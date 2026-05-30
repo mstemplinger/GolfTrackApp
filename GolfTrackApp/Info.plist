@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>UIBackgroundModes</key>
+	<array>
+		<string>audio</string>
+	</array>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>Caddy, dein Golf-Assistent, benötigt das Mikrofon für Sprachgespräche.</string>
+	<key>NSSupportsLiveActivities</key>
+	<true/>
+	<key>MKDirectionsApplicationSupportedModes</key>
+	<array/>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>golftrack</string>
+			</array>
+			<key>CFBundleURLName</key>
+			<string>com.TobiasAufschlaeger.GolfTrackappnew</string>
+		</dict>
+	</array>
+</dict>
+</plist>

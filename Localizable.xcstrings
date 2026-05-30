@@ -1,0 +1,4339 @@
+{
+  "sourceLanguage" : "de",
+  "strings" : {
+    "" : {
+
+    },
+    "-" : {
+
+    },
+    "–" : {
+
+    },
+    "—" : {
+
+    },
+    "— m" : {
+
+    },
+    "·" : {
+
+    },
+    "· %@" : {
+
+    },
+    "· %@ gesamt" : {
+
+    },
+    "\"%@\" wird unwiderruflich gelöscht." : {
+
+    },
+    "(%lld offen)" : {
+
+    },
+    "(Ø %@)" : {
+
+    },
+    "/" : {
+
+    },
+    "/ Loch %lld" : {
+
+    },
+    "/ Monat" : {
+
+    },
+    "%@" : {
+
+    },
+    "%@ – %@" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$@ – %2$@"
+          }
+        }
+      }
+    },
+    "%@ · %@" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$@ · %2$@"
+          }
+        }
+      }
+    },
+    "%@ (%lld Fragen)" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$@ (%2$lld Fragen)"
+          }
+        }
+      }
+    },
+    "%@ %lld" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$@ %2$lld"
+          }
+        }
+      }
+    },
+    "%@ gratis testen" : {
+
+    },
+    "%@ kostenlos" : {
+
+    },
+    "%@ kostenlos testen – danach jederzeit kündbar" : {
+
+    },
+    "%@%@" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$@%2$@"
+          }
+        }
+      }
+    },
+    "%lld" : {
+
+    },
+    "%lld (%@)" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$lld (%2$@)"
+          }
+        }
+      }
+    },
+    "%lld %%" : {
+
+    },
+    "%lld Abschlag%@" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$lld Abschlag%2$@"
+          }
+        }
+      }
+    },
+    "%lld beantwortet" : {
+
+    },
+    "%lld gelernt" : {
+
+    },
+    "%lld Loch" : {
+
+    },
+    "%lld Loch · Par %lld" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$lld Loch · Par %2$lld"
+          }
+        }
+      }
+    },
+    "%lld Löcher" : {
+
+    },
+    "%lld Löcher · Par %lld" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$lld Löcher · Par %2$lld"
+          }
+        }
+      }
+    },
+    "%lld m" : {
+
+    },
+    "%lld min" : {
+
+    },
+    "%lld offizielle Prüfungsfragen" : {
+
+    },
+    "%lld Pkt" : {
+
+    },
+    "%lld Pkt." : {
+
+    },
+    "%lld Punkte" : {
+
+    },
+    "%lld Regeln" : {
+
+    },
+    "%lld Schlag%@ erfasst" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$lld Schlag%2$@ erfasst"
+          }
+        }
+      }
+    },
+    "%lld Schlag%@ gemessen" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$lld Schlag%2$@ gemessen"
+          }
+        }
+      }
+    },
+    "%lld Schläge" : {
+
+    },
+    "%lld Seite%@ gescannt" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$lld Seite%2$@ gescannt"
+          }
+        }
+      }
+    },
+    "%lld Seiten" : {
+
+    },
+    "%lld Statistiken" : {
+
+    },
+    "%lld Tipps" : {
+
+    },
+    "%lld verbleibend" : {
+
+    },
+    "%lld von %lld Schlägern gemessen" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$lld von %2$lld Schlägern gemessen"
+          }
+        }
+      }
+    },
+    "%lld–%lld %@" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$lld–%2$lld %3$@"
+          }
+        }
+      }
+    },
+    "%lld/%lld" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$lld/%2$lld"
+          }
+        }
+      }
+    },
+    "• %@" : {
+
+    },
+    "• Runde beendet" : {
+
+    },
+    "∑" : {
+
+    },
+    "+" : {
+
+    },
+    "+%lld" : {
+
+    },
+    "+20" : {
+
+    },
+    "−" : {
+
+    },
+    "● LIVE" : {
+
+    },
+    "✋" : {
+
+    },
+    "🧭" : {
+
+    },
+    "0 Pkt." : {
+
+    },
+    "1" : {
+
+    },
+    "01" : {
+
+    },
+    "2" : {
+
+    },
+    "2 SL" : {
+
+    },
+    "2 up" : {
+
+    },
+    "3" : {
+
+    },
+    "4" : {
+
+    },
+    "04" : {
+
+    },
+    "5" : {
+
+    },
+    "7-Tage-Vorhersage" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "7-Tage-Vorhersage"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "7-Day Forecast"
+          }
+        }
+      }
+    },
+    "9 Löcher" : {
+
+    },
+    "9:41" : {
+
+    },
+    "18 Löcher" : {
+
+    },
+    "24.0" : {
+
+    },
+    "72.0" : {
+
+    },
+    "92" : {
+
+    },
+    "128 m" : {
+
+    },
+    "186 m zum Loch" : {
+
+    },
+    "195 m" : {
+
+    },
+    "354 m zum Loch" : {
+
+    },
+    "A" : {
+
+    },
+    "Abbildung" : {
+
+    },
+    "Abbrechen" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Abbrechen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cancel"
+          }
+        }
+      }
+    },
+    "Abgeschlossene Runden erscheinen hier" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Abgeschlossene Runden erscheinen hier"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Completed rounds will appear here"
+          }
+        }
+      }
+    },
+    "Abschlag" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Abschlag"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tee"
+          }
+        }
+      }
+    },
+    "Abschlag setzen" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Abschlag setzen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Set Tee"
+          }
+        }
+      }
+    },
+    "Abschlag wählen" : {
+
+    },
+    "Abschlagbreite" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Abschlagbreite"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tee Width"
+          }
+        }
+      }
+    },
+    "Abschließen" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Abschließen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Finish"
+          }
+        }
+      }
+    },
+    "Aktiv" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aktiv"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Active"
+          }
+        }
+      }
+    },
+    "Aktive Runden" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aktive Runden"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Active Rounds"
+          }
+        }
+      }
+    },
+    "AKTUELLES LOCH" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "AKTUELLES LOCH"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "CURRENT HOLE"
+          }
+        }
+      }
+    },
+    "Alle %lld Ergebnisse anzeigen" : {
+
+    },
+    "Alle %lld Messungen löschen?" : {
+
+    },
+    "Alle %lld Runden löschen?" : {
+
+    },
+    "Alle Ergebnisse löschen?" : {
+
+    },
+    "Alle Fragen gelernt!" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Alle Fragen gelernt!"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "All questions learned!"
+          }
+        }
+      }
+    },
+    "Alle Golfplätze" : {
+
+    },
+    "Alle Kategorien (%lld Fragen)" : {
+
+    },
+    "Alle löschen" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Alle löschen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Delete All"
+          }
+        }
+      }
+    },
+    "ALLE MESSUNGEN" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ALLE MESSUNGEN"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ALL MEASUREMENTS"
+          }
+        }
+      }
+    },
+    "Antworten durchsehen" : {
+
+    },
+    "Anzeigen" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Anzeigen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Show"
+          }
+        }
+      }
+    },
+    "API-Einstellungen" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "API-setting"
+          }
+        }
+      }
+    },
+    "API-Key" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "API-Key"
+          }
+        }
+      }
+    },
+    "API-Key eintragen" : {
+
+    },
+    "API-Key entfernen" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Remove API-Key"
+          }
+        }
+      }
+    },
+    "App-Info" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "App-Info"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "App Info"
+          }
+        }
+      }
+    },
+    "APPLE WATCH" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "APPLE WATCH"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "APPLE WATCH"
+          }
+        }
+      }
+    },
+    "Auf iPhone spiegeln" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mirror to iPhone"
+          }
+        }
+      }
+    },
+    "aus %lld Messung%@" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "aus %1$lld Messung%2$@"
+          }
+        }
+      }
+    },
+    "B" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "B"
+          }
+        }
+      }
+    },
+    "Bald" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bald"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Coming Soon"
+          }
+        }
+      }
+    },
+    "Bald verfügbar – wir arbeiten daran!" : {
+
+    },
+    "Basierend auf Daten von über 100.000 Golfrunden analysiert Shot Scope die häufigsten Fehler von Handicap-Golfern." : {
+
+    },
+    "Bearbeiten" : {
+
+    },
+    "Beenden" : {
+
+    },
+    "Benutzerdefiniert" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Benutzerdefiniert"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Custom"
+          }
+        }
+      }
+    },
+    "Best" : {
+
+    },
+    "Best Ball – %lld Spieler" : {
+
+    },
+    "Best Ball Schläge" : {
+
+    },
+    "Best Ball: %lld (%@)" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Best Ball: %1$lld (%2$@)"
+          }
+        }
+      }
+    },
+    "Best Ball: %lld Punkte" : {
+
+    },
+    "Bestanden ✓" : {
+
+    },
+    "Bestanden!" : {
+
+    },
+    "Beste %lld von %lld" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Beste %1$lld von %2$lld"
+          }
+        }
+      }
+    },
+    "Bestenliste" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bestenliste"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Leaderboard"
+          }
+        }
+      }
+    },
+    "Bestes Diff.: %@" : {
+
+    },
+    "Bezeichnung" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bezeichnung"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Name"
+          }
+        }
+      }
+    },
+    "BUNKER" : {
+
+    },
+    "C" : {
+
+    },
+    "Caddy" : {
+
+    },
+    "Caddy – Golf-Assistent" : {
+
+    },
+    "Course Rating (CR)" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Course Rating (CR)"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Course Rating (CR)"
+          }
+        }
+      }
+    },
+    "CR %@" : {
+
+    },
+    "CR und Slope stehen auf der Scorekarte oder der Club-Website. Standard: CR 72.0 / Slope 113." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "CR und Slope stehen auf der Scorekarte oder der Club-Website. Standard: CR 72.0 / Slope 113."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "CR and Slope are found on the scorecard or club website. Default: CR 72.0 / Slope 113."
+          }
+        }
+      }
+    },
+    "D" : {
+
+    },
+    "danach %@ / Monat" : {
+
+    },
+    "Das Ergebnis wird nicht gespeichert." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Das Ergebnis wird nicht gespeichert."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The result will not be saved."
+          }
+        }
+      }
+    },
+    "Daten" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Daten"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Data"
+          }
+        }
+      }
+    },
+    "Datenschutz" : {
+
+    },
+    "Datum" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Datum"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Date"
+          }
+        }
+      }
+    },
+    "DATUM" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "DATUM"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "DATE"
+          }
+        }
+      }
+    },
+    "DEIN DURCHSCHNITT" : {
+
+    },
+    "Dein Fortschritt wird gespeichert." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dein Fortschritt wird gespeichert."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Your progress will be saved."
+          }
+        }
+      }
+    },
+    "Dein Fortschritt wird gespeichert. Du kannst die Runde auf der Startseite fortsetzen oder dort löschen." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dein Fortschritt wird gespeichert. Du kannst die Runde auf der Startseite fortsetzen oder dort löschen."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Your progress will be saved. You can continue or delete the round from the home screen."
+          }
+        }
+      }
+    },
+    "Dein Name" : {
+
+    },
+    "Dein persönlicher Golfbegleiter" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dein persönlicher Golfbegleiter"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Your personal golf companion"
+          }
+        }
+      }
+    },
+    "Dein persönlicher KI-Caddy –\nRegeln, Tipps und Strategien per Sprache." : {
+
+    },
+    "Der Durchschnitt wird wieder auf die Voreinstellung (%lld m) zurückgesetzt." : {
+
+    },
+    "Die aktuellen Golfregeln gelten seit dem 1. Januar 2023. Lokale Platzregeln können einzelne Punkte abweichen." : {
+
+    },
+    "Die Runde wird als abgeschlossen gespeichert." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Die Runde wird als abgeschlossen gespeichert."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The round will be saved as completed."
+          }
+        }
+      }
+    },
+    "Die Runde wird unwiderruflich gelöscht." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Die Runde wird unwiderruflich gelöscht."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The round will be permanently deleted."
+          }
+        }
+      }
+    },
+    "Diese Aktion kann nicht rückgängig gemacht werden." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Diese Aktion kann nicht rückgängig gemacht werden."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "This action cannot be undone."
+          }
+        }
+      }
+    },
+    "Dieser Spielmodus kommt bald" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dieser Spielmodus kommt bald"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "This game mode is coming soon"
+          }
+        }
+      }
+    },
+    "Dieses Spielformat wird bald verfügbar sein." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dieses Spielformat wird bald verfügbar sein."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "This game format will be available soon."
+          }
+        }
+      }
+    },
+    "Distanz & Karte" : {
+
+    },
+    "Distanz messen" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Distanz messen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Measure Distance"
+          }
+        }
+      }
+    },
+    "Distanz speichern" : {
+
+    },
+    "Distanzeinheit" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Distanzeinheit"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Distance Unit"
+          }
+        }
+      }
+    },
+    "Distanzen (GPS)" : {
+
+    },
+    "Dokument löschen?" : {
+
+    },
+    "Dokument scannen" : {
+
+    },
+    "Dokumente" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dokumente"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Documents"
+          }
+        }
+      }
+    },
+    "Du hast alle %lld Fragen beherrscht." : {
+
+    },
+    "Du kannst die Runde auf dem iPhone spiegeln und dort Einträge vornehmen." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Du kannst die Runde auf dem iPhone spiegeln und dort Einträge vornehmen."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "You can mirror the round on iPhone and enter scores there."
+          }
+        }
+      }
+    },
+    "Durchschnitt der %lld besten Score-Differentials × 0,96" : {
+
+    },
+    "Durchschnittswerte" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Durchschnittswerte"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Averages"
+          }
+        }
+      }
+    },
+    "E" : {
+
+    },
+    "Eigenen Platz manuell erstellen" : {
+
+    },
+    "Einheit" : {
+
+    },
+    "Einstellungen" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Einstellungen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Settings"
+          }
+        }
+      }
+    },
+    "Empfehlung:" : {
+
+    },
+    "Empfehlung: 5 Wood" : {
+
+    },
+    "Entfernen" : {
+
+    },
+    "Entfernung:" : {
+
+    },
+    "Erado" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Erado"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Erado"
+          }
+        }
+      }
+    },
+    "Erado Score" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Erado Score"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Erado Score"
+          }
+        }
+      }
+    },
+    "Ergebnis" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ergebnis"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Result"
+          }
+        }
+      }
+    },
+    "Ergebnisse" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ergebnisse"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Results"
+          }
+        }
+      }
+    },
+    "Erklärung" : {
+
+    },
+    "Erneut versuchen" : {
+
+    },
+    "Erreicht ✓" : {
+
+    },
+    "Errungenschaften" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Errungenschaften"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Achievements"
+          }
+        }
+      }
+    },
+    "Erste Runde starten" : {
+
+    },
+    "Erste Schritte" : {
+
+    },
+    "Ersten Platz hinzufügen" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ersten Platz hinzufügen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Add First Course"
+          }
+        }
+      }
+    },
+    "Erstes Dokument scannen" : {
+
+    },
+    "Fairway" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fairway"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fairway"
+          }
+        }
+      }
+    },
+    "Falsch" : {
+
+    },
+    "Fehler" : {
+
+    },
+    "Fertig" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fertig"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Done"
+          }
+        }
+      }
+    },
+    "Feuchte" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Feuchte"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Humidity"
+          }
+        }
+      }
+    },
+    "Fortsetzen" : {
+
+    },
+    "Frage %lld von %lld" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Frage %1$lld von %2$lld"
+          }
+        }
+      }
+    },
+    "Frage %lld/%lld" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Frage %1$lld/%2$lld"
+          }
+        }
+      }
+    },
+    "Freunde" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Freunde"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Friends"
+          }
+        }
+      }
+    },
+    "Füge deine Schläger hinzu oder lade die Standardausstattung." : {
+
+    },
+    "Führung A" : {
+
+    },
+    "Für die Online-Suche wird ein API-Key benötigt." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Für die Online-Suche wird ein API-Key benötigt."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "An API key is required for online search."
+          }
+        }
+      }
+    },
+    "Für einen vollständigen Index werden Runden mit Course-Rating & Slope-Rating benötigt." : {
+
+    },
+    "Game Center" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Game Center"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Game Center"
+          }
+        }
+      }
+    },
+    "Game Center öffnen" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Game Center öffnen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Open Game Center"
+          }
+        }
+      }
+    },
+    "Gebaut mit" : {
+
+    },
+    "Gefühlt" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gefühlt"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Feels Like"
+          }
+        }
+      }
+    },
+    "Gesamt" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gesamt"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Total"
+          }
+        }
+      }
+    },
+    "GESAMT" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "GESAMT"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "TOTAL"
+          }
+        }
+      }
+    },
+    "Gesamt: %lld" : {
+
+    },
+    "Gespeicherte Distanzen" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gespeicherte Distanzen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Saved Distances"
+          }
+        }
+      }
+    },
+    "Gespeicherte Plätze" : {
+
+    },
+    "Gespeicherte Schläge" : {
+
+    },
+    "Gespeicherte Schläger" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gespeicherte Schläger"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Saved Clubs"
+          }
+        }
+      }
+    },
+    "Gespräch beenden" : {
+
+    },
+    "Gespräch starten" : {
+
+    },
+    "gewonnene Löcher" : {
+
+    },
+    "GIR" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "GIR"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "GIR"
+          }
+        }
+      }
+    },
+    "Golf-Assistent" : {
+
+    },
+    "Golf-Ratgeber" : {
+
+    },
+    "Golf-Wetter" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Golf-Wetter"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Golf Weather"
+          }
+        }
+      }
+    },
+    "Golfclub Beispiel" : {
+
+    },
+    "GolfCourseAPI Key" : {
+
+    },
+    "golfcourseapi.com/sign-in" : {
+
+    },
+    "Golfer" : {
+
+    },
+    "Golfer!" : {
+
+    },
+    "GOLFPLATZ" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "GOLFPLATZ"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "GOLF COURSE"
+          }
+        }
+      }
+    },
+    "Golfplatz hinzufügen" : {
+
+    },
+    "Golfplätze" : {
+
+    },
+    "Golfplätze in der Nähe" : {
+
+    },
+    "Golfplätze in der Nähe (30 km)" : {
+
+    },
+    "Golfregeln 2023" : {
+
+    },
+    "GolfTrack" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "GolfTrack"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "GolfTrack"
+          }
+        }
+      }
+    },
+    "GolfTrack Pro" : {
+
+    },
+    "Gratis" : {
+
+    },
+    "Handicap" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Handicap"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Handicap"
+          }
+        }
+      }
+    },
+    "Handicap Index" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Handicap Index"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Handicap Index"
+          }
+        }
+      }
+    },
+    "Handicap-Daten" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Handicap-Daten"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Handicap Data"
+          }
+        }
+      }
+    },
+    "HCP" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "HCP"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "HCP"
+          }
+        }
+      }
+    },
+    "HCP %lld" : {
+
+    },
+    "Herzlichen Glückwunsch! Du hast die Probeprüfung bestanden." : {
+
+    },
+    "Heute" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Heute"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Today"
+          }
+        }
+      }
+    },
+    "Hilfe & Anleitung" : {
+
+    },
+    "Hilfe & Rechtliches" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hilfe & Rechtliches"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Help & Legal"
+          }
+        }
+      }
+    },
+    "Hinzufügen" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hinzufügen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Add"
+          }
+        }
+      }
+    },
+    "Home" : {
+
+    },
+    "Importieren" : {
+
+    },
+    "Impressum" : {
+
+    },
+    "In Arbeit" : {
+
+    },
+    "In einer zukünftigen Version verfügbar" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "In einer zukünftigen Version verfügbar"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Available in a future version"
+          }
+        }
+      }
+    },
+    "Jederzeit kündbar · Keine Bindung" : {
+
+    },
+    "Jetzt abonnieren" : {
+
+    },
+    "Kapitel %lld" : {
+
+    },
+    "Karte" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Karte"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Map"
+          }
+        }
+      }
+    },
+    "Kategorie" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kategorie"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Category"
+          }
+        }
+      }
+    },
+    "Kategorie wählen" : {
+
+    },
+    "Kategorien" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kategorien"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Categories"
+          }
+        }
+      }
+    },
+    "Kauf wiederherstellen" : {
+
+    },
+    "Kein API-Key – bitte in den Einstellungen eintragen." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kein API-Key – bitte in den Einstellungen eintragen."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No API key – please enter one in Settings."
+          }
+        }
+      }
+    },
+    "Kein API-Key eingetragen" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kein API-Key eingetragen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No API key entered"
+          }
+        }
+      }
+    },
+    "Keine Lochwerte verfügbar" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Keine Lochwerte verfügbar"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No hole values available"
+          }
+        }
+      }
+    },
+    "Keine Runden" : {
+
+    },
+    "Keine Schläger" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Keine Schläger"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No Clubs"
+          }
+        }
+      }
+    },
+    "Keine Statistiken" : {
+
+    },
+    "Kostenlos registrieren unter:" : {
+
+    },
+    "L%lld" : {
+
+    },
+    "Lädt…" : {
+
+    },
+    "Letzte Runde" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Letzte Runde"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Last Round"
+          }
+        }
+      }
+    },
+    "Linie entfernen" : {
+
+    },
+    "Live" : {
+
+    },
+    "LIVE" : {
+
+    },
+    "Loch %lld" : {
+
+    },
+    "Loch %lld – Schläge" : {
+
+    },
+    "Loch %lld / %lld" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Loch %1$lld / %2$lld"
+          }
+        }
+      }
+    },
+    "Loch 1 – Position" : {
+
+    },
+    "LOCH 1 · 18" : {
+
+    },
+    "LOCH 4 · 18" : {
+
+    },
+    "LOCH 18 · 18" : {
+
+    },
+    "Loch- & Abschlagpositionen gespeichert" : {
+
+    },
+    "Löcher" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Löcher"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Holes"
+          }
+        }
+      }
+    },
+    "Lochposition festlegen" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lochposition festlegen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Set Hole Position"
+          }
+        }
+      }
+    },
+    "Los geht's!" : {
+
+    },
+    "Löschen" : {
+
+    },
+    "Matchplay – Lochspiel-Wertung" : {
+
+    },
+    "Max" : {
+
+    },
+    "Mein Standort" : {
+
+    },
+    "Meine Schläger" : {
+
+    },
+    "Meinen Standort verwenden" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Meinen Standort verwenden"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Use My Location"
+          }
+        }
+      }
+    },
+    "Melde dich bei Game Center an, um deinen Score mit Freunden zu teilen." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Melde dich bei Game Center an, um deinen Score mit Freunden zu teilen."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sign in to Game Center to share your score with friends."
+          }
+        }
+      }
+    },
+    "Messung %lld" : {
+
+    },
+    "Messungen löschen" : {
+
+    },
+    "Meter" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Meter"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Meters"
+          }
+        }
+      }
+    },
+    "Min" : {
+
+    },
+    "Mindestens 75 % (23/30)" : {
+
+    },
+    "Minigolf & Putten" : {
+
+    },
+    "Mit Game Center verbinden" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mit Game Center verbinden"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Connect with Game Center"
+          }
+        }
+      }
+    },
+    "Mitgliedskarte, Belege & mehr" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mitgliedskarte, Belege & mehr"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Membership card, receipts & more"
+          }
+        }
+      }
+    },
+    "Möchtest du die wichtigsten Golfregeln nachschlagen?" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Möchtest du die wichtigsten Golfregeln nachschlagen?"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Would you like to look up the most important golf rules?"
+          }
+        }
+      }
+    },
+    "Modus beenden?" : {
+
+    },
+    "Nach Kategorie" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nach Kategorie"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "By Category"
+          }
+        }
+      }
+    },
+    "Nächste" : {
+
+    },
+    "Nächste Einheit automatisch abspielen" : {
+
+    },
+    "Nächste Frage" : {
+
+    },
+    "Name" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Name"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Name"
+          }
+        }
+      }
+    },
+    "Namen eingeben oder erneut drücken, um ohne Namen zu starten." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Namen eingeben oder erneut drücken, um ohne Namen zu starten."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Enter names or press again to start without names."
+          }
+        }
+      }
+    },
+    "Neu scannen" : {
+
+    },
+    "Neu setzen" : {
+
+    },
+    "Neue Runde" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Neue Runde"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "New Round"
+          }
+        }
+      }
+    },
+    "Neue Runde spielen" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Neue Runde spielen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Play New Round"
+          }
+        }
+      }
+    },
+    "Neue Runde starten" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Neue Runde starten"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Start New Round"
+          }
+        }
+      }
+    },
+    "Neuer Platz" : {
+
+    },
+    "Nicht beantwortet" : {
+
+    },
+    "Nicht bestanden" : {
+
+    },
+    "Nicht ganz – die Frage kommt wieder" : {
+
+    },
+    "Noch %lld m zum Loch" : {
+
+    },
+    "Noch gesperrt" : {
+
+    },
+    "Noch keine Dokumente" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Noch keine Dokumente"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No documents yet"
+          }
+        }
+      }
+    },
+    "Noch keine eigenen Messungen" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Noch keine eigenen Messungen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No personal measurements yet"
+          }
+        }
+      }
+    },
+    "Noch keine Golfplätze" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Noch keine Golfplätze"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No golf courses yet"
+          }
+        }
+      }
+    },
+    "Noch keine Plätze gespeichert." : {
+
+    },
+    "Noch keine Runde" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Noch keine Runde"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No round yet"
+          }
+        }
+      }
+    },
+    "Noch keine Runden" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Noch keine Runden"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No rounds yet"
+          }
+        }
+      }
+    },
+    "Noch nicht genug Daten" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Noch nicht genug Daten"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Not enough data yet"
+          }
+        }
+      }
+    },
+    "Notizen" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Notizen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Notes"
+          }
+        }
+      }
+    },
+    "Nutzungsbedingungen" : {
+
+    },
+    "Ø 180 m · aus 12 Messungen" : {
+
+    },
+    "Ø aus %lld Messung%@" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Ø aus %1$lld Messung%2$@"
+          }
+        }
+      }
+    },
+    "Offizieller Fragenkatalog · %lld Fragen · 6 Themengebiete" : {
+
+    },
+    "Ohne Namen starten – erneut drücken" : {
+
+    },
+    "Ohne Pin schließen" : {
+
+    },
+    "OK" : {
+
+    },
+    "Online suchen: \"%@\"" : {
+
+    },
+    "Online-Ergebnisse" : {
+
+    },
+    "Ort (optional)" : {
+
+    },
+    "Par" : {
+
+    },
+    "Par %lld" : {
+
+    },
+    "PAR %lld" : {
+
+    },
+    "PAR 4" : {
+
+    },
+    "Par pro Loch" : {
+
+    },
+    "Par pro Loch (%lld Löcher)" : {
+
+    },
+    "Penalty Area" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Penalty Area"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Penalty Area"
+          }
+        }
+      }
+    },
+    "Pin aktualisieren" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pin aktualisieren"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Update Pin"
+          }
+        }
+      }
+    },
+    "Pin gesetzt" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pin gesetzt"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pin Set"
+          }
+        }
+      }
+    },
+    "Pin gesetzt · Loch 4" : {
+
+    },
+    "Pin setzen" : {
+
+    },
+    "Platz" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Platz"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Course"
+          }
+        }
+      }
+    },
+    "Platz & Spielmodus wählen" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Platz & Spielmodus wählen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Select Course & Mode"
+          }
+        }
+      }
+    },
+    "Platz auswählen…" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Platz auswählen…"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Select course…"
+          }
+        }
+      }
+    },
+    "Platz hinzufügen" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Platz hinzufügen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Add Course"
+          }
+        }
+      }
+    },
+    "Platz nicht dabei? Lege ihn manuell an." : {
+
+    },
+    "Platz nicht gefunden? Lege ihn manuell an." : {
+
+    },
+    "Platz suchen" : {
+
+    },
+    "Platz suchen…" : {
+
+    },
+    "Platz wählen" : {
+
+    },
+    "Platz wählen …" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Platz wählen …"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Select course …"
+          }
+        }
+      }
+    },
+    "Platzdaten laden …" : {
+
+    },
+    "Plätze aus der Datenbank" : {
+
+    },
+    "Plätze im 30-km-Umkreis. Weiter entfernte Plätze sind per Suche erreichbar." : {
+
+    },
+    "Platzinfo" : {
+
+    },
+    "Platzinformationen" : {
+
+    },
+    "Platzname *" : {
+
+    },
+    "Platzname oder Club" : {
+
+    },
+    "Platzname oder Club suchen" : {
+
+    },
+    "Platzreife lernen" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Platzreife lernen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Learn Golf License"
+          }
+        }
+      }
+    },
+    "Platzreife Quiz" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Platzreife Quiz"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Golf License Quiz"
+          }
+        }
+      }
+    },
+    "Platzreife Theorie" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Platzreife Theorie"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Golf License Theory"
+          }
+        }
+      }
+    },
+    "Praxis-Tipp" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Praxis-Tipp"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Practical Tip"
+          }
+        }
+      }
+    },
+    "Pro" : {
+
+    },
+    "Pro freischalten" : {
+
+    },
+    "Pro Tipp des Tages" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pro Tipp des Tages"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pro Tip of the Day"
+          }
+        }
+      }
+    },
+    "PRO TIPP DES TAGES" : {
+
+    },
+    "Probeprüfung" : {
+
+    },
+    "Profil" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Profil"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Profile"
+          }
+        }
+      }
+    },
+    "Prüfung abbrechen?" : {
+
+    },
+    "Prüfung abgeben" : {
+
+    },
+    "Punkte" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Punkte"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Points"
+          }
+        }
+      }
+    },
+    "Punktetabelle" : {
+
+    },
+    "Putts" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Putts"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Putts"
+          }
+        }
+      }
+    },
+    "Quelle: R&A Rules of Golf 2023 (r-a.org) · USGA (usga.org)" : {
+
+    },
+    "Rechtliches" : {
+
+    },
+    "Referenz" : {
+
+    },
+    "Regeln, Tipps & Strategien" : {
+
+    },
+    "Regelwerk 2023 – R&A / USGA" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Regelwerk 2023 – R&A / USGA"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Rules of Golf 2023 – R&A / USGA"
+          }
+        }
+      }
+    },
+    "Richtig" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Richtig"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Correct"
+          }
+        }
+      }
+    },
+    "Richtig!" : {
+
+    },
+    "Richtung 20 Runden für vollen WHS-Index" : {
+
+    },
+    "Richtungslinie setzen" : {
+
+    },
+    "Runde" : {
+
+    },
+    "Runde abbrechen?" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Runde abbrechen?"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cancel Round?"
+          }
+        }
+      }
+    },
+    "Runde abgeschlossen!" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Runde abgeschlossen!"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Round Complete!"
+          }
+        }
+      }
+    },
+    "Runde abschließen" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Runde abschließen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Finish Round"
+          }
+        }
+      }
+    },
+    "Runde abschließen?" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Runde abschließen?"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Finish Round?"
+          }
+        }
+      }
+    },
+    "Runde läuft auf der Watch" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Runde läuft auf der Watch"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Round running on Watch"
+          }
+        }
+      }
+    },
+    "Runde löschen" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Runde löschen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Delete Round"
+          }
+        }
+      }
+    },
+    "Runde löschen?" : {
+
+    },
+    "Runde starten" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Runde starten"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Start Round"
+          }
+        }
+      }
+    },
+    "Runde starten – %@" : {
+
+    },
+    "Runde verlassen?" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Runde verlassen?"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Leave Round?"
+          }
+        }
+      }
+    },
+    "Runden" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Runden"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Rounds"
+          }
+        }
+      }
+    },
+    "S.%lld" : {
+
+    },
+    "Satellit" : {
+
+    },
+    "Scanne deine Mitgliedskarte oder Greenfee-Belege für schnellen Zugriff." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Scanne deine Mitgliedskarte oder Greenfee-Belege für schnellen Zugriff."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Scan your membership card or greenfee receipts for quick access."
+          }
+        }
+      }
+    },
+    "Schl." : {
+
+    },
+    "Schlag %lld" : {
+
+    },
+    "Schlag 1 · Driver" : {
+
+    },
+    "Schlag aufzeichnen" : {
+
+    },
+    "Schlag-Tracking" : {
+
+    },
+    "Schläge" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Schläge"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Strokes"
+          }
+        }
+      }
+    },
+    "SCHLÄGE" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "SCHLÄGE"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "STROKES"
+          }
+        }
+      }
+    },
+    "Schläge auf der Karte" : {
+
+    },
+    "Schläge werden automatisch beim Aufzeichnen eingetragen." : {
+
+    },
+    "Schläger hinzufügen" : {
+
+    },
+    "Schlägerdistanzen (Ø)" : {
+
+    },
+    "Schlagkarte" : {
+
+    },
+    "schlechtes Wetter" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "schlechtes Wetter"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Poor Weather"
+          }
+        }
+      }
+    },
+    "Schließen" : {
+
+    },
+    "Schritt %lld von %lld" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Schritt %1$lld von %2$lld"
+          }
+        }
+      }
+    },
+    "Score" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Score"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Score"
+          }
+        }
+      }
+    },
+    "Score Differentials (letzte Runden)" : {
+
+    },
+    "SCORE GESAMT" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "SCORE GESAMT"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "TOTAL SCORE"
+          }
+        }
+      }
+    },
+    "SCORE-VERLAUF" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "SCORE-VERLAUF"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "SCORE HISTORY"
+          }
+        }
+      }
+    },
+    "Score-Verlauf (letzte %lld Runden)" : {
+
+    },
+    "Scorecard" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Scorecard"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Scorecard"
+          }
+        }
+      }
+    },
+    "Skins" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Skins"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Skins"
+          }
+        }
+      }
+    },
+    "Skins: Du %lld" : {
+
+    },
+    "Slope %lld" : {
+
+    },
+    "Slope Rating" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Slope Rating"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Slope Rating"
+          }
+        }
+      }
+    },
+    "Smart-Modus" : {
+
+    },
+    "Smart-Modus, Probeprüfung & Ergebnisse" : {
+
+    },
+    "Speichern" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Speichern"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Save"
+          }
+        }
+      }
+    },
+    "Spiel" : {
+
+    },
+    "Spiel starten" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Spiel starten"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Start Game"
+          }
+        }
+      }
+    },
+    "Spiele noch %lld Runde%@, um einen Handicap-Index zu erhalten." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Spiele noch %1$lld Runde%2$@, um einen Handicap-Index zu erhalten."
+          }
+        }
+      }
+    },
+    "Spiele Runden, um Statistiken zu sehen" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Spiele Runden, um Statistiken zu sehen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Play rounds to see statistics"
+          }
+        }
+      }
+    },
+    "Spieler" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Spieler"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Players"
+          }
+        }
+      }
+    },
+    "Spieler %lld" : {
+
+    },
+    "Spieler entfernen" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Spieler entfernen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Remove Player"
+          }
+        }
+      }
+    },
+    "Spieler hinzufügen" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Spieler hinzufügen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Add Player"
+          }
+        }
+      }
+    },
+    "Spielmodi" : {
+
+    },
+    "Spielmodus" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Spielmodus"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Game Mode"
+          }
+        }
+      }
+    },
+    "SPIELMODUS" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "SPIELMODUS"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "GAME MODE"
+          }
+        }
+      }
+    },
+    "Spielmodus wählen" : {
+
+    },
+    "Spielregeln" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Spielregeln"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Rules of Golf"
+          }
+        }
+      }
+    },
+    "Spielregeln anzeigen?" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Spielregeln anzeigen?"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Show Rules of Golf?"
+          }
+        }
+      }
+    },
+    "Stableford" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Stableford"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Stableford"
+          }
+        }
+      }
+    },
+    "Standard" : {
+
+    },
+    "Standardschläger laden" : {
+
+    },
+    "Standort" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Standort"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Location"
+          }
+        }
+      }
+    },
+    "Standort gesperrt" : {
+
+    },
+    "Standort nicht verfügbar" : {
+
+    },
+    "Standort nicht verfügbar – alle Plätze werden angezeigt." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Standort nicht verfügbar – alle Plätze werden angezeigt."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Location unavailable – showing all courses."
+          }
+        }
+      }
+    },
+    "Standort wird ermittelt …" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Standort wird ermittelt …"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Determining location …"
+          }
+        }
+      }
+    },
+    "Start" : {
+
+    },
+    "Starte deine erste Runde und\nverfolge deinen Fortschritt." : {
+
+    },
+    "Startpunkt setzen" : {
+
+    },
+    "Statistiken" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Statistiken"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Statistics"
+          }
+        }
+      }
+    },
+    "Stelle mir eine Frage über Golf…" : {
+
+    },
+    "Stelle sicher, dass der Standortzugriff erlaubt ist." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Stelle sicher, dass der Standortzugriff erlaubt ist."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Make sure location access is allowed."
+          }
+        }
+      }
+    },
+    "Stop" : {
+
+    },
+    "Strafe" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Strafe"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Penalty"
+          }
+        }
+      }
+    },
+    "Strafschlag" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Strafschlag"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Penalty Stroke"
+          }
+        }
+      }
+    },
+    "Strategie-Insights: Shot Scope Ltd.  ·  Regeln: R&A / USGA 2023" : {
+
+    },
+    "Streich: %@" : {
+
+    },
+    "Suche läuft …" : {
+
+    },
+    "Suche weltweit nach Plätzen oder lege einen manuell an." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Suche weltweit nach Plätzen oder lege einen manuell an."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Search courses worldwide or add one manually."
+          }
+        }
+      }
+    },
+    "Suchergebnisse (%lld)" : {
+
+    },
+    "Sucht weltweit nach Golfplätzen via API." : {
+
+    },
+    "SwiftUI & SwiftData" : {
+
+    },
+    "Team" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Team"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Team"
+          }
+        }
+      }
+    },
+    "Team %@" : {
+
+    },
+    "Team Punkte" : {
+
+    },
+    "Team Schläge" : {
+
+    },
+    "Team: %lld Punkte" : {
+
+    },
+    "Team: %lld Schläge (%@)" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Team: %1$lld Schläge (%2$@)"
+          }
+        }
+      }
+    },
+    "Tipp" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tipp"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tip"
+          }
+        }
+      }
+    },
+    "Tippe auf die Karte, um das Loch zu markieren" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tippe auf die Karte, um das Loch zu markieren"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tap the map to mark the hole"
+          }
+        }
+      }
+    },
+    "Tippe auf die Karte, um den Pin zu setzen" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tippe auf die Karte, um den Pin zu setzen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tap the map to set the pin"
+          }
+        }
+      }
+    },
+    "Tippe auf einen Schläger für Details & Verlauf" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tippe auf einen Schläger für Details & Verlauf"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tap a club for details & history"
+          }
+        }
+      }
+    },
+    "Tippe auf Karte oder nutze deinen Standort" : {
+
+    },
+    "Tipps" : {
+
+    },
+    "Tipps & Coaching" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tipps & Coaching"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tips & Coaching"
+          }
+        }
+      }
+    },
+    "Titel" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Titel"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Title"
+          }
+        }
+      }
+    },
+    "Top-Tipp" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Top-Tipp"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Top Tip"
+          }
+        }
+      }
+    },
+    "Training" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Training"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Training"
+          }
+        }
+      }
+    },
+    "Trainingsfortschritt" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Trainingsfortschritt"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Training Progress"
+          }
+        }
+      }
+    },
+    "Trainingsinhalte kommen bald" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Trainingsinhalte kommen bald"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Training content coming soon"
+          }
+        }
+      }
+    },
+    "Tutorial beenden" : {
+
+    },
+    "Tutorial neu starten" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tutorial neu starten"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Restart Tutorial"
+          }
+        }
+      }
+    },
+    "Übe noch etwas weiter und versuche es erneut." : {
+
+    },
+    "Über 30.000 Golfplätze weltweit mit Loch-für-Loch Par-Werten." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Über 30.000 Golfplätze weltweit mit Loch-für-Loch Par-Werten."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Over 30,000 golf courses worldwide with hole-by-hole par values."
+          }
+        }
+      }
+    },
+    "Über diese Einheit" : {
+
+    },
+    "Übernehmen" : {
+
+    },
+    "Überspringen" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Überspringen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Skip"
+          }
+        }
+      }
+    },
+    "Verbindung testen" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Verbindung testen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Test Connection"
+          }
+        }
+      }
+    },
+    "Vergleiche dich mit Freunden" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vergleiche dich mit Freunden"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Compare yourself with friends"
+          }
+        }
+      }
+    },
+    "Verlassen" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Verlassen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Leave"
+          }
+        }
+      }
+    },
+    "Verlauf" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Verlauf"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "History"
+          }
+        }
+      }
+    },
+    "Version" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Version"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Version"
+          }
+        }
+      }
+    },
+    "Vollbild" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vollbild"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Full Screen"
+          }
+        }
+      }
+    },
+    "Voreingestellte Weite" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Voreingestellte Weite"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Default Distance"
+          }
+        }
+      }
+    },
+    "Voreinstellung" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Voreinstellung"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Default"
+          }
+        }
+      }
+    },
+    "VOREINSTELLUNG" : {
+
+    },
+    "VOREINSTELLUNG ANPASSEN" : {
+
+    },
+    "VS" : {
+
+    },
+    "vs. Par" : {
+
+    },
+    "Warte auf GPS…" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Warte auf GPS…"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Waiting for GPS…"
+          }
+        }
+      }
+    },
+    "Weiter" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Weiter"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Continue"
+          }
+        }
+      }
+    },
+    "WEITER →" : {
+
+    },
+    "Weiter spielen" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Weiter spielen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Keep Playing"
+          }
+        }
+      }
+    },
+    "Weitere Plätze sind per Suche erreichbar." : {
+
+    },
+    "Weitermachen" : {
+
+    },
+    "Weniger anzeigen" : {
+
+    },
+    "Werde zum besseren Golfspieler –\nmit geführten Audio-Trainings direkt in der App." : {
+
+    },
+    "Wetter" : {
+
+    },
+    "Wetter nicht verfügbar" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wetter nicht verfügbar"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Weather unavailable"
+          }
+        }
+      }
+    },
+    "Wettervorhersage" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wettervorhersage"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Weather Forecast"
+          }
+        }
+      }
+    },
+    "WHS" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "WHS"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "WHS"
+          }
+        }
+      }
+    },
+    "WHS Handicap" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "WHS Handicap"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "WHS Handicap"
+          }
+        }
+      }
+    },
+    "Wie möchtest du das Dokument hinzufügen?" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wie möchtest du das Dokument hinzufügen?"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "How would you like to add the document?"
+          }
+        }
+      }
+    },
+    "Wiedergabegeschwindigkeit" : {
+
+    },
+    "Wiederholt" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wiederholt"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Repeated"
+          }
+        }
+      }
+    },
+    "Willkommen zurück," : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Willkommen zurück,"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Welcome back,"
+          }
+        }
+      }
+    },
+    "Wind" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wind"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wind"
+          }
+        }
+      }
+    },
+    "Wird durch eigene Messungen automatisch ersetzt." : {
+
+    },
+    "World Handicap System (WHS)" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "World Handicap System (WHS)"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "World Handicap System (WHS)"
+          }
+        }
+      }
+    },
+    "Yards" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Yards"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Yards"
+          }
+        }
+      }
+    },
+    "z. B. 7 Eisen" : {
+
+    },
+    "z.B. Mitgliedskarte 2025" : {
+
+    },
+    "Zahlen & Fakten" : {
+
+    },
+    "Zählspiel" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zählspiel"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Stroke Play"
+          }
+        }
+      }
+    },
+    "Zeit" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zeit"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Time"
+          }
+        }
+      }
+    },
+    "Ziehen & Zoomen zum Anpassen" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ziehen & Zoomen zum Anpassen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Drag & zoom to adjust"
+          }
+        }
+      }
+    },
+    "Zurück" : {
+
+    },
+    "Zurücksetzen" : {
+
+    }
+  },
+  "version" : "1.0"
+}

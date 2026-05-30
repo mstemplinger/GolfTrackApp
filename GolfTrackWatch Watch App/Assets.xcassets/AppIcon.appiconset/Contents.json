@@ -1,9 +1,9 @@
 {
   "images" : [
     {
-      "filename" : "Unbenanntes_Projekt 7.png",
+      "filename" : "Unbenanntes_Projekt 8.png",
       "idiom" : "universal",
-      "platform" : "ios",
+      "platform" : "watchos",
       "size" : "1024x1024"
     }
   ],

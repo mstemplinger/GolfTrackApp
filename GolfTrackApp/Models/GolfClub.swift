@@ -9,12 +9,15 @@ final class GolfClub {
     /// Alle gemessenen Schläge in Metern (automatisch aus ShotTracker befüllt)
     var measuredDistances: [Double]
     var order: Int
+    var isPutter: Bool = false
+    var bag: GolfBag?
 
-    init(name: String, averageDistance: Int, order: Int = 0) {
+    init(name: String, averageDistance: Int, order: Int = 0, isPutter: Bool = false) {
         self.name = name
         self.defaultDistance = averageDistance
         self.measuredDistances = []
         self.order = order
+        self.isPutter = isPutter
     }
 
     // MARK: - Computed

@@ -1,4 +1,5 @@
 import SwiftUI
+import SwiftData
 
 struct TipsView: View {
     private let categories: [TipsCategory] = [
@@ -8,7 +9,12 @@ struct TipsView: View {
         TipsCategory(name: "Strategie",   icon: "map",                 color: Color(red: 1.0, green: 0.6, blue: 0.3)),
     ]
 
+    @Query private var rounds: [Round]
     @State private var showDailyTipDetail = false
+
+    private var recommendations: [TrainingRecommendation] {
+        TrainingRecommender.recommendations(from: rounds)
+    }
 
     private var dailyTip: DailyTip {
         let dayOfYear = Calendar.current.ordinality(of: .day, in: .year, for: Date()) ?? 1
@@ -39,6 +45,11 @@ struct TipsView: View {
                             .sheet(isPresented: $showDailyTipDetail) {
                                 DailyTipDetailView(tip: dailyTip)
                             }
+
+                        // Persönliche Empfehlungen aus den Statistiken
+                        if !recommendations.isEmpty {
+                            recommendationsSection
+                        }
 
                         // Ratgeber Link
                         NavigationLink {
@@ -99,6 +110,84 @@ struct TipsView: View {
             }
             .navigationBarHidden(true)
         }
+    }
+
+    // MARK: - Empfehlungen aus Statistiken
+
+    private var recommendationsSection: some View {
+        VStack(alignment: .leading, spacing: 10) {
+            HStack(spacing: 6) {
+                Image(systemName: "sparkles")
+                    .font(.subheadline)
+                    .foregroundStyle(AppTheme.gold)
+                Text("Für dich empfohlen")
+                    .font(.headline)
+                    .foregroundStyle(AppTheme.text)
+                Spacer()
+            }
+            Text("Audio-Lektionen, die zu deinen aktuellen Statistiken passen")
+                .font(.caption)
+                .foregroundStyle(AppTheme.textSec)
+
+            VStack(spacing: 0) {
+                ForEach(Array(recommendations.enumerated()), id: \.element.id) { i, rec in
+                    Button { openTraining(for: rec) } label: {
+                        recommendationRow(rec)
+                    }
+                    .buttonStyle(.plain)
+                    if i < recommendations.count - 1 {
+                        Divider().background(AppTheme.cardAlt).padding(.leading, 66)
+                    }
+                }
+            }
+            .background(AppTheme.card, in: RoundedRectangle(cornerRadius: 16))
+        }
+        .padding(.horizontal)
+    }
+
+    private func recommendationRow(_ rec: TrainingRecommendation) -> some View {
+        HStack(spacing: 14) {
+            ZStack {
+                RoundedRectangle(cornerRadius: 12)
+                    .fill(rec.lesson.category.color.opacity(0.18))
+                    .frame(width: 52, height: 52)
+                Image(systemName: "play.fill")
+                    .font(.system(size: 18))
+                    .foregroundStyle(rec.lesson.category.color)
+            }
+            VStack(alignment: .leading, spacing: 3) {
+                Text(rec.lesson.title)
+                    .font(.subheadline.bold())
+                    .foregroundStyle(AppTheme.text)
+                    .lineLimit(1)
+                Text(rec.reason)
+                    .font(.caption)
+                    .foregroundStyle(AppTheme.textSec)
+                    .lineLimit(3)
+                    .fixedSize(horizontal: false, vertical: true)
+                Text(rec.statLabel)
+                    .font(.caption2.bold())
+                    .foregroundStyle(AppTheme.gold)
+                    .padding(.horizontal, 8)
+                    .padding(.vertical, 3)
+                    .background(AppTheme.gold.opacity(0.12), in: Capsule())
+                    .padding(.top, 1)
+            }
+            Spacer()
+            Image(systemName: "chevron.right")
+                .font(.caption)
+                .foregroundStyle(AppTheme.textTer)
+        }
+        .padding(16)
+        .contentShape(Rectangle())
+    }
+
+    private func openTraining(for rec: TrainingRecommendation) {
+        NotificationCenter.default.post(
+            name: .openTraining,
+            object: nil,
+            userInfo: ["category": rec.lesson.category.rawValue]
+        )
     }
 
     private var dailyTipCard: some View {

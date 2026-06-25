@@ -4,6 +4,8 @@ import MapKit
 struct RoundDetailView: View {
     @Bindable var round: Round
     @State private var continuePlaying = false
+    @State private var shareImage: UIImage? = nil
+    @State private var showShareSheet = false
 
     private var roundTotalDistanceM: Double {
         round.sortedScores.reduce(0) { $0 + $1.totalDistanceMeters }
@@ -30,18 +32,38 @@ struct RoundDetailView: View {
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
             ToolbarItem(placement: .topBarTrailing) {
-                Button {
-                    round.isComplete = false
-                    continuePlaying = true
-                } label: {
-                    Label("Fortsetzen", systemImage: "pencil")
+                HStack(spacing: 4) {
+                    Button {
+                        Task { await renderAndShare() }
+                    } label: {
+                        Image(systemName: "square.and.arrow.up")
+                    }
+                    .foregroundStyle(AppTheme.gold)
+
+                    Button {
+                        round.isComplete = false
+                        continuePlaying = true
+                    } label: {
+                        Image(systemName: "pencil")
+                    }
+                    .foregroundStyle(AppTheme.gold)
                 }
-                .foregroundStyle(AppTheme.gold)
+            }
+        }
+        .sheet(isPresented: $showShareSheet) {
+            if let img = shareImage {
+                ShareSheet(items: [img])
             }
         }
         .navigationDestination(isPresented: $continuePlaying) {
             ScorecardView(round: round)
         }
+    }
+
+    @MainActor
+    private func renderAndShare() async {
+        shareImage = renderScorecardImage(for: round)
+        showShareSheet = true
     }
 
     private var summaryCard: some View {

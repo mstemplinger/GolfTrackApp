@@ -21,16 +21,34 @@ struct ProfileView: View {
 
     private var completedRounds: [Round] { allRounds.filter(\.isComplete) }
 
+    private var golferTitle: String {
+        let rounds = completedRounds.count
+        let best = completedRounds.map { $0.totalStrokes }.filter { $0 > 0 }.min() ?? 999
+        switch rounds {
+        case 0:       return "Einsteiger"
+        case 1...4:   return "Anfänger"
+        case 5...14:  return "Amateur"
+        case 15...29:
+            return best <= 90 ? "Fortgeschrittener" : "Regelmäßiger Golfer"
+        case 30...59:
+            return best <= 85 ? "Clubspieler" : "Fortgeschrittener"
+        case 60...99:
+            return best <= 80 ? "Singlestelliger Golfer" : "Erfahrener Clubspieler"
+        default:
+            if best <= 72 { return "Profi-Niveau" }
+            if best <= 76 { return "Scratch Golfer" }
+            if best <= 80 { return "Singlestelliger Golfer" }
+            return "Veteran"
+        }
+    }
+
     var body: some View {
         NavigationStack {
             ZStack {
                 AppTheme.bg.ignoresSafeArea()
                     .onAppear {
                         if profileImage == nil {
-                            Task.detached(priority: .userInitiated) {
-                                let img = ProfileImageStore.load()
-                                await MainActor.run { profileImage = img }
-                            }
+                            Task { profileImage = ProfileImageStore.load() }
                         }
                     }
 
@@ -87,21 +105,29 @@ struct ProfileView: View {
 
                             // Name
                             if editingName {
-                                HStack {
+                                HStack(spacing: 8) {
                                     TextField("Dein Name", text: $draftName)
                                         .font(.title3.bold())
                                         .foregroundStyle(AppTheme.text)
                                         .multilineTextAlignment(.center)
                                         .textFieldStyle(.plain)
+                                        .padding(.horizontal, 12)
+                                        .padding(.vertical, 8)
+                                        .background(AppTheme.card, in: RoundedRectangle(cornerRadius: 10))
+                                        .overlay(
+                                            RoundedRectangle(cornerRadius: 10)
+                                                .stroke(AppTheme.gold, lineWidth: 1.5)
+                                        )
                                     Button {
                                         playerName = draftName.isEmpty ? playerName : draftName
                                         editingName = false
                                     } label: {
                                         Image(systemName: "checkmark.circle.fill")
+                                            .font(.title3)
                                             .foregroundStyle(AppTheme.gold)
                                     }
                                 }
-                                .padding(.horizontal, 40)
+                                .padding(.horizontal, 32)
                             } else {
                                 Button {
                                     draftName = playerName
@@ -117,7 +143,7 @@ struct ProfileView: View {
                                     }
                                 }
                             }
-                            Text("Golfer")
+                            Text(golferTitle)
                                 .font(.subheadline)
                                 .foregroundStyle(AppTheme.textSec)
                         }
@@ -223,8 +249,8 @@ struct ProfileView: View {
             .padding(.horizontal, 18)
             .padding(.vertical, 14)
             Divider().background(AppTheme.cardAlt).padding(.leading, 62)
-            settingsRow(icon: "bag.fill", color: AppTheme.gold, title: "Meine Schläger") {
-                AnyView(ClubBagView())
+            settingsRow(icon: "bag.fill", color: AppTheme.gold, title: "Schläger-Bags") {
+                AnyView(BagManagerView())
             }
             Divider().background(AppTheme.cardAlt).padding(.leading, 62)
             settingsRow(icon: "mappin.and.ellipse", color: AppTheme.gold, title: "Golfplätze verwalten") {
@@ -233,6 +259,10 @@ struct ProfileView: View {
             Divider().background(AppTheme.cardAlt).padding(.leading, 62)
             settingsRow(icon: "figure.golf", color: Color(red: 0.3, green: 0.85, blue: 0.5), title: "Minigolf") {
                 AnyView(MinigolfView())
+            }
+            Divider().background(AppTheme.cardAlt).padding(.leading, 62)
+            settingsRow(icon: "bell.badge.fill", color: Color(red: 1.0, green: 0.75, blue: 0.2), title: "Benachrichtigungen") {
+                AnyView(NotificationSettingsView())
             }
             Divider().background(AppTheme.cardAlt).padding(.leading, 62)
             settingsRow(icon: "key.fill", color: Color(red: 0.6, green: 0.5, blue: 1.0), title: "API-Einstellungen") {

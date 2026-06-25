@@ -10,6 +10,8 @@ final class HoleScore {
     var greenInRegulation: Bool
     var pinLatitude: Double?
     var pinLongitude: Double?
+    /// Name des verwendeten Schlägers für dieses Loch (optional, vom Nutzer wählbar)
+    var clubName: String? = nil
     var round: Round?
 
     @Relationship(deleteRule: .cascade, inverse: \Shot.holeScore)

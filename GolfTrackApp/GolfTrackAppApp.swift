@@ -16,10 +16,16 @@ struct GolfTrackAppApp: App {
 
     init() {
         configureNavigationBarAppearance()
-        configureTabBarAppearance()
+        // Ab iOS 26 rendert die schwebende Liquid-Glass-Tab-Bar mit einer
+        // opaken UITabBarAppearance beim Kaltstart fehlerhaft (riesige,
+        // abgeschnittene Labels) — dort die System-Tab-Bar verwenden.
+        if #unavailable(iOS 26.0) {
+            configureTabBarAppearance()
+        }
         // Game Center Authentifizierung beim Start
         Task { @MainActor in
             GameCenterManager.shared.authenticate()
+            await NotificationManager.shared.requestAuthorization()
         }
     }
 
@@ -29,6 +35,6 @@ struct GolfTrackAppApp: App {
                 .environmentObject(subscriptionManager)
                 .preferredColorScheme(.dark)
         }
-        .modelContainer(for: [Course.self, Round.self, HoleScore.self, Shot.self, PlayerHoleScore.self, QuizResult.self, GolfClub.self])
+        .modelContainer(for: [Course.self, Round.self, HoleScore.self, Shot.self, PlayerHoleScore.self, QuizResult.self, GolfClub.self, GolfBag.self])
     }
 }

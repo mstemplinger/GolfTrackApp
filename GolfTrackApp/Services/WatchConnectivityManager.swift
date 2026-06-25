@@ -23,6 +23,17 @@ enum WCAction {
     static let requestCourseList = "requestCourseList" // Watch → iPhone: Plätze anfordern
     static let watchStartRound  = "watchStartRound"  // Watch → iPhone: Runde starten
     static let watchShot        = "watchShot"         // Watch → iPhone: Schlag aufzeichnen
+    static let minigolfSync     = "minigolfSync"      // beidseitig: kompletter Minigolf-Spielstand
+}
+
+// MARK: - Minigolf-Sync-Zustand (kompletter Spielstand, beidseitig)
+
+struct MinigolfSyncState: Equatable {
+    var active: Bool
+    var players: [String]
+    var holes: Int
+    var scores: [[Int]]
+    var currentHole: Int
 }
 
 // MARK: - Manager (iPhone-Seite)
@@ -32,6 +43,9 @@ final class WatchConnectivityManager: NSObject, ObservableObject {
     static let shared = WatchConnectivityManager()
 
     @Published var isWatchReachable = false
+
+    /// Letzter von der Watch empfangener Minigolf-Spielstand (für Live-Sync)
+    @Published var minigolfState: MinigolfSyncState?
 
     // Callbacks
     var onWatchStrokesUpdate: ((_ strokes: [Int], _ currentHole: Int) -> Void)?
@@ -96,6 +110,31 @@ final class WatchConnectivityManager: NSObject, ObservableObject {
             WCMessageKey.courses: courseData
         ]
         sendToWatch(payload)
+    }
+
+    // MARK: - Minigolf-Spielstand an Watch senden (iPhone → Watch)
+
+    func sendMinigolfState(_ state: MinigolfSyncState) {
+        let payload: [String: Any] = [
+            WCMessageKey.action: WCAction.minigolfSync,
+            "mgActive":      state.active,
+            "mgPlayers":     state.players,
+            "mgHoles":       state.holes,
+            "mgScores":      state.scores,
+            "mgCurrentHole": state.currentHole
+        ]
+        sendToWatch(payload)
+    }
+
+    fileprivate nonisolated static func parseMinigolf(_ payload: [String: Any]) -> MinigolfSyncState? {
+        guard let active  = payload["mgActive"]      as? Bool,
+              let players = payload["mgPlayers"]     as? [String],
+              let holes   = payload["mgHoles"]       as? Int,
+              let scores  = payload["mgScores"]      as? [[Int]],
+              let hole    = payload["mgCurrentHole"] as? Int
+        else { return nil }
+        return MinigolfSyncState(active: active, players: players,
+                                 holes: holes, scores: scores, currentHole: hole)
     }
 
     // MARK: - Senden (Message wenn erreichbar, sonst ApplicationContext)
@@ -173,8 +212,23 @@ extension WatchConnectivityManager: WCSessionDelegate {
                 self.onWatchShotReceived?(holeIndex, fromLat, fromLon, toLat, toLon, distance)
             }
 
+        case WCAction.minigolfSync:
+            if let state = Self.parseMinigolf(message) {
+                Task { @MainActor in self.minigolfState = state }
+            }
+
         default:
             break
         }
+    }
+
+    // ApplicationContext (App war im Hintergrund) – aktuell nur für Minigolf relevant
+    nonisolated func session(_ session: WCSession,
+                             didReceiveApplicationContext context: [String: Any]) {
+        guard let action = context[WCMessageKey.action] as? String,
+              action == WCAction.minigolfSync,
+              let state = Self.parseMinigolf(context)
+        else { return }
+        Task { @MainActor in self.minigolfState = state }
     }
 }

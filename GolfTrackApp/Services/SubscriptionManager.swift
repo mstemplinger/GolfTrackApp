@@ -14,20 +14,31 @@ enum StoreError: LocalizedError {
 @MainActor
 final class SubscriptionManager: ObservableObject {
 
-    static let productID = "Trainingsvideos_abo"
+    // Product IDs
+    static let trainingProductID = "Trainingsvideos_abo"
+    static let caddyProductID    = "Caddy_abo"
+    static let proProductID      = "GolfTrackPro_abo"
 
-    @Published var isSubscribed  = false
-    @Published var product: Product?
+    @Published var isTrainingSubscribed = false
+    @Published var isCaddySubscribed    = false
+
+    @Published var trainingProduct: Product?
+    @Published var caddyProduct: Product?
+    @Published var proProduct: Product?
+
     @Published var isPurchasing  = false
     @Published var isRestoring   = false
     @Published var errorMessage: String?
+
+    // Legacy computed for TrainingView compatibility
+    var isSubscribed: Bool { isTrainingSubscribed }
 
     private var transactionListener: Task<Void, Never>?
 
     init() {
         transactionListener = listenForTransactions()
         Task {
-            await loadProduct()
+            await loadProducts()
             await updateSubscriptionStatus()
         }
     }
@@ -36,9 +47,22 @@ final class SubscriptionManager: ObservableObject {
         transactionListener?.cancel()
     }
 
+    // MARK: - Subscription Period
+
+    func subscriptionPeriodLabel(for product: Product?) -> String {
+        guard let period = product?.subscription?.subscriptionPeriod else { return "Monat" }
+        switch period.unit {
+        case .day:   return period.value == 1 ? "Tag"   : "\(period.value) Tage"
+        case .week:  return period.value == 1 ? "Woche" : "\(period.value) Wochen"
+        case .month: return period.value == 1 ? "Monat" : "\(period.value) Monate"
+        case .year:  return period.value == 1 ? "Jahr"  : "\(period.value) Jahre"
+        @unknown default: return "Periode"
+        }
+    }
+
     // MARK: - Introductory Offer
 
-    var freeTrialLabel: String? {
+    func freeTrialLabel(for product: Product?) -> String? {
         guard let offer = product?.subscription?.introductoryOffer,
               offer.paymentMode == .freeTrial else { return nil }
         let p = offer.period
@@ -51,23 +75,36 @@ final class SubscriptionManager: ObservableObject {
         }
     }
 
+    // Legacy helpers used by TrainingPaywallView
+    var freeTrialLabel: String? { freeTrialLabel(for: trainingProduct) }
     var hasFreeTrial: Bool { freeTrialLabel != nil }
 
     // MARK: - Load
 
-    func loadProduct() async {
+    func loadProducts() async {
         do {
-            let products = try await Product.products(for: [Self.productID])
-            product = products.first
+            let ids: [String] = [Self.trainingProductID, Self.caddyProductID, Self.proProductID]
+            let products = try await Product.products(for: ids)
+            for p in products {
+                switch p.id {
+                case Self.trainingProductID: trainingProduct = p
+                case Self.caddyProductID:    caddyProduct    = p
+                case Self.proProductID:      proProduct      = p
+                default: break
+                }
+            }
         } catch {
             errorMessage = "Abonnement konnte nicht geladen werden."
         }
     }
 
+    // Legacy used by TrainingPaywallView
+    var product: Product? { trainingProduct }
+    func loadProduct() async { await loadProducts() }
+
     // MARK: - Purchase
 
-    func purchase() async {
-        guard let product else { return }
+    func purchase(_ product: Product) async {
         isPurchasing = true
         errorMessage = nil
         defer { isPurchasing = false }
@@ -77,11 +114,25 @@ final class SubscriptionManager: ObservableObject {
             switch result {
             case .success(let verification):
                 let transaction = try checkVerified(verification)
-                await updateSubscriptionStatus()
+                // State sofort setzen — updateSubscriptionStatus wird NICHT direkt
+                // aufgerufen, da StoreKit die Entitlements erst verzögert aktualisiert
+                // und sonst den gerade gesetzten State wieder überschreiben würde.
+                // Der Transaction-Listener übernimmt die spätere Synchronisierung.
+                switch product.id {
+                case Self.trainingProductID:
+                    isTrainingSubscribed = true
+                    isCaddySubscribed    = false
+                case Self.caddyProductID:
+                    isCaddySubscribed    = true
+                    isTrainingSubscribed = false
+                case Self.proProductID:
+                    isTrainingSubscribed = true
+                    isCaddySubscribed    = true
+                default:
+                    break
+                }
                 await transaction.finish()
-            case .pending:
-                break
-            case .userCancelled:
+            case .pending, .userCancelled:
                 break
             @unknown default:
                 break
@@ -89,6 +140,12 @@ final class SubscriptionManager: ObservableObject {
         } catch {
             errorMessage = "Kauf fehlgeschlagen. Bitte versuche es erneut."
         }
+    }
+
+    // Legacy used by TrainingPaywallView
+    func purchase() async {
+        guard let p = trainingProduct else { return }
+        await purchase(p)
     }
 
     // MARK: - Restore
@@ -108,15 +165,19 @@ final class SubscriptionManager: ObservableObject {
     // MARK: - Status
 
     func updateSubscriptionStatus() async {
-        var found = false
+        var hasTraining = false
+        var hasCaddy    = false
         for await result in Transaction.currentEntitlements {
-            guard case .verified(let tx) = result else { continue }
-            if tx.productID == Self.productID && tx.revocationDate == nil {
-                found = true
-                break
+            guard case .verified(let tx) = result, tx.revocationDate == nil else { continue }
+            switch tx.productID {
+            case Self.trainingProductID: hasTraining = true
+            case Self.caddyProductID:    hasCaddy    = true
+            case Self.proProductID:      hasTraining = true; hasCaddy = true
+            default: break
             }
         }
-        isSubscribed = found
+        isTrainingSubscribed = hasTraining
+        isCaddySubscribed    = hasCaddy
     }
 
     // MARK: - Helpers

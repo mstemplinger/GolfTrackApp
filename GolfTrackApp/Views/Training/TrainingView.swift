@@ -52,25 +52,54 @@ struct TrainingLesson: Identifiable {
     let category: TrainingCategory
     let durationLabel: String
     let audioFile: String?
+    /// Konkrete Übungsaufgabe, die der Nutzer nach der Lektion umsetzen kann
+    let practiceTask: String
+    /// Erhöht sich mit jeder neuen Batch – steuert das "Neu"-Badge
+    let batchVersion: Int
 
     var isAvailable: Bool { audioFile != nil }
 }
 
 // MARK: - Content
 
-private let allLessons: [TrainingLesson] = [
-    TrainingLesson(id: "01", title: "Der richtige Griff",       subtitle: "Fundament jedes Schlags",               category: .grundlagen, durationLabel: "2 Min.",   audioFile: "01_grundlagen_griff"),
-    TrainingLesson(id: "02", title: "Stand und Balance",         subtitle: "Stabilität für mehr Konsistenz",        category: .grundlagen, durationLabel: "2 Min.",   audioFile: "02_grundlagen_stand"),
-    TrainingLesson(id: "03", title: "Driver-Strategie",          subtitle: "Warum fast immer der Driver besser ist", category: .drive,     durationLabel: "2,5 Min.", audioFile: "03_drive_strategie"),
-    TrainingLesson(id: "04", title: "Gewichtsverlagerung",       subtitle: "Hüftrotation und Schwungkraft",         category: .technik,    durationLabel: "2,5 Min.", audioFile: "04_technik_schwung"),
-    TrainingLesson(id: "05", title: "Weniger Lob-Wedge",         subtitle: "Die häufigste Kurzspiel-Falle",         category: .kurzspiel,  durationLabel: "2,5 Min.", audioFile: "05_kurzspiel_chip"),
-    TrainingLesson(id: "06", title: "Drei-Putts vermeiden",      subtitle: "Distanzkontrolle auf dem Grün",         category: .putten,     durationLabel: "2,5 Min.", audioFile: "06_putten_distanzkontrolle"),
-    TrainingLesson(id: "07", title: "Pre-Shot Routine",          subtitle: "Dein Anker auf dem Platz",              category: .mental,     durationLabel: "2 Min.",   audioFile: "07_mental_pre_shot"),
-    TrainingLesson(id: "08", title: "Fehler loslassen",          subtitle: "Ein Schlag nach dem anderen",           category: .mental,     durationLabel: "2 Min.",   audioFile: "08_mental_fehler"),
-    TrainingLesson(id: "09", title: "Course Management",         subtitle: "Smarter spielen, weniger Fehler",       category: .strategie,  durationLabel: "2,5 Min.", audioFile: "09_strategie_course_management"),
-    TrainingLesson(id: "10", title: "Schlägerwahl beim Anspiel", subtitle: "Immer einen Schläger mehr nehmen",      category: .anspiel,    durationLabel: "2 Min.",   audioFile: "10_anspiel_schlaegewahl"),
-    TrainingLesson(id: "11", title: "Bunker-Spiel",              subtitle: "Raus, und zwar sicher",                 category: .kurzspiel,  durationLabel: "2 Min.",   audioFile: nil),
-    TrainingLesson(id: "12", title: "Den Ball sauber treffen",   subtitle: "Trefferfläche und Sweet Spot",          category: .technik,    durationLabel: "2 Min.",   audioFile: nil),
+let allLessons: [TrainingLesson] = [
+    // MARK: Batch 1
+    TrainingLesson(id: "01", title: "Der richtige Griff",       subtitle: "Fundament jedes Schlags",                category: .grundlagen, durationLabel: "2 Min.",   audioFile: "01_grundlagen_griff",
+        practiceTask: "Nimm deinen Schläger und überprüfe täglich 5 Minuten lang deinen Griff – erst ohne Ball vor dem Spiegel, dann mit einigen Chips auf der Range.", batchVersion: 1),
+    TrainingLesson(id: "02", title: "Stand und Balance",         subtitle: "Stabilität für mehr Konsistenz",         category: .grundlagen, durationLabel: "2 Min.",   audioFile: "02_grundlagen_stand",
+        practiceTask: "Geh auf die Driving Range und mache 20 langsame Schwünge, bei denen du nach dem Finish mindestens 3 Sekunden im Balance stehst – erst mit einem kurzen Eisen, dann mit dem Driver.", batchVersion: 1),
+    TrainingLesson(id: "03", title: "Driver-Strategie",          subtitle: "Warum fast immer der Driver besser ist", category: .drive,      durationLabel: "2,5 Min.", audioFile: "03_drive_strategie",
+        practiceTask: "Wähle auf der Driving Range eine Ziellinie und schlage 15 Bälle gezielt darauf. Zähle, wie viele du links/rechts verfehlst – das gibt dir ein ehrliches Bild deiner Streuung.", batchVersion: 1),
+    TrainingLesson(id: "04", title: "Gewichtsverlagerung",       subtitle: "Hüftrotation und Schwungkraft",          category: .technik,    durationLabel: "2,5 Min.", audioFile: "04_technik_schwung",
+        practiceTask: "Übe auf der Range die 'Step-Drill': Stelle deine Füße zusammen, mache einen Schritt Richtung Ziel im Durchschwung und spüre, wie das Gewicht von rechts nach links wandert.", batchVersion: 1),
+    TrainingLesson(id: "05", title: "Weniger Lob-Wedge",         subtitle: "Die häufigste Kurzspiel-Falle",          category: .kurzspiel,  durationLabel: "2,5 Min.", audioFile: "05_kurzspiel_chip",
+        practiceTask: "Geh auf den Übungsbereich und chipse 20 Bälle auf ein nahes Ziel – aber nur mit einem 7er- oder 8er-Eisen statt dem Wedge. Beobachte, wie viel präziser der Rollout wird.", batchVersion: 1),
+    TrainingLesson(id: "06", title: "Drei-Putts vermeiden",      subtitle: "Distanzkontrolle auf dem Grün",          category: .putten,     durationLabel: "2,5 Min.", audioFile: "06_putten_distanzkontrolle",
+        practiceTask: "Geh auf das Übungsgreen und putte je 5 Bälle aus 5, 8 und 12 Metern – Ziel ist nicht einzulochen, sondern den Ball innerhalb eines Handtuchs um das Loch zu stoppen.", batchVersion: 1),
+    TrainingLesson(id: "07", title: "Pre-Shot Routine",          subtitle: "Dein Anker auf dem Platz",               category: .mental,     durationLabel: "2 Min.",   audioFile: "07_mental_pre_shot",
+        practiceTask: "Entwickle eine 3-Schritt-Routine (Visualisieren → Anspielen → Schlagen) und wende sie auf der Range bei jedem einzelnen Ball konsequent an, egal wie kurz der Schlag ist.", batchVersion: 1),
+    TrainingLesson(id: "08", title: "Fehler loslassen",          subtitle: "Ein Schlag nach dem anderen",            category: .mental,     durationLabel: "2 Min.",   audioFile: "08_mental_fehler",
+        practiceTask: "Lege dir auf der Range eine 'Reset-Geste' fest (z. B. einmal tief durchatmen und den Schläger ablegen). Wende sie nach jedem Fehlschlag bewusst an, bevor du den nächsten Ball nimmst.", batchVersion: 1),
+    TrainingLesson(id: "09", title: "Course Management",         subtitle: "Smarter spielen, weniger Fehler",        category: .strategie,  durationLabel: "2,5 Min.", audioFile: "09_strategie_course_management",
+        practiceTask: "Plane beim nächsten Platzrunde jeden Abschlag schriftlich vor dem Schlag: Welcher Schläger, welche Landezone, warum? Vergleiche danach Plan vs. Ergebnis loch für loch.", batchVersion: 1),
+    TrainingLesson(id: "10", title: "Schlägerwahl beim Anspiel", subtitle: "Immer einen Schläger mehr nehmen",       category: .anspiel,    durationLabel: "2 Min.",   audioFile: "10_anspiel_schlaegewahl",
+        practiceTask: "Geh auf die Driving Range und miss deine tatsächlichen Distanzen mit 5 verschiedenen Eisen (je 10 Bälle pro Schläger). Notiere die Ergebnisse in den App-Einstellungen unter Schlägerbag.", batchVersion: 1),
+    TrainingLesson(id: "11", title: "Bunker-Spiel",              subtitle: "Raus, und zwar sicher",                  category: .kurzspiel,  durationLabel: "2 Min.",   audioFile: "11_kurzspiel_bunker",
+        practiceTask: "Geh in den Übungsbunker und schlage 20 Bälle mit deinem Sand-Wedge – Fokus ausschließlich auf 'immer raus', nicht auf die Nähe zum Loch. Erst wenn 90 % rausgehen, zielst du genauer.", batchVersion: 1),
+    TrainingLesson(id: "12", title: "Den Ball sauber treffen",   subtitle: "Trefferfläche und Sweet Spot",           category: .technik,    durationLabel: "2 Min.",   audioFile: "12_technik_trefferpunkt",
+        practiceTask: "Klebe auf deinem Schlägerblatt ein Stück Klebeband (oder nutze Impact-Tape) und schlage 10 Bälle. Die Abdrücke zeigen dir exakt, wo du den Ball triffst – arbeite daran, den Sweet Spot zu zentrieren.", batchVersion: 1),
+
+    // MARK: Batch 2
+    TrainingLesson(id: "13", title: "Fade und Draw spielen",     subtitle: "Schlagformen gezielt einsetzen",         category: .technik,    durationLabel: "2,5 Min.", audioFile: "13_technik_fade_draw",
+        practiceTask: "Geh auf die Range und versuche bewusst 10 Bälle mit einem leichten Draw (Griffstärke erhöhen, Stance leicht geschlossen) und 10 mit einem Fade (Griffstärke verringern, Stance leicht offen). Vergleiche die Landepunkte.", batchVersion: 2),
+    TrainingLesson(id: "14", title: "Spiel aus dem Rough",       subtitle: "Wenn der Plan nicht aufgeht",           category: .strategie,  durationLabel: "2 Min.",   audioFile: "14_strategie_rough",
+        practiceTask: "Übe gezielt aus dem Rough auf der Range: Suche hohe Gräser am Rand, lege Bälle hinein und schlage mit einem kurzen Eisen (8 oder 9). Fokus liegt auf sauberem Kontakt – nicht auf Distanz.", batchVersion: 2),
+    TrainingLesson(id: "15", title: "Aufwärm-Routine",           subtitle: "Die ersten 10 Minuten entscheiden",     category: .grundlagen, durationLabel: "2 Min.",   audioFile: "15_grundlagen_aufwaermen",
+        practiceTask: "Führe vor deiner nächsten Runde die 4-Stufen-Aufwärmroutine durch: 3 Min. Körpermobilisation, 5 Bälle Chip, 5 Bälle Anspiel, 5 Bälle Driver. Stoppe die Zeit – das Ziel sind unter 15 Minuten.", batchVersion: 2),
+    TrainingLesson(id: "16", title: "Tempo und Rhythmus",        subtitle: "Der unsichtbare Schlüssel zum Swing",   category: .technik,    durationLabel: "2 Min.",   audioFile: "16_technik_tempo_rhythmus",
+        practiceTask: "Übe den '1-2-3-Rhythmus': Zähle beim Rückschwung '1-2', bei der Übergangsphase '3' und beim Durchschwung '4'. Übe 20 Bälle mit lautem Zählen – das Tempo soll gleichmäßig sein, nicht schnell.", batchVersion: 2),
+    TrainingLesson(id: "17", title: "Das Grün lesen",            subtitle: "Gefälle und Grain richtig einschätzen", category: .putten,     durationLabel: "2,5 Min.", audioFile: "17_putten_gruen_lesen",
+        practiceTask: "Geh auf das Übungsgreen und analysiere 5 Putts aus je 4 Metern aus verschiedenen Richtungen (bergauf, bergab, Sidehill links, rechts). Schätze die Brechwirkung vor dem Schlag und vergleiche mit dem Ergebnis.", batchVersion: 2),
 ]
 
 private let availableLessons = allLessons.filter(\.isAvailable)
@@ -97,6 +126,16 @@ final class TrainingPlayerModel: ObservableObject {
     private var player: AVAudioPlayer?
     private var timer: Timer?
 
+    private var remoteCommandsSetup = false
+
+    func onAppear() {
+        // Ensure remote commands are only set up once and on main actor
+        if !remoteCommandsSetup {
+            setupRemoteCommands()
+            remoteCommandsSetup = true
+        }
+    }
+
     var progress: Double { duration > 0 ? currentTime / duration : 0 }
 
     var currentIndex: Int? {
@@ -110,9 +149,7 @@ final class TrainingPlayerModel: ObservableObject {
         lesson.id == "01" || isSubscribed
     }
 
-    init() {
-        setupRemoteCommands()
-    }
+    init() {}
 
     // MARK: Playback
 
@@ -120,23 +157,29 @@ final class TrainingPlayerModel: ObservableObject {
         guard let file = lesson.audioFile,
               let url = Bundle.main.url(forResource: file, withExtension: "mp3") else { return }
         stop()
+        player = nil
         do {
             try AVAudioSession.sharedInstance().setCategory(.playback, mode: .default, options: [])
             try AVAudioSession.sharedInstance().setActive(true)
-            player = try AVAudioPlayer(contentsOf: url)
-            player?.enableRate = true
-            player?.rate = speed
-            player?.prepareToPlay()
-            duration = player?.duration ?? 1
+            let newPlayer = try AVAudioPlayer(contentsOf: url)
+            newPlayer.enableRate = true
+            newPlayer.rate = speed
+            newPlayer.prepareToPlay()
+            player = newPlayer
+            duration = newPlayer.duration
             currentTime = 0
             currentLesson = lesson
             updateNowPlaying(playing: false)
-        } catch {}
+        } catch {
+            player = nil
+            currentLesson = nil
+        }
     }
 
     func play() {
-        player?.rate = speed
-        player?.play()
+        guard let player else { return }
+        player.rate = speed
+        player.play()
         isPlaying = true
         startTimer()
         updateNowPlaying(playing: true)
@@ -248,6 +291,8 @@ final class TrainingPlayerModel: ObservableObject {
     // MARK: Remote Commands
 
     private func setupRemoteCommands() {
+        if remoteCommandsSetup { return }
+
         let center = MPRemoteCommandCenter.shared()
 
         center.playCommand.addTarget { [weak self] _ in
@@ -308,14 +353,13 @@ final class TrainingPlayerModel: ObservableObject {
     private func startTimer() {
         stopTimer()
         timer = Timer.scheduledTimer(withTimeInterval: 0.5, repeats: true) { [weak self] _ in
+            MainActor.assumeIsolated {
             guard let self, let p = self.player else { return }
-            Task { @MainActor in
                 self.currentTime = p.currentTime
                 self.updateNowPlayingProgress()
                 if !p.isPlaying && self.isPlaying {
                     self.isPlaying = false
                     self.stopTimer()
-                    // Autoplay nur wenn nächste Lektion zugänglich ist
                     let nextIdx = (self.currentIndex ?? -1) + 1
                     let nextAccessible = nextIdx < availableLessons.count
                         && self.lessonIsAccessible(availableLessons[nextIdx])
@@ -328,7 +372,7 @@ final class TrainingPlayerModel: ObservableObject {
                             self.onNeedsSubscription?()
                         }
                     }
-                }
+            }
             }
         }
     }
@@ -337,9 +381,16 @@ final class TrainingPlayerModel: ObservableObject {
         timer?.invalidate()
         timer = nil
     }
+
+    deinit {
+        timer?.invalidate()
+        try? AVAudioSession.sharedInstance().setActive(false, options: [])
+    }
 }
 
 // MARK: - Main View
+
+private let currentBatchVersion = 2
 
 struct TrainingView: View {
     @EnvironmentObject private var subscriptionManager: SubscriptionManager
@@ -347,6 +398,10 @@ struct TrainingView: View {
     @State private var selectedCategory: TrainingCategory = .alle
     @State private var showPlayer   = false
     @State private var showPaywall  = false
+    /// Speichert, welche Batch der Nutzer zuletzt gesehen hat – "Neu"-Badge verschwindet danach
+    @AppStorage("training_seenBatchVersion") private var seenBatchVersion: Int = 0
+    /// Steuert, ob "Neu"-Badges in dieser Session sichtbar sind
+    @State private var showNewBadges = false
 
     private var filteredLessons: [TrainingLesson] {
         selectedCategory == .alle ? allLessons : allLessons.filter { $0.category == selectedCategory }
@@ -376,12 +431,23 @@ struct TrainingView: View {
         }
         .animation(.spring(response: 0.35), value: playerModel.currentLesson?.id)
         .onAppear {
+            playerModel.onAppear()
             playerModel.isSubscribed = subscriptionManager.isSubscribed
             playerModel.onNeedsSubscription = { showPaywall = true }
+            // "Neu"-Badge beim ersten Öffnen dieser Batch anzeigen, dann als gesehen markieren
+            showNewBadges = seenBatchVersion < currentBatchVersion
+            seenBatchVersion = currentBatchVersion
         }
         .onChange(of: subscriptionManager.isSubscribed) { _, subscribed in
             playerModel.isSubscribed = subscribed
             if !subscribed { playerModel.stop() }
+        }
+        // Empfehlung aus den Tipps → passende Kategorie vorauswählen
+        .onReceive(NotificationCenter.default.publisher(for: .openTraining)) { note in
+            if let raw = note.userInfo?["category"] as? String,
+               let cat = TrainingCategory(rawValue: raw) {
+                selectedCategory = cat
+            }
         }
     }
 
@@ -456,12 +522,50 @@ struct TrainingView: View {
                 ForEach(filteredLessons) { lesson in
                     lessonCard(lesson)
                 }
+                updateHint
                 Spacer(minLength: playerModel.currentLesson != nil ? 90 : 30)
             }
             .padding(.horizontal)
             .padding(.top, 12)
         }
     }
+
+    private var updateHint: some View {
+        Button {
+            if let url = URL(string: "itms-apps://apps.apple.com/app/id6767996957") {
+                UIApplication.shared.open(url)
+            }
+        } label: {
+            HStack(spacing: 10) {
+                Image(systemName: "arrow.down.circle.fill")
+                    .font(.system(size: 18))
+                    .foregroundStyle(AppTheme.gold.opacity(0.7))
+                VStack(alignment: .leading, spacing: 3) {
+                    Text("Regelmäßig neue Audiobooks")
+                        .font(.caption.bold())
+                        .foregroundStyle(AppTheme.textSec)
+                    Text("Schau im App Store nach Updates – mit jedem Update kommen neue Lektionen dazu, die im Abo inklusive sind.")
+                        .font(.caption2)
+                        .foregroundStyle(AppTheme.textTer)
+                        .fixedSize(horizontal: false, vertical: true)
+                }
+                Spacer()
+                Image(systemName: "chevron.right")
+                    .font(.caption)
+                    .foregroundStyle(AppTheme.textTer)
+            }
+            .padding(14)
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .background(AppTheme.card, in: RoundedRectangle(cornerRadius: 14))
+            .overlay(RoundedRectangle(cornerRadius: 14).stroke(AppTheme.gold.opacity(0.15), lineWidth: 1))
+        }
+        .buttonStyle(.plain)
+        .padding(.top, 4)
+    }
+
+    private var isNewLesson: (TrainingLesson) -> Bool {{ lesson in
+        showNewBadges && lesson.batchVersion == currentBatchVersion
+    }}
 
     private func lessonCard(_ lesson: TrainingLesson) -> some View {
         // Zugriffslogik:
@@ -500,9 +604,19 @@ struct TrainingView: View {
 
                 // Text
                 VStack(alignment: .leading, spacing: 3) {
-                    Text(lesson.title)
-                        .font(.subheadline.bold())
-                        .foregroundStyle(hasAudio ? AppTheme.text : AppTheme.textSec)
+                    HStack(spacing: 6) {
+                        Text(lesson.title)
+                            .font(.subheadline.bold())
+                            .foregroundStyle(hasAudio ? AppTheme.text : AppTheme.textSec)
+                        if isNewLesson(lesson) {
+                            Text("NEU")
+                                .font(.system(size: 9, weight: .bold))
+                                .foregroundStyle(.white)
+                                .padding(.horizontal, 5)
+                                .padding(.vertical, 2)
+                                .background(Color(red: 0.9, green: 0.25, blue: 0.25), in: Capsule())
+                        }
+                    }
                     Text(lesson.subtitle)
                         .font(.caption)
                         .foregroundStyle(AppTheme.textSec)
@@ -851,22 +965,42 @@ struct TrainingPlayerSheet: View {
     }
 
     private func descriptionCard(_ lesson: TrainingLesson) -> some View {
-        VStack(alignment: .leading, spacing: 10) {
-            Label("Über diese Einheit", systemImage: "text.alignleft")
-                .font(.caption.bold())
-                .foregroundStyle(AppTheme.textSec)
+        VStack(alignment: .leading, spacing: 14) {
+            // Über diese Einheit
+            VStack(alignment: .leading, spacing: 8) {
+                Label("Über diese Einheit", systemImage: "text.alignleft")
+                    .font(.caption.bold())
+                    .foregroundStyle(AppTheme.textSec)
 
-            Text(lesson.subtitle)
-                .font(.subheadline)
-                .foregroundStyle(AppTheme.text)
-                .fixedSize(horizontal: false, vertical: true)
+                Text(lesson.subtitle)
+                    .font(.subheadline)
+                    .foregroundStyle(AppTheme.text)
+                    .fixedSize(horizontal: false, vertical: true)
 
-            HStack(spacing: 12) {
-                Label(lesson.durationLabel, systemImage: "clock")
-                Label(lesson.category.rawValue, systemImage: lesson.category.icon)
+                HStack(spacing: 12) {
+                    Label(lesson.durationLabel, systemImage: "clock")
+                    Label(lesson.category.rawValue, systemImage: lesson.category.icon)
+                }
+                .font(.caption)
+                .foregroundStyle(AppTheme.textTer)
             }
-            .font(.caption)
-            .foregroundStyle(AppTheme.textTer)
+
+            Divider()
+
+            // Deine Übungsaufgabe
+            VStack(alignment: .leading, spacing: 8) {
+                Label("Deine Übungsaufgabe", systemImage: "checkmark.circle")
+                    .font(.caption.bold())
+                    .foregroundStyle(lesson.category.color)
+
+                Text(lesson.practiceTask)
+                    .font(.subheadline)
+                    .foregroundStyle(AppTheme.text)
+                    .fixedSize(horizontal: false, vertical: true)
+            }
+            .padding(12)
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .background(lesson.category.color.opacity(0.08), in: RoundedRectangle(cornerRadius: 10))
         }
         .frame(maxWidth: .infinity, alignment: .leading)
         .padding(16)

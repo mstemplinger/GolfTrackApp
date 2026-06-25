@@ -25,6 +25,7 @@ struct AddCourseSheetView: View {
 
     // Manual creation
     @State private var showManualForm = false
+    @State private var showScorecardScanner = false
 
     // Location for distance sorting
     @State private var locationManager = CLLocationManager()
@@ -128,6 +129,12 @@ struct AddCourseSheetView: View {
             .sheet(isPresented: $showManualForm) {
                 AddCourseView()
             }
+            .sheet(isPresented: $showScorecardScanner) {
+                ScorecardScannerView { course in
+                    context.insert(course)
+                    dismiss()
+                }
+            }
             .task {
                 locationManager.requestWhenInUseAuthorization()
                 try? await Task.sleep(nanoseconds: 800_000_000)
@@ -212,15 +219,21 @@ struct AddCourseSheetView: View {
 
     private var manualSection: some View {
         Section {
-            Button { showManualForm = true } label: {
-                Label("Eigenen Platz manuell erstellen", systemImage: "plus.circle.fill")
+            Button { showScorecardScanner = true } label: {
+                Label("Scorecard scannen", systemImage: "camera.viewfinder")
                     .foregroundStyle(AppTheme.gold)
             }
             .listRowBackground(AppTheme.card)
+
+            Button { showManualForm = true } label: {
+                Label("Eigenen Platz manuell erstellen", systemImage: "plus.circle.fill")
+                    .foregroundStyle(AppTheme.textSec)
+            }
+            .listRowBackground(AppTheme.card)
+        } header: {
+            Text("Platz nicht dabei?").foregroundStyle(AppTheme.textSec)
         } footer: {
-            Text(query.isEmpty
-                 ? "Platz nicht dabei? Lege ihn manuell an."
-                 : "Platz nicht gefunden? Lege ihn manuell an.")
+            Text("Halte die gedruckte Scorecard vor die Kamera – GolfTrack liest Par, HCP und Distanzen automatisch aus.")
                 .font(.caption)
         }
     }

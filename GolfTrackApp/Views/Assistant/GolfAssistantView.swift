@@ -74,81 +74,91 @@ struct GolfAssistantView: View {
     // MARK: - Orb
 
     private var orbArea: some View {
-        ZStack {
-            ForEach(0..<3, id: \.self) { i in
-                orbRing(index: i)
-            }
-            orbCore
+        TimelineView(.animation) { timeline in
+            let t = timeline.date.timeIntervalSinceReferenceDate
+            orbView(time: t)
         }
-        .frame(width: 200, height: 200)
-        .padding(.bottom, 16)
+        .frame(width: 220, height: 220)
+        .padding(.bottom, 8)
     }
 
-    private func orbRing(index: Int) -> some View {
-        let scale: CGFloat = service.isActive ? 1 + CGFloat(index) * 0.25 : 1
-        let opacity: Double = service.isActive ? 0.15 - Double(index) * 0.04 : 0
-        return Circle()
-            .fill(AppTheme.gold.opacity(opacity))
-            .scaleEffect(scale)
-            .animation(
-                .easeInOut(duration: 1.2 + Double(index) * 0.3)
-                    .repeatForever(autoreverses: true)
-                    .delay(Double(index) * 0.2),
-                value: service.isActive
-            )
-    }
+    private func orbView(time t: Double) -> some View {
+        let pulse = service.isActive
+            ? 1.0 + 0.06 * sin(t * (service.mode == .speaking ? 6 : 2.5))
+            : 1.0
+        let glowRadius: CGFloat = service.isActive ? (service.mode == .speaking ? 36 : 22) : 8
+        let glowOpacity: Double = service.isMuted ? 0.1 : (service.isActive ? 0.55 : 0.15)
 
-    private var orbCore: some View {
-        ZStack {
+        return ZStack {
+            // Äußerer Glow-Ring
+            Circle()
+                .fill(AppTheme.gold.opacity(glowOpacity * 0.3))
+                .frame(width: 190, height: 190)
+                .blur(radius: 18)
+
+            // Orb-Körper: Basis
+            Circle()
+                .fill(Color(red: 0.06, green: 0.14, blue: 0.08))
+                .frame(width: 150, height: 150)
+
+            // Rotation-Gradient (ElevenLabs-Stil)
+            Circle()
+                .fill(
+                    AngularGradient(
+                        colors: [
+                            AppTheme.gold.opacity(0.9),
+                            Color(red: 0.06, green: 0.14, blue: 0.08),
+                            AppTheme.gold.opacity(0.15),
+                            Color(red: 0.06, green: 0.14, blue: 0.08),
+                            AppTheme.gold.opacity(0.7),
+                            Color(red: 0.06, green: 0.14, blue: 0.08),
+                            AppTheme.gold.opacity(0.9),
+                        ],
+                        center: .center,
+                        startAngle: .degrees(t * (service.mode == .speaking ? 120 : 40)),
+                        endAngle: .degrees(t * (service.mode == .speaking ? 120 : 40) + 360)
+                    )
+                )
+                .frame(width: 150, height: 150)
+                .blur(radius: 6)
+
+            // Radialer Glanz (3D-Effekt)
             Circle()
                 .fill(
                     RadialGradient(
                         colors: [
-                            AppTheme.gold.opacity(orbIntensity),
-                            Color(red: 0.1, green: 0.25, blue: 0.1)
+                            .white.opacity(0.25),
+                            AppTheme.gold.opacity(0.1),
+                            .clear
                         ],
-                        center: .center,
-                        startRadius: 10,
+                        center: UnitPoint(x: 0.35, y: 0.3),
+                        startRadius: 0,
                         endRadius: 70
                     )
                 )
-                .frame(width: 120, height: 120)
-                .shadow(color: AppTheme.gold.opacity(0.4), radius: service.isActive ? 20 : 5)
-                .animation(.easeInOut(duration: 0.8), value: service.isActive)
+                .frame(width: 150, height: 150)
 
-            if service.mode == .speaking && service.status == .connected {
-                waveBars
-            } else {
-                Image(systemName: service.isActive ? "waveform" : "mic.fill")
-                    .font(.system(size: 36, weight: .medium))
-                    .foregroundStyle(service.isActive ? AppTheme.gold : .white.opacity(0.4))
-                    .animation(.easeInOut(duration: 0.3), value: service.isActive)
-            }
-        }
-    }
-
-    private var orbIntensity: Double {
-        switch service.status {
-        case .connected:    return service.isMuted ? 0.2 : (service.mode == .speaking ? 0.9 : 0.6)
-        case .connecting:   return 0.4
-        default:            return 0.15
-        }
-    }
-
-    private var waveBars: some View {
-        HStack(spacing: 4) {
-            ForEach(0..<5, id: \.self) { i in
-                RoundedRectangle(cornerRadius: 3)
-                    .fill(AppTheme.gold)
-                    .frame(width: 4, height: CGFloat.random(in: 12...36))
-                    .animation(
-                        .easeInOut(duration: 0.4 + Double(i) * 0.1)
-                            .repeatForever(autoreverses: true)
-                            .delay(Double(i) * 0.08),
-                        value: service.mode
+            // Dunkle Überlagerung an Rand
+            Circle()
+                .fill(
+                    RadialGradient(
+                        colors: [.clear, Color(red: 0.04, green: 0.10, blue: 0.05).opacity(0.85)],
+                        center: .center,
+                        startRadius: 45,
+                        endRadius: 75
                     )
+                )
+                .frame(width: 150, height: 150)
+
+            // Mute-Slash
+            if service.isMuted {
+                Image(systemName: "mic.slash.fill")
+                    .font(.system(size: 30, weight: .semibold))
+                    .foregroundStyle(.white.opacity(0.6))
             }
         }
+        .scaleEffect(pulse)
+        .shadow(color: AppTheme.gold.opacity(glowOpacity), radius: glowRadius, x: 0, y: 0)
     }
 
     // MARK: - Status Label

@@ -3,10 +3,12 @@ import SwiftData
 
 struct NewRoundView: View {
     @Query(sort: \Course.name) private var courses: [Course]
+    @Query(sort: \GolfBag.createdAt) private var bags: [GolfBag]
     @Environment(\.modelContext) private var context
     @Environment(\.dismiss) private var dismiss
 
     @State private var selectedCourse: Course?
+    @State private var selectedBag: GolfBag?
     @State private var roundDate = Date.now
     @State private var selectedMode: GameMode
     @State private var activeRound: Round?
@@ -80,6 +82,40 @@ struct NewRoundView: View {
                                 .foregroundStyle(AppTheme.gold)
                         }
                         .textCase(nil)
+                    }
+                }
+
+                // Bag selector (only when bags exist)
+                if !bags.isEmpty {
+                    Section("Schläger-Bag") {
+                        ForEach(bags) { bag in
+                            Button {
+                                selectedBag = (selectedBag?.persistentModelID == bag.persistentModelID) ? nil : bag
+                            } label: {
+                                HStack(spacing: 12) {
+                                    Image(systemName: "bag.fill")
+                                        .font(.title3)
+                                        .foregroundStyle(selectedBag?.persistentModelID == bag.persistentModelID ? AppTheme.gold : AppTheme.textSec)
+                                    VStack(alignment: .leading, spacing: 2) {
+                                        Text(bag.name)
+                                            .font(.subheadline.bold())
+                                            .foregroundStyle(AppTheme.text)
+                                        Text("\(bag.clubs.count) Schläger")
+                                            .font(.caption)
+                                            .foregroundStyle(AppTheme.textSec)
+                                    }
+                                    Spacer()
+                                    if selectedBag?.persistentModelID == bag.persistentModelID {
+                                        Image(systemName: "checkmark.circle.fill")
+                                            .foregroundStyle(AppTheme.gold)
+                                    }
+                                }
+                                .padding(.vertical, 4)
+                            }
+                            .buttonStyle(.plain)
+                            .listRowBackground(selectedBag?.persistentModelID == bag.persistentModelID
+                                ? AppTheme.gold.opacity(0.08) : AppTheme.card)
+                        }
                     }
                 }
 
@@ -210,6 +246,9 @@ struct NewRoundView: View {
                 if selectedCourse == nil, courses.count == 1 {
                     selectedCourse = courses.first
                 }
+                if selectedBag == nil {
+                    selectedBag = bags.first
+                }
             }
             .sheet(isPresented: $showCourseManager) { CourseListView() }
             .sheet(isPresented: $showCourseSelector) {
@@ -299,6 +338,7 @@ struct NewRoundView: View {
     private func startRound() {
         guard let course = selectedCourse else { return }
         let round = Round(date: roundDate, course: course, gameMode: selectedMode)
+        round.bag = selectedBag
         let validNames = selectedMode.isMultiplayer ? otherPlayers.filter { !$0.trimmingCharacters(in: .whitespaces).isEmpty } : []
         round.otherPlayerNames = validNames
         context.insert(round)
@@ -322,5 +362,7 @@ struct NewRoundView: View {
         }
 
         activeRound = round
+        // Offene-Runde-Erinnerung: falls die Runde morgen früh noch nicht abgeschlossen ist
+        Task { await NotificationManager.shared.scheduleOpenRoundReminder(courseName: course.name) }
     }
 }

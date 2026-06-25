@@ -9,6 +9,54 @@
 			<key>orderHint</key>
 			<integer>0</integer>
 		</dict>
+		<key>GolfTrackWatch Watch App.xcscheme_^#shared#^_</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>1</integer>
+		</dict>
+		<key>GolfWidgetExtension.xcscheme_^#shared#^_</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>2</integer>
+		</dict>
+	</dict>
+	<key>SuppressBuildableAutocreation</key>
+	<dict>
+		<key>EE0A1E822FA3B5250018E2EC</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>EE0A1E8F2FA3B5260018E2EC</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>EE0A1E992FA3B5260018E2EC</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>EE646C282FABC99D00CD80D5</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>EE646C342FABC99F00CD80D5</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>EE646C3E2FABC99F00CD80D5</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>EEB4CF7F2FB4BB5F00E6D6A5</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 	</dict>
 </dict>
 </plist>

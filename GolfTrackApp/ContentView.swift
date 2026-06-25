@@ -21,7 +21,7 @@ struct ContentView: View {
                     .tabItem { Label("Training", systemImage: "figure.golf") }
                     .tag(1)
                 NavigationStack { GolfRulesView() }
-                    .tabItem { Label("Spielregeln", systemImage: "book.fill") }
+                    .tabItem { Label("Regeln", systemImage: "book.fill") }
                     .tag(2)
                 TipsView()
                     .tabItem { Label("Tipps", systemImage: "lightbulb.fill") }
@@ -51,6 +51,10 @@ struct ContentView: View {
                     NotificationCenter.default.post(name: .openShotTracker, object: nil)
                 }
             }
+        }
+        // Empfehlung aus den Tipps → zum Training-Tab wechseln
+        .onReceive(NotificationCenter.default.publisher(for: .openTraining)) { _ in
+            selectedTab = 1
         }
     }
 }

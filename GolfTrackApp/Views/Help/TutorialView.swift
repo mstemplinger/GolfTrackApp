@@ -38,21 +38,19 @@ struct TutorialView: View {
                     }
                 }
                 .tabViewStyle(.page(indexDisplayMode: .never))
-                .animation(.easeInOut(duration: 0.3), value: currentStep)
 
                 // ── Navigation bar ───────────────────────────────────
                 navBar
                     .padding(.bottom, 28)
             }
         }
+        // Eine einzige, durchgehende Puls-Animation – wird nicht bei jedem
+        // Seitenwechsel neu gestartet (das verursachte Ruckler).
         .onAppear { startPulse() }
-        .onChange(of: currentStep) { _, _ in
-            pulse = false
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) { startPulse() }
-        }
     }
 
     private func startPulse() {
+        guard !pulse else { return }
         withAnimation(.easeInOut(duration: 0.85).repeatForever(autoreverses: true)) {
             pulse = true
         }
@@ -188,7 +186,7 @@ struct TutorialView: View {
         switch i {
         case 0: return "Tippe auf der Startseite auf den goldenen Button, um eine neue Runde zu beginnen."
         case 1: return "Wähle deinen Platz aus. Neue Plätze legst du unter Einstellungen → Golfplätze an."
-        case 2: return "Wähle zwischen 14 Modi – vom Zählspiel bis Stableford. Das ⓘ erklärt jeden Modus."
+        case 2: return "Wähle aus 18 Spielmodi in drei Kategorien: Einzel (z. B. Zählspiel, Stableford, Matchplay), Partner (z. B. Vierer, Greensome) und Team (z. B. Scramble). Das ⓘ erklärt jeden Modus."
         case 3: return "Tippe + oder − um Schläge pro Loch einzutragen. Die Zahl aktualisiert sich sofort."
         case 4: return "Trage Putts, Fairway-Treffer und GIR ein – die Basis für deine Statistiken."
         case 5: return "Tippe auf \"Lochposition festlegen\" und setze den Pin auf der Satellitenkarte. Die App zeigt dir ab sofort die genaue Distanz zum Loch an."
@@ -243,9 +241,11 @@ struct Spotlight: View {
     var radius: CGFloat = 10
 
     var body: some View {
+        // Nur Rahmenstärke/-deckkraft pulsieren – der Schatten bleibt statisch,
+        // da das Animieren des Schattenradius pro Frame teuer (ruckelig) ist.
         RoundedRectangle(cornerRadius: radius)
-            .strokeBorder(AppTheme.gold, lineWidth: pulse ? 2 : 1.2)
-            .shadow(color: AppTheme.gold.opacity(pulse ? 0.85 : 0.3), radius: pulse ? 7 : 3)
+            .strokeBorder(AppTheme.gold.opacity(pulse ? 1.0 : 0.7), lineWidth: pulse ? 2 : 1.2)
+            .shadow(color: AppTheme.gold.opacity(0.45), radius: 4)
     }
 }
 

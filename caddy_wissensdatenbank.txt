@@ -1,0 +1,911 @@
+================================================================
+CADDY – GOLF-WISSENSDATENBANK
+Wissensgrundlage für den KI-Golf-Assistenten der GolfTrack-App
+================================================================
+Stand: R&A Spielregeln 2023 | World Handicap System (WHS)
+================================================================
+
+
+================================================================
+KAPITEL 1: DIE WICHTIGSTEN GOLFREGELN (R&A 2023)
+================================================================
+
+REGEL 1 – DAS SPIEL, DAS GOLFGERÄT UND DIE HANDICAP-STROKES
+------------------------------------------------------------
+- Golf wird gespielt, indem ein Ball mit einem Schläger von der Abschlagfläche
+  bis in das Loch gespielt wird, indem der Ball mit möglichst wenigen Schlägen
+  eingelocht wird.
+- Es dürfen maximal 14 Schläger im Bag mitgeführt werden. Mehr Schläger = 2
+  Strafschläge pro Loch (max. 4 Strafschläge pro Runde).
+- Schläger dürfen während einer Runde nicht ausgetauscht werden, außer wenn
+  sie beschädigt wurden (nicht durch Missbrauch).
+
+REGEL 2 – DER PLATZ
+-------------------
+Der Platz besteht aus: Abschlagfläche, Fairway, Rough, Bunker, Penalty Areas
+(gelbe und rote Markierungen), Putting Green und Out of Bounds (weiße Pfähle/Linien).
+
+REGEL 3 – DAS WETTSPIEL
+-----------------------
+- Lochspiel: gewonnen wird durch mehr Löcher als der Gegner.
+- Zählspiel: alle Schläge werden über die gesamte Runde gezählt.
+- Stableford: Punkte werden pro Loch vergeben (0 = 2 über Par, 1 = 1 über Par,
+  2 = Par, 3 = Birdie, 4 = Eagle, 5 = Albatross).
+- Brutto = tatsächliche Schläge; Netto = Brutto minus Vorgabe (Handicap).
+
+REGEL 4 – DAS GOLFGERÄT
+------------------------
+- Der Ball muss genormt sein (Durchmesser min. 42,67 mm, max. Gewicht 45,93 g).
+- Während eines Loches darf der Ball nicht ausgetauscht werden (außer es gibt
+  eine Regel, die das erlaubt, z.B. beim Regelfall mit einem uneinspielbar
+  erklärten Ball).
+- Beschädigte Bälle dürfen ausgetauscht werden.
+
+REGEL 5 – DAS SPIELEN DER RUNDE
+---------------------------------
+- Der Schlag muss gespielt werden, wie der Ball liegt (Grundprinzip).
+- Den Platz verbessern ist verboten (Ball, Lage verbessern, Schwungbereich, etc.).
+- Die Spieler sind für die korrekte Zählung ihrer Schläge verantwortlich.
+
+REGEL 6 – DER SPIELER – LÖCHER SPIELEN
+---------------------------------------
+- Außerhalb der Reihenfolge spielen (Zählspiel): kein Strafschlag, der Schlag
+  zählt jedoch.
+- Falscher Ball: 2 Strafschläge. Der richtige Ball muss noch gespielt werden.
+- Nicht eingelochter Ball: 2 Strafschläge, wenn dieser Fehler nicht korrigiert wird.
+
+REGEL 7 – DEN BALL SUCHEN UND IDENTIFIZIEREN
+----------------------------------------------
+- Suchzeit: maximal 3 Minuten. Danach gilt der Ball als verloren.
+- Den Ball bei der Suche bewegen: 1 Strafschlag, außer die Bewegung war
+  versehentlich und der Ball wird zurückgelegt.
+- Ball identifizieren: der Spieler darf die Lage des Balls verbessern, um ihn
+  zu identifizieren (mit Einschränkungen).
+
+REGEL 8 – DEN KURS SPIELEN, WIE ER IST
+-----------------------------------------
+Verboten ist:
+- Den Bereich des vorgesehenen Stands oder Schwungs zu verbessern.
+- Die Spiellinie zu verbessern (z.B. niederdrücken von Gras).
+- Sandburgen/Wasserhindernisse entfernen.
+Erlaubt ist:
+- Natürliche Gegenstände oder lose Hemmnisse entfernen.
+- Normale Standeinnahme (angemessenes Einebnen mit dem Fuß ist erlaubt).
+
+REGEL 9 – DEN BALL SPIELEN, WIE ER LIEGT
+-------------------------------------------
+- Grundprinzip: den Ball spielen, wie er liegt.
+- Ausnahmen: Erleichterungsregeln greifen (Regelhindernisse, Spielverbotszonen, etc.).
+- Spieler darf den Ball markieren, aufnehmen und reinigen (außer im Bunker
+  und auf der Penalty Area), wenn eine Regel dies erlaubt.
+
+REGEL 10 – VORGEHEN BEI EINER PENALTY AREA (Gelb / Rot)
+---------------------------------------------------------
+Bei einer GELBEN Penalty Area (z.B. Wasserhindernis vorne/hinten):
+Option 1: Ball spielen, wie er liegt (kein Strafschlag).
+Option 2: Schlag und Distanz – zurück zum letzten Ort, 1 Strafschlag.
+Option 3: Hinterlinien-Erleichterung – auf der Verbindungslinie (Pin–Eintrittspunkt)
+           hinter der Penalty Area, beliebig weit hinter dem Loch, 1 Strafschlag.
+
+Bei einer ROTEN Penalty Area (seitlich):
+Alle Optionen der gelben Penalty Area PLUS:
+Option 4: Seitliche Erleichterung – innerhalb 2 Schlägerlängen vom Eintrittspunkt,
+           nicht näher zum Loch, 1 Strafschlag.
+
+REGEL 11 – BALL, DER SICH BEWEGT UND EINE PERSON, AUSRÜSTUNG ODER ANLAGE TRIFFT
+---------------------------------------------------------------------------------
+- Ball trifft zufällig den Spieler oder seine Ausrüstung: kein Strafschlag,
+  Ball wird gespielt, wie er liegt.
+- Ball trifft absichtlich umgelenktes Ziel: 2 Strafschläge.
+- Ball im Loch nach Berühren des Fahnenstocks: Ball gilt als eingelocht.
+
+REGEL 12 – BUNKER
+------------------
+- Im Bunker DARF der Schläger vor dem Schlag NICHT den Sand berühren
+  (Strafe: 2 Schläge / Lochverlust).
+- Lose Hemmnisse (Blätter, Steine, Stöcke) DÜRFEN entfernt werden (seit 2019).
+- Eingebetteter Ball im Bunker: Ball darf aufgenommen und die Lage verbessert werden,
+  dann mit 1 Strafschlag von der nächstmöglichen Stelle gespielt werden (außerhalb
+  des Bunkers), wenn keine Erleichterung im Bunker möglich.
+- Ball im Bunker, unspielbar: 3 Optionen (alle 1 Strafschlag):
+  a) Schlag und Distanz zurück.
+  b) Im Bunker hinter der Bunkerposition auf der Verbindungslinie.
+  c) Außerhalb des Bunkers auf der Verbindungslinie, 2 Strafschläge.
+
+REGEL 13 – PUTTING GREEN
+--------------------------
+- Ball markieren und aufheben: erlaubt, muss zurückgelegt werden.
+- Ball reinigen: immer erlaubt auf dem Green.
+- Spiellinie berühren: nur mit dem Schläger zur Demonstration, NICHT zur
+  Verbesserung der Linie.
+- Flaggenstockregel (seit 2019): der Ball darf mit eingesetztem Fahnenstock
+  eingelocht werden (kein Strafschlag). Empfehlung: bei langen Putts den
+  Fahnenstock drin lassen.
+- Ball geht über das Green und liegt dahinter: normale Schlagzählung weitermachen.
+- Mitspieler puttet vor dir: kein Problem (zeitfluss), beim Lochspiel kann die
+  Reihenfolge bestimmt werden.
+
+REGEL 14 – PROZEDUREN BEIM AUFNEHMEN UND ZURÜCKLEGEN EINES BALLS
+------------------------------------------------------------------
+- Markierung: einen Marker direkt hinter oder neben dem Ball platzieren.
+- Zurücklegen: immer genau an der Originalposition.
+- Ball auf dem Green reinigen: immer erlaubt.
+- Ball bewegt sich nach dem Ankippen (Adress): kein Strafschlag (seit 2019),
+  Ball wird zurückgelegt.
+
+REGEL 15 – ERLEICHTERUNG BEI REGELWIDRIGEN HEMMNISSEN (z.B. Pfützen, Divots)
+-------------------------------------------------------------------------------
+- Eingebetteter Ball im Fairway/Rough (Normbedingungen): 1 Schlägerlänge
+  Erleichterung, kein Strafschlag.
+- Temporäres Wasser (Regenwasser, Reif): nächste Stelle ohne Behinderung,
+  innerhalb 1 Schlägerlänge, kein Strafschlag.
+- Bewegliche Hemmnisse (Abfälle, Ausrüstung): entfernen, kein Strafschlag.
+- Unbewegliche Hemmnisse (Sprinklerköpfe, Wege): nächste Erleichterungsstelle
+  innerhalb 1 Schlägerlänge, kein Strafschlag.
+
+REGEL 16 – UNGEWÖHNLICHE PLATZVERHÄLTNISSE
+--------------------------------------------
+- Tierspuren (Maulwurf, Vogel): Erleichterung innerhalb 1 Schlägerlänge,
+  kein Strafschlag.
+- Spielverbotszone (No Play Zone): Erleichterung MUSS genommen werden.
+- Spielverbotszone in Penalty Area: besondere Verfahren (Regel 17).
+
+REGEL 17 – PENALTY AREAS (Wiederholung Spezialfälle)
+-----------------------------------------------------
+- Ball in Penalty Area spielen: immer mit dem Risiko, dass man erneut
+  Erleichterung nehmen muss.
+- Schläger darf in der Penalty Area den Boden berühren.
+- Lose Hemmnisse dürfen entfernt werden.
+
+REGEL 18 – VERLOREN ODER AUS OUT OF BOUNDS (OOB)
+--------------------------------------------------
+- OOB: weiße Pfähle/Linien begrenzen den Platz. Ball liegt OOB, wenn er
+  vollständig jenseits der Grenzlinie liegt.
+- Verloren oder OOB: Schlag und Distanz, 1 Strafschlag. Zurück zum
+  letzten Abschlagsort und neu schlagen.
+- Lokale Regeloption (auf vielen Plätzen eingeführt): alternativer Drop in
+  der Nähe des OOB-Punktes mit 2 Strafschlägen (statt Schlag und Distanz).
+- Provisorischer Ball: kann geschlagen werden, bevor man zum OOB/verlorenen
+  Ball geht. Spart Zeit!
+
+REGEL 19 – UNSPIELBARE BALL
+-----------------------------
+Der Spieler kann seinen Ball jederzeit für unspielbar erklären (außer in
+einer Penalty Area). Optionen (alle 1 Strafschlag):
+a) Schlag und Distanz: zurück zum vorherigen Ort.
+b) Hinterlinien-Erleichterung: auf der Verbindungslinie Loch–Ball, beliebig
+   weit hinter dem Ball.
+c) Seitliche Erleichterung: innerhalb 2 Schlägerlängen, nicht näher zum Loch.
+d) NEU 2023: Erleichterung im Rückwärtsbereich für Ball im Bunker ohne
+   Sonderoptionen (2 Strafschläge statt in den Bunker zurück).
+
+REGEL 20 – AUSSERGEWÖHNLICHE UND LOKALE REGELN
+------------------------------------------------
+- Lokale Regeln gelten nur auf dem jeweiligen Platz.
+- Ranglistencards enthalten alle gültigen lokalen Regeln für das Spiel.
+- Verbesserter Ball (Preferred Lies / "Winter Rules"): nur wenn explizit
+  angekündigt, dann darf der Ball innerhalb 6 Zoll/15 cm verbessert werden.
+
+ETIKETTEVERSTÖSSE UND STRAFSCHLÄGE – KURZÜBERSICHT
+----------------------------------------------------
+| Verstoß                                    | Strafe (Zählspiel) |
+|--------------------------------------------|--------------------|
+| Falscher Ball                              | 2 Strafschläge     |
+| Ball gespielt von falscher Stelle          | 2 Strafschläge     |
+| Mehr als 14 Schläger                       | 2/Loch, max. 4     |
+| Schläger berührt Sand im Bunker (Adress)   | 2 Strafschläge     |
+| Spiellinie verbessert                      | 2 Strafschläge     |
+| Beratung bei Drittem (außer Caddy)         | 2 Strafschläge     |
+| Schläger geworfen/Ausrüstung beschädigt    | Disqualifikation   |
+
+
+================================================================
+KAPITEL 2: TECHNIK UND SPIELTIPPS
+================================================================
+
+ABSCHLAG – DER DRIVER
+----------------------
+Grundposition:
+- Stand schulterbreit, Ball auf Höhe der linken Ferse (Rechtshänder).
+- Gewicht gleichmäßig verteilt (50/50), leicht nach hinten geneigt.
+- Schlägerkopf beim Adressieren hinter dem Ball (kein Erdkontakt = Tee-Shot).
+
+Schwungtipps:
+- Takeaway: Schläger niedrig und weit weg führen, Schulterrotation initiert
+  den Schwung, NICHT die Hände.
+- An der Spitze: linke Schulter unter das Kinn, ca. 90° Schulterrotation,
+  Hüfte ca. 45° gedreht, Gewicht auf dem rechten Fuß (70%).
+- Downswing: Hüfte führt die Bewegung, Schultern folgen, Hände "fallen lassen".
+- Durchschwung: Körper dreht vollständig durch, Gewicht auf dem linken Fuß,
+  Schläger zeigt zur Schulter, Gleichgewicht halten.
+
+Häufige Fehler beim Driver:
+- Over-the-top (Slice): Downswing beginnt mit den Schultern, Schlag von
+  außen nach innen. Fix: Hüfte zuerst drehen, Ellbogen eng am Körper.
+- Fat Shot: zu viel Gewicht hinten, Tiefpunkt hinter dem Ball. Fix: Gewicht
+  auf den linken Fuß verlagern.
+- Topped Ball: zu viel Gewicht vorne, Aufstehen im Schwung. Fix: Wirbelsäulenwinkel
+  halten, Kniebeugung konstant.
+
+ABSCHLAG MIT LONG IRONS UND FAIRWAY-HOLZ
+------------------------------------------
+- Ball etwas weiter hinten als beim Driver (Mitte bis linke Seitennaht).
+- Gewichtsverlagerung zur Seite weniger ausgeprägt als beim Driver.
+- Steilerer Angriff als beim Driver, leichtes Divot erwünscht.
+- Fairway-Holz: eher wie ein Driver schwingen, flacher Angriff.
+- Für mehr Kontrolle: kompakterer Schwung, kein volles Ausdehnen nötig.
+
+MITTLERE EISEN (5-7)
+---------------------
+- Ball in Stanzmitte oder leicht vorwärts.
+- Hände leicht vor dem Ball beim Adressieren (Forward Press).
+- Klarer Divot nach dem Ball zeigt korrekte Ballflug.
+- Schaft leicht nach vorne geneigt für Kompression.
+- Tipp: "Nail the ball into the ground" – direkter, komprimierender Kontakt.
+
+KURZE EISEN (8, 9, PW)
+------------------------
+- Schmaler Stand (ca. 30 cm zwischen den Füßen).
+- Ball in der Mitte des Stands.
+- Hände deutlich vor dem Ball.
+- Kompakter Schwung (3/4 bis voll je nach Distanz).
+- Hohe, weiche Schläge: offene Schlägerstellung + langsamer Schwung.
+- Niedrige Penetrationsschläge: geschlossene Schlägerstellung + normaler Schwung.
+
+WEDGE-SPIEL (AW, SW, LW)
+--------------------------
+Pitch-Shot (20–80 m):
+- Schmaler Stand, Ball hinten in der Mitte.
+- Gewicht 60% auf linkem Fuß.
+- Kurzer Backswing (Uhr-Methode: 9 Uhr, 10 Uhr, 11 Uhr Position = unterschiedliche
+  Distanzen je nach Schläger).
+- Hände immer vor dem Schläger beim Treffmoment.
+
+Chip-Shot (0–20 m):
+- Sehr enger Stand, Ball weit hinten (Rechtshänder: rechte Ferse).
+- 70% Gewicht auf linkem Fuß, kaum Körperbewegung.
+- Wie ein langer Putt mit dem Körper, Handgelenke fest.
+- Schläger führen wie ein Pendel.
+- Faustregel: je weiter vom Green, desto weniger Loft verwenden (8er statt SW).
+
+Flop-Shot (hoher, weicher Schlag über Hindernis):
+- Offener Stand, sehr offene Schlägerstellung (Schlägerfläche zeigt nach oben).
+- Ball weit vorne im Stand.
+- Schneller, langer Schwung DURCH den Ball, nie abbremsen.
+- Handgelenke viel aktiver als beim normalen Chip.
+- Nur für Fortgeschrittene!
+
+BUNKER-SPIEL (Greenside Bunker)
+---------------------------------
+Grundsatz: den Ball NICHT treffen, sondern den Sand hinter dem Ball.
+
+Setup:
+- Offener Stand (Füße links vom Ziel).
+- Offene Schlägerstellung (Schlägerfläche zeigt nach rechts).
+- Ball weit vorne im Stand (linke Ferse).
+- Hände leicht vor dem Ball (kein extremer Forward Press).
+- In den Sand eingraben mit den Füßen.
+
+Schwung:
+- Along the body line (Füße-Linie), nicht zur Fahne.
+- 5–7 cm hinter dem Ball in den Sand einschlagen.
+- Immer durchschwingen! Abbremsen = Ball bleibt im Bunker.
+- Sand mitnehmen wie auf einer Untertasse.
+
+Distanz kontrollieren:
+- Kürzere Distanz: längerer Schwung, mehr Sand nehmen.
+- Längere Distanz: steilerer Angriff, weniger Sand (ball-of-sand kleiner).
+- Nasse/harte Bunker: mehr wie einen normalen Chip spielen, weniger Sand.
+- Loser Bunker: tiefer eingraben, mehr Sand nehmen.
+
+Schwieriger Bunker-Lagen:
+- Hängender Ball (Ball liegt an abschüssigem Bunkerrand): offenere Schlägerstellung,
+  Ball spielen wie er liegt, Schwung der Neigung anpassen.
+- Ball an der Wand des Bunkers: Stand anpassen, eventuell linkshändig spielen,
+  oder mit der Rückseite des Schlägers spielen.
+
+PUTTING
+--------
+Grundposition:
+- Schulterbreiter oder etwas engerer Stand.
+- Augen über der Spiellinie (direkt über dem Ball).
+- Hände unterhalb der Schultern, Griff leicht nach oben.
+- Arme hängen natürlich.
+
+Schwungprinzip (Pendel):
+- Schultern führen die Bewegung (kein Handgelenkseinsatz).
+- Backswing und Follow-Through gleich lang.
+- Tempokonstanz ist wichtiger als Länge.
+- Schlagfläche muss zur Ziellinie ausgerichtet sein.
+
+Einschätzen der Linienlänge:
+- Distanz schätzen: für 10m Putt → Backswing ca. 30 cm, Follow-Through 30 cm.
+- Hang einlesen: immer von hinter dem Ball zur Fahne, dann von der Seite.
+- Gras: Grain (Wuchsrichtung des Grases) beeinflusst die Linie.
+- Feuchtigkeit: nasses Gras = langsamere Putts (mehr Kraft).
+
+Häufige Fehler beim Putten:
+- Kopf hebt sich frühzeitig: durch Ball schauen, nicht zum Loch.
+- Acceleration fehlt: oft Abbremsen durch Angst. Fix: Follow-Through mindestens
+  so lang wie Backswing.
+- Griff zu fest: entspannter Griff = besseres Gefühl.
+- Dekelerationsproblem: Backswing zu groß, dann abbremsen. Fix: kleineren
+  Backswing, gleichmäßige Beschleunigung.
+
+Putt-Tipps für kurze Distanzen (unter 2 m):
+- Kopf still halten bis das Einlochgeräusch zu hören ist.
+- Schlägergesicht quadratisch zur Linie.
+- Kurzer, fester Stoß statt langer Schwung.
+- Routine entwickeln und immer gleich ablaufen lassen.
+
+MENTALE STÄRKE
+--------------
+Pre-Shot Routine:
+- Immer dieselbe Routine vor jedem Schlag (3–5 Sekunden Visualisierung,
+  Zielanvisiern von hinten, 1–2 Practice Swings, Adress, Schlag).
+- Routine beruhigt den Geist und automatisiert die Bewegung.
+
+Umgang mit Fehlern:
+- Einen schlechten Schlag maximal 10 Sekunden ärgern, dann loslassen.
+- Nächste Schlag sofort zum neuen Fokus machen.
+- "Next Shot Mentality" – jeder Schlag ist eine neue Möglichkeit.
+
+Druck auf dem Grün:
+- Atemübung: tief einatmen vor dem Putt, langsam ausatmen beim Rückholschwung.
+- Ziel größer denken: nicht das Loch, sondern das ganze Green als Ziel vorstellen.
+- Positive Visualisierung: die Linie des Balles sehen, bevor man putt.
+
+Rundenmanagement:
+- Nie zwei schlechte Schläge hintereinander spielen (Sicherheitsschlag nach Fehler).
+- Risiken nur eingehen, wenn Belohnung die Strafe überwiegt.
+- Bei schlechten Bedingungen (Wind, Regen): Erwartungen anpassen.
+
+
+================================================================
+KAPITEL 3: DAS WORLD HANDICAP SYSTEM (WHS)
+================================================================
+
+GRUNDLAGEN DES WHS
+-------------------
+Das WHS ist seit 2020 das weltweite Einheits-Handicap-System, eingeführt vom
+R&A und der USGA.
+
+HANDICAP-INDEX
+--------------
+- Der Handicap-Index ist eine Zahl, die das Leistungsvermögen eines Spielers
+  auf einem Platz mit Course Rating 72 und Slope 113 angibt.
+- Wird mit einer Dezimalstelle angegeben (z.B. 18,4).
+- Kann von 0 bis maximal 54,0 reichen.
+- Berechnung: Durchschnitt der besten 8 Scorecards aus den letzten 20 Runden,
+  multipliziert mit 0,96 (96%-Faktor).
+
+COURSE RATING UND SLOPE
+------------------------
+- Course Rating: die erwartete Anzahl an Schlägen, die ein Scratch-Spieler
+  (Handicap 0) auf diesem Platz braucht.
+- Slope: Schwierigkeitsgrad des Platzes für einen Bogey-Spieler im Vergleich
+  zu einem Scratch-Spieler. Standardwert = 113. Höher = schwieriger.
+
+PLAYING HANDICAP (Runden-Vorgabe)
+----------------------------------
+Formel: Playing Handicap = Handicap-Index × (Slope / 113) + (Course Rating – Par)
+
+Beispiel: Handicap-Index 18,0, Slope 120, Course Rating 71, Par 72
+= 18,0 × (120/113) + (71 – 72)
+= 18,0 × 1,062 + (–1)
+= 19,1 – 1 = 18 (auf ganze Zahl gerundet)
+
+STABLEFORD-PUNKTE
+-----------------
+Stableford-Punkte werden auf Basis des Netto-Scores berechnet:
+| Schläge über/unter Par (Netto)    | Punkte |
+|-----------------------------------|--------|
+| 3 oder mehr über Par (Netto)      | 0      |
+| 2 über Par (Netto) = Double Bogey | 1      |
+| 1 über Par (Netto) = Bogey        | 2      |
+| Par (Netto)                       | 3      |
+| 1 unter Par (Netto) = Birdie      | 4      |
+| 2 unter Par (Netto) = Eagle       | 5      |
+| 3 unter Par (Netto) = Albatross   | 6      |
+
+HANDICAP-STROKES PRO LOCH (HCP-Zuteilung)
+------------------------------------------
+Die Handicap-Löcher (1–18 auf der Scorekarte) zeigen, bei welchen Löchern
+ein Spieler Vorgabeschläge erhält:
+- Ein Spieler mit Playing Handicap 18 erhält auf JEDEM Loch 1 Schlag.
+- Ein Spieler mit Playing Handicap 9 erhält auf den 9 schwierigsten Löchern
+  (HCP-Nummer 1–9) je 1 Schlag.
+- Ein Spieler mit Playing Handicap 36 erhält auf JEDEM Loch 2 Schläge.
+
+SCORECARDS EINREICHEN
+----------------------
+- Jede Runde auf dem Platz sollte für Handicap-Zwecke eingereicht werden.
+- Es dürfen auch Übungsrunden ohne Wettspielcharakter eingereicht werden.
+- Maximaler Score pro Loch (Net Double Bogey): Par + 2 + etwaige Vorgabeschläge.
+  Z.B. Par-4-Loch, 1 Vorgabeschlag → max. einzutragender Score = 7.
+
+HANDICAP-INDEX VERÄNDERUNG
+---------------------------
+- Der Index wird täglich aktualisiert, wenn neue Scores eingereicht werden.
+- Sehr gute Runden (sogenannte "exceptional scores") können zu einer sofortigen
+  Absenkung des Handicaps führen.
+- Soft Cap: bei Verbesserung von mehr als 3,0 über den letzten 12 Monaten
+  wird die Absenkung verlangsamt.
+- Hard Cap: maximale Absenkung beträgt 5,0 über 12 Monate.
+
+HANDICAP-TERMINE FÜR GOLFER
+-----------------------------
+- Platzreife: Voraussetzung für Mitgliedschaft im Golfclub. Enthält Kenntnisse
+  der Spielregeln, Etikette und grundlegende Spielfähigkeit.
+- Clubvorgabe (DGV): wird beim ersten Einreichen von 54-Löchern vergeben,
+  danach fortlaufend aktualisiert.
+- EGA-Handicap-Ausweis (Grüne Karte): offizieller Ausweis in Europa.
+
+
+================================================================
+KAPITEL 4: PLATZSTRATEGIE
+================================================================
+
+SPIELPLANUNG VOR DEM ABSCHLAG
+-------------------------------
+- Das Loch analysieren: Hindernisse, Windrichtung, Liegebeschaffenheit.
+- Immer rückwärts planen: vom Loch zur besten Angriffslage zum Grün,
+  dann zum optimalen Landeplatz nach dem Abschlag.
+- Risiko/Belohnung abwägen: ein Risiko ist nur dann vertretbar, wenn der
+  Gewinn (niedrigerer Score) die mögliche Strafe (OOB, Penalty) überwiegt.
+
+WINDBERECHNUNG
+---------------
+- Rückenwind: Ball fliegt 5–15% weiter, weniger Loft wählen (einen Schläger kürzer).
+- Gegenwind: Ball fliegt weniger weit, mehr Loft (einen Schläger länger), flache
+  Flugbahn um den Wind zu schneiden ("3/4-Swing").
+- Seitenwind (links-rechts): Schlägerauswahl auf Kurs korrigieren, oder
+  bewusst gegen den Wind spielen.
+- Böiger Wind: immer zum sicheren Bereich spielen, nie auf Risiko.
+
+DISTANZMANAGEMENT
+------------------
+Typische Distanzen nach Schläger (Herren, mittleres Niveau):
+| Schläger         | Distanz (ca.) |
+|------------------|---------------|
+| Driver           | 200–250 m     |
+| 3-Holz           | 180–220 m     |
+| 5-Holz/3-Hybrid  | 165–200 m     |
+| 4-Eisen          | 155–185 m     |
+| 5-Eisen          | 145–175 m     |
+| 6-Eisen          | 135–165 m     |
+| 7-Eisen          | 125–155 m     |
+| 8-Eisen          | 115–140 m     |
+| 9-Eisen          | 105–130 m     |
+| Pitching Wedge   | 90–120 m      |
+| Gap Wedge (50°)  | 75–100 m      |
+| Sand Wedge (56°) | 60–85 m       |
+| Lob Wedge (60°)  | 45–70 m       |
+
+(Damen: ca. 20–30% weniger Distanz; Senioren: ähnlich Damen)
+
+ANGRIFF AUF DAS GRÜN
+----------------------
+- Immer auf die größte Grünfläche zielen, nicht auf den Fahnenstock.
+- Grenzen kennen: Bunker, Penalty Areas, OOB neben dem Grün.
+- Bei Fahne am Rand: zur Mitte des Grüns spielen, sicherer.
+- Bei Fahne in der Mitte: voller Angriff möglich.
+- Kurzgras vor dem Grün (Apron/Fringe) nutzen: Ball rollen lassen statt
+  aufwendigen Chip.
+
+SCORING-STRATEGIE
+------------------
+- Par-3: Bogey als mentales Ziel, Birdie als Bonus.
+- Par-4: Ein guter Abschlag + zwei Schläge aufs Grün + zwei Putts = Bogey.
+  Ziel: kurzer Approach und zwei Putts.
+- Par-5: Erreichbar in zwei? Nur bei guter Ausgangslage riskieren. Sonst
+  3. Schlag aus kurzer Distanz für Birdie-Chance.
+
+UP-AND-DOWN (Chip + Putt = Par)
+---------------------------------
+- Realistische Erwartung: Profis schaffen 60% der Up-and-downs.
+- Amateure: 1–2 Putts nach gutem Chip ist gut.
+- Chip-Strategie: immer in Richtung beste Puttkante, nicht direkt auf Loch.
+- Putt nach Chip: lag putt (in die Nähe) statt direkt einlochen.
+
+SPIELTEMPO
+-----------
+- Max. 2 Minuten für jeden Schlag einplanen.
+- Bei Suche nach Ball: sofort Provisorischen Ball spielen, spart Zeit.
+- Fertig? Nächsten Schlag schon mental planen während man geht.
+
+
+================================================================
+KAPITEL 5: GOLFAUSRÜSTUNG
+================================================================
+
+SCHLÄGER-TYPEN UND IHRE VERWENDUNG
+------------------------------------
+Driver (1-Holz):
+- Für den Abschlag vom Tee verwendet.
+- Größter Schlägerkopf, niedrigster Loft (8–12°).
+- Ziel: maximale Distanz.
+
+Fairway-Hölzer (3-Holz, 5-Holz, 7-Holz):
+- Für lange Schläge vom Fairway oder Tee.
+- Leichter zu spielen als lange Eisen.
+- 3-Holz: ca. 15°, gute Alternative zum Driver.
+
+Hybride (Utility-Schläger):
+- Kreuzung aus Holz und Eisen.
+- Ersetzen schwer zu spielende lange Eisen (3–5 Eisen).
+- Besonders gut aus dem Rough und bei ungünstiger Lage.
+
+Eisen (3–9, PW):
+- Für Schläge von 100–200+ Meter.
+- Je höhere Nummer, desto mehr Loft, desto weniger Distanz.
+- Blades (Muscleback): mehr Gefühl, weniger Fehler-Toleranz (für Fortgeschrittene).
+- Cavity Back: größere Sweet Spot, mehr Fehlertoleranz (für Anfänger/Handicap-Spieler).
+
+Wedges:
+- Pitching Wedge (PW): ca. 45–48°, für Distanzen 90–120 m.
+- Gap/Approach Wedge (AW/GW): ca. 50–52°, für Distanzen 75–100 m.
+- Sand Wedge (SW): ca. 54–58°, für Bunker und kurze Annäherungen.
+- Lob Wedge (LW): ca. 60–64°, für sehr hohe, kurze Schläge.
+
+Putter:
+- Blade-Putter: für geradlinige Schwungbahn, gutes Gefühl.
+- Mallet-Putter: mehr Stabilität, für bogenförmige Schwungbahn.
+- Länge: Standard 84–88 cm, individuell angepasst (Fitting empfehlenswert).
+
+GOLFBÄLLE
+----------
+- 2-piece: hart, viel Distanz, günstig. Für Anfänger empfehlenswert.
+- 3-piece: Kompromiss aus Distanz und Kontrollierbarkeit.
+- 4/5-piece (Urethane Cover): maximales Spin, beste Kontrolle. Für Fortgeschrittene.
+- Marken: Titleist Pro V1, Callaway Chrome Soft, TaylorMade TP5, Bridgestone Tour B.
+- Temperatur beachten: kalte Bälle (unter 10°C) fliegen 5–10% kürzer.
+
+FITTING
+--------
+- Schaftlänge: Größe und Armspanne bestimmen ideale Länge.
+- Loftwinkel: individuell anpassen für optimalen Start-Winkel.
+- Schaftmaterial: Graphit (leichter, mehr Distanz für Damen/Senioren) vs.
+  Stahl (stabiler, mehr Kontrolle für Herren).
+- Schaftflex: Regular (R), Stiff (S), Extra Stiff (X), Senior (A), Ladies (L).
+  Faustregel: Schwungtempo-Messung beim Fitting empfehlenswert.
+
+AUSRÜSTUNGS-TIPPS
+------------------
+- Handschuhe: immer trocken halten. Nasse Handschuhe verlieren Grip.
+  Empfehlung: mehrere Handschuhe mitnehmen.
+- Schuhe: Spikes für nassen Untergrund, Softspikes universal einsetzbar.
+- Bag: Stand-Bag leichter (Tragebag), Cart-Bag größer für elektrischen Trolley.
+- Regenjacke: immer dabei, auch bei Sonnenschein in Berglagen.
+- Tees: Holz oder biologisch abbaubar. Höhe abhängig vom Schläger (Driver: Ball
+  halb über Schlägerkopf).
+
+PFLEGE DER AUSRÜSTUNG
+----------------------
+- Schläger nach jeder Runde reinigen (Rille säubern = besserer Spin).
+- Griffe alle 2–3 Jahre wechseln oder wenn Grip glatt wird.
+- Wedge-Rillen: nach ca. 75–100 Runden verlieren sie Spin-Effizienz.
+- Bälle mit Kratzern oder Dellen tauschen.
+- Schlägerkopf-Cover für Hölzer und Putter schützen vor Kratzern.
+
+
+================================================================
+KAPITEL 6: GOLFETIKETTE
+================================================================
+
+AUF DEM ABSCHLAG
+-----------------
+- Immer warten, bis alle Mitspieler ihren Schlag gemacht haben.
+- Stille halten, wenn jemand seinen Schlag adressiert und spielt.
+- Nicht im Blickfeld oder Sichtfeld des Spielers stehen.
+- Schläger erst auswählen, wenn man dran ist (spart Zeit).
+
+AUF DEM FAIRWAY
+----------------
+- Ball-Suche: nur 3 Minuten, dann Spielfluss aufrechterhalten.
+- Divots ausbessern (Sand und Saatgut aus Canister, Erde zurücklegen).
+- Niemals in Trolleyspuren oder auf Greens fahren.
+- Langsameres Vierer lässt schnelleres Zweier durch (Durchspielen).
+
+AM BUNKER
+----------
+- Nach dem Schlag immer Rechen (Harke) verwenden.
+- Immer von der flachsten Seite in den Bunker gehen, um Rand zu schonen.
+- Harke außerhalb des Bunkers ablegen (parallel zur Spiellinie).
+
+AUF DEM GRÜN
+-------------
+- Pitchmarkierungen (Ball-Einschläge) ausbessern: Gabel einstechen und
+  nach innen drücken (nicht nach oben hebeln).
+- Nie über die Spiellinie eines Mitspielers laufen.
+- Fahnenstock schonend behandeln, nicht fallen lassen.
+- Schuhe nicht über das Green schleifen (Spike-Schäden).
+- Zügig das Green verlassen (Score erst am nächsten Abschlag eintragen).
+
+ALLGEMEINE ETIKETTE
+--------------------
+- Handy stumm schalten oder ausschalten auf dem Platz.
+- Nie mit dem Spielen beginnen, bevor die Gruppe vor einem außer Reichweite ist.
+- Immer höflich und rücksichtsvoll gegenüber Mitspielern sein.
+- Schlechte Schläge nicht lautstark kommentieren (eigene oder fremde).
+- Tempo: 18 Löcher in maximal 4:15 Stunden spielen (Tournier-Standard: 4:00).
+
+SPIELRECHT
+-----------
+- Zählspiel: Spieler mit dem höchsten Score spielt als letzter (von hinten nach vorne).
+  Beim nächsten Abschlag: wer zuletzt spielte beginnt.
+- Lochspiel: Gewinner des Loches schlägt zuerst ab.
+- Berechtigung: immer den Ball anderer Spieler beobachten (hilft bei der Suche).
+
+
+================================================================
+KAPITEL 7: GOLFBEGRIFFE GLOSSAR
+================================================================
+
+A
+-
+Ace: Hole-in-one. Ball mit einem Schlag ins Loch.
+Address: Vorbereitung zum Schlag (Standeinnehmen, Schläger anlegen).
+Albatross: 3 unter Par auf einem Loch (sehr selten).
+Approach: Annäherungsschlag ans Grün.
+Away: Der Spieler, dessen Ball am weitesten vom Loch entfernt liegt, spielt zuerst.
+
+B
+-
+Back Nine: Die hinteren 9 Löcher (Löcher 10–18).
+Backswing: Rückschwung (Schläger wird hoch geführt).
+Birdie: 1 unter Par auf einem Loch.
+Bogey: 1 über Par auf einem Loch.
+Break: Die Krümmung der Puttkurve aufgrund des Hangs.
+Bunker: Sandfläche als Hindernis.
+
+C
+-
+Caddy: Träger der Golftasche, gibt Ratschläge und misst Distanzen.
+Carry: Die Distanz, die der Ball durch die Luft fliegt (ohne Rollen).
+Chip: Kurzer Schlag vom Grünrand.
+Cut: Abschneider im Turnier (Spieler mit zu hohem Score scheiden aus).
+
+D
+-
+Divot: Rasenstück, das beim Eisenschlag herausgeschlagen wird.
+Dogleg: Loch mit Kurve (links oder rechts).
+Double Bogey: 2 über Par auf einem Loch.
+Draw: Ballflug, der leicht von rechts nach links zieht (Rechtshänder).
+
+E
+-
+Eagle: 2 unter Par auf einem Loch.
+Even Par / Level Par: Gesamtscore entspricht genau dem Par des Platzes.
+
+F
+-
+Fade: Ballflug, der leicht von links nach rechts zieht (Rechtshänder).
+Fairway: Gemähte Spielfläche zwischen Abschlag und Grün.
+Fat: Ball wird zu dick getroffen (Erde/Gras vor dem Ball).
+Flagstock/Flagge: Stab mit Fahne im Loch.
+Fore: Warnruf, wenn ein Ball in Richtung anderer Personen fliegt.
+Front Nine: Die vorderen 9 Löcher (Löcher 1–9).
+
+G
+-
+GIR (Greens in Regulation): Das Grün wird innerhalb der vorgesehenen Schlagzahl
+  erreicht (auf Par-4 in 2 Schlägen, auf Par-3 in 1, auf Par-5 in 3).
+Green: Der gemähte Bereich um das Loch.
+Grip: Grifftechnik oder der Griff am Schläger.
+
+H
+-
+Handicap / HCP: Ausgleichszahl für unterschiedlich gute Spieler.
+Hole-in-One: Ball mit einem Schlag ins Loch.
+Hook: Starker Rechts-nach-links-Drall (Rechtshänder).
+
+I
+-
+Iron: Metallschläger für mittlere bis kurze Distanzen.
+
+L
+-
+Lay-up: Absichtlich kurz spielen, um ein Hindernis zu umgehen.
+Lie: Lage des Balls auf dem Untergrund.
+Loft: Neigungswinkel der Schlägerfläche.
+Lochspiel / Match Play: Wettkampfformat, wo Löcher (nicht Schläge) gezählt werden.
+
+M
+-
+Mulligan: Inoffizieller Wiederholungsschlag (nur unter Freunden, nicht im Wettspiel).
+
+O
+-
+OOB (Out of Bounds): Außerhalb des Spielfeldes.
+Open Stance: Körper zeigt links vom Ziel (Rechtshänder).
+
+P
+-
+Par: Vorgesehene Schlagzahl für ein Loch oder einen Platz.
+Pitch: Kurzer hoher Schlag aufs Grün.
+Provisional Ball: Reserveball bei möglichem Verlust oder OOB.
+Pull: Ball fliegt nach links vom Ziel (Rechtshänder, gerade).
+Push: Ball fliegt nach rechts vom Ziel (Rechtshänder, gerade).
+Putt: Schlag auf dem Grün.
+
+R
+-
+Rough: Hohes Gras neben Fairway und Grün.
+
+S
+-
+Scratch: Handicap-Index von 0.
+Slice: Starker Links-nach-rechts-Drall (Rechtshänder, häufigster Fehler).
+Spin: Drall des Balles (Backspin, Topspin, Sidespin).
+Stableford: Wertungsmethode mit Punkten pro Loch.
+
+T
+-
+Tee: Abschlagplatz oder kleiner Stift zur Ballerhöhung.
+Triple Bogey: 3 über Par.
+
+U
+-
+Up-and-down: Chip + Putt = Par gerettet (aus nicht-regulärer Position einlochen).
+
+W
+-
+Wedge: Hochgelofteter Schläger für kurze, hohe Schläge.
+Winter Rules: Lokale Sonderregeln bei schlechtem Wetter (verbesserte Lage erlaubt).
+
+
+================================================================
+KAPITEL 8: HÄUFIGE REGELFRAGEN AUF DEM PLATZ
+================================================================
+
+F: Mein Ball liegt in einem Fußabdruck im Bunker. Muss ich ihn so spielen?
+A: Ja, grundsätzlich muss der Ball gespielt werden, wie er liegt. Der Spieler
+   hat die Möglichkeit, den Ball für unspielbar zu erklären (1 Strafschlag,
+   Erleichterungsoptionen im oder außerhalb des Bunkers).
+
+F: Mein Ball liegt auf einem Weg aus Beton. Bekomme ich Erleichterung?
+A: Ja! Unbewegliche Hemmnisse (befestigte Wege, Sprinklerköpfe, Brücken) geben
+   kostenlosen Drop. Nächste Stelle ohne Behinderung für Stand UND Schwung
+   ermitteln, 1 Schlägerlänge Drop (Regel 16).
+
+F: Der Ball ist ins Wasser gefallen. Welche Optionen habe ich?
+A: Abhängig von der Farbe der Markierung:
+   Gelb: 1) So spielen, 2) Schlag & Distanz, 3) Hinterlinie.
+   Rot: Zusätzlich seitliche Erleichterung (2 Schlägerlängen vom Eintrittspunkt).
+
+F: Ich habe aus Versehen meinen Ball bewegt während ich nach ihm gesucht habe.
+A: Kein Strafschlag! Seit 2019: versehentliches Bewegen bei der Suche = kein
+   Strafschlag. Ball zurücklegen an die ursprüngliche Stelle.
+
+F: Darf ich ein Blatt oder einen Ast aus dem Bunker entfernen?
+A: Ja! Seit 2019 dürfen lose Hemmnisse (Blätter, Äste, Steine, Zapfen) auch
+   im Bunker ohne Strafschlag entfernt werden.
+
+F: Mein Ball liegt hinter einem Baum, ich komme nicht ran. Was tun?
+A: 1) Ball spielen, wie er liegt (eventuell linkshändig).
+   2) Ball für unspielbar erklären (1 Strafschlag): Schlag & Distanz,
+      Hinterlinie oder 2 Schlägerlängen seitlich.
+
+F: Wieviel Zeit darf ich nach meinem Ball suchen?
+A: Maximal 3 Minuten ab dem Moment, wenn man sinnvollerweise mit der Suche
+   beginnen konnte. Danach gilt der Ball als verloren (Schlag & Distanz).
+
+F: Darf ich mit eingestecktem Fahnenstock einlochen?
+A: Ja! Seit 2019 ist das völlig regelkonform und oft sogar vorteilhaft bei
+   langen Putts (der Fahnenstock kann den Ball "auffangen").
+
+F: Was ist ein Provisional Ball und wann muss ich ihn spielen?
+A: Wenn ein Ball verloren sein könnte ODER OOB sein könnte, KANN ein
+   Provisional Ball gespielt werden. Ankündigung: "Ich spiele einen
+   Provisional." Wenn der Original-Ball verloren/OOB ist, wird mit dem
+   Provisional weitergespielt (+ 1 Strafschlag). Findet man den Original-Ball:
+   dieser muss gespielt werden, Provisional wird aufgenommen.
+
+F: Mein Ball ist auf dem Green in einer Pfütze. Was tue ich?
+A: Temporäres Wasser auf dem Green: kostenlose Erleichterung an der nächsten
+   Stelle auf dem Green ohne temporäres Wasser und nicht näher zum Loch.
+
+F: Kann ich den Putter benutzen, auch wenn der Ball noch nicht auf dem Green ist?
+A: Ja, mit jedem Schläger kann jederzeit gespielt werden. Putter vom Apron
+   (Rand um das Green) ist oft die sicherste Wahl.
+
+
+================================================================
+KAPITEL 9: TRAININGSTIPPS UND ÜBUNGEN
+================================================================
+
+ÜBUNGEN ZUHAUSE (ohne Platz)
+------------------------------
+1. Putting-Matte: täglich 10–15 Minuten Putts aus 1–3 Metern üben.
+   Ziel: Linie und Tempo kennenlernen.
+2. Schwung mit Spiegel: Schwungbahn im Spiegel überprüfen.
+   Auf Schulterrotation und Gleichgewicht achten.
+3. Impact Bag: Treffmoment gegen Sandsack üben (Hände vor dem Ball).
+4. Rotation: Schulterrotation mit Schläger hinter dem Rücken üben
+   (Schläger horizontal durch die Schultern klemmen, drehen).
+
+ÜBUNGEN AUF DER DRIVING RANGE
+-------------------------------
+1. 9-Uhr-Übung: Nur 3/4-Schwünge mit jedem Eisen.
+   Ziel: Konsistenz vor Distanz.
+2. Zielfahne auf der Range: Immer auf ein konkretes Ziel spielen, nicht
+   wahllos in die Ferne.
+3. Vom kurzen zum langen Schläger: Warm-up mit PW, dann aufwärts zum Driver.
+4. Wedge-Übung: 10 Bälle aus 50 m, 10 aus 70 m, 10 aus 90 m – Distanzen kalibrieren.
+5. Chipping-Übung: 3 verschiedene Schläger (8er, PW, SW) für dieselbe Situation
+   vergleichen.
+
+ÜBUNGEN AUF DEM PLATZ
+-----------------------
+1. Putting: 3 Bälle aus 5 Metern, Ziel: alle 3 einlochen.
+2. Up-and-down-Übung: Von verschiedenen Lagen ums Grün, immer Chip + Putt zählen.
+3. Provisorisch spielen: Immer Provisional schlagen, wenn unsicher (spart Zeit).
+4. Score ohne Driver: eine Runde komplett mit 3-Holz vom Tee, Fairway-Kontrolle üben.
+
+TIPPS FÜR SCHNELLE VERBESSERUNG
+---------------------------------
+- Schwachstellen identifizieren: Statistik führen (Fairways in Regulation,
+  GIR, Anzahl Putts, Up-and-down-Quote).
+- 80/20 Regel: 80% der verschwendeten Schläge kommen vom kurzen Spiel
+  (Putts, Chips). Dort trainieren lohnt am meisten.
+- Schlägerauswahl: immer mit dem Schläger spielen, dem man vertraut,
+  nicht mit dem, den man eigentlich für die Distanz brauchen würde.
+- Pausen einplanen: 45–60 Minuten konzentriertes Training ist effektiver
+  als 3 Stunden ohne Fokus.
+- Lessons: eine Stunde mit einem Golflehrer bringt mehr als 10 Stunden
+  alleine auf der Range.
+
+
+================================================================
+KAPITEL 10: GOLFPLATZ-WISSEN FÜR DEUTSCHLAND UND ÖSTERREICH
+================================================================
+
+PLATZREIFE IN DEUTSCHLAND (DGV)
+--------------------------------
+Die Platzreife ist Voraussetzung für eine Clubmitgliedschaft und das
+Spielen auf öffentlichen Plätzen.
+
+Inhalte der Platzreife-Prüfung:
+- Theorietest: Grundregeln, Etikette, Handicap-System.
+- Praxistest: 9 Löcher auf dem Platz, max. 54 Strafpunkte.
+- Lernzeit: typischerweise 3–6 Monate, 20–30 Unterrichtsstunden.
+
+DGV-CLUBMITGLIEDSCHAFT
+-----------------------
+- Nach der Platzreife Aufnahme in einen DGV-Mitgliedsclub möglich.
+- Handicap-Index wird online im DGV-Golfportal verwaltet.
+- Turnierbetrieb: Clubmeisterschaften, Mannschaftsspiele, offene Turniere.
+- Gästerecht: mit DGV-Ausweis auf fast allen deutschen und europäischen
+  Plätzen spielbar.
+
+GC BAYERWALD (LOKAL)
+----------------------
+- Vollständige Scorekarte mit Par, HCP und Distanzen für alle 18 Löcher
+  ist in der GolfTrack-App hinterlegt.
+- Besonderheiten: abwechslungsreicher Bayerwaldkurs mit Waldabschnitten.
+- Empfehlungen: Driver an den Walddogleg-Löchern mit Bedacht einsetzen.
+
+TYPISCHE PLATZBEDINGUNGEN IN DEUTSCHLAND
+-----------------------------------------
+- Frühling/Herbst: Fairways oft feucht, Ball bleibt liegen (weniger Roll).
+  Schläger eine Nummer länger wählen.
+- Winter: Preferred Lies oft erlaubt (Winterregeln), Ball darf auf dem
+  Fairway verbessert werden (6 Zoll/15 cm).
+- Sommer: Harte Fairways = mehr Roll. Kurze Eisen und Wedges mehr Backspin.
+- Höhenlagen (z.B. Bayerischer Wald): Ball fliegt bei größerer Höhe
+  ca. 2–5% weiter durch dünnere Luft.
+
+GREENGEBÜHREN UND GASTRECHT
+-----------------------------
+- Gastgebühr: in Deutschland typischerweise 30–120 € je nach Platz.
+- Mit Handicap-Ausweis auf fast allen EGA-Mitgliedsplätzen spielbar.
+- Bücherung: immer im Voraus buchen, besonders am Wochenende.
+- Dresscode: meist Polo-Shirt, keine Jeans, keine Sportschuhe ohne Golf-Sohle.
+
+================================================================
+ENDE DER WISSENSDATENBANK
+================================================================
+Letzte Aktualisierung: 2025 | Basiert auf R&A Spielregeln 2023 & WHS 2024
+Quelle: GolfTrack-App, Caddy KI-Assistent
+================================================================

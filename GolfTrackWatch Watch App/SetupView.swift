@@ -10,6 +10,8 @@ private let rowBg  = Color(red: 0.10, green: 0.20, blue: 0.12)
 
 // MARK: - Setup View
 
+enum WatchSetupMode { case golf, minigolf }
+
 struct SetupView: View {
 
     @State private var model: WatchRoundModel?
@@ -23,15 +25,38 @@ struct SetupView: View {
     @State private var isWaitingForPhone = false
     @State private var waitingTimeoutTask: Task<Void, Never>?
 
-    private let wc = WatchConnectivityManager.shared
+    // Minigolf
+    @State private var setupMode: WatchSetupMode = .golf
+    @State private var minigolfConfig: WatchMinigolfConfig?
+
+    @ObservedObject private var wc = WatchConnectivityManager.shared
 
     // MARK: - Body
 
     var body: some View {
+        content
+            // iPhone hat ein Minigolf-Spiel gestartet → auf der Watch öffnen
+            .onChange(of: wc.minigolfState) { _, newValue in
+                guard model == nil, minigolfConfig == nil,
+                      let s = newValue, s.active, !s.players.isEmpty else { return }
+                minigolfConfig = WatchMinigolfConfig(
+                    players: s.players, holes: s.holes,
+                    scores: s.scores, currentHole: s.currentHole
+                )
+                WKInterfaceDevice.current().play(.notification)
+            }
+    }
+
+    @ViewBuilder
+    private var content: some View {
         if let model {
             StrokeTrackerView(model: model) {
                 self.model = nil
                 self.selectedCourse = nil
+            }
+        } else if let cfg = minigolfConfig {
+            WatchMinigolfScoringView(config: cfg) {
+                self.minigolfConfig = nil
             }
         } else if isWaitingForPhone {
             waitingView
@@ -73,13 +98,59 @@ struct SetupView: View {
                             .foregroundStyle(.white)
                             .kerning(0.5)
                     }
-                    Text("Neue Runde")
+                    Text(setupMode == .golf ? "Neue Runde" : "Minigolf")
                         .font(.system(size: 10))
                         .foregroundStyle(.secondary)
                 }
                 .padding(.top, 6)
                 .padding(.bottom, 2)
 
+                // ── Modus-Umschalter ───────────────────────────────
+                HStack(spacing: 6) {
+                    modeButton("Golf", mode: .golf)
+                    modeButton("Minigolf", mode: .minigolf)
+                }
+                .padding(.bottom, 2)
+
+                if setupMode == .minigolf {
+                    WatchMinigolfSetupView { cfg in
+                        minigolfConfig = cfg
+                    }
+                } else {
+                    golfSetupSections
+                }
+            }
+            .padding(.horizontal, 6)
+        }
+        .background(darkBg)
+        .onAppear {
+            setupConnectivity()
+            wc.loadPendingContext()
+            wc.requestCourseList()
+        }
+    }
+
+    private func modeButton(_ title: String, mode: WatchSetupMode) -> some View {
+        Button {
+            setupMode = mode
+            WKInterfaceDevice.current().play(.click)
+        } label: {
+            Text(title)
+                .font(.system(size: 12, weight: .bold))
+                .frame(maxWidth: .infinity)
+                .padding(.vertical, 6)
+                .background(setupMode == mode ? gold : rowBg)
+                .foregroundStyle(setupMode == mode ? darkBg : .white)
+                .clipShape(RoundedRectangle(cornerRadius: 9))
+        }
+        .buttonStyle(.plain)
+    }
+
+    // MARK: - Golf-Setup-Abschnitte
+
+    @ViewBuilder
+    private var golfSetupSections: some View {
+        Group {
                 // ── Platz-Sektion ──────────────────────────────────
                 if !availableCourses.isEmpty {
                     VStack(alignment: .leading, spacing: 4) {
@@ -127,14 +198,6 @@ struct SetupView: View {
                 .buttonStyle(.plain)
                 .padding(.top, 6)
                 .padding(.bottom, 6)
-            }
-            .padding(.horizontal, 6)
-        }
-        .background(darkBg)
-        .onAppear {
-            setupConnectivity()
-            wc.loadPendingContext()
-            wc.requestCourseList()
         }
     }
 

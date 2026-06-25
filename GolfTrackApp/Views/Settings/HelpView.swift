@@ -217,7 +217,7 @@ struct PrivacyView: View {
                 Group {
                     legalBlock(
                         title: "Datenschutz auf einen Blick",
-                        body: "GolfTrack speichert alle Daten ausschließlich lokal auf deinem Gerät. Es werden keine personenbezogenen Daten an Dritte übertragen, gesammelt oder auf externen Servern gespeichert."
+                        body: "GolfTrack speichert deine Daten (Runden, Scores, Statistiken) lokal auf deinem Gerät. Es werden keine Analyse- oder Tracking-Dienste eingesetzt. Einzelne Funktionen nutzen externe Dienste (Caddy-Sprachassistent, Golfplatz-Suche, Wetter) — dabei werden nur die unten beschriebenen Daten übertragen, und nur wenn du die jeweilige Funktion aktiv verwendest."
                     )
                     legalBlock(
                         title: "Gespeicherte Daten",
@@ -228,8 +228,16 @@ struct PrivacyView: View {
                         body: "GolfTrack kann deinen GPS-Standort für das Schlag-Tracking auf der Karte verwenden. Der Standortzugriff erfolgt nur während der App-Nutzung und die Koordinaten werden ausschließlich lokal auf deinem Gerät gespeichert."
                     )
                     legalBlock(
+                        title: "Caddy-Sprachassistent (ElevenLabs)",
+                        body: "Wenn du den Caddy-Sprachassistenten nutzt, wird deine Spracheingabe zur Verarbeitung an ElevenLabs Inc. (USA) übertragen. Die Übertragung erfolgt nur, während ein Gespräch aktiv ist. Für die Verarbeitung gilt die Datenschutzerklärung von ElevenLabs (elevenlabs.io/privacy). Ohne Nutzung des Caddys werden keine Sprachdaten übertragen."
+                    )
+                    legalBlock(
                         title: "GolfCourse API",
                         body: "Wenn du einen API-Key für golfcourseapi.com hinterlegst, werden Suchanfragen für Golfplätze an die API übertragen. Dabei wird ausschließlich dein Suchbegriff übermittelt. Der API-Key wird lokal in den UserDefaults deines Geräts gespeichert."
+                    )
+                    legalBlock(
+                        title: "Wetterdaten (Open-Meteo)",
+                        body: "Für die Wetteranzeige werden die ungefähren Koordinaten deines Standorts bzw. des Golfplatzes an den Wetterdienst Open-Meteo (open-meteo.com) übertragen. Es werden keine weiteren personenbezogenen Daten übermittelt."
                     )
                     legalBlock(
                         title: "Deine Rechte",
@@ -285,7 +293,9 @@ struct ImprintView: View {
                     title: "Urheberrecht",
                     lines: [
                         "Das Design und der Quellcode der App sind urheberrechtlich geschützt.",
-                        "Golfplatz-Daten werden über die GolfCourse API bezogen."
+                        "Golfplatz-Daten werden über die GolfCourse API bezogen.",
+                        "Der Caddy-Sprachassistent nutzt die Sprachtechnologie von ElevenLabs.",
+                        "Wetterdaten werden von Open-Meteo bereitgestellt."
                     ]
                 )
                 imprintBlock(

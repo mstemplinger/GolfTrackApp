@@ -10,6 +10,8 @@ struct HomeView: View {
     @State private var showNewRound      = false
     @State private var showTutorial      = false
     @State private var showAssistant     = false
+    @State private var showCaddyPaywall  = false
+    @EnvironmentObject private var subscriptionManager: SubscriptionManager
     @StateObject private var weather = GolfWeatherService()
     @Environment(\.horizontalSizeClass) private var sizeClass
 
@@ -79,7 +81,13 @@ struct HomeView: View {
                         }
                         .padding(.horizontal)
 
-                        Button { showAssistant = true } label: {
+                        Button {
+                            if subscriptionManager.isCaddySubscribed {
+                                showAssistant = true
+                            } else {
+                                showCaddyPaywall = true
+                            }
+                        } label: {
                             HStack(spacing: 10) {
                                 Image(systemName: "waveform.circle.fill")
                                     .font(.title3)
@@ -121,6 +129,10 @@ struct HomeView: View {
                             GolfAssistantView()
                                 .presentationDetents([.large])
                                 .presentationDragIndicator(.visible)
+                        }
+                        .sheet(isPresented: $showCaddyPaywall) {
+                            CaddyPaywallView()
+                                .environmentObject(subscriptionManager)
                         }
 
                         Spacer(minLength: 30)

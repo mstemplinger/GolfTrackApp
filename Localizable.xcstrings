@@ -37,10 +37,10 @@
     "/" : {
 
     },
-    "/ Loch %lld" : {
+    "/ %@" : {
 
     },
-    "/ Monat" : {
+    "/ Loch %lld" : {
 
     },
     "%@" : {
@@ -62,6 +62,26 @@
           "stringUnit" : {
             "state" : "new",
             "value" : "%1$@ · %2$@"
+          }
+        }
+      }
+    },
+    "%@ · %lld Löcher" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$@ · %2$lld Löcher"
+          }
+        }
+      }
+    },
+    "%@ · Loch %lld von %lld" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$@ · Loch %2$lld von %3$lld"
           }
         }
       }
@@ -132,6 +152,9 @@
       }
     },
     "%lld beantwortet" : {
+
+    },
+    "%lld falsche Antworten ansehen" : {
 
     },
     "%lld gelernt" : {
@@ -207,6 +230,9 @@
     "%lld Schläge" : {
 
     },
+    "%lld Schläger" : {
+
+    },
     "%lld Seite%@ gescannt" : {
       "localizations" : {
         "de" : {
@@ -228,6 +254,16 @@
     },
     "%lld verbleibend" : {
 
+    },
+    "%lld von %lld falsch beantwortet" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$lld von %2$lld falsch beantwortet"
+          }
+        }
+      }
     },
     "%lld von %lld Schlägern gemessen" : {
       "localizations" : {
@@ -286,6 +322,16 @@
     "✋" : {
 
     },
+    "🥇 %@ · %lld Schläge" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "🥇 %1$@ · %2$lld Schläge"
+          }
+        }
+      }
+    },
     "🧭" : {
 
     },
@@ -310,6 +356,9 @@
     "3" : {
 
     },
+    "3 Tagen" : {
+
+    },
     "4" : {
 
     },
@@ -317,6 +366,12 @@
 
     },
     "5" : {
+
+    },
+    "5 Tagen" : {
+
+    },
+    "7 Tagen" : {
 
     },
     "7-Tage-Vorhersage" : {
@@ -335,16 +390,37 @@
         }
       }
     },
+    "9 Loch" : {
+
+    },
     "9 Löcher" : {
 
     },
     "9:41" : {
 
     },
+    "14 Tagen" : {
+
+    },
+    "18 Loch" : {
+
+    },
     "18 Löcher" : {
 
     },
+    "20 Min." : {
+
+    },
     "24.0" : {
+
+    },
+    "30 Min." : {
+
+    },
+    "45 Min." : {
+
+    },
+    "60 Min." : {
 
     },
     "72.0" : {
@@ -402,6 +478,9 @@
           }
         }
       }
+    },
+    "Abonnement wird geladen…" : {
+
     },
     "Abschlag" : {
       "localizations" : {
@@ -584,7 +663,16 @@
         }
       }
     },
+    "Alle Trainings und der KI-Caddy –\nalles in einem Abo." : {
+
+    },
+    "Angefangenes Spiel" : {
+
+    },
     "Antworten durchsehen" : {
+
+    },
+    "Anzahl Löcher" : {
 
     },
     "Anzeigen" : {
@@ -668,6 +756,9 @@
         }
       }
     },
+    "Audio-Lektionen, die zu deinen aktuellen Statistiken passen" : {
+
+    },
     "Auf iPhone spiegeln" : {
       "localizations" : {
         "en" : {
@@ -698,6 +789,9 @@
         }
       }
     },
+    "Bag umbenennen" : {
+
+    },
     "Bald" : {
       "localizations" : {
         "de" : {
@@ -714,9 +808,6 @@
         }
       }
     },
-    "Bald verfügbar – wir arbeiten daran!" : {
-
-    },
     "Basierend auf Daten von über 100.000 Golfrunden analysiert Shot Scope die häufigsten Fehler von Handicap-Golfern." : {
 
     },
@@ -724,6 +815,15 @@
 
     },
     "Beenden" : {
+
+    },
+    "Benachrichtigungen" : {
+
+    },
+    "Benachrichtigungen gesperrt" : {
+
+    },
+    "Benachrichtigungen werden nur als lokale Erinnerungen verschickt – keine Werbung, keine Server." : {
 
     },
     "Benutzerdefiniert" : {
@@ -815,6 +915,9 @@
         }
       }
     },
+    "Bitte in den iPhone-Einstellungen aktivieren." : {
+
+    },
     "BUNKER" : {
 
     },
@@ -825,6 +928,9 @@
 
     },
     "Caddy – Golf-Assistent" : {
+
+    },
+    "Caddy und alle Trainings –\nalles in einem Abo." : {
 
     },
     "Course Rating (CR)" : {
@@ -865,8 +971,15 @@
     "D" : {
 
     },
-    "danach %@ / Monat" : {
-
+    "danach %@ / %@" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "danach %1$@ / %2$@"
+          }
+        }
+      }
     },
     "Das Ergebnis wird nicht gespeichert." : {
       "localizations" : {
@@ -938,6 +1051,9 @@
     "DEIN DURCHSCHNITT" : {
 
     },
+    "Dein Ergebnis wurde nicht an die Game-Center-Bestenliste übertragen, weil nicht auf allen Löchern ein Schlag eingetragen ist. Trage auf jedem Loch mindestens einen Schlag ein, damit die Runde in der Bestenliste zählt." : {
+
+    },
     "Dein Fortschritt wird gespeichert." : {
       "localizations" : {
         "de" : {
@@ -992,7 +1108,10 @@
     "Dein persönlicher KI-Caddy –\nRegeln, Tipps und Strategien per Sprache." : {
 
     },
-    "Der Durchschnitt wird wieder auf die Voreinstellung (%lld m) zurückgesetzt." : {
+    "Deine Übungsaufgabe" : {
+
+    },
+    "Der Durchschnitt wird auf die Voreinstellung (%lld m) zurückgesetzt." : {
 
     },
     "Die aktuellen Golfregeln gelten seit dem 1. Januar 2023. Lokale Platzregeln können einzelne Punkte abweichen." : {
@@ -1141,7 +1260,19 @@
         }
       }
     },
+    "Du hast aktuell Caddy aktiv. Wenn du das Training-Abo kaufst, verlierst du deinen Caddy-Zugang. Mit Pro bekommst du beides – Training und Caddy – in einem Abo." : {
+
+    },
+    "Du hast aktuell Training aktiv. Wenn du das Caddy-Abo kaufst, verlierst du deinen Training-Zugang. Mit Pro bekommst du beides – Caddy und Training – in einem Abo." : {
+
+    },
     "Du hast alle %lld Fragen beherrscht." : {
+
+    },
+    "Du hast bereits Caddy" : {
+
+    },
+    "Du hast bereits Training" : {
 
     },
     "Du kannst die Runde auf dem iPhone spiegeln und dort Einträge vornehmen." : {
@@ -1183,6 +1314,12 @@
 
     },
     "Eigenen Platz manuell erstellen" : {
+
+    },
+    "EIGENER SCHLÄGER" : {
+
+    },
+    "Einen Moment bitte …" : {
 
     },
     "Einheit" : {
@@ -1280,6 +1417,18 @@
         }
       }
     },
+    "Erinnert dich am nächsten Morgen an eine unfertige Runde" : {
+
+    },
+    "Erinnert dich während einer Runde, wenn du längere Zeit nichts eingetragen hast" : {
+
+    },
+    "Erinnert dich wenn du längere Zeit nicht gespielt hast" : {
+
+    },
+    "Erinnerung nach" : {
+
+    },
     "Erklärung" : {
 
     },
@@ -1309,6 +1458,15 @@
 
     },
     "Erste Schritte" : {
+
+    },
+    "Erstelle dein erstes Schläger-Bag." : {
+
+    },
+    "Erstellen" : {
+
+    },
+    "Erstellt mit GolfTrack" : {
 
     },
     "Ersten Platz hinzufügen" : {
@@ -1347,6 +1505,9 @@
       }
     },
     "Falsch" : {
+
+    },
+    "Falsche Antworten" : {
 
     },
     "Fehler" : {
@@ -1424,10 +1585,13 @@
         }
       }
     },
-    "Füge deine Schläger hinzu oder lade die Standardausstattung." : {
+    "Füge deine Schläger zu diesem Bag hinzu." : {
 
     },
     "Führung A" : {
+
+    },
+    "Für dich empfohlen" : {
 
     },
     "Für die Online-Suche wird ein API-Key benötigt." : {
@@ -1533,6 +1697,9 @@
         }
       }
     },
+    "Gesamt Par" : {
+
+    },
     "Gesamt: %lld" : {
 
     },
@@ -1632,9 +1799,6 @@
     "golfcourseapi.com/sign-in" : {
 
     },
-    "Golfer" : {
-
-    },
     "Golfer!" : {
 
     },
@@ -1689,6 +1853,9 @@
 
     },
     "Gratis" : {
+
+    },
+    "Halte die gedruckte Scorecard vor die Kamera – GolfTrack liest Par, HCP und Distanzen automatisch aus." : {
 
     },
     "Handicap" : {
@@ -1841,6 +2008,12 @@
         }
       }
     },
+    "Inaktivitätserinnerung" : {
+
+    },
+    "Ist ein Putter" : {
+
+    },
     "Jederzeit kündbar · Keine Bindung" : {
 
     },
@@ -1936,6 +2109,9 @@
         }
       }
     },
+    "Kein GPS-Signal – Position nicht gespeichert" : {
+
+    },
     "Keine Lochwerte verfügbar" : {
       "localizations" : {
         "de" : {
@@ -1951,6 +2127,9 @@
           }
         }
       }
+    },
+    "Keine Par-Werte erkannt – bitte manuell im Bearbeiten-Modus eingeben." : {
+
     },
     "Keine Runden" : {
 
@@ -1975,6 +2154,9 @@
 
     },
     "Kostenlos registrieren unter:" : {
+
+    },
+    "L %lld" : {
 
     },
     "L%lld" : {
@@ -2039,6 +2221,12 @@
     "Loch- & Abschlagpositionen gespeichert" : {
 
     },
+    "Loch-Details" : {
+
+    },
+    "Loch-Werte" : {
+
+    },
     "Löcher" : {
       "localizations" : {
         "de" : {
@@ -2054,6 +2242,9 @@
           }
         }
       }
+    },
+    "Löcher bearbeiten" : {
+
     },
     "Lochposition festlegen" : {
       "localizations" : {
@@ -2084,9 +2275,6 @@
 
     },
     "Mein Standort" : {
-
-    },
-    "Meine Schläger" : {
 
     },
     "Meinen Standort verwenden" : {
@@ -2150,6 +2338,9 @@
 
     },
     "Minigolf & Putten" : {
+
+    },
+    "Minuten" : {
 
     },
     "Mit Game Center verbinden" : {
@@ -2260,6 +2451,9 @@
         }
       }
     },
+    "NEU" : {
+
+    },
     "Neu scannen" : {
 
     },
@@ -2317,6 +2511,15 @@
     "Neuer Platz" : {
 
     },
+    "Neues Bag" : {
+
+    },
+    "Neues Bag erstellen" : {
+
+    },
+    "Nicht an Game Center übertragen" : {
+
+    },
     "Nicht beantwortet" : {
 
     },
@@ -2330,6 +2533,9 @@
 
     },
     "Noch gesperrt" : {
+
+    },
+    "Noch keine Bags" : {
 
     },
     "Noch keine Dokumente" : {
@@ -2450,6 +2656,12 @@
     "Nutzungsbedingungen" : {
 
     },
+    "Ø %@" : {
+
+    },
+    "Ø %lld m" : {
+
+    },
     "Ø 180 m · aus 12 Messungen" : {
 
     },
@@ -2463,7 +2675,13 @@
         }
       }
     },
+    "Offene Runde" : {
+
+    },
     "Offizieller Fragenkatalog · %lld Fragen · 6 Themengebiete" : {
+
+    },
+    "Öffnen" : {
 
     },
     "Ohne Namen starten – erneut drücken" : {
@@ -2500,6 +2718,9 @@
 
     },
     "Par pro Loch (%lld Löcher)" : {
+
+    },
+    "Pause-Erinnerung" : {
 
     },
     "Penalty Area" : {
@@ -2620,10 +2841,10 @@
         }
       }
     },
-    "Platz nicht dabei? Lege ihn manuell an." : {
+    "Platz nicht dabei?" : {
 
     },
-    "Platz nicht gefunden? Lege ihn manuell an." : {
+    "Platz speichern" : {
 
     },
     "Platz suchen" : {
@@ -2664,6 +2885,9 @@
 
     },
     "Platzinformationen" : {
+
+    },
+    "Platzname" : {
 
     },
     "Platzname *" : {
@@ -2808,6 +3032,12 @@
     "Punktetabelle" : {
 
     },
+    "PUTTER" : {
+
+    },
+    "Putter · Auto-Putts" : {
+
+    },
     "Putts" : {
       "localizations" : {
         "de" : {
@@ -2824,13 +3054,28 @@
         }
       }
     },
+    "Putts +1 automatisch" : {
+
+    },
+    "Putts werden beim Schlag automatisch hochgezählt" : {
+
+    },
     "Quelle: R&A Rules of Golf 2023 (r-a.org) · USGA (usga.org)" : {
+
+    },
+    "Ratings" : {
 
     },
     "Rechtliches" : {
 
     },
     "Referenz" : {
+
+    },
+    "Regelmäßig neue Audiobooks" : {
+
+    },
+    "Regeln" : {
 
     },
     "Regeln, Tipps & Strategien" : {
@@ -3036,6 +3281,12 @@
     "Satellit" : {
 
     },
+    "Scan fehlgeschlagen" : {
+
+    },
+    "Scan-Ergebnis prüfen" : {
+
+    },
     "Scanne deine Mitgliedskarte oder Greenfee-Belege für schnellen Zugriff." : {
       "localizations" : {
         "de" : {
@@ -3052,10 +3303,16 @@
         }
       }
     },
+    "Schau im App Store nach Updates – mit jedem Update kommen neue Lektionen dazu, die im Abo inklusive sind." : {
+
+    },
     "Schl." : {
 
     },
     "Schlag %lld" : {
+
+    },
+    "Schlag %lld – Schläger?" : {
 
     },
     "Schlag 1 · Driver" : {
@@ -3107,6 +3364,15 @@
 
     },
     "Schläger hinzufügen" : {
+
+    },
+    "Schläger manuell eingeben" : {
+
+    },
+    "Schläger-Bag" : {
+
+    },
+    "Schläger-Bags" : {
 
     },
     "Schlägerdistanzen (Ø)" : {
@@ -3215,6 +3481,12 @@
         }
       }
     },
+    "Scorecard scannen" : {
+
+    },
+    "Scorecard wird gelesen%@" : {
+
+    },
     "Skins" : {
       "localizations" : {
         "de" : {
@@ -3276,6 +3548,9 @@
       }
     },
     "Spiel" : {
+
+    },
+    "Spiel beenden & speichern" : {
 
     },
     "Spiel starten" : {
@@ -3410,6 +3685,7 @@
 
     },
     "Spielregeln" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -3460,7 +3736,7 @@
     "Standard" : {
 
     },
-    "Standardschläger laden" : {
+    "Standard-Bag erstellen" : {
 
     },
     "Standort" : {
@@ -3630,6 +3906,9 @@
     "SwiftUI & SwiftData" : {
 
     },
+    "Tage" : {
+
+    },
     "Team" : {
       "localizations" : {
         "de" : {
@@ -3684,7 +3963,11 @@
         }
       }
     },
+    "Tippe auf die Karte oder ziehe den Pin, um das Loch zu markieren" : {
+
+    },
     "Tippe auf die Karte, um das Loch zu markieren" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -3785,6 +4068,9 @@
           }
         }
       }
+    },
+    "TOT" : {
+
     },
     "Training" : {
       "localizations" : {
@@ -3895,6 +4181,9 @@
         }
       }
     },
+    "Umbenennen" : {
+
+    },
     "Verbindung testen" : {
       "localizations" : {
         "de" : {
@@ -3975,6 +4264,9 @@
         }
       }
     },
+    "Verwerfen" : {
+
+    },
     "Vollbild" : {
       "localizations" : {
         "de" : {
@@ -3992,6 +4284,7 @@
       }
     },
     "Voreingestellte Weite" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -4095,7 +4388,7 @@
     "Weniger anzeigen" : {
 
     },
-    "Werde zum besseren Golfspieler –\nmit geführten Audio-Trainings direkt in der App." : {
+    "Werde zum besseren Golfspieler –\nmit geführten Audio-Trainings." : {
 
     },
     "Wetter" : {
@@ -4235,7 +4528,7 @@
         }
       }
     },
-    "Wird durch eigene Messungen automatisch ersetzt." : {
+    "Wird automatisch deaktiviert, wenn du eine Apple Watch zum Tracken verwendest." : {
 
     },
     "World Handicap System (WHS)" : {
@@ -4270,7 +4563,7 @@
         }
       }
     },
-    "z. B. 7 Eisen" : {
+    "z. B. Turnier-Bag" : {
 
     },
     "z.B. Mitgliedskarte 2025" : {
@@ -4327,6 +4620,9 @@
           }
         }
       }
+    },
+    "Zu Pro wechseln – alles in einem" : {
+
     },
     "Zurück" : {
 

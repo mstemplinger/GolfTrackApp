@@ -9,6 +9,7 @@ final class Round {
     var notes: String
     var gameModeRaw: String = GameMode.strokePlay.rawValue
     var isWatchInitiated: Bool = false
+    var bag: GolfBag?
 
     var playerNamesRaw: String = ""
 

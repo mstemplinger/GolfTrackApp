@@ -13,6 +13,8 @@ struct PinSetterView: View {
     @State private var userLocation: CLLocation?
     @State private var pendingLat: Double?
     @State private var pendingLon: Double?
+    @State private var dragOffset: CGSize = .zero
+    @State private var isDraggingPin = false
 
     var body: some View {
         NavigationStack {
@@ -24,6 +26,20 @@ struct PinSetterView: View {
                         if let lat = pendingLat, let lon = pendingLon {
                             Annotation("Pin", coordinate: CLLocationCoordinate2D(latitude: lat, longitude: lon)) {
                                 pinMarker
+                                    .scaleEffect(isDraggingPin ? 1.25 : 1.0)
+                                    .offset(dragOffset)
+                                    .animation(.spring(response: 0.3), value: isDraggingPin)
+                                    .gesture(
+                                        DragGesture()
+                                            .onChanged { value in
+                                                isDraggingPin = true
+                                                dragOffset = value.translation
+                                            }
+                                            .onEnded { value in
+                                                commitDrag(translation: value.translation,
+                                                           proxy: proxy, lat: lat, lon: lon)
+                                            }
+                                    )
                             }
                         }
                     }
@@ -119,7 +135,7 @@ struct PinSetterView: View {
             Image(systemName: "mappin.circle.fill")
                 .font(.title3)
                 .foregroundStyle(AppTheme.gold)
-            Text("Tippe auf die Karte, um das Loch zu markieren")
+            Text("Tippe auf die Karte oder ziehe den Pin, um das Loch zu markieren")
                 .font(.subheadline.bold())
                 .foregroundStyle(AppTheme.text)
             Spacer()
@@ -210,6 +226,22 @@ struct PinSetterView: View {
                 latitudinalMeters: 150,
                 longitudinalMeters: 150
             ))
+        }
+    }
+
+    /// Wandelt das Verschieben des Pins in eine neue Koordinate um.
+    private func commitDrag(translation: CGSize, proxy: MapProxy, lat: Double, lon: Double) {
+        defer {
+            dragOffset = .zero
+            isDraggingPin = false
+        }
+        let coord = CLLocationCoordinate2D(latitude: lat, longitude: lon)
+        guard let screenPoint = proxy.convert(coord, to: .local) else { return }
+        let newPoint = CGPoint(x: screenPoint.x + translation.width,
+                               y: screenPoint.y + translation.height)
+        if let newCoord = proxy.convert(newPoint, from: .local) {
+            pendingLat = newCoord.latitude
+            pendingLon = newCoord.longitude
         }
     }
 }

@@ -17,6 +17,7 @@ struct ScorecardView: View {
     @State private var showShakeAlert = false
     @State private var showRules = false
     @State private var showCourseInfo = false
+    @State private var showIncompleteScoreAlert = false
 
     private let wc = WatchConnectivityManager.shared
     @ObservedObject private var gc = GameCenterManager.shared
@@ -105,11 +106,25 @@ struct ScorecardView: View {
                 }
                 gc.evaluateAchievements(rounds: [round])
                 GolfLiveActivityManager.endRound()
-                showRoundCompleteSheet = true
+                // Inaktivitätserinnerung: 5 Tage nach der abgeschlossenen Runde
+                Task { await NotificationManager.shared.scheduleInactivityReminder(afterDays: 5) }
+                NotificationManager.shared.cancelOpenRoundReminder()
+                NotificationManager.shared.cancelRoundInactivityReminder()
+                // Hinweis, falls das Ergebnis wegen fehlender Löcher nicht an Game Center ging
+                if !allHolesPlayed && gc.isAuthenticated {
+                    showIncompleteScoreAlert = true
+                } else {
+                    showRoundCompleteSheet = true
+                }
             }
             Button("Weiter spielen", role: .cancel) {}
         } message: {
             Text("Die Runde wird als abgeschlossen gespeichert.")
+        }
+        .alert("Nicht an Game Center übertragen", isPresented: $showIncompleteScoreAlert) {
+            Button("OK") { showRoundCompleteSheet = true }
+        } message: {
+            Text("Dein Ergebnis wurde nicht an die Game-Center-Bestenliste übertragen, weil nicht auf allen Löchern ein Schlag eingetragen ist. Trage auf jedem Loch mindestens einen Schlag ein, damit die Runde in der Bestenliste zählt.")
         }
         .sheet(isPresented: $showRoundCompleteSheet) {
             RoundCompleteSheet(round: round) {
@@ -161,6 +176,9 @@ struct ScorecardView: View {
             let strokes = sortedScores.map(\.strokes)
             wc.startRound(holes: sortedScores.count, strokes: strokes, currentHoleIndex: currentIndex)
 
+            // Inaktivitäts-Erinnerung während der Runde starten
+            scheduleRoundInactivityReminder()
+
             // Watch-Updates auf iPhone anwenden
             wc.onWatchStrokesUpdate = { watchStrokes, watchHole in
                 guard watchStrokes.count == sortedScores.count else { return }
@@ -187,15 +205,30 @@ struct ScorecardView: View {
         .onDisappear {
             // Callbacks aufräumen damit keine Zombie-Referenzen bleiben
             wc.onWatchShotReceived = nil
+            NotificationManager.shared.cancelRoundInactivityReminder()
         }
         .onChange(of: currentIndex) { _, newIndex in
             let strokes = sortedScores.map(\.strokes)
             wc.updateStrokes(strokes: strokes, currentHoleIndex: newIndex)
+            scheduleRoundInactivityReminder()
         }
         .onChange(of: round.totalStrokes) { _, _ in
             let strokes = sortedScores.map(\.strokes)
             wc.updateStrokes(strokes: strokes, currentHoleIndex: currentIndex)
+            scheduleRoundInactivityReminder()
         }
+    }
+
+    // MARK: - Round inactivity reminder
+
+    private func scheduleRoundInactivityReminder() {
+        let storedMinutes = UserDefaults.standard.integer(forKey: "notif.roundInactivity.minutes")
+        let minutes = storedMinutes > 0 ? storedMinutes : 45
+        NotificationManager.shared.rescheduleRoundInactivityReminder(
+            holeName: "Loch \(currentIndex + 1)",
+            afterMinutes: minutes,
+            watchIsActive: wc.isWatchReachable
+        )
     }
 
     // MARK: - Game status banner

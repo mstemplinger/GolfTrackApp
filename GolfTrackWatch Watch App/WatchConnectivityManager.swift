@@ -11,6 +11,16 @@ struct WatchCourse: Identifiable, Equatable {
     var id: String { name }
 }
 
+// MARK: - Minigolf-Sync-Zustand (kompletter Spielstand, beidseitig)
+
+struct MinigolfSyncState: Equatable {
+    var active: Bool
+    var players: [String]
+    var holes: Int
+    var scores: [[Int]]
+    var currentHole: Int
+}
+
 // MARK: - Manager (Watch-Seite)
 
 @MainActor
@@ -22,6 +32,9 @@ final class WatchConnectivityManager: NSObject, ObservableObject {
     var onUpdateStrokes: ((_ strokes: [Int], _ currentHole: Int) -> Void)?
     var onFinishRound: (() -> Void)?
     var onCoursesReceived: ((_ courses: [WatchCourse]) -> Void)?
+
+    /// Letzter vom iPhone empfangener Minigolf-Spielstand (für Live-Sync)
+    @Published var minigolfState: MinigolfSyncState?
 
     private override init() {
         super.init()
@@ -81,6 +94,21 @@ final class WatchConnectivityManager: NSObject, ObservableObject {
             "toLat":     toLat,
             "toLon":     toLon,
             "distance":  distance
+        ]
+        sendToPhone(payload)
+    }
+
+    // MARK: - Minigolf-Spielstand an iPhone senden (Watch → iPhone)
+
+    func sendMinigolfState(_ state: MinigolfSyncState) {
+        guard WCSession.default.activationState == .activated else { return }
+        let payload: [String: Any] = [
+            "action":        "minigolfSync",
+            "mgActive":      state.active,
+            "mgPlayers":     state.players,
+            "mgHoles":       state.holes,
+            "mgScores":      state.scores,
+            "mgCurrentHole": state.currentHole
         ]
         sendToPhone(payload)
     }
@@ -153,6 +181,16 @@ extension WatchConnectivityManager: WCSessionDelegate {
 
         case "finishRound":
             onFinishRound?()
+
+        case "minigolfSync":
+            guard let active  = payload["mgActive"]      as? Bool,
+                  let players = payload["mgPlayers"]     as? [String],
+                  let holes   = payload["mgHoles"]       as? Int,
+                  let scores  = payload["mgScores"]      as? [[Int]],
+                  let hole    = payload["mgCurrentHole"] as? Int
+            else { return }
+            minigolfState = MinigolfSyncState(active: active, players: players,
+                                              holes: holes, scores: scores, currentHole: hole)
 
         case "courseList":
             guard let coursesData = payload["courses"] as? [[String: Any]] else { return }

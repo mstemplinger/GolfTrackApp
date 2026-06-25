@@ -345,6 +345,9 @@ struct SmartModeView: View {
     @State private var startTime = Date()
     @State private var isFinished = false
     @State private var showQuitConfirm = false
+    @State private var wrongAnswers: [(question: QuizQuestion, chosen: Int)] = []
+    @State private var showWrongReview = false
+    @State private var wrongReviewIndex = 0
 
     private var progress: Double { allQuestions.isEmpty ? 1 : Double(masteredIDs.count) / Double(allQuestions.count) }
 
@@ -451,6 +454,11 @@ struct SmartModeView: View {
             if index == question.correctIndex {
                 sessionCorrect += 1
                 masteredIDs.insert(question.id)
+            } else {
+                // Track first-time wrong answers only
+                if !wrongAnswers.contains(where: { $0.question.id == question.id }) {
+                    wrongAnswers.append((question: question, chosen: index))
+                }
             }
             // Queue is only modified in nextQuestion() to avoid mid-render changes
         } label: {
@@ -584,17 +592,40 @@ struct SmartModeView: View {
             }
             .padding(.horizontal)
 
-            Button("Fertig") { saveAndDismiss() }
-                .font(.headline)
-                .frame(maxWidth: .infinity)
-                .padding(.vertical, 16)
-                .background(AppTheme.gold, in: RoundedRectangle(cornerRadius: 14))
-                .foregroundStyle(.white)
-                .padding(.horizontal)
+            VStack(spacing: 12) {
+                if !wrongAnswers.isEmpty {
+                    Button {
+                        wrongReviewIndex = 0
+                        showWrongReview = true
+                    } label: {
+                        Label("\(wrongAnswers.count) falsche Antworten ansehen", systemImage: "exclamationmark.circle")
+                            .font(.headline)
+                            .frame(maxWidth: .infinity)
+                            .padding(.vertical, 14)
+                            .background(Color.orange.opacity(0.12), in: RoundedRectangle(cornerRadius: 14))
+                            .foregroundStyle(.orange)
+                    }
+                    .buttonStyle(.plain)
+                    .padding(.horizontal)
+                }
+                Button("Fertig") { saveAndDismiss() }
+                    .font(.headline)
+                    .frame(maxWidth: .infinity)
+                    .padding(.vertical, 16)
+                    .background(AppTheme.gold, in: RoundedRectangle(cornerRadius: 14))
+                    .foregroundStyle(.white)
+                    .padding(.horizontal)
+            }
 
             Spacer()
         }
         .background(AppTheme.bg)
+        .sheet(isPresented: $showWrongReview) {
+            WrongAnswerReviewSheet(
+                wrongAnswers: wrongAnswers,
+                currentIndex: $wrongReviewIndex
+            )
+        }
     }
 
     // MARK: Helpers

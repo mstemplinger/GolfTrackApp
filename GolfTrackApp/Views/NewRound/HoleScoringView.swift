@@ -11,13 +11,21 @@ struct HoleScoringView: View {
     let onPrevious: () -> Void
     let onNext: () -> Void
 
-    @Query(sort: \GolfClub.order) private var clubs: [GolfClub]
+    @Query(sort: \GolfClub.order) private var allClubs: [GolfClub]
+
+    private var clubs: [GolfClub] {
+        if let bag = round.bag { return bag.sortedClubs }
+        return allClubs
+    }
     @AppStorage(DistanceUnit.storageKey) private var distanceUnit: DistanceUnit = .meters
     @Environment(\.modelContext) private var context
     @State private var locationManager = CLLocationManager()
     @State private var userLocation: CLLocation?
     @State private var showShotTracker = false
     @State private var showPinSetter = false
+    @State private var showClubPicker = false
+    @State private var pendingGPSLocation: CLLocation?
+    @State private var pendingShotNumber: Int = 0
 
     private var diff: Int { score.strokes - par }
 
@@ -74,6 +82,17 @@ struct HoleScoringView: View {
         .sheet(isPresented: $showPinSetter) {
             PinSetterView(pinLatitude: $score.pinLatitude, pinLongitude: $score.pinLongitude)
         }
+        .sheet(isPresented: $showClubPicker) {
+            ClubPickerSheet(
+                clubs: clubs,
+                strokeNumber: pendingShotNumber,
+                gpsLocation: pendingGPSLocation,
+                holeScore: score,
+                onPutterSelected: { score.putts += 1 }
+            )
+            .presentationDetents([.medium, .large])
+            .presentationDragIndicator(.visible)
+        }
         .onAppear {
             if clubs.isEmpty { seedDefaultClubs() }
             updateWidget()
@@ -106,15 +125,24 @@ struct HoleScoringView: View {
     }
 
     private func seedDefaultClubs() {
-        let defaults: [(name: String, dist: Int, order: Int)] = [
-            ("Driver",   220, 0),  ("3 Wood",  195, 1),  ("5 Wood",  180, 2),
-            ("3 Eisen",  185, 3),  ("4 Eisen", 175, 4),  ("5 Eisen", 165, 5),
-            ("6 Eisen",  155, 6),  ("7 Eisen", 145, 7),  ("8 Eisen", 130, 8),
-            ("9 Eisen",  120, 9),  ("PW",      110, 10), ("GW",       95, 11),
-            ("SW",        80, 12), ("LW",       60, 13), ("Putter",   10, 14),
+        let defaults: [(String, Int, Int, Bool)] = [
+            ("Driver", 220, 0, false),  ("3 Wood", 195, 1, false),  ("5 Wood", 180, 2, false),
+            ("3 Eisen", 185, 3, false), ("4 Eisen", 175, 4, false), ("5 Eisen", 165, 5, false),
+            ("6 Eisen", 155, 6, false), ("7 Eisen", 145, 7, false), ("8 Eisen", 130, 8, false),
+            ("9 Eisen", 120, 9, false), ("PW", 110, 10, false),     ("GW", 95, 11, false),
+            ("SW", 80, 12, false),      ("LW", 60, 13, false),      ("Putter", 10, 14, true),
         ]
-        for d in defaults {
-            context.insert(GolfClub(name: d.name, averageDistance: d.dist, order: d.order))
+        let bag = round.bag ?? {
+            let b = GolfBag(name: "Standard")
+            context.insert(b)
+            round.bag = b
+            return b
+        }()
+        for (name, dist, order, isPutter) in defaults {
+            let club = GolfClub(name: name, averageDistance: dist, order: order, isPutter: isPutter)
+            club.bag = bag
+            context.insert(club)
+            bag.clubs.append(club)
         }
     }
 
@@ -374,7 +402,15 @@ struct HoleScoringView: View {
 
             HStack(spacing: 28) {
                 Button {
-                    if score.strokes > 1 { score.strokes -= 1 }
+                    guard score.strokes > 1 else { return }
+                    let removingNum = score.strokes
+                    score.strokes -= 1
+                    if let shot = score.shots.first(where: { $0.shotNumber == removingNum }) {
+                        if let club = clubs.first(where: { $0.name == shot.club }), club.isPutter, score.putts > 0 {
+                            score.putts -= 1
+                        }
+                        context.delete(shot)
+                    }
                 } label: {
                     Image(systemName: "minus.circle.fill")
                         .font(.system(size: 48))
@@ -390,7 +426,19 @@ struct HoleScoringView: View {
                     .animation(.snappy, value: score.strokes)
 
                 Button {
+                    let shotNum = score.strokes + 1
                     score.strokes += 1
+                    // Update previous shot's destination with current position
+                    if let loc = userLocation,
+                       let prev = score.sortedShots.last {
+                        let c = loc.coordinate
+                        prev.toLatitude = c.latitude
+                        prev.toLongitude = c.longitude
+                        prev.distanceMeters = Shot.haversineDistance(from: prev.fromCoordinate, to: c)
+                    }
+                    pendingGPSLocation = userLocation
+                    pendingShotNumber = shotNum
+                    if !clubs.isEmpty { showClubPicker = true }
                 } label: {
                     Image(systemName: "plus.circle.fill")
                         .font(.system(size: 48))
@@ -406,14 +454,16 @@ struct HoleScoringView: View {
     // MARK: - Secondary Stats Card
 
     private var secondaryStatsCard: some View {
-        HStack(spacing: 0) {
-            puttCounter
-            Divider().frame(height: 50).padding(.horizontal, 8)
-            if par > 3 {
-                fairwayToggle
+        VStack(spacing: 0) {
+            HStack(spacing: 0) {
+                puttCounter
                 Divider().frame(height: 50).padding(.horizontal, 8)
+                if par > 3 {
+                    fairwayToggle
+                    Divider().frame(height: 50).padding(.horizontal, 8)
+                }
+                girToggle
             }
-            girToggle
         }
         .padding(.horizontal, 16)
         .padding(.vertical, 14)
@@ -761,5 +811,105 @@ struct HoleScoringView: View {
         if diff < 0 { return AppTheme.gold }
         if diff == 0 { return .primary }
         return diff == 1 ? .orange : .red
+    }
+}
+
+// MARK: - Club Picker Sheet
+
+private struct ClubPickerSheet: View {
+    let clubs: [GolfClub]
+    let strokeNumber: Int
+    let gpsLocation: CLLocation?
+    @Bindable var holeScore: HoleScore
+    let onPutterSelected: () -> Void
+
+    @Environment(\.dismiss) private var dismiss
+    @Environment(\.modelContext) private var context
+    @AppStorage(DistanceUnit.storageKey) private var distanceUnit: DistanceUnit = .meters
+
+    var body: some View {
+        NavigationStack {
+            ZStack {
+                AppTheme.bg.ignoresSafeArea()
+                ScrollView {
+                    VStack(spacing: 8) {
+                        if gpsLocation == nil {
+                            HStack(spacing: 8) {
+                                Image(systemName: "location.slash")
+                                    .foregroundStyle(AppTheme.textSec)
+                                Text("Kein GPS-Signal – Position nicht gespeichert")
+                                    .font(.caption)
+                                    .foregroundStyle(AppTheme.textSec)
+                                Spacer()
+                            }
+                            .padding(.horizontal, 16)
+                            .padding(.vertical, 10)
+                        }
+                        ForEach(clubs) { club in
+                            Button {
+                                if club.isPutter { onPutterSelected() }
+                                recordShot(club: club.name)
+                                dismiss()
+                            } label: {
+                                HStack(spacing: 14) {
+                                    ZStack {
+                                        Circle()
+                                            .fill(club.isPutter ? Color.blue.opacity(0.15) : AppTheme.gold.opacity(0.15))
+                                            .frame(width: 40, height: 40)
+                                        Image(systemName: club.isPutter ? "flag.fill" : "figure.golf")
+                                            .font(.system(size: 16))
+                                            .foregroundStyle(club.isPutter ? Color.blue : AppTheme.gold)
+                                    }
+                                    VStack(alignment: .leading, spacing: 2) {
+                                        HStack(spacing: 6) {
+                                            Text(club.name)
+                                                .font(.subheadline.bold())
+                                                .foregroundStyle(AppTheme.text)
+                                            if club.isPutter {
+                                                Text("PUTTER")
+                                                    .font(.system(size: 9, weight: .bold))
+                                                    .tracking(1)
+                                                    .foregroundStyle(.blue)
+                                                    .padding(.horizontal, 5).padding(.vertical, 2)
+                                                    .background(Color.blue.opacity(0.15), in: Capsule())
+                                            }
+                                        }
+                                        Text(club.isPutter ? "Putts +1 automatisch" : "Ø \(distanceUnit.format(Double(club.averageDistance)))")
+                                            .font(.caption)
+                                            .foregroundStyle(club.isPutter ? Color.blue.opacity(0.7) : AppTheme.textSec)
+                                    }
+                                    Spacer()
+                                    Image(systemName: "chevron.right")
+                                        .font(.caption)
+                                        .foregroundStyle(AppTheme.textTer)
+                                }
+                                .padding(.horizontal, 16)
+                                .padding(.vertical, 12)
+                                .background(AppTheme.card, in: RoundedRectangle(cornerRadius: 14))
+                            }
+                        }
+                    }
+                    .padding(.horizontal, 16)
+                    .padding(.top, 8)
+                    .padding(.bottom, 24)
+                }
+            }
+            .navigationTitle("Schlag \(strokeNumber) – Schläger?")
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .cancellationAction) {
+                    Button("Überspringen") { dismiss() }
+                        .foregroundStyle(AppTheme.textSec)
+                }
+            }
+        }
+    }
+
+    private func recordShot(club: String) {
+        let coord = gpsLocation?.coordinate ?? CLLocationCoordinate2D(latitude: 0, longitude: 0)
+        let shot = Shot(shotNumber: strokeNumber, from: coord, to: coord, club: club)
+        shot.holeScore = holeScore
+        holeScore.shots.append(shot)
+        context.insert(shot)
     }
 }

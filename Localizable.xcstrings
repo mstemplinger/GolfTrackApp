@@ -2,55 +2,166 @@
   "sourceLanguage" : "de",
   "strings" : {
     "" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : ""
+          }
+        }
+      }
     },
     "-" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "-"
+          }
+        }
+      }
     },
     "–" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "–"
+          }
+        }
+      }
     },
     "—" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "—"
+          }
+        }
+      }
     },
     "— m" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "— m"
+          }
+        }
+      }
     },
     "·" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "·"
+          }
+        }
+      }
     },
     "· %@" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "· %@"
+          }
+        }
+      }
     },
     "· %@ gesamt" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "· %@ total"
+          }
+        }
+      }
     },
     "\"%@\" wird unwiderruflich gelöscht." : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "\"%@\" will be permanently deleted."
+          }
+        }
+      }
     },
     "(%lld offen)" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "(%lld open)"
+          }
+        }
+      }
     },
     "(Ø %@)" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "(Ø %@)"
+          }
+        }
+      }
     },
     "/" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "/"
+          }
+        }
+      }
     },
     "/ %@" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "/ %@"
+          }
+        }
+      }
     },
     "/ Loch %lld" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "/ hole %lld"
+          }
+        }
+      }
     },
     "%@" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@"
+          }
+        }
+      }
     },
     "%@ – %@" : {
       "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "new",
+            "value" : "%1$@ – %2$@"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
             "value" : "%1$@ – %2$@"
           }
         }
@@ -63,6 +174,12 @@
             "state" : "new",
             "value" : "%1$@ · %2$@"
           }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@ · %2$@"
+          }
         }
       }
     },
@@ -72,6 +189,12 @@
           "stringUnit" : {
             "state" : "new",
             "value" : "%1$@ · %2$lld Löcher"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@ · %2$lld holes"
           }
         }
       }
@@ -83,6 +206,12 @@
             "state" : "new",
             "value" : "%1$@ · Loch %2$lld von %3$lld"
           }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@ · hole %2$lld of %3$lld"
+          }
         }
       }
     },
@@ -92,6 +221,12 @@
           "stringUnit" : {
             "state" : "new",
             "value" : "%1$@ (%2$lld Fragen)"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@ (%2$lld questions)"
           }
         }
       }
@@ -103,17 +238,44 @@
             "state" : "new",
             "value" : "%1$@ %2$lld"
           }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@ %2$lld"
+          }
         }
       }
     },
     "%@ gratis testen" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Try %@ for free"
+          }
+        }
+      }
     },
     "%@ kostenlos" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ free"
+          }
+        }
+      }
     },
     "%@ kostenlos testen – danach jederzeit kündbar" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Try %@ free – cancel anytime afterwards"
+          }
+        }
+      }
     },
     "%@%@" : {
       "localizations" : {
@@ -122,11 +284,24 @@
             "state" : "new",
             "value" : "%1$@%2$@"
           }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@%2$@"
+          }
         }
       }
     },
     "%lld" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld"
+          }
+        }
+      }
     },
     "%lld (%@)" : {
       "localizations" : {
@@ -135,11 +310,24 @@
             "state" : "new",
             "value" : "%1$lld (%2$@)"
           }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$lld (%2$@)"
+          }
         }
       }
     },
     "%lld %%" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld %%"
+          }
+        }
+      }
     },
     "%lld Abschlag%@" : {
       "localizations" : {
@@ -148,20 +336,54 @@
             "state" : "new",
             "value" : "%1$lld Abschlag%2$@"
           }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$lld tee shot%2$@"
+          }
         }
       }
     },
     "%lld beantwortet" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld answered"
+          }
+        }
+      }
     },
     "%lld falsche Antworten ansehen" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "View %lld wrong answers"
+          }
+        }
+      }
     },
     "%lld gelernt" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld learned"
+          }
+        }
+      }
     },
     "%lld Loch" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld hole"
+          }
+        }
+      }
     },
     "%lld Loch · Par %lld" : {
       "localizations" : {
@@ -170,11 +392,24 @@
             "state" : "new",
             "value" : "%1$lld Loch · Par %2$lld"
           }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$lld hole · par %2$lld"
+          }
         }
       }
     },
     "%lld Löcher" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld holes"
+          }
+        }
+      }
     },
     "%lld Löcher · Par %lld" : {
       "localizations" : {
@@ -183,29 +418,84 @@
             "state" : "new",
             "value" : "%1$lld Löcher · Par %2$lld"
           }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$lld holes · par %2$lld"
+          }
         }
       }
     },
     "%lld m" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld m"
+          }
+        }
+      }
     },
     "%lld min" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld min"
+          }
+        }
+      }
     },
     "%lld offizielle Prüfungsfragen" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld official exam questions"
+          }
+        }
+      }
     },
     "%lld Pkt" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld pts"
+          }
+        }
+      }
     },
     "%lld Pkt." : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld pts."
+          }
+        }
+      }
     },
     "%lld Punkte" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld points"
+          }
+        }
+      }
     },
     "%lld Regeln" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld rules"
+          }
+        }
+      }
     },
     "%lld Schlag%@ erfasst" : {
       "localizations" : {
@@ -213,6 +503,12 @@
           "stringUnit" : {
             "state" : "new",
             "value" : "%1$lld Schlag%2$@ erfasst"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$lld stroke%2$@ recorded"
           }
         }
       }
@@ -224,14 +520,34 @@
             "state" : "new",
             "value" : "%1$lld Schlag%2$@ gemessen"
           }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$lld shot%2$@ measured"
+          }
         }
       }
     },
     "%lld Schläge" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld strokes"
+          }
+        }
+      }
     },
     "%lld Schläger" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld clubs"
+          }
+        }
+      }
     },
     "%lld Seite%@ gescannt" : {
       "localizations" : {
@@ -240,20 +556,54 @@
             "state" : "new",
             "value" : "%1$lld Seite%2$@ gescannt"
           }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$lld page%2$@ scanned"
+          }
         }
       }
     },
     "%lld Seiten" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld pages"
+          }
+        }
+      }
     },
     "%lld Statistiken" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld statistics"
+          }
+        }
+      }
     },
     "%lld Tipps" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld tips"
+          }
+        }
+      }
     },
     "%lld verbleibend" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld remaining"
+          }
+        }
+      }
     },
     "%lld von %lld falsch beantwortet" : {
       "localizations" : {
@@ -261,6 +611,12 @@
           "stringUnit" : {
             "state" : "new",
             "value" : "%1$lld von %2$lld falsch beantwortet"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$lld of %2$lld answered incorrectly"
           }
         }
       }
@@ -272,6 +628,12 @@
             "state" : "new",
             "value" : "%1$lld von %2$lld Schlägern gemessen"
           }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$lld of %2$lld clubs measured"
+          }
         }
       }
     },
@@ -280,6 +642,12 @@
         "de" : {
           "stringUnit" : {
             "state" : "new",
+            "value" : "%1$lld–%2$lld %3$@"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
             "value" : "%1$lld–%2$lld %3$@"
           }
         }
@@ -292,35 +660,104 @@
             "state" : "new",
             "value" : "%1$lld/%2$lld"
           }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$lld/%2$lld"
+          }
         }
       }
     },
     "• %@" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "• %@"
+          }
+        }
+      }
     },
     "• Runde beendet" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "• Round finished"
+          }
+        }
+      }
     },
     "∑" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "∑"
+          }
+        }
+      }
     },
     "+" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "+"
+          }
+        }
+      }
     },
     "+%lld" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "+%lld"
+          }
+        }
+      }
     },
     "+20" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "+20"
+          }
+        }
+      }
     },
     "−" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "−"
+          }
+        }
+      }
     },
     "● LIVE" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "● LIVE"
+          }
+        }
+      }
     },
     "✋" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "✋"
+          }
+        }
+      }
     },
     "🥇 %@ · %lld Schläge" : {
       "localizations" : {
@@ -329,50 +766,154 @@
             "state" : "new",
             "value" : "🥇 %1$@ · %2$lld Schläge"
           }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🥇 %1$@ · %2$lld strokes"
+          }
         }
       }
     },
     "🧭" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🧭"
+          }
+        }
+      }
     },
     "0 Pkt." : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "0 pts."
+          }
+        }
+      }
     },
     "1" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "1"
+          }
+        }
+      }
     },
     "01" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "01"
+          }
+        }
+      }
     },
     "2" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "2"
+          }
+        }
+      }
     },
     "2 SL" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "2 SL"
+          }
+        }
+      }
     },
     "2 up" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "2 up"
+          }
+        }
+      }
     },
     "3" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "3"
+          }
+        }
+      }
     },
     "3 Tagen" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "3 days"
+          }
+        }
+      }
     },
     "4" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "4"
+          }
+        }
+      }
     },
     "04" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "04"
+          }
+        }
+      }
     },
     "5" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "5"
+          }
+        }
+      }
     },
     "5 Tagen" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "5 days"
+          }
+        }
+      }
     },
     "7 Tagen" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "7 days"
+          }
+        }
+      }
     },
     "7-Tage-Vorhersage" : {
       "localizations" : {
@@ -391,61 +932,194 @@
       }
     },
     "9 Loch" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "9 holes"
+          }
+        }
+      }
     },
     "9 Löcher" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "9 holes"
+          }
+        }
+      }
     },
     "9:41" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "9:41"
+          }
+        }
+      }
     },
     "14 Tagen" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "14 days"
+          }
+        }
+      }
     },
     "18 Loch" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "18 holes"
+          }
+        }
+      }
     },
     "18 Löcher" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "18 holes"
+          }
+        }
+      }
     },
     "20 Min." : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "20 min"
+          }
+        }
+      }
     },
     "24.0" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "24.0"
+          }
+        }
+      }
     },
     "30 Min." : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "30 min"
+          }
+        }
+      }
     },
     "45 Min." : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "45 min"
+          }
+        }
+      }
     },
     "60 Min." : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "60 min"
+          }
+        }
+      }
     },
     "72.0" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "72.0"
+          }
+        }
+      }
     },
     "92" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "92"
+          }
+        }
+      }
     },
     "128 m" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "128 m"
+          }
+        }
+      }
     },
     "186 m zum Loch" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "186 m to the hole"
+          }
+        }
+      }
     },
     "195 m" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "195 m"
+          }
+        }
+      }
     },
     "354 m zum Loch" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "354 m to the hole"
+          }
+        }
+      }
     },
     "A" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "A"
+          }
+        }
+      }
     },
     "Abbildung" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Illustration"
+          }
+        }
+      }
     },
     "Abbrechen" : {
       "localizations" : {
@@ -480,7 +1154,14 @@
       }
     },
     "Abonnement wird geladen…" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Loading subscription…"
+          }
+        }
+      }
     },
     "Abschlag" : {
       "localizations" : {
@@ -515,7 +1196,14 @@
       }
     },
     "Abschlag wählen" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Select tee"
+          }
+        }
+      }
     },
     "Abschlagbreite" : {
       "localizations" : {
@@ -598,16 +1286,44 @@
       }
     },
     "Alle %lld Ergebnisse anzeigen" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Show all %lld results"
+          }
+        }
+      }
     },
     "Alle %lld Messungen löschen?" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Delete all %lld measurements?"
+          }
+        }
+      }
     },
     "Alle %lld Runden löschen?" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Delete all %lld rounds?"
+          }
+        }
+      }
     },
     "Alle Ergebnisse löschen?" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Delete all results?"
+          }
+        }
+      }
     },
     "Alle Fragen gelernt!" : {
       "localizations" : {
@@ -626,10 +1342,24 @@
       }
     },
     "Alle Golfplätze" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "All golf courses"
+          }
+        }
+      }
     },
     "Alle Kategorien (%lld Fragen)" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "All categories (%lld questions)"
+          }
+        }
+      }
     },
     "Alle löschen" : {
       "localizations" : {
@@ -664,16 +1394,44 @@
       }
     },
     "Alle Trainings und der KI-Caddy –\nalles in einem Abo." : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "All training and the AI Caddy –\nall in one subscription."
+          }
+        }
+      }
     },
     "Angefangenes Spiel" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Game in progress"
+          }
+        }
+      }
     },
     "Antworten durchsehen" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Review answers"
+          }
+        }
+      }
     },
     "Anzahl Löcher" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Number of holes"
+          }
+        }
+      }
     },
     "Anzeigen" : {
       "localizations" : {
@@ -712,7 +1470,14 @@
       }
     },
     "API-Key eintragen" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Enter API key"
+          }
+        }
+      }
     },
     "API-Key entfernen" : {
       "localizations" : {
@@ -757,7 +1522,14 @@
       }
     },
     "Audio-Lektionen, die zu deinen aktuellen Statistiken passen" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Audio lessons that match your current statistics"
+          }
+        }
+      }
     },
     "Auf iPhone spiegeln" : {
       "localizations" : {
@@ -776,6 +1548,12 @@
             "state" : "new",
             "value" : "aus %1$lld Messung%2$@"
           }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "from %1$lld measurement%2$@"
+          }
         }
       }
     },
@@ -790,7 +1568,14 @@
       }
     },
     "Bag umbenennen" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Rename bag"
+          }
+        }
+      }
     },
     "Bald" : {
       "localizations" : {
@@ -809,22 +1594,64 @@
       }
     },
     "Basierend auf Daten von über 100.000 Golfrunden analysiert Shot Scope die häufigsten Fehler von Handicap-Golfern." : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Based on data from over 100,000 golf rounds, Shot Scope analyzes the most common mistakes of handicap golfers."
+          }
+        }
+      }
     },
     "Bearbeiten" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Edit"
+          }
+        }
+      }
     },
     "Beenden" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "End"
+          }
+        }
+      }
     },
     "Benachrichtigungen" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Notifications"
+          }
+        }
+      }
     },
     "Benachrichtigungen gesperrt" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Notifications blocked"
+          }
+        }
+      }
     },
     "Benachrichtigungen werden nur als lokale Erinnerungen verschickt – keine Werbung, keine Server." : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Notifications are sent only as local reminders – no ads, no servers."
+          }
+        }
+      }
     },
     "Benutzerdefiniert" : {
       "localizations" : {
@@ -843,13 +1670,34 @@
       }
     },
     "Best" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Best"
+          }
+        }
+      }
     },
     "Best Ball – %lld Spieler" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Best Ball – %lld players"
+          }
+        }
+      }
     },
     "Best Ball Schläge" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Best Ball strokes"
+          }
+        }
+      }
     },
     "Best Ball: %lld (%@)" : {
       "localizations" : {
@@ -858,17 +1706,44 @@
             "state" : "new",
             "value" : "Best Ball: %1$lld (%2$@)"
           }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Best Ball: %1$lld (%2$@)"
+          }
         }
       }
     },
     "Best Ball: %lld Punkte" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Best Ball: %lld points"
+          }
+        }
+      }
     },
     "Bestanden ✓" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Passed ✓"
+          }
+        }
+      }
     },
     "Bestanden!" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Passed!"
+          }
+        }
+      }
     },
     "Beste %lld von %lld" : {
       "localizations" : {
@@ -876,6 +1751,12 @@
           "stringUnit" : {
             "state" : "new",
             "value" : "Beste %1$lld von %2$lld"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Best %1$lld of %2$lld"
           }
         }
       }
@@ -897,7 +1778,14 @@
       }
     },
     "Bestes Diff.: %@" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Best diff.: %@"
+          }
+        }
+      }
     },
     "Bezeichnung" : {
       "localizations" : {
@@ -916,22 +1804,64 @@
       }
     },
     "Bitte in den iPhone-Einstellungen aktivieren." : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Please enable in iPhone Settings."
+          }
+        }
+      }
     },
     "BUNKER" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "BUNKER"
+          }
+        }
+      }
     },
     "C" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "C"
+          }
+        }
+      }
     },
     "Caddy" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Caddy"
+          }
+        }
+      }
     },
     "Caddy – Golf-Assistent" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Caddy – Golf Assistant"
+          }
+        }
+      }
     },
     "Caddy und alle Trainings –\nalles in einem Abo." : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Caddy and all training –\nall in one subscription."
+          }
+        }
+      }
     },
     "Course Rating (CR)" : {
       "localizations" : {
@@ -950,7 +1880,14 @@
       }
     },
     "CR %@" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "CR %@"
+          }
+        }
+      }
     },
     "CR und Slope stehen auf der Scorekarte oder der Club-Website. Standard: CR 72.0 / Slope 113." : {
       "localizations" : {
@@ -969,7 +1906,14 @@
       }
     },
     "D" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "D"
+          }
+        }
+      }
     },
     "danach %@ / %@" : {
       "localizations" : {
@@ -977,6 +1921,12 @@
           "stringUnit" : {
             "state" : "new",
             "value" : "danach %1$@ / %2$@"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "then %1$@ / %2$@"
           }
         }
       }
@@ -1014,7 +1964,14 @@
       }
     },
     "Datenschutz" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Privacy"
+          }
+        }
+      }
     },
     "Datum" : {
       "localizations" : {
@@ -1049,10 +2006,24 @@
       }
     },
     "DEIN DURCHSCHNITT" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "YOUR AVERAGE"
+          }
+        }
+      }
     },
     "Dein Ergebnis wurde nicht an die Game-Center-Bestenliste übertragen, weil nicht auf allen Löchern ein Schlag eingetragen ist. Trage auf jedem Loch mindestens einen Schlag ein, damit die Runde in der Bestenliste zählt." : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Your score was not submitted to the Game Center leaderboard because not every hole has a stroke entered. Enter at least one stroke on each hole so the round counts on the leaderboard."
+          }
+        }
+      }
     },
     "Dein Fortschritt wird gespeichert." : {
       "localizations" : {
@@ -1087,7 +2058,14 @@
       }
     },
     "Dein Name" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Your Name"
+          }
+        }
+      }
     },
     "Dein persönlicher Golfbegleiter" : {
       "localizations" : {
@@ -1106,16 +2084,44 @@
       }
     },
     "Dein persönlicher KI-Caddy –\nRegeln, Tipps und Strategien per Sprache." : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Your personal AI Caddy –\nrules, tips and strategies by voice."
+          }
+        }
+      }
     },
     "Deine Übungsaufgabe" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Your practice task"
+          }
+        }
+      }
     },
     "Der Durchschnitt wird auf die Voreinstellung (%lld m) zurückgesetzt." : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The average will be reset to the default (%lld m)."
+          }
+        }
+      }
     },
     "Die aktuellen Golfregeln gelten seit dem 1. Januar 2023. Lokale Platzregeln können einzelne Punkte abweichen." : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The current golf rules have been in effect since January 1, 2023. Local course rules may differ on individual points."
+          }
+        }
+      }
     },
     "Die Runde wird als abgeschlossen gespeichert." : {
       "localizations" : {
@@ -1198,7 +2204,14 @@
       }
     },
     "Distanz & Karte" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Distance & Map"
+          }
+        }
+      }
     },
     "Distanz messen" : {
       "localizations" : {
@@ -1217,7 +2230,14 @@
       }
     },
     "Distanz speichern" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Save Distance"
+          }
+        }
+      }
     },
     "Distanzeinheit" : {
       "localizations" : {
@@ -1236,13 +2256,34 @@
       }
     },
     "Distanzen (GPS)" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dinstances (GPS)"
+          }
+        }
+      }
     },
     "Dokument löschen?" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Delete dokument?"
+          }
+        }
+      }
     },
     "Dokument scannen" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Scan dokument"
+          }
+        }
+      }
     },
     "Dokumente" : {
       "localizations" : {
@@ -1261,19 +2302,54 @@
       }
     },
     "Du hast aktuell Caddy aktiv. Wenn du das Training-Abo kaufst, verlierst du deinen Caddy-Zugang. Mit Pro bekommst du beides – Training und Caddy – in einem Abo." : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "You currently have Caddy active. If you buy the Training subscription, you'll lose your Caddy access. With Pro you get both – Training and Caddy – in one subscription."
+          }
+        }
+      }
     },
     "Du hast aktuell Training aktiv. Wenn du das Caddy-Abo kaufst, verlierst du deinen Training-Zugang. Mit Pro bekommst du beides – Caddy und Training – in einem Abo." : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "You currently have Training active. If you buy the Caddy subscription, you'll lose your Training access. With Pro you get both – Caddy and Training – in one subscription."
+          }
+        }
+      }
     },
     "Du hast alle %lld Fragen beherrscht." : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "You've mastered all %lld questions."
+          }
+        }
+      }
     },
     "Du hast bereits Caddy" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "You already have Caddy"
+          }
+        }
+      }
     },
     "Du hast bereits Training" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "You already have Training"
+          }
+        }
+      }
     },
     "Du kannst die Runde auf dem iPhone spiegeln und dort Einträge vornehmen." : {
       "localizations" : {
@@ -1292,7 +2368,14 @@
       }
     },
     "Durchschnitt der %lld besten Score-Differentials × 0,96" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Average of the %lld best score differentials × 0.96"
+          }
+        }
+      }
     },
     "Durchschnittswerte" : {
       "localizations" : {
@@ -1311,19 +2394,54 @@
       }
     },
     "E" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "E"
+          }
+        }
+      }
     },
     "Eigenen Platz manuell erstellen" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Create your own course manually"
+          }
+        }
+      }
     },
     "EIGENER SCHLÄGER" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "CUSTOM CLUB"
+          }
+        }
+      }
     },
     "Einen Moment bitte …" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "One moment please …"
+          }
+        }
+      }
     },
     "Einheit" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Unit"
+          }
+        }
+      }
     },
     "Einstellungen" : {
       "localizations" : {
@@ -1342,16 +2460,44 @@
       }
     },
     "Empfehlung:" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Recommendation:"
+          }
+        }
+      }
     },
     "Empfehlung: 5 Wood" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Recommendation: 5 wood"
+          }
+        }
+      }
     },
     "Entfernen" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Remove"
+          }
+        }
+      }
     },
     "Entfernung:" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Distance:"
+          }
+        }
+      }
     },
     "Erado" : {
       "localizations" : {
@@ -1418,25 +2564,74 @@
       }
     },
     "Erinnert dich am nächsten Morgen an eine unfertige Runde" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Reminds you the next morning about an unfinished round"
+          }
+        }
+      }
     },
     "Erinnert dich während einer Runde, wenn du längere Zeit nichts eingetragen hast" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Reminds you during a round if you haven't entered anything for a while"
+          }
+        }
+      }
     },
     "Erinnert dich wenn du längere Zeit nicht gespielt hast" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Reminds you when you haven't played for a while"
+          }
+        }
+      }
     },
     "Erinnerung nach" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Reminder after"
+          }
+        }
+      }
     },
     "Erklärung" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Explanation"
+          }
+        }
+      }
     },
     "Erneut versuchen" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Try again"
+          }
+        }
+      }
     },
     "Erreicht ✓" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Achieved ✓"
+          }
+        }
+      }
     },
     "Errungenschaften" : {
       "localizations" : {
@@ -1455,19 +2650,54 @@
       }
     },
     "Erste Runde starten" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Start first round"
+          }
+        }
+      }
     },
     "Erste Schritte" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Getting started"
+          }
+        }
+      }
     },
     "Erstelle dein erstes Schläger-Bag." : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Create your first club bag."
+          }
+        }
+      }
     },
     "Erstellen" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Create"
+          }
+        }
+      }
     },
     "Erstellt mit GolfTrack" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Created with GolfTrack"
+          }
+        }
+      }
     },
     "Ersten Platz hinzufügen" : {
       "localizations" : {
@@ -1486,7 +2716,14 @@
       }
     },
     "Erstes Dokument scannen" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Scan first document"
+          }
+        }
+      }
     },
     "Fairway" : {
       "localizations" : {
@@ -1505,13 +2742,34 @@
       }
     },
     "Falsch" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wrong"
+          }
+        }
+      }
     },
     "Falsche Antworten" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wrong answers"
+          }
+        }
+      }
     },
     "Fehler" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Error"
+          }
+        }
+      }
     },
     "Fertig" : {
       "localizations" : {
@@ -1547,7 +2805,14 @@
       }
     },
     "Fortsetzen" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Resume"
+          }
+        }
+      }
     },
     "Frage %lld von %lld" : {
       "localizations" : {
@@ -1555,6 +2820,12 @@
           "stringUnit" : {
             "state" : "new",
             "value" : "Frage %1$lld von %2$lld"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Question %1$lld of %2$lld"
           }
         }
       }
@@ -1565,6 +2836,12 @@
           "stringUnit" : {
             "state" : "new",
             "value" : "Frage %1$lld/%2$lld"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Question %1$lld/%2$lld"
           }
         }
       }
@@ -1586,13 +2863,34 @@
       }
     },
     "Füge deine Schläger zu diesem Bag hinzu." : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Add your clubs to this bag."
+          }
+        }
+      }
     },
     "Führung A" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "A leads"
+          }
+        }
+      }
     },
     "Für dich empfohlen" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Recommended for you"
+          }
+        }
+      }
     },
     "Für die Online-Suche wird ein API-Key benötigt." : {
       "localizations" : {
@@ -1611,7 +2909,14 @@
       }
     },
     "Für einen vollständigen Index werden Runden mit Course-Rating & Slope-Rating benötigt." : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "A full index requires rounds with course rating & slope rating."
+          }
+        }
+      }
     },
     "Game Center" : {
       "localizations" : {
@@ -1646,7 +2951,14 @@
       }
     },
     "Gebaut mit" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Built with"
+          }
+        }
+      }
     },
     "Gefühlt" : {
       "extractionState" : "stale",
@@ -1698,10 +3010,24 @@
       }
     },
     "Gesamt Par" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Total par"
+          }
+        }
+      }
     },
     "Gesamt: %lld" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Total: %lld"
+          }
+        }
+      }
     },
     "Gespeicherte Distanzen" : {
       "localizations" : {
@@ -1720,10 +3046,24 @@
       }
     },
     "Gespeicherte Plätze" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Saved courses"
+          }
+        }
+      }
     },
     "Gespeicherte Schläge" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Saved shots"
+          }
+        }
+      }
     },
     "Gespeicherte Schläger" : {
       "extractionState" : "stale",
@@ -1743,13 +3083,34 @@
       }
     },
     "Gespräch beenden" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "End conversation"
+          }
+        }
+      }
     },
     "Gespräch starten" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Start conversation"
+          }
+        }
+      }
     },
     "gewonnene Löcher" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "holes won"
+          }
+        }
+      }
     },
     "GIR" : {
       "localizations" : {
@@ -1768,10 +3129,24 @@
       }
     },
     "Golf-Assistent" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Golf Assistant"
+          }
+        }
+      }
     },
     "Golf-Ratgeber" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Golf Guide"
+          }
+        }
+      }
     },
     "Golf-Wetter" : {
       "extractionState" : "stale",
@@ -1791,16 +3166,44 @@
       }
     },
     "Golfclub Beispiel" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Example Golf Club"
+          }
+        }
+      }
     },
     "GolfCourseAPI Key" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "GolfCourseAPI key"
+          }
+        }
+      }
     },
     "golfcourseapi.com/sign-in" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "golfcourseapi.com/sign-in"
+          }
+        }
+      }
     },
     "Golfer!" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Golfer!"
+          }
+        }
+      }
     },
     "GOLFPLATZ" : {
       "localizations" : {
@@ -1819,19 +3222,54 @@
       }
     },
     "Golfplatz hinzufügen" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Add golf course"
+          }
+        }
+      }
     },
     "Golfplätze" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Golf courses"
+          }
+        }
+      }
     },
     "Golfplätze in der Nähe" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nearby golf courses"
+          }
+        }
+      }
     },
     "Golfplätze in der Nähe (30 km)" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nearby golf courses (30 km)"
+          }
+        }
+      }
     },
     "Golfregeln 2023" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Golf Rules 2023"
+          }
+        }
+      }
     },
     "GolfTrack" : {
       "localizations" : {
@@ -1850,13 +3288,34 @@
       }
     },
     "GolfTrack Pro" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "GolfTrack Pro"
+          }
+        }
+      }
     },
     "Gratis" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Free"
+          }
+        }
+      }
     },
     "Halte die gedruckte Scorecard vor die Kamera – GolfTrack liest Par, HCP und Distanzen automatisch aus." : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hold the printed scorecard up to the camera – GolfTrack automatically reads par, HCP and distances."
+          }
+        }
+      }
     },
     "Handicap" : {
       "localizations" : {
@@ -1923,10 +3382,24 @@
       }
     },
     "HCP %lld" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "HCP %lld"
+          }
+        }
+      }
     },
     "Herzlichen Glückwunsch! Du hast die Probeprüfung bestanden." : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Congratulations! You passed the practice exam."
+          }
+        }
+      }
     },
     "Heute" : {
       "localizations" : {
@@ -1945,7 +3418,14 @@
       }
     },
     "Hilfe & Anleitung" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Help & Guide"
+          }
+        }
+      }
     },
     "Hilfe & Rechtliches" : {
       "localizations" : {
@@ -1980,16 +3460,44 @@
       }
     },
     "Home" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Home"
+          }
+        }
+      }
     },
     "Importieren" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Import"
+          }
+        }
+      }
     },
     "Impressum" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Imprint"
+          }
+        }
+      }
     },
     "In Arbeit" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "In progress"
+          }
+        }
+      }
     },
     "In einer zukünftigen Version verfügbar" : {
       "extractionState" : "stale",
@@ -2009,19 +3517,54 @@
       }
     },
     "Inaktivitätserinnerung" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Inactivity reminder"
+          }
+        }
+      }
     },
     "Ist ein Putter" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Is a putter"
+          }
+        }
+      }
     },
     "Jederzeit kündbar · Keine Bindung" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cancel anytime · No commitment"
+          }
+        }
+      }
     },
     "Jetzt abonnieren" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Subscribe now"
+          }
+        }
+      }
     },
     "Kapitel %lld" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Chapter %lld"
+          }
+        }
+      }
     },
     "Karte" : {
       "localizations" : {
@@ -2056,7 +3599,14 @@
       }
     },
     "Kategorie wählen" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Choose category"
+          }
+        }
+      }
     },
     "Kategorien" : {
       "localizations" : {
@@ -2075,7 +3625,14 @@
       }
     },
     "Kauf wiederherstellen" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Restore purchase"
+          }
+        }
+      }
     },
     "Kein API-Key – bitte in den Einstellungen eintragen." : {
       "localizations" : {
@@ -2110,7 +3667,14 @@
       }
     },
     "Kein GPS-Signal – Position nicht gespeichert" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No GPS signal – position not saved"
+          }
+        }
+      }
     },
     "Keine Lochwerte verfügbar" : {
       "localizations" : {
@@ -2129,10 +3693,24 @@
       }
     },
     "Keine Par-Werte erkannt – bitte manuell im Bearbeiten-Modus eingeben." : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No par values detected – please enter manually in edit mode."
+          }
+        }
+      }
     },
     "Keine Runden" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No rounds"
+          }
+        }
+      }
     },
     "Keine Schläger" : {
       "localizations" : {
@@ -2151,19 +3729,54 @@
       }
     },
     "Keine Statistiken" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No statistics"
+          }
+        }
+      }
     },
     "Kostenlos registrieren unter:" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Register for free at:"
+          }
+        }
+      }
     },
     "L %lld" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "L %lld"
+          }
+        }
+      }
     },
     "L%lld" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "L%lld"
+          }
+        }
+      }
     },
     "Lädt…" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Loading…"
+          }
+        }
+      }
     },
     "Letzte Runde" : {
       "localizations" : {
@@ -2182,19 +3795,54 @@
       }
     },
     "Linie entfernen" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Remove line"
+          }
+        }
+      }
     },
     "Live" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Live"
+          }
+        }
+      }
     },
     "LIVE" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "LIVE"
+          }
+        }
+      }
     },
     "Loch %lld" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hole %lld"
+          }
+        }
+      }
     },
     "Loch %lld – Schläge" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hole %lld – strokes"
+          }
+        }
+      }
     },
     "Loch %lld / %lld" : {
       "localizations" : {
@@ -2203,29 +3851,84 @@
             "state" : "new",
             "value" : "Loch %1$lld / %2$lld"
           }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hole %1$lld / %2$lld"
+          }
         }
       }
     },
     "Loch 1 – Position" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hole 1 – position"
+          }
+        }
+      }
     },
     "LOCH 1 · 18" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "HOLE 1 · 18"
+          }
+        }
+      }
     },
     "LOCH 4 · 18" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "HOLE 4 · 18"
+          }
+        }
+      }
     },
     "LOCH 18 · 18" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "HOLE 18 · 18"
+          }
+        }
+      }
     },
     "Loch- & Abschlagpositionen gespeichert" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hole & tee positions saved"
+          }
+        }
+      }
     },
     "Loch-Details" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hole details"
+          }
+        }
+      }
     },
     "Loch-Werte" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hole values"
+          }
+        }
+      }
     },
     "Löcher" : {
       "localizations" : {
@@ -2244,7 +3947,14 @@
       }
     },
     "Löcher bearbeiten" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Edit holes"
+          }
+        }
+      }
     },
     "Lochposition festlegen" : {
       "localizations" : {
@@ -2263,19 +3973,54 @@
       }
     },
     "Los geht's!" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Let's go!"
+          }
+        }
+      }
     },
     "Löschen" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Delete"
+          }
+        }
+      }
     },
     "Matchplay – Lochspiel-Wertung" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Match play – hole-by-hole scoring"
+          }
+        }
+      }
     },
     "Max" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Max"
+          }
+        }
+      }
     },
     "Mein Standort" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "My location"
+          }
+        }
+      }
     },
     "Meinen Standort verwenden" : {
       "localizations" : {
@@ -2310,10 +4055,24 @@
       }
     },
     "Messung %lld" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Measurement %lld"
+          }
+        }
+      }
     },
     "Messungen löschen" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Delete measurements"
+          }
+        }
+      }
     },
     "Meter" : {
       "localizations" : {
@@ -2332,16 +4091,44 @@
       }
     },
     "Min" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Min"
+          }
+        }
+      }
     },
     "Mindestens 75 % (23/30)" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "At least 75% (23/30)"
+          }
+        }
+      }
     },
     "Minigolf & Putten" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Minigolf & putting"
+          }
+        }
+      }
     },
     "Minuten" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Minutes"
+          }
+        }
+      }
     },
     "Mit Game Center verbinden" : {
       "localizations" : {
@@ -2392,7 +4179,14 @@
       }
     },
     "Modus beenden?" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Exit mode?"
+          }
+        }
+      }
     },
     "Nach Kategorie" : {
       "localizations" : {
@@ -2411,13 +4205,34 @@
       }
     },
     "Nächste" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Next"
+          }
+        }
+      }
     },
     "Nächste Einheit automatisch abspielen" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Automatically play next lesson"
+          }
+        }
+      }
     },
     "Nächste Frage" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Next question"
+          }
+        }
+      }
     },
     "Name" : {
       "localizations" : {
@@ -2452,13 +4267,34 @@
       }
     },
     "NEU" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "NEW"
+          }
+        }
+      }
     },
     "Neu scannen" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Scan again"
+          }
+        }
+      }
     },
     "Neu setzen" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Set again"
+          }
+        }
+      }
     },
     "Neue Runde" : {
       "localizations" : {
@@ -2509,34 +4345,104 @@
       }
     },
     "Neuer Platz" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "New course"
+          }
+        }
+      }
     },
     "Neues Bag" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "New bag"
+          }
+        }
+      }
     },
     "Neues Bag erstellen" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Create new bag"
+          }
+        }
+      }
     },
     "Nicht an Game Center übertragen" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Not submitted to Game Center"
+          }
+        }
+      }
     },
     "Nicht beantwortet" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Not answered"
+          }
+        }
+      }
     },
     "Nicht bestanden" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Failed"
+          }
+        }
+      }
     },
     "Nicht ganz – die Frage kommt wieder" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Not quite – the question will come back"
+          }
+        }
+      }
     },
     "Noch %lld m zum Loch" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld m left to the hole"
+          }
+        }
+      }
     },
     "Noch gesperrt" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Still locked"
+          }
+        }
+      }
     },
     "Noch keine Bags" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No bags yet"
+          }
+        }
+      }
     },
     "Noch keine Dokumente" : {
       "localizations" : {
@@ -2587,7 +4493,14 @@
       }
     },
     "Noch keine Plätze gespeichert." : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No courses saved yet."
+          }
+        }
+      }
     },
     "Noch keine Runde" : {
       "localizations" : {
@@ -2654,16 +4567,44 @@
       }
     },
     "Nutzungsbedingungen" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Terms of Use"
+          }
+        }
+      }
     },
     "Ø %@" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ø %@"
+          }
+        }
+      }
     },
     "Ø %lld m" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ø %lld m"
+          }
+        }
+      }
     },
     "Ø 180 m · aus 12 Messungen" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ø 180 m · from 12 measurements"
+          }
+        }
+      }
     },
     "Ø aus %lld Messung%@" : {
       "localizations" : {
@@ -2672,56 +4613,174 @@
             "state" : "new",
             "value" : "Ø aus %1$lld Messung%2$@"
           }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ø from %1$lld measurement%2$@"
+          }
         }
       }
     },
     "Offene Runde" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Open round"
+          }
+        }
+      }
     },
     "Offizieller Fragenkatalog · %lld Fragen · 6 Themengebiete" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Official question catalog · %lld questions · 6 topics"
+          }
+        }
+      }
     },
     "Öffnen" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Open"
+          }
+        }
+      }
     },
     "Ohne Namen starten – erneut drücken" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Start without name – press again"
+          }
+        }
+      }
     },
     "Ohne Pin schließen" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Close without pin"
+          }
+        }
+      }
     },
     "OK" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "OK"
+          }
+        }
+      }
     },
     "Online suchen: \"%@\"" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Search online: \"%@\""
+          }
+        }
+      }
     },
     "Online-Ergebnisse" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Online results"
+          }
+        }
+      }
     },
     "Ort (optional)" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Location (optional)"
+          }
+        }
+      }
     },
     "Par" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Par"
+          }
+        }
+      }
     },
     "Par %lld" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Par %lld"
+          }
+        }
+      }
     },
     "PAR %lld" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "PAR %lld"
+          }
+        }
+      }
     },
     "PAR 4" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "PAR 4"
+          }
+        }
+      }
     },
     "Par pro Loch" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Par per hole"
+          }
+        }
+      }
     },
     "Par pro Loch (%lld Löcher)" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Par per hole (%lld holes)"
+          }
+        }
+      }
     },
     "Pause-Erinnerung" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Break reminder"
+          }
+        }
+      }
     },
     "Penalty Area" : {
       "localizations" : {
@@ -2772,10 +4831,24 @@
       }
     },
     "Pin gesetzt · Loch 4" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pin set · hole 4"
+          }
+        }
+      }
     },
     "Pin setzen" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Set pin"
+          }
+        }
+      }
     },
     "Platz" : {
       "localizations" : {
@@ -2842,19 +4915,54 @@
       }
     },
     "Platz nicht dabei?" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Course not listed?"
+          }
+        }
+      }
     },
     "Platz speichern" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Save course"
+          }
+        }
+      }
     },
     "Platz suchen" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Search course"
+          }
+        }
+      }
     },
     "Platz suchen…" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Search course…"
+          }
+        }
+      }
     },
     "Platz wählen" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Choose course"
+          }
+        }
+      }
     },
     "Platz wählen …" : {
       "localizations" : {
@@ -2873,31 +4981,94 @@
       }
     },
     "Platzdaten laden …" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Loading course data …"
+          }
+        }
+      }
     },
     "Plätze aus der Datenbank" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Courses from the database"
+          }
+        }
+      }
     },
     "Plätze im 30-km-Umkreis. Weiter entfernte Plätze sind per Suche erreichbar." : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Courses within 30 km. More distant courses can be found via search."
+          }
+        }
+      }
     },
     "Platzinfo" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Course info"
+          }
+        }
+      }
     },
     "Platzinformationen" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Course information"
+          }
+        }
+      }
     },
     "Platzname" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Course name"
+          }
+        }
+      }
     },
     "Platzname *" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Course name *"
+          }
+        }
+      }
     },
     "Platzname oder Club" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Course name or club"
+          }
+        }
+      }
     },
     "Platzname oder Club suchen" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Search course name or club"
+          }
+        }
+      }
     },
     "Platzreife lernen" : {
       "localizations" : {
@@ -2964,10 +5135,24 @@
       }
     },
     "Pro" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pro"
+          }
+        }
+      }
     },
     "Pro freischalten" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Unlock Pro"
+          }
+        }
+      }
     },
     "Pro Tipp des Tages" : {
       "localizations" : {
@@ -2986,10 +5171,24 @@
       }
     },
     "PRO TIPP DES TAGES" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "PRO TIP OF THE DAY"
+          }
+        }
+      }
     },
     "Probeprüfung" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Practice exam"
+          }
+        }
+      }
     },
     "Profil" : {
       "localizations" : {
@@ -3008,10 +5207,24 @@
       }
     },
     "Prüfung abbrechen?" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cancel exam?"
+          }
+        }
+      }
     },
     "Prüfung abgeben" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Submit exam"
+          }
+        }
+      }
     },
     "Punkte" : {
       "localizations" : {
@@ -3030,13 +5243,34 @@
       }
     },
     "Punktetabelle" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Points table"
+          }
+        }
+      }
     },
     "PUTTER" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "PUTTER"
+          }
+        }
+      }
     },
     "Putter · Auto-Putts" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Putter · auto putts"
+          }
+        }
+      }
     },
     "Putts" : {
       "localizations" : {
@@ -3055,31 +5289,94 @@
       }
     },
     "Putts +1 automatisch" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Putts +1 automatically"
+          }
+        }
+      }
     },
     "Putts werden beim Schlag automatisch hochgezählt" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Putts are counted up automatically with each stroke"
+          }
+        }
+      }
     },
     "Quelle: R&A Rules of Golf 2023 (r-a.org) · USGA (usga.org)" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Source: R&A Rules of Golf 2023 (r-a.org) · USGA (usga.org)"
+          }
+        }
+      }
     },
     "Ratings" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ratings"
+          }
+        }
+      }
     },
     "Rechtliches" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Legal"
+          }
+        }
+      }
     },
     "Referenz" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Reference"
+          }
+        }
+      }
     },
     "Regelmäßig neue Audiobooks" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Regularly new audiobooks"
+          }
+        }
+      }
     },
     "Regeln" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Rules"
+          }
+        }
+      }
     },
     "Regeln, Tipps & Strategien" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Rules, tips & strategies"
+          }
+        }
+      }
     },
     "Regelwerk 2023 – R&A / USGA" : {
       "localizations" : {
@@ -3114,16 +5411,44 @@
       }
     },
     "Richtig!" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Correct!"
+          }
+        }
+      }
     },
     "Richtung 20 Runden für vollen WHS-Index" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Toward 20 rounds for a full WHS index"
+          }
+        }
+      }
     },
     "Richtungslinie setzen" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Set direction line"
+          }
+        }
+      }
     },
     "Runde" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Round"
+          }
+        }
+      }
     },
     "Runde abbrechen?" : {
       "localizations" : {
@@ -3222,7 +5547,14 @@
       }
     },
     "Runde löschen?" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Delete round?"
+          }
+        }
+      }
     },
     "Runde starten" : {
       "localizations" : {
@@ -3241,7 +5573,14 @@
       }
     },
     "Runde starten – %@" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Start round – %@"
+          }
+        }
+      }
     },
     "Runde verlassen?" : {
       "localizations" : {
@@ -3276,16 +5615,44 @@
       }
     },
     "S.%lld" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "p.%lld"
+          }
+        }
+      }
     },
     "Satellit" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Satellite"
+          }
+        }
+      }
     },
     "Scan fehlgeschlagen" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Scan failed"
+          }
+        }
+      }
     },
     "Scan-Ergebnis prüfen" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Review scan result"
+          }
+        }
+      }
     },
     "Scanne deine Mitgliedskarte oder Greenfee-Belege für schnellen Zugriff." : {
       "localizations" : {
@@ -3304,25 +5671,74 @@
       }
     },
     "Schau im App Store nach Updates – mit jedem Update kommen neue Lektionen dazu, die im Abo inklusive sind." : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Check the App Store for updates – each update adds new lessons that are included in the subscription."
+          }
+        }
+      }
     },
     "Schl." : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Str."
+          }
+        }
+      }
     },
     "Schlag %lld" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Shot %lld"
+          }
+        }
+      }
     },
     "Schlag %lld – Schläger?" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Shot %lld – club?"
+          }
+        }
+      }
     },
     "Schlag 1 · Driver" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Shot 1 · Driver"
+          }
+        }
+      }
     },
     "Schlag aufzeichnen" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Record shot"
+          }
+        }
+      }
     },
     "Schlag-Tracking" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Shot tracking"
+          }
+        }
+      }
     },
     "Schläge" : {
       "extractionState" : "stale",
@@ -3358,28 +5774,84 @@
       }
     },
     "Schläge auf der Karte" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Shots on the map"
+          }
+        }
+      }
     },
     "Schläge werden automatisch beim Aufzeichnen eingetragen." : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Shots are entered automatically when recording."
+          }
+        }
+      }
     },
     "Schläger hinzufügen" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Add club"
+          }
+        }
+      }
     },
     "Schläger manuell eingeben" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Enter club manually"
+          }
+        }
+      }
     },
     "Schläger-Bag" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Club bag"
+          }
+        }
+      }
     },
     "Schläger-Bags" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Club bags"
+          }
+        }
+      }
     },
     "Schlägerdistanzen (Ø)" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Club distances (Ø)"
+          }
+        }
+      }
     },
     "Schlagkarte" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Shot map"
+          }
+        }
+      }
     },
     "schlechtes Wetter" : {
       "extractionState" : "stale",
@@ -3399,7 +5871,14 @@
       }
     },
     "Schließen" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Close"
+          }
+        }
+      }
     },
     "Schritt %lld von %lld" : {
       "localizations" : {
@@ -3407,6 +5886,12 @@
           "stringUnit" : {
             "state" : "new",
             "value" : "Schritt %1$lld von %2$lld"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Step %1$lld of %2$lld"
           }
         }
       }
@@ -3428,7 +5913,14 @@
       }
     },
     "Score Differentials (letzte Runden)" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Score differentials (recent rounds)"
+          }
+        }
+      }
     },
     "SCORE GESAMT" : {
       "localizations" : {
@@ -3463,7 +5955,14 @@
       }
     },
     "Score-Verlauf (letzte %lld Runden)" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Score history (last %lld rounds)"
+          }
+        }
+      }
     },
     "Scorecard" : {
       "localizations" : {
@@ -3482,10 +5981,24 @@
       }
     },
     "Scorecard scannen" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Scan scorecard"
+          }
+        }
+      }
     },
     "Scorecard wird gelesen%@" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Reading scorecard%@"
+          }
+        }
+      }
     },
     "Skins" : {
       "localizations" : {
@@ -3504,10 +6017,24 @@
       }
     },
     "Skins: Du %lld" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Skins: You %lld"
+          }
+        }
+      }
     },
     "Slope %lld" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Slope %lld"
+          }
+        }
+      }
     },
     "Slope Rating" : {
       "localizations" : {
@@ -3526,10 +6053,24 @@
       }
     },
     "Smart-Modus" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Smart mode"
+          }
+        }
+      }
     },
     "Smart-Modus, Probeprüfung & Ergebnisse" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Smart mode, practice exam & results"
+          }
+        }
+      }
     },
     "Speichern" : {
       "localizations" : {
@@ -3548,10 +6089,24 @@
       }
     },
     "Spiel" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Game"
+          }
+        }
+      }
     },
     "Spiel beenden & speichern" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "End game & save"
+          }
+        }
+      }
     },
     "Spiel starten" : {
       "localizations" : {
@@ -3575,6 +6130,12 @@
           "stringUnit" : {
             "state" : "new",
             "value" : "Spiele noch %1$lld Runde%2$@, um einen Handicap-Index zu erhalten."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Play %1$lld more round%2$@ to get a handicap index."
           }
         }
       }
@@ -3612,7 +6173,14 @@
       }
     },
     "Spieler %lld" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Player %lld"
+          }
+        }
+      }
     },
     "Spieler entfernen" : {
       "localizations" : {
@@ -3647,7 +6215,14 @@
       }
     },
     "Spielmodi" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Game modes"
+          }
+        }
+      }
     },
     "Spielmodus" : {
       "localizations" : {
@@ -3682,7 +6257,14 @@
       }
     },
     "Spielmodus wählen" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Choose game mode"
+          }
+        }
+      }
     },
     "Spielregeln" : {
       "extractionState" : "stale",
@@ -3734,10 +6316,24 @@
       }
     },
     "Standard" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Standard"
+          }
+        }
+      }
     },
     "Standard-Bag erstellen" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Create default bag"
+          }
+        }
+      }
     },
     "Standort" : {
       "localizations" : {
@@ -3756,10 +6352,24 @@
       }
     },
     "Standort gesperrt" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Location blocked"
+          }
+        }
+      }
     },
     "Standort nicht verfügbar" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Location unavailable"
+          }
+        }
+      }
     },
     "Standort nicht verfügbar – alle Plätze werden angezeigt." : {
       "localizations" : {
@@ -3794,13 +6404,34 @@
       }
     },
     "Start" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Start"
+          }
+        }
+      }
     },
     "Starte deine erste Runde und\nverfolge deinen Fortschritt." : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Start your first round and\ntrack your progress."
+          }
+        }
+      }
     },
     "Startpunkt setzen" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Set starting point"
+          }
+        }
+      }
     },
     "Statistiken" : {
       "localizations" : {
@@ -3819,7 +6450,14 @@
       }
     },
     "Stelle mir eine Frage über Golf…" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ask me a question about golf…"
+          }
+        }
+      }
     },
     "Stelle sicher, dass der Standortzugriff erlaubt ist." : {
       "localizations" : {
@@ -3838,7 +6476,14 @@
       }
     },
     "Stop" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Stop"
+          }
+        }
+      }
     },
     "Strafe" : {
       "localizations" : {
@@ -3873,13 +6518,34 @@
       }
     },
     "Strategie-Insights: Shot Scope Ltd.  ·  Regeln: R&A / USGA 2023" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Strategy insights: Shot Scope Ltd.  ·  Rules: R&A / USGA 2023"
+          }
+        }
+      }
     },
     "Streich: %@" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dropped: %@"
+          }
+        }
+      }
     },
     "Suche läuft …" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Searching …"
+          }
+        }
+      }
     },
     "Suche weltweit nach Plätzen oder lege einen manuell an." : {
       "localizations" : {
@@ -3898,16 +6564,44 @@
       }
     },
     "Suchergebnisse (%lld)" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Search results (%lld)"
+          }
+        }
+      }
     },
     "Sucht weltweit nach Golfplätzen via API." : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Searches worldwide for golf courses via API."
+          }
+        }
+      }
     },
     "SwiftUI & SwiftData" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "SwiftUI & SwiftData"
+          }
+        }
+      }
     },
     "Tage" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Days"
+          }
+        }
+      }
     },
     "Team" : {
       "localizations" : {
@@ -3926,16 +6620,44 @@
       }
     },
     "Team %@" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Team %@"
+          }
+        }
+      }
     },
     "Team Punkte" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Team points"
+          }
+        }
+      }
     },
     "Team Schläge" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Team strokes"
+          }
+        }
+      }
     },
     "Team: %lld Punkte" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Team: %lld points"
+          }
+        }
+      }
     },
     "Team: %lld Schläge (%@)" : {
       "localizations" : {
@@ -3943,6 +6665,12 @@
           "stringUnit" : {
             "state" : "new",
             "value" : "Team: %1$lld Schläge (%2$@)"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Team: %1$lld strokes (%2$@)"
           }
         }
       }
@@ -3964,7 +6692,14 @@
       }
     },
     "Tippe auf die Karte oder ziehe den Pin, um das Loch zu markieren" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tap the map or drag the pin to mark the hole"
+          }
+        }
+      }
     },
     "Tippe auf die Karte, um das Loch zu markieren" : {
       "extractionState" : "stale",
@@ -4016,10 +6751,24 @@
       }
     },
     "Tippe auf Karte oder nutze deinen Standort" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tap the map or use your location"
+          }
+        }
+      }
     },
     "Tipps" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tips"
+          }
+        }
+      }
     },
     "Tipps & Coaching" : {
       "localizations" : {
@@ -4070,7 +6819,14 @@
       }
     },
     "TOT" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "TOT"
+          }
+        }
+      }
     },
     "Training" : {
       "localizations" : {
@@ -4122,7 +6878,14 @@
       }
     },
     "Tutorial beenden" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Exit tutorial"
+          }
+        }
+      }
     },
     "Tutorial neu starten" : {
       "localizations" : {
@@ -4141,7 +6904,14 @@
       }
     },
     "Übe noch etwas weiter und versuche es erneut." : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Practice a bit more and try again."
+          }
+        }
+      }
     },
     "Über 30.000 Golfplätze weltweit mit Loch-für-Loch Par-Werten." : {
       "localizations" : {
@@ -4160,10 +6930,24 @@
       }
     },
     "Über diese Einheit" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "About this lesson"
+          }
+        }
+      }
     },
     "Übernehmen" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Apply"
+          }
+        }
+      }
     },
     "Überspringen" : {
       "localizations" : {
@@ -4182,7 +6966,14 @@
       }
     },
     "Umbenennen" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Rename"
+          }
+        }
+      }
     },
     "Verbindung testen" : {
       "localizations" : {
@@ -4265,7 +7056,14 @@
       }
     },
     "Verwerfen" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Discard"
+          }
+        }
+      }
     },
     "Vollbild" : {
       "localizations" : {
@@ -4317,16 +7115,44 @@
       }
     },
     "VOREINSTELLUNG" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "DEFAULT"
+          }
+        }
+      }
     },
     "VOREINSTELLUNG ANPASSEN" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ADJUST DEFAULT"
+          }
+        }
+      }
     },
     "VS" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "VS"
+          }
+        }
+      }
     },
     "vs. Par" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "vs. par"
+          }
+        }
+      }
     },
     "Warte auf GPS…" : {
       "localizations" : {
@@ -4361,7 +7187,14 @@
       }
     },
     "WEITER →" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "NEXT →"
+          }
+        }
+      }
     },
     "Weiter spielen" : {
       "localizations" : {
@@ -4380,19 +7213,54 @@
       }
     },
     "Weitere Plätze sind per Suche erreichbar." : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "More courses can be found via search."
+          }
+        }
+      }
     },
     "Weitermachen" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Continue"
+          }
+        }
+      }
     },
     "Weniger anzeigen" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Show less"
+          }
+        }
+      }
     },
     "Werde zum besseren Golfspieler –\nmit geführten Audio-Trainings." : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Become a better golfer –\nwith guided audio training."
+          }
+        }
+      }
     },
     "Wetter" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Weather"
+          }
+        }
+      }
     },
     "Wetter nicht verfügbar" : {
       "extractionState" : "stale",
@@ -4477,7 +7345,14 @@
       }
     },
     "Wiedergabegeschwindigkeit" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Playback speed"
+          }
+        }
+      }
     },
     "Wiederholt" : {
       "localizations" : {
@@ -4529,7 +7404,14 @@
       }
     },
     "Wird automatisch deaktiviert, wenn du eine Apple Watch zum Tracken verwendest." : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Automatically disabled when you use an Apple Watch for tracking."
+          }
+        }
+      }
     },
     "World Handicap System (WHS)" : {
       "localizations" : {
@@ -4564,13 +7446,34 @@
       }
     },
     "z. B. Turnier-Bag" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "e.g. tournament bag"
+          }
+        }
+      }
     },
     "z.B. Mitgliedskarte 2025" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "e.g. membership card 2025"
+          }
+        }
+      }
     },
     "Zahlen & Fakten" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Facts & figures"
+          }
+        }
+      }
     },
     "Zählspiel" : {
       "extractionState" : "stale",
@@ -4622,13 +7525,34 @@
       }
     },
     "Zu Pro wechseln – alles in einem" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Switch to Pro – all in one"
+          }
+        }
+      }
     },
     "Zurück" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Back"
+          }
+        }
+      }
     },
     "Zurücksetzen" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Reset"
+          }
+        }
+      }
     }
   },
   "version" : "1.0"

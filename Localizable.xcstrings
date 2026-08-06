@@ -1575,6 +1575,40 @@
         }
       }
     },
+    "%lld von %lld Löchern ableitbar" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$lld von %2$lld Löchern ableitbar"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$lld of %2$lld holes can be derived"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$lld de %2$lld hoyos se pueden deducir"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$lld trous sur %2$lld peuvent être déduits"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$lld di %2$lld buche deducibili"
+          }
+        }
+      }
+    },
     "%lld von %lld Schlägern gemessen" : {
       "localizations" : {
         "de" : {
@@ -1605,6 +1639,40 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "%1$lld di %2$lld mazze misurate"
+          }
+        }
+      }
+    },
+    "%lld/%lld Löcher mit Position · Aufzeichnungen: %lld" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$lld/%2$lld Löcher mit Position · Aufzeichnungen: %3$lld"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$lld/%2$lld holes with position · Recordings: %3$lld"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$lld/%2$lld hoyos con posición · Grabaciones: %3$lld"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$lld/%2$lld trous avec position · Enregistrements : %3$lld"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$lld/%2$lld buche con posizione · Registrazioni: %3$lld"
           }
         }
       }
@@ -2893,6 +2961,34 @@
         }
       }
     },
+    "Ab etwa drei aufgezeichneten Runden pro Platz werden die Schätzungen deutlich stabiler." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "From about three recorded rounds per course the estimates become noticeably more stable."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "A partir de unas tres vueltas grabadas por campo las estimaciones se vuelven claramente más estables."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "À partir d'environ trois parties enregistrées par parcours, les estimations deviennent nettement plus stables."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "A partire da circa tre giri registrati per campo le stime diventano molto più stabili."
+          }
+        }
+      }
+    },
     "Abbildung" : {
       "localizations" : {
         "en" : {
@@ -2951,6 +3047,96 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Annulla"
+          }
+        }
+      }
+    },
+    "Abdeckung %lld %%" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Coverage %lld %%"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cobertura %lld %%"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Couverture %lld %%"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Copertura %lld %%"
+          }
+        }
+      }
+    },
+    "Abgeleitete Länge: %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Derived length: %@"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Longitud deducida: %@"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Longueur déduite : %@"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lunghezza dedotta: %@"
+          }
+        }
+      }
+    },
+    "Abgeleitete Länge: %@ · Scorecard: %lld m" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Abgeleitete Länge: %1$@ · Scorecard: %2$lld m"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Derived length: %1$@ · Scorecard: %2$lld m"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Longitud deducida: %1$@ · Scorecard: %2$lld m"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Longueur déduite : %1$@ · Carte de score : %2$lld m"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lunghezza dedotta: %1$@ · Scorecard: %2$lld m"
           }
         }
       }
@@ -3249,6 +3435,34 @@
         }
       }
     },
+    "Aktiviere das Positions-Tracking in den Einstellungen und spiele eine Runde auf diesem Platz. Danach können Abschlag und Grün pro Loch geschätzt werden." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Enable position tracking in the settings and play a round on this course. Tee and green can then be estimated for each hole."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Activa el seguimiento de posición en los ajustes y juega una vuelta en este campo. Después se pueden estimar el tee y el green de cada hoyo."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Active le suivi de position dans les réglages et joue une partie sur ce parcours. Le départ et le green pourront ensuite être estimés pour chaque trou."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Attiva il tracciamento della posizione nelle impostazioni e gioca un giro su questo campo. Dopo sarà possibile stimare tee e green di ogni buca."
+          }
+        }
+      }
+    },
     "AKTUELLES LOCH" : {
       "localizations" : {
         "de" : {
@@ -3429,6 +3643,34 @@
         }
       }
     },
+    "Alle gespeicherten Laufspuren werden endgültig entfernt (%lld GPS-Punkte)." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "All saved walking paths will be permanently removed (%lld GPS points)."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Se eliminarán definitivamente todos los trazados guardados (%lld puntos GPS)."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tous les tracés enregistrés seront définitivement supprimés (%lld points GPS)."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tutti i tracciati salvati verranno rimossi definitivamente (%lld punti GPS)."
+          }
+        }
+      }
+    },
     "Alle Golfplätze" : {
       "localizations" : {
         "en" : {
@@ -3481,6 +3723,62 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Tutte le categorie (%lld domande)"
+          }
+        }
+      }
+    },
+    "Alle Laufspuren löschen" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Delete all walking paths"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Eliminar todos los trazados"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Supprimer tous les tracés"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Elimina tutti i tracciati"
+          }
+        }
+      }
+    },
+    "Alle Laufspuren löschen?" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Delete all walking paths?"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "¿Eliminar todos los trazados?"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Supprimer tous les tracés ?"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Eliminare tutti i tracciati?"
           }
         }
       }
@@ -3553,6 +3851,34 @@
         }
       }
     },
+    "Alle plausiblen Vorschläge übernehmen" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Apply all plausible suggestions"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aplicar todas las sugerencias plausibles"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Appliquer toutes les suggestions plausibles"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Applica tutti i suggerimenti plausibili"
+          }
+        }
+      }
+    },
     "Alle Trainings und der KI-Caddy –\nalles in einem Abo." : {
       "localizations" : {
         "en" : {
@@ -3577,6 +3903,34 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Tutti gli allenamenti e il Caddy IA –\ntutto in un unico abbonamento."
+          }
+        }
+      }
+    },
+    "Am Abschlag und am Grün stehst du still, dazwischen bewegst du dich. Aus dem ersten und letzten längeren Stillstand pro Loch werden Abschlag und Grün geschätzt. Getrackte Schläge und selbst gesetzte Pins zählen stärker als die Laufspur." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "At the tee and on the green you stand still, in between you move. The first and last longer standstill per hole are used to estimate tee and green. Tracked strokes and pins you set yourself count more than the walking path."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "En el tee y en el green estás quieto, entre medias te mueves. El primer y el último parón largo de cada hoyo sirven para estimar el tee y el green. Los golpes registrados y las banderas que colocas tú mismo cuentan más que el trazado."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Au départ et sur le green tu restes immobile, entre les deux tu marches. Le premier et le dernier arrêt prolongé de chaque trou servent à estimer le départ et le green. Les coups enregistrés et les drapeaux que tu places toi-même comptent davantage que le tracé."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Al tee e sul green stai fermo, nel mezzo ti muovi. Il primo e l'ultimo arresto prolungato di ogni buca servono a stimare tee e green. I colpi registrati e le bandiere impostate da te contano più del tracciato."
           }
         }
       }
@@ -3935,6 +4289,62 @@
         }
       }
     },
+    "Aufzeichnung aktiv" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Recording active"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Grabación activa"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Enregistrement actif"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Registrazione attiva"
+          }
+        }
+      }
+    },
+    "Aufzeichnungen" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Recordings"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Grabaciones"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Enregistrements"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Registrazioni"
+          }
+        }
+      }
+    },
     "aus %lld Messung%@" : {
       "localizations" : {
         "de" : {
@@ -3965,6 +4375,62 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "da %1$lld misurazione%2$@"
+          }
+        }
+      }
+    },
+    "Aus mehreren Runden gerechnet. Trotzdem eine Schätzung – kein amtlicher Platzplan." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Calculated from several rounds. Still an estimate – not an official course map."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Calculado a partir de varias vueltas. Sigue siendo una estimación, no un plano oficial del campo."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Calculé à partir de plusieurs parties. Reste une estimation, pas un plan officiel du parcours."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Calcolato da più giri. Resta una stima, non una planimetria ufficiale del campo."
+          }
+        }
+      }
+    },
+    "Aus sehr wenigen Daten. Eine Laufspur ist nicht das Fairway – du läufst zu deinem Ball, über Wege und ins Rough. Betrachte das als groben Anhaltspunkt." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Based on very little data. A walking path is not the fairway – you walk to your ball, along paths and into the rough. Treat this as a rough indication only."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Basado en muy pocos datos. Un trazado no es el fairway: caminas hacia tu bola, por los senderos y hacia el rough. Tómalo solo como una orientación aproximada."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Basé sur très peu de données. Un tracé n'est pas le fairway : tu marches vers ta balle, sur les chemins et dans le rough. À considérer comme une simple indication."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Basato su pochissimi dati. Un tracciato non è il fairway: cammini verso la tua palla, sui sentieri e nel rough. Consideralo solo un'indicazione approssimativa."
           }
         }
       }
@@ -4143,6 +4609,34 @@
         }
       }
     },
+    "belastbar" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "solid"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "fiable"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "fiable"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "affidabile"
+          }
+        }
+      }
+    },
     "Benachrichtigungen" : {
       "localizations" : {
         "en" : {
@@ -4257,6 +4751,40 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Personalizzato"
+          }
+        }
+      }
+    },
+    "Bereits gespeichert: %lld von %lld Löchern." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Bereits gespeichert: %1$lld von %2$lld Löchern."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Already saved: %1$lld of %2$lld holes."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ya guardado: %1$lld de %2$lld hoyos."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Déjà enregistré : %1$lld trous sur %2$lld."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Già salvato: %1$lld di %2$lld buche."
           }
         }
       }
@@ -4885,6 +5413,34 @@
         }
       }
     },
+    "Dafür braucht es pro Loch Abschlag- und Grünposition sowie Messpunkte dazwischen – aus Laufspuren oder getrackten Schlägen. Par-3-Löcher werden übersprungen, dort gibt es kein Fairway." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "This needs a tee and green position per hole plus measurements in between – from walking paths or tracked strokes. Par 3 holes are skipped, they have no fairway."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Para ello hacen falta la posición de tee y green de cada hoyo y mediciones entre ambos, procedentes de trazados o golpes registrados. Los hoyos de par 3 se omiten, no tienen fairway."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Il faut pour cela une position de départ et de green par trou ainsi que des mesures entre les deux, issues des tracés ou des coups enregistrés. Les trous en par 3 sont ignorés, ils n'ont pas de fairway."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Servono la posizione di tee e green di ogni buca e misurazioni intermedie, da tracciati o colpi registrati. Le buche par 3 vengono saltate, non hanno fairway."
+          }
+        }
+      }
+    },
     "danach %@ / %@" : {
       "localizations" : {
         "de" : {
@@ -4949,6 +5505,34 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Il risultato non verrà salvato."
+          }
+        }
+      }
+    },
+    "Das Löschen entfernt nur die Laufspuren. Runden, Scores und bereits übernommene Loch-Positionen bleiben erhalten." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Deleting only removes the walking paths. Rounds, scores and hole positions you have already applied are kept."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Al eliminar solo se borran los trazados. Las vueltas, los scores y las posiciones de hoyo ya aplicadas se conservan."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "La suppression ne retire que les tracés. Les parties, les scores et les positions de trous déjà appliquées sont conservés."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "L'eliminazione rimuove solo i tracciati. Giri, score e posizioni delle buche già applicate vengono conservati."
           }
         }
       }
@@ -5349,6 +5933,34 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "La media verrà reimpostata sul valore predefinito (%lld m)."
+          }
+        }
+      }
+    },
+    "Die abgeleitete Länge passt nicht zur Scorecard – hier steckt wahrscheinlich ein GPS-Ausreißer oder ein falsch zugeordnetes Loch drin." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The derived length does not match the scorecard – there is probably a GPS outlier or a wrongly assigned hole in here."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "La longitud deducida no coincide con la scorecard: probablemente haya un valor GPS atípico o un hoyo mal asignado."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "La longueur déduite ne correspond pas à la carte de score : il y a probablement une valeur GPS aberrante ou un trou mal attribué."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "La lunghezza dedotta non corrisponde allo scorecard: probabilmente c'è un valore GPS anomalo o una buca assegnata in modo errato."
           }
         }
       }
@@ -5967,6 +6579,34 @@
         }
       }
     },
+    "dünn" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "thin"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "escaso"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "mince"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "scarso"
+          }
+        }
+      }
+    },
     "Durchschnitt der %lld besten Score-Differentials × 0,96" : {
       "localizations" : {
         "en" : {
@@ -6255,6 +6895,34 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Consiglio: legno 5"
+          }
+        }
+      }
+    },
+    "Ende" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "End"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fin"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fin"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fine"
           }
         }
       }
@@ -6917,6 +7585,62 @@
         }
       }
     },
+    "Fairway-Verlauf" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fairway shape"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Trazado del fairway"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tracé du fairway"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Andamento del fairway"
+          }
+        }
+      }
+    },
+    "Fairway-Verlauf wird berechnet …" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Calculating fairway shape …"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Calculando el trazado del fairway …"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Calcul du tracé du fairway …"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Calcolo dell'andamento del fairway …"
+          }
+        }
+      }
+    },
     "Falsch" : {
       "localizations" : {
         "en" : {
@@ -7318,6 +8042,62 @@
         }
       }
     },
+    "Für diese Runde liegen noch keine verwertbaren GPS-Punkte vor." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "There are no usable GPS points for this round yet."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Todavía no hay puntos GPS utilizables para esta vuelta."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aucun point GPS exploitable n'est encore disponible pour cette partie."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Per questo giro non ci sono ancora punti GPS utilizzabili."
+          }
+        }
+      }
+    },
+    "Für dieses Loch übernehmen" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Apply for this hole"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aplicar a este hoyo"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Appliquer à ce trou"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Applica a questa buca"
+          }
+        }
+      }
+    },
     "Für einen vollständigen Index werden Runden mit Course-Rating & Slope-Rating benötigt." : {
       "localizations" : {
         "en" : {
@@ -7597,6 +8377,62 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Totale: %lld"
+          }
+        }
+      }
+    },
+    "gespeichert" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "saved"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "guardado"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "enregistré"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "salvato"
+          }
+        }
+      }
+    },
+    "Gespeicherte Daten" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Saved data"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Datos guardados"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Données enregistrées"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dati salvati"
           }
         }
       }
@@ -8283,6 +9119,34 @@
         }
       }
     },
+    "GPS-Punkte" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "GPS points"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Puntos GPS"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Points GPS"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Punti GPS"
+          }
+        }
+      }
+    },
     "Gratis" : {
       "localizations" : {
         "en" : {
@@ -8307,6 +9171,34 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Gratis"
+          }
+        }
+      }
+    },
+    "Grün" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Green"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Green"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Green"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Green"
           }
         }
       }
@@ -8661,6 +9553,62 @@
         }
       }
     },
+    "hoch" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "high"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "alta"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "élevée"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "alta"
+          }
+        }
+      }
+    },
+    "Hohe Konfidenz übernehmen (%lld)" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Apply high confidence (%lld)"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aplicar confianza alta (%lld)"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Appliquer la confiance élevée (%lld)"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Applica affidabilità alta (%lld)"
+          }
+        }
+      }
+    },
     "Home" : {
       "localizations" : {
         "en" : {
@@ -8773,6 +9721,34 @@
         }
       }
     },
+    "In den iOS-Einstellungen öffnen" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Open in iOS settings"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Abrir en los ajustes de iOS"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ouvrir dans les réglages iOS"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Apri nelle impostazioni di iOS"
+          }
+        }
+      }
+    },
     "In einer zukünftigen Version verfügbar" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -8836,6 +9812,34 @@
         }
       }
     },
+    "iOS zeichnet auch bei gesperrtem Display weiter auf und zeigt dabei eine blaue Anzeige in der Statusleiste. Rechne mit etwas mehr Akkuverbrauch als ohne Tracking." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "iOS keeps recording while the display is locked and shows a blue indicator in the status bar. Expect somewhat higher battery use than without tracking."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "iOS sigue grabando con la pantalla bloqueada y muestra un indicador azul en la barra de estado. Cuenta con algo más de consumo de batería que sin seguimiento."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "iOS continue d'enregistrer même écran verrouillé et affiche un indicateur bleu dans la barre d'état. Prévois une consommation de batterie un peu plus élevée que sans suivi."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "iOS continua a registrare anche con il display bloccato e mostra un indicatore blu nella barra di stato. Metti in conto un consumo di batteria un po' più alto rispetto a senza tracciamento."
+          }
+        }
+      }
+    },
     "Ist ein Putter" : {
       "localizations" : {
         "en" : {
@@ -8860,6 +9864,34 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "È un putter"
+          }
+        }
+      }
+    },
+    "Je mehr Runden auf diesem Platz aufgezeichnet sind, desto genauer wird die Schätzung. Prüfe Vorschläge mit niedriger Konfidenz auf der Karte, bevor du sie übernimmst." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The more rounds recorded on this course, the more accurate the estimate. Check suggestions with low confidence on the map before applying them."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cuantas más vueltas se graben en este campo, más precisa será la estimación. Revisa en el mapa las sugerencias con confianza baja antes de aplicarlas."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Plus il y a de parties enregistrées sur ce parcours, plus l'estimation est précise. Vérifie sur la carte les suggestions à faible confiance avant de les appliquer."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Più giri vengono registrati su questo campo, più precisa diventa la stima. Controlla sulla mappa i suggerimenti con affidabilità bassa prima di applicarli."
           }
         }
       }
@@ -9174,6 +10206,34 @@
         }
       }
     },
+    "Kein Fairway-Verlauf ableitbar" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No fairway shape can be derived"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No se puede deducir el trazado del fairway"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aucun tracé de fairway déductible"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nessun andamento del fairway deducibile"
+          }
+        }
+      }
+    },
     "Kein GPS-Signal – Position nicht gespeichert" : {
       "localizations" : {
         "en" : {
@@ -9198,6 +10258,34 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Nessun segnale GPS – posizione non salvata"
+          }
+        }
+      }
+    },
+    "Keine Löcher mit hoher Konfidenz" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No holes with high confidence"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ningún hoyo con confianza alta"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aucun trou avec une confiance élevée"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nessuna buca con affidabilità alta"
           }
         }
       }
@@ -9354,6 +10442,90 @@
         }
       }
     },
+    "Konfidenz: hoch" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Confidence: high"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Confianza: alta"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Confiance : élevée"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Affidabilità: alta"
+          }
+        }
+      }
+    },
+    "Konfidenz: mittel" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Confidence: medium"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Confianza: media"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Confiance : moyenne"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Affidabilità: media"
+          }
+        }
+      }
+    },
+    "Konfidenz: niedrig" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Confidence: low"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Confianza: baja"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Confiance : faible"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Affidabilità: bassa"
+          }
+        }
+      }
+    },
     "Kostenlos registrieren unter:" : {
       "localizations" : {
         "en" : {
@@ -9462,6 +10634,146 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Caricamento…"
+          }
+        }
+      }
+    },
+    "Länge %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Length %@"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Longitud %@"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Longueur %@"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lunghezza %@"
+          }
+        }
+      }
+    },
+    "Laufspur" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Walking path"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Trazado"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tracé"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tracciato"
+          }
+        }
+      }
+    },
+    "Laufspur aufzeichnen" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Record walking path"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Grabar trazado"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Enregistrer le tracé"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Registra il tracciato"
+          }
+        }
+      }
+    },
+    "Laufspur wird aufgezeichnet · %lld Punkte" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Recording walking path · %lld points"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Grabando trazado · %lld puntos"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Enregistrement du tracé · %lld points"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Registrazione del tracciato · %lld punti"
+          }
+        }
+      }
+    },
+    "Laufspuren werden ausgewertet …" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Analysing walking paths …"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Analizando trazados …"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Analyse des tracés …"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Analisi dei tracciati …"
           }
         }
       }
@@ -9838,6 +11150,62 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Dettagli buca"
+          }
+        }
+      }
+    },
+    "Loch-Positionen" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hole positions"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Posiciones de hoyo"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Positions des trous"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Posizioni delle buche"
+          }
+        }
+      }
+    },
+    "Loch-Positionen ableiten" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Derive hole positions"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Deducir posiciones de hoyo"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Déduire les positions des trous"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Deduci le posizioni delle buche"
           }
         }
       }
@@ -10440,6 +11808,34 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Tessera, ricevute e altro"
+          }
+        }
+      }
+    },
+    "mittel" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "medium"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "media"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "moyenne"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "media"
           }
         }
       }
@@ -11074,6 +12470,34 @@
         }
       }
     },
+    "niedrig" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "low"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "baja"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "faible"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "bassa"
+          }
+        }
+      }
+    },
     "Noch %lld m zum Loch" : {
       "localizations" : {
         "en" : {
@@ -11154,6 +12578,34 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Ancora nessuna sacca"
+          }
+        }
+      }
+    },
+    "Noch keine Daten zum Ableiten" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No data to derive from yet"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Todavía no hay datos para deducir"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pas encore de données à exploiter"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ancora nessun dato da elaborare"
           }
         }
       }
@@ -11390,6 +12842,34 @@
         }
       }
     },
+    "Noch wenige Runden. Der Korridor kann daneben liegen, vor allem an Doglegs." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Only a few rounds so far. The corridor can be off, especially at doglegs."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Todavía pocas vueltas. El corredor puede estar desplazado, sobre todo en los doglegs."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Encore peu de parties. Le couloir peut être décalé, surtout dans les doglegs."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ancora pochi giri. Il corridoio può essere spostato, soprattutto nei dogleg."
+          }
+        }
+      }
+    },
     "Notizen" : {
       "localizations" : {
         "de" : {
@@ -11420,6 +12900,34 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Note"
+          }
+        }
+      }
+    },
+    "Nur während einer laufenden Runde" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Only during an active round"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Solo durante una vuelta en curso"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Uniquement pendant une partie en cours"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Solo durante un giro in corso"
           }
         }
       }
@@ -11706,6 +13214,34 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Chiudi senza pin"
+          }
+        }
+      }
+    },
+    "Ohne Standortzugriff kann keine Laufspur aufgezeichnet werden." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Without location access no walking path can be recorded."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sin acceso a la ubicación no se puede grabar ningún trazado."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sans accès à la localisation, aucun tracé ne peut être enregistré."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Senza accesso alla posizione non è possibile registrare alcun tracciato."
           }
         }
       }
@@ -12836,6 +14372,34 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Teoria abilitazione"
+          }
+        }
+      }
+    },
+    "Positions-Tracking" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Position tracking"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Seguimiento de posición"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Suivi de position"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tracciamento posizione"
           }
         }
       }
@@ -14056,6 +15620,68 @@
         }
       }
     },
+    "Runden: %lld" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Rounds: %lld"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vueltas: %lld"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Parties : %lld"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Giri: %lld"
+          }
+        }
+      }
+    },
+    "Runden: %lld · Streuung ±%lld m" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Runden: %1$lld · Streuung ±%2$lld m"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Rounds: %1$lld · Spread ±%2$lld m"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vueltas: %1$lld · Dispersión ±%2$lld m"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Parties : %1$lld · Dispersion ±%2$lld m"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Giri: %1$lld · Dispersione ±%2$lld m"
+          }
+        }
+      }
+    },
     "S.%lld" : {
       "localizations" : {
         "en" : {
@@ -14198,6 +15824,34 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Scansiona la tua tessera o le ricevute green fee per un accesso rapido."
+          }
+        }
+      }
+    },
+    "Schätzt aus den Messpunkten zwischen Abschlag und Grün, wo das Fairway ungefähr verläuft. Braucht gespeicherte Loch-Positionen." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Estimates roughly where the fairway runs, from the measurements between tee and green. Requires saved hole positions."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Estima aproximadamente por dónde va el fairway a partir de las mediciones entre el tee y el green. Requiere posiciones de hoyo guardadas."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Estime approximativement le tracé du fairway à partir des mesures entre le départ et le green. Nécessite des positions de trous enregistrées."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Stima approssimativamente dove passa il fairway partendo dalle misurazioni tra tee e green. Richiede posizioni delle buche salvate."
           }
         }
       }
@@ -15036,6 +16690,68 @@
         }
       }
     },
+    "Scorecard: %lld m · Abweichung %lld %%" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Scorecard: %1$lld m · Abweichung %2$lld %%"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Scorecard: %1$lld m · Deviation %2$lld %%"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Scorecard: %1$lld m · Desviación %2$lld %%"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Carte de score : %1$lld m · Écart %2$lld %%"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Scorecard: %1$lld m · Scostamento %2$lld %%"
+          }
+        }
+      }
+    },
+    "sehr dünn" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "very thin"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "muy escaso"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "très mince"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "molto scarso"
+          }
+        }
+      }
+    },
     "Skins" : {
       "localizations" : {
         "de" : {
@@ -15212,6 +16928,34 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Modalità smart, esame di prova e risultati"
+          }
+        }
+      }
+    },
+    "Speicherbedarf" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Storage used"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Espacio usado"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Espace utilisé"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Spazio occupato"
           }
         }
       }
@@ -15979,6 +17723,62 @@
         }
       }
     },
+    "Standortzugriff erlaubt" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Location access granted"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Acceso a la ubicación permitido"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Accès à la localisation autorisé"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Accesso alla posizione consentito"
+          }
+        }
+      }
+    },
+    "Standortzugriff nicht erlaubt" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Location access not granted"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Acceso a la ubicación no permitido"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Accès à la localisation refusé"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Accesso alla posizione non consentito"
+          }
+        }
+      }
+    },
     "Start" : {
       "localizations" : {
         "en" : {
@@ -16093,6 +17893,34 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Statistiche"
+          }
+        }
+      }
+    },
+    "Status" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Status"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Estado"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Statut"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Stato"
           }
         }
       }
@@ -17299,6 +19127,34 @@
         }
       }
     },
+    "Übernommen" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Applied"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aplicado"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Appliqué"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Applicato"
+          }
+        }
+      }
+    },
     "Überspringen" : {
       "localizations" : {
         "de" : {
@@ -17774,6 +19630,34 @@
         }
       }
     },
+    "Während einer Runde wird alle paar Meter deine Position gespeichert. Daraus leitet die App Abschlag- und Grünpositionen der Löcher ab – so bekommst du die Entfernung zur Fahne ohne den Pin selbst zu setzen.\n\nDie Daten bleiben auf deinem iPhone und werden nicht übertragen. Du kannst sie jederzeit hier löschen." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "During a round your position is saved every few metres. From that the app derives the tee and green positions of the holes – so you get the distance to the pin without setting the pin yourself.\n\nThe data stays on your iPhone and is not transmitted. You can delete it here at any time."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Durante una vuelta se guarda tu posición cada pocos metros. Con ello la app deduce las posiciones de tee y green de los hoyos, así obtienes la distancia a la bandera sin colocar la bandera tú mismo.\n\nLos datos permanecen en tu iPhone y no se transmiten. Puedes borrarlos aquí en cualquier momento."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pendant une partie, ta position est enregistrée tous les quelques mètres. L'app en déduit les positions de départ et de green des trous – tu obtiens ainsi la distance au drapeau sans placer le drapeau toi-même.\n\nLes données restent sur ton iPhone et ne sont pas transmises. Tu peux les supprimer ici à tout moment."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Durante un giro la tua posizione viene salvata ogni pochi metri. Da questi dati l'app deduce le posizioni di tee e green delle buche, così ottieni la distanza dalla bandiera senza impostarla manualmente.\n\nI dati restano sul tuo iPhone e non vengono trasmessi. Puoi eliminarli qui in qualsiasi momento."
+          }
+        }
+      }
+    },
     "Warte auf GPS…" : {
       "localizations" : {
         "de" : {
@@ -18182,6 +20066,34 @@
         }
       }
     },
+    "Wie das funktioniert" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "How this works"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cómo funciona"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Comment ça marche"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Come funziona"
+          }
+        }
+      }
+    },
     "Wie möchtest du das Dokument hinzufügen?" : {
       "localizations" : {
         "de" : {
@@ -18371,6 +20283,34 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Viene disattivato automaticamente se usi un Apple Watch per il tracciamento."
+          }
+        }
+      }
+    },
+    "Wird beim Start der nächsten Runde abgefragt" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "You'll be asked when the next round starts"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Se te preguntará al iniciar la próxima vuelta"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "La demande aura lieu au début de la prochaine partie"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Verrà richiesto all'inizio del prossimo giro"
           }
         }
       }

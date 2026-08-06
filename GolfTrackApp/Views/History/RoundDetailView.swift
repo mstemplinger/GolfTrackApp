@@ -22,6 +22,9 @@ struct RoundDetailView: View {
                     if !round.holeScores.flatMap({ $0.shots }).isEmpty {
                         RoundShotMapCard(round: round)
                     }
+                    if (round.track?.pointCount ?? 0) > 1 {
+                        RoundTrackMapCard(round: round)
+                    }
                     if roundTotalDistanceM > 0 { distanceSection }
                     if !round.notes.isEmpty { notesSection }
                 }

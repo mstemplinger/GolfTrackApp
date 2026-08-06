@@ -30,6 +30,14 @@ final class Course {
     var flagLatitudes:  [Double] = []
     var flagLongitudes: [Double] = []
 
+    // MARK: – Abgeleiteter Fairway-Verlauf
+    /// JSON-kodierte `[HoleCorridor]` – das fertig aggregierte Ergebnis der
+    /// Korridor-Berechnung. Bewusst nur das Aggregat, nicht die Rohpunkte:
+    /// es überlebt das Löschen der Laufspuren und enthält weder Zeit noch Kennung.
+    var fairwayData: Data = Data()
+    /// Wann der Verlauf zuletzt berechnet wurde.
+    var fairwayComputedAt: Date?
+
     @Relationship(deleteRule: .nullify, inverse: \Round.course)
     var rounds: [Round] = []
 
@@ -60,24 +68,61 @@ final class Course {
 
     /// True wenn für alle Löcher Abschlag- und Fahnen-GPS gespeichert sind.
     var hasHolePositions: Bool {
-        teeLatitudes.count  == numberOfHoles &&
-        teeLongitudes.count == numberOfHoles &&
-        flagLatitudes.count  == numberOfHoles &&
-        flagLongitudes.count == numberOfHoles
+        (1...max(1, numberOfHoles)).allSatisfy {
+            teeCoordinate(forHole: $0) != nil && flagCoordinate(forHole: $0) != nil
+        }
+    }
+
+    /// Anzahl Löcher mit vollständiger Position (Abschlag *und* Fahne).
+    var holePositionCount: Int {
+        (1...max(1, numberOfHoles)).filter {
+            teeCoordinate(forHole: $0) != nil && flagCoordinate(forHole: $0) != nil
+        }.count
     }
 
     /// Abschlag-Koordinate für Loch `hole` (1-basiert), oder nil wenn nicht vorhanden.
     func teeCoordinate(forHole hole: Int) -> CLLocationCoordinate2D? {
         let i = hole - 1
         guard i >= 0, i < teeLatitudes.count, i < teeLongitudes.count else { return nil }
-        return CLLocationCoordinate2D(latitude: teeLatitudes[i], longitude: teeLongitudes[i])
+        return Course.validCoordinate(teeLatitudes[i], teeLongitudes[i])
     }
 
     /// Fahnen-Koordinate für Loch `hole` (1-basiert), oder nil wenn nicht vorhanden.
     func flagCoordinate(forHole hole: Int) -> CLLocationCoordinate2D? {
         let i = hole - 1
         guard i >= 0, i < flagLatitudes.count, i < flagLongitudes.count else { return nil }
-        return CLLocationCoordinate2D(latitude: flagLatitudes[i], longitude: flagLongitudes[i])
+        return Course.validCoordinate(flagLatitudes[i], flagLongitudes[i])
+    }
+
+    /// Setzt die Abschlag-Position für ein einzelnes Loch. Lücken werden mit
+    /// `NaN` aufgefüllt – die Accessors behandeln das als "nicht gesetzt".
+    func setTeeCoordinate(_ coordinate: CLLocationCoordinate2D, forHole hole: Int) {
+        let i = hole - 1
+        guard i >= 0, i < numberOfHoles else { return }
+        Course.pad(&teeLatitudes,  to: numberOfHoles)
+        Course.pad(&teeLongitudes, to: numberOfHoles)
+        teeLatitudes[i]  = coordinate.latitude
+        teeLongitudes[i] = coordinate.longitude
+    }
+
+    /// Setzt die Fahnen-Position für ein einzelnes Loch.
+    func setFlagCoordinate(_ coordinate: CLLocationCoordinate2D, forHole hole: Int) {
+        let i = hole - 1
+        guard i >= 0, i < numberOfHoles else { return }
+        Course.pad(&flagLatitudes,  to: numberOfHoles)
+        Course.pad(&flagLongitudes, to: numberOfHoles)
+        flagLatitudes[i]  = coordinate.latitude
+        flagLongitudes[i] = coordinate.longitude
+    }
+
+    private static func pad(_ values: inout [Double], to count: Int) {
+        while values.count < count { values.append(.nan) }
+    }
+
+    private static func validCoordinate(_ lat: Double, _ lon: Double) -> CLLocationCoordinate2D? {
+        guard lat.isFinite, lon.isFinite, !(lat == 0 && lon == 0) else { return nil }
+        let coord = CLLocationCoordinate2D(latitude: lat, longitude: lon)
+        return CLLocationCoordinate2DIsValid(coord) ? coord : nil
     }
 
     /// Distanz von `location` zur Fahne von Loch `hole` in Metern, oder nil.
@@ -90,6 +135,23 @@ final class Course {
     func distanceToTee(hole: Int, from location: CLLocation) -> CLLocationDistance? {
         guard let coord = teeCoordinate(forHole: hole) else { return nil }
         return CLLocation(latitude: coord.latitude, longitude: coord.longitude).distance(from: location)
+    }
+
+    // MARK: – Fairway-Verlauf
+
+    /// Gespeicherte Fairway-Korridore, leer wenn noch nichts berechnet wurde.
+    var fairwayCorridors: [HoleCorridor] {
+        guard !fairwayData.isEmpty else { return [] }
+        return (try? JSONDecoder().decode([HoleCorridor].self, from: fairwayData)) ?? []
+    }
+
+    func corridor(forHole hole: Int) -> HoleCorridor? {
+        fairwayCorridors.first { $0.holeNumber == hole }
+    }
+
+    func setFairwayCorridors(_ corridors: [HoleCorridor], computedAt: Date = .now) {
+        fairwayData = (try? JSONEncoder().encode(corridors)) ?? Data()
+        fairwayComputedAt = corridors.isEmpty ? nil : computedAt
     }
 
     // MARK: – Platzmittelpunkt

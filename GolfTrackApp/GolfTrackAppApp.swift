@@ -35,6 +35,6 @@ struct GolfTrackAppApp: App {
                 .environmentObject(subscriptionManager)
                 .preferredColorScheme(.dark)
         }
-        .modelContainer(for: [Course.self, Round.self, HoleScore.self, Shot.self, PlayerHoleScore.self, QuizResult.self, GolfClub.self, GolfBag.self])
+        .modelContainer(for: [Course.self, Round.self, HoleScore.self, Shot.self, PlayerHoleScore.self, QuizResult.self, GolfClub.self, GolfBag.self, RoundTrack.self])
     }
 }

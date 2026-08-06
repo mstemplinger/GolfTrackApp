@@ -21,6 +21,7 @@ struct ScorecardView: View {
 
     private let wc = WatchConnectivityManager.shared
     @ObservedObject private var gc = GameCenterManager.shared
+    @ObservedObject private var tracking = RoundTrackingService.shared
 
     private var sortedScores: [HoleScore] {
         round.holeScores.sorted { $0.holeNumber < $1.holeNumber }
@@ -55,6 +56,12 @@ struct ScorecardView: View {
 
                 if round.gameMode.isMultiplayer {
                     gameStatusBanner
+                }
+
+                if tracking.isTracking {
+                    trackingIndicator
+                        .padding(.horizontal, 16)
+                        .padding(.top, 4)
                 }
 
                 miniScorecard
@@ -99,6 +106,7 @@ struct ScorecardView: View {
             Button("Abschließen") {
                 round.isComplete = true
                 wc.finishRound()
+                tracking.stop()
                 // Nur zur Bestenliste zählen wenn alle Löcher mit mindestens 1 Schlag belegt sind
                 let allHolesPlayed = sortedScores.allSatisfy { $0.strokes >= 1 }
                 if allHolesPlayed {
@@ -172,6 +180,11 @@ struct ScorecardView: View {
             // Game Center: Aktivitätsstatus setzen (Freunde sehen "spielt gerade")
             gc.activateAccessPoint()
 
+            // Laufspur aufzeichnen – tut nur etwas, wenn in den Einstellungen erlaubt
+            if !round.isComplete {
+                tracking.start(round: round, context: context, currentHole: currentIndex + 1)
+            }
+
             // Runde an Watch senden beim Start
             let strokes = sortedScores.map(\.strokes)
             wc.startRound(holes: sortedScores.count, strokes: strokes, currentHoleIndex: currentIndex)
@@ -206,17 +219,38 @@ struct ScorecardView: View {
             // Callbacks aufräumen damit keine Zombie-Referenzen bleiben
             wc.onWatchShotReceived = nil
             NotificationManager.shared.cancelRoundInactivityReminder()
+            // Runde verlassen/pausiert → Aufzeichnung beenden. Beim Wiedereinstieg
+            // wird derselbe Track fortgesetzt.
+            tracking.stop()
         }
         .onChange(of: currentIndex) { _, newIndex in
             let strokes = sortedScores.map(\.strokes)
             wc.updateStrokes(strokes: strokes, currentHoleIndex: newIndex)
             scheduleRoundInactivityReminder()
+            tracking.setCurrentHole(newIndex + 1)
         }
         .onChange(of: round.totalStrokes) { _, _ in
             let strokes = sortedScores.map(\.strokes)
             wc.updateStrokes(strokes: strokes, currentHoleIndex: currentIndex)
             scheduleRoundInactivityReminder()
         }
+    }
+
+    // MARK: - Tracking indicator
+
+    private var trackingIndicator: some View {
+        HStack(spacing: 8) {
+            Image(systemName: "figure.walk")
+                .font(.caption)
+                .foregroundStyle(AppTheme.gold)
+            Text("Laufspur wird aufgezeichnet · \(tracking.pointCount) Punkte")
+                .font(.caption2)
+                .foregroundStyle(AppTheme.textSec)
+            Spacer()
+        }
+        .padding(.horizontal, 12)
+        .padding(.vertical, 8)
+        .background(AppTheme.cardDark, in: RoundedRectangle(cornerRadius: 10))
     }
 
     // MARK: - Round inactivity reminder

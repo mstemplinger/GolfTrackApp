@@ -5,6 +5,9 @@ import CoreLocation
 struct PinSetterView: View {
     @Binding var pinLatitude: Double?
     @Binding var pinLongitude: Double?
+    /// Wird aufgerufen, wenn der Nutzer einen Pin tatsächlich speichert
+    /// (nicht beim Abbrechen) – damit ein vorbefüllter Pin als manuell gilt.
+    var onManualSave: (() -> Void)? = nil
 
     @Environment(\.dismiss) private var dismiss
     @AppStorage(DistanceUnit.storageKey) private var distanceUnit: DistanceUnit = .meters
@@ -190,6 +193,7 @@ struct PinSetterView: View {
                 if let lat = pendingLat, let lon = pendingLon {
                     pinLatitude = lat
                     pinLongitude = lon
+                    onManualSave?()
                 }
                 dismiss()
             } label: {

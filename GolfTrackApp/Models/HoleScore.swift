@@ -10,6 +10,10 @@ final class HoleScore {
     var greenInRegulation: Bool
     var pinLatitude: Double?
     var pinLongitude: Double?
+    /// true, wenn der Pin aus den abgeleiteten Platzpositionen vorbefüllt wurde
+    /// und nicht vom Nutzer gesetzt ist. Wichtig, damit die Ableitung
+    /// (`CourseGeometryInference`) sich nicht selbst bestätigt.
+    var pinIsAutomatic: Bool = false
     /// Name des verwendeten Schlägers für dieses Loch (optional, vom Nutzer wählbar)
     var clubName: String? = nil
     var round: Round?

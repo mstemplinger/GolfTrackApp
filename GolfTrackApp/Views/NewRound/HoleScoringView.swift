@@ -80,7 +80,9 @@ struct HoleScoringView: View {
             ShotTrackerView(holeScore: score)
         }
         .sheet(isPresented: $showPinSetter) {
-            PinSetterView(pinLatitude: $score.pinLatitude, pinLongitude: $score.pinLongitude)
+            PinSetterView(pinLatitude: $score.pinLatitude,
+                          pinLongitude: $score.pinLongitude,
+                          onManualSave: { score.pinIsAutomatic = false })
         }
         .sheet(isPresented: $showClubPicker) {
             ClubPickerSheet(
@@ -96,9 +98,13 @@ struct HoleScoringView: View {
         .onAppear {
             if clubs.isEmpty { seedDefaultClubs() }
             updateWidget()
+            prefillPinFromCourse()
         }
         .onChange(of: score.strokes) { _, _ in updateWidget() }
-        .onChange(of: score.holeNumber) { _, _ in updateWidget() }
+        .onChange(of: score.holeNumber) { _, _ in
+            updateWidget()
+            prefillPinFromCourse()
+        }
         .onReceive(NotificationCenter.default.publisher(for: .openShotTracker)) { _ in
             showShotTracker = true
         }
@@ -144,6 +150,18 @@ struct HoleScoringView: View {
             context.insert(club)
             bag.clubs.append(club)
         }
+    }
+
+    // MARK: - Pin Prefill
+
+    /// Übernimmt die für den Platz hinterlegte (ggf. abgeleitete) Fahnenposition,
+    /// solange der Nutzer für dieses Loch keinen eigenen Pin gesetzt hat.
+    private func prefillPinFromCourse() {
+        guard !score.hasPinLocation || score.pinIsAutomatic,
+              let coord = round.course?.flagCoordinate(forHole: score.holeNumber) else { return }
+        score.pinLatitude = coord.latitude
+        score.pinLongitude = coord.longitude
+        score.pinIsAutomatic = true
     }
 
     // MARK: - Pin Distance Helpers

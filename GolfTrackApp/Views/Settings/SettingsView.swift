@@ -14,6 +14,12 @@ struct SettingsView: View {
                         }
                         .listRowBackground(AppTheme.card)
                         NavigationLink {
+                            TrackingSettingsView()
+                        } label: {
+                            Label("Positions-Tracking", systemImage: "figure.walk")
+                        }
+                        .listRowBackground(AppTheme.card)
+                        NavigationLink {
                             APIKeySettingsView()
                         } label: {
                             Label("API-Einstellungen", systemImage: "key.fill")

@@ -785,7 +785,7 @@
 				INFOPLIST_KEY_CFBundleDisplayName = GolfTrack;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.sports";
 				INFOPLIST_KEY_NSCameraUsageDescription = "GolfTrack verwendet die Kamera, um Mitgliedskarten und Belege zu scannen.";
-				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "GolfTrack benötigt deinen Standort, um das aktuelle Wetter für deinen Golfplatz anzuzeigen.";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "GolfTrack nutzt deinen Standort für das Platzwetter, für Entfernungen zur Fahne und – wenn du das Positions-Tracking aktivierst – um während einer Runde deine Laufspur aufzuzeichnen und daraus Abschlag und Grün der Löcher zu erkennen. Die Laufspur bleibt auf deinem iPhone.";
 				INFOPLIST_KEY_NSMicrophoneUsageDescription = "Caddy, dein Golf-Assistent, benötigt das Mikrofon für Sprachgespräche.";
 				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "GolfTrack liest Fotos aus deiner Bibliothek, um Dokumente hinzuzufügen.";
 				INFOPLIST_KEY_NSSupportsLiveActivities = YES;
@@ -828,7 +828,7 @@
 				INFOPLIST_KEY_CFBundleDisplayName = GolfTrack;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.sports";
 				INFOPLIST_KEY_NSCameraUsageDescription = "GolfTrack verwendet die Kamera, um Mitgliedskarten und Belege zu scannen.";
-				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "GolfTrack benötigt deinen Standort, um das aktuelle Wetter für deinen Golfplatz anzuzeigen.";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "GolfTrack nutzt deinen Standort für das Platzwetter, für Entfernungen zur Fahne und – wenn du das Positions-Tracking aktivierst – um während einer Runde deine Laufspur aufzuzeichnen und daraus Abschlag und Grün der Löcher zu erkennen. Die Laufspur bleibt auf deinem iPhone.";
 				INFOPLIST_KEY_NSMicrophoneUsageDescription = "Caddy, dein Golf-Assistent, benötigt das Mikrofon für Sprachgespräche.";
 				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "GolfTrack liest Fotos aus deiner Bibliothek, um Dokumente hinzuzufügen.";
 				INFOPLIST_KEY_NSSupportsLiveActivities = YES;

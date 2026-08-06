@@ -19,6 +19,11 @@ final class Round {
     @Relationship(deleteRule: .cascade, inverse: \PlayerHoleScore.round)
     var playerHoleScores: [PlayerHoleScore] = []
 
+    /// Aufgezeichnete Laufspur – nur vorhanden, wenn der Nutzer das
+    /// Positions-Tracking aktiviert hat.
+    @Relationship(deleteRule: .cascade, inverse: \RoundTrack.round)
+    var track: RoundTrack?
+
     init(date: Date = .now, course: Course? = nil, notes: String = "", gameMode: GameMode = .strokePlay) {
         self.date = date
         self.course = course

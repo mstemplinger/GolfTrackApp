@@ -1,0 +1,13 @@
+# macOS
+.DS_Store
+
+# Zugangsdaten – gehören nie ins Repo (Instagram/Telegram-Tokens)
+*.local.json
+
+# Marketing-Werkzeuge: Abhängigkeiten und generierte Medien
+marketing/**/node_modules/
+marketing/**/out/
+
+# Alte Arbeitskopien
+marketing Kopie/
+marketing Kopie.zip

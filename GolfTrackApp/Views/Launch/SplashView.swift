@@ -4,6 +4,7 @@ import SwiftUI
 
 struct SplashContainerView: View {
     @State private var showSplash = true
+    @State private var showWhatsNew = false
 
     var body: some View {
         ZStack {
@@ -13,10 +14,16 @@ struct SplashContainerView: View {
                     withAnimation(.easeInOut(duration: 0.55)) {
                         showSplash = false
                     }
+                    // Update-Einführung erst nach dem Splash, und nur für
+                    // Bestandsnutzer – Neuinstallationen sehen das Onboarding.
+                    showWhatsNew = WhatsNew.evaluateOnLaunch()
                 }
                 .transition(.opacity)
                 .zIndex(1)
             }
+        }
+        .sheet(isPresented: $showWhatsNew, onDismiss: { WhatsNew.markCurrentAsSeen() }) {
+            WhatsNewView()
         }
     }
 }

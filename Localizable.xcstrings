@@ -3271,6 +3271,34 @@
         }
       }
     },
+    "Abschlag und Grün von allein" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tee and green by itself"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tee y green automáticamente"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Départ et green tout seuls"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tee e green da soli"
+          }
+        }
+      }
+    },
     "Abschlag wählen" : {
       "localizations" : {
         "en" : {
@@ -4317,6 +4345,62 @@
         }
       }
     },
+    "Aufzeichnung aktiviert – sie startet mit deiner nächsten Runde." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Recording enabled – it starts with your next round."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Grabación activada: empieza con tu próxima vuelta."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Enregistrement activé – il démarre avec ta prochaine partie."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Registrazione attivata: parte con il tuo prossimo giro."
+          }
+        }
+      }
+    },
+    "Aufzeichnung einschalten" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Turn recording on"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Activar la grabación"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Activer l'enregistrement"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Attiva la registrazione"
+          }
+        }
+      }
+    },
     "Aufzeichnungen" : {
       "localizations" : {
         "en" : {
@@ -4375,6 +4459,34 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "da %1$lld misurazione%2$@"
+          }
+        }
+      }
+    },
+    "Aus deinen Runden schätzt die App, wo Abschlag und Fahne jedes Lochs liegen. Danach steht die Entfernung zur Fahne da, ohne dass du den Pin selbst setzen musst." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "From your rounds the app estimates where the tee and the pin of each hole are. After that the distance to the pin is simply there, without you setting the pin yourself."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "A partir de tus vueltas, la app estima dónde están el tee y la bandera de cada hoyo. Después la distancia a la bandera aparece sola, sin que tengas que colocarla tú."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "À partir de tes parties, l'app estime où se trouvent le départ et le drapeau de chaque trou. La distance au drapeau s'affiche ensuite sans que tu aies à le placer toi-même."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dai tuoi giri l'app stima dove si trovano il tee e la bandiera di ogni buca. Dopodiché la distanza dalla bandiera compare da sola, senza che tu debba impostarla."
           }
         }
       }
@@ -5881,6 +5993,62 @@
         }
       }
     },
+    "Dein Weg über den Platz" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Your path around the course"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tu recorrido por el campo"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ton parcours sur le terrain"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Il tuo percorso sul campo"
+          }
+        }
+      }
+    },
+    "Deine Laufspur" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Your walking path"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tu trazado"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ton tracé"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Il tuo tracciato"
+          }
+        }
+      }
+    },
     "Deine Übungsaufgabe" : {
       "localizations" : {
         "en" : {
@@ -5989,6 +6157,34 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Le regole del golf attuali sono in vigore dal 1° gennaio 2023. Le regole locali del campo possono differire su singoli punti."
+          }
+        }
+      }
+    },
+    "Die Aufzeichnung ist standardmäßig aus und läuft nur während einer Runde. Die Daten bleiben auf deinem iPhone und werden nicht übertragen. Du kannst das Tracking jederzeit in den Einstellungen abschalten und die Aufzeichnungen dort löschen." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Recording is off by default and only runs during a round. The data stays on your iPhone and is not transmitted. You can switch tracking off in the settings at any time and delete the recordings there."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "La grabación está desactivada por defecto y solo funciona durante una vuelta. Los datos permanecen en tu iPhone y no se transmiten. Puedes desactivar el seguimiento en los ajustes cuando quieras y borrar allí las grabaciones."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "L'enregistrement est désactivé par défaut et ne fonctionne que pendant une partie. Les données restent sur ton iPhone et ne sont pas transmises. Tu peux désactiver le suivi dans les réglages à tout moment et y supprimer les enregistrements."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "La registrazione è disattivata di default e funziona solo durante un giro. I dati restano sul tuo iPhone e non vengono trasmessi. Puoi disattivare il tracciamento nelle impostazioni in qualsiasi momento ed eliminare lì le registrazioni."
           }
         }
       }
@@ -9091,6 +9287,34 @@
         }
       }
     },
+    "GolfTrack kann jetzt aufzeichnen, wo du auf dem Platz unterwegs warst – und daraus lernen, wie die Löcher liegen." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "GolfTrack can now record where you walked on the course – and learn from it how the holes are laid out."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "GolfTrack ahora puede grabar por dónde has ido en el campo y deducir de ello cómo están dispuestos los hoyos."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "GolfTrack peut désormais enregistrer où tu es passé sur le parcours et en déduire la disposition des trous."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "GolfTrack ora può registrare dove ti sei mosso sul campo e capirne la disposizione delle buche."
+          }
+        }
+      }
+    },
     "GolfTrack Pro" : {
       "localizations" : {
         "en" : {
@@ -11902,6 +12126,34 @@
         }
       }
     },
+    "Nach ein paar Runden zeichnet die App, wo das Fairway ungefähr verläuft – Doglegs inklusive. Je mehr Runden, desto genauer." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "After a few rounds the app draws roughly where the fairway runs – doglegs included. The more rounds, the more accurate."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tras unas cuantas vueltas la app dibuja por dónde va aproximadamente el fairway, doglegs incluidos. Cuantas más vueltas, más preciso."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Après quelques parties, l'app dessine approximativement le tracé du fairway, doglegs compris. Plus il y a de parties, plus c'est précis."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dopo qualche giro l'app disegna all'incirca dove passa il fairway, dogleg inclusi. Più giri, più è precisa."
+          }
+        }
+      }
+    },
     "Nach Kategorie" : {
       "localizations" : {
         "de" : {
@@ -12112,6 +12364,34 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "NUOVO"
+          }
+        }
+      }
+    },
+    "Neu in GolfTrack" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "New in GolfTrack"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Novedades en GolfTrack"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nouveau dans GolfTrack"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Novità in GolfTrack"
           }
         }
       }
@@ -16932,6 +17212,34 @@
         }
       }
     },
+    "Später entscheiden" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Decide later"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Decidir más tarde"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Décider plus tard"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Decido dopo"
+          }
+        }
+      }
+    },
     "Speicherbedarf" : {
       "localizations" : {
         "en" : {
@@ -19692,6 +20000,34 @@
         }
       }
     },
+    "Was ist neu" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "What's new"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Novedades"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nouveautés"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Novità"
+          }
+        }
+      }
+    },
     "Weiter" : {
       "localizations" : {
         "de" : {
@@ -19868,6 +20204,34 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Mostra meno"
+          }
+        }
+      }
+    },
+    "Wenn du es erlaubst, merkt sich GolfTrack während der Runde alle paar Meter deine Position. Nach der Runde siehst du deinen Weg über den Platz auf der Karte." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "If you allow it, GolfTrack notes your position every few metres during the round. Afterwards you can see your path across the course on the map."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Si lo permites, GolfTrack anota tu posición cada pocos metros durante la vuelta. Después puedes ver tu recorrido por el campo en el mapa."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Si tu l'autorises, GolfTrack retient ta position tous les quelques mètres pendant la partie. Ensuite, tu vois ton parcours sur la carte."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Se lo consenti, GolfTrack registra la tua posizione ogni pochi metri durante il giro. Dopo puoi vedere il tuo percorso sulla mappa."
           }
         }
       }

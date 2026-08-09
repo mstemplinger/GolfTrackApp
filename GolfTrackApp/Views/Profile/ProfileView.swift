@@ -18,6 +18,7 @@ struct ProfileView: View {
     @AppStorage(DistanceUnit.storageKey) private var distanceUnit: DistanceUnit = .meters
     @ObservedObject private var gc = GameCenterManager.shared
     @State private var selectedAchievement: GCAchievement?
+    @State private var showWhatsNew = false
 
     private var completedRounds: [Round] { allRounds.filter(\.isComplete) }
 
@@ -184,6 +185,7 @@ struct ProfileView: View {
             }
             .navigationBarHidden(true)
         }
+        .sheet(isPresented: $showWhatsNew) { WhatsNewView() }
     }
 
     // MARK: - Avatar
@@ -257,6 +259,10 @@ struct ProfileView: View {
                 AnyView(CourseListView())
             }
             Divider().background(AppTheme.cardAlt).padding(.leading, 62)
+            settingsRow(icon: "figure.walk", color: Color(red: 0.4, green: 0.8, blue: 0.9), title: "Positions-Tracking") {
+                AnyView(TrackingSettingsView())
+            }
+            Divider().background(AppTheme.cardAlt).padding(.leading, 62)
             settingsRow(icon: "figure.golf", color: Color(red: 0.3, green: 0.85, blue: 0.5), title: "Minigolf") {
                 AnyView(MinigolfView())
             }
@@ -271,6 +277,30 @@ struct ProfileView: View {
             Divider().background(AppTheme.cardAlt).padding(.leading, 62)
             settingsRow(icon: "questionmark.circle.fill", color: Color(red: 1.0, green: 0.6, blue: 0.3), title: "Hilfe & Anleitung") {
                 AnyView(HelpView())
+            }
+            Divider().background(AppTheme.cardAlt).padding(.leading, 62)
+            Button {
+                showWhatsNew = true
+            } label: {
+                HStack(spacing: 14) {
+                    ZStack {
+                        RoundedRectangle(cornerRadius: 9)
+                            .fill(AppTheme.gold.opacity(0.18))
+                            .frame(width: 40, height: 40)
+                        Image(systemName: "sparkles")
+                            .font(.system(size: 16))
+                            .foregroundStyle(AppTheme.gold)
+                    }
+                    Text("Was ist neu")
+                        .font(.subheadline)
+                        .foregroundStyle(AppTheme.text)
+                    Spacer()
+                    Image(systemName: "chevron.right")
+                        .font(.caption)
+                        .foregroundStyle(AppTheme.textTer)
+                }
+                .padding(.horizontal, 18)
+                .padding(.vertical, 14)
             }
             Divider().background(AppTheme.cardAlt).padding(.leading, 62)
             Button {
@@ -301,7 +331,7 @@ struct ProfileView: View {
         .padding(.horizontal)
     }
 
-    private func settingsRow(icon: String, color: Color, title: String, destination: @escaping () -> AnyView) -> some View {
+    private func settingsRow(icon: String, color: Color, title: LocalizedStringKey, destination: @escaping () -> AnyView) -> some View {
         NavigationLink { destination() } label: {
             HStack(spacing: 14) {
                 ZStack {

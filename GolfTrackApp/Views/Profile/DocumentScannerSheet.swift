@@ -159,7 +159,7 @@ struct DocumentScannerSheet: View {
     private var previewSection: some View {
         VStack(alignment: .leading, spacing: 10) {
             HStack {
-                Text("\(scannedImages.count) Seite\(scannedImages.count == 1 ? "" : "n") gescannt")
+                Text(scannedImages.count == 1 ? "1 Seite gescannt" : "\(scannedImages.count) Seiten gescannt")
                     .font(.subheadline.bold())
                     .foregroundStyle(AppTheme.text)
                 Spacer()

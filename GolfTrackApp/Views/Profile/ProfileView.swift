@@ -223,6 +223,18 @@ struct ProfileView: View {
         .cardStyle()
     }
 
+    /// Singular und Plural als getrennte Literale – eine Endung als Platzhalter
+    /// durchzureichen ergibt in anderen Sprachen Unsinn ("3 more roundn").
+    private func handicapHint(missing: Int) -> LocalizedStringKey {
+        if missing <= 0 {
+            return "Für einen vollständigen Index werden Runden mit Course-Rating & Slope-Rating benötigt."
+        }
+        if missing == 1 {
+            return "Spiele noch 1 Runde, um einen Handicap-Index zu erhalten."
+        }
+        return "Spiele noch \(missing) Runden, um einen Handicap-Index zu erhalten."
+    }
+
     // MARK: - Settings
 
     private var settingsSection: some View {
@@ -448,9 +460,7 @@ struct ProfileView: View {
                         .font(.subheadline.bold())
                         .foregroundStyle(AppTheme.textSec)
                     let missing = max(0, 3 - completedRounds.count)
-                    Text(missing > 0
-                         ? "Spiele noch \(missing) Runde\(missing == 1 ? "" : "n"), um einen Handicap-Index zu erhalten."
-                         : "Für einen vollständigen Index werden Runden mit Course-Rating & Slope-Rating benötigt.")
+                    Text(handicapHint(missing: missing))
                         .font(.caption)
                         .foregroundStyle(AppTheme.textTer)
                         .multilineTextAlignment(.center)

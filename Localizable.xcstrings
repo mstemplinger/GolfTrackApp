@@ -1395,40 +1395,6 @@
         }
       }
     },
-    "%lld Seite%@ gescannt" : {
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "%1$lld Seite%2$@ gescannt"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "%1$lld page%2$@ scanned"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "%1$lld página%2$@ escaneada"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "%1$lld page%2$@ scannée"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "%1$lld pagina%2$@ scansionata"
-          }
-        }
-      }
-    },
     "%lld Seiten" : {
       "localizations" : {
         "en" : {
@@ -1453,6 +1419,34 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "%lld pagine"
+          }
+        }
+      }
+    },
+    "%lld Seiten gescannt" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld pages scanned"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld páginas escaneadas"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld pages numérisées"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld pagine scansionate"
           }
         }
       }
@@ -2139,6 +2133,34 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "01"
+          }
+        }
+      }
+    },
+    "1 Seite gescannt" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "1 page scanned"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "1 página escaneada"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "1 page numérisée"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "1 pagina scansionata"
           }
         }
       }
@@ -4429,36 +4451,58 @@
         }
       }
     },
-    "aus %lld Messung%@" : {
+    "aus %lld Messungen" : {
       "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "aus %1$lld Messung%2$@"
-          }
-        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "from %1$lld measurement%2$@"
+            "value" : "from %lld measurements"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "de %1$lld medición%2$@"
+            "value" : "de %lld mediciones"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "sur %1$lld mesure%2$@"
+            "value" : "sur %lld mesures"
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "da %1$lld misurazione%2$@"
+            "value" : "su %lld misurazioni"
+          }
+        }
+      }
+    },
+    "aus 1 Messung" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "from 1 measurement"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "de 1 medición"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "sur 1 mesure"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "su 1 misurazione"
           }
         }
       }
@@ -13324,36 +13368,58 @@
         }
       }
     },
-    "Ø aus %lld Messung%@" : {
+    "Ø aus %lld Messungen" : {
       "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "Ø aus %1$lld Messung%2$@"
-          }
-        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Ø from %1$lld measurement%2$@"
+            "value" : "Ø from %lld measurements"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Ø de %1$lld medición%2$@"
+            "value" : "Ø de %lld mediciones"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Ø sur %1$lld mesure%2$@"
+            "value" : "Ø sur %lld mesures"
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Ø da %1$lld misurazione%2$@"
+            "value" : "Ø su %lld misurazioni"
+          }
+        }
+      }
+    },
+    "Ø aus 1 Messung" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ø from 1 measurement"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ø de 1 medición"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ø sur 1 mesure"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ø su 1 misurazione"
           }
         }
       }
@@ -17392,36 +17458,58 @@
         }
       }
     },
-    "Spiele noch %lld Runde%@, um einen Handicap-Index zu erhalten." : {
+    "Spiele noch %lld Runden, um einen Handicap-Index zu erhalten." : {
       "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "Spiele noch %1$lld Runde%2$@, um einen Handicap-Index zu erhalten."
-          }
-        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Play %1$lld more round%2$@ to get a handicap index."
+            "value" : "Play %lld more rounds to get a handicap index."
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Juega %1$lld vuelta%2$@ más para obtener un índice de hándicap."
+            "value" : "Juega %lld vueltas más para obtener un índice de hándicap."
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Joue encore %1$lld partie%2$@ pour obtenir un index de handicap."
+            "value" : "Joue encore %lld parties pour obtenir un index de handicap."
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Gioca ancora %1$lld giro%2$@ per ottenere un indice di handicap."
+            "value" : "Gioca ancora %lld giri per ottenere un indice di handicap."
+          }
+        }
+      }
+    },
+    "Spiele noch 1 Runde, um einen Handicap-Index zu erhalten." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Play 1 more round to get a handicap index."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Juega 1 vuelta más para obtener un índice de hándicap."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Joue encore 1 partie pour obtenir un index de handicap."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gioca ancora 1 giro per ottenere un indice di handicap."
           }
         }
       }

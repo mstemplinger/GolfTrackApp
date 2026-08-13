@@ -273,7 +273,7 @@ struct ClubBagView: View {
                     }
                 }
                 if club.hasUserData {
-                    Text("Ø aus \(club.shotCount) Messung\(club.shotCount == 1 ? "" : "en")")
+                    Text(club.shotCount == 1 ? "Ø aus 1 Messung" : "Ø aus \(club.shotCount) Messungen")
                         .font(.caption)
                         .foregroundStyle(AppTheme.gold)
                 } else {
@@ -437,7 +437,7 @@ struct ClubDetailSheet: View {
                 .foregroundStyle(club.hasUserData ? AppTheme.gold : AppTheme.textSec)
                 .contentTransition(.numericText())
             if club.hasUserData {
-                Text("aus \(club.shotCount) Messung\(club.shotCount == 1 ? "" : "en")")
+                Text(club.shotCount == 1 ? "aus 1 Messung" : "aus \(club.shotCount) Messungen")
                     .font(.subheadline).foregroundStyle(AppTheme.textSec)
                 if club.shotCount >= 2 {
                     HStack(spacing: 20) {

@@ -196,6 +196,16 @@ enum FairwayCorridorInference {
             .compactMap { corridor(forHole: $0, course: course, rounds: prepared) }
     }
 
+    /// Gespeicherte Korridore, wenn sie zum aktuellen Datenstand passen – sonst
+    /// frisch gerechnet. Schreibt nichts, ist also für Ansichten gedacht, die
+    /// nur lesen wollen.
+    static func currentCorridors(for course: Course) -> [HoleCorridor] {
+        let tracked = course.rounds.filter { $0.track != nil }.count
+        let stored = course.fairwayCorridors
+        if !stored.isEmpty, stored.map(\.roundCount).max() == tracked { return stored }
+        return corridors(for: course)
+    }
+
     static func corridor(forHole hole: Int, course: Course) -> HoleCorridor? {
         corridor(forHole: hole, course: course, rounds: course.rounds.map(PreparedRound.init))
     }

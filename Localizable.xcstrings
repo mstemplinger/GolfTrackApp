@@ -3383,6 +3383,34 @@
         }
       }
     },
+    "Abschlag→Grün" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tee→green"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tee→green"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Départ→green"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tee→green"
+          }
+        }
+      }
+    },
     "Abschließen" : {
       "localizations" : {
         "de" : {
@@ -4535,6 +4563,34 @@
         }
       }
     },
+    "Aus mehreren Runden gerechnet – trotzdem eine Schätzung." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Calculated from several rounds – still an estimate."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Calculado a partir de varias vueltas: sigue siendo una estimación."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Calculé à partir de plusieurs parties – reste une estimation."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Calcolato da più giri: resta una stima."
+          }
+        }
+      }
+    },
     "Aus mehreren Runden gerechnet. Trotzdem eine Schätzung – kein amtlicher Platzplan." : {
       "localizations" : {
         "en" : {
@@ -4559,6 +4615,34 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Calcolato da più giri. Resta una stima, non una planimetria ufficiale del campo."
+          }
+        }
+      }
+    },
+    "Aus sehr wenigen Daten – nur ein grober Anhaltspunkt." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Based on very little data – a rough indication only."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Basado en muy pocos datos: solo una orientación aproximada."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Basé sur très peu de données – simple indication."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Basato su pochissimi dati: solo un'indicazione approssimativa."
           }
         }
       }
@@ -6089,6 +6173,34 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Il tuo tracciato"
+          }
+        }
+      }
+    },
+    "deine Spur" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "your path"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "tu trazado"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ton tracé"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "il tuo tracciato"
           }
         }
       }
@@ -8310,6 +8422,34 @@
         }
       }
     },
+    "Für dieses Loch sind noch keine Abschlag- und Grünpositionen gespeichert. Sie entstehen aus den aufgezeichneten Runden." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No tee and green positions are saved for this hole yet. They come from the recorded rounds."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Para este hoyo aún no hay posiciones de tee y green guardadas. Surgen de las vueltas grabadas."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aucune position de départ et de green n'est encore enregistrée pour ce trou. Elles proviennent des parties enregistrées."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Per questa buca non ci sono ancora posizioni di tee e green salvate. Nascono dai giri registrati."
+          }
+        }
+      }
+    },
     "Für dieses Loch übernehmen" : {
       "localizations" : {
         "en" : {
@@ -8493,6 +8633,34 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Percepita"
+          }
+        }
+      }
+    },
+    "gelaufen" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "walked"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "recorrido"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "parcouru"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "percorso"
           }
         }
       }
@@ -8798,6 +8966,34 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Mazze salvate"
+          }
+        }
+      }
+    },
+    "gespielt" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "played"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "jugados"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "joués"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "giocate"
           }
         }
       }
@@ -10794,6 +10990,34 @@
         }
       }
     },
+    "Korridor" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Corridor"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Corredor"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Couloir"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Corridoio"
+          }
+        }
+      }
+    },
     "Kostenlos registrieren unter:" : {
       "localizations" : {
         "en" : {
@@ -10902,6 +11126,34 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Caricamento…"
+          }
+        }
+      }
+    },
+    "Länge" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Length"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Longitud"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Longueur"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lunghezza"
           }
         }
       }
@@ -12878,6 +13130,34 @@
         }
       }
     },
+    "Noch kein Fairway-Verlauf für dieses Loch – dafür braucht es Messpunkte zwischen Abschlag und Grün. Par-3-Löcher werden übersprungen." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No fairway shape for this hole yet – that needs measurements between tee and green. Par 3 holes are skipped."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aún no hay trazado del fairway para este hoyo: hacen falta mediciones entre el tee y el green. Los hoyos de par 3 se omiten."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pas encore de tracé de fairway pour ce trou : il faut des mesures entre le départ et le green. Les trous en par 3 sont ignorés."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ancora nessun andamento del fairway per questa buca: servono misurazioni tra tee e green. Le buche par 3 vengono saltate."
+          }
+        }
+      }
+    },
     "Noch keine Bags" : {
       "localizations" : {
         "en" : {
@@ -13162,6 +13442,34 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Dati ancora insufficienti"
+          }
+        }
+      }
+    },
+    "Noch wenige Runden, der Korridor kann daneben liegen." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Only a few rounds so far, the corridor can be off."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Todavía pocas vueltas, el corredor puede estar desplazado."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Encore peu de parties, le couloir peut être décalé."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ancora pochi giri, il corridoio può essere spostato."
           }
         }
       }
@@ -13816,6 +14124,34 @@
         }
       }
     },
+    "Par gesamt" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Total par"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Par total"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Par total"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Par totale"
+          }
+        }
+      }
+    },
     "Par pro Loch" : {
       "localizations" : {
         "en" : {
@@ -13930,6 +14266,34 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Penalty Area"
+          }
+        }
+      }
+    },
+    "Pin" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pin"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bandera"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Drapeau"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bandiera"
           }
         }
       }
@@ -14364,6 +14728,34 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Scegli campo …"
+          }
+        }
+      }
+    },
+    "Platz wird ausgewertet …" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Analysing the course …"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Analizando el campo …"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Analyse du parcours …"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Analisi del campo …"
           }
         }
       }
@@ -15736,6 +16128,34 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Completare il giro?"
+          }
+        }
+      }
+    },
+    "Runde im Überblick" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Round at a glance"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vuelta de un vistazo"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vue d'ensemble de la partie"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Il giro in sintesi"
           }
         }
       }

@@ -23,11 +23,20 @@ struct HoleScoringView: View {
     @State private var userLocation: CLLocation?
     @State private var showShotTracker = false
     @State private var showPinSetter = false
+    @State private var showHoleOverview = false
+    @State private var showRoundOverview = false
     @State private var showClubPicker = false
     @State private var pendingGPSLocation: CLLocation?
     @State private var pendingShotNumber: Int = 0
 
     private var diff: Int { score.strokes - par }
+
+    /// True, sobald für dieses Loch mindestens ein Schlag eingetragen ist.
+    /// Ohne diese Prüfung rechnet `diff` mit 0 Schlägen: auf einem Par 4 ergibt
+    /// das −4, und das Badge zeigte „Albatross" auf einem Loch, das noch nicht
+    /// gespielt ist. Dasselbe gilt für die Stableford-Punkte, die bei 0 Schlägen
+    /// auf 6 kamen.
+    private var hasScore: Bool { score.strokes > 0 }
 
     private var scoreToParColor: Color {
         guard let s = round.scoreToPar else { return AppTheme.text }
@@ -83,6 +92,12 @@ struct HoleScoringView: View {
             PinSetterView(pinLatitude: $score.pinLatitude,
                           pinLongitude: $score.pinLongitude,
                           onManualSave: { score.pinIsAutomatic = false })
+        }
+        .sheet(isPresented: $showHoleOverview) {
+            HoleTrackingOverviewSheet(round: round, score: score, par: par)
+        }
+        .sheet(isPresented: $showRoundOverview) {
+            RoundTrackingOverviewSheet(round: round, currentHole: score.holeNumber)
         }
         .sheet(isPresented: $showClubPicker) {
             ClubPickerSheet(
@@ -186,6 +201,10 @@ struct HoleScoringView: View {
         if score.hasPinLocation {
             // Pin is set — show distance + club recommendation
             VStack(alignment: .leading, spacing: 10) {
+                // Tippen öffnet die Loch-Übersicht mit allem, was das Tracking weiß.
+                Button {
+                    showHoleOverview = true
+                } label: {
                 HStack(spacing: 14) {
                     // Flag icon
                     ZStack {
@@ -235,7 +254,13 @@ struct HoleScoringView: View {
                                 .foregroundStyle(AppTheme.textSec)
                         }
                     }
+                    Spacer(minLength: 0)
+                    Image(systemName: "chevron.right")
+                        .font(.caption)
+                        .foregroundStyle(AppTheme.textTer)
                 }
+                }
+                .buttonStyle(.plain)
 
                 // Subtle "update pin" text button at bottom
                 Button {
@@ -366,19 +391,23 @@ struct HoleScoringView: View {
                     .tracking(1.0)
                     .foregroundStyle(AppTheme.textSec)
 
-                Text(scoreName)
-                    .font(.subheadline.bold())
-                    .foregroundStyle(scoreColor)
-                    .padding(.horizontal, 12)
-                    .padding(.vertical, 5)
-                    .background(scoreColor.opacity(0.15), in: Capsule())
-                    .animation(.easeInOut(duration: 0.2), value: diff)
+                // Badge und Punkte erst, wenn ein Schlag eingetragen ist —
+                // sonst stünde dort eine Bewertung für ein ungespieltes Loch.
+                if hasScore {
+                    Text(scoreName)
+                        .font(.subheadline.bold())
+                        .foregroundStyle(scoreColor)
+                        .padding(.horizontal, 12)
+                        .padding(.vertical, 5)
+                        .background(scoreColor.opacity(0.15), in: Capsule())
+                        .animation(.easeInOut(duration: 0.2), value: diff)
 
-                if gameMode == .stableford {
-                    let pts = GameMode.stablefordPoints(strokes: score.strokes, par: par)
-                    Text("\(pts) Pkt")
-                        .font(.caption.bold())
-                        .foregroundStyle(pts >= 3 ? AppTheme.gold : pts == 0 ? AppTheme.textTer : .primary)
+                    if gameMode == .stableford {
+                        let pts = GameMode.stablefordPoints(strokes: score.strokes, par: par)
+                        Text("\(pts) Pkt")
+                            .font(.caption.bold())
+                            .foregroundStyle(pts >= 3 ? AppTheme.gold : pts == 0 ? AppTheme.textTer : .primary)
+                    }
                 }
             }
             .padding(.trailing, 2)
@@ -526,6 +555,15 @@ struct HoleScoringView: View {
     // MARK: - Score Gesamt Bar
 
     private var scoreGesamtBar: some View {
+        Button {
+            showRoundOverview = true
+        } label: {
+            scoreGesamtBarContent
+        }
+        .buttonStyle(.plain)
+    }
+
+    private var scoreGesamtBarContent: some View {
         HStack {
             Text("SCORE GESAMT")
                 .font(.system(size: 10, weight: .semibold))
@@ -542,6 +580,9 @@ struct HoleScoringView: View {
                 Text("/ Loch \(score.holeNumber)")
                     .font(.subheadline)
                     .foregroundStyle(AppTheme.textSec)
+                Image(systemName: "chevron.right")
+                    .font(.caption)
+                    .foregroundStyle(AppTheme.textTer)
             }
         }
         .padding(.horizontal, 18)
@@ -559,7 +600,7 @@ struct HoleScoringView: View {
                 Image(systemName: "mappin.and.ellipse")
                 Text(score.shots.isEmpty
                      ? "Schlag aufzeichnen"
-                     : "\(score.shots.count) Schlag\(score.shots.count == 1 ? "" : "schläge") erfasst")
+                     : "\(score.shots.count) \(score.shots.count == 1 ? String(localized: "Schlag") : String(localized: "Schläge")) erfasst")
                 if !score.shots.isEmpty {
                     Text("· \(distanceUnit.format(score.totalDistanceMeters)) gesamt")
                         .foregroundStyle(Color(red: 0.06, green: 0.14, blue: 0.08).opacity(0.6))
@@ -791,6 +832,10 @@ struct HoleScoringView: View {
         let stableford = gameMode == .betterBallStableford
         let teamValue = GameScoringEngine.betterBallHoleValue(
             holeScore: score, partnerScore: partner, par: par, stableford: stableford)
+        // Hat noch keiner gespielt, liefert betterBallHoleValue 0 — die Zeile
+        // stünde dann als „Team: 0 Schläge (−4)" in Gold auf dem Loch.
+        // Gleiche Prüfung wie in der Best-Ball-Zeile weiter oben.
+        if score.strokes > 0 || partner.strokes > 0 {
         HStack {
             Spacer()
             if stableford {
@@ -807,6 +852,7 @@ struct HoleScoringView: View {
             Spacer()
         }
         .padding(.horizontal)
+        }
     }
 
     // MARK: - Score helpers

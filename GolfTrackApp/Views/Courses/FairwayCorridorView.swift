@@ -14,6 +14,14 @@ struct FairwayCorridorView: View {
     @State private var isCalculating = false
     @State private var didCalculate = false
 
+    /// True, wenn seit der gespeicherten Berechnung Runden mit Laufspur
+    /// hinzugekommen (oder weggefallen) sind.
+    private var isStale: Bool {
+        let tracked = course.rounds.filter { $0.track != nil }.count
+        guard let stored = corridors.map(\.roundCount).max() else { return true }
+        return stored != tracked
+    }
+
     private var selected: HoleCorridor? {
         guard let selectedHole else { return corridors.first }
         return corridors.first { $0.holeNumber == selectedHole } ?? corridors.first
@@ -50,7 +58,10 @@ struct FairwayCorridorView: View {
             guard corridors.isEmpty, !didCalculate else { return }
             corridors = course.fairwayCorridors
             selectedHole = corridors.first?.holeNumber
-            if corridors.isEmpty { await calculate() }
+            // Neu rechnen, wenn nichts gespeichert ist ODER seit der letzten
+            // Berechnung Runden dazugekommen sind – sonst zeigt die Ansicht
+            // stillschweigend einen veralteten Korridor.
+            if corridors.isEmpty || isStale { await calculate() }
         }
     }
 

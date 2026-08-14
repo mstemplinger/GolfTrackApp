@@ -34,6 +34,8 @@ struct GolfTrackAppApp: App {
             SplashContainerView()
                 .environmentObject(subscriptionManager)
                 .preferredColorScheme(.dark)
+                .seedDemoDataIfRequested()
+                .simulateTrackedRoundIfRequested()
         }
         .modelContainer(for: [Course.self, Round.self, HoleScore.self, Shot.self, PlayerHoleScore.self, QuizResult.self, GolfClub.self, GolfBag.self, RoundTrack.self])
     }

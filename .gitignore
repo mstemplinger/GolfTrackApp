@@ -5,7 +5,7 @@
 *.local.json
 
 # Marketing-Werkzeuge: Abhängigkeiten und generierte Medien
-marketing/**/node_modules/
+marketing/**/node_modules
 marketing/**/out/
 
 # Alte Arbeitskopien

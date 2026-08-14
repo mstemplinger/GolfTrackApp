@@ -147,6 +147,28 @@ final class RoundTrack {
 
     /// Grobe Speichergröße in KB – für die Anzeige in den Einstellungen.
     var storageKilobytes: Double { Double(pointData.count) / 1024.0 }
+
+    // MARK: Plausibilität
+
+    /// Weniger Zeit pro Loch als das ist beim Golf nicht spielbar.
+    static let minimumMinutesPerHole: Double = 3
+
+    /// Aufgezeichnete Minuten je gespieltem Loch, oder nil wenn nichts gespielt wurde.
+    func minutesPerHole(playedHoles: Int) -> Double? {
+        guard playedHoles > 0, duration > 0 else { return nil }
+        return duration / 60 / Double(playedHoles)
+    }
+
+    /// True, wenn die Aufzeichnung für die Zahl gespielter Löcher zu kurz ist –
+    /// dann wurde die Runde eher nachgetragen als gespielt, und die Spur zeigt
+    /// nicht den Platz, sondern wo der Nutzer beim Eintragen war.
+    ///
+    /// Solche Spuren dürfen nicht in die Ableitung von Abschlag, Grün und
+    /// Fairway einfließen.
+    func looksBackfilled(playedHoles: Int) -> Bool {
+        guard pointCount > 0, let minutes = minutesPerHole(playedHoles: playedHoles) else { return false }
+        return minutes < RoundTrack.minimumMinutesPerHole
+    }
 }
 
 // MARK: - Vorbereitete Runde für Auswertungen

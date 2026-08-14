@@ -8332,6 +8332,40 @@
         }
       }
     },
+    "Für %lld Löcher wurden nur %lld Minuten aufgezeichnet – das ist für eine gespielte Runde zu kurz. Wenn du die Runde nachgetragen hast, zeigt die Laufspur nicht den Platz, sondern wo du beim Eintragen warst. Solche Spuren verfälschen die Abschlag-, Grün- und Fairway-Erkennung." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Für %1$lld Löcher wurden nur %2$lld Minuten aufgezeichnet – das ist für eine gespielte Runde zu kurz. Wenn du die Runde nachgetragen hast, zeigt die Laufspur nicht den Platz, sondern wo du beim Eintragen warst. Solche Spuren verfälschen die Abschlag-, Grün- und Fairway-Erkennung."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Only %2$lld minutes were recorded for %1$lld holes – too short for a round actually played. If you entered the round afterwards, the walking path does not show the course but where you were while entering it. Such paths distort the tee, green and fairway detection."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Para %1$lld hoyos solo se grabaron %2$lld minutos, demasiado poco para una vuelta jugada. Si añadiste la vuelta después, el trazado no muestra el campo sino dónde estabas al introducirla. Esos trazados falsean la detección de tee, green y fairway."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Seules %2$lld minutes ont été enregistrées pour %1$lld trous – trop court pour une partie réellement jouée. Si tu as saisi la partie après coup, le tracé ne montre pas le parcours mais l'endroit où tu étais en la saisissant. De tels tracés faussent la détection du départ, du green et du fairway."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Per %1$lld buche sono stati registrati solo %2$lld minuti: troppo poco per un giro davvero giocato. Se hai inserito il giro in seguito, il tracciato non mostra il campo ma dove ti trovavi durante l'inserimento. Tracciati simili falsano il riconoscimento di tee, green e fairway."
+          }
+        }
+      }
+    },
     "Für dich empfohlen" : {
       "localizations" : {
         "en" : {
@@ -10097,6 +10131,34 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Home"
+          }
+        }
+      }
+    },
+    "Ich habe gespielt – behalten" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "I played – keep it"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "La jugué: conservar"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "J'ai joué – conserver"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ho giocato: conserva"
           }
         }
       }
@@ -12480,6 +12542,34 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Per categoria"
+          }
+        }
+      }
+    },
+    "Nachgetragen – Spur löschen" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Entered later – delete path"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Añadida después: borrar trazado"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Saisie après coup – supprimer le tracé"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Inserito dopo: elimina tracciato"
           }
         }
       }
@@ -16252,6 +16342,34 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Eliminare il giro?"
+          }
+        }
+      }
+    },
+    "Runde nachgetragen?" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Round entered later?"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "¿Vuelta añadida después?"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Partie saisie après coup ?"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Giro inserito in seguito?"
           }
         }
       }

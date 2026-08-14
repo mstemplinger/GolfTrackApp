@@ -18,6 +18,7 @@ struct ScorecardView: View {
     @State private var showRules = false
     @State private var showCourseInfo = false
     @State private var showIncompleteScoreAlert = false
+    @State private var showBackfillAlert = false
 
     private let wc = WatchConnectivityManager.shared
     @ObservedObject private var gc = GameCenterManager.shared
@@ -118,16 +119,29 @@ struct ScorecardView: View {
                 Task { await NotificationManager.shared.scheduleInactivityReminder(afterDays: 5) }
                 NotificationManager.shared.cancelOpenRoundReminder()
                 NotificationManager.shared.cancelRoundInactivityReminder()
-                // Hinweis, falls das Ergebnis wegen fehlender Löcher nicht an Game Center ging
-                if !allHolesPlayed && gc.isAuthenticated {
-                    showIncompleteScoreAlert = true
+
+                // Zu kurze Aufzeichnung: erst klären, ob die Runde nachgetragen
+                // wurde, bevor die Spur in die Platzableitung einfließt.
+                if isBackfillCandidate {
+                    showBackfillAlert = true
                 } else {
-                    showRoundCompleteSheet = true
+                    presentCompletion(allHolesPlayed: allHolesPlayed)
                 }
             }
             Button("Weiter spielen", role: .cancel) {}
         } message: {
             Text("Die Runde wird als abgeschlossen gespeichert.")
+        }
+        .alert("Runde nachgetragen?", isPresented: $showBackfillAlert) {
+            Button("Nachgetragen – Spur löschen", role: .destructive) {
+                discardTrack()
+                presentCompletion(allHolesPlayed: sortedScores.allSatisfy { $0.strokes >= 1 })
+            }
+            Button("Ich habe gespielt – behalten", role: .cancel) {
+                presentCompletion(allHolesPlayed: sortedScores.allSatisfy { $0.strokes >= 1 })
+            }
+        } message: {
+            Text("Für \(round.playedScores.count) Löcher wurden nur \(recordedMinutes) Minuten aufgezeichnet – das ist für eine gespielte Runde zu kurz. Wenn du die Runde nachgetragen hast, zeigt die Laufspur nicht den Platz, sondern wo du beim Eintragen warst. Solche Spuren verfälschen die Abschlag-, Grün- und Fairway-Erkennung.")
         }
         .alert("Nicht an Game Center übertragen", isPresented: $showIncompleteScoreAlert) {
             Button("OK") { showRoundCompleteSheet = true }
@@ -233,6 +247,36 @@ struct ScorecardView: View {
             let strokes = sortedScores.map(\.strokes)
             wc.updateStrokes(strokes: strokes, currentHoleIndex: currentIndex)
             scheduleRoundInactivityReminder()
+        }
+    }
+
+    // MARK: - Nachgetragene Runde
+
+    /// Aufgezeichnete Minuten, gerundet – für den Hinweistext.
+    private var recordedMinutes: Int {
+        Int(((round.track?.duration ?? 0) / 60).rounded())
+    }
+
+    /// True, wenn eine Laufspur vorliegt, die für die gespielten Löcher zu kurz ist.
+    private var isBackfillCandidate: Bool {
+        round.track?.looksBackfilled(playedHoles: round.playedScores.count) ?? false
+    }
+
+    /// Verwirft die Laufspur dieser Runde. Scores und Schläge bleiben erhalten.
+    private func discardTrack() {
+        guard let track = round.track else { return }
+        round.track = nil
+        context.delete(track)
+        try? context.save()
+    }
+
+    /// Zeigt nach der Track-Entscheidung den regulären Abschluss.
+    private func presentCompletion(allHolesPlayed: Bool) {
+        // Hinweis, falls das Ergebnis wegen fehlender Löcher nicht an Game Center ging
+        if !allHolesPlayed && gc.isAuthenticated {
+            showIncompleteScoreAlert = true
+        } else {
+            showRoundCompleteSheet = true
         }
     }
 
@@ -555,7 +599,7 @@ struct ScorecardView: View {
         ScrollViewReader { proxy in
             ScrollView(.horizontal, showsIndicators: false) {
                 VStack(spacing: 0) {
-                    scorecardRow(label: "Loch", values: sortedScores.map { "\($0.holeNumber)" },
+                    scorecardRow(label: String(localized: "Loch"), values: sortedScores.map { "\($0.holeNumber)" },
                                  total: "∑", style: .header)
                     scorecardRow(label: "Par", values: sortedScores.map { "\(par(for: $0))" },
                                  total: "\(round.course?.totalPar ?? 0)", style: .muted)
@@ -623,7 +667,12 @@ struct ScorecardView: View {
                 .frame(width: 50, alignment: .leading)
                 .font(.caption).foregroundStyle(AppTheme.textSec)
             ForEach(sortedScores, id: \.holeNumber) { score in
-                let pts = GameMode.stablefordPoints(strokes: score.strokes, par: par(for: score))
+                // Ohne die Nullprüfung ergibt stablefordPoints auf einem
+                // ungespielten Par 4 sechs Punkte und färbte den Platzhalter „·"
+                // golden ein, als wäre das Loch stark gespielt.
+                let pts = score.strokes > 0
+                    ? GameMode.stablefordPoints(strokes: score.strokes, par: par(for: score))
+                    : 0
                 Text(score.strokes > 0 ? "\(pts)" : "·")
                     .frame(width: 34)
                     .font(.caption.bold())

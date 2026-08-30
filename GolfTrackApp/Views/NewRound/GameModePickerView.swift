@@ -72,20 +72,20 @@ struct GameModePickerView: View {
 
     private func shortDesc(_ mode: GameMode) -> String {
         switch mode {
-        case .strokePlay:          return "Klassisches Zählspiel – jeder Schlag zählt"
-        case .stableford:          return "Punkte statt Schläge – Birdie=3, Par=2, Bogey=1"
-        case .matchplay:           return "Loch für Loch gegen einen Gegner"
-        case .skins:               return "Niedrigster Score gewinnt den Skin – Unentschieden trägt über"
-        case .erado:               return "Zählspiel – die schlechtesten Löcher werden gestrichen"
-        case .betterBallStroke:    return "Bester Score pro Loch zählt für das 2er-Team"
-        case .betterBallStableford: return "Beste Stableford-Punkte pro Loch für das Team"
-        case .scramble2Mann:       return "Beide schlagen ab – bester Abschlag wird gespielt"
-        case .vierer:              return "Ein Ball, zwei Spieler – abwechselnd schlagen"
-        case .greensome:           return "Beide schlagen ab, bester Teeshot – dann Wechselschlag"
-        case .betterBallMatchplay: return "2 gegen 2 – bester Ball pro Team, Matchplay-Wertung"
-        case .bestBallStroke:      return "3–4 Spieler – bester Score pro Loch zählt"
-        case .bestBallStableford:  return "3–4 Spieler – beste Stableford-Punkte pro Loch"
-        case .scrambleTeam:        return "3–4 Spieler – alle schlagen ab, bester Abschlag gespielt"
+        case .strokePlay: return String(localized: "Klassisches Zählspiel – jeder Schlag zählt")
+        case .stableford: return String(localized: "Punkte statt Schläge – Birdie=3, Par=2, Bogey=1")
+        case .matchplay: return String(localized: "Loch für Loch gegen einen Gegner")
+        case .skins: return String(localized: "Niedrigster Score gewinnt den Skin – Unentschieden trägt über")
+        case .erado: return String(localized: "Zählspiel – die schlechtesten Löcher werden gestrichen")
+        case .betterBallStroke: return String(localized: "Bester Score pro Loch zählt für das 2er-Team")
+        case .betterBallStableford: return String(localized: "Beste Stableford-Punkte pro Loch für das Team")
+        case .scramble2Mann: return String(localized: "Beide schlagen ab – bester Abschlag wird gespielt")
+        case .vierer: return String(localized: "Ein Ball, zwei Spieler – abwechselnd schlagen")
+        case .greensome: return String(localized: "Beide schlagen ab, bester Teeshot – dann Wechselschlag")
+        case .betterBallMatchplay: return String(localized: "2 gegen 2 – bester Ball pro Team, Matchplay-Wertung")
+        case .bestBallStroke: return String(localized: "3–4 Spieler – bester Score pro Loch zählt")
+        case .bestBallStableford: return String(localized: "3–4 Spieler – beste Stableford-Punkte pro Loch")
+        case .scrambleTeam: return String(localized: "3–4 Spieler – alle schlagen ab, bester Abschlag gespielt")
         default:                   return String(mode.description.prefix(60))
         }
     }

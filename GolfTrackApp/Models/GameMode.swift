@@ -1,4 +1,5 @@
 import Foundation
+import SwiftUI
 
 enum GameModeCategory: String {
     case individual = "Individuelle Spielformen"
@@ -14,6 +15,8 @@ enum GameModeCategory: String {
     }
 }
 
+// Die Namen, Untertitel und Beschreibungen sind uebersetzbar: als nackte
+// Literale blieben sie in jeder Sprache deutsch.
 enum GameMode: String, CaseIterable, Codable {
     // Individual
     case strokePlay
@@ -40,25 +43,25 @@ enum GameMode: String, CaseIterable, Codable {
 
     var displayName: String {
         switch self {
-        case .strokePlay: return "Zählspiel"
-        case .stableford: return "Stableford"
-        case .erado: return "Erado®"
-        case .skins: return "Skins"
-        case .duplicateStableford: return "Duplicate®"
-        case .matchplay: return "Matchplay"
-        case .betterBallStroke: return "Better Ball"
-        case .betterBallStableford: return "Better Ball"
-        case .scramble2Mann: return "2-Mann Scramble"
-        case .betterBallMatchplay: return "Better Ball"
-        case .vierer: return "Vierer"
-        case .greensome: return "Greensome"
-        case .scrambleMatchplay: return "Scramble"
-        case .bestBallStroke: return "Best Ball"
-        case .bestBallStableford: return "Best Ball"
-        case .scrambleTeam: return "Scramble"
-        case .matchNet: return "Match/Net"
-        case .duplicateScramble: return "Duplicate® Scramble"
-        case .irishRumble: return "Irish Rumble"
+        case .strokePlay: return String(localized: "Zählspiel")
+        case .stableford: return String(localized: "Stableford")
+        case .erado: return String(localized: "Erado®")
+        case .skins: return String(localized: "Skins")
+        case .duplicateStableford: return String(localized: "Duplicate®")
+        case .matchplay: return String(localized: "Matchplay")
+        case .betterBallStroke: return String(localized: "Better Ball")
+        case .betterBallStableford: return String(localized: "Better Ball")
+        case .scramble2Mann: return String(localized: "2-Mann Scramble")
+        case .betterBallMatchplay: return String(localized: "Better Ball")
+        case .vierer: return String(localized: "Vierer")
+        case .greensome: return String(localized: "Greensome")
+        case .scrambleMatchplay: return String(localized: "Scramble")
+        case .bestBallStroke: return String(localized: "Best Ball")
+        case .bestBallStableford: return String(localized: "Best Ball")
+        case .scrambleTeam: return String(localized: "Scramble")
+        case .matchNet: return String(localized: "Match/Net")
+        case .duplicateScramble: return String(localized: "Duplicate® Scramble")
+        case .irishRumble: return String(localized: "Irish Rumble")
         }
     }
 
@@ -66,23 +69,23 @@ enum GameMode: String, CaseIterable, Codable {
         switch self {
         case .strokePlay: return ""
         case .stableford: return ""
-        case .erado: return "Zählspiel"
-        case .skins: return "Zählspiel"
-        case .duplicateStableford: return "Stableford"
+        case .erado: return String(localized: "Zählspiel")
+        case .skins: return String(localized: "Zählspiel")
+        case .duplicateStableford: return String(localized: "Stableford")
         case .matchplay: return ""
-        case .betterBallStroke: return "Zählspiel"
-        case .betterBallStableford: return "Stableford"
-        case .scramble2Mann: return "Zählspiel"
-        case .betterBallMatchplay: return "Matchplay"
-        case .vierer: return "Matchplay"
-        case .greensome: return "Matchplay"
-        case .scrambleMatchplay: return "Matchplay"
-        case .bestBallStroke: return "Zählspiel"
-        case .bestBallStableford: return "Stableford"
-        case .scrambleTeam: return "Zählspiel"
-        case .matchNet: return "Zählspiel"
-        case .duplicateScramble: return "Stableford"
-        case .irishRumble: return "Best Ball"
+        case .betterBallStroke: return String(localized: "Zählspiel")
+        case .betterBallStableford: return String(localized: "Stableford")
+        case .scramble2Mann: return String(localized: "Zählspiel")
+        case .betterBallMatchplay: return String(localized: "Matchplay")
+        case .vierer: return String(localized: "Matchplay")
+        case .greensome: return String(localized: "Matchplay")
+        case .scrambleMatchplay: return String(localized: "Matchplay")
+        case .bestBallStroke: return String(localized: "Zählspiel")
+        case .bestBallStableford: return String(localized: "Stableford")
+        case .scrambleTeam: return String(localized: "Zählspiel")
+        case .matchNet: return String(localized: "Zählspiel")
+        case .duplicateScramble: return String(localized: "Stableford")
+        case .irishRumble: return String(localized: "Best Ball")
         }
     }
 
@@ -123,43 +126,43 @@ enum GameMode: String, CaseIterable, Codable {
     var description: String {
         switch self {
         case .strokePlay:
-            return "Die klassische Spielform: Jeder Schlag zählt. Wer am Ende der Runde die wenigsten Schläge hat, gewinnt."
+            return String(localized: "Die klassische Spielform: Jeder Schlag zählt. Wer am Ende der Runde die wenigsten Schläge hat, gewinnt.")
         case .stableford:
-            return "Punkte statt Schläge: Albatross=5, Eagle=4, Birdie=3, Par=2, Bogey=1, Double+=0. Wer die meisten Punkte sammelt, gewinnt."
+            return String(localized: "Punkte statt Schläge: Albatross=5, Eagle=4, Birdie=3, Par=2, Bogey=1, Double+=0. Wer die meisten Punkte sammelt, gewinnt.")
         case .erado:
-            return "Wie Zählspiel, aber die schlechteste(n) Löcher werden gestrichen. Bei 18 Löchern werden 2 Streichlöcher angerechnet, bei 9 Löchern 1."
+            return String(localized: "Wie Zählspiel, aber die schlechteste(n) Löcher werden gestrichen. Bei 18 Löchern werden 2 Streichlöcher angerechnet, bei 9 Löchern 1.")
         case .skins:
-            return "Jedes Loch hat einen Wert (Skin). Wer das Loch gewinnt, erhält den Skin. Bei Gleichstand wird der Skin übertragen."
+            return String(localized: "Jedes Loch hat einen Wert (Skin). Wer das Loch gewinnt, erhält den Skin. Bei Gleichstand wird der Skin übertragen.")
         case .duplicateStableford:
-            return "Stableford-Punkte werden multipliziert – bestimmte Löcher zählen doppelt oder dreifach."
+            return String(localized: "Stableford-Punkte werden multipliziert – bestimmte Löcher zählen doppelt oder dreifach.")
         case .matchplay:
-            return "Loch für Loch. Wer das Loch mit weniger Schlägen spielt, gewinnt es. Wer am Ende mehr Löcher hat, gewinnt die Runde."
+            return String(localized: "Loch für Loch. Wer das Loch mit weniger Schlägen spielt, gewinnt es. Wer am Ende mehr Löcher hat, gewinnt die Runde.")
         case .betterBallStroke:
-            return "Zwei Spieler spielen gemeinsam – der bessere Score pro Loch zählt für das Team."
+            return String(localized: "Zwei Spieler spielen gemeinsam – der bessere Score pro Loch zählt für das Team.")
         case .betterBallStableford:
-            return "Wie Better Ball, aber gewertet nach Stableford-Punkten. Die höheren Punkte pro Loch zählen für das Team."
+            return String(localized: "Wie Better Ball, aber gewertet nach Stableford-Punkten. Die höheren Punkte pro Loch zählen für das Team.")
         case .scramble2Mann:
-            return "Beide Spieler schlagen ab. Der beste Abschlag wird gewählt und beide spielen von dort weiter."
+            return String(localized: "Beide Spieler schlagen ab. Der beste Abschlag wird gewählt und beide spielen von dort weiter.")
         case .betterBallMatchplay:
-            return "2 gegen 2: Pro Team zählt der bessere Score. Die Teams spielen Loch für Loch gegeneinander (Matchplay)."
+            return String(localized: "2 gegen 2: Pro Team zählt der bessere Score. Die Teams spielen Loch für Loch gegeneinander (Matchplay).")
         case .vierer:
-            return "Zwei Spieler spielen abwechselnd mit einem Ball (Wechselschlag). Ein Team, ein Ball, ein Score."
+            return String(localized: "Zwei Spieler spielen abwechselnd mit einem Ball (Wechselschlag). Ein Team, ein Ball, ein Score.")
         case .greensome:
-            return "Beide Partner schlagen ab. Der beste Abschlag wird gewählt. Danach spielen beide abwechselnd bis zum Einlochen."
+            return String(localized: "Beide Partner schlagen ab. Der beste Abschlag wird gewählt. Danach spielen beide abwechselnd bis zum Einlochen.")
         case .scrambleMatchplay:
-            return "Scramble-Format (bester Ball, alle spielen weiter) im Matchplay-Modus gegen ein anderes Team."
+            return String(localized: "Scramble-Format (bester Ball, alle spielen weiter) im Matchplay-Modus gegen ein anderes Team.")
         case .bestBallStroke:
-            return "3 oder 4 Spieler im Team – der beste Score pro Loch zählt für das Team (Zählspiel)."
+            return String(localized: "3 oder 4 Spieler im Team – der beste Score pro Loch zählt für das Team (Zählspiel).")
         case .bestBallStableford:
-            return "Best Ball mit Stableford-Wertung – der höchste Punktwert pro Loch zählt für das Team."
+            return String(localized: "Best Ball mit Stableford-Wertung – der höchste Punktwert pro Loch zählt für das Team.")
         case .scrambleTeam:
-            return "3–4 Spieler: Alle schlagen ab, bester Abschlag wird gewählt. Alle spielen von dort weiter bis zum Einlochen."
+            return String(localized: "3–4 Spieler: Alle schlagen ab, bester Abschlag wird gewählt. Alle spielen von dort weiter bis zum Einlochen.")
         case .matchNet:
-            return "Zählspiel gegen eine Netto-Zielvorgabe. Das Team spielt gegen einen vorgegebenen Netto-Score."
+            return String(localized: "Zählspiel gegen eine Netto-Zielvorgabe. Das Team spielt gegen einen vorgegebenen Netto-Score.")
         case .duplicateScramble:
-            return "Scramble mit Stableford-Wertung und Multiplikator auf bestimmten Löchern."
+            return String(localized: "Scramble mit Stableford-Wertung und Multiplikator auf bestimmten Löchern.")
         case .irishRumble:
-            return "Die ersten Löcher werden als Best Ball gespielt, dann wechselt das Format nach einem festen Schlüssel."
+            return String(localized: "Die ersten Löcher werden als Best Ball gespielt, dann wechselt das Format nach einem festen Schlüssel.")
         }
     }
 

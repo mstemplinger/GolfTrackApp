@@ -178,7 +178,8 @@ struct WeatherForecastView: View {
 
     // MARK: - Helper
 
-    private func detailRow(icon: String, label: String, value: String) -> some View {
+    // Siehe HomeView.weatherDetail: als String bliebe die Beschriftung deutsch.
+    private func detailRow(icon: String, label: LocalizedStringKey, value: String) -> some View {
         HStack(spacing: 6) {
             Image(systemName: icon)
                 .font(.caption)

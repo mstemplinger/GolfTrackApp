@@ -98,7 +98,13 @@ final class GolfWeatherService: NSObject, ObservableObject {
         guard hasData else { return true }
         return rawWeatherCode < 45 && rawWindSpeed <= 30
     }
-    var golfWeatherLabel: String { isGoodGolfWeather ? "Golf-Wetter" : "schlechtes Wetter" }
+    // String(localized:) statt eines nackten Literals: der Wert landet über
+    // Text(String) im UI und würde sonst in jeder Sprache deutsch bleiben.
+    var golfWeatherLabel: String {
+        isGoodGolfWeather
+            ? String(localized: "Golf-Wetter")
+            : String(localized: "schlechtes Wetter")
+    }
 
     // MARK: Private
 
@@ -202,29 +208,31 @@ final class GolfWeatherService: NSObject, ObservableObject {
         isLoading = false
     }
 
-    // MARK: WMO weather code → German text + SF Symbol
+    // MARK: WMO-Wettercode → lokalisierter Text + SF Symbol
+    // Die Texte liegen als deutsche Schlüssel im String-Katalog; ohne
+    // String(localized:) blieben sie in jeder Sprache deutsch.
 
     static func weatherInfo(wmoCode code: Int) -> (String, String) {
         switch code {
-        case 0:           return ("Sonnig",             "sun.max.fill")
-        case 1:           return ("Meist sonnig",       "sun.max.fill")
-        case 2:           return ("Teils bewölkt",      "cloud.sun.fill")
-        case 3:           return ("Bedeckt",            "cloud.fill")
-        case 45, 48:      return ("Neblig",             "cloud.fog.fill")
-        case 51, 53, 55:  return ("Nieselregen",        "cloud.drizzle.fill")
-        case 56, 57:      return ("Eisregen",           "cloud.sleet.fill")
-        case 61, 63:      return ("Regen",              "cloud.rain.fill")
-        case 65:          return ("Starkregen",         "cloud.heavyrain.fill")
-        case 66, 67:      return ("Gefrierender Regen", "cloud.sleet.fill")
-        case 71, 73:      return ("Schnee",             "cloud.snow.fill")
-        case 75:          return ("Starker Schnee",     "cloud.snow.fill")
-        case 77:          return ("Schneegriesel",      "cloud.snow.fill")
-        case 80, 81:      return ("Regenschauer",       "cloud.sun.rain.fill")
-        case 82:          return ("Starke Schauer",     "cloud.heavyrain.fill")
-        case 85, 86:      return ("Schneeschauer",      "cloud.snow.fill")
-        case 95:          return ("Gewitter",           "cloud.bolt.fill")
-        case 96, 99:      return ("Starke Gewitter",   "cloud.bolt.rain.fill")
-        default:          return ("Wechselhaft",        "cloud.sun.fill")
+        case 0:           return (String(localized: "Sonnig"),             "sun.max.fill")
+        case 1:           return (String(localized: "Meist sonnig"),       "sun.max.fill")
+        case 2:           return (String(localized: "Teils bewölkt"),      "cloud.sun.fill")
+        case 3:           return (String(localized: "Bedeckt"),            "cloud.fill")
+        case 45, 48:      return (String(localized: "Neblig"),             "cloud.fog.fill")
+        case 51, 53, 55:  return (String(localized: "Nieselregen"),        "cloud.drizzle.fill")
+        case 56, 57:      return (String(localized: "Eisregen"),           "cloud.sleet.fill")
+        case 61, 63:      return (String(localized: "Regen"),              "cloud.rain.fill")
+        case 65:          return (String(localized: "Starkregen"),         "cloud.heavyrain.fill")
+        case 66, 67:      return (String(localized: "Gefrierender Regen"), "cloud.sleet.fill")
+        case 71, 73:      return (String(localized: "Schnee"),             "cloud.snow.fill")
+        case 75:          return (String(localized: "Starker Schnee"),     "cloud.snow.fill")
+        case 77:          return (String(localized: "Schneegriesel"),      "cloud.snow.fill")
+        case 80, 81:      return (String(localized: "Regenschauer"),       "cloud.sun.rain.fill")
+        case 82:          return (String(localized: "Starke Schauer"),     "cloud.heavyrain.fill")
+        case 85, 86:      return (String(localized: "Schneeschauer"),      "cloud.snow.fill")
+        case 95:          return (String(localized: "Gewitter"),           "cloud.bolt.fill")
+        case 96, 99:      return (String(localized: "Starke Gewitter"),   "cloud.bolt.rain.fill")
+        default:          return (String(localized: "Wechselhaft"),        "cloud.sun.fill")
         }
     }
 }

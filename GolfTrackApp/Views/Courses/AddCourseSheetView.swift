@@ -38,10 +38,14 @@ struct AddCourseSheetView: View {
 
     private let nearbyRadius: CLLocationDistance = 30_000 // 30 km
 
+    /// Plätze von golftrack.app zusätzlich zu den eingebauten
+    private let catalog = CourseCatalogService.shared
+
     // All bundled courses sorted by distance (used as base for filtering)
     private var sortedBundledCourses: [BundledCourseEntry] {
-        guard let loc = userLocation else { return BundledCourses.all }
-        return BundledCourses.all.sorted { $0.distance(from: loc) < $1.distance(from: loc) }
+        let all = catalog.allGolfCourses
+        guard let loc = userLocation else { return all }
+        return all.sorted { $0.distance(from: loc) < $1.distance(from: loc) }
     }
 
     // Only courses within 30 km – shown in the default "Nearby" section.
@@ -56,7 +60,7 @@ struct AddCourseSheetView: View {
     private var bundledSearchResults: [BundledCourseEntry] {
         let q = query.trimmingCharacters(in: .whitespaces).lowercased()
         guard !q.isEmpty else { return [] }
-        return BundledCourses.all.filter {
+        return catalog.allGolfCourses.filter {
             $0.name.lowercased().contains(q) || $0.location.lowercased().contains(q)
         }
     }
@@ -140,6 +144,11 @@ struct AddCourseSheetView: View {
                 try? await Task.sleep(nanoseconds: 800_000_000)
                 userLocation = locationManager.location
                 locationDetermined = true
+            }
+            .task {
+                // Neue Plätze von golftrack.app nachladen – schlägt der Abruf
+                // fehl, bleibt die eingebaute Liste unverändert stehen.
+                await catalog.refreshIfNeeded()
             }
             } // ZStack
         }

@@ -310,7 +310,7 @@ struct ScorecardConfirmView: View {
 
             // Table header
             HStack(spacing: 0) {
-                tableHeaderCell("Loch", width: 44)
+                tableHeaderCell(String(localized: "Loch"), width: 44)
                 tableHeaderCell("Par", width: 44)
                 tableHeaderCell("HCP", width: 44)
                 tableHeaderCell("Meter", width: 60)

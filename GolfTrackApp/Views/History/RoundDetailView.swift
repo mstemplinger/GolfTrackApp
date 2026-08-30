@@ -237,7 +237,7 @@ struct RoundDetailView: View {
             Text("Scorecard").font(.headline)
             ScrollView(.horizontal, showsIndicators: false) {
                 VStack(alignment: .leading, spacing: 0) {
-                    tableRow(label: "Loch", values: round.sortedScores.map { "\($0.holeNumber)" }, total: "∑", bold: true)
+                    tableRow(label: String(localized: "Loch"), values: round.sortedScores.map { "\($0.holeNumber)" }, total: "∑", bold: true)
                     Divider()
                     tableRow(label: "Par", values: parValues, total: "\(round.course?.totalPar ?? 0)", muted: true)
                     tableRow(label: "Score", values: [], total: "\(round.totalStrokes)", scoreRow: true)

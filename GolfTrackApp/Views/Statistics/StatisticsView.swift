@@ -194,7 +194,7 @@ struct StatisticsView: View {
                     VStack(alignment: .leading, spacing: 2) {
                         Text(stat.club)
                             .font(.subheadline.bold())
-                        Text("\(stat.count) Schlag\(stat.count == 1 ? "" : "schläge") gemessen")
+                        Text("\(stat.count) \(stat.count == 1 ? String(localized: "Schlag") : String(localized: "Schläge")) gemessen")
                             .font(.caption)
                             .foregroundStyle(.secondary)
                     }
@@ -219,7 +219,9 @@ struct StatisticsView: View {
 }
 
 struct StatCard: View {
-    let title: String
+    // LocalizedStringKey, nicht String: sonst bleibt die Beschriftung deutsch,
+    // obwohl die Übersetzung im String-Katalog steht.
+    let title: LocalizedStringKey
     let value: String
     let icon: String
     let color: Color

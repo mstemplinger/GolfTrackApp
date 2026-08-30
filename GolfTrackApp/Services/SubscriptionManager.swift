@@ -36,6 +36,15 @@ final class SubscriptionManager: ObservableObject {
     private var transactionListener: Task<Void, Never>?
 
     init() {
+        #if DEBUG
+        // Sofort setzen, nicht erst im Task: die Views lesen den Status beim
+        // ersten Aufbau. Nur mit -unlockAll und nur in DEBUG-Builds.
+        if ProcessInfo.processInfo.arguments.contains("-unlockAll") {
+            isTrainingSubscribed = true
+            isCaddySubscribed    = true
+        }
+        #endif
+
         transactionListener = listenForTransactions()
         Task {
             await loadProducts()
@@ -165,6 +174,17 @@ final class SubscriptionManager: ObservableObject {
     // MARK: - Status
 
     func updateSubscriptionStatus() async {
+        #if DEBUG
+        // Screenshots sollen die Inhalte zeigen, nicht die Kaufseite. Nur mit
+        // -unlockAll beim Start, nur in DEBUG-Builds — im Release existiert
+        // dieser Zweig nicht.
+        if ProcessInfo.processInfo.arguments.contains("-unlockAll") {
+            isTrainingSubscribed = true
+            isCaddySubscribed    = true
+            return
+        }
+        #endif
+
         var hasTraining = false
         var hasCaddy    = false
         for await result in Transaction.currentEntitlements {

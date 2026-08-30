@@ -44,7 +44,7 @@ struct CourseInfoSheet: View {
             VStack(spacing: 0) {
                 // Table header
                 tableRow(
-                    hole: "Loch", hcp: "HCP", length: "Meter", par: "Par",
+                    hole: String(localized: "Loch"), hcp: "HCP", length: String(localized: "Meter"), par: "Par",
                     isHeader: true
                 )
                 Divider().background(AppTheme.cardAlt)

@@ -119,10 +119,10 @@ enum AssistantStatus: Equatable {
 
     var label: String {
         switch self {
-        case .disconnected:  return "Nicht verbunden"
-        case .connecting:    return "Verbinden..."
-        case .connected:     return "Verbunden"
-        case .disconnecting: return "Trenne Verbindung..."
+        case .disconnected:  return String(localized: "Nicht verbunden")
+        case .connecting:    return String(localized: "Verbinden...")
+        case .connected:     return String(localized: "Verbunden")
+        case .disconnecting: return String(localized: "Trenne Verbindung...")
         }
     }
 }
@@ -133,8 +133,8 @@ enum AssistantMode: Equatable {
 
     var label: String {
         switch self {
-        case .listening: return "Zuhören..."
-        case .speaking:  return "Caddy spricht..."
+        case .listening: return String(localized: "Zuhören...")
+        case .speaking:  return String(localized: "Caddy spricht...")
         }
     }
 }

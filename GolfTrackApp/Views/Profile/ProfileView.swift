@@ -16,6 +16,7 @@ struct ProfileView: View {
 
     @AppStorage("hasSeenOnboarding") private var hasSeenOnboarding = false
     @AppStorage(DistanceUnit.storageKey) private var distanceUnit: DistanceUnit = .meters
+    @AppStorage(AppFocus.storageKey) private var appFocus: AppFocus = .golf
     @ObservedObject private var gc = GameCenterManager.shared
     @State private var selectedAchievement: GCAchievement?
     @State private var showWhatsNew = false
@@ -239,6 +240,30 @@ struct ProfileView: View {
 
     private var settingsSection: some View {
         VStack(spacing: 0) {
+            // Schwerpunkt der App: Golf oder Minigolf
+            HStack(spacing: 14) {
+                ZStack {
+                    RoundedRectangle(cornerRadius: 9)
+                        .fill(AppTheme.gold.opacity(0.18))
+                        .frame(width: 40, height: 40)
+                    Image(systemName: "target")
+                        .font(.system(size: 16))
+                        .foregroundStyle(AppTheme.gold)
+                }
+                Text("Schwerpunkt")
+                    .font(.subheadline)
+                    .foregroundStyle(AppTheme.text)
+                Spacer()
+                Picker("Schwerpunkt", selection: $appFocus) {
+                    Text("Golf").tag(AppFocus.golf)
+                    Text("Minigolf").tag(AppFocus.minigolf)
+                }
+                .pickerStyle(.segmented)
+                .frame(width: 160)
+            }
+            .padding(.horizontal, 18)
+            .padding(.vertical, 14)
+            Divider().background(AppTheme.cardAlt).padding(.leading, 62)
             // Distance unit picker
             HStack(spacing: 14) {
                 ZStack {

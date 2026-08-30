@@ -29,6 +29,68 @@
         }
       }
     },
+    "%@ · %lld Bahnen" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@ · %2$lld Bahnen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@ · %2$lld holes"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@ · %2$lld pistas"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@ · %2$lld pistes"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@ · %2$lld piste"
+          }
+        }
+      }
+    },
+    "%lld Bahnen" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld holes"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld pistas"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld pistes"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld piste"
+          }
+        }
+      }
+    },
     "-" : {
       "localizations" : {
         "en" : {
@@ -53,6 +115,454 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "-"
+          }
+        }
+      }
+    },
+    "Bahn für Bahn" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hole by hole"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pista a pista"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Piste après piste"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pista dopo pista"
+          }
+        }
+      }
+    },
+    "Drei Sätze, wie das Zählen in der App funktioniert – oder direkt loslegen." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Three sentences on how counting works in the app – or start right away."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tres frases sobre cómo se cuenta en la app, o empieza directamente."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Trois phrases sur le comptage dans l'app – ou commence tout de suite."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tre frasi su come si conta nell'app, oppure inizia subito."
+          }
+        }
+      }
+    },
+    "Ja, kurz zeigen" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Yes, show me"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sí, muéstramelo"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Oui, montre-moi"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sì, mostrami"
+          }
+        }
+      }
+    },
+    "Jeder Spieler hat eine eigene Zeile. Nach jedem Schlag auf + tippen – verzählt? Das Minus korrigiert." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Every player has their own row. Tap + after each stroke – miscounted? The minus fixes it."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cada jugador tiene su propia fila. Toca + después de cada golpe. ¿Te has equivocado? El menos lo corrige."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Chaque joueur a sa propre ligne. Touche + après chaque coup – erreur de comptage ? Le moins corrige."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ogni giocatore ha la sua riga. Tocca + dopo ogni colpo – hai sbagliato a contare? Il meno corregge."
+          }
+        }
+      }
+    },
+    "Kurz erklärt?" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "A quick intro?"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "¿Te lo explicamos?"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Petite explication ?"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ti spieghiamo?"
+          }
+        }
+      }
+    },
+    "Minigolfplätze" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Minigolf courses"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Campos de minigolf"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Parcours de minigolf"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Campi di minigolf"
+          }
+        }
+      }
+    },
+    "Namen sind optional – leer lassen geht auch." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Names are optional – leaving them empty works too."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Los nombres son opcionales: puedes dejarlos vacíos."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Les noms sont facultatifs – tu peux les laisser vides."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "I nomi sono facoltativi: puoi lasciarli vuoti."
+          }
+        }
+      }
+    },
+    "Nein, direkt starten" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No, start now"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No, empezar ya"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Non, commencer"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No, inizia subito"
+          }
+        }
+      }
+    },
+    "Oben rechts siehst du jederzeit die Tabelle. Nach der letzten Bahn steht der Sieger fest." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The standings are available at the top right at any time. After the last hole the winner is decided."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Arriba a la derecha ves la clasificación en cualquier momento. Tras la última pista se decide el ganador."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "En haut à droite, le classement est visible à tout moment. Après la dernière piste, le vainqueur est désigné."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "In alto a destra vedi sempre la classifica. Dopo l'ultima pista è deciso il vincitore."
+          }
+        }
+      }
+    },
+    "Runde starten · %lld Bahnen" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Start Round · %lld holes"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Empezar partida · %lld pistas"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Démarrer la partie · %lld pistes"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Inizia partita · %lld piste"
+          }
+        }
+      }
+    },
+    "Schläge zählen" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Counting strokes"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Contar golpes"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Compter les coups"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Contare i colpi"
+          }
+        }
+      }
+    },
+    "Unten auf „Weiter“ geht es zur nächsten Bahn. Der Stand wird automatisch gesichert, auch wenn du das Handy weglegst." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "“Continue” at the bottom takes you to the next hole. The score is saved automatically, even if you put the phone away."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Con «Continuar» abajo pasas a la siguiente pista. El marcador se guarda automáticamente, aunque dejes el móvil."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "En bas, « Continuer » mène à la piste suivante. Le score est enregistré automatiquement, même si tu poses le téléphone."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "In basso «Avanti» porta alla pista successiva. Il punteggio viene salvato automaticamente, anche se posi il telefono."
+          }
+        }
+      }
+    },
+    "Verstanden" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Got it"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Entendido"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Compris"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Capito"
+          }
+        }
+      }
+    },
+    "Vor Ort einfach den QR-Code scannen – Begrüßung, kurze Einführung, los." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "On site simply scan the QR code – greeting, short intro, off you go."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "En el lugar solo hay que escanear el código QR: bienvenida, breve introducción y a jugar."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sur place, scanne simplement le code QR : accueil, courte intro, c'est parti."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sul posto basta scansionare il codice QR: benvenuto, breve introduzione e via."
+          }
+        }
+      }
+    },
+    "Wer spielt mit?" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Who's playing?"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "¿Quién juega?"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Qui joue ?"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Chi gioca?"
+          }
+        }
+      }
+    },
+    "Willkommen!" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Welcome!"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "¡Bienvenido!"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bienvenue !"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Benvenuto!"
           }
         }
       }
@@ -805,6 +1315,26 @@
         }
       }
     },
+    "%lld %@ erfasst" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$lld %2$@ erfasst"
+          }
+        }
+      }
+    },
+    "%lld %@ gemessen" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$lld %2$@ gemessen"
+          }
+        }
+      }
+    },
     "%lld %%" : {
       "localizations" : {
         "en" : {
@@ -1041,6 +1571,34 @@
         }
       }
     },
+    "%lld Löcher · %lld Spieler" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld holes · %lld players"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld hoyos · %lld jugadores"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld trous · %lld joueurs"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld buche · %lld giocatori"
+          }
+        }
+      }
+    },
     "%lld Löcher · Par %lld" : {
       "localizations" : {
         "de" : {
@@ -1272,6 +1830,7 @@
       }
     },
     "%lld Schlag%@ erfasst" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -1306,6 +1865,7 @@
       }
     },
     "%lld Schlag%@ gemessen" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -1637,40 +2197,6 @@
         }
       }
     },
-    "%lld/%lld Löcher mit Position · Aufzeichnungen: %lld" : {
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "%1$lld/%2$lld Löcher mit Position · Aufzeichnungen: %3$lld"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "%1$lld/%2$lld holes with position · Recordings: %3$lld"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "%1$lld/%2$lld hoyos con posición · Grabaciones: %3$lld"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "%1$lld/%2$lld trous avec position · Enregistrements : %3$lld"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "%1$lld/%2$lld buche con posizione · Registrazioni: %3$lld"
-          }
-        }
-      }
-    },
     "%lld–%lld %@" : {
       "localizations" : {
         "de" : {
@@ -1735,6 +2261,40 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "%1$lld/%2$lld"
+          }
+        }
+      }
+    },
+    "%lld/%lld Löcher mit Position · Aufzeichnungen: %lld" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$lld/%2$lld Löcher mit Position · Aufzeichnungen: %3$lld"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$lld/%2$lld holes with position · Recordings: %3$lld"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$lld/%2$lld hoyos con posición · Grabaciones: %3$lld"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$lld/%2$lld trous avec position · Enregistrements : %3$lld"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$lld/%2$lld buche con posizione · Registrazioni: %3$lld"
           }
         }
       }
@@ -2193,6 +2753,12 @@
         }
       }
     },
+    "2 gegen 2 – bester Ball pro Team, Matchplay-Wertung" : {
+
+    },
+    "2 gegen 2: Pro Team zählt der bessere Score. Die Teams spielen Loch für Loch gegeneinander (Matchplay)." : {
+
+    },
     "2 SL" : {
       "localizations" : {
         "en" : {
@@ -2249,6 +2815,9 @@
         }
       }
     },
+    "2-Mann Scramble" : {
+
+    },
     "3" : {
       "localizations" : {
         "en" : {
@@ -2277,6 +2846,9 @@
         }
       }
     },
+    "3 oder 4 Spieler im Team – der beste Score pro Loch zählt für das Team (Zählspiel)." : {
+
+    },
     "3 Tagen" : {
       "localizations" : {
         "en" : {
@@ -2304,6 +2876,24 @@
           }
         }
       }
+    },
+    "3–4 Spieler – alle schlagen ab, bester Abschlag gespielt" : {
+
+    },
+    "3–4 Spieler – beste Stableford-Punkte pro Loch" : {
+
+    },
+    "3–4 Spieler – beste Stableford-Punkte pro Loch zählen" : {
+
+    },
+    "3–4 Spieler – bester Score pro Loch zählt" : {
+
+    },
+    "3–4 Spieler – bester Score pro Loch zählt für das Team" : {
+
+    },
+    "3–4 Spieler: Alle schlagen ab, bester Abschlag wird gewählt. Alle spielen von dort weiter bis zum Einlochen." : {
+
     },
     "4" : {
       "localizations" : {
@@ -3349,6 +3939,34 @@
         }
       }
     },
+    "Abschlag→Grün" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tee→green"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tee→green"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Départ→green"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tee→green"
+          }
+        }
+      }
+    },
     "Abschlagbreite" : {
       "localizations" : {
         "de" : {
@@ -3379,34 +3997,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Larghezza tee"
-          }
-        }
-      }
-    },
-    "Abschlag→Grün" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Tee→green"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Tee→green"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Départ→green"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Tee→green"
           }
         }
       }
@@ -3655,6 +4245,34 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Eliminare tutti i %lld giri?"
+          }
+        }
+      }
+    },
+    "Alle anzeigen" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Show all"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ver todo"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tout afficher"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mostra tutto"
           }
         }
       }
@@ -4821,6 +5439,9 @@
         }
       }
     },
+    "Bedeckt" : {
+
+    },
     "Beenden" : {
       "localizations" : {
         "en" : {
@@ -4848,6 +5469,18 @@
           }
         }
       }
+    },
+    "Beide Partner schlagen ab. Der beste Abschlag wird gewählt. Danach spielen beide abwechselnd bis zum Einlochen." : {
+
+    },
+    "Beide schlagen ab – bester Abschlag wird gespielt" : {
+
+    },
+    "Beide schlagen ab, bester Teeshot – dann Wechselschlag" : {
+
+    },
+    "Beide Spieler schlagen ab. Der beste Abschlag wird gewählt und beide spielen von dort weiter." : {
+
     },
     "belastbar" : {
       "localizations" : {
@@ -5057,6 +5690,9 @@
         }
       }
     },
+    "Best Ball" : {
+
+    },
     "Best Ball – %lld Spieler" : {
       "localizations" : {
         "en" : {
@@ -5084,6 +5720,9 @@
           }
         }
       }
+    },
+    "Best Ball mit Stableford-Wertung – der höchste Punktwert pro Loch zählt für das Team." : {
+
     },
     "Best Ball Schläge" : {
       "localizations" : {
@@ -5265,6 +5904,9 @@
         }
       }
     },
+    "Beste Stableford-Punkte pro Loch für das Team" : {
+
+    },
     "Bestenliste" : {
       "localizations" : {
         "de" : {
@@ -5299,6 +5941,37 @@
         }
       }
     },
+    "Bester Schnitt" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Best average"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mejor promedio"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Meilleure moyenne"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Media migliore"
+          }
+        }
+      }
+    },
+    "Bester Score pro Loch zählt für das 2er-Team" : {
+
+    },
     "Bestes Diff.: %@" : {
       "localizations" : {
         "en" : {
@@ -5326,6 +5999,12 @@
           }
         }
       }
+    },
+    "Bestleistung" : {
+
+    },
+    "Better Ball" : {
+
     },
     "Bezeichnung" : {
       "localizations" : {
@@ -5357,6 +6036,34 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Nome"
+          }
+        }
+      }
+    },
+    "Bis zu 8 Spieler auf einer Scorekarte" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Up to 8 players on one scorecard"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hasta 8 jugadores en una tarjeta"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Jusqu'à 8 joueurs sur une carte de score"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fino a 8 giocatori su un'unica scorecard"
           }
         }
       }
@@ -5500,6 +6207,9 @@
           }
         }
       }
+    },
+    "Caddy spricht..." : {
+
     },
     "Caddy und alle Trainings –\nalles in einem Abo." : {
       "localizations" : {
@@ -6345,6 +7055,12 @@
         }
       }
     },
+    "Die ersten Löcher werden als Best Ball gespielt, dann wechselt das Format nach einem festen Schlüssel." : {
+
+    },
+    "Die klassische Spielform: Jeder Schlag zählt. Wer am Ende der Runde die wenigsten Schläge hat, gewinnt." : {
+
+    },
     "Die Runde wird als abgeschlossen gespeichert." : {
       "localizations" : {
         "de" : {
@@ -6897,6 +7613,34 @@
         }
       }
     },
+    "Du kannst das später jederzeit im Profil ändern." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "You can change this any time in your profile."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Puedes cambiarlo en cualquier momento en tu perfil."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vous pouvez modifier ce choix à tout moment dans votre profil."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Puoi cambiarlo in qualsiasi momento nel profilo."
+          }
+        }
+      }
+    },
     "Du kannst die Runde auf dem iPhone spiegeln und dort Einträge vornehmen." : {
       "localizations" : {
         "de" : {
@@ -6958,6 +7702,12 @@
           }
         }
       }
+    },
+    "Duplicate®" : {
+
+    },
+    "Duplicate® Scramble" : {
+
     },
     "Durchschnitt der %lld besten Score-Differentials × 0,96" : {
       "localizations" : {
@@ -7105,6 +7855,12 @@
         }
       }
     },
+    "Ein Ball, zwei Spieler – abwechselnd schlagen" : {
+
+    },
+    "Ein Ball, zwei Spieler – abwechselnd schlagen (Wechselschlag)" : {
+
+    },
     "Einen Moment bitte …" : {
       "localizations" : {
         "en" : {
@@ -7194,6 +7950,9 @@
           }
         }
       }
+    },
+    "Eisregen" : {
+
     },
     "Empfehlung:" : {
       "localizations" : {
@@ -7402,6 +8161,9 @@
           }
         }
       }
+    },
+    "Erado®" : {
+
     },
     "Ergebnis" : {
       "localizations" : {
@@ -8112,7 +8874,6 @@
       }
     },
     "Feuchte" : {
-      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -8636,8 +9397,10 @@
         }
       }
     },
+    "Gefrierender Regen" : {
+
+    },
     "Gefühlt" : {
-      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -9088,6 +9851,9 @@
         }
       }
     },
+    "Gewitter" : {
+
+    },
     "gewonnene Löcher" : {
       "localizations" : {
         "en" : {
@@ -9150,6 +9916,34 @@
         }
       }
     },
+    "Golf" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Golf"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Golf"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Golf"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Golf"
+          }
+        }
+      }
+    },
     "Golf-Assistent" : {
       "localizations" : {
         "en" : {
@@ -9174,6 +9968,34 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Assistente golf"
+          }
+        }
+      }
+    },
+    "Golf-Funktionen bleiben jederzeit verfügbar" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Golf features stay available at any time"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Las funciones de golf siguen disponibles en todo momento"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Les fonctions golf restent disponibles à tout moment"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Le funzioni golf restano sempre disponibili"
           }
         }
       }
@@ -9206,8 +10028,63 @@
         }
       }
     },
+    "Golf-Runde" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Golf round"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vuelta de golf"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Parcours de golf"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Giro di golf"
+          }
+        }
+      }
+    },
+    "Golf-Verlauf" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Golf history"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Historial de golf"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Historique golf"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cronologia golf"
+          }
+        }
+      }
+    },
     "Golf-Wetter" : {
-      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -9499,6 +10376,9 @@
         }
       }
     },
+    "Golfplätze verwalten" : {
+
+    },
     "Golfregeln 2023" : {
       "localizations" : {
         "en" : {
@@ -9673,6 +10553,9 @@
         }
       }
     },
+    "Greensome" : {
+
+    },
     "Grün" : {
       "localizations" : {
         "en" : {
@@ -9762,6 +10645,9 @@
           }
         }
       }
+    },
+    "Handicap (WHS)" : {
+
     },
     "Handicap Index" : {
       "localizations" : {
@@ -10310,6 +11196,34 @@
         }
       }
     },
+    "In Sekunden startklar – kein Tutorial nötig" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ready in seconds – no tutorial needed"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Listo en segundos: no necesitas tutorial"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Prêt en quelques secondes – aucun tutoriel nécessaire"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pronto in pochi secondi – nessun tutorial necessario"
+          }
+        }
+      }
+    },
     "Inaktivitätserinnerung" : {
       "localizations" : {
         "en" : {
@@ -10365,6 +11279,9 @@
           }
         }
       }
+    },
+    "Irish Rumble" : {
+
     },
     "Ist ein Putter" : {
       "localizations" : {
@@ -10449,6 +11366,9 @@
           }
         }
       }
+    },
+    "Jedes Loch hat einen Wert (Skin). Wer das Loch gewinnt, erhält den Skin. Bei Gleichstand wird der Skin übertragen." : {
+
     },
     "Jetzt abonnieren" : {
       "localizations" : {
@@ -10968,6 +11888,9 @@
         }
       }
     },
+    "Klassisches Zählspiel – jeder Schlag zählt" : {
+
+    },
     "Konfidenz: hoch" : {
       "localizations" : {
         "en" : {
@@ -11360,6 +12283,34 @@
         }
       }
     },
+    "Letzte Partien" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Recent games"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Últimas partidas"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dernières parties"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ultime partite"
+          }
+        }
+      }
+    },
     "Letzte Runde" : {
       "localizations" : {
         "de" : {
@@ -11477,6 +12428,9 @@
           }
         }
       }
+    },
+    "Loch" : {
+
     },
     "Loch %lld" : {
       "localizations" : {
@@ -11679,6 +12633,12 @@
           }
         }
       }
+    },
+    "Loch für Loch gegen einen Gegner" : {
+
+    },
+    "Loch für Loch. Wer das Loch mit weniger Schlägen spielt, gewinnt es. Wer am Ende mehr Löcher hat, gewinnt die Runde." : {
+
     },
     "Loch- & Abschlagpositionen gespeichert" : {
       "localizations" : {
@@ -11916,6 +12876,34 @@
         }
       }
     },
+    "Los geht's" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Let's go"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vamos allá"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "C'est parti"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Iniziamo"
+          }
+        }
+      }
+    },
     "Los geht's!" : {
       "localizations" : {
         "en" : {
@@ -11971,6 +12959,12 @@
           }
         }
       }
+    },
+    "Match/Net" : {
+
+    },
+    "Matchplay" : {
+
     },
     "Matchplay – Lochspiel-Wertung" : {
       "localizations" : {
@@ -12089,6 +13083,9 @@
           }
         }
       }
+    },
+    "Meist sonnig" : {
+
     },
     "Melde dich bei Game Center an, um deinen Score mit Freunden zu teilen." : {
       "localizations" : {
@@ -12270,6 +13267,9 @@
         }
       }
     },
+    "Minigolf" : {
+
+    },
     "Minigolf & Putten" : {
       "localizations" : {
         "en" : {
@@ -12294,6 +13294,34 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Minigolf e putting"
+          }
+        }
+      }
+    },
+    "Minigolf-Spiel starten" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Start minigolf game"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Empezar partida de minigolf"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Démarrer une partie de minigolf"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Avvia partita di minigolf"
           }
         }
       }
@@ -12726,6 +13754,9 @@
         }
       }
     },
+    "Neblig" : {
+
+    },
     "NEU" : {
       "localizations" : {
         "en" : {
@@ -13136,6 +14167,9 @@
         }
       }
     },
+    "Nicht verbunden" : {
+
+    },
     "niedrig" : {
       "localizations" : {
         "en" : {
@@ -13163,6 +14197,12 @@
           }
         }
       }
+    },
+    "Niedrigster Score gewinnt den Skin – Unentschieden trägt über" : {
+
+    },
+    "Nieselregen" : {
+
     },
     "Noch %lld m zum Loch" : {
       "localizations" : {
@@ -13244,6 +14284,34 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Ancora nessun andamento del fairway per questa buca: servono misurazioni tra tee e green. Le buche par 3 vengono saltate."
+          }
+        }
+      }
+    },
+    "Noch kein Spiel" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No game yet"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sin partidas"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aucune partie"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nessuna partita"
           }
         }
       }
@@ -13822,6 +14890,12 @@
         }
       }
     },
+    "Ø Putts/Runde" : {
+
+    },
+    "Ø Score vs. Par" : {
+
+    },
     "Offene Runde" : {
       "localizations" : {
         "en" : {
@@ -14294,6 +15368,62 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Par per buca (%lld buche)"
+          }
+        }
+      }
+    },
+    "Partie" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Game"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Partida"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Partie"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Partita"
+          }
+        }
+      }
+    },
+    "Partien" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Games"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Partidas"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Parties"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Partite"
           }
         }
       }
@@ -15536,6 +16666,12 @@
         }
       }
     },
+    "Punkte statt Schläge – Birdie=3, Par=2, Bogey=1" : {
+
+    },
+    "Punkte statt Schläge: Albatross=5, Eagle=4, Birdie=3, Par=2, Bogey=1, Double+=0. Wer die meisten Punkte sammelt, gewinnt." : {
+
+    },
     "Punktetabelle" : {
       "localizations" : {
         "en" : {
@@ -15939,6 +17075,12 @@
           }
         }
       }
+    },
+    "Regen" : {
+
+    },
+    "Regenschauer" : {
+
     },
     "Richtig" : {
       "localizations" : {
@@ -16504,6 +17646,37 @@
         }
       }
     },
+    "Runden auf dem Platz, Handicap & Schlagverfolgung" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Rounds on the course, handicap & shot tracking"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vueltas en el campo, hándicap y seguimiento de golpes"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Parcours, handicap et suivi des coups"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Giri sul campo, handicap e tracciamento dei colpi"
+          }
+        }
+      }
+    },
+    "Runden gespielt" : {
+
+    },
     "Runden: %lld" : {
       "localizations" : {
         "en" : {
@@ -16796,6 +17969,9 @@
         }
       }
     },
+    "Schlag" : {
+
+    },
     "Schlag %lld" : {
       "localizations" : {
         "en" : {
@@ -16937,7 +18113,6 @@
       }
     },
     "Schläge" : {
-      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -17033,6 +18208,34 @@
         }
       }
     },
+    "Schläge pro Loch" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Strokes per hole"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Golpes por hoyo"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Coups par trou"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Colpi per buca"
+          }
+        }
+      }
+    },
     "Schläge werden automatisch beim Aufzeichnen eingetragen." : {
       "localizations" : {
         "en" : {
@@ -17057,6 +18260,34 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "I colpi vengono inseriti automaticamente durante la registrazione."
+          }
+        }
+      }
+    },
+    "Schläge, Distanzen und Laufwege auf der Karte" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Shots, distances and walking tracks on the map"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Golpes, distancias y recorridos en el mapa"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Coups, distances et trajets sur la carte"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Colpi, distanze e percorsi sulla mappa"
           }
         }
       }
@@ -17230,7 +18461,6 @@
       }
     },
     "schlechtes Wetter" : {
-      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -17292,6 +18522,43 @@
         }
       }
     },
+    "Schnee" : {
+
+    },
+    "Schneegriesel" : {
+
+    },
+    "Schneeschauer" : {
+
+    },
+    "Schnelle Spiele mit Freunden, Schlag für Schlag gezählt" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Quick games with friends, counted stroke by stroke"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Partidas rápidas con amigos, golpe a golpe"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Parties rapides entre amis, comptées coup par coup"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Partite veloci con gli amici, contate colpo dopo colpo"
+          }
+        }
+      }
+    },
     "Schritt %lld von %lld" : {
       "localizations" : {
         "de" : {
@@ -17322,6 +18589,34 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Passo %1$lld di %2$lld"
+          }
+        }
+      }
+    },
+    "Schwerpunkt" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Focus"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Enfoque"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Priorité"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Focus"
           }
         }
       }
@@ -17608,6 +18903,15 @@
         }
       }
     },
+    "Scramble" : {
+
+    },
+    "Scramble mit Stableford-Wertung und Multiplikator auf bestimmten Löchern." : {
+
+    },
+    "Scramble-Format (bester Ball, alle spielen weiter) im Matchplay-Modus gegen ein anderes Team." : {
+
+    },
     "sehr dünn" : {
       "localizations" : {
         "en" : {
@@ -17815,6 +19119,9 @@
           }
         }
       }
+    },
+    "Sonnig" : {
+
     },
     "Später entscheiden" : {
       "localizations" : {
@@ -18216,6 +19523,34 @@
         }
       }
     },
+    "Spielformen, Regeln und Platzreife-Training" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Game formats, rules and beginner training"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Formatos de juego, reglas y formación para principiantes"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Formats de jeu, règles et formation pour débutants"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Formati di gioco, regole e corso per principianti"
+          }
+        }
+      }
+    },
     "Spielmodi" : {
       "localizations" : {
         "en" : {
@@ -18442,6 +19777,9 @@
           }
         }
       }
+    },
+    "Stableford-Punkte werden multipliziert – bestimmte Löcher zählen doppelt oder dreifach." : {
+
     },
     "Standard" : {
       "localizations" : {
@@ -18713,6 +20051,18 @@
         }
       }
     },
+    "Starke Gewitter" : {
+
+    },
+    "Starke Schauer" : {
+
+    },
+    "Starker Schnee" : {
+
+    },
+    "Starkregen" : {
+
+    },
     "Start" : {
       "localizations" : {
         "en" : {
@@ -18737,6 +20087,34 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Avvia"
+          }
+        }
+      }
+    },
+    "Starte dein erstes Spiel" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Start your first game"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Empieza tu primera partida"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lancez votre première partie"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Inizia la tua prima partita"
           }
         }
       }
@@ -19427,6 +20805,9 @@
         }
       }
     },
+    "Teils bewölkt" : {
+
+    },
     "Tipp" : {
       "localizations" : {
         "de" : {
@@ -19881,6 +21262,9 @@
         }
       }
     },
+    "Trenne Verbindung..." : {
+
+    },
     "Tutorial beenden" : {
       "localizations" : {
         "en" : {
@@ -20151,6 +21535,12 @@
         }
       }
     },
+    "UV" : {
+
+    },
+    "Verbinden..." : {
+
+    },
     "Verbindung testen" : {
       "localizations" : {
         "de" : {
@@ -20184,6 +21574,9 @@
           }
         }
       }
+    },
+    "Verbunden" : {
+
     },
     "Vergleiche dich mit Freunden" : {
       "localizations" : {
@@ -20348,6 +21741,9 @@
           }
         }
       }
+    },
+    "Vierer" : {
+
     },
     "Vollbild" : {
       "localizations" : {
@@ -20653,6 +22049,37 @@
           }
         }
       }
+    },
+    "Was möchtest du hauptsächlich tracken?" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "What do you mainly want to track?"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "¿Qué quieres registrar principalmente?"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Que souhaitez-vous suivre principalement ?"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Che cosa vuoi tracciare principalmente?"
+          }
+        }
+      }
+    },
+    "Wechselhaft" : {
+
     },
     "Weiter" : {
       "localizations" : {
@@ -21056,6 +22483,37 @@
         }
       }
     },
+    "WHS-Handicap wird automatisch berechnet" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "WHS handicap calculated automatically"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hándicap WHS calculado automáticamente"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Handicap WHS calculé automatiquement"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Handicap WHS calcolato automaticamente"
+          }
+        }
+      }
+    },
+    "Wie Better Ball, aber gewertet nach Stableford-Punkten. Die höheren Punkte pro Loch zählen für das Team." : {
+
+    },
     "Wie das funktioniert" : {
       "localizations" : {
         "en" : {
@@ -21117,6 +22575,9 @@
           }
         }
       }
+    },
+    "Wie Zählspiel, aber die schlechteste(n) Löcher werden gestrichen. Bei 18 Löchern werden 2 Streichlöcher angerechnet, bei 9 Löchern 1." : {
+
     },
     "Wiedergabegeschwindigkeit" : {
       "localizations" : {
@@ -21180,6 +22641,34 @@
         }
       }
     },
+    "Willkommen bei GolfTrack" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Welcome to GolfTrack"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Te damos la bienvenida a GolfTrack"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bienvenue sur GolfTrack"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Benvenuto su GolfTrack"
+          }
+        }
+      }
+    },
     "Willkommen zurück," : {
       "localizations" : {
         "de" : {
@@ -21215,7 +22704,6 @@
       }
     },
     "Wind" : {
-      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -21458,7 +22946,6 @@
       }
     },
     "Zählspiel" : {
-      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -21491,6 +22978,12 @@
           }
         }
       }
+    },
+    "Zählspiel – die schlechtesten Löcher werden gestrichen" : {
+
+    },
+    "Zählspiel gegen eine Netto-Zielvorgabe. Das Team spielt gegen einen vorgegebenen Netto-Score." : {
+
     },
     "Zeit" : {
       "localizations" : {
@@ -21588,6 +23081,9 @@
         }
       }
     },
+    "Zuhören..." : {
+
+    },
     "Zurück" : {
       "localizations" : {
         "en" : {
@@ -21643,6 +23139,12 @@
           }
         }
       }
+    },
+    "Zwei Spieler spielen abwechselnd mit einem Ball (Wechselschlag). Ein Team, ein Ball, ein Score." : {
+
+    },
+    "Zwei Spieler spielen gemeinsam – der bessere Score pro Loch zählt für das Team." : {
+
     }
   },
   "version" : "1.0"

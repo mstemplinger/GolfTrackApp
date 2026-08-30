@@ -6,6 +6,7 @@ struct HomeView: View {
     @Query(sort: \Course.name) private var allCourses: [Course]
     @Environment(\.modelContext) private var context
     @AppStorage("playerName") private var playerName = "Golfer"
+    @AppStorage(AppFocus.storageKey) private var appFocus: AppFocus = .golf
 
     @State private var showNewRound      = false
     @State private var showTutorial      = false
@@ -33,6 +34,14 @@ struct HomeView: View {
     /// Steuert Navigation zu einer aktiven (unvollständigen) Runde
     @State private var selectedIncompleteRound: Round?
 
+    // MARK: Minigolf (nur bei Schwerpunkt "Minigolf" sichtbar)
+    /// Angefangenes Minigolf-Spiel aus den UserDefaults
+    @State private var minigolfSaved: SavedMinigolfGame?
+    @State private var minigolfHistory: [MinigolfHistoryEntry] = []
+    @State private var showMinigolf = false
+    @State private var resumeMinigolfConfig: MinigolfConfig?
+    @State private var selectedMinigolfEntry: MinigolfHistoryEntry?
+
     private let wc = WatchConnectivityManager.shared
 
     private var completedRounds: [Round] { allRounds.filter(\.isComplete) }
@@ -49,91 +58,14 @@ struct HomeView: View {
                         topBar
                         greetingCard
                             .tutorialAnchor(.dashboardCards)
-                        statsRow
-                        weatherCard
-                            .onTapGesture {
-                                if weather.hasData { showWeatherForecast = true }
-                            }
-                        if let wr = watchRound, !wr.isComplete { watchRoundBanner(wr) }
-                        if !completedRounds.isEmpty { trainingProgressCard }
-                        if !incompleteRounds.isEmpty { activeRoundsCard }
 
-                        Button { showNewRound = true } label: {
-                            Label("Neue Runde spielen", systemImage: "plus.circle.fill")
-                                .goldButton()
+                        if appFocus == .minigolf {
+                            minigolfSections
+                        } else {
+                            golfSections
                         }
-                        .padding(.horizontal)
-                        .tutorialAnchor(.newRoundButton)
 
-                        HStack(spacing: 12) {
-                            NavigationLink {
-                                PlatzreifeQuizView()
-                            } label: {
-                                Label("Platzreife lernen", systemImage: "graduationcap.fill")
-                                    .greenButton()
-                            }
-                            NavigationLink {
-                                HistoryView()
-                            } label: {
-                                Label("Verlauf", systemImage: "clock.fill")
-                                    .greenButton()
-                            }
-                        }
-                        .padding(.horizontal)
-
-                        Button {
-                            if subscriptionManager.isCaddySubscribed {
-                                showAssistant = true
-                            } else {
-                                showCaddyPaywall = true
-                            }
-                        } label: {
-                            HStack(spacing: 10) {
-                                Image(systemName: "waveform.circle.fill")
-                                    .font(.title3)
-                                VStack(alignment: .leading, spacing: 1) {
-                                    Text("Caddy – Golf-Assistent")
-                                        .font(.subheadline.weight(.semibold))
-                                    Text("Regeln, Tipps & Strategien")
-                                        .font(.caption)
-                                        .opacity(0.7)
-                                }
-                                Spacer()
-                                Image(systemName: "chevron.right")
-                                    .font(.caption.weight(.semibold))
-                                    .opacity(0.5)
-                            }
-                            .foregroundStyle(.white)
-                            .padding(.horizontal, 20)
-                            .padding(.vertical, 14)
-                            .background(
-                                RoundedRectangle(cornerRadius: 16)
-                                    .fill(
-                                        LinearGradient(
-                                            colors: [
-                                                Color(red: 0.12, green: 0.30, blue: 0.12),
-                                                Color(red: 0.08, green: 0.20, blue: 0.08)
-                                            ],
-                                            startPoint: .topLeading,
-                                            endPoint: .bottomTrailing
-                                        )
-                                    )
-                                    .overlay(
-                                        RoundedRectangle(cornerRadius: 16)
-                                            .stroke(AppTheme.gold.opacity(0.35), lineWidth: 1)
-                                    )
-                            )
-                        }
-                        .padding(.horizontal)
-                        .sheet(isPresented: $showAssistant) {
-                            GolfAssistantView()
-                                .presentationDetents([.large])
-                                .presentationDragIndicator(.visible)
-                        }
-                        .sheet(isPresented: $showCaddyPaywall) {
-                            CaddyPaywallView()
-                                .environmentObject(subscriptionManager)
-                        }
+                        caddyButton
 
                         Spacer(minLength: 30)
                     }
@@ -157,9 +89,26 @@ struct HomeView: View {
             .sheet(isPresented: $showWeatherForecast) {
                 WeatherForecastView(weather: weather).preferredColorScheme(.dark)
             }
+            // Minigolf: Setup bzw. direktes Fortsetzen eines Spiels
+            .fullScreenCover(isPresented: $showMinigolf, onDismiss: loadMinigolfData) {
+                MinigolfView(showsCloseButton: true).preferredColorScheme(.dark)
+            }
+            .fullScreenCover(item: $resumeMinigolfConfig, onDismiss: loadMinigolfData) { config in
+                NavigationStack { MinigolfScoringView(config: config) }
+                    .preferredColorScheme(.dark)
+            }
+            .sheet(item: $selectedMinigolfEntry) { entry in
+                MinigolfResultsView(
+                    playerNames: entry.playerNames,
+                    numberOfHoles: entry.numberOfHoles,
+                    scores: entry.scores
+                )
+                .preferredColorScheme(.dark)
+            }
             .onAppear {
                 weather.fetch()
                 setupWatchSync()
+                loadMinigolfData()
             }
             .onChange(of: allCourses) { _, courses in
                 // Wenn Plätze sich ändern, Watch sofort aktualisieren
@@ -205,6 +154,325 @@ struct HomeView: View {
 
             // watchRound setzen → Banner erscheint (keine automatische Navigation)
             watchRound = round
+        }
+    }
+
+    // MARK: - Sektionen: Golf-Schwerpunkt
+
+    @ViewBuilder
+    private var golfSections: some View {
+        statsRow
+        weatherCard
+            .onTapGesture {
+                if weather.hasData { showWeatherForecast = true }
+            }
+        if let wr = watchRound, !wr.isComplete { watchRoundBanner(wr) }
+        if !completedRounds.isEmpty { trainingProgressCard }
+        if !incompleteRounds.isEmpty { activeRoundsCard }
+
+        Button { showNewRound = true } label: {
+            Label("Neue Runde spielen", systemImage: "plus.circle.fill")
+                .goldButton()
+        }
+        .padding(.horizontal)
+        .tutorialAnchor(.newRoundButton)
+
+        HStack(spacing: 12) {
+            NavigationLink {
+                PlatzreifeQuizView()
+            } label: {
+                Label("Platzreife lernen", systemImage: "graduationcap.fill")
+                    .greenButton()
+            }
+            NavigationLink {
+                HistoryView()
+            } label: {
+                Label("Verlauf", systemImage: "clock.fill")
+                    .greenButton()
+            }
+        }
+        .padding(.horizontal)
+    }
+
+    // MARK: - Sektionen: Minigolf-Schwerpunkt
+
+    @ViewBuilder
+    private var minigolfSections: some View {
+        minigolfStatsRow
+        weatherCard
+            .onTapGesture {
+                if weather.hasData { showWeatherForecast = true }
+            }
+        if let game = minigolfSaved { minigolfResumeCard(game) }
+
+        Button { showMinigolf = true } label: {
+            Label("Minigolf-Spiel starten", systemImage: "plus.circle.fill")
+                .goldButton()
+        }
+        .padding(.horizontal)
+        .tutorialAnchor(.newRoundButton)
+
+        if !minigolfHistory.isEmpty { minigolfHistoryCard }
+
+        // Laufende Golfrunden bleiben auch im Minigolf-Modus sichtbar
+        if let wr = watchRound, !wr.isComplete { watchRoundBanner(wr) }
+        if !incompleteRounds.isEmpty { activeRoundsCard }
+
+        HStack(spacing: 12) {
+            Button { showNewRound = true } label: {
+                Label("Golf-Runde", systemImage: "figure.golf")
+                    .greenButton()
+            }
+            .buttonStyle(.plain)
+            NavigationLink {
+                HistoryView()
+            } label: {
+                Label("Golf-Verlauf", systemImage: "clock.fill")
+                    .greenButton()
+            }
+        }
+        .padding(.horizontal)
+    }
+
+    // MARK: Minigolf – Statistik
+
+    private var minigolfStatsRow: some View {
+        HStack(spacing: 12) {
+            // Bester Schnitt pro Loch (Sieger-Score der jeweiligen Partie)
+            VStack(alignment: .leading, spacing: 6) {
+                Text("Bester Schnitt")
+                    .font(.caption)
+                    .foregroundStyle(AppTheme.textSec)
+                Text(bestMinigolfAverageDisplay)
+                    .font(.system(size: 32, weight: .bold, design: .rounded))
+                    .foregroundStyle(minigolfHistory.isEmpty ? AppTheme.textSec : AppTheme.text)
+                Text(minigolfHistory.isEmpty ? "Noch kein Spiel" : "Schläge pro Loch")
+                    .font(.caption2.bold())
+                    .foregroundStyle(minigolfHistory.isEmpty ? AppTheme.textTer : AppTheme.gold)
+            }
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .padding(18)
+            .cardStyle()
+
+            // Anzahl gespielter Partien
+            VStack(alignment: .leading, spacing: 6) {
+                Text("Partien")
+                    .font(.caption)
+                    .foregroundStyle(AppTheme.textSec)
+                Text(minigolfHistory.isEmpty ? "–" : "\(minigolfHistory.count)")
+                    .font(.system(size: 32, weight: .bold, design: .rounded))
+                    .foregroundStyle(minigolfHistory.isEmpty ? AppTheme.textSec : AppTheme.text)
+                if let last = minigolfHistory.first {
+                    Text(last.date.formatted(date: .abbreviated, time: .omitted))
+                        .font(.caption2.bold())
+                        .foregroundStyle(AppTheme.gold)
+                        .lineLimit(1)
+                } else {
+                    Text("Starte dein erstes Spiel")
+                        .font(.caption2)
+                        .foregroundStyle(AppTheme.textTer)
+                        .lineLimit(1)
+                }
+            }
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .padding(18)
+            .cardStyle()
+        }
+        .padding(.horizontal)
+    }
+
+    /// Bester (niedrigster) Schnitt pro Loch über alle gespeicherten Partien.
+    private var bestMinigolfAverageDisplay: String {
+        let averages: [Double] = minigolfHistory.compactMap { entry in
+            guard entry.numberOfHoles > 0 else { return nil }
+            guard let best = entry.scores.map({ $0.reduce(0, +) }).min(), best > 0 else { return nil }
+            return Double(best) / Double(entry.numberOfHoles)
+        }
+        guard let best = averages.min() else { return "–" }
+        return String(format: "%.1f", best)
+    }
+
+    // MARK: Minigolf – angefangenes Spiel
+
+    private func minigolfResumeCard(_ game: SavedMinigolfGame) -> some View {
+        VStack(alignment: .leading, spacing: 10) {
+            Label("Angefangenes Spiel", systemImage: "clock.arrow.circlepath")
+                .font(.subheadline.bold())
+                .foregroundStyle(AppTheme.text)
+
+            Text("\(game.playerNames.joined(separator: ", ")) · Loch \(game.currentHole + 1) von \(game.numberOfHoles)")
+                .font(.caption)
+                .foregroundStyle(AppTheme.textSec)
+                .fixedSize(horizontal: false, vertical: true)
+
+            HStack(spacing: 10) {
+                Button {
+                    resumeMinigolfConfig = MinigolfConfig(
+                        playerNames: game.playerNames,
+                        numberOfHoles: game.numberOfHoles,
+                        initialScores: game.scores,
+                        initialHole: game.currentHole,
+                        courseName: game.courseName
+                    )
+                } label: {
+                    Label("Fortsetzen", systemImage: "play.fill")
+                        .font(.subheadline.bold())
+                        .frame(maxWidth: .infinity)
+                        .padding(.vertical, 10)
+                        .background(AppTheme.gold, in: RoundedRectangle(cornerRadius: 10))
+                        .foregroundStyle(Color(red: 0.06, green: 0.14, blue: 0.08))
+                }
+                .buttonStyle(.plain)
+
+                Button {
+                    MinigolfGameStore.clear()
+                    withAnimation(.spring(response: 0.3)) { minigolfSaved = nil }
+                } label: {
+                    Label("Verwerfen", systemImage: "trash")
+                        .font(.subheadline.bold())
+                        .frame(maxWidth: .infinity)
+                        .padding(.vertical, 10)
+                        .background(Color.red.opacity(0.12), in: RoundedRectangle(cornerRadius: 10))
+                        .foregroundStyle(.red)
+                }
+                .buttonStyle(.plain)
+            }
+        }
+        .padding(18)
+        .cardStyle()
+        .padding(.horizontal)
+    }
+
+    // MARK: Minigolf – Verlauf
+
+    private var minigolfHistoryCard: some View {
+        VStack(alignment: .leading, spacing: 12) {
+            HStack {
+                Text("Letzte Partien")
+                    .font(.subheadline.bold())
+                    .foregroundStyle(AppTheme.textSec)
+                Spacer()
+                if minigolfHistory.count > 3 {
+                    Button { showMinigolf = true } label: {
+                        Text("Alle anzeigen")
+                            .font(.caption.bold())
+                            .foregroundStyle(AppTheme.gold)
+                    }
+                    .buttonStyle(.plain)
+                }
+            }
+
+            ForEach(minigolfHistory.prefix(3)) { entry in
+                Button { selectedMinigolfEntry = entry } label: {
+                    minigolfHistoryRow(entry)
+                }
+                .buttonStyle(.plain)
+            }
+        }
+        .padding(20)
+        .cardStyle()
+        .padding(.horizontal)
+    }
+
+    private func minigolfHistoryRow(_ entry: MinigolfHistoryEntry) -> some View {
+        let totals = entry.scores.map { $0.reduce(0, +) }
+        let winner = totals.indices.min(by: { totals[$0] < totals[$1] })
+        return HStack {
+            VStack(alignment: .leading, spacing: 3) {
+                Text(winner.map { "\(entry.playerNames[$0])" } ?? "Partie")
+                    .font(.subheadline.bold())
+                    .foregroundStyle(AppTheme.text)
+                    .lineLimit(1)
+                Text("\(entry.numberOfHoles) Löcher · \(entry.playerNames.count) Spieler")
+                    .font(.caption)
+                    .foregroundStyle(AppTheme.textSec)
+                    .lineLimit(1)
+                if let courseName = entry.courseName {
+                    Label(courseName, systemImage: "mappin.and.ellipse")
+                        .font(.caption2)
+                        .foregroundStyle(AppTheme.textSec)
+                        .lineLimit(1)
+                }
+            }
+            Spacer()
+            VStack(alignment: .trailing, spacing: 2) {
+                Text(winner.map { "\(totals[$0])" } ?? "–")
+                    .font(.headline.bold())
+                    .foregroundStyle(AppTheme.gold)
+                Text(entry.date.formatted(date: .abbreviated, time: .omitted))
+                    .font(.caption)
+                    .foregroundStyle(AppTheme.textSec)
+            }
+            Image(systemName: "chevron.right")
+                .font(.caption)
+                .foregroundStyle(AppTheme.textTer)
+        }
+        .padding(14)
+        .background(AppTheme.cardAlt, in: RoundedRectangle(cornerRadius: 12))
+    }
+
+    /// Minigolf-Stand aus den UserDefaults nachladen (beim Erscheinen und
+    /// nach dem Schließen eines Spiels).
+    private func loadMinigolfData() {
+        minigolfSaved = MinigolfGameStore.load()
+        minigolfHistory = MinigolfGameStore.loadHistory()
+    }
+
+    // MARK: Caddy
+
+    private var caddyButton: some View {
+        Button {
+            if subscriptionManager.isCaddySubscribed {
+                showAssistant = true
+            } else {
+                showCaddyPaywall = true
+            }
+        } label: {
+            HStack(spacing: 10) {
+                Image(systemName: "waveform.circle.fill")
+                    .font(.title3)
+                VStack(alignment: .leading, spacing: 1) {
+                    Text("Caddy – Golf-Assistent")
+                        .font(.subheadline.weight(.semibold))
+                    Text("Regeln, Tipps & Strategien")
+                        .font(.caption)
+                        .opacity(0.7)
+                }
+                Spacer()
+                Image(systemName: "chevron.right")
+                    .font(.caption.weight(.semibold))
+                    .opacity(0.5)
+            }
+            .foregroundStyle(.white)
+            .padding(.horizontal, 20)
+            .padding(.vertical, 14)
+            .background(
+                RoundedRectangle(cornerRadius: 16)
+                    .fill(
+                        LinearGradient(
+                            colors: [
+                                Color(red: 0.12, green: 0.30, blue: 0.12),
+                                Color(red: 0.08, green: 0.20, blue: 0.08)
+                            ],
+                            startPoint: .topLeading,
+                            endPoint: .bottomTrailing
+                        )
+                    )
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 16)
+                            .stroke(AppTheme.gold.opacity(0.35), lineWidth: 1)
+                    )
+            )
+        }
+        .padding(.horizontal)
+        .sheet(isPresented: $showAssistant) {
+            GolfAssistantView()
+                .presentationDetents([.large])
+                .presentationDragIndicator(.visible)
+        }
+        .sheet(isPresented: $showCaddyPaywall) {
+            CaddyPaywallView()
+                .environmentObject(subscriptionManager)
         }
     }
 
@@ -466,7 +734,10 @@ struct HomeView: View {
         }
     }
 
-    private func weatherDetail(icon: String, label: String, value: String) -> some View {
+    // label als LocalizedStringKey, nicht als String: bei String wird das Literal
+    // unverändert durchgereicht und bleibt in jeder Sprache deutsch, obwohl die
+    // Übersetzung im String-Katalog liegt.
+    private func weatherDetail(icon: String, label: LocalizedStringKey, value: String) -> some View {
         HStack(spacing: 6) {
             Image(systemName: icon)
                 .font(.caption)

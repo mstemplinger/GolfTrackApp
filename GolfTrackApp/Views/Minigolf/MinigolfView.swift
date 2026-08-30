@@ -10,6 +10,8 @@ struct MinigolfConfig: Identifiable, Hashable {
     let numberOfHoles: Int
     var initialScores: [[Int]]? = nil
     var initialHole: Int = 0
+    /// Anlage, an der gespielt wird (per QR-Code gestartet) – sonst `nil`.
+    var courseName: String? = nil
 }
 
 // MARK: - Persistence
@@ -20,6 +22,7 @@ struct SavedMinigolfGame: Codable {
     var scores: [[Int]]
     var currentHole: Int
     var savedAt: Date? = nil
+    var courseName: String? = nil
 }
 
 struct MinigolfHistoryEntry: Codable, Identifiable {
@@ -28,6 +31,7 @@ struct MinigolfHistoryEntry: Codable, Identifiable {
     var playerNames: [String]
     var numberOfHoles: Int
     var scores: [[Int]]
+    var courseName: String? = nil
 }
 
 enum MinigolfGameStore {
@@ -82,6 +86,11 @@ enum MinigolfGameStore {
 enum MinigolfTab { case spiel, tools }
 
 struct MinigolfView: View {
+    /// Wird die View modal präsentiert (z.B. von der Startseite), braucht sie
+    /// einen eigenen Schließen-Button – beim Push in einen NavigationStack nicht.
+    var showsCloseButton: Bool = false
+
+    @Environment(\.dismiss) private var dismiss
     @State private var rawNames: [String] = ["", ""]
     @State private var numberOfHoles: Int = 9
     @State private var activeConfig: MinigolfConfig?
@@ -90,7 +99,11 @@ struct MinigolfView: View {
     @State private var savedGame: SavedMinigolfGame?
     @State private var history: [MinigolfHistoryEntry] = []
     @State private var selectedHistoryEntry: MinigolfHistoryEntry?
+    /// Anlage, deren Start-Flow gerade gezeigt wird (Liste oder QR-Scan)
+    @State private var startingCourse: MinigolfCourseEntry?
     @ObservedObject private var wc = WatchConnectivityManager.shared
+    /// Anlagen von golftrack.app zusätzlich zu den eingebauten
+    private let catalog = CourseCatalogService.shared
 
     var body: some View {
         NavigationStack {
@@ -113,6 +126,7 @@ struct MinigolfView: View {
                             if savedGame != nil {
                                 resumeCard
                             }
+                            coursesCard
                             holesCard
                             playersCard
 
@@ -141,6 +155,14 @@ struct MinigolfView: View {
             }
             .appBackground()
             .navigationTitle("Minigolf & Putten")
+            .toolbar {
+                if showsCloseButton {
+                    ToolbarItem(placement: .topBarLeading) {
+                        Button("Fertig") { dismiss() }
+                            .foregroundStyle(AppTheme.gold)
+                    }
+                }
+            }
             .navigationDestination(item: $activeConfig) { config in
                 MinigolfScoringView(config: config)
             }
@@ -150,6 +172,9 @@ struct MinigolfView: View {
                 }
                 savedGame = MinigolfGameStore.load()
                 history = MinigolfGameStore.loadHistory()
+            }
+            .task {
+                await catalog.refreshIfNeeded()
             }
             .onChange(of: activeConfig) { _, newValue in
                 // Returning from a running game — pick up the persisted state
@@ -170,6 +195,10 @@ struct MinigolfView: View {
                     initialHole: s.currentHole
                 )
             }
+            .fullScreenCover(item: $startingCourse, onDismiss: reloadStoredGames) { course in
+                MinigolfCourseStartView(course: course)
+                    .preferredColorScheme(.dark)
+            }
             .sheet(item: $selectedHistoryEntry) { entry in
                 MinigolfResultsView(
                     playerNames: entry.playerNames,
@@ -178,6 +207,60 @@ struct MinigolfView: View {
                 )
             }
         }
+    }
+
+    // MARK: Anlagen (QR-Code-Start)
+
+    /// Minigolfanlagen, für die es einen QR-Code am Eingang gibt. Der Tipp auf
+    /// die Zeile führt in denselben Ablauf wie der Scan. Die Codes zum
+    /// Aushängen gibt es auf golftrack.app, nicht in der App.
+    private var coursesCard: some View {
+        VStack(alignment: .leading, spacing: 12) {
+            Label("Minigolfplätze", systemImage: "mappin.and.ellipse")
+                .font(.headline)
+
+            Text("Vor Ort einfach den QR-Code scannen – Begrüßung, kurze Einführung, los.")
+                .font(.caption)
+                .foregroundStyle(.secondary)
+
+            VStack(spacing: 8) {
+                ForEach(catalog.allMinigolfCourses) { course in
+                    Button { startingCourse = course } label: {
+                        courseRow(course)
+                    }
+                    .buttonStyle(.plain)
+                }
+            }
+        }
+        .padding()
+        .background(AppTheme.card, in: RoundedRectangle(cornerRadius: 16))
+    }
+
+    private func courseRow(_ course: MinigolfCourseEntry) -> some View {
+        HStack(spacing: 10) {
+            VStack(alignment: .leading, spacing: 3) {
+                Text(course.name)
+                    .font(.subheadline.bold())
+                Text("\(course.location) · \(course.holes) Bahnen")
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
+                    .lineLimit(1)
+            }
+            Spacer(minLength: 0)
+            Image(systemName: "chevron.right")
+                .font(.caption.bold())
+                .foregroundStyle(.secondary)
+        }
+        .padding(.horizontal, 12)
+        .padding(.vertical, 10)
+        .background(AppTheme.cardAlt, in: RoundedRectangle(cornerRadius: 10))
+        .contentShape(Rectangle())
+    }
+
+    /// Nach einem Start über die Anlagen-Liste den gespeicherten Stand neu laden.
+    private func reloadStoredGames() {
+        savedGame = MinigolfGameStore.load()
+        history = MinigolfGameStore.loadHistory()
     }
 
     // MARK: History card
@@ -235,6 +318,12 @@ struct MinigolfView: View {
                     .font(.caption)
                     .foregroundStyle(.secondary)
                     .lineLimit(1)
+                if let courseName = entry.courseName {
+                    Label(courseName, systemImage: "mappin.and.ellipse")
+                        .font(.caption2)
+                        .foregroundStyle(.secondary)
+                        .lineLimit(1)
+                }
                 Text(entry.date.formatted(date: .abbreviated, time: .shortened) + " Uhr")
                     .font(.caption2)
                     .foregroundStyle(.secondary)
@@ -273,7 +362,8 @@ struct MinigolfView: View {
                             playerNames: game.playerNames,
                             numberOfHoles: game.numberOfHoles,
                             initialScores: game.scores,
-                            initialHole: game.currentHole
+                            initialHole: game.currentHole,
+                            courseName: game.courseName
                         )
                     } label: {
                         Label("Fortsetzen", systemImage: "play.fill")
@@ -571,7 +661,8 @@ struct MinigolfScoringView: View {
             numberOfHoles: holeCount,
             scores: scores,
             currentHole: currentHole,
-            savedAt: Date()
+            savedAt: Date(),
+            courseName: config.courseName
         ))
     }
 
@@ -580,7 +671,8 @@ struct MinigolfScoringView: View {
             date: Date(),
             playerNames: config.playerNames,
             numberOfHoles: holeCount,
-            scores: scores
+            scores: scores,
+            courseName: config.courseName
         ))
         MinigolfGameStore.clear()
         wc.sendMinigolfState(currentState(active: false))

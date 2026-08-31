@@ -1,0 +1,314 @@
+@import "tailwindcss";
+
+/*
+  Bildwelt: Clubhaus nach Sonnenuntergang.
+  Tiefes Nachtgrün, Messing als einziger Akzent, und dort wo Zahlen stehen
+  das Papier einer gedruckten Scorekarte.
+*/
+@theme {
+  --color-night: #08180f;
+  --color-moss: #0e2718;
+  --color-moss-2: #163421;
+  --color-moss-3: #1c4129;
+  --color-fairway: #28824b;
+  --color-brass: #c9a035;
+  --color-brass-soft: #e0c583;
+  --color-paper: #f4efe2;
+  --color-paper-2: #e8e0cd;
+  --color-ink: #17251c;
+  --color-cream: #f2ede3;
+  --color-muted: #a9bcae;
+
+  --font-display: var(--font-fraunces), "Iowan Old Style", Georgia, serif;
+  --font-sans: var(--font-instrument), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-dm-mono), ui-monospace, "SF Mono", monospace;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background-color: var(--color-night);
+    color: var(--color-cream);
+    font-family: var(--font-sans);
+    font-synthesis-weight: none;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  ::selection {
+    background: var(--color-brass);
+    color: var(--color-night);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-brass);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+}
+
+@layer components {
+  /* Feiner Filmkorn-Schleier über der ganzen Seite. */
+  .grain::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: 60;
+    pointer-events: none;
+    opacity: 0.045;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  /* Lichtschein wie eine Flutlichtstange hinter dem Inhalt. */
+  .glow {
+    background-image:
+      radial-gradient(120% 80% at 50% -10%, rgba(40, 130, 75, 0.28) 0%, transparent 62%),
+      radial-gradient(60% 50% at 85% 8%, rgba(201, 160, 53, 0.14) 0%, transparent 70%);
+  }
+
+  .rule {
+    border-color: color-mix(in srgb, var(--color-brass) 26%, transparent);
+  }
+
+  /*
+    Gerätrahmen für die Bildschirmfotos aus dem Simulator.
+    Die Aufnahmen bringen Statusleiste und Dynamic Island schon mit,
+    der Rahmen ist deshalb nur eine Kante – keine gezeichnete Attrappe.
+  */
+  .phone {
+    position: relative;
+    display: block;
+    border-radius: 2.4rem;
+    padding: 0.4rem;
+    background: linear-gradient(155deg, rgba(242, 237, 227, 0.34), rgba(242, 237, 227, 0.05) 42%, rgba(0, 0, 0, 0.4));
+    box-shadow:
+      0 0 0 1px rgba(0, 0, 0, 0.5),
+      0 34px 70px -28px rgba(0, 0, 0, 0.85);
+  }
+  .phone > img {
+    display: block;
+    width: 100%;
+    height: auto;
+    border-radius: 2.05rem;
+  }
+
+  /* Apple Watch: Gehäuse mit Krone rechts. Der Screenshot ist nur der Schirm. */
+  .watch {
+    position: relative;
+    display: block;
+    width: 100%;
+    border-radius: 30% / 25%;
+    padding: 0.55rem;
+    background: linear-gradient(155deg, rgba(242, 237, 227, 0.3), rgba(242, 237, 227, 0.04) 45%, rgba(0, 0, 0, 0.45));
+    box-shadow:
+      0 0 0 1px rgba(0, 0, 0, 0.5),
+      0 26px 54px -24px rgba(0, 0, 0, 0.85);
+  }
+  .watch > img {
+    display: block;
+    width: 100%;
+    height: auto;
+    border-radius: 27% / 22%;
+    background: #000;
+  }
+  .watch::after {
+    content: "";
+    position: absolute;
+    right: -0.28rem;
+    top: 32%;
+    width: 0.34rem;
+    height: 14%;
+    border-radius: 0.2rem;
+    background: linear-gradient(90deg, rgba(242, 237, 227, 0.45), rgba(201, 160, 53, 0.55));
+  }
+
+  /*
+    Trefferfläche. 44 px sind Pflicht, auch für gestapelte Verweise im Fuß
+    und im Menü – gemessen wird, nicht geschätzt.
+  */
+  .tap {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+  }
+
+  summary {
+    list-style: none;
+  }
+  summary::-webkit-details-marker {
+    display: none;
+  }
+
+
+  /* Papier einer gedruckten Scorekarte. */
+  .paper {
+    background-color: var(--color-paper);
+    background-image:
+      linear-gradient(rgba(23, 37, 28, 0.045) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(23, 37, 28, 0.045) 1px, transparent 1px);
+    background-size: 100% 2.25rem, 3.5rem 100%;
+    color: var(--color-ink);
+    box-shadow:
+      0 1px 0 rgba(255, 255, 255, 0.5) inset,
+      0 24px 60px -24px rgba(0, 0, 0, 0.75);
+  }
+
+  .field {
+    width: 100%;
+    /* 44 px, damit sich das Formular am Handy bedienen lässt. */
+    min-height: 44px;
+    background: rgba(255, 255, 255, 0.62);
+    border: 1px solid rgba(23, 37, 28, 0.22);
+    border-radius: 3px;
+    padding: 0.6rem 0.7rem;
+    font-family: var(--font-sans);
+    font-size: 0.95rem;
+    color: var(--color-ink);
+    transition: border-color 0.15s ease, background 0.15s ease;
+  }
+  /*
+    Ausnahme für die Lochtabelle: 18 Zeilen mal 44 px wären anderthalb
+    Bildschirme nur für Zahlenfelder. 36 px liegen über der harten Grenze
+    von 24 px aus WCAG 2.2 AA und bleiben mit dem Daumen treffbar.
+  */
+  .field--tight {
+    min-height: 36px;
+  }
+  .field::placeholder {
+    color: rgba(23, 37, 28, 0.38);
+  }
+  .field:hover {
+    border-color: rgba(23, 37, 28, 0.4);
+  }
+  .field:focus {
+    background: #fff;
+    border-color: var(--color-fairway);
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(40, 130, 75, 0.16);
+  }
+  .field[aria-invalid="true"] {
+    border-color: #a6321f;
+    box-shadow: 0 0 0 3px rgba(166, 50, 31, 0.12);
+  }
+
+  .label {
+    display: block;
+    font-size: 0.72rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    font-weight: 600;
+    color: rgba(23, 37, 28, 0.62);
+    margin-bottom: 0.35rem;
+  }
+
+  /* Messingschild-Knopf. */
+  .btn-brass {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.55rem;
+    background: linear-gradient(180deg, var(--color-brass-soft), var(--color-brass));
+    color: #241a04;
+    font-weight: 600;
+    letter-spacing: 0.01em;
+    padding: 0.8rem 1.4rem;
+    border-radius: 999px;
+    box-shadow: 0 10px 30px -12px rgba(201, 160, 53, 0.7);
+    transition: transform 0.18s cubic-bezier(0.2, 0.8, 0.3, 1), box-shadow 0.18s ease;
+  }
+  .btn-brass:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 16px 36px -12px rgba(201, 160, 53, 0.85);
+  }
+  .btn-brass:active {
+    transform: translateY(0);
+  }
+  .btn-brass:disabled {
+    opacity: 0.55;
+    transform: none;
+    cursor: not-allowed;
+  }
+
+  .btn-ghost {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.78rem 1.3rem;
+    border-radius: 999px;
+    border: 1px solid color-mix(in srgb, var(--color-brass) 40%, transparent);
+    color: var(--color-cream);
+    transition: background 0.18s ease, border-color 0.18s ease;
+  }
+  .btn-ghost:hover {
+    background: rgba(201, 160, 53, 0.1);
+    border-color: var(--color-brass);
+  }
+
+  /* Marginalie: "01 / Scorekarte" am linken Rand eines Abschnitts. */
+  .marginal {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: color-mix(in srgb, var(--color-brass) 78%, transparent);
+  }
+}
+
+@layer utilities {
+  .reveal {
+    animation: reveal 0.85s cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+
+  @keyframes reveal {
+    from {
+      opacity: 0;
+      transform: translateY(18px);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .reveal {
+      animation: none;
+    }
+    html {
+      scroll-behavior: auto;
+    }
+    *,
+    *::before,
+    *::after {
+      transition-duration: 0.01ms !important;
+    }
+  }
+}
+
+@layer components {
+  /* Rechtstexte: ruhige Spalte, klare Zwischenüberschriften. */
+  .legal-prose h2 {
+    font-family: var(--font-display);
+    font-size: 1.25rem;
+    letter-spacing: -0.01em;
+    margin-top: 2.5rem;
+    margin-bottom: 0.75rem;
+    color: var(--color-brass-soft);
+  }
+  .legal-prose h2:first-child {
+    margin-top: 0;
+  }
+  .legal-prose p {
+    margin-bottom: 1rem;
+    line-height: 1.75;
+    color: color-mix(in srgb, var(--color-cream) 72%, transparent);
+  }
+  .legal-prose a {
+    color: var(--color-brass);
+    text-decoration: underline;
+    text-underline-offset: 4px;
+  }
+}

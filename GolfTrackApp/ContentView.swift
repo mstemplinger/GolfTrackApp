@@ -7,6 +7,7 @@ extension Notification.Name {
 
 struct ContentView: View {
 
+    @Environment(\.modelContext) private var modelContext
     @AppStorage("hasSeenOnboarding") private var hasSeenOnboarding = false
     @AppStorage(AppFocus.chosenKey)  private var hasChosenAppFocus = false
     @AppStorage(AppFocus.storageKey) private var appFocus: AppFocus = .golf
@@ -19,6 +20,8 @@ struct ContentView: View {
     @State private var deepLinkLoading = false
     /// Text der Meldung, wenn ein gescannter Code zu keiner Anlage führt.
     @State private var deepLinkFehler: String?
+    /// Wie viele im App Clip gezählte Runden gerade übernommen wurden.
+    @State private var importedClipRounds = 0
 
     private var isMinigolfFocus: Bool { appFocus == .minigolf }
 
@@ -69,6 +72,24 @@ struct ContentView: View {
         // ZStack bekommt den coordinateSpace – gleich für Overlay und Tab-Inhalte
         .coordinateSpace(name: "screen")
         .onAppear(perform: migrateExistingInstall)
+        // Runden aus dem App Clip einsammeln. Muss nach dem Start laufen, weil
+        // erst dann ein Datenkontext bereitsteht; der Katalog wird abgewartet,
+        // damit der Platz vollständig angelegt wird statt als Notnagel.
+        .task {
+            await CourseCatalogService.shared.refreshIfNeeded()
+            let count = ClipRoundImporter.importPendingRounds(into: modelContext)
+            if count > 0 { importedClipRounds = count }
+        }
+        .alert("Runde übernommen", isPresented: Binding(
+            get: { importedClipRounds > 0 },
+            set: { if !$0 { importedClipRounds = 0 } }
+        )) {
+            Button("Gut") { importedClipRounds = 0 }
+        } message: {
+            Text(importedClipRounds == 1
+                 ? "Deine Runde aus dem App Clip steht jetzt in der App."
+                 : "\(importedClipRounds) Runden aus dem App Clip stehen jetzt in der App.")
+        }
         .onOpenURL { url in
             Task { await handleDeepLink(url) }
         }

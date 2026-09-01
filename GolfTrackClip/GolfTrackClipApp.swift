@@ -1,4 +1,5 @@
 import SwiftUI
+import StoreKit
 
 /// Der App Clip: eine Minigolfrunde, ohne dass jemand etwas installieren muss.
 ///
@@ -43,6 +44,12 @@ struct GolfTrackClipApp: App {
                 if let url = activity.webpageURL { open(url) }
             }
             .onOpenURL { url in open(url) }
+            // Am Ende der Runde die volle App vorschlagen – Apples eigener
+            // Weg dafür. Bewusst erst dann und nicht beim Start: Wer gerade
+            // erst gescannt hat, will spielen, nicht installieren.
+            .onReceive(NotificationCenter.default.publisher(for: .minigolfRoundFinished)) { _ in
+                recommendFullApp()
+            }
             .task {
                 #if DEBUG
                 // Ohne echten Scan gibt es keinen Universal Link. Xcode und der
@@ -56,6 +63,20 @@ struct GolfTrackClipApp: App {
                 #endif
             }
         }
+    }
+
+    /// Blendet die App-Store-Karte für die volle App ein.
+    ///
+    /// `SKOverlay` ist im App Clip der vorgesehene Weg; ein selbstgebauter
+    /// Knopf mit App-Store-Link wäre gegen die Richtlinien und würde den
+    /// Zustand des Clips nicht mitnehmen. Der gespielte Stand liegt bereits
+    /// in der gemeinsamen App-Gruppe und steht nach dem Installieren da.
+    private func recommendFullApp() {
+        guard let scene = UIApplication.shared.connectedScenes
+            .compactMap({ $0 as? UIWindowScene })
+            .first(where: { $0.activationState == .foregroundActive }) else { return }
+        let config = SKOverlay.AppClipConfiguration(position: .bottom)
+        SKOverlay(configuration: config).present(in: scene)
     }
 
     private func open(_ url: URL) {

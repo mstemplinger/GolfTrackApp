@@ -69,6 +69,9 @@ struct MinigolfScoringView: View {
 
                     #if !APPCLIP
                     MinigolfAdSlotView(courseID: config.courseID, rotation: currentHole)
+                    // Statt der Werbefläche: Wer das Trainings-Abo hat, findet
+                    // hier die Putt-Audios.
+                    PuttTrainingCard(compact: true)
                     #endif
                 }
                 .padding()
@@ -180,6 +183,9 @@ struct MinigolfScoringView: View {
             challenges: challenges
         ))
         MinigolfGameStore.clear()
+        // Der Clip hängt hieran seinen Hinweis auf die volle App; in der App
+        // hört niemand zu.
+        NotificationCenter.default.post(name: .minigolfRoundFinished, object: nil)
         #if !APPCLIP
         wc.sendMinigolfState(currentState(active: false))
         #endif

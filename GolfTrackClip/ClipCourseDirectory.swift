@@ -1,24 +1,36 @@
 import Foundation
 
-/// Anlagen nachschlagen, die nicht im Programm stecken.
+/// Plätze nachschlagen, die nicht im Programm stecken.
 ///
-/// Eine eigene, kleine Fassung statt `CourseCatalogService`: der zieht die
-/// Golfplatz-Datenbank mit, und der Clip darf entpackt nur 15 MB groß sein.
-/// Hier wird genau eine Anlage gesucht, ohne Cache – der Clip lebt ohnehin nur
+/// Eine eigene, kleine Fassung statt `CourseCatalogService`: der bringt den
+/// gesamten Platzkatalog mit, und der Clip darf entpackt nur 15 MB groß sein.
+/// Hier wird genau ein Platz gesucht, ohne Cache – der Clip lebt ohnehin nur
 /// für diese eine Runde.
+///
+/// Golfplätze stecken **nie** im Programm: 97 Stück mit Par-, HCP- und
+/// Längenwerten wären zu viel für den Clip. Sie kommen immer von hier.
 enum ClipCourseDirectory {
 
-    private static let feedURL = URL(string: "https://golftrack.app/api/v1/courses?kind=minigolf")!
+    private static func feedURL(kind: CourseLinkKind) -> URL {
+        URL(string: "https://golftrack.app/api/v1/courses?kind=\(kind.rawValue)")!
+    }
 
-    static func course(id: String) async -> MinigolfCourseEntry? {
-        var request = URLRequest(url: feedURL)
+    private static func fetch(kind: CourseLinkKind) async -> [Course] {
+        var request = URLRequest(url: feedURL(kind: kind))
         request.timeoutInterval = 12
 
         guard let (data, response) = try? await URLSession.shared.data(for: request),
               let http = response as? HTTPURLResponse, (200..<300).contains(http.statusCode),
-              let feed = try? JSONDecoder().decode(Feed.self, from: data) else { return nil }
+              let feed = try? JSONDecoder().decode(Feed.self, from: data) else { return [] }
+        return feed.courses
+    }
 
-        return feed.courses.first { $0.id == id }?.entry
+    static func minigolfCourse(id: String) async -> MinigolfCourseEntry? {
+        await fetch(kind: .minigolf).first { $0.id == id }?.minigolfEntry
+    }
+
+    static func golfCourse(id: String) async -> GolfLiteCourse? {
+        await fetch(kind: .golf).first { $0.id == id }?.golfEntry
     }
 
     // MARK: – Format der API
@@ -37,8 +49,11 @@ enum ClipCourseDirectory {
         let lon: Double?
         let welcome: String
         let facilityNotes: String
+        /// Leer, wenn im Verzeichnis nicht für jedes Loch ein Par steht – die
+        /// API liefert bewusst lieber nichts als eine halbe Reihe.
+        let parValues: [Int]
 
-        var entry: MinigolfCourseEntry {
+        var minigolfEntry: MinigolfCourseEntry {
             MinigolfCourseEntry(
                 id: id,
                 name: name,
@@ -50,6 +65,16 @@ enum ClipCourseDirectory {
                     ? "Willkommen! Ab jetzt zählen wir für dich mit – Bahn für Bahn."
                     : welcome,
                 notes: facilityNotes
+            )
+        }
+
+        var golfEntry: GolfLiteCourse {
+            GolfLiteCourse(
+                id: id,
+                name: name,
+                location: location,
+                holes: holes,
+                parValues: parValues.count == holes ? parValues : []
             )
         }
     }

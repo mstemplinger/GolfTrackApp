@@ -1,5 +1,6 @@
 /**
- * Universal Links und App Clip für die Minigolf-QR-Codes.
+ * Universal Links und App Clip für die QR-Codes an den Plätzen – Golf wie
+ * Minigolf.
  * Muss ohne Dateiendung und als `application/json` ausgeliefert werden –
  * genau dafür dieser Route Handler.
  */
@@ -27,6 +28,7 @@ export async function GET() {
           appIDs: [APP_ID],
           components: [
             { "/": "/minigolf/*", comment: "Startet eine Minigolfrunde an dieser Anlage" },
+            { "/": "/golf/*", comment: "Startet eine Runde auf diesem Golfplatz" },
           ],
         },
       ],

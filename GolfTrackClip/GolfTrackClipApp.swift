@@ -14,7 +14,8 @@ import StoreKit
 @main
 struct GolfTrackClipApp: App {
 
-    @State private var course: MinigolfCourseEntry?
+    @State private var minigolfCourse: MinigolfCourseEntry?
+    @State private var golfCourse: GolfLiteCourse?
     @State private var status: Status = .waiting
 
     enum Status: Equatable {
@@ -31,8 +32,10 @@ struct GolfTrackClipApp: App {
     var body: some Scene {
         WindowGroup {
             Group {
-                if let course {
-                    MinigolfCourseStartView(course: course)
+                if let minigolfCourse {
+                    MinigolfCourseStartView(course: minigolfCourse)
+                } else if let golfCourse {
+                    GolfLiteStartView(course: golfCourse)
                 } else {
                     ClipPlaceholderView(status: status)
                 }
@@ -55,7 +58,7 @@ struct GolfTrackClipApp: App {
                 // Ohne echten Scan gibt es keinen Universal Link. Xcode und der
                 // Simulator reichen die Testadresse als `_XCAppClipURL` durch –
                 // nur so lässt sich der Ablauf hier überhaupt durchspielen.
-                if course == nil,
+                if minigolfCourse == nil, golfCourse == nil,
                    let raw = ProcessInfo.processInfo.environment["_XCAppClipURL"],
                    let url = URL(string: raw) {
                     open(url)
@@ -80,28 +83,41 @@ struct GolfTrackClipApp: App {
     }
 
     private func open(_ url: URL) {
-        guard let id = MinigolfDeepLink.courseID(from: url) else {
-            status = .failed("Dieser Code gehört zu keiner Minigolfanlage.")
+        guard let link = CourseDeepLink.link(from: url) else {
+            status = .failed("Dieser Code gehört zu keinem Platz von GolfTrack.")
             return
         }
 
-        // Eingebaute Anlagen kennt der Clip sofort – das ist der Normalfall
-        // und funktioniert auch ohne Empfang.
-        if let known = MinigolfCourses.course(id: id) {
-            course = known
-            status = .ready
-            return
-        }
-
-        // Sonst beim Verzeichnis nachfragen: Anlagen, die über golftrack.app
-        // dazugekommen sind, stecken nicht im Programm.
-        status = .loading
-        Task {
-            if let fetched = await ClipCourseDirectory.course(id: id) {
-                course = fetched
+        switch link.kind {
+        case .minigolf:
+            // Eingebaute Anlagen kennt der Clip sofort – das ist der Normalfall
+            // und funktioniert auch ohne Empfang.
+            if let known = MinigolfCourses.course(id: link.slug) {
+                minigolfCourse = known
                 status = .ready
-            } else {
-                status = .failed("Diese Anlage kennen wir noch nicht. Bitte sag an der Kasse Bescheid.")
+                return
+            }
+            status = .loading
+            Task {
+                if let fetched = await ClipCourseDirectory.minigolfCourse(id: link.slug) {
+                    minigolfCourse = fetched
+                    status = .ready
+                } else {
+                    status = .failed("Diese Anlage kennen wir noch nicht. Bitte sag an der Kasse Bescheid.")
+                }
+            }
+
+        case .golf:
+            // Golfplätze stecken nie im Programm, dafür sind es zu viele.
+            // Ohne Empfang geht hier nichts – das sagt die Meldung auch.
+            status = .loading
+            Task {
+                if let fetched = await ClipCourseDirectory.golfCourse(id: link.slug) {
+                    golfCourse = fetched
+                    status = .ready
+                } else {
+                    status = .failed("Der Platz ließ sich nicht laden. Prüf die Verbindung und scanne noch einmal.")
+                }
             }
         }
     }
@@ -120,9 +136,9 @@ private struct ClipPlaceholderView: View {
 
             switch status {
             case .waiting, .ready:
-                Text("Minigolf mit GolfTrack")
+                Text("Runde starten mit GolfTrack")
                     .font(.title2.bold())
-                Text("Scanne den QR-Code an der Anlage, dann zählen wir für dich mit.")
+                Text("Scanne den QR-Code am Platz, dann zählen wir für dich mit.")
                     .font(.subheadline)
                     .foregroundStyle(.secondary)
                     .multilineTextAlignment(.center)

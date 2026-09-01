@@ -29,68 +29,6 @@
         }
       }
     },
-    "%@ · %lld Bahnen" : {
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "%1$@ · %2$lld Bahnen"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "%1$@ · %2$lld holes"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "%1$@ · %2$lld pistas"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "%1$@ · %2$lld pistes"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "%1$@ · %2$lld piste"
-          }
-        }
-      }
-    },
-    "%lld Bahnen" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "%lld holes"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "%lld pistas"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "%lld pistes"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "%lld piste"
-          }
-        }
-      }
-    },
     "-" : {
       "localizations" : {
         "en" : {
@@ -115,454 +53,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "-"
-          }
-        }
-      }
-    },
-    "Bahn für Bahn" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Hole by hole"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Pista a pista"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Piste après piste"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Pista dopo pista"
-          }
-        }
-      }
-    },
-    "Drei Sätze, wie das Zählen in der App funktioniert – oder direkt loslegen." : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Three sentences on how counting works in the app – or start right away."
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Tres frases sobre cómo se cuenta en la app, o empieza directamente."
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Trois phrases sur le comptage dans l'app – ou commence tout de suite."
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Tre frasi su come si conta nell'app, oppure inizia subito."
-          }
-        }
-      }
-    },
-    "Ja, kurz zeigen" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Yes, show me"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Sí, muéstramelo"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Oui, montre-moi"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Sì, mostrami"
-          }
-        }
-      }
-    },
-    "Jeder Spieler hat eine eigene Zeile. Nach jedem Schlag auf + tippen – verzählt? Das Minus korrigiert." : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Every player has their own row. Tap + after each stroke – miscounted? The minus fixes it."
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Cada jugador tiene su propia fila. Toca + después de cada golpe. ¿Te has equivocado? El menos lo corrige."
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Chaque joueur a sa propre ligne. Touche + après chaque coup – erreur de comptage ? Le moins corrige."
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Ogni giocatore ha la sua riga. Tocca + dopo ogni colpo – hai sbagliato a contare? Il meno corregge."
-          }
-        }
-      }
-    },
-    "Kurz erklärt?" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "A quick intro?"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "¿Te lo explicamos?"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Petite explication ?"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Ti spieghiamo?"
-          }
-        }
-      }
-    },
-    "Minigolfplätze" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Minigolf courses"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Campos de minigolf"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Parcours de minigolf"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Campi di minigolf"
-          }
-        }
-      }
-    },
-    "Namen sind optional – leer lassen geht auch." : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Names are optional – leaving them empty works too."
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Los nombres son opcionales: puedes dejarlos vacíos."
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Les noms sont facultatifs – tu peux les laisser vides."
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "I nomi sono facoltativi: puoi lasciarli vuoti."
-          }
-        }
-      }
-    },
-    "Nein, direkt starten" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "No, start now"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "No, empezar ya"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Non, commencer"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "No, inizia subito"
-          }
-        }
-      }
-    },
-    "Oben rechts siehst du jederzeit die Tabelle. Nach der letzten Bahn steht der Sieger fest." : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "The standings are available at the top right at any time. After the last hole the winner is decided."
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Arriba a la derecha ves la clasificación en cualquier momento. Tras la última pista se decide el ganador."
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "En haut à droite, le classement est visible à tout moment. Après la dernière piste, le vainqueur est désigné."
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "In alto a destra vedi sempre la classifica. Dopo l'ultima pista è deciso il vincitore."
-          }
-        }
-      }
-    },
-    "Runde starten · %lld Bahnen" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Start Round · %lld holes"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Empezar partida · %lld pistas"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Démarrer la partie · %lld pistes"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Inizia partita · %lld piste"
-          }
-        }
-      }
-    },
-    "Schläge zählen" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Counting strokes"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Contar golpes"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Compter les coups"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Contare i colpi"
-          }
-        }
-      }
-    },
-    "Unten auf „Weiter“ geht es zur nächsten Bahn. Der Stand wird automatisch gesichert, auch wenn du das Handy weglegst." : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "“Continue” at the bottom takes you to the next hole. The score is saved automatically, even if you put the phone away."
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Con «Continuar» abajo pasas a la siguiente pista. El marcador se guarda automáticamente, aunque dejes el móvil."
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "En bas, « Continuer » mène à la piste suivante. Le score est enregistré automatiquement, même si tu poses le téléphone."
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "In basso «Avanti» porta alla pista successiva. Il punteggio viene salvato automaticamente, anche se posi il telefono."
-          }
-        }
-      }
-    },
-    "Verstanden" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Got it"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Entendido"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Compris"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Capito"
-          }
-        }
-      }
-    },
-    "Vor Ort einfach den QR-Code scannen – Begrüßung, kurze Einführung, los." : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "On site simply scan the QR code – greeting, short intro, off you go."
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "En el lugar solo hay que escanear el código QR: bienvenida, breve introducción y a jugar."
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Sur place, scanne simplement le code QR : accueil, courte intro, c'est parti."
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Sul posto basta scansionare il codice QR: benvenuto, breve introduzione e via."
-          }
-        }
-      }
-    },
-    "Wer spielt mit?" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Who's playing?"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "¿Quién juega?"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Qui joue ?"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Chi gioca?"
-          }
-        }
-      }
-    },
-    "Willkommen!" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Welcome!"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "¡Bienvenido!"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Bienvenue !"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Benvenuto!"
           }
         }
       }
@@ -999,6 +489,40 @@
         }
       }
     },
+    "%@ · %lld Bahnen" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@ · %2$lld Bahnen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@ · %2$lld holes"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@ · %2$lld pistas"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@ · %2$lld pistes"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@ · %2$lld piste"
+          }
+        }
+      }
+    },
     "%@ · %lld Löcher" : {
       "localizations" : {
         "de" : {
@@ -1135,6 +659,74 @@
         }
       }
     },
+    "%@ Fairways" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ Fairways"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ Fairways"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ Fairways"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ fairways"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ fairway"
+          }
+        }
+      }
+    },
+    "%@ GIR" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ GIR"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ GIR"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ GIR"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ GIR"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ GIR"
+          }
+        }
+      }
+    },
     "%@ gratis testen" : {
       "localizations" : {
         "en" : {
@@ -1215,6 +807,40 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Prova %@ gratis – poi disdici quando vuoi"
+          }
+        }
+      }
+    },
+    "%@ Löcher 3+ über Par" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ Löcher 3+ über Par"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ holes 3+ over par"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ hoyos 3+ sobre par"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ trous 3+ au-dessus du par"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ buche 3+ sopra il par"
           }
         }
       }
@@ -1393,6 +1019,34 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "%1$lld tee%2$@"
+          }
+        }
+      }
+    },
+    "%lld Bahnen" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld holes"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld pistas"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld pistes"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld piste"
           }
         }
       }
@@ -4277,6 +3931,40 @@
         }
       }
     },
+    "Alle Audio-Trainings freischalten" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Alle Audio-Trainings freischalten"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Unlock all audio trainings"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Desbloquear todos los entrenamientos de audio"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Débloquer tous les entraînements audio"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sblocca tutti gli allenamenti audio"
+          }
+        }
+      }
+    },
     "Alle Ergebnisse löschen?" : {
       "localizations" : {
         "en" : {
@@ -4631,6 +4319,40 @@
         }
       }
     },
+    "Ändern" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ändern"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Change"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cambiar"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Modifier"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Modifica"
+          }
+        }
+      }
+    },
     "Angefangenes Spiel" : {
       "localizations" : {
         "en" : {
@@ -4658,6 +4380,12 @@
           }
         }
       }
+    },
+    "Anlage nicht gefunden" : {
+
+    },
+    "Anlage wird gesucht …" : {
+
     },
     "Antworten durchsehen" : {
       "localizations" : {
@@ -4711,6 +4439,40 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Numero di buche"
+          }
+        }
+      }
+    },
+    "Anzeige" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Anzeige"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ad"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Publicidad"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Publicité"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pubblicità"
           }
         }
       }
@@ -4929,6 +4691,108 @@
         }
       }
     },
+    "Ass-Jäger" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ass-Jäger"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ace hunter"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cazador de ases"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Chasseur d'as"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cacciatore di assi"
+          }
+        }
+      }
+    },
+    "Asse" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Asse"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "aces"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ases"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "as"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "assi"
+          }
+        }
+      }
+    },
+    "Audio-Lektionen, die genau die Schwächen dieser Runde angehen" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Audio-Lektionen, die genau die Schwächen dieser Runde angehen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Audio lessons that target the weak spots of this round"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lecciones de audio para los puntos débiles de esta vuelta"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Leçons audio ciblant les points faibles de cette partie"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lezioni audio mirate ai punti deboli di questo giro"
+          }
+        }
+      }
+    },
     "Audio-Lektionen, die zu deinen aktuellen Statistiken passen" : {
       "localizations" : {
         "en" : {
@@ -4957,6 +4821,40 @@
         }
       }
     },
+    "Audio-Trainings für Technik und Kopf" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Audio-Trainings für Technik und Kopf"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Audio training for technique and mindset"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Entrenamientos de audio para técnica y mente"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Entraînements audio pour la technique et le mental"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Allenamenti audio per tecnica e testa"
+          }
+        }
+      }
+    },
     "Auf iPhone spiegeln" : {
       "localizations" : {
         "en" : {
@@ -4981,6 +4879,40 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Rifletti su iPhone"
+          }
+        }
+      }
+    },
+    "Aufholjagd" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aufholjagd"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Comeback"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Remontada"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Remontée"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Rimonta"
           }
         }
       }
@@ -5349,6 +5281,102 @@
         }
       }
     },
+    "Bahn für Bahn" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hole by hole"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pista a pista"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Piste après piste"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pista dopo pista"
+          }
+        }
+      }
+    },
+    "Bahnen" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bahnen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "holes"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "pistas"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "pistes"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "piste"
+          }
+        }
+      }
+    },
+    "Bahnenduell" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bahnenduell"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hole duel"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Duelo de pistas"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Duel de pistes"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Duello di piste"
+          }
+        }
+      }
+    },
     "Bald" : {
       "localizations" : {
         "de" : {
@@ -5658,6 +5686,40 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Già salvato: %1$lld di %2$lld buche."
+          }
+        }
+      }
+    },
+    "Besser putten lernen" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Besser putten lernen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Learn to putt better"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aprende a putear mejor"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mieux putter"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Impara a puttare meglio"
           }
         }
       }
@@ -6208,6 +6270,40 @@
         }
       }
     },
+    "Caddy fragen" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Caddy fragen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ask Caddy"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pregunta al Caddy"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Demander au Caddy"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Chiedi al Caddy"
+          }
+        }
+      }
+    },
     "Caddy spricht..." : {
 
     },
@@ -6617,6 +6713,40 @@
         }
       }
     },
+    "Dein Anspiel hat Potenzial. Gezielte Schlagformen bringen dich näher an die Fahne." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dein Anspiel hat Potenzial. Gezielte Schlagformen bringen dich näher an die Fahne."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Your approach play has potential. Shaped shots bring you closer to the pin."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tu approach tiene potencial. Curvar el golpe a propósito te acerca a la bandera."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ton jeu d'approche a du potentiel. Des effets maîtrisés te rapprochent du drapeau."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Il tuo avvicinamento ha potenziale. Colpi lavorati ti portano più vicino alla bandiera."
+          }
+        }
+      }
+    },
     "DEIN DURCHSCHNITT" : {
       "localizations" : {
         "en" : {
@@ -6939,6 +7069,40 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Il tuo esercizio"
+          }
+        }
+      }
+    },
+    "Der Assistent für Schlagwahl und Taktik" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Der Assistent für Schlagwahl und Taktik"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The assistant for club choice and tactics"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "El asistente para la elección de palo y la táctica"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "L'assistant pour le choix du club et la tactique"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "L'assistente per la scelta della mazza e la tattica"
           }
         }
       }
@@ -7473,6 +7637,68 @@
         }
       }
     },
+    "Drei Sätze, wie das Zählen in der App funktioniert – oder direkt loslegen." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Three sentences on how counting works in the app – or start right away."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tres frases sobre cómo se cuenta en la app, o empieza directamente."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Trois phrases sur le comptage dans l'app – ou commence tout de suite."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tre frasi su come si conta nell'app, oppure inizia subito."
+          }
+        }
+      }
+    },
+    "Du brauchst noch viele Putts. Diese Lektion trainiert deine Distanzkontrolle auf dem Grün." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Du brauchst noch viele Putts. Diese Lektion trainiert deine Distanzkontrolle auf dem Grün."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "You still need a lot of putts. This lesson trains your distance control on the green."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aún necesitas muchos putts. Esta lección entrena tu control de distancia en el green."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tu as encore besoin de beaucoup de putts. Cette leçon travaille ton contrôle de distance sur le green."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ti servono ancora molti putt. Questa lezione allena il controllo della distanza sul green."
+          }
+        }
+      }
+    },
     "Du hast aktuell Caddy aktiv. Wenn du das Training-Abo kaufst, verlierst du deinen Caddy-Zugang. Mit Pro bekommst du beides – Training und Caddy – in einem Abo." : {
       "localizations" : {
         "en" : {
@@ -7671,6 +7897,40 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Puoi duplicare il giro sull'iPhone e inserire i punteggi lì."
+          }
+        }
+      }
+    },
+    "Du landest oft im Rough. Diese Lektion zeigt, wie du trotzdem gute Schläge spielst." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Du landest oft im Rough. Diese Lektion zeigt, wie du trotzdem gute Schläge spielst."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "You often end up in the rough. This lesson shows how to still play good shots."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Acabas a menudo en el rough. Esta lección enseña a jugar buenos golpes igualmente."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tu finis souvent dans le rough. Cette leçon montre comment jouer quand même de bons coups."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Finisci spesso nel rough. Questa lezione mostra come giocare comunque buoni colpi."
           }
         }
       }
@@ -7947,6 +8207,40 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Impostazioni"
+          }
+        }
+      }
+    },
+    "Einzelne Löcher kosten dir zu viele Schläge. Gleichmäßiges Tempo hilft bei Drucksituationen." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Einzelne Löcher kosten dir zu viele Schläge. Gleichmäßiges Tempo hilft bei Drucksituationen."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Single holes cost you too many strokes. A steady tempo helps under pressure."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Algunos hoyos te cuestan demasiados golpes. Un tempo constante ayuda bajo presión."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Certains trous te coûtent trop de coups. Un tempo régulier aide sous pression."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Alcune buche ti costano troppi colpi. Un tempo costante aiuta sotto pressione."
           }
         }
       }
@@ -8661,6 +8955,40 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Scansiona il primo documento"
+          }
+        }
+      }
+    },
+    "Etwas zu viele Putts. Besseres Grünlesen kann direkt Schläge sparen." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Etwas zu viele Putts. Besseres Grünlesen kann direkt Schläge sparen."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Slightly too many putts. Reading greens better saves strokes right away."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Algo demasiados putts. Leer mejor el green ahorra golpes de inmediato."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Un peu trop de putts. Mieux lire le green fait gagner des coups tout de suite."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Qualche putt di troppo. Leggere meglio il green fa risparmiare colpi subito."
           }
         }
       }
@@ -9851,6 +10179,41 @@
         }
       }
     },
+    "Geteilt: %@" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Geteilt: %@"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Shared: %@"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Compartido: %@"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Partagé : %@"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Condiviso: %@"
+          }
+        }
+      }
+    },
     "Gewitter" : {
 
     },
@@ -10841,6 +11204,40 @@
         }
       }
     },
+    "Hier könnte Ihre Anlage stehen" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hier könnte Ihre Anlage stehen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Your course could be here"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aquí podría estar su campo"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Votre parcours pourrait être ici"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Qui potrebbe esserci il vostro campo"
+          }
+        }
+      }
+    },
     "Hilfe & Anleitung" : {
       "localizations" : {
         "en" : {
@@ -11049,6 +11446,40 @@
         }
       }
     },
+    "Immer wieder hohe Löcher (3+ über Par). Cleveres Course Management senkt deinen Score." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Immer wieder hohe Löcher (3+ über Par). Cleveres Course Management senkt deinen Score."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Repeated blow-up holes (3+ over par). Smart course management lowers your score."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hoyos altos repetidos (3+ sobre par). Un course management inteligente baja tu score."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Des trous à répétition à 3 coups ou plus au-dessus du par. Un course management intelligent fait baisser ton score."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Buche pesanti ricorrenti (3+ sopra il par). Un course management intelligente abbassa il tuo score."
+          }
+        }
+      }
+    },
     "Importieren" : {
       "localizations" : {
         "en" : {
@@ -11196,6 +11627,40 @@
         }
       }
     },
+    "in Folge" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "in Folge"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "in a row"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "seguidas"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "d'affilée"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "di fila"
+          }
+        }
+      }
+    },
     "In Sekunden startklar – kein Tutorial nötig" : {
       "localizations" : {
         "en" : {
@@ -11311,6 +11776,34 @@
         }
       }
     },
+    "Ja, kurz zeigen" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Yes, show me"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sí, muéstramelo"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Oui, montre-moi"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sì, mostrami"
+          }
+        }
+      }
+    },
     "Je mehr Runden auf diesem Platz aufgezeichnet sind, desto genauer wird die Schätzung. Prüfe Vorschläge mit niedriger Konfidenz auf der Karte, bevor du sie übernimmst." : {
       "localizations" : {
         "en" : {
@@ -11335,6 +11828,34 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Più giri vengono registrati su questo campo, più precisa diventa la stima. Controlla sulla mappa i suggerimenti con affidabilità bassa prima di applicarli."
+          }
+        }
+      }
+    },
+    "Jeder Spieler hat eine eigene Zeile. Nach jedem Schlag auf + tippen – verzählt? Das Minus korrigiert." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Every player has their own row. Tap + after each stroke – miscounted? The minus fixes it."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cada jugador tiene su propia fila. Toca + después de cada golpe. ¿Te has equivocado? El menos lo corrige."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Chaque joueur a sa propre ligne. Touche + après chaque coup – erreur de comptage ? Le moins corrige."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ogni giocatore ha la sua riga. Tocca + dopo ogni colpo – hai sbagliato a contare? Il meno corregge."
           }
         }
       }
@@ -11708,6 +12229,40 @@
         }
       }
     },
+    "Kein Sieger – niemand hat es geschafft." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kein Sieger – niemand hat es geschafft."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No winner – nobody managed it."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sin ganador: nadie lo consiguió."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pas de vainqueur – personne n'y est parvenu."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nessun vincitore: non ci è riuscito nessuno."
+          }
+        }
+      }
+    },
     "Keine Löcher mit hoher Konfidenz" : {
       "localizations" : {
         "en" : {
@@ -12027,6 +12582,34 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Registrati gratis su:"
+          }
+        }
+      }
+    },
+    "Kurz erklärt?" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "A quick intro?"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "¿Te lo explicamos?"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Petite explication ?"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ti spieghiamo?"
           }
         }
       }
@@ -13326,6 +13909,34 @@
         }
       }
     },
+    "Minigolfplätze" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Minigolf courses"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Campos de minigolf"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Parcours de minigolf"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Campi di minigolf"
+          }
+        }
+      }
+    },
     "Minuten" : {
       "localizations" : {
         "en" : {
@@ -13754,8 +14365,132 @@
         }
       }
     },
+    "Namen sind optional – leer lassen geht auch." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Names are optional – leaving them empty works too."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Los nombres son opcionales: puedes dejarlos vacíos."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Les noms sont facultatifs – tu peux les laisser vides."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "I nomi sono facoltativi: puoi lasciarli vuoti."
+          }
+        }
+      }
+    },
+    "Nebenwertungen zusätzlich zur Schlagzahl – jede hat ihren eigenen Sieger. Lässt sich auch während der Runde noch ändern." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nebenwertungen zusätzlich zur Schlagzahl – jede hat ihren eigenen Sieger. Lässt sich auch während der Runde noch ändern."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Side contests on top of the stroke count – each one has its own winner. You can still change them during the round."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Clasificaciones extra además del número de golpes: cada una tiene su ganador. Puedes cambiarlas durante la vuelta."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Classements annexes en plus du nombre de coups – chacun a son vainqueur. Modifiable même en cours de partie."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Classifiche extra oltre al numero di colpi: ognuna ha il suo vincitore. Puoi modificarle anche durante il giro."
+          }
+        }
+      }
+    },
     "Neblig" : {
 
+    },
+    "Nein, direkt starten" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No, start now"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No, empezar ya"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Non, commencer"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No, inizia subito"
+          }
+        }
+      }
+    },
+    "Nervenstark" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nervenstark"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nerves of steel"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nervios de acero"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sang-froid"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nervi saldi"
+          }
+        }
+      }
     },
     "NEU" : {
       "localizations" : {
@@ -14604,6 +15339,40 @@
         }
       }
     },
+    "noch offen" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "noch offen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "still open"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "aún abierto"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "encore ouvert"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ancora aperto"
+          }
+        }
+      }
+    },
     "Noch wenige Runden, der Korridor kann daneben liegen." : {
       "localizations" : {
         "en" : {
@@ -14778,6 +15547,40 @@
         }
       }
     },
+    "Ø %@ Putts/Loch" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ø %@ Putts/Loch"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ø %@ putts/hole"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ø %@ putts/hoyo"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ø %@ putts/trou"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ø %@ putt/buca"
+          }
+        }
+      }
+    },
     "Ø %lld m" : {
       "localizations" : {
         "en" : {
@@ -14895,6 +15698,34 @@
     },
     "Ø Score vs. Par" : {
 
+    },
+    "Oben rechts siehst du jederzeit die Tabelle. Nach der letzten Bahn steht der Sieger fest." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The standings are available at the top right at any time. After the last hole the winner is decided."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Arriba a la derecha ves la clasificación en cualquier momento. Tras la última pista se decide el ganador."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "En haut à droite, le classement est visible à tout moment. Après la dernière piste, le vainqueur est désigné."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "In alto a destra vedi sempre la classifica. Dopo l'ultima pista è deciso il vincitore."
+          }
+        }
+      }
     },
     "Offene Runde" : {
       "localizations" : {
@@ -15424,6 +16255,74 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Partite"
+          }
+        }
+      }
+    },
+    "Passend zu dieser Runde" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Passend zu dieser Runde"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fits this round"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Para esta vuelta"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pour cette partie"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Per questo giro"
+          }
+        }
+      }
+    },
+    "Patzer" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Patzer"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "blow-ups"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "fallos"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ratés"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "errori"
           }
         }
       }
@@ -16330,6 +17229,40 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Teoria abilitazione"
+          }
+        }
+      }
+    },
+    "Pokale" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pokale"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Trophies"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Trofeos"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Trophées"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Trofei"
           }
         }
       }
@@ -17516,6 +18449,40 @@
         }
       }
     },
+    "Runde ohne auffällige Schwäche. Diese Lektion hilft dir, das Niveau zu halten." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Runde ohne auffällige Schwäche. Diese Lektion hilft dir, das Niveau zu halten."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "A round without any obvious weak spot. This lesson helps you hold that level."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vuelta sin puntos débiles claros. Esta lección te ayuda a mantener el nivel."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Partie sans faiblesse marquée. Cette leçon t'aide à garder ce niveau."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Giro senza debolezze evidenti. Questa lezione ti aiuta a mantenere il livello."
+          }
+        }
+      }
+    },
     "Runde starten" : {
       "localizations" : {
         "de" : {
@@ -17574,6 +18541,34 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Inizia giro – %@"
+          }
+        }
+      }
+    },
+    "Runde starten · %lld Bahnen" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Start Round · %lld holes"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Empezar partida · %lld pistas"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Démarrer la partie · %lld pistes"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Inizia partita · %lld piste"
           }
         }
       }
@@ -18208,6 +19203,40 @@
         }
       }
     },
+    "Schläge besser" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Schläge besser"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "strokes better"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "golpes mejor"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "coups de moins"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "colpi in meno"
+          }
+        }
+      }
+    },
     "Schläge pro Loch" : {
       "localizations" : {
         "en" : {
@@ -18260,6 +19289,34 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "I colpi vengono inseriti automaticamente durante la registrazione."
+          }
+        }
+      }
+    },
+    "Schläge zählen" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Counting strokes"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Contar golpes"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Compter les coups"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Contare i colpi"
           }
         }
       }
@@ -18518,6 +19575,40 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Chiudi"
+          }
+        }
+      }
+    },
+    "Schlussspurt" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Schlussspurt"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Final sprint"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Esprint final"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sprint final"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Volata finale"
           }
         }
       }
@@ -18936,6 +20027,108 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "molto scarso"
+          }
+        }
+      }
+    },
+    "Selten das Grün in Regulation getroffen. Die richtige Schlägerwahl beim Anspiel hilft." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Selten das Grün in Regulation getroffen. Die richtige Schlägerwahl beim Anspiel hilft."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Rarely hit the green in regulation. The right club choice on approach helps."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pocas veces el green en regulación. Elegir bien el palo en el approach ayuda."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Rarement le green en régulation. Le bon choix de club à l'approche aide."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Raramente green in regulation. La scelta giusta della mazza in avvicinamento aiuta."
+          }
+        }
+      }
+    },
+    "Serie" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Serie"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Streak"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Racha"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Série"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Serie"
+          }
+        }
+      }
+    },
+    "Serie, Asse, Bahnenduell – zählt rückwirkend ab Bahn 1." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Serie, Asse, Bahnenduell – zählt rückwirkend ab Bahn 1."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Streak, aces, hole duel – counts retroactively from hole 1."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Racha, ases, duelo de pistas: cuenta de forma retroactiva desde la pista 1."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Série, as, duel de pistes – compte rétroactivement dès la piste 1."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Serie, assi, duello di piste: vale a ritroso dalla pista 1."
           }
         }
       }
@@ -21535,6 +22728,34 @@
         }
       }
     },
+    "Unten auf „Weiter“ geht es zur nächsten Bahn. Der Stand wird automatisch gesichert, auch wenn du das Handy weglegst." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "“Continue” at the bottom takes you to the next hole. The score is saved automatically, even if you put the phone away."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Con «Continuar» abajo pasas a la siguiente pista. El marcador se guarda automáticamente, aunque dejes el móvil."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "En bas, « Continuer » mène à la piste suivante. Le score est enregistré automatiquement, même si tu poses le téléphone."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "In basso «Avanti» porta alla pista successiva. Il punteggio viene salvato automaticamente, anche se posi il telefono."
+          }
+        }
+      }
+    },
     "UV" : {
 
     },
@@ -21714,6 +22935,34 @@
         }
       }
     },
+    "Verstanden" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Got it"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Entendido"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Compris"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Capito"
+          }
+        }
+      }
+    },
     "Verwerfen" : {
       "localizations" : {
         "en" : {
@@ -21775,6 +23024,34 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Schermo intero"
+          }
+        }
+      }
+    },
+    "Vor Ort einfach den QR-Code scannen – Begrüßung, kurze Einführung, los." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "On site simply scan the QR code – greeting, short intro, off you go."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "En el lugar solo hay que escanear el código QR: bienvenida, breve introducción y a jugar."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sur place, scanne simplement le code QR : accueil, courte intro, c'est parti."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sul posto basta scansionare il codice QR: benvenuto, breve introduzione e via."
           }
         }
       }
@@ -22233,6 +23510,40 @@
         }
       }
     },
+    "Wenige Fairways getroffen. Mehr Stabilität im Stand sorgt für geradere Abschläge." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wenige Fairways getroffen. Mehr Stabilität im Stand sorgt für geradere Abschläge."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Few fairways hit. More stability in your stance leads to straighter tee shots."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pocos Fairways alcanzados. Más estabilidad en la postura da salidas más rectas."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Peu de fairways touchés. Plus de stabilité à l'adresse donne des drives plus droits."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pochi fairway centrati. Più stabilità nella posizione rende i colpi di partenza più dritti."
+          }
+        }
+      }
+    },
     "Weniger anzeigen" : {
       "localizations" : {
         "en" : {
@@ -22285,6 +23596,272 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Se lo consenti, GolfTrack registra la tua posizione ogni pochi metri durante il giro. Dopo puoi vedere il tuo percorso sulla mappa."
+          }
+        }
+      }
+    },
+    "Wer braucht auf den letzten 3 Bahnen die wenigsten Schläge?" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wer braucht auf den letzten 3 Bahnen die wenigsten Schläge?"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Who needs the fewest strokes on the last 3 holes?"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "¿Quién necesita menos golpes en las últimas 3 pistas?"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Qui a besoin du moins de coups sur les 3 dernières pistes ?"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Chi impiega meno colpi nelle ultime 3 piste?"
+          }
+        }
+      }
+    },
+    "Wer gewinnt die meisten Bahnen allein? Bei Gleichstand auf einer Bahn bekommt sie niemand." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wer gewinnt die meisten Bahnen allein? Bei Gleichstand auf einer Bahn bekommt sie niemand."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Who wins the most holes outright? A tied hole goes to nobody."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "¿Quién gana en solitario más pistas? Si hay empate en una pista, no la gana nadie."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Qui gagne le plus de pistes en solo ? En cas d'égalité sur une piste, personne ne la remporte."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Chi vince da solo il maggior numero di piste? In caso di parità su una pista non la vince nessuno."
+          }
+        }
+      }
+    },
+    "Wer leistet sich die wenigsten Patzer mit 4 Schlägen oder mehr?" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wer leistet sich die wenigsten Patzer mit 4 Schlägen oder mehr?"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Who makes the fewest blow-ups of 4 strokes or more?"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "¿Quién comete menos fallos de 4 golpes o más?"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Qui commet le moins de ratés à 4 coups ou plus ?"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Chi commette meno errori da 4 colpi o più?"
+          }
+        }
+      }
+    },
+    "Wer locht am häufigsten mit dem ersten Schlag ein?" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wer locht am häufigsten mit dem ersten Schlag ein?"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Who holes out with the first stroke most often?"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "¿Quién emboca más veces al primer golpe?"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Qui rentre la balle le plus souvent au premier coup ?"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Chi imbuca più spesso al primo colpo?"
+          }
+        }
+      }
+    },
+    "Wer schafft die längste Serie an Bahnen hintereinander mit höchstens 2 Schlägen?" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wer schafft die längste Serie an Bahnen hintereinander mit höchstens 2 Schlägen?"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Who manages the longest run of holes in a row with 2 strokes or fewer?"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "¿Quién logra la racha más larga de pistas seguidas con 2 golpes como máximo?"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Qui réussit la plus longue série de pistes d'affilée en 2 coups maximum ?"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Chi realizza la serie più lunga di piste consecutive con al massimo 2 colpi?"
+          }
+        }
+      }
+    },
+    "Wer spielt die zweite Hälfte am deutlichsten besser als die erste?" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wer spielt die zweite Hälfte am deutlichsten besser als die erste?"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Who improves the most from the first half to the second?"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "¿Quién mejora más de la primera a la segunda mitad?"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Qui progresse le plus entre la première et la seconde moitié ?"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Chi migliora di più dalla prima alla seconda metà?"
+          }
+        }
+      }
+    },
+    "Wer spielt mit?" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Who's playing?"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "¿Quién juega?"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Qui joue ?"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Chi gioca?"
+          }
+        }
+      }
+    },
+    "Werbeplatz für Betreiber – golftrack.app" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Werbeplatz für Betreiber – golftrack.app"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ad space for operators – golftrack.app"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Espacio publicitario para gestores – golftrack.app"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Espace publicitaire pour exploitants – golftrack.app"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Spazio pubblicitario per gestori – golftrack.app"
           }
         }
       }
@@ -22411,6 +23988,108 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Previsioni meteo"
+          }
+        }
+      }
+    },
+    "Wettkampf dazunehmen" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wettkampf dazunehmen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Add a contest"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Añadir un reto"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ajouter un concours"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aggiungi una sfida"
+          }
+        }
+      }
+    },
+    "Wettkämpfe" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wettkämpfe"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Contests"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Retos"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Concours"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sfide"
+          }
+        }
+      }
+    },
+    "Wettkämpfe zählen immer über die ganze Runde – auch wenn du sie erst jetzt einschaltest." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wettkämpfe zählen immer über die ganze Runde – auch wenn du sie erst jetzt einschaltest."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Contests always count for the whole round – even if you switch them on right now."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Los retos cuentan siempre para toda la vuelta, aunque los actives ahora mismo."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Les concours comptent toujours pour toute la partie, même si tu les actives maintenant."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Le sfide valgono sempre per tutto il giro, anche se le attivi solo adesso."
           }
         }
       }
@@ -22699,6 +24378,34 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Bentornato,"
+          }
+        }
+      }
+    },
+    "Willkommen!" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Welcome!"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "¡Bienvenido!"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bienvenue !"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Benvenuto!"
           }
         }
       }

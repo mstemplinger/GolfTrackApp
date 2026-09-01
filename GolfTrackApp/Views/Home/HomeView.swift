@@ -312,7 +312,8 @@ struct HomeView: View {
                         numberOfHoles: game.numberOfHoles,
                         initialScores: game.scores,
                         initialHole: game.currentHole,
-                        courseName: game.courseName
+                        courseName: game.courseName,
+                        courseID: game.courseID
                     )
                 } label: {
                     Label("Fortsetzen", systemImage: "play.fill")

@@ -18,13 +18,23 @@ final class SubscriptionManager: ObservableObject {
     static let trainingProductID = "Trainingsvideos_abo"
     static let caddyProductID    = "Caddy_abo"
     static let proProductID      = "GolfTrackPro_abo"
+    /// Einmalkauf, der die Werbung abschaltet. Muss in App Store Connect als
+    /// nicht verbrauchbarer Artikel unter dieser Kennung angelegt sein –
+    /// solange er fehlt, bleibt `adFreeProduct` einfach leer.
+    static let adFreeProductID   = "GolfTrack_werbefrei"
 
     @Published var isTrainingSubscribed = false
     @Published var isCaddySubscribed    = false
+    @Published var isAdFree             = false
 
     @Published var trainingProduct: Product?
     @Published var caddyProduct: Product?
     @Published var proProduct: Product?
+    @Published var adFreeProduct: Product?
+
+    /// Werbung sieht nur, wer nichts bezahlt hat. Ein Abo schaltet sie mit ab –
+    /// wer für Inhalte zahlt, soll nicht zusätzlich beworben werden.
+    var showsAds: Bool { !(isAdFree || isTrainingSubscribed || isCaddySubscribed) }
 
     @Published var isPurchasing  = false
     @Published var isRestoring   = false
@@ -42,6 +52,7 @@ final class SubscriptionManager: ObservableObject {
         if ProcessInfo.processInfo.arguments.contains("-unlockAll") {
             isTrainingSubscribed = true
             isCaddySubscribed    = true
+            isAdFree             = true
         }
         #endif
 
@@ -92,13 +103,15 @@ final class SubscriptionManager: ObservableObject {
 
     func loadProducts() async {
         do {
-            let ids: [String] = [Self.trainingProductID, Self.caddyProductID, Self.proProductID]
+            let ids: [String] = [Self.trainingProductID, Self.caddyProductID,
+                                 Self.proProductID, Self.adFreeProductID]
             let products = try await Product.products(for: ids)
             for p in products {
                 switch p.id {
                 case Self.trainingProductID: trainingProduct = p
                 case Self.caddyProductID:    caddyProduct    = p
                 case Self.proProductID:      proProduct      = p
+                case Self.adFreeProductID:   adFreeProduct   = p
                 default: break
                 }
             }
@@ -137,6 +150,8 @@ final class SubscriptionManager: ObservableObject {
                 case Self.proProductID:
                     isTrainingSubscribed = true
                     isCaddySubscribed    = true
+                case Self.adFreeProductID:
+                    isAdFree = true
                 default:
                     break
                 }
@@ -181,23 +196,27 @@ final class SubscriptionManager: ObservableObject {
         if ProcessInfo.processInfo.arguments.contains("-unlockAll") {
             isTrainingSubscribed = true
             isCaddySubscribed    = true
+            isAdFree             = true
             return
         }
         #endif
 
         var hasTraining = false
         var hasCaddy    = false
+        var hasAdFree   = false
         for await result in Transaction.currentEntitlements {
             guard case .verified(let tx) = result, tx.revocationDate == nil else { continue }
             switch tx.productID {
             case Self.trainingProductID: hasTraining = true
             case Self.caddyProductID:    hasCaddy    = true
             case Self.proProductID:      hasTraining = true; hasCaddy = true
+            case Self.adFreeProductID:   hasAdFree   = true
             default: break
             }
         }
         isTrainingSubscribed = hasTraining
         isCaddySubscribed    = hasCaddy
+        isAdFree             = hasAdFree
     }
 
     // MARK: - Helpers

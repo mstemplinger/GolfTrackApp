@@ -14,6 +14,7 @@ struct MinigolfCourseStartView: View {
     @Environment(\.dismiss) private var dismiss
     @State private var step: Step = .welcome
     @State private var rawNames: [String] = ["", ""]
+    @State private var challenges: [MinigolfChallenge] = []
     @State private var tutorialPage = 0
     @State private var config: MinigolfConfig?
     /// Wurde die Runde schon gestartet? Dann schließt der Flow sich mit ihr.
@@ -49,6 +50,9 @@ struct MinigolfCourseStartView: View {
         .onAppear {
             if let names = MinigolfGameStore.loadNames(), !names.isEmpty {
                 rawNames = names
+            }
+            if challenges.isEmpty {
+                challenges = MinigolfGameStore.loadChallenges()
             }
         }
         // Runde beendet oder verlassen → gesamten Flow schließen
@@ -232,6 +236,8 @@ struct MinigolfCourseStartView: View {
 
             playersCard
 
+            MinigolfChallengeSetupCard(selection: $challenges, initiallyExpanded: false)
+
             Button(action: startRound) {
                 Text("Runde starten · \(course.holes) Bahnen").goldButton()
             }
@@ -307,11 +313,14 @@ struct MinigolfCourseStartView: View {
                 : name
         }
         MinigolfGameStore.saveNames(rawNames)
+        MinigolfGameStore.saveChallenges(challenges)
         MinigolfGameStore.clear()
         didStart = true
         config = MinigolfConfig(playerNames: names,
                                 numberOfHoles: course.holes,
-                                courseName: course.name)
+                                courseName: course.name,
+                                courseID: course.id,
+                                challenges: challenges)
     }
 }
 

@@ -12,6 +12,11 @@ struct MinigolfConfig: Identifiable, Hashable {
     var initialHole: Int = 0
     /// Anlage, an der gespielt wird (per QR-Code gestartet) – sonst `nil`.
     var courseName: String? = nil
+    /// Kennung derselben Anlage. Der Name steht auf der Karte, die Kennung
+    /// entscheidet, welche Werbung im freien Feld darunter läuft.
+    var courseID: String? = nil
+    /// Aktive Nebenwertungen (Serie, Asse, …)
+    var challenges: [MinigolfChallenge] = []
 }
 
 // MARK: - Persistence
@@ -23,6 +28,9 @@ struct SavedMinigolfGame: Codable {
     var currentHole: Int
     var savedAt: Date? = nil
     var courseName: String? = nil
+    var courseID: String? = nil
+    /// Optional, damit ältere gespeicherte Spiele weiter geladen werden können.
+    var challenges: [MinigolfChallenge]? = nil
 }
 
 struct MinigolfHistoryEntry: Codable, Identifiable {
@@ -32,12 +40,14 @@ struct MinigolfHistoryEntry: Codable, Identifiable {
     var numberOfHoles: Int
     var scores: [[Int]]
     var courseName: String? = nil
+    var challenges: [MinigolfChallenge]? = nil
 }
 
 enum MinigolfGameStore {
     private static let gameKey = "minigolf.savedGame"
     private static let namesKey = "minigolf.savedPlayerNames"
     private static let historyKey = "minigolf.history"
+    private static let challengesKey = "minigolf.challenges"
 
     static func load() -> SavedMinigolfGame? {
         guard let data = UserDefaults.standard.data(forKey: gameKey) else { return nil }
@@ -60,6 +70,16 @@ enum MinigolfGameStore {
 
     static func saveNames(_ names: [String]) {
         UserDefaults.standard.set(names, forKey: namesKey)
+    }
+
+    /// Zuletzt gewählte Wettkämpfe – Vorschlag für die nächste Runde.
+    static func loadChallenges() -> [MinigolfChallenge] {
+        (UserDefaults.standard.stringArray(forKey: challengesKey) ?? [])
+            .compactMap(MinigolfChallenge.init(rawValue:))
+    }
+
+    static func saveChallenges(_ challenges: [MinigolfChallenge]) {
+        UserDefaults.standard.set(challenges.map(\.rawValue), forKey: challengesKey)
     }
 
     static func loadHistory() -> [MinigolfHistoryEntry] {
@@ -93,6 +113,7 @@ struct MinigolfView: View {
     @Environment(\.dismiss) private var dismiss
     @State private var rawNames: [String] = ["", ""]
     @State private var numberOfHoles: Int = 9
+    @State private var selectedChallenges: [MinigolfChallenge] = []
     @State private var activeConfig: MinigolfConfig?
     @State private var tracker = DistanceTracker()
     @State private var activeTab: MinigolfTab = .spiel
@@ -129,6 +150,8 @@ struct MinigolfView: View {
                             coursesCard
                             holesCard
                             playersCard
+                            MinigolfChallengeSetupCard(selection: $selectedChallenges,
+                                                       initiallyExpanded: false)
 
                             Button { startGame() } label: {
                                 Text("Spiel starten")
@@ -172,9 +195,15 @@ struct MinigolfView: View {
                 }
                 savedGame = MinigolfGameStore.load()
                 history = MinigolfGameStore.loadHistory()
+                if selectedChallenges.isEmpty {
+                    selectedChallenges = MinigolfGameStore.loadChallenges()
+                }
             }
             .task {
                 await catalog.refreshIfNeeded()
+                // Anzeigen schon hier holen, nicht erst in der Zählkarte: auf
+                // der Anlage selbst ist oft kein Netz mehr.
+                await AdCatalogService.shared.refreshIfNeeded()
             }
             .onChange(of: activeConfig) { _, newValue in
                 // Returning from a running game — pick up the persisted state
@@ -192,7 +221,8 @@ struct MinigolfView: View {
                     playerNames: s.players,
                     numberOfHoles: s.holes,
                     initialScores: s.scores,
-                    initialHole: s.currentHole
+                    initialHole: s.currentHole,
+                    challenges: selectedChallenges
                 )
             }
             .fullScreenCover(item: $startingCourse, onDismiss: reloadStoredGames) { course in
@@ -203,7 +233,8 @@ struct MinigolfView: View {
                 MinigolfResultsView(
                     playerNames: entry.playerNames,
                     numberOfHoles: entry.numberOfHoles,
-                    scores: entry.scores
+                    scores: entry.scores,
+                    challenges: entry.challenges ?? []
                 )
             }
         }
@@ -363,7 +394,9 @@ struct MinigolfView: View {
                             numberOfHoles: game.numberOfHoles,
                             initialScores: game.scores,
                             initialHole: game.currentHole,
-                            courseName: game.courseName
+                            courseName: game.courseName,
+                            courseID: game.courseID,
+                            challenges: game.challenges ?? []
                         )
                     } label: {
                         Label("Fortsetzen", systemImage: "play.fill")
@@ -543,9 +576,12 @@ struct MinigolfView: View {
             n.trimmingCharacters(in: .whitespaces).isEmpty ? "Spieler \(i + 1)" : n
         }
         MinigolfGameStore.saveNames(rawNames)
+        MinigolfGameStore.saveChallenges(selectedChallenges)
         MinigolfGameStore.clear()
         savedGame = nil
-        activeConfig = MinigolfConfig(playerNames: names, numberOfHoles: numberOfHoles)
+        activeConfig = MinigolfConfig(playerNames: names,
+                                      numberOfHoles: numberOfHoles,
+                                      challenges: selectedChallenges)
     }
 }
 
@@ -556,6 +592,8 @@ struct MinigolfScoringView: View {
     @State private var scores: [[Int]]
     @State private var currentHole = 0
     @State private var showResults = false
+    @State private var challenges: [MinigolfChallenge]
+    @State private var showChallenges = false
     /// Zuletzt mit der Watch abgeglichener Zustand – verhindert Echo-Schleifen
     @State private var lastSynced: MinigolfSyncState?
     @Environment(\.dismiss) private var dismiss
@@ -569,6 +607,7 @@ struct MinigolfScoringView: View {
                          count: config.playerNames.count)
         )
         _currentHole = State(initialValue: config.initialHole)
+        _challenges = State(initialValue: config.challenges)
     }
 
     private var playerCount: Int { config.playerNames.count }
@@ -590,6 +629,19 @@ struct MinigolfScoringView: View {
                     ForEach(0..<playerCount, id: \.self) { i in
                         playerCard(for: i)
                     }
+
+                    if challenges.isEmpty {
+                        addChallengesButton
+                    } else {
+                        MinigolfChallengeLiveCard(
+                            playerNames: config.playerNames,
+                            scores: scores,
+                            challenges: challenges,
+                            onEdit: { showChallenges = true }
+                        )
+                    }
+
+                    MinigolfAdSlotView(courseID: config.courseID, rotation: currentHole)
                 }
                 .padding()
             }
@@ -603,23 +655,38 @@ struct MinigolfScoringView: View {
                 Button("Ergebnis") { showResults = true }
                     .foregroundStyle(AppTheme.gold)
             }
+            ToolbarItem(placement: .topBarTrailing) {
+                Button { showChallenges = true } label: {
+                    Image(systemName: challenges.isEmpty ? "trophy" : "trophy.fill")
+                }
+                .foregroundStyle(AppTheme.gold)
+            }
         }
         .sheet(isPresented: $showResults) {
             MinigolfResultsView(
                 playerNames: config.playerNames,
                 numberOfHoles: holeCount,
                 scores: scores,
+                challenges: challenges,
                 onFinish: finishGame
             )
+        }
+        .sheet(isPresented: $showChallenges) {
+            MinigolfChallengeSheet(selection: $challenges)
         }
         .onAppear { persist(); pushToWatch() }
         .onChange(of: scores) { persist(); pushToWatch() }
         .onChange(of: currentHole) { persist(); pushToWatch() }
+        .onChange(of: challenges) { persist(); MinigolfGameStore.saveChallenges(challenges) }
         // Live-Update von der Watch übernehmen
         .onChange(of: wc.minigolfState) { _, newValue in applyFromWatch(newValue) }
+        .task { await AdCatalogService.shared.refreshIfNeeded() }
         .onDisappear {
             // Spiel auf dem iPhone verlassen → Watch informieren
             wc.sendMinigolfState(currentState(active: false))
+            // Gesammelte Werbezähler abschicken – einmal je Runde statt bei
+            // jeder Bahn.
+            Task { await AdCatalogService.shared.flushCounters() }
         }
     }
 
@@ -662,7 +729,9 @@ struct MinigolfScoringView: View {
             scores: scores,
             currentHole: currentHole,
             savedAt: Date(),
-            courseName: config.courseName
+            courseName: config.courseName,
+            courseID: config.courseID,
+            challenges: challenges
         ))
     }
 
@@ -672,7 +741,8 @@ struct MinigolfScoringView: View {
             playerNames: config.playerNames,
             numberOfHoles: holeCount,
             scores: scores,
-            courseName: config.courseName
+            courseName: config.courseName,
+            challenges: challenges
         ))
         MinigolfGameStore.clear()
         wc.sendMinigolfState(currentState(active: false))
@@ -741,6 +811,32 @@ struct MinigolfScoringView: View {
         .background(AppTheme.card, in: RoundedRectangle(cornerRadius: 14))
     }
 
+    /// Hinweis, solange keine Nebenwertung läuft – man kann sie mitten in der
+    /// Runde noch dazunehmen, gewertet wird dann trotzdem ab Bahn 1.
+    private var addChallengesButton: some View {
+        Button { showChallenges = true } label: {
+            HStack(spacing: 10) {
+                Image(systemName: "trophy.fill")
+                    .foregroundStyle(AppTheme.gold)
+                VStack(alignment: .leading, spacing: 2) {
+                    Text("Wettkampf dazunehmen")
+                        .font(.subheadline.bold())
+                    Text("Serie, Asse, Bahnenduell – zählt rückwirkend ab Bahn 1.")
+                        .font(.caption)
+                        .foregroundStyle(.secondary)
+                }
+                Spacer(minLength: 0)
+                Image(systemName: "chevron.right")
+                    .font(.caption.bold())
+                    .foregroundStyle(.secondary)
+            }
+            .padding(12)
+            .background(AppTheme.card, in: RoundedRectangle(cornerRadius: 14))
+            .contentShape(Rectangle())
+        }
+        .buttonStyle(.plain)
+    }
+
     private func rankColor(_ rank: Int) -> Color {
         switch rank {
         case 0: return Color(red: 0.85, green: 0.65, blue: 0.1)
@@ -803,6 +899,7 @@ struct MinigolfResultsView: View {
     let playerNames: [String]
     let numberOfHoles: Int
     let scores: [[Int]]
+    var challenges: [MinigolfChallenge] = []
     var onFinish: (() -> Void)? = nil
     @Environment(\.dismiss) private var dismiss
 
@@ -821,6 +918,13 @@ struct MinigolfResultsView: View {
             ScrollView {
                 VStack(spacing: 20) {
                     rankingList
+
+                    if !challenges.isEmpty {
+                        MinigolfAwardsCard(playerNames: playerNames,
+                                           scores: scores,
+                                           challenges: challenges)
+                    }
+
                     scorecardTable
 
                     if let onFinish {

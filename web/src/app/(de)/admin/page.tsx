@@ -47,6 +47,9 @@ export default async function AdminPage() {
           <h1 className="mt-2 font-display text-3xl tracking-tight">Eingegangene Anlagen</h1>
         </div>
         <div className="flex items-center gap-5 text-sm">
+          <Link href="/admin/werbung" className="tap text-cream/70 transition-colors hover:text-brass">
+            Werbung
+          </Link>
           <Link href="/" className="tap text-cream/70 transition-colors hover:text-brass">
             Zur Website
           </Link>
@@ -81,7 +84,7 @@ function Center({ children }: { children: React.ReactNode }) {
 
 function Stat({ label, value, highlight }: { label: string; value: number; highlight?: boolean }) {
   return (
-    <div className="bg-night/85 p-5">
+    <div className="bg-black/25 p-5">
       <dt className="marginal">{label}</dt>
       <dd className={`mt-1.5 font-mono text-3xl ${highlight && value > 0 ? "text-brass" : "text-cream/80"}`}>
         {value}
@@ -102,7 +105,7 @@ function Group({ title, courses, empty }: { title: string; courses: CourseRecord
             <li key={course.id}>
               <Link
                 href={`/admin/${course.id}`}
-                className="flex flex-wrap items-center justify-between gap-3 bg-night/85 p-4 transition-colors hover:bg-moss-2/60"
+                className="flex flex-wrap items-center justify-between gap-3 bg-black/25 p-4 transition-colors hover:bg-white/[0.04]"
               >
                 <span className="min-w-0">
                   <span className="block truncate font-display text-lg tracking-tight">{course.name}</span>

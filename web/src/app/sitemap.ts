@@ -22,6 +22,14 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     })),
   );
 
+  // Nur auf Deutsch: die Seite richtet sich an Betreiber hiesiger Anlagen.
+  pages.push({
+    url: `${SITE_URL}/werbung`,
+    lastModified: new Date(),
+    changeFrequency: "monthly",
+    priority: 0.4,
+  });
+
   const minigolf = await listCourses({ status: "approved", kind: "minigolf", limit: 1000 });
   for (const course of minigolf) {
     pages.push({

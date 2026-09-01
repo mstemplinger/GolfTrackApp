@@ -44,6 +44,49 @@ const STATEMENTS = [
      created_at timestamptz NOT NULL DEFAULT now()
    )`,
   `CREATE INDEX IF NOT EXISTS submission_attempts_idx ON submission_attempts (ip_hash, created_at DESC)`,
+  `CREATE TABLE IF NOT EXISTS ads (
+     id           uuid PRIMARY KEY DEFAULT gen_random_uuid(),
+     status       text NOT NULL DEFAULT 'draft' CHECK (status IN ('draft', 'active', 'paused')),
+     placement    text NOT NULL DEFAULT 'minigolf_scoring',
+     course_slug  text NOT NULL DEFAULT '',
+     title        text NOT NULL,
+     subtitle     text NOT NULL DEFAULT '',
+     image_url    text NOT NULL DEFAULT '',
+     link_url     text NOT NULL DEFAULT '',
+     advertiser   text NOT NULL DEFAULT '',
+     weight       integer NOT NULL DEFAULT 1 CHECK (weight BETWEEN 1 AND 100),
+     starts_on    date,
+     ends_on      date,
+     admin_notes  text NOT NULL DEFAULT '',
+     -- Kam der Eintrag über das Formular auf /werbung, steht hier, wer ihn
+     -- geschickt hat. Von Hand angelegte Anzeigen lassen die Felder leer.
+     source          text NOT NULL DEFAULT 'admin',
+     submitter_name  text NOT NULL DEFAULT '',
+     submitter_email text NOT NULL DEFAULT '',
+     submitter_phone text NOT NULL DEFAULT '',
+     request_note    text NOT NULL DEFAULT '',
+     created_at   timestamptz NOT NULL DEFAULT now(),
+     updated_at   timestamptz NOT NULL DEFAULT now()
+   )`,
+  // Nachgereichte Spalten. `CREATE TABLE IF NOT EXISTS` fasst eine bestehende
+  // Tabelle nicht mehr an – neue Felder brauchen deshalb immer ein eigenes
+  // ALTER, sonst fehlen sie überall dort, wo die Tabelle schon steht.
+  `ALTER TABLE ads ADD COLUMN IF NOT EXISTS source          text NOT NULL DEFAULT 'admin'`,
+  `ALTER TABLE ads ADD COLUMN IF NOT EXISTS submitter_name  text NOT NULL DEFAULT ''`,
+  `ALTER TABLE ads ADD COLUMN IF NOT EXISTS submitter_email text NOT NULL DEFAULT ''`,
+  `ALTER TABLE ads ADD COLUMN IF NOT EXISTS submitter_phone text NOT NULL DEFAULT ''`,
+  `ALTER TABLE ads ADD COLUMN IF NOT EXISTS request_note    text NOT NULL DEFAULT ''`,
+  `CREATE INDEX IF NOT EXISTS ads_status_placement_idx ON ads (status, placement)`,
+  `CREATE INDEX IF NOT EXISTS ads_course_slug_idx ON ads (course_slug)`,
+  // Reichweite pro Anzeige und Tag. Bewusst nur Zähler – keine Gerätekennung,
+  // keine Adresse, nichts, was auf eine Person zurückführt.
+  `CREATE TABLE IF NOT EXISTS ad_stats (
+     ad_id       uuid NOT NULL REFERENCES ads(id) ON DELETE CASCADE,
+     day         date NOT NULL,
+     impressions bigint NOT NULL DEFAULT 0,
+     clicks      bigint NOT NULL DEFAULT 0,
+     PRIMARY KEY (ad_id, day)
+   )`,
 ];
 
 let ready: Promise<void> | null = null;

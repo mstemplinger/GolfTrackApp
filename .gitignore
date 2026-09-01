@@ -11,3 +11,6 @@ marketing/**/out/
 # Alte Arbeitskopien
 marketing Kopie/
 marketing Kopie.zip
+
+# Python-Bytecode der Marketing-Skripte
+marketing/__pycache__/

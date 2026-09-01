@@ -1,3 +1,4 @@
+import type { AdRecord } from "./ads";
 import type { CourseRecord } from "./courses";
 
 /**
@@ -81,5 +82,59 @@ export function toFeed(records: CourseRecord[]): Feed {
     generatedAt: new Date().toISOString(),
     count: courses.length,
     courses,
+  };
+}
+
+// MARK: – Werbung
+
+/**
+ * Die Anzeige, wie sie im Gerät ankommt. `courseID` ist die Kennung der
+ * Anlage – leer heißt „überall". Die Feldnamen entsprechen `RemoteAd` in der
+ * iOS-App.
+ */
+export interface FeedAd {
+  id: string;
+  placement: string;
+  courseID: string;
+  title: string;
+  subtitle: string;
+  imageURL: string;
+  linkURL: string;
+  advertiser: string;
+  weight: number;
+  startsOn: string | null;
+  endsOn: string | null;
+}
+
+export interface AdFeed {
+  version: number;
+  generatedAt: string;
+  count: number;
+  ads: FeedAd[];
+}
+
+export function toFeedAd(record: AdRecord): FeedAd {
+  return {
+    id: record.id,
+    placement: record.placement,
+    courseID: record.courseSlug,
+    title: record.title,
+    subtitle: record.subtitle,
+    imageURL: record.imageURL,
+    linkURL: record.linkURL,
+    advertiser: record.advertiser,
+    weight: record.weight,
+    startsOn: record.startsOn,
+    endsOn: record.endsOn,
+  };
+}
+
+export function toAdFeed(records: AdRecord[]): AdFeed {
+  const ads = records.map(toFeedAd);
+  return {
+    version: 1,
+    generatedAt: new Date().toISOString(),
+    count: ads.length,
+    ads,
   };
 }

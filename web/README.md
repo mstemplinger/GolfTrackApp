@@ -60,7 +60,9 @@ src/
     (en)/en/…         englische Seiten
     (de)/admin/…      Adminpanel (nicht indexiert)
     api/v1/courses/   öffentliche Platzdaten für die App
+    api/v1/ads/       Anzeigen für den Werbeplatz in der App
     api/submissions/  Endpunkt des Anmeldeformulars
+    api/ads/request/  Endpunkt der Buchungsanfrage von /werbung
     .well-known/      apple-app-site-association für Universal Links
   components/         Kopf, Fuß, Scorekarte, Lochkarte
   i18n/               sämtliche Texte (content.ts) und Pfade (routes.ts)
@@ -70,6 +72,18 @@ deploy/               Auslieferung, pm2- und nginx-Konfiguration
 ```
 
 Texte ändert man ausschließlich in `src/i18n/content.ts` — beide Sprachen stehen dort nebeneinander, damit auffällt, wenn eine fehlt. Eine weitere Sprache ist ein zusätzlicher Schlüssel dort plus ein Eintrag in `routes.ts`.
+
+## Schrift, Logo, Knöpfe
+
+Display- und Fließtext sind serifenlos: **Manrope** für Überschriften (700–800, negative Laufweite), **Instrument Sans** für den Fließtext, **DM Mono** für Marginalien und Zahlen. Die frühere Serife Fraunces ist raus – sie passte weder zur App-Oberfläche noch zur Wortmarke im eigenen Logo, die selbst ein geometrischer Grotesk ist. Alle drei kommen über `next/font/google` und werden mit der Seite ausgeliefert, nicht von Google nachgeladen.
+
+Das Logo in Kopf und Fuß ist das echte Zeichen der App, kopiert aus `GolfTrackApp/Assets.xcassets/AppLogo.imageset/AppLogo.png` nach `public/logo.png` (192 px). Der Schriftzug im Logo bleibt ungenutzt: er nimmt dort nur rund ein Neuntel der Bildhöhe ein, für lesbare 16 px bräuchte man ein 137 px hohes Logo. Deshalb Zeichen als Bild, Name als echter Text. Wird das Logo in der App geändert, hier neu kopieren:
+
+```bash
+sips --resampleWidth 192 ../GolfTrackApp/Assets.xcassets/AppLogo.imageset/AppLogo.png --out public/logo.png
+```
+
+Knöpfe folgen der App: flächiges Messing, Radius 0.85 rem, dunkle Schrift, kein Farbverlauf und kein Leuchtschein.
 
 ## Bildschirmfotos aus der App
 
@@ -117,6 +131,9 @@ Die Kennung (`slug`) landet in QR-Codes und Universal Links. Sie lässt sich än
 | GET     | `/api/v1/courses?kind=golf` | nur Golfplätze                   |
 | GET     | `/api/v1/courses/{slug}`    | eine einzelne Anlage             |
 | POST    | `/api/submissions`          | Formular (Rate-Limit, Honigtopf) |
+| GET     | `/api/v1/ads`               | laufende Anzeigen für die App    |
+| POST    | `/api/v1/ads/event`         | Sichtkontakte und Tipps zählen   |
+| POST    | `/api/ads/request`          | Buchungsanfrage von `/werbung`   |
 
 Die Feldnamen entsprechen `BundledCourseEntry` und `MinigolfCourseEntry` in der iOS-App, damit dort nichts umgerechnet werden muss. Beschreibung der Felder: `/api-docs`.
 
@@ -125,6 +142,16 @@ Die Feldnamen entsprechen `BundledCourseEntry` und `MinigolfCourseEntry` in der 
 `GolfTrackApp/Services/CourseCatalogService.swift` lädt den Katalog, legt ihn in Application Support ab und führt ihn mit den eingebauten Plätzen zusammen (bei Namensgleichheit gewinnt der eingebaute Eintrag). Ohne Netz bleibt der letzte Stand nutzbar; die eingebauten Plätze funktionieren immer.
 
 Verwendet wird der Dienst in `AddCourseSheetView` (Platzauswahl), `MinigolfView` (Anlagenliste) und `ContentView` (QR- und Universal-Links).
+
+## Werbung
+
+Unter den Spielernamen in der Minigolf-Zählkarte steht ein Feld, das sich verkaufen lässt. Verwaltet wird es unter `/admin/werbung`, angefragt von Betreibern unter `/werbung`.
+
+- Eine Anzeige gehört entweder zu einer Anlage (`course_slug`) oder gilt überall. **Die Anlage geht vor** — wer den Platz vor Ort bezahlt hat, bekommt ihn auch.
+- `status`: `draft` (nur im Adminpanel), `active` (läuft), `paused`. Anfragen über das Formular landen als `draft` mit `source = 'form'`.
+- Die App lädt über `/api/v1/ads` **alle** laufenden Anzeigen und wählt vor Ort selbst aus. Grund: auf einer Anlage im Wald ist selten Netz, und der Platz soll trotzdem gefüllt sein.
+- Gezählt wird in `ad_stats` nur „Anzeige X, Tag Y, n mal gesehen / getippt". Keine Gerätekennung, kein Standort, nichts Personenbezogenes — deshalb braucht der Slot keinen Einwilligungsdialog. Die Zahlen sind damit auch nicht fälschungssicher; für die Abrechnung mit einer Anlage reicht das, für einen Werbemarkt mit fremdem Geld nicht.
+- In der App: `GolfTrackApp/Services/AdCatalogService.swift` (Laden, Auswahl, Zähler) und `Views/Minigolf/MinigolfAdSlotView.swift` (Darstellung). Wer ein Abo oder den Einmalkauf `GolfTrack_werbefrei` hat, sieht die Fläche gar nicht.
 
 ## Sicherung
 

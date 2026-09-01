@@ -19,7 +19,7 @@
   --color-cream: #f2ede3;
   --color-muted: #a9bcae;
 
-  --font-display: var(--font-fraunces), "Iowan Old Style", Georgia, serif;
+  --font-display: var(--font-manrope), ui-sans-serif, system-ui, sans-serif;
   --font-sans: var(--font-instrument), ui-sans-serif, system-ui, sans-serif;
   --font-mono: var(--font-dm-mono), ui-monospace, "SF Mono", monospace;
 }
@@ -27,6 +27,12 @@
 @layer base {
   html {
     scroll-behavior: smooth;
+    /*
+      Eigene Farbe für die Wurzel: sonst reicht `body` seinen Hintergrund an
+      die Leinwand weiter, und der Verlauf sitzt nicht mehr dort, wo er
+      gezeichnet wurde.
+    */
+    background-color: #08180f;
   }
 
   body {
@@ -35,6 +41,20 @@
     font-family: var(--font-sans);
     font-synthesis-weight: none;
     -webkit-font-smoothing: antialiased;
+  }
+
+  /*
+    Überschriften laufen grundsätzlich im Display-Schnitt, fett und eng.
+    Manrope regular wirkt bei 3 rem dünn und beliebig – erst ab 700 mit
+    negativer Laufweite bekommt eine Zeile Gewicht.
+  */
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--font-display);
+    font-weight: 700;
+    letter-spacing: -0.025em;
   }
 
   ::selection {
@@ -61,11 +81,27 @@
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E");
   }
 
-  /* Lichtschein wie eine Flutlichtstange hinter dem Inhalt. */
+  /*
+    Hintergrund der ganzen Seite: ein Licht über der Bühne und darunter ein
+    einziger, sehr langsamer Verlauf ins Dunklere.
+
+    Die beiden Lichtkegel sind in `rem` gerechnet, nicht in Prozent. Prozent
+    beziehen sich auf die Höhe des `body` – auf einer 14 000 px langen Seite
+    wird daraus ein 11 000 px hoher Schleier, der nirgends anfängt und
+    nirgends aufhört. Mit festen Längen liegt das Licht dort, wo es hingehört:
+    über dem ersten Bildschirm.
+
+    Der lineare Verlauf läuft über die volle Seitenhöhe und wird nicht
+    wiederholt. Deshalb gibt es keine Kante, an der die Farbe springt – die
+    Abschnitte trennen Haarlinien und Abstände, keine Farbflächen.
+  */
   .glow {
     background-image:
-      radial-gradient(120% 80% at 50% -10%, rgba(40, 130, 75, 0.28) 0%, transparent 62%),
-      radial-gradient(60% 50% at 85% 8%, rgba(201, 160, 53, 0.14) 0%, transparent 70%);
+      radial-gradient(72rem 34rem at 50% -8rem, rgba(40, 130, 75, 0.32), transparent 68%),
+      radial-gradient(34rem 22rem at 88% 1rem, rgba(201, 160, 53, 0.14), transparent 70%),
+      linear-gradient(180deg, #0b2114 0%, #08180f 26%, #071510 62%, #050f0a 100%);
+    background-repeat: no-repeat;
+    background-attachment: scroll;
   }
 
   .rule {
@@ -203,32 +239,37 @@
     margin-bottom: 0.35rem;
   }
 
-  /* Messingschild-Knopf. */
+  /*
+    Knöpfe wie in der App: flächiges Gold, gerundetes Rechteck, dunkle Schrift.
+    Vorher waren es Pillen mit Farbverlauf, Leuchtschein und Anheben beim
+    Überfahren – drei Effekte, die eine Fläche nach Knopf aus den 2010ern
+    aussehen lassen. Geblieben ist eine schlichte Aufhellung.
+  */
   .btn-brass {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    gap: 0.55rem;
-    background: linear-gradient(180deg, var(--color-brass-soft), var(--color-brass));
-    color: #241a04;
-    font-weight: 600;
-    letter-spacing: 0.01em;
-    padding: 0.8rem 1.4rem;
-    border-radius: 999px;
-    box-shadow: 0 10px 30px -12px rgba(201, 160, 53, 0.7);
-    transition: transform 0.18s cubic-bezier(0.2, 0.8, 0.3, 1), box-shadow 0.18s ease;
+    gap: 0.5rem;
+    min-height: 48px;
+    background: var(--color-brass);
+    color: #1c1400;
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 0.95rem;
+    letter-spacing: -0.01em;
+    padding: 0.7rem 1.4rem;
+    border-radius: 0.85rem;
+    transition: background 0.15s ease;
   }
   .btn-brass:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 16px 36px -12px rgba(201, 160, 53, 0.85);
-  }
-  .btn-brass:active {
-    transform: translateY(0);
+    background: var(--color-brass-soft);
   }
   .btn-brass:disabled {
-    opacity: 0.55;
-    transform: none;
+    opacity: 0.5;
     cursor: not-allowed;
+  }
+  .btn-brass:disabled:hover {
+    background: var(--color-brass);
   }
 
   .btn-ghost {
@@ -236,20 +277,27 @@
     align-items: center;
     justify-content: center;
     gap: 0.5rem;
-    padding: 0.78rem 1.3rem;
-    border-radius: 999px;
-    border: 1px solid color-mix(in srgb, var(--color-brass) 40%, transparent);
+    min-height: 48px;
+    padding: 0.7rem 1.3rem;
+    border-radius: 0.85rem;
+    border: 1px solid rgba(242, 237, 227, 0.22);
     color: var(--color-cream);
-    transition: background 0.18s ease, border-color 0.18s ease;
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 0.95rem;
+    letter-spacing: -0.01em;
+    transition: background 0.15s ease, border-color 0.15s ease;
   }
   .btn-ghost:hover {
-    background: rgba(201, 160, 53, 0.1);
-    border-color: var(--color-brass);
+    background: rgba(242, 237, 227, 0.07);
+    border-color: rgba(242, 237, 227, 0.4);
   }
 
   /* Marginalie: "01 / Scorekarte" am linken Rand eines Abschnitts. */
   .marginal {
     font-family: var(--font-mono);
+    /* Eigenes Gewicht: sonst erbt eine Marginalie in einem h2 die fetten 700. */
+    font-weight: 400;
     font-size: 0.7rem;
     letter-spacing: 0.22em;
     text-transform: uppercase;

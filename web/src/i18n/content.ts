@@ -16,7 +16,7 @@ const de = {
   nav: {
     home: "Start",
     directory: "Plätze",
-    submit: "Platz eintragen",
+    submit: "Anlage eintragen",
     support: "Hilfe",
     api: "API",
     langSwitch: "English",
@@ -27,9 +27,9 @@ const de = {
   home: {
     eyebrow: "iPhone · Apple Watch",
     title: "Deine Runde,\nLoch für Loch.",
-    lead: "Jede Runde aufzeichnen, jeden Schlag verorten, dein Handicap automatisch berechnen. Ohne Abo loslegen.",
+    lead: "Jede Runde aufzeichnen, jeden Schlag verorten, das Handicap automatisch fortschreiben. Dieser Teil kostet nichts und braucht kein Abo.",
     ctaPrimary: "Im App Store laden",
-    ctaSecondary: "Platz eintragen",
+    ctaSecondary: "Anlage eintragen",
     heroShotAlt: "Startbildschirm von GolfTrack mit Handicap-Index, letzter Runde und Wetter am Platz",
     scorecardCaption: "Wie in der App: Loch, Par, Schläge.",
     scorecardLabels: { title: "Scorekarte", hole: "Loch", par: "Par", me: "Ich", out: "Out" },
@@ -70,7 +70,7 @@ const de = {
     features: [
       {
         title: "Scorekarte",
-        body: "Schläge, Putts, Fairway und Grün pro Loch – auf dem iPhone oder direkt am Handgelenk. Auch für mehrere Mitspieler.",
+        body: "Schläge, Putts, Fairway und Grün pro Loch am iPhone, die Schläge auch an der Uhr. Auch für mehrere Mitspieler.",
       },
       {
         title: "Handicap nach WHS",
@@ -86,11 +86,11 @@ const de = {
       },
       {
         title: "Minigolf-Modus",
-        body: "Bahn für Bahn zählen, für die ganze Gruppe. Per QR-Code an der Anlage startet die Runde ohne Tippen.",
+        body: "Bahn für Bahn zählen, für die ganze Gruppe. Wer den QR-Code an der Anlage scannt, startet die Runde mit der richtigen Bahnenzahl.",
       },
       {
         title: "Wetter am Platz",
-        body: "Wind, Regenwahrscheinlichkeit und Temperatur für die nächsten Stunden – bevor du losfährst.",
+        body: "Wind, Regenwahrscheinlichkeit und Temperatur für die nächsten Stunden, abgefragt für den Ort des Platzes.",
       },
     ],
     watchEyebrow: "04 — Apple Watch",
@@ -113,7 +113,7 @@ const de = {
     trackingEyebrow: "05 — GPS",
     trackingTitle: "Positions-Tracking",
     trackingBody:
-      "GolfTrack kann aufzeichnen, wo du während der Runde unterwegs warst, und daraus lernen, wie die Löcher liegen. Nach ein paar Runden steht die Entfernung zur Fahne einfach da.",
+      "GolfTrack kann aufzeichnen, wo du während der Runde unterwegs warst, und daraus lernen, wie die Löcher liegen. Nach ein paar Runden zeigt die App die Entfernung zur Fahne, weil sie die Lage der Löcher aus deinen eigenen Wegen kennt.",
     trackingPoints: [
       "Standardmäßig ausgeschaltet",
       "Läuft nur während einer Runde",
@@ -173,22 +173,22 @@ const de = {
     ],
     modesFooter: "Dazu neun Achievements über Game Center.",
 
-    priceEyebrow: "08 — Preise",
-    priceTitle: "Was nichts kostet, was etwas kostet",
+    priceEyebrow: "08 — Kosten",
+    priceTitle: "Preise und Abos",
     priceFree:
-      "Runden aufzeichnen, Scorekarte, Handicap und Statistiken sind kostenlos. Ein Konto bei mir brauchst du dafür nicht.",
+      "Runden aufzeichnen, Scorekarte, Handicap und Statistiken sind kostenlos und brauchen kein Konto bei mir.",
     pricePlans: [
       { title: "Training", body: "17 Audio-Trainings, vom Griff bis zum Grün lesen." },
       { title: "Caddy", body: "Sprach-Assistent während der Runde: Schlägerwahl, Entfernungen, Fragen zu den Regeln." },
       { title: "Pro", body: "Training und Caddy in einem Abo, mit unbegrenzten Caddy-Gesprächen." },
     ],
-    priceNote: "Monatlich, jederzeit kündbar, keine Bindung. Was es kostet, steht im App Store.",
+    priceNote: "Alle drei laufen monatlich und lassen sich jederzeit im App Store kündigen; dort steht auch der Preis.",
     priceShotAlt: "Audio-Trainings nach Kategorien, mit Fortschritt je Einheit",
 
     coursesEyebrow: "09 — Anlagen",
     coursesTitle: "Für Golfclubs und Minigolfanlagen",
     coursesBody:
-      "Trag deine Anlage einmal ein: Löcher, Par, Stroke Index, Längen, Course und Slope Rating. Nach der Freigabe erscheint sie in der App – jeder Gast findet sie beim Rundenstart, ohne etwas abzutippen.",
+      "Trag deine Anlage einmal ein: Löcher, Par, Stroke Index, Längen, Course und Slope Rating. Nach der Freigabe steht sie in der App, und Gäste wählen sie beim Rundenstart aus der Liste.",
     coursesPoints: [
       { title: "Kostenlos", body: "Für die Anlage entstehen keine Kosten." },
       { title: "Geprüft", body: "Jede Einsendung wird vor der Veröffentlichung von Hand kontrolliert." },
@@ -205,14 +205,14 @@ const de = {
   directory: {
     title: "Eingetragene Plätze",
     lead: "Alle freigegebenen Anlagen. Die App lädt genau diese Liste.",
-    empty: "Noch keine freigegebenen Plätze. Deine Anlage kann die erste sein.",
+    empty: "Bisher ist keine Anlage freigegeben.",
     golf: "Golfplätze",
     minigolf: "Minigolfanlagen",
     holes: "Löcher",
     lanes: "Bahnen",
     par: "Par",
     rating: "CR / Slope",
-    submitCta: "Eigene Anlage eintragen",
+    submitCta: "Anlage eintragen",
     apiHint: "Dieselben Daten als JSON:",
     qrDownload: "QR-Code",
     qrTitle: "QR-Code für den Aushang",
@@ -244,9 +244,9 @@ const de = {
     latitude: "Breitengrad",
     longitude: "Längengrad",
     useLocation: "Aktuellen Standort übernehmen",
-    locationDenied: "Standort nicht verfügbar – bitte von Hand eintragen.",
+    locationDenied: "Standort nicht verfügbar. Bitte von Hand eintragen.",
     courseRating: "Course Rating",
-    courseRatingHint: "z. B. 71,4 – steht auf der Scorekarte",
+    courseRatingHint: "Steht auf der Scorekarte, zum Beispiel 71,4",
     slopeRating: "Slope Rating",
     slopeRatingHint: "55 bis 155, Standard 113",
     holeTableHint:
@@ -261,7 +261,7 @@ const de = {
     autofillHcp: "Stroke Index 1–18 vorbelegen",
     clearHoles: "Tabelle leeren",
     facilityNotes: "Platzinfos",
-    facilityNotesHint: "Toiletten, Wasserstellen, Defibrillator, Gastronomie – erscheint in der App unter dem Platz.",
+    facilityNotesHint: "Toiletten, Wasserstellen, Defibrillator, Gastronomie. Erscheint in der App unter dem Platz.",
     welcome: "Begrüßung",
     welcomeHint: "Wird Gästen beim Start der Runde angezeigt (vor allem für Minigolf per QR-Code).",
     website: "Website",
@@ -290,13 +290,13 @@ const de = {
   },
   support: {
     title: "Hilfe & Kontakt",
-    lead: "Fragen zur App, zu einem Eintrag oder zum Abo? Schreib mir.",
+    lead: "Fragen zur App, zu einem Eintrag oder zu den Abos beantworte ich per Mail.",
     contactTitle: "Kontakt",
     faqTitle: "Häufige Fragen",
     faq: [
       {
         q: "Kostet die App etwas?",
-        a: "Runden aufzeichnen, Scorekarte, Handicap und Statistiken sind kostenlos. Optional gibt es Abos für Trainingsfunktionen und den Sprach-Caddy.",
+        a: "Runden aufzeichnen, Scorekarte, Handicap und Statistiken sind kostenlos. Für die Audio-Trainings und den Sprach-Caddy gibt es Abos, einzeln oder zusammen als Pro.",
       },
       {
         q: "Wie kommt mein Platz in die App?",
@@ -304,7 +304,7 @@ const de = {
       },
       {
         q: "Etwas an unserem Platz hat sich geändert.",
-        a: "Schreib mir eine kurze Mail mit den neuen Werten – ich pflege sie ein, die Kennung des Platzes bleibt gleich.",
+        a: "Schreib mir eine kurze Mail mit den neuen Werten. Ich pflege sie ein, die Kennung des Platzes bleibt gleich.",
       },
       {
         q: "Werden meine Positionsdaten hochgeladen?",
@@ -312,7 +312,7 @@ const de = {
       },
       {
         q: "Wie funktioniert der QR-Code an der Minigolfanlage?",
-        a: "Der Code enthält einen Link, der die App mit der richtigen Anlage und Bahnenzahl öffnet. Gäste scannen und können sofort zählen.",
+        a: "Der Code enthält einen Link, der die App mit der richtigen Anlage und Bahnenzahl öffnet, sodass Gäste nach dem Scannen sofort zählen können.",
       },
     ],
   },
@@ -349,7 +349,7 @@ const en: Content = {
   nav: {
     home: "Home",
     directory: "Courses",
-    submit: "List a course",
+    submit: "List your venue",
     support: "Help",
     api: "API",
     langSwitch: "Deutsch",
@@ -360,9 +360,9 @@ const en: Content = {
   home: {
     eyebrow: "iPhone · Apple Watch",
     title: "Your round,\nhole by hole.",
-    lead: "Record every round, place every shot, let your handicap work itself out. No subscription needed to start.",
+    lead: "Record every round, place every shot, keep the handicap up to date. That part is free and needs no subscription.",
     ctaPrimary: "Get it on the App Store",
-    ctaSecondary: "List a course",
+    ctaSecondary: "List your venue",
     heroShotAlt: "GolfTrack home screen with handicap index, last round and weather at the course",
     scorecardCaption: "Just like the app: hole, par, strokes.",
     scorecardLabels: { title: "Scorecard", hole: "Hole", par: "Par", me: "Me", out: "Out" },
@@ -403,7 +403,7 @@ const en: Content = {
     features: [
       {
         title: "Scorecard",
-        body: "Strokes, putts, fairways and greens per hole – on the iPhone or straight from your wrist. Several players at once.",
+        body: "Strokes, putts, fairways and greens per hole on the iPhone, strokes on the watch as well. Several players at once.",
       },
       {
         title: "WHS handicap",
@@ -419,11 +419,11 @@ const en: Content = {
       },
       {
         title: "Minigolf mode",
-        body: "Count lane by lane for the whole group. A QR code at the venue starts the round without any typing.",
+        body: "Count lane by lane for the whole group. Scanning the QR code at the venue starts the round with the right number of lanes.",
       },
       {
         title: "Weather on site",
-        body: "Wind, chance of rain and temperature for the next few hours – before you set off.",
+        body: "Wind, chance of rain and temperature for the next few hours, taken for the location of the course.",
       },
     ],
     watchEyebrow: "04 — Apple Watch",
@@ -446,7 +446,7 @@ const en: Content = {
     trackingEyebrow: "05 — GPS",
     trackingTitle: "Position tracking",
     trackingBody:
-      "GolfTrack can record where you walked during a round and learn from it how the holes are laid out. After a few rounds the distance to the pin is simply there.",
+      "GolfTrack can record where you walked during a round and learn from it how the holes are laid out. After a few rounds it shows the distance to the pin, because it has worked out the layout from your own walks.",
     trackingPoints: [
       "Off by default",
       "Runs only during a round",
@@ -506,22 +506,22 @@ const en: Content = {
     ],
     modesFooter: "Plus nine achievements through Game Center.",
 
-    priceEyebrow: "08 — Price",
-    priceTitle: "What is free, what is not",
+    priceEyebrow: "08 — Cost",
+    priceTitle: "Price and subscriptions",
     priceFree:
-      "Recording rounds, the scorecard, handicap and statistics are free. You do not need an account with me for any of it.",
+      "Recording rounds, the scorecard, handicap and statistics are free and need no account with me.",
     pricePlans: [
       { title: "Training", body: "17 audio lessons, from the grip to reading a green." },
       { title: "Caddy", body: "A voice assistant during the round: club choice, distances, questions about the rules." },
       { title: "Pro", body: "Training and Caddy in one subscription, with unlimited Caddy conversations." },
     ],
-    priceNote: "Monthly, cancel any time, no commitment. The price is shown in the App Store.",
+    priceNote: "All three run monthly and can be cancelled in the App Store, where the price is shown as well.",
     priceShotAlt: "Audio lessons by category, with progress per lesson",
 
     coursesEyebrow: "09 — Venues",
     coursesTitle: "For golf clubs and minigolf venues",
     coursesBody:
-      "List your venue once: holes, par, stroke index, lengths, course and slope rating. Once approved it shows up in the app – every visitor finds it when starting a round, with nothing to type in.",
+      "List your venue once: holes, par, stroke index, lengths, course and slope rating. Once approved it appears in the app, and visitors pick it from the list when they start a round.",
     coursesPoints: [
       { title: "Free", body: "There is no cost for the venue." },
       { title: "Reviewed", body: "Every submission is checked by hand before it goes live." },
@@ -538,14 +538,14 @@ const en: Content = {
   directory: {
     title: "Listed courses",
     lead: "Every approved venue. This is exactly the list the app loads.",
-    empty: "No approved courses yet. Yours could be the first.",
+    empty: "No venue has been approved yet.",
     golf: "Golf courses",
     minigolf: "Minigolf venues",
     holes: "holes",
     lanes: "lanes",
     par: "Par",
     rating: "CR / slope",
-    submitCta: "List your own venue",
+    submitCta: "List your venue",
     apiHint: "The same data as JSON:",
     qrDownload: "QR code",
     qrTitle: "QR code for the venue sign",
@@ -577,9 +577,9 @@ const en: Content = {
     latitude: "Latitude",
     longitude: "Longitude",
     useLocation: "Use my current location",
-    locationDenied: "Location unavailable – please enter it manually.",
+    locationDenied: "Location unavailable. Please enter it manually.",
     courseRating: "Course rating",
-    courseRatingHint: "e.g. 71.4 – printed on the scorecard",
+    courseRatingHint: "Printed on the scorecard, for example 71.4",
     slopeRating: "Slope rating",
     slopeRatingHint: "55 to 155, standard is 113",
     holeTableHint:
@@ -594,7 +594,7 @@ const en: Content = {
     autofillHcp: "Prefill stroke index 1–18",
     clearHoles: "Clear table",
     facilityNotes: "Facilities",
-    facilityNotesHint: "Toilets, water points, defibrillator, catering – shown in the app under the course.",
+    facilityNotesHint: "Toilets, water points, defibrillator, catering. Shown in the app under the course.",
     welcome: "Welcome message",
     welcomeHint: "Shown to guests when a round starts (mainly for minigolf via QR code).",
     website: "Website",
@@ -623,13 +623,13 @@ const en: Content = {
   },
   support: {
     title: "Help & contact",
-    lead: "Questions about the app, a listing or a subscription? Drop me a line.",
+    lead: "Questions about the app, a listing or the subscriptions are answered by email.",
     contactTitle: "Contact",
     faqTitle: "Frequently asked",
     faq: [
       {
         q: "Does the app cost anything?",
-        a: "Recording rounds, the scorecard, handicap and statistics are free. There are optional subscriptions for training features and the voice caddy.",
+        a: "Recording rounds, the scorecard, handicap and statistics are free. The audio lessons and the voice caddy are subscriptions, separately or together as Pro.",
       },
       {
         q: "How does my course get into the app?",
@@ -637,7 +637,7 @@ const en: Content = {
       },
       {
         q: "Something about our course has changed.",
-        a: "Send me a short email with the new values – I will update them, and the course keeps its identifier.",
+        a: "Send me a short email with the new values. I will update them, and the course keeps its identifier.",
       },
       {
         q: "Is my location data uploaded?",
@@ -645,7 +645,7 @@ const en: Content = {
       },
       {
         q: "How does the QR code at a minigolf venue work?",
-        a: "The code holds a link that opens the app with the right venue and number of lanes. Guests scan it and start counting.",
+        a: "The code holds a link that opens the app with the right venue and number of lanes, so guests can scan it and start counting.",
       },
     ],
   },

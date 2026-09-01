@@ -124,7 +124,7 @@ export default async function AdminDetailPage({ params }: PageProps<"/admin/[id]
       {/* Kontrolle: was die App bekommt */}
       <section className="mt-12">
         <h2 className="marginal">So sieht es die App</h2>
-        <pre className="mt-3 overflow-x-auto rounded-sm border rule bg-night/85 p-5 font-mono text-xs leading-relaxed text-cream/65">
+        <pre className="mt-3 overflow-x-auto rounded-sm border rule bg-black/25 p-5 font-mono text-xs leading-relaxed text-cream/65">
           {JSON.stringify(feed, null, 2)}
         </pre>
       </section>

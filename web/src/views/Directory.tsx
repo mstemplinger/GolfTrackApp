@@ -16,7 +16,7 @@ export async function Directory({ lang }: { lang: Lang }) {
       <PageHeader index="10 — Katalog" title={copy.title} lead={copy.lead} />
       <main className="mx-auto max-w-6xl px-5 py-14 sm:px-8 sm:py-16">
         {courses.length === 0 ? (
-          <div className="rounded-sm border rule bg-moss/30 p-10 text-center">
+          <div className="rounded-sm border rule bg-black/20 p-10 text-center">
             <p className="text-cream/70">{copy.empty}</p>
             <Link href={path("submit", lang)} className="btn-brass mt-6">
               {copy.submitCta}
@@ -94,7 +94,7 @@ function CourseGroup({
           );
 
           return (
-            <li key={course.id} className="bg-night/85 p-6 transition-colors hover:bg-moss-2/60">
+            <li key={course.id} className="bg-black/25 p-6 transition-colors hover:bg-white/[0.04]">
               {course.kind === "minigolf" ? (
                 <>
                   <Link href={`/minigolf/${course.slug}`} className="block">

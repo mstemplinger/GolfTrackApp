@@ -1,10 +1,17 @@
-import { DM_Mono, Fraunces, Instrument_Sans } from "next/font/google";
+import { DM_Mono, Instrument_Sans, Manrope } from "next/font/google";
 
-/** Display: eine warme, leicht eigenwillige Serif – wie ein graviertes Clubschild. */
-export const fraunces = Fraunces({
+/**
+ * Display: Manrope, geometrischer Grotesk mit kräftigem Fettschnitt.
+ *
+ * Vorher stand hier Fraunces, eine warme Old-Style-Serife. Die passte weder
+ * zur App – deren Oberfläche ist durchgehend serifenlos – noch zum eigenen
+ * Logo, dessen Wortmarke ebenfalls ein geometrischer Grotesk ist. Große
+ * Überschriften laufen deshalb jetzt in derselben Formensprache wie das
+ * Zeichen darüber.
+ */
+export const manrope = Manrope({
   subsets: ["latin"],
-  variable: "--font-fraunces",
-  axes: ["SOFT", "WONK", "opsz"],
+  variable: "--font-manrope",
   display: "swap",
 });
 
@@ -22,4 +29,4 @@ export const dmMono = DM_Mono({
   display: "swap",
 });
 
-export const fontVariables = `${fraunces.variable} ${instrument.variable} ${dmMono.variable}`;
+export const fontVariables = `${manrope.variable} ${instrument.variable} ${dmMono.variable}`;

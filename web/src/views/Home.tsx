@@ -10,8 +10,9 @@ import { APP_STORE_URL, path, type Lang } from "@/i18n/routes";
  * Startseite.
  *
  * Der Rhythmus wechselt bewusst von Abschnitt zu Abschnitt: Bühne mit Gerät,
- * Filmstreifen, Rasterwand, dunkles Band, Zeichnung neben Foto, reine
- * Typografie. Sonst sieht jede Sektion aus wie die davor.
+ * Filmstreifen, Rasterwand, Uhrenpaar, Zeichnung neben Foto, reine Typografie.
+ * Getrennt wird mit Haarlinien und Abstand, nicht mit Farbflächen – der
+ * Hintergrund läuft als ein einziger Verlauf durch (siehe `.glow`).
  */
 export function Home({ lang }: { lang: Lang }) {
   const copy = t(lang);
@@ -29,12 +30,12 @@ export function Home({ lang }: { lang: Lang }) {
             <div>
               <p className="marginal reveal">{home.eyebrow}</p>
               <h1
-                className="reveal mt-5 font-display text-[clamp(2.5rem,7vw,4.6rem)] font-normal leading-[0.98] tracking-[-0.02em]"
+                className="reveal mt-5 font-display text-[clamp(2.5rem,7vw,4.6rem)] font-extrabold leading-[0.95] tracking-[-0.04em]"
                 style={{ animationDelay: "80ms" }}
               >
                 {titleTop}
                 <br />
-                <span className="text-brass italic">{titleBottom}</span>
+                <span className="text-brass">{titleBottom}</span>
               </h1>
               <p
                 className="reveal mt-6 max-w-md text-lg leading-relaxed text-cream/75"
@@ -74,7 +75,7 @@ export function Home({ lang }: { lang: Lang }) {
         </section>
 
         {/* 02 — Ablauf: vier Schritte als Filmstreifen */}
-        <section id="runde" className="border-t rule bg-moss/25">
+        <section id="runde" className="border-t rule">
           <div className="mx-auto max-w-6xl px-5 py-16 sm:px-8 sm:py-20">
             <SectionHeading index={home.roundEyebrow} title={home.roundTitle} lead={home.roundLead} />
             {/*
@@ -105,7 +106,7 @@ export function Home({ lang }: { lang: Lang }) {
             <SectionHeading index={home.featuresEyebrow} title={home.featuresTitle} />
             <ul className="mt-12 grid gap-px overflow-hidden rounded-sm border rule bg-brass/15 sm:grid-cols-2 lg:grid-cols-3">
               {home.features.map((feature, index) => (
-                <li key={feature.title} className="bg-night/85 p-7 transition-colors hover:bg-moss-2/70">
+                <li key={feature.title} className="bg-black/25 p-7 transition-colors hover:bg-white/[0.04]">
                   <span className="marginal">{String(index + 1).padStart(2, "0")}</span>
                   <h3 className="mt-3 font-display text-xl tracking-tight">{feature.title}</h3>
                   <p className="mt-2.5 text-sm leading-relaxed text-cream/65">{feature.body}</p>
@@ -115,8 +116,8 @@ export function Home({ lang }: { lang: Lang }) {
           </div>
         </section>
 
-        {/* 04 — Uhr: dunkleres Band, zwei kleine Geräte nebeneinander */}
-        <section id="watch" className="border-t rule bg-[#050f09]">
+        {/* 04 — Uhr: zwei kleine Geräte neben dem Text */}
+        <section id="watch" className="border-t rule">
           <div className="mx-auto grid max-w-6xl items-center gap-12 px-5 py-16 sm:px-8 sm:py-24 lg:grid-cols-[0.9fr_1.1fr]">
             <div className="flex items-end justify-center gap-5 sm:gap-8 lg:order-2 lg:justify-end">
               <WatchShot shot="w1-setup" alt={home.watchAlts[0]} width={188} className="mb-8" />
@@ -169,7 +170,7 @@ export function Home({ lang }: { lang: Lang }) {
         </section>
 
         {/* 06 — Zahlen: Text links, zwei versetzte Geräte rechts */}
-        <section id="zahlen" className="border-t rule bg-moss/25">
+        <section id="zahlen" className="border-t rule">
           <div className="mx-auto grid max-w-6xl items-center gap-14 px-5 py-16 sm:px-8 sm:py-24 lg:grid-cols-[0.95fr_1.05fr]">
             <SectionHeading index={home.statsEyebrow} title={home.statsTitle} lead={home.statsBody} />
             <div className="flex items-start justify-center gap-4 sm:gap-8 lg:justify-end">
@@ -211,7 +212,7 @@ export function Home({ lang }: { lang: Lang }) {
         </section>
 
         {/* 08 — Preise */}
-        <section id="preise" className="border-t rule bg-moss/25">
+        <section id="preise" className="border-t rule">
           <div className="mx-auto grid max-w-6xl gap-14 px-5 py-16 sm:px-8 sm:py-24 lg:grid-cols-[1.05fr_0.95fr]">
             <div>
               <SectionHeading index={home.priceEyebrow} title={home.priceTitle} lead={home.priceFree} />
@@ -239,7 +240,7 @@ export function Home({ lang }: { lang: Lang }) {
               <div>
                 <dl className="grid gap-px overflow-hidden rounded-sm border rule bg-brass/15 sm:grid-cols-2">
                   {home.coursesPoints.map((point) => (
-                    <div key={point.title} className="bg-night/85 p-6">
+                    <div key={point.title} className="bg-black/25 p-6">
                       <dt className="font-display text-lg tracking-tight text-brass-soft">{point.title}</dt>
                       <dd className="mt-1.5 text-sm leading-relaxed text-cream/65">{point.body}</dd>
                     </div>
@@ -259,9 +260,9 @@ export function Home({ lang }: { lang: Lang }) {
         </section>
 
         {/* 10 — Schluss */}
-        <section className="border-t rule bg-[#050f09]">
+        <section className="border-t rule">
           <div className="mx-auto max-w-6xl px-5 py-16 text-center sm:px-8 sm:py-24">
-            <h2 className="mx-auto max-w-2xl font-display text-3xl leading-[1.1] tracking-tight sm:text-4xl">
+            <h2 className="mx-auto max-w-2xl font-display text-3xl leading-[1.08] tracking-[-0.03em] sm:text-4xl">
               {home.closingTitle}
             </h2>
             <p className="mt-4 text-cream/70">{home.closingBody}</p>

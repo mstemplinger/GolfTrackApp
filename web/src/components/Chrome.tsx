@@ -1,21 +1,33 @@
+import Image from "next/image";
 import Link from "next/link";
 import { APP_STORE_URL, alternatePath, path, type Lang, type RouteKey } from "@/i18n/routes";
 import { t } from "@/i18n/content";
 
-/** Wortmarke: Fahne im Loch, aus reinem Markup. */
+/**
+ * Wortmarke: das echte Zeichen der App plus der Name als Text.
+ *
+ * Die Logodatei enthält auch einen Schriftzug (`AppIcon.appiconset`), aber der
+ * nimmt dort nur gut ein Neuntel der Bildhöhe ein. Damit „GolfTrack" bei 16 px
+ * lesbar bliebe, müsste das Logo rund 137 px hoch sein – das Dreifache der
+ * Kopfleiste. Deshalb aufgeteilt: Zeichen als Bild, Name als echter Text
+ * (skalierbar, auswählbar, färbbar).
+ *
+ * Quelle: `GolfTrackApp/Assets.xcassets/AppLogo.imageset/AppLogo.png`.
+ */
 export function Wordmark({ lang, className = "" }: { lang: Lang; className?: string }) {
   return (
-    <Link href={path("home", lang)} className={`tap group gap-2.5 ${className}`}>
-      <span
+    <Link href={path("home", lang)} className={`tap gap-2.5 ${className}`}>
+      <Image
+        src="/logo.png"
+        alt=""
         aria-hidden
-        className="relative grid h-8 w-8 shrink-0 place-items-center rounded-full border border-brass/50 bg-moss-2/70"
-      >
-        <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none">
-          <path d="M8 20V4l9 3.2L8 10.4" stroke="var(--color-brass)" strokeWidth="1.6" strokeLinejoin="round" />
-          <ellipse cx="8" cy="20.4" rx="4.6" ry="1.5" fill="var(--color-fairway)" opacity="0.55" />
-        </svg>
-      </span>
-      <span className="font-display text-lg font-semibold tracking-tight">
+        width={192}
+        height={192}
+        sizes="36px"
+        className="h-9 w-9 shrink-0 rounded-[0.6rem]"
+        priority
+      />
+      <span className="font-display text-lg font-extrabold tracking-[-0.03em]">
         Golf<span className="text-brass">Track</span>
       </span>
     </Link>
@@ -38,7 +50,7 @@ export function Header({ lang, current }: { lang: Lang; current?: RouteKey }) {
   const langHref = current ? alternatePath(current, lang) : alternatePath("home", lang);
 
   return (
-    <header className="sticky top-0 z-50 border-b rule bg-night/85 backdrop-blur-md">
+    <header className="sticky top-0 z-50 border-b rule bg-[#0a1d12]/85 backdrop-blur-md">
       <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-5 py-2.5 sm:px-8">
         <Wordmark lang={lang} />
 
@@ -82,7 +94,7 @@ export function Header({ lang, current }: { lang: Lang; current?: RouteKey }) {
                 <path d="M4 7h16M4 12h16M4 17h16" strokeLinecap="round" />
               </svg>
             </summary>
-            <div className="absolute right-0 top-[calc(100%+0.7rem)] z-50 w-56 rounded-sm border rule bg-night/97 p-2 shadow-[0_24px_60px_-20px_rgba(0,0,0,0.9)] backdrop-blur-md">
+            <div className="absolute right-0 top-[calc(100%+0.7rem)] z-50 w-56 rounded-sm border rule bg-[#0a1d12]/97 p-2 shadow-[0_24px_60px_-20px_rgba(0,0,0,0.9)] backdrop-blur-md">
               <ul className="divide-y rule">
                 {NAV.map((item) => (
                   <li key={item.key}>
@@ -121,7 +133,7 @@ export function Footer({ lang }: { lang: Lang }) {
   const copy = t(lang);
   const year = new Date().getFullYear();
   return (
-    <footer className="mt-24 border-t rule bg-moss/40">
+    <footer className="mt-24 border-t rule bg-black/20">
       <div className="mx-auto grid max-w-6xl gap-8 px-5 py-14 sm:px-8 md:grid-cols-[1.4fr_1fr_1fr_1fr] md:gap-10">
         <div>
           <Wordmark lang={lang} />
@@ -207,7 +219,7 @@ export function PageHeader({
     <div className="border-b rule">
       <div className="mx-auto max-w-6xl px-5 py-14 sm:px-8 sm:py-16">
         <p className="marginal">{index}</p>
-        <h1 className="mt-3 max-w-3xl font-display text-[clamp(2.1rem,5vw,3.4rem)] leading-[1.02] tracking-[-0.02em]">
+        <h1 className="mt-3 max-w-3xl font-display text-[clamp(2.1rem,5vw,3.4rem)] font-extrabold leading-[1.0] tracking-[-0.035em]">
           {title}
         </h1>
         {lead ? <p className="mt-4 max-w-2xl leading-relaxed text-cream/70">{lead}</p> : null}
@@ -238,7 +250,7 @@ export function SectionHeading({
   return (
     <div className={`${centred ? "mx-auto max-w-2xl text-center" : "max-w-2xl"} ${className}`}>
       <p className="marginal">{index}</p>
-      <h2 className="mt-3 font-display text-3xl leading-[1.1] tracking-tight sm:text-4xl">{title}</h2>
+      <h2 className="mt-3 font-display text-3xl leading-[1.08] tracking-[-0.03em] sm:text-4xl">{title}</h2>
       {lead ? <p className="mt-4 leading-relaxed text-cream/70">{lead}</p> : null}
     </div>
   );

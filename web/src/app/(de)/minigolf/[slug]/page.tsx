@@ -24,8 +24,19 @@ export async function generateMetadata({
       `Zähle deine Runde auf der Anlage ${course.name} mit GolfTrack mit – Bahn für Bahn, für die ganze Gruppe.`,
     alternates: { canonical: `${SITE_URL}/minigolf/${course.slug}` },
     robots: { index: true, follow: true },
+    other: {
+      // Landet jemand doch im Browser – etwa weil er den Link geteilt bekommen
+      // hat statt den Code zu scannen –, bietet Safari oben den App Clip an.
+      // `app-clip-bundle-id` kennt die Metadata-API von Next nicht, deshalb
+      // von Hand.
+      "apple-itunes-app": `app-id=${APP_STORE_ID}, app-clip-bundle-id=${APP_CLIP_BUNDLE_ID}`,
+    },
   };
 }
+
+/** Kennungen für den Safari-Hinweis. Müssen zu App Store Connect passen. */
+const APP_STORE_ID = "6767996957";
+const APP_CLIP_BUNDLE_ID = "com.TobiasAufschlaeger.GolfTrackandwatch.Clip";
 
 export default async function MinigolfLandingPage({ params }: PageProps<"/minigolf/[slug]">) {
   const { slug } = await params;

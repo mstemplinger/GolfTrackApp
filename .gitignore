@@ -17,3 +17,4 @@ marketing/__pycache__/
 
 # Ausgabe von xcodebuild -target (ohne -scheme)
 build/
+marketing/flyer/out/

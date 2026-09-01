@@ -52,8 +52,22 @@ keine Sichtkontakte für die Anlage.
 1. **App-Version mit dem Clip hochladen.** Erst dann existiert die
    App-Clip-Ressource in App Store Connect.
 2. **Advanced App Clip Experiences** – eine je Anlagen-Adresse, sonst
-   erscheint beim Scannen keine Karte. Dafür gibt es
-   `marketing/asc-appclip-experiences.py`:
+   erscheint beim Scannen keine Karte.
+
+   > **Die erste muss von Hand angelegt werden.** Das Anlegen über die API
+   > scheitert (Stand 1.9.2026) an der Kennung, die der Übersetzung im
+   > `included`-Block mitgegeben werden muss: Apple weist `DE`, `de`, `de-DE`,
+   > `1`, `0`, UUIDs in jeder Schreibweise und zusammengesetzte Kennungen alle
+   > mit „The provided included entity id … has invalid format" ab, nennt das
+   > Feld in der Dokumentation aber nur „opaque resource ID" und optional.
+   > Weglassen geht nicht, weil die Beziehung `localizations` Pflicht ist.
+   >
+   > Sobald eine Experience in App Store Connect steht, liest
+   > `--show-localization-ids` die Kennung aus, die Apple selbst vergibt.
+   > Daran lässt sich das Format ablesen und in `create_experience()`
+   > eintragen – danach läuft auch das Anlegen.
+
+   Dafür gibt es `marketing/asc-appclip-experiences.py`:
 
    ```bash
    # nachsehen, was fehlt

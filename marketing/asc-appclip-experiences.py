@@ -27,9 +27,12 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
+import re
 import struct
 import sys
+import urllib.error
 import urllib.request
+import uuid
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
@@ -98,8 +101,19 @@ def upload_image(asc: ASC, path: Path) -> str:
                                      method=op["method"])
         for header in op.get("requestHeaders", []):
             req.add_header(header["name"], header["value"])
-        with urllib.request.urlopen(req, timeout=180, context=asc.ssl):
-            pass
+        try:
+            with urllib.request.urlopen(req, timeout=180, context=asc.ssl):
+                pass
+        except urllib.error.HTTPError as e:
+            body = e.read().decode(errors="replace")
+            # Apple erkennt gleiche Bilder am Inhalt wieder und nennt in der
+            # Absage die Kennung der vorhandenen Fassung. Genau die wollen wir –
+            # sonst bliebe ein zweiter Anlauf nach einem Abbruch für immer
+            # hängen.
+            match = re.search(r"already exists with id\s*-\s*([0-9a-fA-F-]{36})", body)
+            if match:
+                return match.group(1)
+            raise APIError(e.code, op["method"], op["url"], body) from None
 
     asc.patch(
         f"/v1/appClipAdvancedExperienceImages/{image['id']}",
@@ -142,6 +156,27 @@ def existing_links(asc: ASC, clip_id: str) -> dict[str, dict]:
 
 def create_experience(asc: ASC, clip_id: str, link: str, title: str, subtitle: str,
                       image_id: str, language: str, category: str, action: str) -> dict:
+    # ACHTUNG – hier klemmt es (Stand 1.9.2026).
+    #
+    # Die Übersetzung muss mitgeschickt werden, die Beziehung `localizations`
+    # ist Pflicht (ohne sie: „missing a required relationship"). Der Eintrag
+    # unter `included` braucht eine Kennung – und Apple weist jedes Format ab,
+    # das wir gefunden haben:
+    #
+    #   'DE', 'de', 'de-DE', 'DE-DE', '1', '0', <UUID> in Groß- und
+    #   Kleinschreibung, UUID ohne Bindestriche, '<clipId>_DE'
+    #     → „The provided included entity id '…' has invalid format"
+    #
+    # Die Dokumentation nennt das Feld nur „opaque resource ID" und als
+    # optional; weglassen geht aber nicht, weil die Beziehung darauf zeigt.
+    # Die Sprache selbst ist richtig: 'DE' steht so im Enum
+    # AppClipAdvancedExperienceLanguage.
+    #
+    # Der Weg heraus: **eine** Experience von Hand in App Store Connect
+    # anlegen, dann mit `--show-localization-ids` die Kennung auslesen, die
+    # Apple selbst vergibt – daran lässt sich das Format ablesen und hier
+    # eintragen. Bis dahin ist nur der lesende Teil dieses Skripts nutzbar.
+    loc_id = str(uuid.uuid4()).upper()
     body = {
         "data": {
             "type": "appClipAdvancedExperiences",
@@ -158,16 +193,14 @@ def create_experience(asc: ASC, clip_id: str, link: str, title: str, subtitle: s
                     "data": {"type": "appClipAdvancedExperienceImages", "id": image_id}
                 },
                 "localizations": {
-                    "data": [{"type": "appClipAdvancedExperienceLocalizations", "id": language}]
+                    "data": [{"type": "appClipAdvancedExperienceLocalizations", "id": loc_id}]
                 },
             },
         },
-        # Die Übersetzung muss mitgeschickt werden; die Kennung ist der
-        # Sprachcode und muss oben und hier gleich lauten.
         "included": [
             {
                 "type": "appClipAdvancedExperienceLocalizations",
-                "id": language,
+                "id": loc_id,
                 "attributes": {"language": language, "title": title, "subtitle": subtitle},
             }
         ],
@@ -189,6 +222,8 @@ def main() -> int:
     ap.add_argument("--action", default="OPEN", choices=["OPEN", "VIEW", "PLAY"],
                     help="Aufschrift des Knopfs auf der Karte")
     ap.add_argument("--only", help="nur diese Anlage (Kennung)")
+    ap.add_argument("--show-localization-ids", action="store_true",
+                    help="Kennungen der Übersetzungen vorhandener Erlebnisse zeigen")
     ap.add_argument("--verbose", action="store_true")
     args = ap.parse_args()
 
@@ -219,6 +254,20 @@ def main() -> int:
     if not courses:
         print("Keine Anlagen gefunden.")
         return 1
+
+    if args.show_localization_ids:
+        found = False
+        for entry in asc.get_all(f"/v1/appClips/{clip_id}/appClipAdvancedExperiences?limit=200"):
+            for loc in asc.get_all(
+                f"/v1/appClipAdvancedExperiences/{entry['id']}/localizations?limit=50"
+            ):
+                found = True
+                print(f"  {entry['attributes'].get('link','?')}")
+                print(f"      Kennung: {loc['id']}")
+                print(f"      Sprache: {loc['attributes'].get('language')}")
+        if not found:
+            print("Keine Übersetzungen vorhanden – erst eine Experience von Hand anlegen.")
+        return 0
 
     have = existing_links(asc, clip_id)
     print(f"{len(courses)} Anlage(n), {len(have)} Erlebnis(se) vorhanden\n")
@@ -254,8 +303,6 @@ def main() -> int:
         title, subtitle = card_texts(course)
         link = f"{SITE}/minigolf/{course['id']}"
         try:
-            # Jedes Erlebnis braucht sein eigenes Bild – dieselbe Kennung
-            # lässt sich nicht zweimal verwenden.
             image_id = upload_image(asc, args.image)
             create_experience(asc, clip_id, link, title, subtitle,
                               image_id, args.language, args.category, args.action)
@@ -263,6 +310,14 @@ def main() -> int:
             angelegt += 1
         except APIError as e:
             print(f"  FEHLER bei {course['name']}: {e}")
+            if "included entity id" in e.detail:
+                print("\n  Das ist der bekannte Haken: Apple nimmt keine der")
+                print("  Kennungen an, die für die Übersetzung in Frage kommen.")
+                print("  Lege die erste Experience von Hand in App Store Connect an")
+                print("  und rufe danach dieses Skript mit --show-localization-ids auf –")
+                print("  dann steht das erwartete Format fest. Siehe den Kommentar in")
+                print("  create_experience().")
+                break
 
     print(f"\n{angelegt} von {len(missing)} angelegt.")
     return 0 if angelegt == len(missing) else 1

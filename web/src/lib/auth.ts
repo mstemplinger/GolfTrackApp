@@ -73,3 +73,20 @@ export async function hashIp(ip: string): Promise<string> {
   const digest = await crypto.subtle.digest("SHA-256", data);
   return Buffer.from(digest).toString("base64url").slice(0, 32);
 }
+
+/**
+ * Zweiter Weg ins Backoffice: ein fester Schlüssel im `Authorization`-Kopf,
+ * für Maschinen statt Menschen (siehe `docs/freigabe-telegram-windows.md`).
+ * Bewusst getrennt vom Adminpasswort – der Schlüssel liegt auf einem anderen
+ * Rechner und lässt sich austauschen, ohne das Passwort zu ändern.
+ */
+export function apiTokenConfigured(): boolean {
+  return (process.env.ADMIN_API_TOKEN ?? "").length >= 16;
+}
+
+export function apiTokenMatches(authorizationHeader: string | null): boolean {
+  if (!apiTokenConfigured()) return false;
+  const expected = process.env.ADMIN_API_TOKEN ?? "";
+  const candidate = (authorizationHeader ?? "").replace(/^Bearer\s+/i, "").trim();
+  return candidate.length > 0 && timingSafeEqual(candidate, expected);
+}

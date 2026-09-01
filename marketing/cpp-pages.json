@@ -1,0 +1,57 @@
+{
+  "_hinweis": [
+    "Quelle der Wahrheit für die benutzerdefinierten Produktseiten.",
+    "Ein Eintrag pro Seite. 'name' ist nur intern in App Store Connect sichtbar.",
+    "'screenshots' sind Pfade relativ zu marketing/screenshots/.",
+    "Werbetext: max. 170 Zeichen, wie auf der normalen Produktseite.",
+    "Reihenfolge der Screenshots = Reihenfolge auf der Seite. Max. 10 pro Slot."
+  ],
+  "displayType": "APP_IPHONE_69",
+  "pages": [
+    {
+      "name": "Instagram",
+      "locales": {
+        "de-DE": {
+          "promotionalText": "Jede Runde aufzeichnen, jeden Schlag verorten, dein Handicap automatisch berechnen. Ohne Abo loslegen.",
+          "screenshots": [
+            "de/01-home.png",
+            "de/19-live-scorecard.png",
+            "de/09-schlagkarte.png",
+            "de/06-statistiken-chart.png",
+            "de/02-profil-handicap.png"
+          ]
+        }
+      }
+    },
+    {
+      "name": "Flyer-Golfclub",
+      "locales": {
+        "de-DE": {
+          "promotionalText": "Die Runde auf deinem Heimatplatz digital mitschreiben – mit offizieller Scorecard, WHS-Handicap und Apple Watch.",
+          "screenshots": [
+            "de/17-platzwahl.png",
+            "de/19-live-scorecard.png",
+            "de/13-rundendetail-gps.png",
+            "de/02-profil-handicap.png",
+            "de/16-spielmodi.png"
+          ]
+        }
+      }
+    },
+    {
+      "name": "Positions-Tracking",
+      "locales": {
+        "de-DE": {
+          "promotionalText": "Deine Laufspur über den Platz: jeder Schlag verortet, Distanzen pro Loch, Abschlag und Grün automatisch erkannt.",
+          "screenshots": [
+            "de/09-schlagkarte.png",
+            "de/13-rundendetail-gps.png",
+            "de/08-rundendetail.png",
+            "de/21-statistik-schlaegerdistanzen.png",
+            "de/04-schlaegerdistanzen.png"
+          ]
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,66 @@
+Betreff: Golfodrom Bad Griesbach — kurze Rückfrage zu Par, Vorgabenverteilung und Rating
+
+Guten Tag,
+
+ich entwickle GolfTrack, eine App zum Erfassen von Golfrunden für iPhone und
+Apple Watch. Ihre drei Golfodrom-Plätze (Jagl, Engled, Pfeiffer) sind darin
+bereits vollständig hinterlegt, damit Gäste ohne Einrichtungsaufwand direkt
+losspielen und ihre Runde Loch für Loch mitschreiben können.
+
+Damit die Angaben verlässlich sind, hätte ich zwei kurze Bitten:
+
+1. Stimmen die unten aufgeführten Werte — Par, Vorgabenverteilung und Längen je
+   Loch — mit Ihrer aktuellen Scorecard überein? Ein Scorecard-PDF oder ein
+   kurzes "passt so" genügt völlig.
+
+2. Für Jagl liegt mir ein Course Rating von 58,8 / Slope 105 vor, für Engled und
+   Pfeiffer bisher nicht. Falls für diese beiden Plätze Ratings vorliegen, würde
+   ich sie gerne ergänzen — andernfalls kennzeichne ich sie weiterhin als nicht
+   bewertet.
+
+Außerdem: Dürfen wir die Platznamen und den Resortnamen in der Platzauswahl der
+App weiterhin so nennen? Falls Sie das anders wünschen, ändere ich es
+selbstverständlich.
+
+Die Aufnahme ist für Sie kostenlos und mit keiner Verpflichtung verbunden. Bei
+Interesse erstelle ich Ihnen gerne kostenlos einen Aushang mit QR-Code für
+Clubhaus oder Pro-Shop — das ist aber ausdrücklich nur ein Angebot und nicht der
+Grund meiner Anfrage.
+
+Freundliche Grüße
+[Name]
+[E-Mail] · [Telefon] · [Website]
+
+
+– – – DATENAUSZUG: SO SIND IHRE PLÄTZE DERZEIT HINTERLEGT – – –
+
+GOLFODROM JAGL
+9 Loch · Par 27 · 1.223 m · Kurt Rossknecht (1989) · CR 58,8 / Slope 105
+
+  Loch      1    2    3    4    5    6    7    8    9
+  Par       3    3    3    3    3    3    3    3    3
+  Vorgabe  17   15    9   11    1    3    5    7   13
+  Meter    80   91  156  133  153  240  139  127  104
+
+GOLFODROM ENGLED
+9 Loch · Par 30 · 1.687 m · kein Rating hinterlegt
+
+  Loch      1    2    3    4    5    6    7    8    9
+  Par       3    3    3    4    3    3    4    3    4
+  Vorgabe   9   11   15    1   17   13    5    7    3
+  Meter   156  166  120  295  115  136  284  143  272
+
+GOLFODROM PFEIFFER
+9 Loch · Par 27 · 1.054 m · kein Rating hinterlegt
+
+  Loch      1    2    3    4    5    6    7    8    9
+  Par       3    3    3    3    3    3    3    3    3
+  Vorgabe   1    9    5   15   13    7    3   11   17
+  Meter   152  116  127   96  109  120  127  113   94
+
+– – –
+
+Diese Nachricht richtet sich an Sie als Betreiber der genannten Golfanlagen und
+betrifft ausschließlich die Richtigkeit der in der App hinterlegten Platzdaten.
+Wenn Sie keine weitere Nachricht von mir wünschen, genügt eine kurze Antwort —
+dann werden Ihre Kontaktdaten bei mir gelöscht.

@@ -15,6 +15,10 @@ struct ContentView: View {
     /// Über QR-Code / Universal Link gestartete Anlage – zeigt sofort den
     /// Begrüßungs- und Startbildschirm der Minigolfrunde.
     @State private var scannedMinigolfCourse: MinigolfCourseEntry?
+    /// Läuft, während der Platzkatalog wegen eines unbekannten Codes nachgeladen wird.
+    @State private var deepLinkLoading = false
+    /// Text der Meldung, wenn ein gescannter Code zu keiner Anlage führt.
+    @State private var deepLinkFehler: String?
 
     private var isMinigolfFocus: Bool { appFocus == .minigolf }
 
@@ -66,29 +70,38 @@ struct ContentView: View {
         .coordinateSpace(name: "screen")
         .onAppear(perform: migrateExistingInstall)
         .onOpenURL { url in
-            // golftrack://minigolf?platz=… → QR-Code an einer Anlage
-            if let course = CourseCatalogService.shared.course(fromDeepLink: url) {
-                openScanned(course)
-                return
-            }
-            // golftrack://home  → Home-Tab öffnen
-            // golftrack://shottracker → Home-Tab + Runde fortsetzen (via NotificationCenter)
-            if url.scheme == "golftrack" {
-                selectedTab = 0
-                if url.host == "shottracker" {
-                    NotificationCenter.default.post(name: .openShotTracker, object: nil)
-                }
-            }
+            Task { await handleDeepLink(url) }
         }
         // Universal Link bzw. App-Clip-Aufruf (…/minigolf/<anlage>)
         .onContinueUserActivity(NSUserActivityTypeBrowsingWeb) { activity in
-            guard let url = activity.webpageURL,
-                  let course = CourseCatalogService.shared.course(fromDeepLink: url) else { return }
-            openScanned(course)
+            guard let url = activity.webpageURL else { return }
+            Task { await handleDeepLink(url) }
         }
         .fullScreenCover(item: $scannedMinigolfCourse) { course in
             MinigolfCourseStartView(course: course)
                 .preferredColorScheme(.dark)
+        }
+        .overlay {
+            if deepLinkLoading {
+                ZStack {
+                    Color.black.opacity(0.55).ignoresSafeArea()
+                    ProgressView("Anlage wird gesucht …")
+                        .padding(24)
+                        .background(.regularMaterial, in: RoundedRectangle(cornerRadius: 16))
+                }
+                .transition(.opacity)
+            }
+        }
+        .alert(
+            "Anlage nicht gefunden",
+            isPresented: Binding(
+                get: { deepLinkFehler != nil },
+                set: { if !$0 { deepLinkFehler = nil } }
+            )
+        ) {
+            Button("OK", role: .cancel) { deepLinkFehler = nil }
+        } message: {
+            Text(deepLinkFehler ?? "")
         }
         // Empfehlung aus den Tipps → zum Training-Tab wechseln
         .onReceive(NotificationCenter.default.publisher(for: .openTraining)) { _ in
@@ -108,6 +121,47 @@ struct ContentView: View {
     /// QR-Code an der Anlage gescannt: direkt in die Begrüßung. Wer die App
     /// dafür frisch installiert hat, hat den Schwerpunkt noch nicht gewählt –
     /// dann ist Minigolf die passende Antwort und das Golf-Tutorial entfällt.
+    /// QR-Code oder Universal Link auswerten.
+    ///
+    /// Der Katalog gleicht sich von allein nur alle sechs Stunden ab. Eine
+    /// Anlage, die die Website vor zehn Minuten freigegeben hat, steht deshalb
+    /// oft noch nicht im Zwischenspeicher. Früher endete das stumm: der
+    /// Universal Link tat nichts, das eigene Schema landete wortlos auf dem
+    /// Home-Tab. Jetzt wird bei einem unbekannten Code einmal erzwungen
+    /// nachgeladen, und wenn die Anlage dann immer noch fehlt, sagt die App es.
+    @MainActor
+    private func handleDeepLink(_ url: URL) async {
+        if let course = CourseCatalogService.shared.course(fromDeepLink: url) {
+            openScanned(course)
+            return
+        }
+
+        // Kein Anlagen-Link: die übrigen Adressen wie bisher behandeln.
+        guard MinigolfDeepLink.courseID(from: url) != nil else {
+            // golftrack://home  → Home-Tab öffnen
+            // golftrack://shottracker → Home-Tab + Runde fortsetzen
+            if url.scheme == "golftrack" {
+                selectedTab = 0
+                if url.host == "shottracker" {
+                    NotificationCenter.default.post(name: .openShotTracker, object: nil)
+                }
+            }
+            return
+        }
+
+        deepLinkLoading = true
+        await CourseCatalogService.shared.refresh()
+        deepLinkLoading = false
+
+        if let course = CourseCatalogService.shared.course(fromDeepLink: url) {
+            openScanned(course)
+        } else if CourseCatalogService.shared.lastError != nil {
+            deepLinkFehler = "Das Platzverzeichnis ließ sich nicht laden. Prüf die Internetverbindung und scanne den Code noch einmal."
+        } else {
+            deepLinkFehler = "Diese Anlage steht noch nicht im Verzeichnis. Wurde sie gerade erst freigegeben, versuch es in ein paar Minuten noch einmal."
+        }
+    }
+
     private func openScanned(_ course: MinigolfCourseEntry) {
         if !hasChosenAppFocus {
             appFocus = .minigolf

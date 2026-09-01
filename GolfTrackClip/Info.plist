@@ -26,6 +26,35 @@
 	<string>6.0</string>
 
 	<!--
+	  Ohne diesen Schlüssel weist App Store Connect das Paket zurück (90713).
+	  Er zeigt auf den Bildsatz in GolfTrackClip/Assets.xcassets; daraus
+	  erzeugt Xcode auch die Größen 120×120 und 152×152, die Apple sonst
+	  vermisst (90022, 90023).
+	-->
+	<key>CFBundleIconName</key>
+	<string>AppIcon</string>
+
+	<!--
+	  Das Ziel läuft auf iPhone und iPad (TARGETED_DEVICE_FAMILY = 1,2),
+	  deshalb müssen beide Listen hier stehen – für das iPad verlangt Apple
+	  alle vier Lagen, sonst schlägt die Prüfung fehl (90474). Bewusst in der
+	  Datei und nicht über INFOPLIST_KEY_…, damit es nur eine Quelle gibt.
+	-->
+	<key>UISupportedInterfaceOrientations</key>
+	<array>
+		<string>UIInterfaceOrientationPortrait</string>
+		<string>UIInterfaceOrientationLandscapeLeft</string>
+		<string>UIInterfaceOrientationLandscapeRight</string>
+	</array>
+	<key>UISupportedInterfaceOrientations~ipad</key>
+	<array>
+		<string>UIInterfaceOrientationPortrait</string>
+		<string>UIInterfaceOrientationPortraitUpsideDown</string>
+		<string>UIInterfaceOrientationLandscapeLeft</string>
+		<string>UIInterfaceOrientationLandscapeRight</string>
+	</array>
+
+	<!--
 	  Macht dieses Ziel zum App Clip. Daran erkennt auch AppClipEnvironment zur
 	  Laufzeit, dass es im Clip läuft, und blendet die Werbung aus – Apple
 	  untersagt sie hier (Richtlinie 2.5.16(a)).

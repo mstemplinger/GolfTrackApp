@@ -165,13 +165,15 @@ struct TipsView: View {
                     .foregroundStyle(AppTheme.textSec)
                     .lineLimit(3)
                     .fixedSize(horizontal: false, vertical: true)
-                Text(rec.statLabel)
-                    .font(.caption2.bold())
-                    .foregroundStyle(AppTheme.gold)
-                    .padding(.horizontal, 8)
-                    .padding(.vertical, 3)
-                    .background(AppTheme.gold.opacity(0.12), in: Capsule())
-                    .padding(.top, 1)
+                if let statLabel = rec.statLabel {
+                    Text(statLabel)
+                        .font(.caption2.bold())
+                        .foregroundStyle(AppTheme.gold)
+                        .padding(.horizontal, 8)
+                        .padding(.vertical, 3)
+                        .background(AppTheme.gold.opacity(0.12), in: Capsule())
+                        .padding(.top, 1)
+                }
             }
             Spacer()
             Image(systemName: "chevron.right")

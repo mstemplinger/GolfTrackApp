@@ -14,3 +14,6 @@ marketing Kopie.zip
 
 # Python-Bytecode der Marketing-Skripte
 marketing/__pycache__/
+
+# Ausgabe von xcodebuild -target (ohne -scheme)
+build/

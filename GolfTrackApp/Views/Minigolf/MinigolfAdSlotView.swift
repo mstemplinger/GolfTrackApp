@@ -41,7 +41,7 @@ struct MinigolfAdSlotView: View {
     }
 
     var body: some View {
-        if subscriptionManager.showsAds {
+        if !AppClipEnvironment.isRunningAsAppClip && subscriptionManager.showsAds {
             content
         }
     }

@@ -14,6 +14,7 @@
 		EEB4CF852FB4BB5F00E6D6A5 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EEB4CF842FB4BB5F00E6D6A5 /* SwiftUI.framework */; };
 		EEB4CF942FB4BB6100E6D6A5 /* GolfWidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = EEB4CF802FB4BB5F00E6D6A5 /* GolfWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		EEFB8CE12FB9196B0045E2F2 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = EEFB8CE02FB9196B0045E2F2 /* Localizable.xcstrings */; };
+		AC1000000000000000000001 /* GolfTrackClip.app in Embed App Clips */ = {isa = PBXBuildFile; fileRef = AC1000000000000000000004 /* GolfTrackClip.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -59,6 +60,13 @@
 			remoteGlobalIDString = EEB4CF7F2FB4BB5F00E6D6A5;
 			remoteInfo = GolfWidgetExtension;
 		};
+		AC1000000000000000000002 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = EE0A1E7B2FA3B5250018E2EC /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = AC1000000000000000000007;
+			remoteInfo = GolfTrackClip;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -84,6 +92,17 @@
 			name = "Embed Foundation Extensions";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		AC1000000000000000000003 /* Embed App Clips */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "$(CONTENTS_FOLDER_PATH)/AppClips";
+			dstSubfolderSpec = 16;
+			files = (
+				AC1000000000000000000001 /* GolfTrackClip.app in Embed App Clips */,
+			);
+			name = "Embed App Clips";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
@@ -101,6 +120,7 @@
 		EEB4CF9C2FB4BBAE00E6D6A5 /* GolfWidget.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = GolfWidget.entitlements; sourceTree = "<group>"; };
 		EEB4CF9D2FB4BBAE00E6D6A5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		EEFB8CE02FB9196B0045E2F2 /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
+		AC1000000000000000000004 /* GolfTrackClip.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GolfTrackClip.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -117,6 +137,13 @@
 				Info.plist,
 			);
 			target = EEB4CF7F2FB4BB5F00E6D6A5 /* GolfWidgetExtension */;
+		};
+		AC1000000000000000000010 /* Exceptions for "GolfTrackClip" folder in "GolfTrackClip" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = AC1000000000000000000007 /* GolfTrackClip */;
 		};
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
@@ -160,6 +187,19 @@
 				EEB4CF982FB4BB6100E6D6A5 /* Exceptions for "GolfWidget" folder in "GolfWidgetExtension" target */,
 			);
 			path = GolfWidget;
+			sourceTree = "<group>";
+		};
+		AC1000000000000000000005 /* GolfTrackShared */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = GolfTrackShared;
+			sourceTree = "<group>";
+		};
+		AC1000000000000000000006 /* GolfTrackClip */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				AC1000000000000000000010 /* Exceptions for "GolfTrackClip" folder in "GolfTrackClip" target */,
+			);
+			path = GolfTrackClip;
 			sourceTree = "<group>";
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
@@ -218,6 +258,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		AC1000000000000000000009 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -232,6 +279,8 @@
 				EE646C382FABC99F00CD80D5 /* GolfTrackWatch Watch AppTests */,
 				EE646C422FABC99F00CD80D5 /* GolfTrackWatch Watch AppUITests */,
 				EEB4CF862FB4BB5F00E6D6A5 /* GolfWidget */,
+				AC1000000000000000000005 /* GolfTrackShared */,
+				AC1000000000000000000006 /* GolfTrackClip */,
 				EEB4CF812FB4BB5F00E6D6A5 /* Frameworks */,
 				EE0A1E842FA3B5250018E2EC /* Products */,
 				EEFB8CE02FB9196B0045E2F2 /* Localizable.xcstrings */,
@@ -248,6 +297,7 @@
 				EE646C352FABC99F00CD80D5 /* GolfTrackWatch Watch AppTests.xctest */,
 				EE646C3F2FABC99F00CD80D5 /* GolfTrackWatch Watch AppUITests.xctest */,
 				EEB4CF802FB4BB5F00E6D6A5 /* GolfWidgetExtension.appex */,
+				AC1000000000000000000004 /* GolfTrackClip.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -284,15 +334,18 @@
 				EE0A1E812FA3B5250018E2EC /* Resources */,
 				EE646C4D2FABC99F00CD80D5 /* Embed Watch Content */,
 				EEB4CF992FB4BB6100E6D6A5 /* Embed Foundation Extensions */,
+				AC1000000000000000000003 /* Embed App Clips */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 				EE646C482FABC99F00CD80D5 /* PBXTargetDependency */,
 				EEB4CF932FB4BB6100E6D6A5 /* PBXTargetDependency */,
+				AC100000000000000000000B /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
 				EE0A1E852FA3B5250018E2EC /* GolfTrackApp */,
+				AC1000000000000000000005 /* GolfTrackShared */,
 			);
 			name = GolfTrackApp;
 			packageProductDependencies = (
@@ -438,6 +491,29 @@
 			productReference = EEB4CF802FB4BB5F00E6D6A5 /* GolfWidgetExtension.appex */;
 			productType = "com.apple.product-type.app-extension";
 		};
+		AC1000000000000000000007 /* GolfTrackClip */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = AC100000000000000000000E /* Build configuration list for PBXNativeTarget "GolfTrackClip" */;
+			buildPhases = (
+				AC1000000000000000000008 /* Sources */,
+				AC1000000000000000000009 /* Frameworks */,
+				AC100000000000000000000A /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				AC1000000000000000000006 /* GolfTrackClip */,
+				AC1000000000000000000005 /* GolfTrackShared */,
+			);
+			name = GolfTrackClip;
+			packageProductDependencies = (
+			);
+			productName = GolfTrackClip;
+			productReference = AC1000000000000000000004 /* GolfTrackClip.app */;
+			productType = "com.apple.product-type.application.on-demand-install-capable";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -473,6 +549,9 @@
 					EEB4CF7F2FB4BB5F00E6D6A5 = {
 						CreatedOnToolsVersion = 26.5;
 					};
+					AC1000000000000000000007 = {
+						CreatedOnToolsVersion = 26.5;
+					};
 				};
 			};
 			buildConfigurationList = EE0A1E7E2FA3B5250018E2EC /* Build configuration list for PBXProject "GolfTrackApp" */;
@@ -503,6 +582,7 @@
 				EE646C342FABC99F00CD80D5 /* GolfTrackWatch Watch AppTests */,
 				EE646C3E2FABC99F00CD80D5 /* GolfTrackWatch Watch AppUITests */,
 				EEB4CF7F2FB4BB5F00E6D6A5 /* GolfWidgetExtension */,
+				AC1000000000000000000007 /* GolfTrackClip */,
 			);
 		};
 /* End PBXProject section */
@@ -552,6 +632,13 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		EEB4CF7E2FB4BB5F00E6D6A5 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		AC100000000000000000000A /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -610,6 +697,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		AC1000000000000000000008 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -642,6 +736,11 @@
 			isa = PBXTargetDependency;
 			target = EEB4CF7F2FB4BB5F00E6D6A5 /* GolfWidgetExtension */;
 			targetProxy = EEB4CF922FB4BB6100E6D6A5 /* PBXContainerItemProxy */;
+		};
+		AC100000000000000000000B /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = AC1000000000000000000007 /* GolfTrackClip */;
+			targetProxy = AC1000000000000000000002 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -1168,6 +1267,82 @@
 			};
 			name = Release;
 		};
+		AC100000000000000000000C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = GolfTrackClip/GolfTrackClip.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 2;
+				DEVELOPMENT_TEAM = NY363CML59;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = GolfTrackClip/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = GolfTrack;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 2.2;
+				PRODUCT_BUNDLE_IDENTIFIER = com.TobiasAufschlaeger.GolfTrackandwatch.Clip;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) APPCLIP DEBUG";
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		AC100000000000000000000D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = GolfTrackClip/GolfTrackClip.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 2;
+				DEVELOPMENT_TEAM = NY363CML59;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = GolfTrackClip/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = GolfTrack;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 2.2;
+				PRODUCT_BUNDLE_IDENTIFIER = com.TobiasAufschlaeger.GolfTrackandwatch.Clip;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) APPCLIP";
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -1239,6 +1414,15 @@
 			buildConfigurations = (
 				EEB4CF962FB4BB6100E6D6A5 /* Debug */,
 				EEB4CF972FB4BB6100E6D6A5 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		AC100000000000000000000E /* Build configuration list for PBXNativeTarget "GolfTrackClip" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				AC100000000000000000000C /* Debug */,
+				AC100000000000000000000D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

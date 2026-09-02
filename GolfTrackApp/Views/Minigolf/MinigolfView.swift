@@ -4,7 +4,7 @@ import MapKit
 
 // MARK: - Setup
 
-enum MinigolfTab { case spiel, tools }
+enum MinigolfTab { case spiel, bahnen }
 
 struct MinigolfView: View {
     /// Wird die View modal präsentiert (z.B. von der Startseite), braucht sie
@@ -16,7 +16,6 @@ struct MinigolfView: View {
     @State private var numberOfHoles: Int = 9
     @State private var selectedChallenges: [MinigolfChallenge] = []
     @State private var activeConfig: MinigolfConfig?
-    @State private var tracker = DistanceTracker()
     @State private var activeTab: MinigolfTab = .spiel
     @State private var savedGame: SavedMinigolfGame?
     @State private var history: [MinigolfHistoryEntry] = []
@@ -33,12 +32,13 @@ struct MinigolfView: View {
                 // Tab picker
                 Picker("", selection: $activeTab.animation(.easeInOut(duration: 0.2))) {
                     Label("Spiel", systemImage: "figure.golf").tag(MinigolfTab.spiel)
-                    Label("Distanz & Karte", systemImage: "location.viewfinder").tag(MinigolfTab.tools)
+                    Label("Bahnen & Regeln", systemImage: "book.fill").tag(MinigolfTab.bahnen)
                 }
                 .pickerStyle(.segmented)
                 .padding(.horizontal)
                 .padding(.vertical, 10)
                 .background(AppTheme.bg)
+                .onChange(of: activeTab) { _, _ in Haptics.selection() }
 
                 Divider()
 
@@ -54,7 +54,10 @@ struct MinigolfView: View {
                             MinigolfChallengeSetupCard(selection: $selectedChallenges,
                                                        initiallyExpanded: false)
 
-                            Button { startGame() } label: {
+                            Button {
+                                Haptics.medium()
+                                startGame()
+                            } label: {
                                 Text("Spiel starten")
                                     .font(.headline)
                                     .frame(maxWidth: .infinity)
@@ -65,12 +68,13 @@ struct MinigolfView: View {
                             .buttonStyle(.plain)
                             .padding(.top, 2)
 
+                            PuttTrainingCard()
+
                             if !history.isEmpty {
                                 historyCard
                             }
                         } else {
-                            DistanceTrackerCard(tracker: tracker)
-                            DistanceMapCard(tracker: tracker)
+                            MinigolfLanesTabContent()
                         }
                     }
                     .padding()
@@ -82,7 +86,10 @@ struct MinigolfView: View {
             .toolbar {
                 if showsCloseButton {
                     ToolbarItem(placement: .topBarLeading) {
-                        Button("Fertig") { dismiss() }
+                        Button("Fertig") {
+                            Haptics.tap()
+                            dismiss()
+                        }
                             .foregroundStyle(AppTheme.gold)
                     }
                 }
@@ -157,7 +164,10 @@ struct MinigolfView: View {
 
             VStack(spacing: 8) {
                 ForEach(catalog.allMinigolfCourses) { course in
-                    Button { startingCourse = course } label: {
+                    Button {
+                        Haptics.tap()
+                        startingCourse = course
+                    } label: {
                         courseRow(course)
                     }
                     .buttonStyle(.plain)
@@ -204,6 +214,7 @@ struct MinigolfView: View {
                     .font(.headline)
                 Spacer()
                 Button {
+                    Haptics.warning()
                     withAnimation(.spring(response: 0.3)) {
                         MinigolfGameStore.saveHistory([])
                         history = []
@@ -218,12 +229,16 @@ struct MinigolfView: View {
 
             VStack(spacing: 8) {
                 ForEach(history) { entry in
-                    Button { selectedHistoryEntry = entry } label: {
+                    Button {
+                        Haptics.tap()
+                        selectedHistoryEntry = entry
+                    } label: {
                         historyRow(entry)
                     }
                     .buttonStyle(.plain)
                     .contextMenu {
                         Button(role: .destructive) {
+                            Haptics.warning()
                             withAnimation(.spring(response: 0.3)) {
                                 history.removeAll { $0.id == entry.id }
                                 MinigolfGameStore.saveHistory(history)
@@ -256,7 +271,7 @@ struct MinigolfView: View {
                         .foregroundStyle(.secondary)
                         .lineLimit(1)
                 }
-                Text(entry.date.formatted(date: .abbreviated, time: .shortened) + " Uhr")
+                Text("\(entry.date.formatted(date: .abbreviated, time: .shortened)) Uhr")
                     .font(.caption2)
                     .foregroundStyle(.secondary)
             }
@@ -283,13 +298,14 @@ struct MinigolfView: View {
                     .foregroundStyle(.secondary)
 
                 if let savedAt = game.savedAt {
-                    Label(savedAt.formatted(date: .abbreviated, time: .shortened) + " Uhr", systemImage: "calendar")
+                    Label("\(savedAt.formatted(date: .abbreviated, time: .shortened)) Uhr", systemImage: "calendar")
                         .font(.caption)
                         .foregroundStyle(.secondary)
                 }
 
                 HStack(spacing: 10) {
                     Button {
+                        Haptics.medium()
                         activeConfig = MinigolfConfig(
                             playerNames: game.playerNames,
                             numberOfHoles: game.numberOfHoles,
@@ -310,6 +326,7 @@ struct MinigolfView: View {
                     .buttonStyle(.plain)
 
                     Button {
+                        Haptics.warning()
                         MinigolfGameStore.clear()
                         withAnimation(.spring(response: 0.3)) { savedGame = nil }
                     } label: {
@@ -339,6 +356,7 @@ struct MinigolfView: View {
             HStack(spacing: 8) {
                 ForEach([6, 9, 12, 18], id: \.self) { n in
                     Button {
+                        Haptics.selection()
                         withAnimation(.spring(response: 0.3, dampingFraction: 0.7)) {
                             numberOfHoles = n
                         }
@@ -365,9 +383,9 @@ struct MinigolfView: View {
                 Spacer()
                 HStack(spacing: 0) {
                     Button {
-                        if numberOfHoles > 1 {
-                            withAnimation(.spring(response: 0.25)) { numberOfHoles -= 1 }
-                        }
+                        guard numberOfHoles > 1 else { return }
+                        Haptics.decrement()
+                        withAnimation(.spring(response: 0.25)) { numberOfHoles -= 1 }
                     } label: {
                         Image(systemName: "minus")
                             .frame(width: 38, height: 38)
@@ -380,9 +398,9 @@ struct MinigolfView: View {
                         .frame(width: 38, alignment: .center)
 
                     Button {
-                        if numberOfHoles < 36 {
-                            withAnimation(.spring(response: 0.25)) { numberOfHoles += 1 }
-                        }
+                        guard numberOfHoles < 36 else { return }
+                        Haptics.stroke()
+                        withAnimation(.spring(response: 0.25)) { numberOfHoles += 1 }
                     } label: {
                         Image(systemName: "plus")
                             .frame(width: 38, height: 38)
@@ -432,6 +450,7 @@ struct MinigolfView: View {
             HStack(spacing: 10) {
                 if rawNames.count < 8 {
                     Button {
+                        Haptics.tap()
                         withAnimation(.spring(response: 0.3)) { rawNames.append("") }
                     } label: {
                         Label("Hinzufügen", systemImage: "plus")
@@ -445,6 +464,7 @@ struct MinigolfView: View {
                 }
                 if rawNames.count > 1 {
                     Button {
+                        Haptics.decrement()
                         withAnimation(.spring(response: 0.3)) { if !rawNames.isEmpty { rawNames.removeLast() } }
                     } label: {
                         Label("Entfernen", systemImage: "minus")
@@ -647,7 +667,10 @@ struct DistanceTrackerCard: View {
 
             HStack(spacing: 10) {
                 if tracker.isTracking {
-                    Button { tracker.setNewStart() } label: {
+                    Button {
+                        Haptics.medium()
+                        tracker.setNewStart()
+                    } label: {
                         Label("Neu setzen", systemImage: "arrow.counterclockwise")
                             .font(.subheadline.bold())
                             .frame(maxWidth: .infinity)
@@ -657,7 +680,10 @@ struct DistanceTrackerCard: View {
                     }
                     .buttonStyle(.plain)
 
-                    Button { tracker.stop() } label: {
+                    Button {
+                        Haptics.tap()
+                        tracker.stop()
+                    } label: {
                         Label("Stop", systemImage: "stop.fill")
                             .font(.subheadline.bold())
                             .frame(maxWidth: .infinity)
@@ -667,7 +693,10 @@ struct DistanceTrackerCard: View {
                     }
                     .buttonStyle(.plain)
                 } else {
-                    Button { tracker.start() } label: {
+                    Button {
+                        Haptics.medium()
+                        tracker.start()
+                    } label: {
                         Label("Startpunkt setzen", systemImage: "location.fill")
                             .font(.subheadline.bold())
                             .frame(maxWidth: .infinity)
@@ -681,7 +710,10 @@ struct DistanceTrackerCard: View {
 
             // Save button — visible only when tracking and distance > 0.5 m
             if tracker.isTracking && (tracker.currentDistance ?? 0) > 0.5 {
-                Button { tracker.saveDistance() } label: {
+                Button {
+                    Haptics.success()
+                    tracker.saveDistance()
+                } label: {
                     Label("Distanz speichern", systemImage: "bookmark.fill")
                         .font(.subheadline.bold())
                         .frame(maxWidth: .infinity)
@@ -705,6 +737,7 @@ struct DistanceTrackerCard: View {
                             .background(AppTheme.gold, in: Circle())
                         Spacer()
                         Button {
+                            Haptics.warning()
                             withAnimation { tracker.savedDistances.removeAll() }
                         } label: {
                             Text("Alle löschen")
@@ -730,6 +763,7 @@ struct DistanceTrackerCard: View {
                         .background(AppTheme.cardAlt, in: RoundedRectangle(cornerRadius: 10))
                         .swipeActions(edge: .trailing) {
                             Button(role: .destructive) {
+                                Haptics.warning()
                                 if let idx = tracker.savedDistances.firstIndex(where: { $0.id == shot.id }) {
                                     tracker.removeSavedDistance(at: IndexSet(integer: idx))
                                 }
@@ -790,7 +824,10 @@ struct DistanceMapCard: View {
                     Spacer()
 
                     if tracker.lockedHeading == nil {
-                        Button { tracker.lockHeading() } label: {
+                        Button {
+                            Haptics.success()
+                            tracker.lockHeading()
+                        } label: {
                             Label("Richtungslinie setzen", systemImage: "arrow.up.forward")
                                 .font(.caption.bold())
                                 .padding(.horizontal, 10).padding(.vertical, 6)
@@ -806,7 +843,10 @@ struct DistanceMapCard: View {
                                     .foregroundStyle(.orange)
                                     .monospacedDigit()
                             }
-                            Button { tracker.clearLockedHeading() } label: {
+                            Button {
+                                Haptics.tap()
+                                tracker.clearLockedHeading()
+                            } label: {
                                 Label("Linie entfernen", systemImage: "xmark")
                                     .font(.caption.bold())
                                     .padding(.horizontal, 10).padding(.vertical, 6)
@@ -872,6 +912,7 @@ struct DistanceMapCard: View {
             .clipShape(RoundedRectangle(cornerRadius: 12))
             .overlay(alignment: .topLeading) {
                 Button {
+                    Haptics.selection()
                     withAnimation { isSatellite.toggle() }
                 } label: {
                     Image(systemName: isSatellite ? "map" : "globe.europe.africa.fill")
@@ -885,7 +926,10 @@ struct DistanceMapCard: View {
             }
             .overlay(alignment: .bottomTrailing) {
                 if !tracker.isTracking {
-                    Button { tracker.start() } label: {
+                    Button {
+                        Haptics.medium()
+                        tracker.start()
+                    } label: {
                         Label("Start", systemImage: "location.fill")
                             .font(.caption.bold())
                             .padding(.horizontal, 10)

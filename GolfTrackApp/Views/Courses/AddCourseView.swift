@@ -23,6 +23,7 @@ struct AddCourseView: View {
                         Text("18 Löcher").tag(18)
                     }
                     .onChange(of: numberOfHoles) { _, new in
+                        Haptics.selection()
                         parValues = Course.defaultPars(for: new)
                     }
                 }
@@ -71,10 +72,16 @@ struct AddCourseView: View {
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
-                    Button("Abbrechen") { dismiss() }
+                    Button("Abbrechen") {
+                        Haptics.tap()
+                        dismiss()
+                    }
                 }
                 ToolbarItem(placement: .confirmationAction) {
-                    Button("Speichern") { save() }
+                    Button("Speichern") {
+                        Haptics.success()
+                        save()
+                    }
                         .disabled(name.trimmingCharacters(in: .whitespaces).isEmpty)
                 }
             }

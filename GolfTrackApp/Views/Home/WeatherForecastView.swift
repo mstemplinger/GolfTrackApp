@@ -45,8 +45,11 @@ struct WeatherForecastView: View {
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
-                    Button("Fertig") { dismiss() }
-                        .foregroundStyle(gold)
+                    Button("Fertig") {
+                        Haptics.tap()
+                        dismiss()
+                    }
+                    .foregroundStyle(gold)
                 }
             }
         }

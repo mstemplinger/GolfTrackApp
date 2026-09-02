@@ -24,6 +24,8 @@ struct GolfTrackAppApp: App {
         }
         // Game Center Authentifizierung beim Start
         Task { @MainActor in
+            // Haptik-Generatoren vorwärmen, damit der erste Impuls sitzt.
+            Haptics.warmUp()
             GameCenterManager.shared.authenticate()
             await NotificationManager.shared.requestAuthorization()
         }

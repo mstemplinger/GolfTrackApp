@@ -15,6 +15,7 @@ struct GameModePickerView: View {
                 ForEach(availableModes, id: \.rawValue) { mode in
                     HStack(spacing: 0) {
                         Button {
+                            Haptics.success()
                             selectedMode = mode
                             dismiss()
                         } label: {
@@ -47,6 +48,7 @@ struct GameModePickerView: View {
                         .buttonStyle(.plain)
 
                         Button {
+                            Haptics.tap()
                             showDetail = mode
                         } label: {
                             Image(systemName: "info.circle")

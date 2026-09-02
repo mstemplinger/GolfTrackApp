@@ -62,11 +62,15 @@ struct ImageCropView: View {
             // Buttons
             VStack {
                 HStack {
-                    Button("Abbrechen") { dismiss() }
-                        .foregroundStyle(.white)
+                    Button("Abbrechen") {
+                        Haptics.tap()
+                        dismiss()
+                    }
+                    .foregroundStyle(.white)
                         .padding()
                     Spacer()
                     Button("Übernehmen") {
+                        Haptics.success()
                         let cropped = cropImage()
                         onCrop(cropped)
                         dismiss()

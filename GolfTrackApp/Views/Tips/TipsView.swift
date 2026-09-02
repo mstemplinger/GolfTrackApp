@@ -40,7 +40,10 @@ struct TipsView: View {
                         .padding(.top, 16)
 
                         // Daily tip
-                        Button { showDailyTipDetail = true } label: { dailyTipCard }
+                        Button {
+                            Haptics.tap()
+                            showDailyTipDetail = true
+                        } label: { dailyTipCard }
                             .buttonStyle(.plain)
                             .sheet(isPresented: $showDailyTipDetail) {
                                 DailyTipDetailView(tip: dailyTip)
@@ -131,7 +134,10 @@ struct TipsView: View {
 
             VStack(spacing: 0) {
                 ForEach(Array(recommendations.enumerated()), id: \.element.id) { i, rec in
-                    Button { openTraining(for: rec) } label: {
+                    Button {
+                        Haptics.tap()
+                        openTraining(for: rec)
+                    } label: {
                         recommendationRow(rec)
                     }
                     .buttonStyle(.plain)
@@ -350,7 +356,10 @@ struct DailyTipDetailView: View {
                 // Drag-Indicator-Bereich + Schließen-Button
                 HStack {
                     Spacer()
-                    Button { dismiss() } label: {
+                    Button {
+                        Haptics.tap()
+                        dismiss()
+                    } label: {
                         Image(systemName: "xmark.circle.fill")
                             .font(.system(size: 26))
                             .foregroundStyle(AppTheme.textTer)

@@ -54,6 +54,7 @@ struct PinSetterView: View {
                     }
                     .onTapGesture { screenPoint in
                         guard let coord = proxy.convert(screenPoint, from: .local) else { return }
+                        Haptics.rigid()
                         withAnimation(.spring(response: 0.3)) {
                             pendingLat = coord.latitude
                             pendingLon = coord.longitude
@@ -77,8 +78,11 @@ struct PinSetterView: View {
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .topBarLeading) {
-                    Button("Abbrechen") { dismiss() }
-                        .foregroundStyle(AppTheme.gold)
+                    Button("Abbrechen") {
+                        Haptics.tap()
+                        dismiss()
+                    }
+                    .foregroundStyle(AppTheme.gold)
                 }
             }
         }
@@ -175,6 +179,7 @@ struct PinSetterView: View {
 
             // Use current location button
             Button {
+                Haptics.tap()
                 useCurrentLocation()
             } label: {
                 HStack(spacing: 8) {
@@ -191,9 +196,12 @@ struct PinSetterView: View {
             // Save button
             Button {
                 if let lat = pendingLat, let lon = pendingLon {
+                    Haptics.success()
                     pinLatitude = lat
                     pinLongitude = lon
                     onManualSave?()
+                } else {
+                    Haptics.tap()
                 }
                 dismiss()
             } label: {

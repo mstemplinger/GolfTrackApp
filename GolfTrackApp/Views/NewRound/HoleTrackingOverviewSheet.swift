@@ -70,8 +70,11 @@ struct HoleTrackingOverviewSheet: View {
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .topBarLeading) {
-                    Button("Fertig") { dismiss() }
-                        .foregroundStyle(AppTheme.gold)
+                    Button("Fertig") {
+                        Haptics.tap()
+                        dismiss()
+                    }
+                    .foregroundStyle(AppTheme.gold)
                 }
             }
         }

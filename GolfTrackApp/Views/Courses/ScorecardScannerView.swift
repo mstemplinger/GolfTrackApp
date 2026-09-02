@@ -62,7 +62,10 @@ struct ScorecardScannerView: View {
                         .foregroundStyle(AppTheme.textSec)
                         .multilineTextAlignment(.center)
                         .padding(.horizontal)
-                    Button("Schließen") { dismiss() }
+                    Button("Schließen") {
+                        Haptics.tap()
+                        dismiss()
+                    }
                         .buttonStyle(GoldButtonStyle())
                         .padding(.horizontal)
                 }
@@ -218,7 +221,10 @@ struct ScorecardConfirmView: View {
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
-                    Button("Abbrechen", action: onCancel)
+                    Button("Abbrechen") {
+                        Haptics.tap()
+                        onCancel()
+                    }
                 }
             }
         }
@@ -303,7 +309,10 @@ struct ScorecardConfirmView: View {
                     .font(.caption.bold())
                     .foregroundStyle(AppTheme.gold)
                 Spacer()
-                Button("Bearbeiten") { showHoleEditor = true }
+                Button("Bearbeiten") {
+                    Haptics.tap()
+                    showHoleEditor = true
+                }
                     .font(.caption.bold())
                     .foregroundStyle(AppTheme.gold)
             }
@@ -345,6 +354,7 @@ struct ScorecardConfirmView: View {
 
     private var saveButton: some View {
         Button {
+            Haptics.success()
             let course = Course(
                 name: data.name.isEmpty ? "Unbekannter Platz" : data.name,
                 numberOfHoles: data.numberOfHoles,
@@ -413,6 +423,7 @@ private struct HoleEditorSheet: View {
                         }
                         .pickerStyle(.segmented)
                         .listRowBackground(AppTheme.card)
+                        .onChange(of: holes) { _, _ in Haptics.selection() }
                     }
 
                     Section("Loch-Werte") {
@@ -438,6 +449,7 @@ private struct HoleEditorSheet: View {
             .toolbar {
                 ToolbarItem(placement: .confirmationAction) {
                     Button("Übernehmen") {
+                        Haptics.success()
                         data.parValues = pars.prefix(holes).compactMap { Int($0) }
                         data.hcpValues = hcps.prefix(holes).compactMap { Int($0) }
                         data.holeLengths = lengths.prefix(holes).compactMap { Int($0) }
@@ -446,7 +458,10 @@ private struct HoleEditorSheet: View {
                     .foregroundStyle(AppTheme.gold)
                 }
                 ToolbarItem(placement: .cancellationAction) {
-                    Button("Abbrechen") { dismiss() }
+                    Button("Abbrechen") {
+                        Haptics.tap()
+                        dismiss()
+                    }
                 }
             }
         }

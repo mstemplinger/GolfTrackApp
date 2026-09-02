@@ -199,6 +199,10 @@ final class GameCenterManager: ObservableObject {
         guard percentComplete > currentProgress else { return }
 
         achievementProgress[id] = percentComplete
+        if percentComplete >= 100, !unlockedAchievements.contains(id) {
+            // Frisch freigeschaltet – spürbar machen, auch ohne Game-Center-Banner.
+            Haptics.celebrate()
+        }
         if percentComplete >= 100 {
             unlockedAchievements.insert(id)
         }

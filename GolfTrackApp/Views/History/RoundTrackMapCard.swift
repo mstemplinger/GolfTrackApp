@@ -48,7 +48,10 @@ struct RoundTrackMapCard: View {
                     .foregroundStyle(AppTheme.text)
                 Spacer()
                 if !segments.isEmpty {
-                    Button { isExpanded = true } label: {
+                    Button {
+                        Haptics.tap()
+                        isExpanded = true
+                    } label: {
                         HStack(spacing: 4) {
                             Image(systemName: "arrow.up.left.and.arrow.down.right")
                             Text("Vollbild")
@@ -79,7 +82,10 @@ struct RoundTrackMapCard: View {
                 }
 
                 if round.course != nil {
-                    Button { showGeometryReview = true } label: {
+                    Button {
+                        Haptics.tap()
+                        showGeometryReview = true
+                    } label: {
                         HStack(spacing: 8) {
                             Image(systemName: "wand.and.stars")
                             Text("Loch-Positionen ableiten")
@@ -197,10 +203,14 @@ struct RoundTrackMapCard: View {
                 .navigationBarTitleDisplayMode(.inline)
                 .toolbar {
                     ToolbarItem(placement: .topBarLeading) {
-                        Button("Schließen") { isExpanded = false }
+                        Button("Schließen") {
+                            Haptics.tap()
+                            isExpanded = false
+                        }
                     }
                     ToolbarItem(placement: .topBarTrailing) {
                         Button {
+                            Haptics.selection()
                             isSatellite.toggle()
                         } label: {
                             Image(systemName: isSatellite ? "map" : "globe.europe.africa")

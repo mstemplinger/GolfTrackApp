@@ -164,13 +164,18 @@ struct HomeView: View {
         statsRow
         weatherCard
             .onTapGesture {
-                if weather.hasData { showWeatherForecast = true }
+                guard weather.hasData else { return }
+                Haptics.tap()
+                showWeatherForecast = true
             }
         if let wr = watchRound, !wr.isComplete { watchRoundBanner(wr) }
         if !completedRounds.isEmpty { trainingProgressCard }
         if !incompleteRounds.isEmpty { activeRoundsCard }
 
-        Button { showNewRound = true } label: {
+        Button {
+            Haptics.medium()
+            showNewRound = true
+        } label: {
             Label("Neue Runde spielen", systemImage: "plus.circle.fill")
                 .goldButton()
         }
@@ -201,11 +206,16 @@ struct HomeView: View {
         minigolfStatsRow
         weatherCard
             .onTapGesture {
-                if weather.hasData { showWeatherForecast = true }
+                guard weather.hasData else { return }
+                Haptics.tap()
+                showWeatherForecast = true
             }
         if let game = minigolfSaved { minigolfResumeCard(game) }
 
-        Button { showMinigolf = true } label: {
+        Button {
+            Haptics.medium()
+            showMinigolf = true
+        } label: {
             Label("Minigolf-Spiel starten", systemImage: "plus.circle.fill")
                 .goldButton()
         }
@@ -218,18 +228,13 @@ struct HomeView: View {
         if let wr = watchRound, !wr.isComplete { watchRoundBanner(wr) }
         if !incompleteRounds.isEmpty { activeRoundsCard }
 
-        HStack(spacing: 12) {
-            Button { showNewRound = true } label: {
-                Label("Golf-Runde", systemImage: "figure.golf")
-                    .greenButton()
-            }
-            .buttonStyle(.plain)
-            NavigationLink {
-                HistoryView()
-            } label: {
-                Label("Golf-Verlauf", systemImage: "clock.fill")
-                    .greenButton()
-            }
+        // Im Minigolf-Schwerpunkt gibt es hier nur den Minigolf-Verlauf. Eine
+        // Golfrunde startet man über den Schwerpunkt-Umschalter im Profil.
+        NavigationLink {
+            MinigolfHistoryView()
+        } label: {
+            Label("Minigolf-Verlauf", systemImage: "clock.fill")
+                .greenButton()
         }
         .padding(.horizontal)
     }
@@ -307,6 +312,7 @@ struct HomeView: View {
 
             HStack(spacing: 10) {
                 Button {
+                    Haptics.medium()
                     resumeMinigolfConfig = MinigolfConfig(
                         playerNames: game.playerNames,
                         numberOfHoles: game.numberOfHoles,
@@ -326,6 +332,7 @@ struct HomeView: View {
                 .buttonStyle(.plain)
 
                 Button {
+                    Haptics.warning()
                     MinigolfGameStore.clear()
                     withAnimation(.spring(response: 0.3)) { minigolfSaved = nil }
                 } label: {
@@ -354,7 +361,9 @@ struct HomeView: View {
                     .foregroundStyle(AppTheme.textSec)
                 Spacer()
                 if minigolfHistory.count > 3 {
-                    Button { showMinigolf = true } label: {
+                    NavigationLink {
+                        MinigolfHistoryView()
+                    } label: {
                         Text("Alle anzeigen")
                             .font(.caption.bold())
                             .foregroundStyle(AppTheme.gold)
@@ -364,7 +373,10 @@ struct HomeView: View {
             }
 
             ForEach(minigolfHistory.prefix(3)) { entry in
-                Button { selectedMinigolfEntry = entry } label: {
+                Button {
+                    Haptics.tap()
+                    selectedMinigolfEntry = entry
+                } label: {
                     minigolfHistoryRow(entry)
                 }
                 .buttonStyle(.plain)
@@ -423,6 +435,7 @@ struct HomeView: View {
 
     private var caddyButton: some View {
         Button {
+            Haptics.tap()
             if subscriptionManager.isCaddySubscribed {
                 showAssistant = true
             } else {
@@ -491,7 +504,10 @@ struct HomeView: View {
                     .foregroundStyle(AppTheme.text)
             }
             Spacer()
-            Button { showTutorial = true } label: {
+            Button {
+                Haptics.tap()
+                showTutorial = true
+            } label: {
                 Image(systemName: "lightbulb.fill")
                     .font(.title3)
                     .foregroundStyle(AppTheme.gold)
@@ -561,6 +577,7 @@ struct HomeView: View {
         } else {
             Menu {
                 Button {
+                    Haptics.selection()
                     selectedWeatherCourse = nil
                     weather.fetch()
                 } label: {
@@ -570,6 +587,7 @@ struct HomeView: View {
                     Divider()
                     ForEach(coursesWithGPS) { course in
                         Button {
+                            Haptics.selection()
                             selectedWeatherCourse = course
                             weather.fetchForCoordinate(
                                 lat: course.latitude!,
@@ -649,6 +667,7 @@ struct HomeView: View {
                     // Standort-/Platz-Picker
                     Menu {
                         Button {
+                            Haptics.selection()
                             selectedWeatherCourse = nil
                             weather.fetch()
                         } label: {
@@ -658,6 +677,7 @@ struct HomeView: View {
                             Divider()
                             ForEach(coursesWithGPS) { course in
                                 Button {
+                                    Haptics.selection()
                                     selectedWeatherCourse = course
                                     weather.fetchForCoordinate(
                                         lat: course.latitude!,
@@ -792,7 +812,10 @@ struct HomeView: View {
                 .foregroundStyle(AppTheme.textSec)
             ForEach(incompleteRounds) { round in
                 HStack(spacing: 10) {
-                    Button { selectedIncompleteRound = round } label: {
+                    Button {
+                        Haptics.tap()
+                        selectedIncompleteRound = round
+                    } label: {
                         DarkRoundRow(round: round)
                     }
                     .buttonStyle(.plain)
@@ -800,6 +823,7 @@ struct HomeView: View {
 
                     // Runde abbrechen / löschen
                     Button {
+                        Haptics.tap()
                         roundToDelete = round
                     } label: {
                         Image(systemName: "xmark.circle.fill")
@@ -818,13 +842,17 @@ struct HomeView: View {
             set: { if !$0 { roundToDelete = nil } }
         )) {
             Button("Runde löschen", role: .destructive) {
+                Haptics.warning()
                 if let r = roundToDelete {
                     GolfLiveActivityManager.endRound()
                     context.delete(r)
                     roundToDelete = nil
                 }
             }
-            Button("Abbrechen", role: .cancel) { roundToDelete = nil }
+            Button("Abbrechen", role: .cancel) {
+                Haptics.tap()
+                roundToDelete = nil
+            }
         } message: {
             Text("Die Runde wird unwiderruflich gelöscht.")
         }
@@ -863,6 +891,7 @@ struct HomeView: View {
                 .fixedSize(horizontal: false, vertical: true)
 
             Button {
+                Haptics.tap()
                 mirrorRound = round
             } label: {
                 Label("Auf iPhone spiegeln", systemImage: "applewatch.and.arrow.forward")
@@ -881,6 +910,7 @@ struct HomeView: View {
         .overlay(alignment: .topTrailing) {
             // Schließen-Button
             Button {
+                Haptics.tap()
                 watchRound = nil
             } label: {
                 Image(systemName: "xmark")

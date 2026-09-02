@@ -37,6 +37,7 @@ struct HistoryView: View {
                                 .listRowSeparator(.hidden)
                                 .swipeActions(edge: .trailing, allowsFullSwipe: true) {
                                     Button(role: .destructive) {
+                                        Haptics.tap()
                                         roundToDelete = round
                                     } label: {
                                         Label("Löschen", systemImage: "trash")
@@ -61,6 +62,7 @@ struct HistoryView: View {
                             // Alle löschen
                             if editMode == .active {
                                 Button {
+                                    Haptics.tap()
                                     showDeleteAllConfirmation = true
                                 } label: {
                                     Text("Alle löschen")
@@ -70,6 +72,7 @@ struct HistoryView: View {
                             }
                             // Bearbeiten / Fertig
                             Button {
+                                Haptics.selection()
                                 withAnimation {
                                     editMode = editMode == .active ? .inactive : .active
                                 }
@@ -91,10 +94,14 @@ struct HistoryView: View {
                 titleVisibility: .visible
             ) {
                 Button("Löschen", role: .destructive) {
+                    Haptics.warning()
                     if let r = roundToDelete { context.delete(r) }
                     roundToDelete = nil
                 }
-                Button("Abbrechen", role: .cancel) { roundToDelete = nil }
+                Button("Abbrechen", role: .cancel) {
+                    Haptics.tap()
+                    roundToDelete = nil
+                }
             } message: {
                 if let r = roundToDelete {
                     Text("\(r.course?.name ?? "Unbekannter Platz") · \(r.date.formatted(date: .abbreviated, time: .omitted))")
@@ -107,10 +114,11 @@ struct HistoryView: View {
                 titleVisibility: .visible
             ) {
                 Button("Alle löschen", role: .destructive) {
+                    Haptics.warning()
                     for round in rounds { context.delete(round) }
                     editMode = .inactive
                 }
-                Button("Abbrechen", role: .cancel) { }
+                Button("Abbrechen", role: .cancel) { Haptics.tap() }
             } message: {
                 Text("Diese Aktion kann nicht rückgängig gemacht werden.")
             }

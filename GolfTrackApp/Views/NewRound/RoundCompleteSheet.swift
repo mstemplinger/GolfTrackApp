@@ -143,7 +143,10 @@ struct RoundCompleteSheet: View {
 
             VStack(spacing: 0) {
                 ForEach(Array(audioRecommendations.enumerated()), id: \.element.id) { i, rec in
-                    Button { open(rec) } label: {
+                    Button {
+                        Haptics.tap()
+                        open(rec)
+                    } label: {
                         recommendationRow(rec)
                     }
                     .buttonStyle(.plain)
@@ -155,7 +158,10 @@ struct RoundCompleteSheet: View {
             .background(AppTheme.card, in: RoundedRectangle(cornerRadius: 16))
 
             if !subscriptionManager.isSubscribed {
-                Button { showPaywall = true } label: {
+                Button {
+                    Haptics.tap()
+                    showPaywall = true
+                } label: {
                     HStack(spacing: 8) {
                         Image(systemName: "crown.fill")
                             .font(.caption)
@@ -258,6 +264,7 @@ struct RoundCompleteSheet: View {
             VStack(spacing: 10) {
                 // Bestenliste anzeigen
                 Button {
+                    Haptics.tap()
                     gc.showLeaderboard()
                 } label: {
                     HStack(spacing: 10) {
@@ -284,6 +291,7 @@ struct RoundCompleteSheet: View {
 
                 // Game Center Dashboard
                 Button {
+                    Haptics.tap()
                     gc.showGameCenter()
                 } label: {
                     HStack(spacing: 10) {
@@ -323,6 +331,7 @@ struct RoundCompleteSheet: View {
 
     private var doneButton: some View {
         Button {
+            Haptics.tap()
             // Wiedergabe endet mit dem Sheet – sonst läuft die Lektion unsichtbar weiter.
             playerModel.stop()
             onDismiss()

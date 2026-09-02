@@ -78,7 +78,10 @@ struct CaddyPaywallView: View {
             get: { subscriptionManager.errorMessage != nil },
             set: { if !$0 { subscriptionManager.errorMessage = nil } }
         )) {
-            Button("OK", role: .cancel) { subscriptionManager.errorMessage = nil }
+            Button("OK", role: .cancel) {
+                Haptics.tap()
+                subscriptionManager.errorMessage = nil
+            }
         } message: {
             Text(subscriptionManager.errorMessage ?? "")
         }
@@ -130,6 +133,7 @@ struct CaddyPaywallView: View {
 
     private func planTab(label: String, plan: Plan) -> some View {
         Button {
+            Haptics.selection()
             withAnimation(.easeInOut(duration: 0.2)) { selectedPlan = plan }
         } label: {
             Text(label)
@@ -183,6 +187,7 @@ struct CaddyPaywallView: View {
                 .foregroundStyle(AppTheme.textSec)
                 .fixedSize(horizontal: false, vertical: true)
             Button {
+                Haptics.selection()
                 withAnimation(.easeInOut(duration: 0.2)) { selectedPlan = .pro }
             } label: {
                 Label("Zu Pro wechseln – alles in einem", systemImage: "crown.fill")
@@ -278,6 +283,7 @@ struct CaddyPaywallView: View {
     private var actionSection: some View {
         VStack(spacing: 12) {
             Button {
+                Haptics.medium()
                 Task {
                     if let p = activeProduct {
                         await subscriptionManager.purchase(p)
@@ -316,6 +322,7 @@ struct CaddyPaywallView: View {
             .disabled(activeProduct == nil || subscriptionManager.isPurchasing || subscriptionManager.isRestoring)
 
             Button {
+                Haptics.tap()
                 Task { await subscriptionManager.restore() }
             } label: {
                 if subscriptionManager.isRestoring {

@@ -23,7 +23,10 @@ struct GolfAssistantView: View {
             get: { service.errorMessage != nil },
             set: { if !$0 { service.errorMessage = nil } }
         )) {
-            Button("OK", role: .cancel) { service.errorMessage = nil }
+            Button("OK", role: .cancel) {
+                Haptics.tap()
+                service.errorMessage = nil
+            }
         } message: {
             Text(service.errorMessage ?? "")
         }
@@ -36,7 +39,10 @@ struct GolfAssistantView: View {
 
     private var header: some View {
         HStack {
-            Button { dismiss() } label: {
+            Button {
+                Haptics.tap()
+                dismiss()
+            } label: {
                 Image(systemName: "chevron.down")
                     .font(.title3.weight(.semibold))
                     .foregroundStyle(AppTheme.gold)
@@ -241,7 +247,10 @@ struct GolfAssistantView: View {
         HStack(spacing: 12) {
             // Mute – nur sichtbar wenn verbunden
             if service.status == .connected {
-                Button { service.toggleMute() } label: {
+                Button {
+                    Haptics.selection()
+                    service.toggleMute()
+                } label: {
                     Image(systemName: service.isMuted ? "mic.slash.fill" : "mic.fill")
                         .font(.system(size: 18, weight: .semibold))
                         .foregroundStyle(service.isMuted ? .white : AppTheme.gold)
@@ -265,6 +274,7 @@ struct GolfAssistantView: View {
 
             // Start / Stop
             Button {
+                Haptics.medium()
                 Task {
                     if service.isActive {
                         await service.stop()

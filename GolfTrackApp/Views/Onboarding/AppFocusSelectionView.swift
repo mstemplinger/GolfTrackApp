@@ -94,6 +94,7 @@ struct AppFocusSelectionView: View {
         let isSelected = selection == focus
 
         return Button {
+            Haptics.selection()
             withAnimation(.spring(response: 0.32, dampingFraction: 0.78)) {
                 selection = focus
             }
@@ -176,6 +177,7 @@ struct AppFocusSelectionView: View {
     private var continueButton: some View {
         Button {
             guard let choice = selection else { return }
+            Haptics.success()
             apply(choice)
         } label: {
             HStack(spacing: 7) {

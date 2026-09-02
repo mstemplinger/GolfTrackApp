@@ -467,7 +467,10 @@ struct TrainingView: View {
                     .padding(.vertical, 5)
                     .background(AppTheme.gold, in: Capsule())
             } else {
-                Button { showPaywall = true } label: {
+                Button {
+                    Haptics.tap()
+                    showPaywall = true
+                } label: {
                     Label("Pro freischalten", systemImage: "crown.fill")
                         .font(.caption.bold())
                         .foregroundStyle(AppTheme.gold)
@@ -499,7 +502,10 @@ struct TrainingView: View {
     }
 
     private func categoryChip(_ cat: TrainingCategory) -> some View {
-        Button { selectedCategory = cat } label: {
+        Button {
+            Haptics.selection()
+            selectedCategory = cat
+        } label: {
             HStack(spacing: 5) {
                 Image(systemName: cat.icon)
                     .font(.caption2.bold())
@@ -532,6 +538,7 @@ struct TrainingView: View {
 
     private var updateHint: some View {
         Button {
+            Haptics.tap()
             if let url = URL(string: "itms-apps://apps.apple.com/app/id6767996957") {
                 UIApplication.shared.open(url)
             }
@@ -580,6 +587,7 @@ struct TrainingView: View {
         let isActive     = playerModel.currentLesson?.id == lesson.id
 
         return Button {
+            Haptics.tap()
             if needsPaywall {
                 showPaywall = true
             } else if canPlay {
@@ -687,7 +695,10 @@ struct TrainingView: View {
     // MARK: Mini Player
 
     private var miniPlayer: some View {
-        Button { showPlayer = true } label: {
+        Button {
+            Haptics.tap()
+            showPlayer = true
+        } label: {
             HStack(spacing: 12) {
                 if let lesson = playerModel.currentLesson {
                     ZStack {
@@ -711,14 +722,20 @@ struct TrainingView: View {
 
                     Spacer()
 
-                    Button { playerModel.skip(seconds: -15) } label: {
+                    Button {
+                        Haptics.tap()
+                        playerModel.skip(seconds: -15)
+                    } label: {
                         Image(systemName: "gobackward.15")
                             .font(.system(size: 17))
                             .foregroundStyle(AppTheme.textSec)
                     }
                     .buttonStyle(.plain)
 
-                    Button { playerModel.toggle() } label: {
+                    Button {
+                        Haptics.tap()
+                        playerModel.toggle()
+                    } label: {
                         Image(systemName: playerModel.isPlaying ? "pause.fill" : "play.fill")
                             .font(.system(size: 18))
                             .foregroundStyle(AppTheme.text)
@@ -727,7 +744,10 @@ struct TrainingView: View {
                     }
                     .buttonStyle(.plain)
 
-                    Button { playerModel.playNext() } label: {
+                    Button {
+                        Haptics.tap()
+                        playerModel.playNext()
+                    } label: {
                         Image(systemName: "forward.end.fill")
                             .font(.system(size: 17))
                             .foregroundStyle(playerModel.canGoNext ? AppTheme.textSec : AppTheme.textTer)
@@ -874,7 +894,10 @@ struct TrainingPlayerSheet: View {
 
     private var controls: some View {
         HStack(spacing: 28) {
-            Button { model.playPrev() } label: {
+            Button {
+                Haptics.tap()
+                model.playPrev()
+            } label: {
                 Image(systemName: "backward.end.fill")
                     .font(.system(size: 24))
                     .foregroundStyle(model.canGoPrev ? AppTheme.textSec : AppTheme.textTer)
@@ -882,14 +905,20 @@ struct TrainingPlayerSheet: View {
             .buttonStyle(.plain)
             .disabled(!model.canGoPrev)
 
-            Button { model.skip(seconds: -15) } label: {
+            Button {
+                Haptics.tap()
+                model.skip(seconds: -15)
+            } label: {
                 Image(systemName: "gobackward.15")
                     .font(.system(size: 24))
                     .foregroundStyle(AppTheme.textSec)
             }
             .buttonStyle(.plain)
 
-            Button { model.toggle() } label: {
+            Button {
+                Haptics.medium()
+                model.toggle()
+            } label: {
                 ZStack {
                     Circle()
                         .fill(accentColor)
@@ -902,14 +931,20 @@ struct TrainingPlayerSheet: View {
             }
             .buttonStyle(.plain)
 
-            Button { model.skip(seconds: 30) } label: {
+            Button {
+                Haptics.tap()
+                model.skip(seconds: 30)
+            } label: {
                 Image(systemName: "goforward.30")
                     .font(.system(size: 24))
                     .foregroundStyle(AppTheme.textSec)
             }
             .buttonStyle(.plain)
 
-            Button { model.playNext() } label: {
+            Button {
+                Haptics.tap()
+                model.playNext()
+            } label: {
                 Image(systemName: "forward.end.fill")
                     .font(.system(size: 24))
                     .foregroundStyle(model.canGoNext ? AppTheme.textSec : AppTheme.textTer)
@@ -929,7 +964,10 @@ struct TrainingPlayerSheet: View {
 
             HStack(spacing: 6) {
                 ForEach(speedOptions, id: \.self) { s in
-                    Button { model.setSpeed(s) } label: {
+                    Button {
+                        Haptics.selection()
+                        model.setSpeed(s)
+                    } label: {
                         Text(speedLabel(s))
                             .font(.caption.bold())
                             .foregroundStyle(model.speed == s
@@ -959,6 +997,7 @@ struct TrainingPlayerSheet: View {
             Toggle("", isOn: $model.autoplay)
                 .labelsHidden()
                 .tint(accentColor)
+                .onChange(of: model.autoplay) { _, _ in Haptics.selection() }
         }
         .padding(16)
         .background(AppTheme.card, in: RoundedRectangle(cornerRadius: 14))

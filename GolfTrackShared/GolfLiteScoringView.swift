@@ -54,7 +54,10 @@ struct GolfLiteScoringView: View {
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
             ToolbarItem(placement: .topBarTrailing) {
-                Button("Ergebnis") { showResult = true }
+                Button("Ergebnis") {
+                    Haptics.tap()
+                    showResult = true
+                }
                     .foregroundStyle(AppTheme.gold)
             }
         }
@@ -103,10 +106,14 @@ struct GolfLiteScoringView: View {
 
             HStack(spacing: 14) {
                 stepButton(symbol: "minus", enabled: strokes[currentHole] > 0) {
-                    if strokes[currentHole] > 0 { strokes[currentHole] -= 1 }
+                    guard strokes[currentHole] > 0 else { return }
+                    Haptics.decrement()
+                    strokes[currentHole] -= 1
                 }
                 stepButton(symbol: "plus", enabled: strokes[currentHole] < 20) {
-                    if strokes[currentHole] < 20 { strokes[currentHole] += 1 }
+                    guard strokes[currentHole] < 20 else { return }
+                    Haptics.stroke()
+                    strokes[currentHole] += 1
                 }
             }
         }
@@ -169,7 +176,9 @@ struct GolfLiteScoringView: View {
     private var bottomNav: some View {
         HStack(spacing: 10) {
             Button {
-                if currentHole > 0 { currentHole -= 1 }
+                guard currentHole > 0 else { return }
+                Haptics.selection()
+                currentHole -= 1
             } label: {
                 Label("Zurück", systemImage: "chevron.left")
                     .font(.subheadline.bold())
@@ -182,7 +191,18 @@ struct GolfLiteScoringView: View {
             .disabled(currentHole == 0)
 
             Button {
-                if currentHole < course.holes - 1 { currentHole += 1 } else { showResult = true }
+                if currentHole < course.holes - 1 {
+                    // Ergebnis des verlassenen Lochs spürbar machen
+                    if strokes[currentHole] > 0, let par {
+                        Haptics.score(relativeToPar: strokes[currentHole] - par)
+                    } else {
+                        Haptics.selection()
+                    }
+                    currentHole += 1
+                } else {
+                    Haptics.celebrate()
+                    showResult = true
+                }
             } label: {
                 Label(currentHole < course.holes - 1 ? "Weiter" : "Ergebnis",
                       systemImage: currentHole < course.holes - 1 ? "chevron.right" : "flag.checkered")
@@ -271,7 +291,10 @@ struct GolfLiteResultView: View {
                     holeGrid
                     FullAppFeaturesCard()
 
-                    Button(action: onFinish) {
+                    Button {
+                        Haptics.celebrate()
+                        onFinish()
+                    } label: {
                         Text("Runde beenden").goldButton()
                     }
                     .buttonStyle(.plain)
@@ -283,7 +306,10 @@ struct GolfLiteResultView: View {
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .topBarLeading) {
-                    Button("Weiterspielen") { dismiss() }
+                    Button("Weiterspielen") {
+                        Haptics.tap()
+                        dismiss()
+                    }
                         .foregroundStyle(AppTheme.gold)
                 }
             }

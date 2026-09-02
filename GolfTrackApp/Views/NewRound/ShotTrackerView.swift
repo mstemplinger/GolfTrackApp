@@ -95,24 +95,31 @@ struct ShotTrackerView: View {
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .topBarLeading) {
-                    Button("Fertig") { dismiss() }
+                    Button("Fertig") {
+                        Haptics.tap()
+                        dismiss()
+                    }
                 }
                 ToolbarItemGroup(placement: .topBarTrailing) {
                     if canUndo {
                         Button {
+                            Haptics.decrement()
                             undoLastAction()
                         } label: {
                             Image(systemName: "arrow.uturn.backward")
                         }
                     }
                     if !holeScore.sortedShots.isEmpty || fromCoord != nil {
-                        Button("Alle löschen", role: .destructive) { clearAll() }
+                        Button("Alle löschen", role: .destructive) {
+                            Haptics.warning()
+                            clearAll()
+                        }
                             .font(.caption)
                     }
                 }
             }
             .alert("Standort nicht verfügbar", isPresented: $locationUnavailableAlert) {
-                Button("OK", role: .cancel) {}
+                Button("OK", role: .cancel) { Haptics.tap() }
             } message: {
                 Text("Stelle sicher, dass der Standortzugriff erlaubt ist.")
             }
@@ -144,6 +151,7 @@ struct ShotTrackerView: View {
             Spacer()
 
             Button {
+                Haptics.tap()
                 useCurrentLocation()
             } label: {
                 Label("Standort", systemImage: "location.fill")
@@ -168,6 +176,7 @@ struct ShotTrackerView: View {
 
     private var satelliteToggleButton: some View {
         Button {
+            Haptics.selection()
             withAnimation(.easeInOut(duration: 0.25)) {
                 isSatellite.toggle()
             }
@@ -223,7 +232,10 @@ struct ShotTrackerView: View {
                 ScrollView(.horizontal, showsIndicators: false) {
                     HStack(spacing: 8) {
                         ForEach(clubNames, id: \.self) { club in
-                            Button(club) { selectedClub = club }
+                            Button(club) {
+                                Haptics.selection()
+                                selectedClub = club
+                            }
                                 .font(.caption)
                                 .padding(.horizontal, 10)
                                 .padding(.vertical, 6)
@@ -277,6 +289,7 @@ struct ShotTrackerView: View {
     // MARK: - Actions
 
     private func handleTap(_ coord: CLLocationCoordinate2D) {
+        Haptics.rigid()
         switch placingState {
         case .from:
             fromCoord = coord
@@ -288,6 +301,7 @@ struct ShotTrackerView: View {
 
     private func useCurrentLocation() {
         guard let coord = locationManager.location?.coordinate else {
+            Haptics.error()
             locationUnavailableAlert = true
             return
         }
@@ -304,6 +318,7 @@ struct ShotTrackerView: View {
 
     private func saveShot() {
         guard let from = fromCoord, let to = toCoord else { return }
+        Haptics.success()
         let dist = Shot.haversineDistance(from: from, to: to)
         let shot = Shot(
             shotNumber: holeScore.sortedShots.count + 1,

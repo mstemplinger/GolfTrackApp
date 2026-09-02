@@ -18,7 +18,10 @@ struct TutorialView: View {
                 // ── Close button ─────────────────────────────────────
                 HStack {
                     Spacer()
-                    Button { dismiss() } label: {
+                    Button {
+                        Haptics.tap()
+                        dismiss()
+                    } label: {
                         Image(systemName: "xmark")
                             .font(.system(size: 12, weight: .bold))
                             .foregroundStyle(Color.white.opacity(0.5))
@@ -124,6 +127,7 @@ struct TutorialView: View {
                 // Back
                 if currentStep > 0 {
                     Button {
+                        Haptics.selection()
                         currentStep -= 1
                     } label: {
                         Image(systemName: "chevron.left")
@@ -142,8 +146,10 @@ struct TutorialView: View {
                 // Forward / Finish
                 Button {
                     if currentStep < totalSteps - 1 {
+                        Haptics.selection()
                         currentStep += 1
                     } else {
+                        Haptics.success()
                         dismiss()
                     }
                 } label: {

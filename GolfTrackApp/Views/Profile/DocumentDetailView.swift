@@ -33,6 +33,7 @@ struct DocumentDetailView: View {
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
                     Button {
+                        Haptics.tap()
                         dismiss()
                     } label: {
                         Image(systemName: "xmark")
@@ -43,7 +44,10 @@ struct DocumentDetailView: View {
                     }
                 }
                 ToolbarItem(placement: .destructiveAction) {
-                    Button { showDeleteAlert = true } label: {
+                    Button {
+                        Haptics.tap()
+                        showDeleteAlert = true
+                    } label: {
                         Image(systemName: "trash")
                             .font(.system(size: 14))
                             .foregroundStyle(.red)
@@ -52,11 +56,12 @@ struct DocumentDetailView: View {
             }
             .alert("Dokument löschen?", isPresented: $showDeleteAlert) {
                 Button("Löschen", role: .destructive) {
+                    Haptics.warning()
                     GolfDocumentStore.shared.delete(document)
                     onDelete()
                     dismiss()
                 }
-                Button("Abbrechen", role: .cancel) {}
+                Button("Abbrechen", role: .cancel) { Haptics.tap() }
             } message: {
                 Text("\"\(document.title)\" wird unwiderruflich gelöscht.")
             }

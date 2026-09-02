@@ -81,8 +81,11 @@ struct WhatsNewView: View {
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
-                    Button("Fertig") { dismiss() }
-                        .foregroundStyle(AppTheme.textSec)
+                    Button("Fertig") {
+                        Haptics.tap()
+                        dismiss()
+                    }
+                    .foregroundStyle(AppTheme.textSec)
                 }
             }
             .safeAreaInset(edge: .bottom) { actionBar }
@@ -158,6 +161,7 @@ struct WhatsNewView: View {
                 }
             } else {
                 Button {
+                    Haptics.success()
                     trackingEnabled = true
                     didEnable = true
                 } label: {
@@ -168,6 +172,7 @@ struct WhatsNewView: View {
             }
 
             Button {
+                Haptics.tap()
                 dismiss()
             } label: {
                 Text(didEnable ? "Weiter" : "Später entscheiden")

@@ -175,6 +175,7 @@ private struct HelpRow: View {
 
     var body: some View {
         Button {
+            Haptics.tap()
             withAnimation(.easeInOut(duration: 0.2)) { expanded.toggle() }
         } label: {
             VStack(alignment: .leading, spacing: 0) {

@@ -31,8 +31,11 @@ struct WrongAnswerReviewSheet: View {
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .confirmationAction) {
-                    Button("Fertig") { dismiss() }
-                        .foregroundStyle(AppTheme.gold)
+                    Button("Fertig") {
+                        Haptics.tap()
+                        dismiss()
+                    }
+                    .foregroundStyle(AppTheme.gold)
                 }
             }
         }
@@ -145,16 +148,25 @@ struct WrongAnswerReviewSheet: View {
     private var navigationBar: some View {
         HStack(spacing: 14) {
             if currentIndex > 0 {
-                Button("Zurück") { withAnimation { currentIndex -= 1 } }
+                Button("Zurück") {
+                    Haptics.selection()
+                    withAnimation { currentIndex -= 1 }
+                }
                     .buttonStyle(.bordered)
             }
             Spacer()
             if currentIndex < wrongAnswers.count - 1 {
-                Button("Nächste") { withAnimation { currentIndex += 1 } }
+                Button("Nächste") {
+                    Haptics.selection()
+                    withAnimation { currentIndex += 1 }
+                }
                     .buttonStyle(.borderedProminent)
                     .tint(AppTheme.gold)
             } else {
-                Button("Fertig") { dismiss() }
+                Button("Fertig") {
+                    Haptics.tap()
+                    dismiss()
+                }
                     .buttonStyle(.borderedProminent)
                     .tint(AppTheme.gold)
             }

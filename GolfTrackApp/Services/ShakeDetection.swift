@@ -21,6 +21,7 @@ class ShakeView: UIView {
 
     override func motionEnded(_ motion: UIEvent.EventSubtype, with event: UIEvent?) {
         guard motion == .motionShake else { return }
+        Haptics.medium()
         NotificationCenter.default.post(name: .deviceDidShake, object: nil)
     }
 }

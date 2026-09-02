@@ -71,7 +71,10 @@ struct RoundShotMapCard: View {
                     .font(.subheadline.bold())
                     .foregroundStyle(AppTheme.text)
                 Spacer()
-                Button { isExpanded = true } label: {
+                Button {
+                    Haptics.tap()
+                    isExpanded = true
+                } label: {
                     HStack(spacing: 4) {
                         Image(systemName: "arrow.up.left.and.arrow.down.right")
                         Text("Vollbild")
@@ -162,10 +165,14 @@ struct RoundShotMapCard: View {
                 .navigationBarTitleDisplayMode(.inline)
                 .toolbar {
                     ToolbarItem(placement: .topBarLeading) {
-                        Button("Schließen") { isExpanded = false }
+                        Button("Schließen") {
+                            Haptics.tap()
+                            isExpanded = false
+                        }
                     }
                     ToolbarItem(placement: .topBarTrailing) {
                         Button {
+                            Haptics.selection()
                             isSatellite.toggle()
                         } label: {
                             Image(systemName: isSatellite ? "map" : "globe.europe.africa")

@@ -77,13 +77,20 @@ struct CourseSelectorView: View {
             }
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
-                    Button("Abbrechen") { dismiss() }
+                    Button("Abbrechen") {
+                        Haptics.tap()
+                        dismiss()
+                    }
                 }
             }
             .alert("Fehler", isPresented: Binding(
                 get: { errorMessage != nil },
                 set: { if !$0 { errorMessage = nil } }
-            )) { Button("OK") { errorMessage = nil }
+            )) {
+                Button("OK") {
+                    Haptics.tap()
+                    errorMessage = nil
+                }
             } message: { Text(errorMessage ?? "") }
             .sheet(item: $selectedAPICourse) { course in
                 TeeBoxPickerView(course: course) { saved in
@@ -161,6 +168,7 @@ struct CourseSelectorView: View {
             if apiResults.isEmpty && !isSearching {
                 Section {
                     Button {
+                        Haptics.tap()
                         Task { await runAPISearch() }
                     } label: {
                         Label("Online suchen: \"\(searchText)\"", systemImage: "magnifyingglass")
@@ -174,7 +182,10 @@ struct CourseSelectorView: View {
             } else if !apiResults.isEmpty {
                 Section("Online-Ergebnisse") {
                     ForEach(apiResults) { course in
-                        Button { selectAPICourse(course) } label: {
+                        Button {
+                            Haptics.tap()
+                            selectAPICourse(course)
+                        } label: {
                             apiCourseRow(course)
                         }
                         .listRowBackground(AppTheme.card)
@@ -192,6 +203,7 @@ struct CourseSelectorView: View {
 
     private func courseRow(_ course: Course, showDistance: Bool) -> some View {
         Button {
+            Haptics.success()
             selectedCourse = course
             dismiss()
         } label: {

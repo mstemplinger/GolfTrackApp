@@ -121,6 +121,7 @@ struct ProfileView: View {
                                                 .stroke(AppTheme.gold, lineWidth: 1.5)
                                         )
                                     Button {
+                                        Haptics.success()
                                         playerName = draftName.isEmpty ? playerName : draftName
                                         editingName = false
                                     } label: {
@@ -132,6 +133,7 @@ struct ProfileView: View {
                                 .padding(.horizontal, 32)
                             } else {
                                 Button {
+                                    Haptics.tap()
                                     draftName = playerName
                                     editingName = true
                                 } label: {
@@ -260,6 +262,7 @@ struct ProfileView: View {
                 }
                 .pickerStyle(.segmented)
                 .frame(width: 160)
+                .onChange(of: appFocus) { _, _ in Haptics.selection() }
             }
             .padding(.horizontal, 18)
             .padding(.vertical, 14)
@@ -284,6 +287,7 @@ struct ProfileView: View {
                 }
                 .pickerStyle(.segmented)
                 .frame(width: 140)
+                .onChange(of: distanceUnit) { _, _ in Haptics.selection() }
             }
             .padding(.horizontal, 18)
             .padding(.vertical, 14)
@@ -304,6 +308,11 @@ struct ProfileView: View {
                 AnyView(MinigolfView())
             }
             Divider().background(AppTheme.cardAlt).padding(.leading, 62)
+            // Früher der zweite Tab im Minigolf-Bereich – dort war es fehl am Platz.
+            settingsRow(icon: "location.viewfinder", color: Color(red: 0.3, green: 0.7, blue: 1.0), title: "Distanz & Karte") {
+                AnyView(MinigolfToolsView())
+            }
+            Divider().background(AppTheme.cardAlt).padding(.leading, 62)
             settingsRow(icon: "bell.badge.fill", color: Color(red: 1.0, green: 0.75, blue: 0.2), title: "Benachrichtigungen") {
                 AnyView(NotificationSettingsView())
             }
@@ -317,6 +326,7 @@ struct ProfileView: View {
             }
             Divider().background(AppTheme.cardAlt).padding(.leading, 62)
             Button {
+                Haptics.tap()
                 showWhatsNew = true
             } label: {
                 HStack(spacing: 14) {
@@ -341,6 +351,7 @@ struct ProfileView: View {
             }
             Divider().background(AppTheme.cardAlt).padding(.leading, 62)
             Button {
+                Haptics.tap()
                 hasSeenOnboarding = false
             } label: {
                 HStack(spacing: 14) {
@@ -525,7 +536,10 @@ struct ProfileView: View {
             LazyVGrid(columns: columns, spacing: 10) {
                 ForEach(achievements, id: \.rawValue) { a in
                     achievementBadge(a)
-                        .onTapGesture { selectedAchievement = a }
+                        .onTapGesture {
+                            Haptics.tap()
+                            selectedAchievement = a
+                        }
                 }
             }
 
@@ -534,6 +548,7 @@ struct ProfileView: View {
                 HStack(spacing: 10) {
                     // Bestenliste
                     Button {
+                        Haptics.tap()
                         gc.showLeaderboard()
                     } label: {
                         HStack(spacing: 6) {
@@ -548,6 +563,7 @@ struct ProfileView: View {
                     }
                     // Errungenschaften / Dashboard
                     Button {
+                        Haptics.tap()
                         gc.showGameCenter()
                     } label: {
                         HStack(spacing: 6) {
@@ -563,6 +579,7 @@ struct ProfileView: View {
                 }
             } else {
                 Button {
+                    Haptics.tap()
                     gc.authenticate()
                 } label: {
                     HStack(spacing: 6) {

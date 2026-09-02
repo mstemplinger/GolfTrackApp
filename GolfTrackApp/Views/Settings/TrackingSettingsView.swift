@@ -38,6 +38,7 @@ struct TrackingSettingsView: View {
                     }
                     .tint(AppTheme.gold)
                     .listRowBackground(AppTheme.card)
+                    .onChange(of: isEnabled) { _, _ in Haptics.selection() }
                 } header: {
                     Text("Positions-Tracking")
                 } footer: {
@@ -122,6 +123,7 @@ struct TrackingSettingsView: View {
 
                     if !tracks.isEmpty {
                         Button(role: .destructive) {
+                            Haptics.tap()
                             showDeleteAllAlert = true
                         } label: {
                             Label("Alle Laufspuren löschen", systemImage: "trash")
@@ -141,8 +143,11 @@ struct TrackingSettingsView: View {
         .navigationTitle("Positions-Tracking")
         .navigationBarTitleDisplayMode(.inline)
         .alert("Alle Laufspuren löschen?", isPresented: $showDeleteAllAlert) {
-            Button("Löschen", role: .destructive) { deleteAllTracks() }
-            Button("Abbrechen", role: .cancel) {}
+            Button("Löschen", role: .destructive) {
+                Haptics.warning()
+                deleteAllTracks()
+            }
+            Button("Abbrechen", role: .cancel) { Haptics.tap() }
         } message: {
             Text("Alle gespeicherten Laufspuren werden endgültig entfernt (\(totalPoints) GPS-Punkte).")
         }
@@ -165,6 +170,7 @@ struct TrackingSettingsView: View {
                     .font(.caption)
                     .foregroundStyle(AppTheme.textSec)
                 Button("In den iOS-Einstellungen öffnen") {
+                    Haptics.tap()
                     if let url = URL(string: UIApplication.openSettingsURLString) {
                         UIApplication.shared.open(url)
                     }

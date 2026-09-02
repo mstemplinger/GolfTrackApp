@@ -93,6 +93,7 @@ struct GolfLiteStartView: View {
                 .font(.subheadline)
                 .foregroundStyle(.secondary)
             Button {
+                Haptics.medium()
                 resuming = entry
                 didStart = true
                 round = course
@@ -113,6 +114,7 @@ struct GolfLiteStartView: View {
 
     private var startButton: some View {
         Button {
+            Haptics.medium()
             GolfLiteStore.clear()
             resuming = nil
             didStart = true

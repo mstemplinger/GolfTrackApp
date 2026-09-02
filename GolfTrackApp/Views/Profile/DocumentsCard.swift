@@ -22,6 +22,7 @@ struct DocumentsCard: View {
                 }
                 Spacer()
                 Button {
+                    Haptics.tap()
                     showScanner = true
                 } label: {
                     HStack(spacing: 5) {
@@ -59,6 +60,7 @@ struct DocumentsCard: View {
                         .multilineTextAlignment(.center)
 
                     Button {
+                        Haptics.tap()
                         showScanner = true
                     } label: {
                         Label("Erstes Dokument scannen", systemImage: "doc.viewfinder.fill")
@@ -80,7 +82,10 @@ struct DocumentsCard: View {
                 LazyVGrid(columns: cols, spacing: 10) {
                     ForEach(documents) { doc in
                         documentTile(doc)
-                            .onTapGesture { selected = doc }
+                            .onTapGesture {
+                                Haptics.tap()
+                                selected = doc
+                            }
                     }
                 }
             }

@@ -28,8 +28,11 @@ struct CourseInfoSheet: View {
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
-                    Button("Fertig") { dismiss() }
-                        .foregroundStyle(AppTheme.gold)
+                    Button("Fertig") {
+                        Haptics.tap()
+                        dismiss()
+                    }
+                    .foregroundStyle(AppTheme.gold)
                 }
             }
         }

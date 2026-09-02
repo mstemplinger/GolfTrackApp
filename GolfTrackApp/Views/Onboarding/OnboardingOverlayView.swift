@@ -274,7 +274,10 @@ struct OnboardingOverlayView: View {
 
             Spacer(minLength: 4)
 
-            Button { dismissTutorial() } label: {
+            Button {
+                Haptics.tap()
+                dismissTutorial()
+            } label: {
                 Image(systemName: "xmark")
                     .font(.system(size: 10, weight: .bold))
                     .foregroundStyle(AppTheme.textSec)
@@ -309,6 +312,7 @@ struct OnboardingOverlayView: View {
 
             if currentStep > 1 {
                 Button {
+                    Haptics.selection()
                     withAnimation(.easeInOut(duration: 0.3)) { currentStep -= 1 }
                 } label: {
                     Image(systemName: "chevron.left")
@@ -321,6 +325,7 @@ struct OnboardingOverlayView: View {
             }
 
             Button {
+                isLast ? Haptics.success() : Haptics.selection()
                 withAnimation(.easeInOut(duration: 0.3)) { advance() }
             } label: {
                 HStack(spacing: 5) {
@@ -382,6 +387,7 @@ struct OnboardingOverlayView: View {
 
             VStack(spacing: 10) {
                 Button {
+                    isLast ? Haptics.success() : Haptics.selection()
                     withAnimation(.easeInOut(duration: 0.3)) { advance() }
                 } label: {
                     Text(isLast ? "Tutorial beenden" : "Weiter")
@@ -394,7 +400,10 @@ struct OnboardingOverlayView: View {
                 .buttonStyle(.plain)
 
                 if !isLast {
-                    Button { dismissTutorial() } label: {
+                    Button {
+                        Haptics.tap()
+                        dismissTutorial()
+                    } label: {
                         Text("Überspringen")
                             .font(.subheadline)
                             .foregroundStyle(AppTheme.textSec)

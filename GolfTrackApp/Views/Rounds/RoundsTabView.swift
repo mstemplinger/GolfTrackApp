@@ -21,7 +21,10 @@ struct RoundsTabView: View {
                             .font(.title2.bold())
                             .foregroundStyle(AppTheme.text)
                         Spacer()
-                        Button { showNewRound = true } label: {
+                        Button {
+                            Haptics.tap()
+                            showNewRound = true
+                        } label: {
                             Image(systemName: "plus.circle.fill")
                                 .font(.title2)
                                 .foregroundStyle(AppTheme.gold)
@@ -34,7 +37,10 @@ struct RoundsTabView: View {
                     ScrollView(showsIndicators: false) {
                         VStack(spacing: 20) {
                             // New Round CTA
-                            Button { showNewRound = true } label: {
+                            Button {
+                                Haptics.medium()
+                                showNewRound = true
+                            } label: {
                                 HStack(spacing: 14) {
                                     ZStack {
                                         Circle().fill(AppTheme.gold).frame(width: 46, height: 46)
@@ -128,7 +134,10 @@ struct RoundsTabView: View {
                 .font(.subheadline)
                 .foregroundStyle(AppTheme.textTer)
                 .multilineTextAlignment(.center)
-            Button { showNewRound = true } label: {
+            Button {
+                Haptics.medium()
+                showNewRound = true
+            } label: {
                 Label("Erste Runde starten", systemImage: "plus")
                     .goldButton()
                     .padding(.horizontal, 40)

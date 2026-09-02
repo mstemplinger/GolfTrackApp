@@ -46,12 +46,18 @@ struct DocumentScannerSheet: View {
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
-                    Button("Abbrechen") { dismiss() }
-                        .foregroundStyle(AppTheme.textSec)
+                    Button("Abbrechen") {
+                        Haptics.tap()
+                        dismiss()
+                    }
+                    .foregroundStyle(AppTheme.textSec)
                 }
                 if !scannedImages.isEmpty {
                     ToolbarItem(placement: .confirmationAction) {
-                        Button("Speichern") { saveDocument() }
+                        Button("Speichern") {
+                            Haptics.success()
+                            saveDocument()
+                        }
                             .bold()
                             .foregroundStyle(AppTheme.gold)
                             .disabled(saving)
@@ -126,7 +132,10 @@ struct DocumentScannerSheet: View {
                                subtitle: String,
                                color: Color,
                                action: @escaping () -> Void) -> some View {
-        Button(action: action) {
+        Button {
+            Haptics.tap()
+            action()
+        } label: {
             HStack(spacing: 14) {
                 ZStack {
                     RoundedRectangle(cornerRadius: 10)
@@ -164,6 +173,7 @@ struct DocumentScannerSheet: View {
                     .foregroundStyle(AppTheme.text)
                 Spacer()
                 Button {
+                    Haptics.tap()
                     scannedImages = []
                     photoItems   = []
                 } label: {
@@ -250,6 +260,7 @@ struct DocumentScannerSheet: View {
     private func typeTile(_ type: GolfDocumentType) -> some View {
         let selected = selectedType == type
         return Button {
+            Haptics.selection()
             selectedType = type
             if title.isEmpty || GolfDocumentType.allCases.map(\.rawValue).contains(title) {
                 title = type.rawValue

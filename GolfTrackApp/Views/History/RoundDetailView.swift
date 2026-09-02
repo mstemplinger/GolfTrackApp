@@ -37,6 +37,7 @@ struct RoundDetailView: View {
             ToolbarItem(placement: .topBarTrailing) {
                 HStack(spacing: 4) {
                     Button {
+                        Haptics.tap()
                         Task { await renderAndShare() }
                     } label: {
                         Image(systemName: "square.and.arrow.up")
@@ -44,6 +45,7 @@ struct RoundDetailView: View {
                     .foregroundStyle(AppTheme.gold)
 
                     Button {
+                        Haptics.medium()
                         round.isComplete = false
                         continuePlaying = true
                     } label: {

@@ -53,6 +53,7 @@ struct ContentView: View {
                     .tag(4)
             }
             .tint(AppTheme.gold)
+            .onChange(of: selectedTab) { _, _ in Haptics.selection() }
             .onPreferenceChange(TutorialFrameKey.self) { frames in
                 tutorialFrames = frames
             }
@@ -84,7 +85,10 @@ struct ContentView: View {
             get: { importedClipRounds > 0 },
             set: { if !$0 { importedClipRounds = 0 } }
         )) {
-            Button("Gut") { importedClipRounds = 0 }
+            Button("Gut") {
+                Haptics.tap()
+                importedClipRounds = 0
+            }
         } message: {
             Text(importedClipRounds == 1
                  ? "Deine Runde aus dem App Clip steht jetzt in der App."
@@ -120,7 +124,10 @@ struct ContentView: View {
                 set: { if !$0 { deepLinkFehler = nil } }
             )
         ) {
-            Button("OK", role: .cancel) { deepLinkFehler = nil }
+            Button("OK", role: .cancel) {
+                Haptics.tap()
+                deepLinkFehler = nil
+            }
         } message: {
             Text(deepLinkFehler ?? "")
         }
@@ -177,13 +184,16 @@ struct ContentView: View {
         if let course = CourseCatalogService.shared.course(fromDeepLink: url) {
             openScanned(course)
         } else if CourseCatalogService.shared.lastError != nil {
+            Haptics.error()
             deepLinkFehler = "Das Platzverzeichnis ließ sich nicht laden. Prüf die Internetverbindung und scanne den Code noch einmal."
         } else {
+            Haptics.error()
             deepLinkFehler = "Diese Anlage steht noch nicht im Verzeichnis. Wurde sie gerade erst freigegeben, versuch es in ein paar Minuten noch einmal."
         }
     }
 
     private func openScanned(_ course: MinigolfCourseEntry) {
+        Haptics.success()
         if !hasChosenAppFocus {
             appFocus = .minigolf
             hasChosenAppFocus = true

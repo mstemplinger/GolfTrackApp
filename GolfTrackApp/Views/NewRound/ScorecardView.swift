@@ -50,8 +50,8 @@ struct ScorecardView: View {
                         par: par(for: score),
                         holeCount: sortedScores.count,
                         gameMode: round.gameMode,
-                        onPrevious: { if currentIndex > 0 { currentIndex -= 1 } },
-                        onNext: { if currentIndex < sortedScores.count - 1 { currentIndex += 1 } }
+                        onPrevious: { goToPreviousHole() },
+                        onNext: { goToNextHole() }
                     )
                 }
 
@@ -75,8 +75,11 @@ struct ScorecardView: View {
         .navigationBarBackButtonHidden()
         .toolbar {
             ToolbarItem(placement: .topBarLeading) {
-                Button("Abbrechen") { showCancelAlert = true }
-                    .foregroundStyle(AppTheme.textSec)
+                Button("Abbrechen") {
+                    Haptics.tap()
+                    showCancelAlert = true
+                }
+                .foregroundStyle(AppTheme.textSec)
             }
             ToolbarItem(placement: .principal) {
                 HStack(spacing: 6) {
@@ -92,19 +95,24 @@ struct ScorecardView: View {
                 HStack(spacing: 12) {
                     if let course = round.course, !course.hcpValues.isEmpty || !course.facilityNotes.isEmpty {
                         Button {
+                            Haptics.tap()
                             showCourseInfo = true
                         } label: {
                             Image(systemName: "info.circle")
                                 .foregroundStyle(AppTheme.textSec)
                         }
                     }
-                    Button("Abschließen") { showFinishAlert = true }
-                        .bold().foregroundStyle(AppTheme.gold)
+                    Button("Abschließen") {
+                        Haptics.tap()
+                        showFinishAlert = true
+                    }
+                    .bold().foregroundStyle(AppTheme.gold)
                 }
             }
         }
         .alert("Runde abschließen?", isPresented: $showFinishAlert) {
             Button("Abschließen") {
+                Haptics.celebrate()
                 round.isComplete = true
                 wc.finishRound()
                 tracking.stop()
@@ -128,23 +136,28 @@ struct ScorecardView: View {
                     presentCompletion(allHolesPlayed: allHolesPlayed)
                 }
             }
-            Button("Weiter spielen", role: .cancel) {}
+            Button("Weiter spielen", role: .cancel) { Haptics.tap() }
         } message: {
             Text("Die Runde wird als abgeschlossen gespeichert.")
         }
         .alert("Runde nachgetragen?", isPresented: $showBackfillAlert) {
             Button("Nachgetragen – Spur löschen", role: .destructive) {
+                Haptics.warning()
                 discardTrack()
                 presentCompletion(allHolesPlayed: sortedScores.allSatisfy { $0.strokes >= 1 })
             }
             Button("Ich habe gespielt – behalten", role: .cancel) {
+                Haptics.tap()
                 presentCompletion(allHolesPlayed: sortedScores.allSatisfy { $0.strokes >= 1 })
             }
         } message: {
             Text("Für \(round.playedScores.count) Löcher wurden nur \(recordedMinutes) Minuten aufgezeichnet – das ist für eine gespielte Runde zu kurz. Wenn du die Runde nachgetragen hast, zeigt die Laufspur nicht den Platz, sondern wo du beim Eintragen warst. Solche Spuren verfälschen die Abschlag-, Grün- und Fairway-Erkennung.")
         }
         .alert("Nicht an Game Center übertragen", isPresented: $showIncompleteScoreAlert) {
-            Button("OK") { showRoundCompleteSheet = true }
+            Button("OK") {
+                Haptics.tap()
+                showRoundCompleteSheet = true
+            }
         } message: {
             Text("Dein Ergebnis wurde nicht an die Game-Center-Bestenliste übertragen, weil nicht auf allen Löchern ein Schlag eingetragen ist. Trage auf jedem Loch mindestens einen Schlag ein, damit die Runde in der Bestenliste zählt.")
         }
@@ -162,8 +175,11 @@ struct ScorecardView: View {
             showShakeAlert = true
         }
         .alert("Spielregeln anzeigen?", isPresented: $showShakeAlert) {
-            Button("Anzeigen") { showRules = true }
-            Button("Abbrechen", role: .cancel) {}
+            Button("Anzeigen") {
+                Haptics.tap()
+                showRules = true
+            }
+            Button("Abbrechen", role: .cancel) { Haptics.tap() }
         } message: {
             Text("Möchtest du die wichtigsten Golfregeln nachschlagen?")
         }
@@ -172,7 +188,10 @@ struct ScorecardView: View {
                 GolfRulesView()
                     .toolbar {
                         ToolbarItem(placement: .topBarTrailing) {
-                            Button("Fertig") { showRules = false }
+                            Button("Fertig") {
+                                Haptics.tap()
+                                showRules = false
+                            }
                                 .foregroundStyle(AppTheme.gold)
                         }
                     }
@@ -185,8 +204,11 @@ struct ScorecardView: View {
         }
 
         .alert("Runde verlassen?", isPresented: $showCancelAlert) {
-            Button("Verlassen", role: .destructive) { dismiss() }
-            Button("Weiter spielen", role: .cancel) {}
+            Button("Verlassen", role: .destructive) {
+                Haptics.warning()
+                dismiss()
+            }
+            Button("Weiter spielen", role: .cancel) { Haptics.tap() }
         } message: {
             Text("Dein Fortschritt wird gespeichert. Du kannst die Runde auf der Startseite fortsetzen oder dort löschen.")
         }
@@ -218,6 +240,8 @@ struct ScorecardView: View {
             // Watch-Schläge (GPS) in SwiftData speichern
             wc.onWatchShotReceived = { holeIdx, fromLat, fromLon, toLat, toLon, distance in
                 guard holeIdx < sortedScores.count else { return }
+                // Schlag von der Watch angekommen – kurz am iPhone bestätigen
+                Haptics.light()
                 let targetHole = sortedScores[holeIdx]
                 let existingShots = targetHole.shots
                 let shot = Shot(
@@ -248,6 +272,27 @@ struct ScorecardView: View {
             wc.updateStrokes(strokes: strokes, currentHoleIndex: currentIndex)
             scheduleRoundInactivityReminder()
         }
+    }
+
+    // MARK: - Lochwechsel
+
+    /// Ein Loch zurück – reines Auswahl-Feedback.
+    private func goToPreviousHole() {
+        guard currentIndex > 0 else { return }
+        Haptics.selection()
+        currentIndex -= 1
+    }
+
+    /// Ein Loch weiter. Ist das verlassene Loch gespielt, spiegelt die Haptik
+    /// das Ergebnis zum Par wider – Birdie fühlt sich anders an als Doppelbogey.
+    private func goToNextHole() {
+        guard currentIndex < sortedScores.count - 1 else { return }
+        if let score = currentScore, score.strokes > 0 {
+            Haptics.score(relativeToPar: score.strokes - par(for: score))
+        } else {
+            Haptics.selection()
+        }
+        currentIndex += 1
     }
 
     // MARK: - Nachgetragene Runde

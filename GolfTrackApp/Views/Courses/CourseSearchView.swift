@@ -25,7 +25,10 @@ struct CourseSearchView: View {
                         ContentUnavailableView.search(text: query)
                     } else {
                         ForEach(results) { course in
-                            Button { selectCourse(course) } label: {
+                            Button {
+                                Haptics.tap()
+                                selectCourse(course)
+                            } label: {
                                 courseRow(course)
                             }
                             .listRowBackground(Color.clear)
@@ -49,14 +52,20 @@ struct CourseSearchView: View {
             }
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
-                    Button("Abbrechen") { dismiss() }
+                    Button("Abbrechen") {
+                        Haptics.tap()
+                        dismiss()
+                    }
                 }
             }
             .alert("Fehler", isPresented: Binding(
                 get: { errorMessage != nil },
                 set: { if !$0 { errorMessage = nil } }
             )) {
-                Button("OK") { errorMessage = nil }
+                Button("OK") {
+                    Haptics.tap()
+                    errorMessage = nil
+                }
             } message: {
                 Text(errorMessage ?? "")
             }
@@ -188,7 +197,10 @@ struct TeeBoxPickerView: View {
                             .listRowBackground(AppTheme.card)
                     } else {
                         ForEach(teeBoxes) { tee in
-                            Button { selectedTeeBox = tee } label: {
+                            Button {
+                                Haptics.selection()
+                                selectedTeeBox = tee
+                            } label: {
                                 teeRow(tee)
                             }
                             .foregroundStyle(AppTheme.text)
@@ -230,10 +242,16 @@ struct TeeBoxPickerView: View {
             .onAppear { selectedTeeBox = teeBoxes.first }
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
-                    Button("Zurück") { dismiss() }
+                    Button("Zurück") {
+                        Haptics.tap()
+                        dismiss()
+                    }
                 }
                 ToolbarItem(placement: .confirmationAction) {
-                    Button("Importieren") { importCourse() }
+                    Button("Importieren") {
+                        Haptics.success()
+                        importCourse()
+                    }
                         .bold()
                         .disabled(selectedTeeBox == nil || course.parValues(for: selectedTeeBox) == nil)
                 }

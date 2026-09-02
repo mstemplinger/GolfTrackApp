@@ -46,6 +46,7 @@ struct FairwayCorridorView: View {
         .toolbar {
             ToolbarItem(placement: .topBarTrailing) {
                 Button {
+                    Haptics.tap()
                     Task { await calculate() }
                 } label: {
                     Image(systemName: "arrow.clockwise")
@@ -84,6 +85,7 @@ struct FairwayCorridorView: View {
                 ForEach(corridors) { corridor in
                     let isActive = corridor.holeNumber == (selected?.holeNumber ?? -1)
                     Button {
+                        Haptics.selection()
                         selectedHole = corridor.holeNumber
                     } label: {
                         Text("\(corridor.holeNumber)")

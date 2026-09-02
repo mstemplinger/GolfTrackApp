@@ -31,7 +31,10 @@ struct NewRoundView: View {
                 // Course
                 Section {
                     if courses.isEmpty {
-                        Button { showCourseManager = true } label: {
+                        Button {
+                            Haptics.tap()
+                            showCourseManager = true
+                        } label: {
                             HStack {
                                 Image(systemName: "plus.circle.fill")
                                     .foregroundStyle(AppTheme.gold)
@@ -42,7 +45,10 @@ struct NewRoundView: View {
                         .listRowBackground(AppTheme.card)
                     } else {
                         // Tappable row that opens the location-aware selector
-                        Button { showCourseSelector = true } label: {
+                        Button {
+                            Haptics.tap()
+                            showCourseSelector = true
+                        } label: {
                             HStack(spacing: 12) {
                                 Image(systemName: "mappin.circle.fill")
                                     .font(.title3)
@@ -75,6 +81,7 @@ struct NewRoundView: View {
                         Text("Platz")
                         Spacer()
                         Button {
+                            Haptics.tap()
                             showCourseManager = true
                         } label: {
                             Label("Platz hinzufügen", systemImage: "plus")
@@ -90,6 +97,7 @@ struct NewRoundView: View {
                     Section("Schläger-Bag") {
                         ForEach(bags) { bag in
                             Button {
+                                Haptics.selection()
                                 selectedBag = (selectedBag?.persistentModelID == bag.persistentModelID) ? nil : bag
                             } label: {
                                 HStack(spacing: 12) {
@@ -167,6 +175,7 @@ struct NewRoundView: View {
                         }
                         if otherPlayers.count < selectedMode.maxOtherPlayers {
                             Button {
+                                Haptics.tap()
                                 otherPlayers.append("")
                             } label: {
                                 Label("Spieler hinzufügen", systemImage: "plus")
@@ -177,6 +186,7 @@ struct NewRoundView: View {
                         }
                         if otherPlayers.count > selectedMode.minOtherPlayers {
                             Button(role: .destructive) {
+                                Haptics.decrement()
                                 otherPlayers.removeLast()
                             } label: {
                                 Label("Spieler entfernen", systemImage: "minus")
@@ -209,7 +219,10 @@ struct NewRoundView: View {
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .topBarLeading) {
-                    Button { dismiss() } label: {
+                    Button {
+                        Haptics.tap()
+                        dismiss()
+                    } label: {
                         Image(systemName: "xmark")
                             .font(.body.weight(.semibold))
                             .foregroundStyle(AppTheme.textSec)
@@ -328,10 +341,12 @@ struct NewRoundView: View {
             otherPlayers.contains { $0.trimmingCharacters(in: .whitespaces).isEmpty }
 
         if hasEmptyNames && !warnMissingNames {
+            Haptics.warning()
             withAnimation(.easeInOut(duration: 0.2)) { warnMissingNames = true }
             return
         }
         warnMissingNames = false
+        Haptics.medium()
         startRound()
     }
 

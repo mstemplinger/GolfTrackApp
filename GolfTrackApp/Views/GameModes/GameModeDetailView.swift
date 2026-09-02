@@ -58,12 +58,18 @@ struct GameModeDetailView: View {
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
             ToolbarItem(placement: .topBarTrailing) {
-                Button("Schließen") { dismiss() }
+                Button("Schließen") {
+                    Haptics.tap()
+                    dismiss()
+                }
             }
         }
         .safeAreaInset(edge: .bottom) {
             if mode.isAvailable {
-                Button { showNewRound = true } label: {
+                Button {
+                    Haptics.medium()
+                    showNewRound = true
+                } label: {
                     Label("Runde starten – \(mode.displayName)", systemImage: "flag.fill")
                         .frame(maxWidth: .infinity)
                 }

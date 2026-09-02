@@ -155,6 +155,7 @@ final class SubscriptionManager: ObservableObject {
                 default:
                     break
                 }
+                Haptics.celebrate()
                 await transaction.finish()
             case .pending, .userCancelled:
                 break
@@ -162,6 +163,7 @@ final class SubscriptionManager: ObservableObject {
                 break
             }
         } catch {
+            Haptics.error()
             errorMessage = "Kauf fehlgeschlagen. Bitte versuche es erneut."
         }
     }
@@ -181,7 +183,9 @@ final class SubscriptionManager: ObservableObject {
         do {
             try await AppStore.sync()
             await updateSubscriptionStatus()
+            Haptics.success()
         } catch {
+            Haptics.error()
             errorMessage = "Wiederherstellen fehlgeschlagen."
         }
     }

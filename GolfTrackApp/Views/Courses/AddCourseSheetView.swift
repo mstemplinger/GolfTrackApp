@@ -112,7 +112,10 @@ struct AddCourseSheetView: View {
             .onChange(of: query) { _, new in if new.isEmpty { results = [] } }
             .toolbar {
                 ToolbarItem(placement: .confirmationAction) {
-                    Button("Fertig") { dismiss() }
+                    Button("Fertig") {
+                        Haptics.tap()
+                        dismiss()
+                    }
                 }
             }
             .overlay { loadingOverlays }
@@ -120,7 +123,10 @@ struct AddCourseSheetView: View {
                 get: { errorMessage != nil },
                 set: { if !$0 { errorMessage = nil } }
             )) {
-                Button("OK") { errorMessage = nil }
+                Button("OK") {
+                    Haptics.tap()
+                    errorMessage = nil
+                }
             } message: {
                 Text(errorMessage ?? "")
             }
@@ -218,7 +224,10 @@ struct AddCourseSheetView: View {
     private var apiResultsSection: some View {
         Section("Suchergebnisse (\(results.count))") {
             ForEach(results) { course in
-                Button { selectAPICourse(course) } label: {
+                Button {
+                    Haptics.tap()
+                    selectAPICourse(course)
+                } label: {
                     apiCourseRow(course)
                 }
                 .listRowBackground(Color.clear)
@@ -228,13 +237,19 @@ struct AddCourseSheetView: View {
 
     private var manualSection: some View {
         Section {
-            Button { showScorecardScanner = true } label: {
+            Button {
+                Haptics.tap()
+                showScorecardScanner = true
+            } label: {
                 Label("Scorecard scannen", systemImage: "camera.viewfinder")
                     .foregroundStyle(AppTheme.gold)
             }
             .listRowBackground(AppTheme.card)
 
-            Button { showManualForm = true } label: {
+            Button {
+                Haptics.tap()
+                showManualForm = true
+            } label: {
                 Label("Eigenen Platz manuell erstellen", systemImage: "plus.circle.fill")
                     .foregroundStyle(AppTheme.textSec)
             }
@@ -271,6 +286,7 @@ struct AddCourseSheetView: View {
 
         return Button {
             guard !alreadySaved else { return }
+            Haptics.success()
             importBundledCourse(entry)
         } label: {
             HStack(spacing: 12) {

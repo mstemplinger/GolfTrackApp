@@ -64,6 +64,7 @@ struct MinigolfAdSlotView: View {
                 // nichts tut (oder ausgegraut wirkt), wäre schlechter.
                 if let link = ad.link {
                     Button {
+                        Haptics.tap()
                         catalog.countClick(ad)
                         openURL(link)
                     } label: {
@@ -77,6 +78,7 @@ struct MinigolfAdSlotView: View {
             .task(id: "\(ad.id)-\(rotation)") { catalog.countImpression(ad) }
         } else if let promo = housePromo {
             Button {
+                Haptics.tap()
                 switch promo.destination {
                 case .sheet:               promoSheet = promo
                 case .link(let url):       openURL(url)

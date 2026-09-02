@@ -30,11 +30,13 @@ struct BagManagerView: View {
                         .listRowBackground(AppTheme.card)
                         .swipeActions(edge: .trailing, allowsFullSwipe: false) {
                             Button(role: .destructive) {
+                                Haptics.warning()
                                 context.delete(bag)
                             } label: {
                                 Label("Löschen", systemImage: "trash")
                             }
                             Button {
+                                Haptics.tap()
                                 renameDraft = bag.name
                                 renamingBag = bag
                             } label: {
@@ -62,10 +64,14 @@ struct BagManagerView: View {
             Button("Erstellen") {
                 let name = newBagName.trimmingCharacters(in: .whitespaces)
                 guard !name.isEmpty else { return }
+                Haptics.success()
                 context.insert(GolfBag(name: name))
                 newBagName = ""
             }
-            Button("Abbrechen", role: .cancel) { newBagName = "" }
+            Button("Abbrechen", role: .cancel) {
+                Haptics.tap()
+                newBagName = ""
+            }
         }
         .alert("Bag umbenennen", isPresented: Binding(
             get: { renamingBag != nil },
@@ -74,10 +80,14 @@ struct BagManagerView: View {
             TextField("Name", text: $renameDraft)
             Button("Speichern") {
                 let name = renameDraft.trimmingCharacters(in: .whitespaces)
+                Haptics.success()
                 if !name.isEmpty { renamingBag?.name = name }
                 renamingBag = nil
             }
-            Button("Abbrechen", role: .cancel) { renamingBag = nil }
+            Button("Abbrechen", role: .cancel) {
+                Haptics.tap()
+                renamingBag = nil
+            }
         }
     }
 
@@ -118,6 +128,7 @@ struct BagManagerView: View {
                 .foregroundStyle(AppTheme.textSec)
                 .multilineTextAlignment(.center)
             Button {
+                Haptics.success()
                 let bag = GolfBag(name: "Standard")
                 context.insert(bag)
                 seedDefaultClubs(into: bag)
@@ -136,7 +147,10 @@ struct BagManagerView: View {
     }
 
     private var addBagButton: some View {
-        Button { showAddBag = true } label: {
+        Button {
+            Haptics.tap()
+            showAddBag = true
+        } label: {
             Label("Neues Bag erstellen", systemImage: "plus.circle.fill")
                 .font(.headline)
                 .foregroundStyle(Color(red: 0.10, green: 0.22, blue: 0.13))
@@ -203,7 +217,10 @@ struct ClubBagView: View {
                         VStack(spacing: 0) {
                             ForEach(Array(clubs.enumerated()), id: \.element.persistentModelID) { index, club in
                                 clubRow(club: club)
-                                    .onTapGesture { detailClub = club }
+                                    .onTapGesture {
+                                        Haptics.tap()
+                                        detailClub = club
+                                    }
                                 if index < clubs.count - 1 {
                                     Divider()
                                         .background(AppTheme.cardAlt)
@@ -301,7 +318,10 @@ struct ClubBagView: View {
         .padding(.vertical, 13)
         .contentShape(Rectangle())
         .swipeActions(edge: .trailing, allowsFullSwipe: true) {
-            Button(role: .destructive) { context.delete(club) } label: {
+            Button(role: .destructive) {
+                Haptics.warning()
+                context.delete(club)
+            } label: {
                 Label("Löschen", systemImage: "trash")
             }
         }
@@ -326,7 +346,10 @@ struct ClubBagView: View {
     }
 
     private var addButton: some View {
-        Button { showAddSheet = true } label: {
+        Button {
+            Haptics.tap()
+            showAddSheet = true
+        } label: {
             Label("Schläger hinzufügen", systemImage: "plus.circle.fill")
                 .font(.headline)
                 .foregroundStyle(Color(red: 0.10, green: 0.22, blue: 0.13))
@@ -377,11 +400,17 @@ struct ClubDetailSheet: View {
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .topBarLeading) {
-                    Button("Fertig") { onDone() }.foregroundStyle(AppTheme.gold)
+                    Button("Fertig") {
+                        Haptics.tap()
+                        onDone()
+                    }.foregroundStyle(AppTheme.gold)
                 }
                 if club.hasUserData {
                     ToolbarItem(placement: .topBarTrailing) {
-                        Button("Zurücksetzen", role: .destructive) { showResetConfirm = true }
+                        Button("Zurücksetzen", role: .destructive) {
+                            Haptics.tap()
+                            showResetConfirm = true
+                        }
                             .font(.caption).foregroundStyle(.red)
                     }
                 }
@@ -390,8 +419,11 @@ struct ClubDetailSheet: View {
                 "Alle \(club.shotCount) Messungen löschen?",
                 isPresented: $showResetConfirm, titleVisibility: .visible
             ) {
-                Button("Messungen löschen", role: .destructive) { club.clearMeasurements() }
-                Button("Abbrechen", role: .cancel) {}
+                Button("Messungen löschen", role: .destructive) {
+                    Haptics.warning()
+                    club.clearMeasurements()
+                }
+                Button("Abbrechen", role: .cancel) { Haptics.tap() }
             } message: {
                 Text("Der Durchschnitt wird auf die Voreinstellung (\(club.defaultDistance) m) zurückgesetzt.")
             }
@@ -421,6 +453,7 @@ struct ClubDetailSheet: View {
             Toggle("", isOn: $club.isPutter)
                 .labelsHidden()
                 .tint(.blue)
+                .onChange(of: club.isPutter) { _, _ in Haptics.selection() }
         }
         .padding(16)
         .background(AppTheme.card, in: RoundedRectangle(cornerRadius: 16))
@@ -469,7 +502,11 @@ struct ClubDetailSheet: View {
             Text("VOREINSTELLUNG ANPASSEN")
                 .font(.system(size: 10, weight: .semibold)).tracking(2).foregroundStyle(AppTheme.textTer)
             HStack(spacing: 20) {
-                Button { if club.defaultDistance > 5 { club.defaultDistance -= 5 } } label: {
+                Button {
+                    guard club.defaultDistance > 5 else { return }
+                    Haptics.decrement()
+                    club.defaultDistance -= 5
+                } label: {
                     Image(systemName: "minus.circle.fill").font(.system(size: 36))
                         .foregroundStyle(club.defaultDistance > 5 ? AppTheme.gold : AppTheme.textTer)
                 }.disabled(club.defaultDistance <= 5)
@@ -477,7 +514,11 @@ struct ClubDetailSheet: View {
                     .font(.system(size: 28, weight: .bold, design: .rounded)).foregroundStyle(AppTheme.text)
                     .frame(minWidth: 90, alignment: .center)
                     .contentTransition(.numericText()).animation(.snappy, value: club.defaultDistance)
-                Button { if club.defaultDistance < 400 { club.defaultDistance += 5 } } label: {
+                Button {
+                    guard club.defaultDistance < 400 else { return }
+                    Haptics.stroke()
+                    club.defaultDistance += 5
+                } label: {
                     Image(systemName: "plus.circle.fill").font(.system(size: 36)).foregroundStyle(AppTheme.gold)
                 }.disabled(club.defaultDistance >= 400)
             }
@@ -569,7 +610,10 @@ struct AddClubSheet: View {
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
-                    Button("Fertig") { onDone() }
+                    Button("Fertig") {
+                        Haptics.tap()
+                        onDone()
+                    }
                         .font(.headline)
                         .foregroundStyle(AppTheme.gold)
                 }
@@ -614,6 +658,7 @@ struct AddClubSheet: View {
                                 .foregroundStyle(.green.opacity(0.6))
                         } else {
                             Button {
+                                Haptics.success()
                                 onAdd(name, dist, isPutter)
                             } label: {
                                 Image(systemName: "plus.circle.fill")
@@ -644,6 +689,7 @@ struct AddClubSheet: View {
 
             VStack(spacing: 0) {
                 Button {
+                    Haptics.tap()
                     withAnimation(.easeInOut(duration: 0.2)) { showCustomForm.toggle() }
                 } label: {
                     HStack(spacing: 14) {
@@ -682,11 +728,16 @@ struct AddClubSheet: View {
                             Text("Ist ein Putter").font(.subheadline).foregroundStyle(AppTheme.text)
                             Spacer()
                             Toggle("", isOn: $customIsPutter).labelsHidden().tint(.blue)
+                                .onChange(of: customIsPutter) { _, _ in Haptics.selection() }
                         }
 
                         if !customIsPutter {
                             HStack(spacing: 16) {
-                                Button { if customDist > 5 { customDist -= 5 } } label: {
+                                Button {
+                                    guard customDist > 5 else { return }
+                                    Haptics.decrement()
+                                    customDist -= 5
+                                } label: {
                                     Image(systemName: "minus.circle.fill").font(.system(size: 32))
                                         .foregroundStyle(customDist > 5 ? AppTheme.gold : AppTheme.textTer)
                                 }.disabled(customDist <= 5)
@@ -695,7 +746,11 @@ struct AddClubSheet: View {
                                     .foregroundStyle(AppTheme.gold)
                                     .frame(minWidth: 80, alignment: .center)
                                     .contentTransition(.numericText()).animation(.snappy, value: customDist)
-                                Button { if customDist < 400 { customDist += 5 } } label: {
+                                Button {
+                                    guard customDist < 400 else { return }
+                                    Haptics.stroke()
+                                    customDist += 5
+                                } label: {
                                     Image(systemName: "plus.circle.fill").font(.system(size: 32)).foregroundStyle(AppTheme.gold)
                                 }.disabled(customDist >= 400)
                             }
@@ -705,6 +760,7 @@ struct AddClubSheet: View {
                         Button {
                             let trimmed = customName.trimmingCharacters(in: .whitespaces)
                             guard !trimmed.isEmpty else { return }
+                            Haptics.success()
                             onAdd(trimmed, customIsPutter ? 10 : customDist, customIsPutter)
                             customName = ""
                             customIsPutter = false

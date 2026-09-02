@@ -11,6 +11,7 @@ struct MinigolfChallengeSelectionList: View {
         VStack(spacing: 8) {
             ForEach(MinigolfChallenge.allCases) { challenge in
                 Button {
+                    Haptics.selection()
                     withAnimation(.spring(response: 0.3, dampingFraction: 0.8)) {
                         toggle(challenge)
                     }
@@ -82,6 +83,7 @@ struct MinigolfChallengeSetupCard: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 12) {
             Button {
+                Haptics.tap()
                 withAnimation(.easeInOut(duration: 0.22)) { isExpanded.toggle() }
             } label: {
                 HStack {
@@ -143,8 +145,11 @@ struct MinigolfChallengeSheet: View {
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
-                    Button("Fertig") { dismiss() }
-                        .foregroundStyle(AppTheme.gold)
+                    Button("Fertig") {
+                        Haptics.tap()
+                        dismiss()
+                    }
+                    .foregroundStyle(AppTheme.gold)
                 }
             }
         }
@@ -170,7 +175,10 @@ struct MinigolfChallengeLiveCard: View {
                     .font(.subheadline.bold())
                 Spacer()
                 if let onEdit {
-                    Button("Ändern") { onEdit() }
+                    Button("Ändern") {
+                        Haptics.tap()
+                        onEdit()
+                    }
                         .font(.caption.bold())
                         .foregroundStyle(AppTheme.gold)
                         .buttonStyle(.plain)

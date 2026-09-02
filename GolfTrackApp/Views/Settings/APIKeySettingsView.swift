@@ -27,6 +27,7 @@ struct APIKeySettingsView: View {
                             }
                         }
                         Button {
+                            Haptics.selection()
                             showKey.toggle()
                         } label: {
                             Image(systemName: showKey ? "eye.slash" : "eye")
@@ -50,6 +51,7 @@ struct APIKeySettingsView: View {
 
                 Section {
                     Button {
+                        Haptics.tap()
                         isTesting = true
                         testResult = nil
                         Task {
@@ -92,6 +94,7 @@ struct APIKeySettingsView: View {
                 if !api.apiKey.isEmpty {
                     Section {
                         Button("API-Key entfernen", role: .destructive) {
+                            Haptics.warning()
                             api.apiKey = ""
                             draft = ""
                             testResult = nil

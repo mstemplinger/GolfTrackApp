@@ -83,11 +83,17 @@ struct MinigolfScoringView: View {
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
             ToolbarItem(placement: .topBarTrailing) {
-                Button("Ergebnis") { showResults = true }
+                Button("Ergebnis") {
+                    Haptics.tap()
+                    showResults = true
+                }
                     .foregroundStyle(AppTheme.gold)
             }
             ToolbarItem(placement: .topBarTrailing) {
-                Button { showChallenges = true } label: {
+                Button {
+                    Haptics.tap()
+                    showChallenges = true
+                } label: {
                     Image(systemName: challenges.isEmpty ? "trophy" : "trophy.fill")
                 }
                 .foregroundStyle(AppTheme.gold)
@@ -227,7 +233,9 @@ struct MinigolfScoringView: View {
 
             HStack(spacing: 4) {
                 Button {
-                    if scores[i][currentHole] > 0 { scores[i][currentHole] -= 1 }
+                    guard scores[i][currentHole] > 0 else { return }
+                    Haptics.decrement()
+                    scores[i][currentHole] -= 1
                 } label: {
                     Image(systemName: "minus.circle.fill")
                         .font(.title)
@@ -241,7 +249,9 @@ struct MinigolfScoringView: View {
                     .frame(width: 40, alignment: .center)
 
                 Button {
-                    if scores[i][currentHole] < 20 { scores[i][currentHole] += 1 }
+                    guard scores[i][currentHole] < 20 else { return }
+                    Haptics.stroke()
+                    scores[i][currentHole] += 1
                 } label: {
                     Image(systemName: "plus.circle.fill")
                         .font(.title)
@@ -257,7 +267,10 @@ struct MinigolfScoringView: View {
     /// Hinweis, solange keine Nebenwertung läuft – man kann sie mitten in der
     /// Runde noch dazunehmen, gewertet wird dann trotzdem ab Bahn 1.
     private var addChallengesButton: some View {
-        Button { showChallenges = true } label: {
+        Button {
+            Haptics.tap()
+            showChallenges = true
+        } label: {
             HStack(spacing: 10) {
                 Image(systemName: "trophy.fill")
                     .foregroundStyle(AppTheme.gold)
@@ -292,6 +305,7 @@ struct MinigolfScoringView: View {
     private var bottomNav: some View {
         HStack(spacing: 12) {
             Button {
+                Haptics.selection()
                 withAnimation(.easeInOut(duration: 0.2)) { currentHole -= 1 }
             } label: {
                 Label("Zurück", systemImage: "chevron.left")
@@ -306,6 +320,8 @@ struct MinigolfScoringView: View {
 
             if currentHole < holeCount - 1 {
                 Button {
+                    // Ein Ass auf dieser Bahn wird gefeiert, sonst reicht ein Klopfer.
+                    scores.contains { $0[currentHole] == 1 } ? Haptics.ace() : Haptics.holeFinished()
                     withAnimation(.easeInOut(duration: 0.2)) { currentHole += 1 }
                 } label: {
                     HStack(spacing: 6) {
@@ -320,7 +336,10 @@ struct MinigolfScoringView: View {
                 }
                 .buttonStyle(.plain)
             } else {
-                Button { showResults = true } label: {
+                Button {
+                    Haptics.celebrate()
+                    showResults = true
+                } label: {
                     Text("Ergebnis")
                         .font(.subheadline.bold())
                         .frame(maxWidth: .infinity)
@@ -371,7 +390,10 @@ struct MinigolfResultsView: View {
                     scorecardTable
 
                     if let onFinish {
-                        Button { onFinish() } label: {
+                        Button {
+                            Haptics.celebrate()
+                            onFinish()
+                        } label: {
                             Label("Spiel beenden & speichern", systemImage: "checkmark.circle.fill")
                                 .font(.headline)
                                 .frame(maxWidth: .infinity)
@@ -389,7 +411,10 @@ struct MinigolfResultsView: View {
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
-                    Button("Fertig") { dismiss() }
+                    Button("Fertig") {
+                        Haptics.tap()
+                        dismiss()
+                    }
                 }
             }
         }

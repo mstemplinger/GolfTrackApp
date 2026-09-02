@@ -203,6 +203,7 @@ struct HoleScoringView: View {
             VStack(alignment: .leading, spacing: 10) {
                 // Tippen öffnet die Loch-Übersicht mit allem, was das Tracking weiß.
                 Button {
+                    Haptics.tap()
                     showHoleOverview = true
                 } label: {
                 HStack(spacing: 14) {
@@ -264,6 +265,7 @@ struct HoleScoringView: View {
 
                 // Subtle "update pin" text button at bottom
                 Button {
+                    Haptics.tap()
                     showPinSetter = true
                 } label: {
                     HStack(spacing: 4) {
@@ -282,6 +284,7 @@ struct HoleScoringView: View {
         } else {
             // Pin not set — compact tappable row
             Button {
+                Haptics.tap()
                 showPinSetter = true
             } label: {
                 HStack(spacing: 10) {
@@ -450,6 +453,7 @@ struct HoleScoringView: View {
             HStack(spacing: 28) {
                 Button {
                     guard score.strokes > 1 else { return }
+                    Haptics.decrement()
                     let removingNum = score.strokes
                     score.strokes -= 1
                     if let shot = score.shots.first(where: { $0.shotNumber == removingNum }) {
@@ -473,6 +477,7 @@ struct HoleScoringView: View {
                     .animation(.snappy, value: score.strokes)
 
                 Button {
+                    Haptics.stroke()
                     let shotNum = score.strokes + 1
                     score.strokes += 1
                     // Update previous shot's destination with current position
@@ -521,14 +526,21 @@ struct HoleScoringView: View {
         VStack(spacing: 8) {
             Text("Putts").font(.caption).foregroundStyle(AppTheme.textSec)
             HStack(spacing: 10) {
-                Button { if score.putts > 0 { score.putts -= 1 } } label: {
+                Button {
+                    guard score.putts > 0 else { return }
+                    Haptics.decrement()
+                    score.putts -= 1
+                } label: {
                     Image(systemName: "minus.circle").font(.title2)
                         .foregroundStyle(score.putts > 0 ? AppTheme.gold : .secondary)
                 }
                 .disabled(score.putts <= 0)
                 Text("\(score.putts)").font(.title.bold()).frame(minWidth: 28)
                     .contentTransition(.numericText()).animation(.snappy, value: score.putts)
-                Button { score.putts += 1 } label: {
+                Button {
+                    Haptics.stroke()
+                    score.putts += 1
+                } label: {
                     Image(systemName: "plus.circle").font(.title2).foregroundStyle(AppTheme.gold)
                 }
             }
@@ -540,6 +552,9 @@ struct HoleScoringView: View {
         VStack(spacing: 8) {
             Text("Fairway").font(.caption).foregroundStyle(AppTheme.textSec)
             Toggle("", isOn: $score.fairwayHit).labelsHidden().tint(AppTheme.gold)
+                .onChange(of: score.fairwayHit) { _, hit in
+                    hit ? Haptics.success() : Haptics.selection()
+                }
         }
         .frame(maxWidth: .infinity)
     }
@@ -548,6 +563,9 @@ struct HoleScoringView: View {
         VStack(spacing: 8) {
             Text("GIR").font(.caption).foregroundStyle(AppTheme.textSec)
             Toggle("", isOn: $score.greenInRegulation).labelsHidden().tint(AppTheme.gold)
+                .onChange(of: score.greenInRegulation) { _, hit in
+                    hit ? Haptics.success() : Haptics.selection()
+                }
         }
         .frame(maxWidth: .infinity)
     }
@@ -556,6 +574,7 @@ struct HoleScoringView: View {
 
     private var scoreGesamtBar: some View {
         Button {
+            Haptics.tap()
             showRoundOverview = true
         } label: {
             scoreGesamtBarContent
@@ -594,6 +613,7 @@ struct HoleScoringView: View {
 
     private var shotTrackerButton: some View {
         Button {
+            Haptics.tap()
             showShotTracker = true
         } label: {
             HStack(spacing: 8) {
@@ -780,7 +800,9 @@ struct HoleScoringView: View {
             Spacer()
             HStack(spacing: 16) {
                 Button {
-                    if opp.strokes > 1 { opp.strokes -= 1 }
+                    guard opp.strokes > 1 else { return }
+                    Haptics.decrement()
+                    opp.strokes -= 1
                 } label: {
                     Image(systemName: "minus.circle.fill")
                         .font(.title2)
@@ -793,6 +815,7 @@ struct HoleScoringView: View {
                     .contentTransition(.numericText())
                     .animation(.snappy, value: opp.strokes)
                 Button {
+                    Haptics.stroke()
                     opp.strokes += 1
                 } label: {
                     Image(systemName: "plus.circle.fill")
@@ -911,6 +934,7 @@ private struct ClubPickerSheet: View {
                         }
                         ForEach(clubs) { club in
                             Button {
+                                Haptics.tap()
                                 if club.isPutter { onPutterSelected() }
                                 recordShot(club: club.name)
                                 dismiss()
@@ -962,7 +986,10 @@ private struct ClubPickerSheet: View {
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
-                    Button("Überspringen") { dismiss() }
+                    Button("Überspringen") {
+                        Haptics.tap()
+                        dismiss()
+                    }
                         .foregroundStyle(AppTheme.textSec)
                 }
             }

@@ -39,7 +39,10 @@ struct MinigolfCourseStartView: View {
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .topBarLeading) {
-                    Button("Abbrechen") { dismiss() }
+                    Button("Abbrechen") {
+                        Haptics.tap()
+                        dismiss()
+                    }
                         .foregroundStyle(AppTheme.gold)
                 }
             }
@@ -90,7 +93,10 @@ struct MinigolfCourseStartView: View {
             .frame(maxWidth: .infinity)
             .background(AppTheme.card, in: RoundedRectangle(cornerRadius: 16))
 
-            Button { step = .tutorialQuestion } label: {
+            Button {
+                Haptics.medium()
+                step = .tutorialQuestion
+            } label: {
                 Text("Los geht's").goldButton()
             }
             .buttonStyle(.plain)
@@ -130,6 +136,7 @@ struct MinigolfCourseStartView: View {
 
             VStack(spacing: 10) {
                 Button {
+                    Haptics.tap()
                     tutorialPage = 0
                     step = .tutorial
                 } label: {
@@ -138,7 +145,10 @@ struct MinigolfCourseStartView: View {
                 }
                 .buttonStyle(.plain)
 
-                Button { step = .players } label: {
+                Button {
+                    Haptics.tap()
+                    step = .players
+                } label: {
                     Label("Nein, direkt starten", systemImage: "figure.golf")
                         .font(.headline)
                         .foregroundStyle(.white)
@@ -198,6 +208,7 @@ struct MinigolfCourseStartView: View {
             .frame(height: 280)
 
             Button {
+                Haptics.selection()
                 if tutorialPage < slides.count - 1 {
                     withAnimation(.easeInOut(duration: 0.2)) { tutorialPage += 1 }
                 } else {
@@ -215,7 +226,10 @@ struct MinigolfCourseStartView: View {
             }
             .buttonStyle(.plain)
 
-            Button("Überspringen") { step = .players }
+            Button("Überspringen") {
+                Haptics.tap()
+                step = .players
+            }
                 .font(.subheadline)
                 .foregroundStyle(.secondary)
         }
@@ -238,7 +252,10 @@ struct MinigolfCourseStartView: View {
 
             MinigolfChallengeSetupCard(selection: $challenges, initiallyExpanded: false)
 
-            Button(action: startRound) {
+            Button {
+                Haptics.medium()
+                startRound()
+            } label: {
                 Text("Runde starten · \(course.holes) Bahnen").goldButton()
             }
             .buttonStyle(.plain)
@@ -275,6 +292,7 @@ struct MinigolfCourseStartView: View {
         HStack(spacing: 10) {
             if rawNames.count < 8 {
                 Button {
+                    Haptics.tap()
                     withAnimation(.spring(response: 0.3)) { rawNames.append("") }
                 } label: {
                     Label("Hinzufügen", systemImage: "plus")
@@ -288,6 +306,7 @@ struct MinigolfCourseStartView: View {
             }
             if rawNames.count > 1 {
                 Button {
+                    Haptics.decrement()
                     withAnimation(.spring(response: 0.3)) {
                         if !rawNames.isEmpty { rawNames.removeLast() }
                     }

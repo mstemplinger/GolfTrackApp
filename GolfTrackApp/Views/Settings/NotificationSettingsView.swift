@@ -65,6 +65,7 @@ struct NotificationSettingsView: View {
             }
             Spacer()
             Button("Öffnen") {
+                Haptics.tap()
                 if let url = URL(string: UIApplication.openSettingsURLString) {
                     UIApplication.shared.open(url)
                 }
@@ -95,6 +96,7 @@ struct NotificationSettingsView: View {
                 Toggle("", isOn: $inactivityEnabled)
                     .labelsHidden()
                     .tint(AppTheme.gold)
+                    .onChange(of: inactivityEnabled) { _, _ in Haptics.selection() }
             }
             .padding(.horizontal, 18)
             .padding(.vertical, 16)
@@ -117,6 +119,7 @@ struct NotificationSettingsView: View {
                         Text("14 Tagen").tag(14)
                     }
                     .pickerStyle(.menu)
+                    .onChange(of: inactivityDays) { _, _ in Haptics.selection() }
                     .tint(AppTheme.gold)
                 }
                 .padding(.horizontal, 18)
@@ -143,6 +146,7 @@ struct NotificationSettingsView: View {
             Toggle("", isOn: $openRoundEnabled)
                 .labelsHidden()
                 .tint(AppTheme.gold)
+                .onChange(of: openRoundEnabled) { _, _ in Haptics.selection() }
         }
         .padding(.horizontal, 18)
         .padding(.vertical, 16)
@@ -214,6 +218,7 @@ private struct RoundInactivityCard: View {
                 Toggle("", isOn: $enabled)
                     .labelsHidden()
                     .tint(AppTheme.gold)
+                    .onChange(of: enabled) { _, _ in Haptics.selection() }
             }
             .padding(.horizontal, 18)
             .padding(.vertical, 16)
@@ -233,6 +238,7 @@ private struct RoundInactivityCard: View {
                         Text("60 Min.").tag(60)
                     }
                     .pickerStyle(.menu)
+                    .onChange(of: minutes) { _, _ in Haptics.selection() }
                     .tint(AppTheme.gold)
                 }
                 .padding(.horizontal, 18)

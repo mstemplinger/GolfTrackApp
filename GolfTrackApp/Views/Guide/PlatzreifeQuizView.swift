@@ -67,17 +67,19 @@ struct PlatzreifeQuizView: View {
         .background(AppTheme.bg)
         .confirmationDialog("Kategorie wählen", isPresented: $showCategoryPicker, titleVisibility: .visible) {
             Button("Alle Kategorien (\(PlatzreifeQuestions.all.count) Fragen)") {
+                Haptics.tap()
                 selectedCategory = nil
                 showSmartMode = true
             }
             ForEach(QuizCategory.allCases, id: \.self) { cat in
                 let count = PlatzreifeQuestions.all.filter { $0.category == cat }.count
                 Button("\(cat.rawValue) (\(count) Fragen)") {
+                    Haptics.tap()
                     selectedCategory = cat
                     showSmartMode = true
                 }
             }
-            Button("Abbrechen", role: .cancel) {}
+            Button("Abbrechen", role: .cancel) { Haptics.tap() }
         }
         .fullScreenCover(isPresented: $showSmartMode) {
             SmartModeView(category: selectedCategory)
@@ -164,7 +166,10 @@ struct PlatzreifeQuizView: View {
         badge: String,
         action: @escaping () -> Void
     ) -> some View {
-        Button(action: action) {
+        Button {
+            Haptics.medium()
+            action()
+        } label: {
             HStack(alignment: .top, spacing: 16) {
                 ZStack {
                     RoundedRectangle(cornerRadius: 14)
@@ -213,6 +218,7 @@ struct PlatzreifeQuizView: View {
                     .font(.headline)
                 Spacer()
                 Button {
+                    Haptics.tap()
                     showDeleteAllConfirm = true
                 } label: {
                     Label("Alle löschen", systemImage: "trash")
@@ -221,9 +227,10 @@ struct PlatzreifeQuizView: View {
                 }
                 .confirmationDialog("Alle Ergebnisse löschen?", isPresented: $showDeleteAllConfirm, titleVisibility: .visible) {
                     Button("Alle löschen", role: .destructive) {
+                        Haptics.warning()
                         results.forEach { context.delete($0) }
                     }
-                    Button("Abbrechen", role: .cancel) {}
+                    Button("Abbrechen", role: .cancel) { Haptics.tap() }
                 }
             }
             .padding(.horizontal)
@@ -242,6 +249,7 @@ struct PlatzreifeQuizView: View {
 
             if results.count > 5 {
                 Button {
+                    Haptics.tap()
                     withAnimation { showAllResults.toggle() }
                 } label: {
                     HStack(spacing: 4) {
@@ -305,6 +313,7 @@ struct PlatzreifeQuizView: View {
             }
 
             Button {
+                Haptics.warning()
                 context.delete(result)
             } label: {
                 Image(systemName: "trash")
@@ -366,12 +375,18 @@ struct SmartModeView: View {
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .topBarLeading) {
-                    Button("Beenden") { showQuitConfirm = true }
+                    Button("Beenden") {
+                        Haptics.tap()
+                        showQuitConfirm = true
+                    }
                 }
             }
             .alert("Modus beenden?", isPresented: $showQuitConfirm) {
-                Button("Abbrechen", role: .cancel) {}
-                Button("Beenden", role: .destructive) { saveAndDismiss() }
+                Button("Abbrechen", role: .cancel) { Haptics.tap() }
+                Button("Beenden", role: .destructive) {
+                    Haptics.tap()
+                    saveAndDismiss()
+                }
             } message: {
                 Text("Dein Fortschritt wird gespeichert.")
             }
@@ -426,7 +441,10 @@ struct SmartModeView: View {
                 if showExplanation {
                     explanationCard(q)
 
-                    Button(action: nextQuestion) {
+                    Button {
+                        Haptics.tap()
+                        nextQuestion()
+                    } label: {
                         Text(masteredIDs.count == allQuestions.count ? "Abschließen" : "Nächste Frage")
                             .font(.headline)
                             .frame(maxWidth: .infinity)
@@ -448,6 +466,7 @@ struct SmartModeView: View {
     private func optionButton(text: String, index: Int, question: QuizQuestion) -> some View {
         Button {
             guard selectedAnswer == nil else { return }
+            index == question.correctIndex ? Haptics.success() : Haptics.error()
             selectedAnswer = index
             showExplanation = true
             sessionTotal += 1
@@ -595,6 +614,7 @@ struct SmartModeView: View {
             VStack(spacing: 12) {
                 if !wrongAnswers.isEmpty {
                     Button {
+                        Haptics.tap()
                         wrongReviewIndex = 0
                         showWrongReview = true
                     } label: {
@@ -608,7 +628,10 @@ struct SmartModeView: View {
                     .buttonStyle(.plain)
                     .padding(.horizontal)
                 }
-                Button("Fertig") { saveAndDismiss() }
+                Button("Fertig") {
+                    Haptics.tap()
+                    saveAndDismiss()
+                }
                     .font(.headline)
                     .frame(maxWidth: .infinity)
                     .padding(.vertical, 16)
@@ -653,6 +676,8 @@ struct SmartModeView: View {
         showExplanation = false
 
         if queue.isEmpty {
+            // Alle Fragen gemeistert – das darf man fühlen.
+            Haptics.celebrate()
             isFinished = true
         } else {
             currentQuestion = queue.first
@@ -720,14 +745,23 @@ struct ExamModeView: View {
             .toolbar {
                 ToolbarItem(placement: .topBarLeading) {
                     if reviewMode {
-                        Button("Zurück") { withAnimation { reviewMode = false } }
+                        Button("Zurück") {
+                            Haptics.tap()
+                            withAnimation { reviewMode = false }
+                        }
                     } else if !isFinished {
-                        Button("Abbrechen") { showQuitConfirm = true }
+                        Button("Abbrechen") {
+                            Haptics.tap()
+                            showQuitConfirm = true
+                        }
                     }
                 }
                 ToolbarItem(placement: .topBarTrailing) {
                     if reviewMode {
-                        Button("Schließen") { dismiss() }
+                        Button("Schließen") {
+                            Haptics.tap()
+                            dismiss()
+                        }
                             .fontWeight(.semibold)
                     } else if !isFinished {
                         timerBadge
@@ -735,8 +769,12 @@ struct ExamModeView: View {
                 }
             }
             .alert("Prüfung abbrechen?", isPresented: $showQuitConfirm) {
-                Button("Weitermachen", role: .cancel) {}
-                Button("Abbrechen", role: .destructive) { stopTimer(); dismiss() }
+                Button("Weitermachen", role: .cancel) { Haptics.tap() }
+                Button("Abbrechen", role: .destructive) {
+                    Haptics.tap()
+                    stopTimer()
+                    dismiss()
+                }
             } message: {
                 Text("Das Ergebnis wird nicht gespeichert.")
             }
@@ -814,6 +852,7 @@ struct ExamModeView: View {
             HStack(spacing: 14) {
                 if currentIndex > 0 {
                     Button("Zurück") {
+                        Haptics.selection()
                         withAnimation { currentIndex -= 1 }
                     }
                     .buttonStyle(.bordered)
@@ -823,6 +862,7 @@ struct ExamModeView: View {
 
                 if currentIndex < examQuestions.count - 1 {
                     Button("Weiter") {
+                        Haptics.selection()
                         withAnimation { currentIndex += 1 }
                     }
                     .buttonStyle(.borderedProminent)
@@ -844,6 +884,7 @@ struct ExamModeView: View {
     private func examOptionButton(text: String, index: Int, qIndex: Int) -> some View {
         let selected = answers[qIndex] == index
         return Button {
+            Haptics.selection()
             answers[qIndex] = index
         } label: {
             HStack(spacing: 12) {
@@ -962,6 +1003,7 @@ struct ExamModeView: View {
                 // Buttons
                 VStack(spacing: 12) {
                     Button("Antworten durchsehen") {
+                        Haptics.tap()
                         reviewIndex = 0
                         reviewMode = true
                     }
@@ -971,7 +1013,10 @@ struct ExamModeView: View {
                     .background(AppTheme.gold.opacity(0.12), in: RoundedRectangle(cornerRadius: 14))
                     .foregroundStyle(AppTheme.gold)
 
-                    Button("Fertig") { dismiss() }
+                    Button("Fertig") {
+                        Haptics.tap()
+                        dismiss()
+                    }
                         .font(.headline)
                         .frame(maxWidth: .infinity)
                         .padding(.vertical, 14)
@@ -1129,16 +1174,25 @@ struct ExamModeView: View {
             // Navigation
             HStack(spacing: 14) {
                 if reviewIndex > 0 {
-                    Button("Zurück") { withAnimation { reviewIndex -= 1 } }
+                    Button("Zurück") {
+                        Haptics.selection()
+                        withAnimation { reviewIndex -= 1 }
+                    }
                         .buttonStyle(.bordered)
                 }
                 Spacer()
                 if reviewIndex < examQuestions.count - 1 {
-                    Button("Nächste") { withAnimation { reviewIndex += 1 } }
+                    Button("Nächste") {
+                        Haptics.selection()
+                        withAnimation { reviewIndex += 1 }
+                    }
                         .buttonStyle(.borderedProminent)
                         .tint(AppTheme.gold)
                 } else {
-                    Button("Fertig") { reviewMode = false }
+                    Button("Fertig") {
+                        Haptics.tap()
+                        reviewMode = false
+                    }
                         .buttonStyle(.borderedProminent)
                         .tint(AppTheme.gold)
                 }
@@ -1170,6 +1224,7 @@ struct ExamModeView: View {
         stopTimer()
         let duration = Int(Date().timeIntervalSince(startTime))
         let result = QuizResult(mode: "exam", score: correctCount, total: examQuestions.count, durationSeconds: duration)
+        result.passed ? Haptics.celebrate() : Haptics.warning()
         context.insert(result)
         withAnimation { isFinished = true }
     }

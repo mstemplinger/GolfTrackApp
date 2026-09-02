@@ -32,6 +32,7 @@ struct CourseListView: View {
             .toolbar {
                 ToolbarItem(placement: .topBarLeading) {
                     Button("Einstellungen", systemImage: "gear") {
+                        Haptics.tap()
                         showAPISettings = true
                     }
                     .foregroundStyle(api.hasAPIKey ? Color.secondary : Color.orange)
@@ -44,6 +45,7 @@ struct CourseListView: View {
                 }
                 ToolbarItem(placement: .topBarTrailing) {
                     Button("Hinzufügen", systemImage: "plus") {
+                        Haptics.tap()
                         showAddSheet = true
                     }
                     .tint(AppTheme.gold)
@@ -89,6 +91,7 @@ struct CourseListView: View {
                 .foregroundStyle(.secondary)
                 .padding(.horizontal)
             Button {
+                Haptics.tap()
                 showAddSheet = true
             } label: {
                 Label("Golfplatz hinzufügen", systemImage: "plus")
@@ -129,6 +132,7 @@ struct CourseListView: View {
     }
 
     private func delete(at offsets: IndexSet) {
+        Haptics.warning()
         for i in offsets { context.delete(courses[i]) }
     }
 }

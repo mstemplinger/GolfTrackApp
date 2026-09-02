@@ -845,6 +845,34 @@
         }
       }
     },
+    "%@ Uhr" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@"
+          }
+        }
+      }
+    },
     "%@%@" : {
       "localizations" : {
         "de" : {
@@ -1019,6 +1047,34 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "%1$lld tee%2$@"
+          }
+        }
+      }
+    },
+    "%lld Audios zum Putten – zwischen zwei Bahnen anhören" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld putting audios – listen between two holes"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld audios de putt: escúchalos entre dos pistas"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld audios de putting – à écouter entre deux pistes"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld audio sul putt: da ascoltare tra due piste"
           }
         }
       }
@@ -1885,6 +1941,40 @@
         }
       }
     },
+    "%lld. %@" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$lld. %2$@"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$lld. %2$@"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$lld. %2$@"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$lld. %2$@"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$lld. %2$@"
+          }
+        }
+      }
+    },
     "%lld/%lld" : {
       "localizations" : {
         "de" : {
@@ -2204,6 +2294,9 @@
           }
         }
       }
+    },
+    "🥇 %@" : {
+
     },
     "🥇 %@ · %lld Schläge" : {
       "localizations" : {
@@ -4235,6 +4328,34 @@
         }
       }
     },
+    "Alle Partien löschen" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Delete all games"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Eliminar todas las partidas"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Supprimer toutes les parties"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Elimina tutte le partite"
+          }
+        }
+      }
+    },
     "Alle plausiblen Vorschläge übernehmen" : {
       "localizations" : {
         "en" : {
@@ -4377,6 +4498,34 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Partita iniziata"
+          }
+        }
+      }
+    },
+    "Anhören" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Listen"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Escuchar"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Écouter"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ascolta"
           }
         }
       }
@@ -4855,6 +5004,34 @@
         }
       }
     },
+    "Auf der Minigolfanlage entscheidet die Distanzkontrolle fast alles – genau wie auf dem Grün." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "On a minigolf course distance control decides almost everything – exactly like on the green."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "En el minigolf el control de distancia lo decide casi todo, igual que en el green."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Au minigolf, le contrôle de distance décide presque tout – exactement comme sur le green."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Al minigolf il controllo della distanza decide quasi tutto, esattamente come sul green."
+          }
+        }
+      }
+    },
     "Auf iPhone spiegeln" : {
       "localizations" : {
         "en" : {
@@ -5281,6 +5458,34 @@
         }
       }
     },
+    "Bahn %lld" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hole %lld"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pista %lld"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Piste %lld"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pista %lld"
+          }
+        }
+      }
+    },
     "Bahn für Bahn" : {
       "localizations" : {
         "en" : {
@@ -5305,6 +5510,34 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Pista dopo pista"
+          }
+        }
+      }
+    },
+    "Bahn suchen" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Search hole"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Buscar pista"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Rechercher une piste"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cerca pista"
           }
         }
       }
@@ -5339,6 +5572,34 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "piste"
+          }
+        }
+      }
+    },
+    "Bahnen & Regeln" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Holes & rules"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pistas y reglas"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pistes et règles"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Piste e regole"
           }
         }
       }
@@ -5469,6 +5730,34 @@
     },
     "Bedeckt" : {
 
+    },
+    "Bedienung" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Controls"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Manejo"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Utilisation"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Utilizzo"
+          }
+        }
+      }
     },
     "Beenden" : {
       "localizations" : {
@@ -7135,6 +7424,34 @@
         }
       }
     },
+    "Die 28 genormten Bahnen" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The 28 standardised holes"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Las 28 pistas normalizadas"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Les 28 pistes normalisées"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Le 28 piste normalizzate"
+          }
+        }
+      }
+    },
     "Die abgeleitete Länge passt nicht zur Scorecard – hier steckt wahrscheinlich ein GPS-Ausreißer oder ein falsch zugeordnetes Loch drin." : {
       "localizations" : {
         "en" : {
@@ -7224,6 +7541,34 @@
     },
     "Die klassische Spielform: Jeder Schlag zählt. Wer am Ende der Runde die wenigsten Schläge hat, gewinnt." : {
 
+    },
+    "Die offiziellen Bahnengolf-Regeln, kurz gefasst." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The official minigolf rules in brief."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Las reglas oficiales del minigolf, en resumen."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Les règles officielles du minigolf, en bref."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Le regole ufficiali del minigolf, in breve."
+          }
+        }
+      }
     },
     "Die Runde wird als abgeschlossen gespeichert." : {
       "localizations" : {
@@ -7543,6 +7888,34 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Distanze (GPS)"
+          }
+        }
+      }
+    },
+    "Distanzkontrolle und Grün lesen – die Putt-Lektionen aus dem Training." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Distance control and reading greens – the putting lessons from the training."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Control de distancia y lectura del green: las lecciones de putt del entrenamiento."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Contrôle de distance et lecture du green – les leçons de putting de l’entraînement."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Controllo della distanza e lettura del green: le lezioni di putt dell’allenamento."
           }
         }
       }
@@ -9697,6 +10070,34 @@
         }
       }
     },
+    "Ganzen Verlauf löschen?" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Delete the entire history?"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "¿Eliminar todo el historial?"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Supprimer tout l’historique ?"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Eliminare tutta la cronologia?"
+          }
+        }
+      }
+    },
     "Gebaut mit" : {
       "localizations" : {
         "en" : {
@@ -10392,6 +10793,7 @@
       }
     },
     "Golf-Runde" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -10420,6 +10822,7 @@
       }
     },
     "Golf-Verlauf" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -10919,6 +11322,34 @@
     "Greensome" : {
 
     },
+    "Großer Player" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Full player"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Reproductor completo"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lecteur complet"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Player completo"
+          }
+        }
+      }
+    },
     "Grün" : {
       "localizations" : {
         "en" : {
@@ -11076,6 +11507,34 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Dati handicap"
+          }
+        }
+      }
+    },
+    "Haptisches Feedback" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Haptic Feedback"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Respuesta háptica"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Retour haptique"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Feedback aptico"
           }
         }
       }
@@ -11300,6 +11759,34 @@
         }
       }
     },
+    "Hindernis" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Obstacle"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Obstáculo"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Obstacle"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ostacolo"
+          }
+        }
+      }
+    },
     "Hinzufügen" : {
       "localizations" : {
         "de" : {
@@ -11442,6 +11929,34 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Ho giocato: conserva"
+          }
+        }
+      }
+    },
+    "Im Abo" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Included"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Incluido"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Inclus"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Incluso"
           }
         }
       }
@@ -11828,6 +12343,34 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Più giri vengono registrati su questo campo, più precisa diventa la stima. Controlla sulla mappa i suggerimenti con affidabilità bassa prima di applicarli."
+          }
+        }
+      }
+    },
+    "Jede zugelassene Miniaturgolfanlage besteht aus 18 davon. Tippe eine Bahn an für Weg, Maße und Tipp." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Every approved miniature golf course uses 18 of them. Tap a hole for its path, dimensions and a tip."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cada campo de minigolf homologado usa 18 de ellas. Toca una pista para ver recorrido, medidas y consejo."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Chaque parcours de minigolf homologué en utilise 18. Touche une piste pour le tracé, les dimensions et un conseil."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ogni campo di minigolf omologato ne usa 18. Tocca una pista per tracciato, misure e consiglio."
           }
         }
       }
@@ -12263,6 +12806,34 @@
         }
       }
     },
+    "Keine Bahn gefunden." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No hole found."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No se ha encontrado ninguna pista."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aucune piste trouvée."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nessuna pista trovata."
+          }
+        }
+      }
+    },
     "Keine Löcher mit hoher Konfidenz" : {
       "localizations" : {
         "en" : {
@@ -12610,6 +13181,34 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Ti spieghiamo?"
+          }
+        }
+      }
+    },
+    "Kurze Vibrationen bei Aktionen wie Schlagzählung, Lochwechsel und Rundenabschluss." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Short vibrations for actions such as counting strokes, switching holes and finishing a round."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vibraciones breves en acciones como contar golpes, cambiar de hoyo y terminar una vuelta."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Brèves vibrations lors d'actions comme le comptage des coups, le changement de trou et la fin de partie."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Brevi vibrazioni per azioni come il conteggio dei colpi, il cambio buca e la fine del giro."
           }
         }
       }
@@ -13543,6 +14142,34 @@
         }
       }
     },
+    "Maße & Besonderheiten" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dimensions & details"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Medidas y particularidades"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dimensions et particularités"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Misure e particolarità"
+          }
+        }
+      }
+    },
     "Match/Net" : {
 
     },
@@ -13905,6 +14532,34 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Avvia partita di minigolf"
+          }
+        }
+      }
+    },
+    "Minigolf-Verlauf" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Minigolf history"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Historial de minigolf"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Historique minigolf"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cronologia minigolf"
           }
         }
       }
@@ -14488,6 +15143,34 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Nervi saldi"
+          }
+        }
+      }
+    },
+    "Netz" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Net"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Red"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Filet"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Rete"
           }
         }
       }
@@ -15209,6 +15892,34 @@
         }
       }
     },
+    "Noch keine Partie gespeichert" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No game saved yet"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Todavía no hay partidas guardadas"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aucune partie enregistrée"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nessuna partita salvata"
+          }
+        }
+      }
+    },
     "Noch keine Plätze gespeichert." : {
       "localizations" : {
         "en" : {
@@ -15459,6 +16170,34 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Note"
+          }
+        }
+      }
+    },
+    "Nummer der Normbahn nach den Normungsbestimmungen für Miniaturgolf (DMV/WMF). Auf der Anlage kann sie an jeder Position stehen. Verbindlich sind die Zeichnungen des Weltverbands – die Skizze hier ist schematisch." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Number of the standardised hole according to the standardisation rules for miniature golf (DMV/WMF). On the course it can be in any position. The world federation’s drawings are authoritative – the sketch here is schematic."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Número de la pista normalizada según las normas de normalización del minigolf (DMV/WMF). En el campo puede ocupar cualquier posición. Los planos de la federación mundial son los vinculantes; el esquema aquí es orientativo."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Numéro de la piste normalisée selon les normes de normalisation du minigolf (DMV/WMF). Sur le parcours, elle peut occuper n’importe quelle position. Les plans de la fédération mondiale font foi – le schéma ci-dessus est indicatif."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Numero della pista normalizzata secondo le norme di normalizzazione del minigolf (DMV/WMF). Sul campo può trovarsi in qualsiasi posizione. Fanno fede i disegni della federazione mondiale: lo schema qui è indicativo."
           }
         }
       }
@@ -17629,6 +18368,34 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Tabella punteggi"
+          }
+        }
+      }
+    },
+    "Putt-Training" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Putting training"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Entrenamiento de putt"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Entraînement au putting"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Allenamento al putt"
           }
         }
       }
@@ -20309,6 +21076,34 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Modalità smart, esame di prova e risultati"
+          }
+        }
+      }
+    },
+    "Sobald du ein Minigolf-Spiel beendest, landet es hier." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "As soon as you finish a minigolf game, it shows up here."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "En cuanto termines una partida de minigolf, aparecerá aquí."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dès que tu termines une partie de minigolf, elle apparaît ici."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Appena concludi una partita di minigolf, la trovi qui."
           }
         }
       }
@@ -23181,6 +23976,34 @@
         }
       }
     },
+    "Vorgesehener Weg" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Intended path"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Recorrido previsto"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tracé prévu"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tracciato previsto"
+          }
+        }
+      }
+    },
     "VS" : {
       "localizations" : {
         "en" : {
@@ -24756,6 +25579,34 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Trascina e zooma per regolare"
+          }
+        }
+      }
+    },
+    "Ziel" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Target"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Meta"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cible"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bersaglio"
           }
         }
       }

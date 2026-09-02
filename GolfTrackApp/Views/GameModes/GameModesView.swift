@@ -26,7 +26,10 @@ struct GameModesView: View {
                                         .buttonStyle(.plain)
                                     } else {
                                         ModeCard(mode: mode)
-                                            .onTapGesture { unavailableMode = mode }
+                                            .onTapGesture {
+                                                Haptics.tap()
+                                                unavailableMode = mode
+                                            }
                                     }
                                 }
                             }
@@ -87,7 +90,10 @@ struct GameModesView: View {
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
-                    Button("Schließen") { unavailableMode = nil }
+                    Button("Schließen") {
+                        Haptics.tap()
+                        unavailableMode = nil
+                    }
                 }
             }
         }

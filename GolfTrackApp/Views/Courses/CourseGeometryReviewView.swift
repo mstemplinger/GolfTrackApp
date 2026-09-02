@@ -41,8 +41,11 @@ struct CourseGeometryReviewView: View {
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .topBarLeading) {
-                    Button("Fertig") { dismiss() }
-                        .foregroundStyle(AppTheme.gold)
+                    Button("Fertig") {
+                        Haptics.tap()
+                        dismiss()
+                    }
+                    .foregroundStyle(AppTheme.gold)
                 }
             }
         }
@@ -192,6 +195,7 @@ struct CourseGeometryReviewView: View {
     private var actionBar: some View {
         VStack(spacing: 10) {
             Button {
+                Haptics.success()
                 apply(usable, minConfidence: 0.7)
             } label: {
                 Text(highConfidenceCount > 0
@@ -204,6 +208,7 @@ struct CourseGeometryReviewView: View {
             .opacity(highConfidenceCount == 0 ? 0.5 : 1)
 
             Button {
+                Haptics.success()
                 apply(usable, minConfidence: 0.4)
             } label: {
                 Text("Alle plausiblen Vorschläge übernehmen")
@@ -373,6 +378,7 @@ private struct HoleGeometryDetailView: View {
             }
 
             Button {
+                Haptics.success()
                 onApply()
                 didApply = true
             } label: {

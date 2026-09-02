@@ -1,6 +1,8 @@
 import SwiftUI
 
 struct SettingsView: View {
+    @AppStorage(Haptics.enabledKey) private var hapticsEnabled = true
+
     var body: some View {
         NavigationStack {
             ZStack {
@@ -27,6 +29,22 @@ struct SettingsView: View {
                         .listRowBackground(AppTheme.card)
                     } header: {
                         Text("Daten")
+                    }
+
+                    Section {
+                        Toggle(isOn: $hapticsEnabled) {
+                            Label("Haptisches Feedback", systemImage: "iphone.radiowaves.left.and.right")
+                        }
+                        .tint(AppTheme.gold)
+                        .listRowBackground(AppTheme.card)
+                        .onChange(of: hapticsEnabled) { _, enabled in
+                            // Beim Einschalten sofort spürbar bestätigen.
+                            if enabled { Haptics.success() }
+                        }
+                    } header: {
+                        Text("Bedienung")
+                    } footer: {
+                        Text("Kurze Vibrationen bei Aktionen wie Schlagzählung, Lochwechsel und Rundenabschluss.")
                     }
 
                     Section {

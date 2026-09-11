@@ -92,7 +92,10 @@ export function SubmitForm({ lang }: { lang: Lang }) {
   }, []);
 
   /** Schreibt den aktuellen Standort in das angegebene Feldpaar. */
-  const useCurrentLocation = useCallback(
+  // Kein Hook, sondern ein Helfer – der Name darf deshalb nicht mit "use"
+  // beginnen, sonst hält ESLint jeden Aufruf im onClick für einen Hook-Aufruf
+  // an falscher Stelle (react-hooks/rules-of-hooks).
+  const applyCurrentLocation = useCallback(
     (latKey: "latitude" | "firstTeeLat", lonKey: "longitude" | "firstTeeLon") => {
       if (!navigator.geolocation) {
         setGeoError(true);
@@ -316,7 +319,7 @@ export function SubmitForm({ lang }: { lang: Lang }) {
             />
             <button
               type="button"
-              onClick={() => useCurrentLocation("latitude", "longitude")}
+              onClick={() => applyCurrentLocation("latitude", "longitude")}
               className="tap min-h-11 whitespace-nowrap rounded-[3px] border border-ink/25 px-4 text-sm transition-colors hover:border-ink/50 hover:bg-ink/5"
             >
               {copy.useLocation}
@@ -347,7 +350,7 @@ export function SubmitForm({ lang }: { lang: Lang }) {
             />
             <button
               type="button"
-              onClick={() => useCurrentLocation("firstTeeLat", "firstTeeLon")}
+              onClick={() => applyCurrentLocation("firstTeeLat", "firstTeeLon")}
               className="tap min-h-11 whitespace-nowrap rounded-[3px] border border-ink/25 px-4 text-sm transition-colors hover:border-ink/50 hover:bg-ink/5"
             >
               {copy.useLocation}

@@ -34,6 +34,20 @@ export function EditForm({ course }: { course: CourseRecord }) {
           <Field label="Breite" name="latitude" defaultValue={course.latitude?.toString() ?? ""} mono />
           <Field label="Länge" name="longitude" defaultValue={course.longitude?.toString() ?? ""} mono />
         </div>
+        <div className="grid grid-cols-2 gap-3">
+          <Field
+            label="1. Abschlag – Breite"
+            name="firstTeeLat"
+            defaultValue={course.firstTeeLat?.toString() ?? ""}
+            mono
+          />
+          <Field
+            label="1. Abschlag – Länge"
+            name="firstTeeLon"
+            defaultValue={course.firstTeeLon?.toString() ?? ""}
+            mono
+          />
+        </div>
         {isGolf ? (
           <>
             <Field

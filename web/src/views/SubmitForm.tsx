@@ -38,6 +38,8 @@ export function SubmitForm({ lang }: { lang: Lang }) {
     country: "DE",
     latitude: "",
     longitude: "",
+    firstTeeLat: "",
+    firstTeeLon: "",
     courseRating: "",
     slopeRating: "",
     facilityNotes: "",
@@ -89,21 +91,25 @@ export function SubmitForm({ lang }: { lang: Lang }) {
     setRows((previous) => previous.map(emptyRow));
   }, []);
 
-  const useCurrentLocation = useCallback(() => {
-    if (!navigator.geolocation) {
-      setGeoError(true);
-      return;
-    }
-    navigator.geolocation.getCurrentPosition(
-      (position) => {
-        setGeoError(false);
-        set("latitude", position.coords.latitude.toFixed(6));
-        set("longitude", position.coords.longitude.toFixed(6));
-      },
-      () => setGeoError(true),
-      { enableHighAccuracy: true, timeout: 10_000 },
-    );
-  }, [set]);
+  /** Schreibt den aktuellen Standort in das angegebene Feldpaar. */
+  const useCurrentLocation = useCallback(
+    (latKey: "latitude" | "firstTeeLat", lonKey: "longitude" | "firstTeeLon") => {
+      if (!navigator.geolocation) {
+        setGeoError(true);
+        return;
+      }
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          setGeoError(false);
+          set(latKey, position.coords.latitude.toFixed(6));
+          set(lonKey, position.coords.longitude.toFixed(6));
+        },
+        () => setGeoError(true),
+        { enableHighAccuracy: true, timeout: 10_000 },
+      );
+    },
+    [set],
+  );
 
   const parSum = useMemo(
     () => rows.reduce((sum, row) => sum + (Number(row.par) || 0), 0),
@@ -137,6 +143,8 @@ export function SubmitForm({ lang }: { lang: Lang }) {
       holes,
       latitude: numberOrNull(values.latitude),
       longitude: numberOrNull(values.longitude),
+      firstTeeLat: numberOrNull(values.firstTeeLat),
+      firstTeeLon: numberOrNull(values.firstTeeLon),
       courseRating: kind === "golf" ? numberOrNull(values.courseRating) : null,
       slopeRating: kind === "golf" ? numberOrNull(values.slopeRating) : null,
       holeData: holeData.length === holes ? holeData : [],
@@ -308,13 +316,43 @@ export function SubmitForm({ lang }: { lang: Lang }) {
             />
             <button
               type="button"
-              onClick={useCurrentLocation}
+              onClick={() => useCurrentLocation("latitude", "longitude")}
               className="tap min-h-11 whitespace-nowrap rounded-[3px] border border-ink/25 px-4 text-sm transition-colors hover:border-ink/50 hover:bg-ink/5"
             >
               {copy.useLocation}
             </button>
           </div>
           {geoError ? <p className="mt-2 text-sm text-[#a6321f]">{copy.locationDenied}</p> : null}
+        </Field>
+        <Field
+          label={isGolf ? copy.firstTee : copy.firstTeeMinigolf}
+          hint={isGolf ? copy.firstTeeHint : copy.firstTeeMinigolfHint}
+        >
+          <div className="grid gap-3 sm:grid-cols-[1fr_1fr_auto]">
+            <input
+              className="field"
+              value={values.firstTeeLat}
+              onChange={(e) => set("firstTeeLat", e.target.value)}
+              placeholder={copy.latitude}
+              inputMode="decimal"
+              aria-label={copy.latitude}
+            />
+            <input
+              className="field"
+              value={values.firstTeeLon}
+              onChange={(e) => set("firstTeeLon", e.target.value)}
+              placeholder={copy.longitude}
+              inputMode="decimal"
+              aria-label={copy.longitude}
+            />
+            <button
+              type="button"
+              onClick={() => useCurrentLocation("firstTeeLat", "firstTeeLon")}
+              className="tap min-h-11 whitespace-nowrap rounded-[3px] border border-ink/25 px-4 text-sm transition-colors hover:border-ink/50 hover:bg-ink/5"
+            >
+              {copy.useLocation}
+            </button>
+          </div>
         </Field>
       </Section>
 

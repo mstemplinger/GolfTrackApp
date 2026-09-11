@@ -14,6 +14,8 @@ struct HomeView: View {
     @State private var showCaddyPaywall  = false
     @EnvironmentObject private var subscriptionManager: SubscriptionManager
     @StateObject private var weather = GolfWeatherService()
+    /// „Du stehst gerade an diesem Platz" – kommt vom Standort, nicht vom Verlauf.
+    @StateObject private var nearby = NearbyCourseService.shared
     @Environment(\.horizontalSizeClass) private var sizeClass
 
     /// nil = Mein Standort, non-nil = Platz-Wetter
@@ -44,6 +46,66 @@ struct HomeView: View {
 
     private let wc = WatchConnectivityManager.shared
 
+    /// Der Platz, an dem der Spieler gerade steht.
+    ///
+    /// Bewusst ein Vorschlag und kein Automatismus: Wer nur Kaffee trinken
+    /// war, soll nicht in einer Runde landen. Das Kreuz macht sie für diesen
+    /// Besuch weg.
+    private func nearbyCard(_ platz: NearbyCourseService.NearbyCourse) -> some View {
+        HStack(spacing: 14) {
+            Image(systemName: platz.kind == .golf ? "flag.fill" : "figure.golf")
+                .font(.title2)
+                .foregroundStyle(AppTheme.gold)
+                .frame(width: 34)
+
+            VStack(alignment: .leading, spacing: 3) {
+                Text("Du bist hier")
+                    .font(.caption2.weight(.semibold))
+                    .foregroundStyle(AppTheme.gold.opacity(0.85))
+                Text(platz.name)
+                    .font(.headline)
+                    .foregroundStyle(AppTheme.text)
+                    .lineLimit(2)
+                    .minimumScaleFactor(0.85)
+                Text(platz.location.isEmpty
+                     ? "\(Int(platz.distance.rounded())) m entfernt"
+                     : "\(platz.location) · \(Int(platz.distance.rounded())) m")
+                    .font(.caption)
+                    .foregroundStyle(AppTheme.textSec)
+                    .lineLimit(1)
+            }
+
+            Spacer(minLength: 0)
+
+            Button {
+                Haptics.medium()
+                UIApplication.shared.open(platz.startURL)
+            } label: {
+                Text("Starten")
+                    .font(.subheadline.bold())
+                    .padding(.horizontal, 16)
+                    .padding(.vertical, 9)
+                    .background(AppTheme.gold, in: Capsule())
+                    .foregroundStyle(Color(red: 0.06, green: 0.14, blue: 0.08))
+            }
+            .buttonStyle(.plain)
+
+            Button {
+                Haptics.tap()
+                nearby.dismissSuggestion()
+            } label: {
+                Image(systemName: "xmark")
+                    .font(.caption.bold())
+                    .foregroundStyle(AppTheme.textTer)
+                    .padding(6)
+            }
+            .buttonStyle(.plain)
+        }
+        .padding(14)
+        .background(AppTheme.card, in: RoundedRectangle(cornerRadius: 16))
+        .padding(.horizontal)
+    }
+
     private var completedRounds: [Round] { allRounds.filter(\.isComplete) }
     private var incompleteRounds: [Round] { allRounds.filter { !$0.isComplete } }
     private var lastRound: Round? { completedRounds.first }
@@ -58,6 +120,10 @@ struct HomeView: View {
                         topBar
                         greetingCard
                             .tutorialAnchor(.dashboardCards)
+
+                        if let platz = nearby.suggestion {
+                            nearbyCard(platz)
+                        }
 
                         if appFocus == .minigolf {
                             minigolfSections
@@ -83,6 +149,8 @@ struct HomeView: View {
                     selectedIncompleteRound = nil
                 })
             }
+            // Standort einmal abfragen – ohne Berechtigung passiert nichts.
+            .task { await nearby.refreshSuggestion() }
             // iPad: vollständige Seite; iPhone: Sheet
             .fullScreenCover(isPresented: $showNewRound) { NewRoundView().preferredColorScheme(.dark) }
             .sheet(isPresented: $showTutorial) { TutorialView().preferredColorScheme(.dark) }

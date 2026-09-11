@@ -557,6 +557,40 @@
         }
       }
     },
+    "%@ · %lld m" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@ · %2$lld m"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@ · %2$lld m"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@ · %2$lld m"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@ · %2$lld m"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@ · %2$lld m"
+          }
+        }
+      }
+    },
     "%@ · Loch %lld von %lld" : {
       "localizations" : {
         "de" : {
@@ -976,6 +1010,30 @@
             "state" : "new",
             "value" : "%1$lld %2$@ erfasst"
           }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$lld %2$@ recorded"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Registrado: %1$lld %2$@"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Enregistré : %1$lld %2$@"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Registrato: %1$lld %2$@"
+          }
         }
       }
     },
@@ -985,6 +1043,30 @@
           "stringUnit" : {
             "state" : "new",
             "value" : "%1$lld %2$@ gemessen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$lld %2$@ measured"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Medido: %1$lld %2$@"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mesuré : %1$lld %2$@"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Misurato: %1$lld %2$@"
           }
         }
       }
@@ -1367,6 +1449,34 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "%lld m"
+          }
+        }
+      }
+    },
+    "%lld m entfernt" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld m away"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "a %lld m"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "à %lld m"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "a %lld m"
           }
         }
       }
@@ -7597,6 +7707,34 @@
         }
       }
     },
+    "Dafür fragt iOS nach dem Standort „Immer“. GolfTrack merkt sich dabei nichts – es wird nur geprüft, ob du an einem der Plätze stehst." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "For this, iOS asks for “Always” location access. GolfTrack remembers nothing – it only checks whether you are at one of the courses."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Para ello, iOS pide la ubicación «Siempre». GolfTrack no guarda nada: solo comprueba si estás en uno de los campos."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pour cela, iOS demande la localisation « Toujours ». GolfTrack ne retient rien – il vérifie seulement si tu es sur l’un des parcours."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Per questo iOS chiede la posizione «Sempre». GolfTrack non memorizza nulla: verifica solo se ti trovi su uno dei campi."
+          }
+        }
+      }
+    },
     "danach %@ / %@" : {
       "localizations" : {
         "de" : {
@@ -9021,6 +9159,34 @@
         }
       }
     },
+    "Du bist hier" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "You are here"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Estás aquí"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tu es ici"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sei qui"
+          }
+        }
+      }
+    },
     "Du brauchst noch viele Putts. Diese Lektion trainiert deine Distanzkontrolle auf dem Grün." : {
       "localizations" : {
         "de" : {
@@ -9287,6 +9453,62 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Finisci spesso nel rough. Questa lezione mostra come giocare comunque buoni colpi."
+          }
+        }
+      }
+    },
+    "Du stehst am Platz. Runde starten und mitzählen?" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "You're at the course. Start a round and keep score?"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Estás en el campo. ¿Empezamos una vuelta y contamos?"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tu es sur le parcours. On lance une partie et on compte ?"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sei al campo. Iniziamo un giro e teniamo il punteggio?"
+          }
+        }
+      }
+    },
+    "Du stehst an der Anlage. Runde starten und mitzählen?" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "You're at the venue. Start a round and keep score?"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Estás en la instalación. ¿Empezamos una vuelta y contamos?"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tu es sur le site. On lance une partie et on compte ?"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sei alla struttura. Iniziamo un giro e teniamo il punteggio?"
           }
         }
       }
@@ -15203,6 +15425,30 @@
             "state" : "new",
             "value" : "Loch %1$lld · %2$lld Schläge"
           }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hole %1$lld · %2$lld strokes"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hoyo %1$lld · %2$lld golpes"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Trou %1$lld · %2$lld coups"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Buca %1$lld · %2$lld colpi"
+          }
         }
       }
     },
@@ -15617,6 +15863,30 @@
             "state" : "new",
             "value" : "Löcher gespielt: %1$lld von %2$lld"
           }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Holes played: %1$lld of %2$lld"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hoyos jugados: %1$lld de %2$lld"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Trous joués : %1$lld sur %2$lld"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Buche giocate: %1$lld di %2$lld"
+          }
         }
       }
     },
@@ -16026,6 +16296,34 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Accedi a Game Center per condividere il tuo punteggio con gli amici."
+          }
+        }
+      }
+    },
+    "Meldet sich, wenn du an einem Platz aus dem Verzeichnis ankommst" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lets you know when you arrive at a course from the directory"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Te avisa cuando llegas a un campo del directorio"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Te prévient quand tu arrives sur un parcours du répertoire"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ti avvisa quando arrivi a un campo dell'elenco"
           }
         }
       }
@@ -19314,6 +19612,34 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Aggiungi campo"
+          }
+        }
+      }
+    },
+    "Platz in der Nähe" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Course nearby"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Campo cerca"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Parcours à proximité"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Campo nelle vicinanze"
           }
         }
       }
@@ -24539,6 +24865,34 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Inizia il tuo primo giro e\nmonitora i tuoi progressi."
+          }
+        }
+      }
+    },
+    "Starten" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Start"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Empezar"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Démarrer"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Inizia"
           }
         }
       }

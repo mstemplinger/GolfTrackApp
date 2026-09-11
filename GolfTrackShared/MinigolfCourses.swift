@@ -23,10 +23,16 @@ struct MinigolfCourseEntry: Identifiable, Hashable {
     /// Einzelne Hinweise mit Symbol – Toiletten, Unterstellhaus bei Gewitter.
     /// Anders als `notes` erscheinen sie auch während der Runde.
     let hints: [CourseHint]
+    /// Standort der ersten Bahn. Getrennt von `lat`/`lon`, weil das die
+    /// Adresse der Anlage ist – der Parkplatz nebenan soll die Runde nicht
+    /// vorschlagen.
+    let firstTeeLat: Double?
+    let firstTeeLon: Double?
 
     init(id: String, name: String, location: String, holes: Int,
          lat: Double, lon: Double, welcome: String, notes: String = "",
-         hints: [CourseHint] = []) {
+         hints: [CourseHint] = [],
+         firstTeeLat: Double? = nil, firstTeeLon: Double? = nil) {
         self.id = id
         self.name = name
         self.location = location
@@ -36,9 +42,21 @@ struct MinigolfCourseEntry: Identifiable, Hashable {
         self.welcome = welcome
         self.notes = notes
         self.hints = hints
+        self.firstTeeLat = firstTeeLat
+        self.firstTeeLon = firstTeeLon
     }
 
     var coordinate: CLLocationCoordinate2D { .init(latitude: lat, longitude: lon) }
+
+    /// Der Punkt, an dem jemand wirklich vor der Anlage steht: die erste Bahn,
+    /// ersatzweise die Adresse. `nil`, wenn gar nichts hinterlegt ist.
+    var startCoordinate: CLLocationCoordinate2D? {
+        if let firstTeeLat, let firstTeeLon {
+            return .init(latitude: firstTeeLat, longitude: firstTeeLon)
+        }
+        guard lat != 0 || lon != 0 else { return nil }
+        return coordinate
+    }
     var clLocation: CLLocation { CLLocation(latitude: lat, longitude: lon) }
 
     /// Link für den QR-Code an der Anlage (öffnet die installierte App).

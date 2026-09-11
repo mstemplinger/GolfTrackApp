@@ -1,11 +1,22 @@
 import UserNotifications
 import SwiftUI
 
+extension Notification.Name {
+    /// Eine Mitteilung mit hinterlegtem Platz wurde angetippt.
+    static let openCourseFromNotification = Notification.Name("openCourseFromNotification")
+}
+
 @MainActor
-final class NotificationManager {
+final class NotificationManager: NSObject {
 
     static let shared = NotificationManager()
-    private init() {}
+    private override init() { super.init() }
+
+    /// Muss früh im Start gesetzt werden, sonst gehen Antippen-Ereignisse
+    /// verloren, die die App überhaupt erst gestartet haben.
+    func becomeDelegate() {
+        UNUserNotificationCenter.current().delegate = self
+    }
 
     // MARK: - Permission
 
@@ -113,9 +124,36 @@ final class NotificationManager {
 
     // MARK: - IDs
 
-    private enum NotificationID {
+    fileprivate enum NotificationID {
         static let inactivity        = "de.golftrack.inactivity"
         static let openRound         = "de.golftrack.openRound"
         static let roundInactivity   = "de.golftrack.roundInactivity"
+    }
+}
+
+
+// MARK: - Antippen
+
+extension NotificationManager: UNUserNotificationCenterDelegate {
+
+    /// Auch im Vordergrund anzeigen – wer gerade in der App ist und den Platz
+    /// betritt, soll den Hinweis sehen statt gar nichts.
+    nonisolated func userNotificationCenter(
+        _ center: UNUserNotificationCenter,
+        willPresent notification: UNNotification
+    ) async -> UNNotificationPresentationOptions {
+        [.banner, .sound]
+    }
+
+    nonisolated func userNotificationCenter(
+        _ center: UNUserNotificationCenter,
+        didReceive response: UNNotificationResponse
+    ) async {
+        let info = response.notification.request.content.userInfo
+        guard let raw = info[NotificationPayload.deepLinkKey] as? String,
+              let url = URL(string: raw) else { return }
+        await MainActor.run {
+            NotificationCenter.default.post(name: .openCourseFromNotification, object: url)
+        }
     }
 }

@@ -5,6 +5,9 @@ struct BundledCourseEntry: Identifiable {
     /// Kennung aus dem Platzverzeichnis – steckt im QR-Code am Abschlag.
     /// Leer bei den fest eingebauten Plätzen, die nie über einen Link kommen.
     var slug: String = ""
+    /// Standort des ersten Abschlags – siehe `startCoordinate`.
+    var firstTeeLat: Double? = nil
+    var firstTeeLon: Double? = nil
     let location: String
     let holes: Int
     let lat: Double
@@ -30,14 +33,27 @@ struct BundledCourseEntry: Identifiable {
 
     var id: String { name }
 
+    /// Der Punkt, an dem jemand wirklich am Platz steht: der erste Abschlag,
+    /// ersatzweise die Adresse. `nil`, wenn gar nichts hinterlegt ist.
+    var startCoordinate: CLLocationCoordinate2D? {
+        if let firstTeeLat, let firstTeeLon {
+            return .init(latitude: firstTeeLat, longitude: firstTeeLon)
+        }
+        guard lat != 0 || lon != 0 else { return nil }
+        return .init(latitude: lat, longitude: lon)
+    }
+
     init(name: String, location: String, holes: Int, lat: Double, lon: Double,
          parValues: [Int] = [], hcpValues: [Int] = [], holeLengths: [Int] = [],
          courseRating: Double = 72.0, slopeRating: Int = 113, facilityNotes: String = "",
          teeLatitudes:  [Double] = [], teeLongitudes: [Double] = [],
          flagLatitudes:  [Double] = [], flagLongitudes: [Double] = [],
-         slug: String = "") {
+         slug: String = "",
+         firstTeeLat: Double? = nil, firstTeeLon: Double? = nil) {
         self.name = name
         self.slug = slug
+        self.firstTeeLat = firstTeeLat
+        self.firstTeeLon = firstTeeLon
         self.location = location
         self.holes = holes
         self.lat = lat

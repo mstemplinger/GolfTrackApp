@@ -111,6 +111,8 @@ export async function save(_state: string | null, formData: FormData): Promise<s
     holes,
     latitude: numberOrNull(formData.get("latitude")),
     longitude: numberOrNull(formData.get("longitude")),
+    firstTeeLat: numberOrNull(formData.get("firstTeeLat")),
+    firstTeeLon: numberOrNull(formData.get("firstTeeLon")),
     courseRating: numberOrNull(formData.get("courseRating")),
     slopeRating: numberOrNull(formData.get("slopeRating")),
     holeData: hasHoleValues ? holeData : [],

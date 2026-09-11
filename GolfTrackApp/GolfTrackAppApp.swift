@@ -27,7 +27,11 @@ struct GolfTrackAppApp: App {
             // Haptik-Generatoren vorwärmen, damit der erste Impuls sitzt.
             Haptics.warmUp()
             GameCenterManager.shared.authenticate()
+            NotificationManager.shared.becomeDelegate()
             await NotificationManager.shared.requestAuthorization()
+            // Zonen wieder aufnehmen, falls der Nutzer die Mitteilung bei
+            // Annäherung eingeschaltet hat.
+            NearbyCourseService.shared.resumeMonitoringIfEnabled()
         }
     }
 

@@ -69,6 +69,13 @@ export const submissionSchema = z
     holes: z.number().int().min(1).max(36),
     latitude: z.number().min(-90).max(90).nullable().default(null),
     longitude: z.number().min(-180).max(180).nullable().default(null),
+    /**
+     * Standort des ersten Abschlags bzw. der ersten Bahn – getrennt von der
+     * Adresse der Anlage, weil die App darüber erkennt, dass jemand
+     * tatsächlich am Platz steht und nicht am Parkplatz nebenan.
+     */
+    firstTeeLat: z.number().min(-90).max(90).nullable().default(null),
+    firstTeeLon: z.number().min(-180).max(180).nullable().default(null),
     courseRating: z.number().min(50).max(90).nullable().default(null),
     slopeRating: z.number().int().min(55).max(155).nullable().default(null),
     holeData: z.array(holeSchema).max(36).default([]),
@@ -108,6 +115,8 @@ export const adminUpdateSchema = z.object({
   holes: z.number().int().min(1).max(36).optional(),
   latitude: z.number().min(-90).max(90).nullable().optional(),
   longitude: z.number().min(-180).max(180).nullable().optional(),
+  firstTeeLat: z.number().min(-90).max(90).nullable().optional(),
+  firstTeeLon: z.number().min(-180).max(180).nullable().optional(),
   courseRating: z.number().min(50).max(90).nullable().optional(),
   slopeRating: z.number().int().min(55).max(155).nullable().optional(),
   holeData: z.array(holeSchema).max(36).optional(),

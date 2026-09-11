@@ -18,6 +18,8 @@ const STATEMENTS = [
      holes           integer NOT NULL,
      latitude        double precision,
      longitude       double precision,
+     first_tee_lat   double precision,
+     first_tee_lon   double precision,
      course_rating   double precision,
      slope_rating    integer,
      hole_data       jsonb NOT NULL DEFAULT '[]'::jsonb,
@@ -40,6 +42,8 @@ const STATEMENTS = [
   // Nachgereicht – siehe die Anmerkung bei `ads`: eine bestehende Tabelle
   // bekommt neue Spalten nur über ein eigenes ALTER.
   `ALTER TABLE courses ADD COLUMN IF NOT EXISTS facility_hints jsonb NOT NULL DEFAULT '[]'::jsonb`,
+  `ALTER TABLE courses ADD COLUMN IF NOT EXISTS first_tee_lat  double precision`,
+  `ALTER TABLE courses ADD COLUMN IF NOT EXISTS first_tee_lon  double precision`,
   `CREATE INDEX IF NOT EXISTS courses_status_kind_idx ON courses (status, kind)`,
   `CREATE INDEX IF NOT EXISTS courses_updated_at_idx ON courses (updated_at DESC)`,
   // Altbestand geradeziehen: bis zum 11.09.2026 wurden jsonb-Spalten doppelt

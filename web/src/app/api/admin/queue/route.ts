@@ -75,6 +75,9 @@ export async function GET(request: Request) {
         facilityNotes: course.facilityNotes,
         // Die Hinweise gehen in die App und gehören deshalb vor die Freigabe.
         facilityHints: course.facilityHints,
+        // Ohne diesen Punkt schlägt die App den Platz vor Ort nicht vor.
+        firstTeeLat: course.firstTeeLat,
+        firstTeeLon: course.firstTeeLon,
         submitterName: course.submitterName,
         submitterEmail: course.submitterEmail,
         submitterRole: course.submitterRole,

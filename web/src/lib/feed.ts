@@ -16,6 +16,9 @@ export interface FeedCourse {
   holes: number;
   lat: number | null;
   lon: number | null;
+  /** Erster Abschlag – der Punkt, an dem die App den Platz vorschlägt. */
+  firstTeeLat: number | null;
+  firstTeeLon: number | null;
   parValues: number[];
   hcpValues: number[];
   holeLengths: number[];
@@ -60,6 +63,8 @@ export function toFeedCourse(record: CourseRecord): FeedCourse {
     holes: record.holes,
     lat: record.latitude,
     lon: record.longitude,
+    firstTeeLat: record.firstTeeLat,
+    firstTeeLon: record.firstTeeLon,
     parValues: column(record, (h) => h.par),
     hcpValues: column(record, (h) => h.hcp),
     holeLengths: column(record, (h) => h.length),

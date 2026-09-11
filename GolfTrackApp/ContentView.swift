@@ -150,6 +150,11 @@ struct ContentView: View {
         } message: {
             Text(deepLinkFehler ?? "")
         }
+        // Mitteilung „Du stehst am Platz" angetippt
+        .onReceive(NotificationCenter.default.publisher(for: .openCourseFromNotification)) { note in
+            guard let url = note.object as? URL else { return }
+            Task { await handleDeepLink(url) }
+        }
         // Empfehlung aus den Tipps → zum Training-Tab wechseln
         .onReceive(NotificationCenter.default.publisher(for: .openTraining)) { _ in
             selectedTab = 1

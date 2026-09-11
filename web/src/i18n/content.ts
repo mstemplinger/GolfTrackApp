@@ -262,6 +262,12 @@ const de = {
     clearHoles: "Tabelle leeren",
     facilityNotes: "Platzinfos",
     facilityNotesHint: "Toiletten, Wasserstellen, Defibrillator, Gastronomie. Erscheint in der App unter dem Platz.",
+    firstTee: "Standort des ersten Abschlags",
+    firstTeeHint:
+      "Am besten direkt am Abschlag 1 aufnehmen. Daran erkennt die App, dass ein Gast wirklich am Platz steht – sie schlägt ihm dann von selbst die Runde vor.",
+    firstTeeMinigolf: "Standort der ersten Bahn",
+    firstTeeMinigolfHint:
+      "Am besten direkt an Bahn 1 aufnehmen. Daran erkennt die App, dass ein Gast wirklich an der Anlage steht – sie schlägt ihm dann von selbst die Runde vor.",
     hints: "Hinweise für Gäste",
     hintsHint: "Je ein Hinweis pro Zeile, mit passendem Symbol. Gäste sehen sie beim Start und während der Runde.",
     hintAdd: "Hinweis hinzufügen",
@@ -611,6 +617,12 @@ const en: Content = {
     clearHoles: "Clear table",
     facilityNotes: "Facilities",
     facilityNotesHint: "Toilets, water points, defibrillator, catering. Shown in the app under the course.",
+    firstTee: "Location of the first tee",
+    firstTeeHint:
+      "Best recorded standing on tee 1. This is how the app recognises that a guest is actually at the course – it then offers them the round on its own.",
+    firstTeeMinigolf: "Location of the first lane",
+    firstTeeMinigolfHint:
+      "Best recorded standing at lane 1. This is how the app recognises that a guest is actually at the venue – it then offers them the round on its own.",
     hints: "Notes for guests",
     hintsHint: "One note per line, each with a matching symbol. Guests see them at the start and during the round.",
     hintAdd: "Add note",

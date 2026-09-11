@@ -10,6 +10,7 @@ struct NotificationSettingsView: View {
     @AppStorage("notif.openRound.enabled")         private var openRoundEnabled: Bool   = true
     @AppStorage("notif.roundInactivity.enabled")   private var roundInactivityEnabled: Bool = true
     @AppStorage("notif.roundInactivity.minutes")   private var roundInactivityMinutes: Int  = 45
+    @AppStorage(NearbyCourseService.enabledKey)    private var nearbyEnabled: Bool      = false
 
     // MARK: - Runtime state
 
@@ -25,6 +26,7 @@ struct NotificationSettingsView: View {
                         deniedBanner
                     }
 
+                    nearbyCard
                     inactivityCard
                     openRoundCard
                     RoundInactivityCard(
@@ -78,6 +80,49 @@ struct NotificationSettingsView: View {
     }
 
     // MARK: - Inactivity card
+
+    /// Mitteilung, sobald man an einem Platz aus dem Verzeichnis ankommt.
+    ///
+    /// Das ist die einzige Stelle, an der GolfTrack „Immer"-Standort braucht:
+    /// Ohne sie kann iOS die App nicht wecken, während sie geschlossen ist.
+    /// Deshalb steht der Schalter auf aus und die Berechtigung wird erst beim
+    /// Einschalten erfragt.
+    @ViewBuilder private var nearbyCard: some View {
+        VStack(spacing: 0) {
+            HStack(spacing: 14) {
+                iconBadge(systemName: "mappin.and.ellipse", color: AppTheme.gold)
+                VStack(alignment: .leading, spacing: 2) {
+                    Text("Platz in der Nähe")
+                        .font(.subheadline.bold())
+                        .foregroundStyle(AppTheme.text)
+                    Text("Meldet sich, wenn du an einem Platz aus dem Verzeichnis ankommst")
+                        .font(.caption)
+                        .foregroundStyle(AppTheme.textSec)
+                }
+                Spacer()
+                Toggle("", isOn: $nearbyEnabled)
+                    .labelsHidden()
+                    .tint(AppTheme.gold)
+                    .onChange(of: nearbyEnabled) { _, neu in
+                        Haptics.selection()
+                        NearbyCourseService.shared.setNotificationsEnabled(neu)
+                    }
+            }
+            .padding(.horizontal, 18)
+            .padding(.vertical, 16)
+
+            if nearbyEnabled {
+                Divider().padding(.leading, 62).background(AppTheme.cardAlt)
+                Text("Dafür fragt iOS nach dem Standort „Immer“. GolfTrack merkt sich dabei nichts – es wird nur geprüft, ob du an einem der Plätze stehst.")
+                    .font(.caption)
+                    .foregroundStyle(AppTheme.textSec)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .padding(.horizontal, 18)
+                    .padding(.vertical, 12)
+            }
+        }
+        .background(AppTheme.card, in: RoundedRectangle(cornerRadius: 16))
+    }
 
     @ViewBuilder private var inactivityCard: some View {
         VStack(spacing: 0) {

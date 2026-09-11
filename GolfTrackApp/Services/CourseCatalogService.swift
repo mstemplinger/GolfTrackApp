@@ -152,6 +152,10 @@ struct RemoteCourse: Decodable {
     let holes: Int
     let lat: Double?
     let lon: Double?
+    /// Erster Abschlag – fehlt bei Plätzen, die vor der Einführung
+    /// freigegeben wurden.
+    let firstTeeLat: Double?
+    let firstTeeLon: Double?
     let parValues: [Int]
     let hcpValues: [Int]
     let holeLengths: [Int]
@@ -182,7 +186,9 @@ struct RemoteCourse: Decodable {
             teeLongitudes: teeLongitudes,
             flagLatitudes: flagLatitudes,
             flagLongitudes: flagLongitudes,
-            slug: id
+            slug: id,
+            firstTeeLat: firstTeeLat,
+            firstTeeLon: firstTeeLon
         )
     }
 
@@ -198,7 +204,9 @@ struct RemoteCourse: Decodable {
             welcome: welcome.isEmpty
                 ? "Willkommen! Ab jetzt zählen wir für dich mit – Bahn für Bahn."
                 : welcome,
-            notes: facilityNotes
+            notes: facilityNotes,
+            firstTeeLat: firstTeeLat,
+            firstTeeLon: firstTeeLon
         )
     }
 }

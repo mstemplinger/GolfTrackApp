@@ -21,6 +21,9 @@ export interface CourseRecord {
   holes: number;
   latitude: number | null;
   longitude: number | null;
+  /** Erster Abschlag bzw. erste Bahn – daran erkennt die App den Platz. */
+  firstTeeLat: number | null;
+  firstTeeLon: number | null;
   courseRating: number | null;
   slopeRating: number | null;
   holeData: Hole[];
@@ -72,6 +75,8 @@ function mapRow(row: DbRow): CourseRecord {
     holes: Number(row.holes),
     latitude: asNumber(row.latitude),
     longitude: asNumber(row.longitude),
+    firstTeeLat: asNumber(row.first_tee_lat),
+    firstTeeLon: asNumber(row.first_tee_lon),
     courseRating: asNumber(row.course_rating),
     slopeRating: asNumber(row.slope_rating),
     holeData: (holeData as Hole[]) ?? [],
@@ -137,9 +142,10 @@ export async function createSubmission(input: SubmissionInput): Promise<CourseRe
   const rows = await query<DbRow>(
     `INSERT INTO courses (
        slug, kind, status, name, location, country, holes, latitude, longitude,
+       first_tee_lat, first_tee_lon,
        course_rating, slope_rating, hole_data, facility_notes, facility_hints, welcome,
        website, phone, public_email, submitter_name, submitter_email, submitter_role, source
-     ) VALUES ($1,$2,'pending',$3,$4,$5,$6,$7,$8,$9,$10,$11::jsonb,$12,$13::jsonb,$14,$15,$16,$17,$18,$19,$20,'form')
+     ) VALUES ($1,$2,'pending',$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13::jsonb,$14,$15::jsonb,$16,$17,$18,$19,$20,$21,$22,'form')
      RETURNING *`,
     [
       slug,
@@ -150,6 +156,8 @@ export async function createSubmission(input: SubmissionInput): Promise<CourseRe
       input.holes,
       input.latitude,
       input.longitude,
+      input.firstTeeLat,
+      input.firstTeeLon,
       input.courseRating,
       input.slopeRating,
       input.holeData ?? [],
@@ -218,6 +226,8 @@ const COLUMN_FOR: Record<keyof AdminUpdate, string> = {
   holes: "holes",
   latitude: "latitude",
   longitude: "longitude",
+  firstTeeLat: "first_tee_lat",
+  firstTeeLon: "first_tee_lon",
   courseRating: "course_rating",
   slopeRating: "slope_rating",
   holeData: "hole_data",

@@ -28,7 +28,12 @@ export async function generateMetadata({
     robots: { index: true, follow: true },
     other: {
       // Landet jemand doch im Browser, bietet Safari oben den App Clip an.
-      "apple-itunes-app": `app-id=${APP_STORE_ID}, app-clip-bundle-id=${APP_CLIP_BUNDLE_ID}`,
+      //
+      // `app-clip-display=card` ist der Unterschied zwischen dem schmalen
+      // Standardbanner („Öffnen" für die App) und der großen App-Clip-Karte
+      // mit Bild und Untertitel. Ohne den Zusatz zeigt Safari nur den Balken,
+      // und wer die App nicht hat, sieht den Clip gar nicht angeboten.
+      "apple-itunes-app": `app-id=${APP_STORE_ID}, app-clip-bundle-id=${APP_CLIP_BUNDLE_ID}, app-clip-display=card`,
     },
   };
 }

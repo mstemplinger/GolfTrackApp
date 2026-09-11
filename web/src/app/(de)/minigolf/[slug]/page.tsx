@@ -30,7 +30,11 @@ export async function generateMetadata({
       // hat statt den Code zu scannen –, bietet Safari oben den App Clip an.
       // `app-clip-bundle-id` kennt die Metadata-API von Next nicht, deshalb
       // von Hand.
-      "apple-itunes-app": `app-id=${APP_STORE_ID}, app-clip-bundle-id=${APP_CLIP_BUNDLE_ID}`,
+      //
+      // `app-clip-display=card` ist der Unterschied zwischen dem schmalen
+      // Standardbanner („Öffnen" für die App) und der großen App-Clip-Karte
+      // mit Bild und Untertitel. Ohne den Zusatz zeigt Safari nur den Balken.
+      "apple-itunes-app": `app-id=${APP_STORE_ID}, app-clip-bundle-id=${APP_CLIP_BUNDLE_ID}, app-clip-display=card`,
     },
   };
 }

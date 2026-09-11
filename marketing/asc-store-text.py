@@ -31,14 +31,26 @@ from asc_api import APP_ID, ASC, APIError
 TEXT_DATEI = Path(__file__).parent / "app-store-text.md"
 
 # Feldname in der API → (Überschriften im Markdown, Grenze von Apple)
+#
+# Die vier Felder liegen an **zwei** Ressourcen, und Apple ist da streng:
+# Beschreibung, Schlüsselwörter und Werbetext hängen an der Version
+# (`appStoreVersionLocalizations`), der Untertitel dagegen an den
+# App-Informationen (`appInfoLocalizations`, zusammen mit Name und
+# Datenschutzadresse). Wer den Untertitel an die Version schickt, bekommt
+# „'subtitle' is not an attribute on the resource".
 FELDER: dict[str, tuple[tuple[str, ...], int]] = {
-    "subtitle": (("untertitel", "subtitle", "sous-titre", "sottotitolo", "subtítulo"), 30),
     "promotionalText": (("werbetext", "promotional text", "texte promotionnel",
                          "testo promozionale", "texto promocional"), 170),
     "keywords": (("schlüsselwörter", "keywords", "mots-clés", "parole chiave",
                   "palabras clave"), 100),
     "description": (("beschreibung", "description", "descrizione", "descripción"), 4000),
 }
+
+INFO_FELDER: dict[str, tuple[tuple[str, ...], int]] = {
+    "subtitle": (("untertitel", "subtitle", "sous-titre", "sottotitolo", "subtítulo"), 30),
+}
+
+ALLE_FELDER = {**FELDER, **INFO_FELDER}
 
 # Sprachkürzel im Markdown → Präfix, mit dem die Locales in ASC beginnen.
 # en-US und en-GB bekommen beide den englischen Abschnitt.
@@ -75,7 +87,7 @@ def lies_texte(pfad: Path) -> dict[str, dict[str, str]]:
         for abschnitt in re.finditer(r"^### (.+?)\n(.*?)(?=\n### |\Z)", block, flags=re.M | re.S):
             titel = abschnitt.group(1).strip().lower()
             inhalt = abschnitt.group(2).strip()
-            for api_feld, (titel_varianten, grenze) in FELDER.items():
+            for api_feld, (titel_varianten, grenze) in ALLE_FELDER.items():
                 if titel in titel_varianten:
                     if laenge(inhalt) > grenze:
                         probleme.append(
@@ -120,6 +132,56 @@ def kurz(text: str, breite: int = 62) -> str:
     return einzeilig if len(einzeilig) <= breite else einzeilig[: breite - 1] + "…"
 
 
+def schreibe_untertitel(asc: ASC, texte: dict[str, dict[str, str]], apply: bool) -> int:
+    """Der Untertitel hängt an den App-Informationen, nicht an der Version."""
+    infos = asc.get_all(f"/v1/apps/{APP_ID}/appInfos?limit=10")
+    offen = [i for i in infos
+             if i["attributes"].get("appStoreState") not in {"READY_FOR_SALE", "REPLACED_WITH_NEW_INFO"}]
+    if not offen:
+        print("\nUntertitel übersprungen – keine bearbeitbaren App-Informationen.")
+        return 0
+    info_id = offen[0]["id"]
+
+    print("\n═══ Untertitel (App-Informationen) ═══")
+    lokal = asc.get_all(f"/v1/appInfos/{info_id}/appInfoLocalizations?limit=50")
+    vorhanden = {l["attributes"]["locale"].split("-")[0]: l for l in lokal}
+    anzahl = 0
+
+    for praefix, felder in sorted(texte.items()):
+        untertitel = felder.get("subtitle")
+        if untertitel is None:
+            continue
+        loc = vorhanden.get(praefix)
+        if loc is not None:
+            alt_wert = loc["attributes"].get("subtitle") or ""
+            if alt_wert == untertitel:
+                print(f"{loc['attributes']['locale']:8} unverändert")
+                continue
+            print(f"{loc['attributes']['locale']:8} alt  {alt_wert or '— leer —'}")
+            print(f"{'':8} neu  {untertitel}")
+            ziel = f"/v1/appInfoLocalizations/{loc['id']}"
+            body = {"data": {"type": "appInfoLocalizations", "id": loc["id"],
+                             "attributes": {"subtitle": untertitel}}}
+            try:
+                asc.patch(ziel, body)
+            except APIError as e:
+                print(f"  ✗ {e.detail}")
+                continue
+        else:
+            locale = ZIEL_LOCALES[praefix]
+            print(f"{locale:8} wird angelegt mit  {untertitel}")
+            body = {"data": {"type": "appInfoLocalizations",
+                             "attributes": {"locale": locale, "subtitle": untertitel},
+                             "relationships": {"appInfo": {"data": {"type": "appInfos", "id": info_id}}}}}
+            try:
+                asc.post("/v1/appInfoLocalizations", body)
+            except APIError as e:
+                print(f"  ✗ {e.detail}")
+                continue
+        anzahl += 1
+    return anzahl
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(description="Produktseitentexte nach App Store Connect")
     parser.add_argument("--issuer", required=True, help="Issuer-UUID aus App Store Connect")
@@ -152,7 +214,7 @@ def main() -> None:
 
         aenderungen = {
             feld: wert for feld, wert in neu.items()
-            if (loc["attributes"].get(feld) or "") != wert
+            if feld in FELDER and (loc["attributes"].get(feld) or "") != wert
         }
         print(f"{locale}")
         for feld in FELDER:
@@ -195,7 +257,10 @@ def main() -> None:
             asc.post("/v1/appStoreVersionLocalizations", {
                 "data": {
                     "type": "appStoreVersionLocalizations",
-                    "attributes": {"locale": locale, **texte[praefix]},
+                    "attributes": {
+                        "locale": locale,
+                        **{f: w for f, w in texte[praefix].items() if f in FELDER},
+                    },
                     "relationships": {
                         "appStoreVersion": {
                             "data": {"type": "appStoreVersions", "id": version_id}
@@ -208,6 +273,8 @@ def main() -> None:
             continue
         geaendert += 1
         print(f"  {'✓ angelegt' if args.apply else '↑ im Probelauf nicht angelegt'}\n")
+
+    geaendert += schreibe_untertitel(asc, texte, args.apply)
 
     if args.apply:
         print(f"Fertig: {geaendert} Sprachen geschrieben.")

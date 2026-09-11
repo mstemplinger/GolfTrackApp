@@ -44,6 +44,34 @@ const STATEMENTS = [
   `ALTER TABLE courses ADD COLUMN IF NOT EXISTS facility_hints jsonb NOT NULL DEFAULT '[]'::jsonb`,
   `ALTER TABLE courses ADD COLUMN IF NOT EXISTS first_tee_lat  double precision`,
   `ALTER TABLE courses ADD COLUMN IF NOT EXISTS first_tee_lon  double precision`,
+  // Wo die Lochdaten den Abschlag von Loch 1 schon kennen, ihn übernehmen –
+  // sonst bliebe das Feld leer, obwohl die Angabe längst im Haus ist. Läuft
+  // nur über Plätze ohne eigenen Eintrag, überschreibt also nie eine Angabe
+  // des Betreibers.
+  //
+  // Korrelierte Unterabfragen im SET, **kein** LATERAL im FROM: Postgres
+  // lässt die Zieltabelle eines UPDATE dort nicht referenzieren
+  // („invalid reference to FROM-clause entry").
+  `UPDATE courses c
+      SET first_tee_lat = (SELECT (e->>'teeLat')::double precision
+                             FROM jsonb_array_elements(c.hole_data) e
+                            WHERE jsonb_typeof(e->'number') = 'number'
+                              AND (e->>'number')::int = 1
+                              AND jsonb_typeof(e->'teeLat') = 'number'
+                            LIMIT 1),
+          first_tee_lon = (SELECT (e->>'teeLon')::double precision
+                             FROM jsonb_array_elements(c.hole_data) e
+                            WHERE jsonb_typeof(e->'number') = 'number'
+                              AND (e->>'number')::int = 1
+                              AND jsonb_typeof(e->'teeLon') = 'number'
+                            LIMIT 1)
+    WHERE c.first_tee_lat IS NULL
+      AND jsonb_typeof(c.hole_data) = 'array'
+      AND EXISTS (SELECT 1 FROM jsonb_array_elements(c.hole_data) e
+                   WHERE jsonb_typeof(e->'number') = 'number'
+                     AND (e->>'number')::int = 1
+                     AND jsonb_typeof(e->'teeLat') = 'number'
+                     AND jsonb_typeof(e->'teeLon') = 'number')`,
   `CREATE INDEX IF NOT EXISTS courses_status_kind_idx ON courses (status, kind)`,
   `CREATE INDEX IF NOT EXISTS courses_updated_at_idx ON courses (updated_at DESC)`,
   // Altbestand geradeziehen: bis zum 11.09.2026 wurden jsonb-Spalten doppelt

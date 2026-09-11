@@ -73,6 +73,8 @@ export async function GET(request: Request) {
         publicEmail: course.publicEmail,
         welcome: course.welcome,
         facilityNotes: course.facilityNotes,
+        // Die Hinweise gehen in die App und gehören deshalb vor die Freigabe.
+        facilityHints: course.facilityHints,
         submitterName: course.submitterName,
         submitterEmail: course.submitterEmail,
         submitterRole: course.submitterRole,

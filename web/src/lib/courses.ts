@@ -43,6 +43,16 @@ export interface CourseRecord {
 
 type DbRow = Record<string, unknown>;
 
+/**
+ * jsonb-Werte werden **roh** an den Treiber gegeben, nicht als Zeichenkette.
+ *
+ * `postgres` erfährt über den Prepare-Schritt, dass der Platzhalter jsonb ist,
+ * und serialisiert den Wert selbst. Wer vorher `JSON.stringify` anwendet,
+ * bekommt eine doppelt kodierte Zeichenkette in der Spalte – lesbar nur noch
+ * über `JSON.parse`, und für jede jsonb-Abfrage in SQL verloren. Genau so lag
+ * `hole_data` bis zum 11.09.2026 in der Datenbank; `migrations.ts` rückt die
+ * Altbestände zurecht, `mapRow` versteht weiterhin beides.
+ */
 const asString = (v: unknown) => (v == null ? "" : String(v));
 const asNumber = (v: unknown) => (v == null ? null : Number(v));
 const asDate = (v: unknown) => (v == null ? null : new Date(v as string).toISOString());
@@ -142,9 +152,9 @@ export async function createSubmission(input: SubmissionInput): Promise<CourseRe
       input.longitude,
       input.courseRating,
       input.slopeRating,
-      JSON.stringify(input.holeData ?? []),
+      input.holeData ?? [],
       input.facilityNotes,
-      JSON.stringify(input.facilityHints ?? []),
+      input.facilityHints ?? [],
       input.welcome,
       input.website,
       input.phone,
@@ -229,11 +239,10 @@ export async function updateCourse(id: string, patch: AdminUpdate): Promise<Cour
     if (value === undefined) continue;
     const column = COLUMN_FOR[key];
     if (!column) continue;
+    params.push(value);
     if (key === "holeData" || key === "facilityHints") {
-      params.push(JSON.stringify(value));
       assignments.push(`${column} = $${params.length}::jsonb`);
     } else {
-      params.push(value);
       assignments.push(`${column} = $${params.length}`);
     }
   }

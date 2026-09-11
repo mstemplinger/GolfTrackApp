@@ -95,24 +95,20 @@ function CourseGroup({
 
           return (
             <li key={course.id} className="bg-black/25 p-6 transition-colors hover:bg-white/[0.04]">
-              {course.kind === "minigolf" ? (
-                <>
-                  <Link href={`/minigolf/${course.slug}`} className="block">
-                    {body}
-                  </Link>
-                  {/* Aushang für die Anlage. Der Code zeigt auf die Seite oben:
-                      mit App startet die Runde, ohne App führt sie zum Store. */}
-                  <a
-                    href={`/qr/${course.slug}`}
-                    title={copy.qrTitle}
-                    className="tap mt-4 inline-block font-mono text-xs text-brass underline underline-offset-4"
-                  >
-                    ↓ {copy.qrDownload}
-                  </a>
-                </>
-              ) : (
-                body
-              )}
+              {/* Golf und Minigolf gleichberechtigt: beide haben eine Landeseite
+                  und beide brauchen ihren Aushang. */}
+              <Link href={`/${course.kind}/${course.slug}`} className="block">
+                {body}
+              </Link>
+              {/* Aushang für die Anlage. Der Code zeigt auf die Seite oben:
+                  mit App startet die Runde, ohne App führt sie zum Store. */}
+              <a
+                href={`/qr/${course.slug}`}
+                title={copy.qrTitle}
+                className="tap mt-4 inline-block font-mono text-xs text-brass underline underline-offset-4"
+              >
+                ↓ {copy.qrDownload}
+              </a>
             </li>
           );
         })}

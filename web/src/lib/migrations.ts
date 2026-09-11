@@ -42,6 +42,13 @@ const STATEMENTS = [
   `ALTER TABLE courses ADD COLUMN IF NOT EXISTS facility_hints jsonb NOT NULL DEFAULT '[]'::jsonb`,
   `CREATE INDEX IF NOT EXISTS courses_status_kind_idx ON courses (status, kind)`,
   `CREATE INDEX IF NOT EXISTS courses_updated_at_idx ON courses (updated_at DESC)`,
+  // Altbestand geradeziehen: bis zum 11.09.2026 wurden jsonb-Spalten doppelt
+  // kodiert geschrieben (JSON.stringify vor dem Treiber), sie liegen deshalb
+  // als JSON-Zeichenkette statt als Array in der Tabelle. Der Ausdruck
+  // `#>> '{}'` holt den Text aus dem Skalar; die WHERE-Klausel macht die
+  // Anweisung idempotent.
+  `UPDATE courses SET hole_data = (hole_data #>> '{}')::jsonb WHERE jsonb_typeof(hole_data) = 'string'`,
+  `UPDATE courses SET facility_hints = (facility_hints #>> '{}')::jsonb WHERE jsonb_typeof(facility_hints) = 'string'`,
   `CREATE TABLE IF NOT EXISTS submission_attempts (
      id         bigserial PRIMARY KEY,
      ip_hash    text NOT NULL,

@@ -6,6 +6,8 @@
 
 Geschrieben werden Untertitel, Werbetext, Schlüsselwörter und Beschreibung –
 alle vier hängen an `appStoreVersionLocalizations`, also ein PATCH je Sprache.
+Sprachen, die es dort noch nicht gibt, werden angelegt: am 11.09.2026 stand die
+Produktseite nur auf Deutsch, alle übrigen Storefronts zeigten denselben Text.
 Die Release Notes bleiben unangetastet; dafür gibt es `asc-fill-metadata.py`.
 
 Ohne `--apply` wird **nichts** geschrieben: Das Skript zeigt je Sprache und Feld,
@@ -41,6 +43,11 @@ FELDER: dict[str, tuple[tuple[str, ...], int]] = {
 # Sprachkürzel im Markdown → Präfix, mit dem die Locales in ASC beginnen.
 # en-US und en-GB bekommen beide den englischen Abschnitt.
 SPRACHE_ZU_PRAEFIX = {"de": "de", "en": "en", "fr": "fr", "it": "it", "es": "es"}
+
+# Welche Sprachen die Produktseite haben soll. Fehlt eine, wird sie angelegt –
+# am 11.09.2026 gab es nur de-DE, alle anderen Storefronts zeigten den
+# deutschen Text. Die Schreibweisen sind die von Apple (Italienisch ohne Land).
+ZIEL_LOCALES = {"de": "de-DE", "en": "en-US", "fr": "fr-FR", "it": "it", "es": "es-ES"}
 
 
 def laenge(text: str) -> int:
@@ -175,6 +182,32 @@ def main() -> None:
             continue
         geaendert += 1
         print(f"  {'✓ geschrieben' if args.apply else '↑ im Probelauf nicht geschrieben'}\n")
+
+    # Fehlende Sprachen anlegen – sonst bliebe es beim deutschen Text für alle.
+    vorhanden = {loc["attributes"]["locale"].split("-")[0] for loc in lokalisierungen}
+    for praefix, locale in sorted(ZIEL_LOCALES.items()):
+        if praefix in vorhanden or praefix not in texte:
+            continue
+        print(f"{locale} – noch nicht vorhanden, wird angelegt")
+        for feld, wert in texte[praefix].items():
+            print(f"  {feld:16} {kurz(wert)}  [{laenge(wert)} Zeichen]")
+        try:
+            asc.post("/v1/appStoreVersionLocalizations", {
+                "data": {
+                    "type": "appStoreVersionLocalizations",
+                    "attributes": {"locale": locale, **texte[praefix]},
+                    "relationships": {
+                        "appStoreVersion": {
+                            "data": {"type": "appStoreVersions", "id": version_id}
+                        }
+                    },
+                }
+            })
+        except APIError as e:
+            print(f"  ✗ {locale}: {e.detail}\n")
+            continue
+        geaendert += 1
+        print(f"  {'✓ angelegt' if args.apply else '↑ im Probelauf nicht angelegt'}\n")
 
     if args.apply:
         print(f"Fertig: {geaendert} Sprachen geschrieben.")

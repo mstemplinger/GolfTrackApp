@@ -5,9 +5,21 @@ Für App Store Connect → „App-Informationen" und „Produktseite". Pro Sprac
 Grenzen von Apple: Untertitel 30 Zeichen, Schlüsselwörter 100, Werbetext 170,
 Beschreibung 4.000. Alle Fassungen unten sind geprüft und liegen darunter.
 
-**Bewusst nicht erwähnt**, weil es in keiner eingereichten Fassung steckt:
+**Stand im Store** (öffentlich abgefragt am 11.09.2026): Version 2.2 ist seit
+dem 05.09.2026 veröffentlicht. Die Produktseite gibt es bislang **nur auf
+Deutsch** – wer den Store auf Französisch, Italienisch, Spanisch oder Englisch
+öffnet, liest den deutschen Text. Die vier Sprachen müssen in App Store Connect
+erst angelegt werden.
+
+**Bewusst nicht erwähnt**, weil es in keiner veröffentlichten Fassung steckt:
 Hinweise der Anlage im App Clip, Bag-Auswahl beim Golf-QR, „Platz in der Nähe".
-Sobald ein Build das enthält, gehören sie in Beschreibung und Werbetext.
+Ebenfalls nicht: der QR-Code am **Golfplatz** für die installierte App – der
+öffnete bis heute nur die App, ohne etwas zu tun. Der QR-Code an **Minigolf**anlagen
+funktioniert und steht deshalb drin.
+
+**Gegenüber dem laufenden Text korrigiert**: Er nennt „über 40 Audio-Lektionen"
+(es sind 17) und „18 Spielmodi" (spielbar sind 14). Solche Zahlen sind ein
+Ablehnungsgrund und ein Grund für Rückerstattungen.
 
 **Schlüsselwörter**: ohne Leerzeichen nach den Kommas (jedes Zeichen zählt) und
 ohne Wörter, die schon im Namen oder Untertitel stehen – die indexiert Apple
@@ -70,6 +82,8 @@ Ohne Abo bleiben: Scorekarte, Handicap, Statistik, Schlagerfassung, Laufspur, Ap
 
 GolfTrack gibt es auf Deutsch, Englisch, Französisch, Italienisch und Spanisch.
 
+Nutzungsbedingungen (EULA): https://www.apple.com/legal/internet-services/itunes/dev/stdeula/
+
 ---
 
 ## English (en-US / en-GB)
@@ -126,6 +140,8 @@ WITH A SUBSCRIPTION, IF YOU WANT ONE
 Free of charge: scorecard, handicap, statistics, shot tracking, walking path, Apple Watch, minigolf, rules and quiz.
 
 GolfTrack speaks German, English, French, Italian and Spanish.
+
+Terms of Use (EULA): https://www.apple.com/legal/internet-services/itunes/dev/stdeula/
 
 ---
 
@@ -184,6 +200,8 @@ Gratuits : carte de score, handicap, statistiques, suivi des coups, tracé, Appl
 
 GolfTrack parle allemand, anglais, français, italien et espagnol.
 
+Conditions d'utilisation (EULA) : https://www.apple.com/legal/internet-services/itunes/dev/stdeula/
+
 ---
 
 ## Italiano (it)
@@ -241,6 +259,8 @@ Gratis: score, handicap, statistiche, rilevamento dei colpi, tracciato, Apple Wa
 
 GolfTrack parla tedesco, inglese, francese, italiano e spagnolo.
 
+Condizioni d'uso (EULA): https://www.apple.com/legal/internet-services/itunes/dev/stdeula/
+
 ---
 
 ## Español (es-ES)
@@ -297,3 +317,5 @@ CON SUSCRIPCIÓN, SI QUIERES
 Gratis: tarjeta, hándicap, estadísticas, registro de golpes, recorrido, Apple Watch, minigolf, reglas y test.
 
 GolfTrack habla alemán, inglés, francés, italiano y español.
+
+Términos de uso (EULA): https://www.apple.com/legal/internet-services/itunes/dev/stdeula/

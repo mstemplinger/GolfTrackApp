@@ -1,5 +1,6 @@
 import type { AdRecord } from "./ads";
 import type { CourseRecord } from "./courses";
+import type { CourseHint } from "./schema";
 
 /**
  * Öffentliches JSON für die App. Die Feldnamen entsprechen bewusst
@@ -21,6 +22,8 @@ export interface FeedCourse {
   courseRating: number | null;
   slopeRating: number | null;
   facilityNotes: string;
+  /** Einzelne Hinweise mit Art – im App Clip stehen sie statt Werbung. */
+  facilityHints: CourseHint[];
   welcome: string;
   website: string;
   phone: string;
@@ -63,6 +66,7 @@ export function toFeedCourse(record: CourseRecord): FeedCourse {
     courseRating: record.courseRating,
     slopeRating: record.slopeRating,
     facilityNotes: record.facilityNotes,
+    facilityHints: record.facilityHints,
     welcome: record.welcome,
     website: record.website,
     phone: record.phone,

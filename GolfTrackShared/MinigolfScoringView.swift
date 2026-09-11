@@ -3,7 +3,8 @@ import SwiftUI
 /// Die Zählkarte und das Ergebnis – der Teil, den auch der App Clip zeigt.
 ///
 /// Was im Clip fehlt, steht hinter `#if !APPCLIP`:
-/// - **Werbung**, weil Apple sie dort untersagt (Richtlinie 2.5.16(a)).
+/// - **Werbung**, weil Apple sie dort untersagt (Richtlinie 2.5.16(a)). An
+///   ihrer Stelle stehen dort die Hinweise der Anlage (`CourseHintRotatingCard`).
 /// - **Watch-Abgleich**, weil ein Clip keine Uhr-Gegenstelle hat und
 ///   `WatchConnectivity` dort nichts zu suchen hat.
 ///
@@ -72,6 +73,10 @@ struct MinigolfScoringView: View {
                     // Statt der Werbefläche: Wer das Trainings-Abo hat, findet
                     // hier die Putt-Audios.
                     PuttTrainingCard(compact: true)
+                    #else
+                    // Im Clip ist Werbung untersagt. An derselben Stelle stehen
+                    // deshalb die Hinweise der Anlage – ein anderer je Bahn.
+                    CourseHintRotatingCard(hints: config.hints, rotation: currentHole)
                     #endif
                 }
                 .padding()

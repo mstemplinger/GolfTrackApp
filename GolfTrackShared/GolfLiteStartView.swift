@@ -20,6 +20,7 @@ struct GolfLiteStartView: View {
                 VStack(spacing: 18) {
                     header
                     infoCard
+                    CourseHintsCard(hints: course.hints)
                     if let saved, saved.courseID == course.id, saved.playedHoles > 0 {
                         resumeCard(saved)
                     }

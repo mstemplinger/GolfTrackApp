@@ -22,6 +22,7 @@ const STATEMENTS = [
      slope_rating    integer,
      hole_data       jsonb NOT NULL DEFAULT '[]'::jsonb,
      facility_notes  text NOT NULL DEFAULT '',
+     facility_hints  jsonb NOT NULL DEFAULT '[]'::jsonb,
      welcome         text NOT NULL DEFAULT '',
      website         text NOT NULL DEFAULT '',
      phone           text NOT NULL DEFAULT '',
@@ -36,6 +37,9 @@ const STATEMENTS = [
      reviewed_at     timestamptz,
      published_at    timestamptz
    )`,
+  // Nachgereicht – siehe die Anmerkung bei `ads`: eine bestehende Tabelle
+  // bekommt neue Spalten nur über ein eigenes ALTER.
+  `ALTER TABLE courses ADD COLUMN IF NOT EXISTS facility_hints jsonb NOT NULL DEFAULT '[]'::jsonb`,
   `CREATE INDEX IF NOT EXISTS courses_status_kind_idx ON courses (status, kind)`,
   `CREATE INDEX IF NOT EXISTS courses_updated_at_idx ON courses (updated_at DESC)`,
   `CREATE TABLE IF NOT EXISTS submission_attempts (

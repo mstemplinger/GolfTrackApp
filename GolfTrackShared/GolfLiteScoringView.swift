@@ -43,6 +43,9 @@ struct GolfLiteScoringView: View {
                 VStack(spacing: 14) {
                     holeCard
                     totalsCard
+                    // Der Clip darf keine Werbung zeigen; die Hinweise der
+                    // Anlage sind keine – und unterwegs nützlicher.
+                    CourseHintRotatingCard(hints: course.hints, rotation: currentHole)
                     FullAppFeaturesCard()
                 }
                 .padding()

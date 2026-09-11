@@ -20,6 +20,9 @@ struct MinigolfConfig: Identifiable, Hashable {
     var courseID: String? = nil
     /// Aktive Nebenwertungen (Serie, Asse, …)
     var challenges: [MinigolfChallenge] = []
+    /// Hinweise der Anlage. Im App Clip laufen sie während der Runde an der
+    /// Stelle, an der die volle App Werbung zeigt.
+    var hints: [CourseHint] = []
 }
 
 // MARK: - Persistence

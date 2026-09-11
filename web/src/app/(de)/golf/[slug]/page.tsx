@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Footer, Header } from "@/components/Chrome";
+import { CourseHintList } from "@/components/CourseHintList";
 import { getCourse } from "@/lib/courses";
 import { APP_STORE_URL, SITE_URL } from "@/i18n/routes";
 
@@ -82,6 +83,8 @@ export default async function GolfLandingPage({ params }: PageProps<"/golf/[slug
         <p className="mt-4 text-sm text-cream/45">
           Ohne installierte App führt der erste Knopf ins Leere – dann zuerst GolfTrack laden.
         </p>
+
+        <CourseHintList hints={course.facilityHints} />
 
         {course.facilityNotes ? (
           <p className="mx-auto mt-10 max-w-lg rounded-sm border rule bg-moss/30 p-5 text-sm leading-relaxed text-cream/65">

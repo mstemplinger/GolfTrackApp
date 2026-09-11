@@ -49,6 +49,8 @@ enum ClipCourseDirectory {
         let lon: Double?
         let welcome: String
         let facilityNotes: String
+        /// Fehlt bei Plätzen, die vor der Einführung freigegeben wurden.
+        let facilityHints: [CourseHint]?
         /// Leer, wenn im Verzeichnis nicht für jedes Loch ein Par steht – die
         /// API liefert bewusst lieber nichts als eine halbe Reihe.
         let parValues: [Int]
@@ -64,7 +66,8 @@ enum ClipCourseDirectory {
                 welcome: welcome.isEmpty
                     ? "Willkommen! Ab jetzt zählen wir für dich mit – Bahn für Bahn."
                     : welcome,
-                notes: facilityNotes
+                notes: facilityNotes,
+                hints: facilityHints ?? []
             )
         }
 
@@ -74,7 +77,8 @@ enum ClipCourseDirectory {
                 name: name,
                 location: location,
                 holes: holes,
-                parValues: parValues.count == holes ? parValues : []
+                parValues: parValues.count == holes ? parValues : [],
+                hints: facilityHints ?? []
             )
         }
     }

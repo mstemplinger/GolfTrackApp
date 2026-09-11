@@ -93,6 +93,8 @@ struct MinigolfCourseStartView: View {
             .frame(maxWidth: .infinity)
             .background(AppTheme.card, in: RoundedRectangle(cornerRadius: 16))
 
+            CourseHintsCard(hints: course.hints)
+
             Button {
                 Haptics.medium()
                 step = .tutorialQuestion
@@ -339,7 +341,8 @@ struct MinigolfCourseStartView: View {
                                 numberOfHoles: course.holes,
                                 courseName: course.name,
                                 courseID: course.id,
-                                challenges: challenges)
+                                challenges: challenges,
+                                hints: course.hints)
     }
 }
 

@@ -1,7 +1,14 @@
 import "server-only";
 import { query, queryOne } from "./db";
 import { ensureSchema } from "./migrations";
-import type { AdminUpdate, CourseKind, CourseStatus, Hole, SubmissionInput } from "./schema";
+import type {
+  AdminUpdate,
+  CourseHint,
+  CourseKind,
+  CourseStatus,
+  Hole,
+  SubmissionInput,
+} from "./schema";
 
 export interface CourseRecord {
   id: string;
@@ -18,6 +25,7 @@ export interface CourseRecord {
   slopeRating: number | null;
   holeData: Hole[];
   facilityNotes: string;
+  facilityHints: CourseHint[];
   welcome: string;
   website: string;
   phone: string;
@@ -41,6 +49,8 @@ const asDate = (v: unknown) => (v == null ? null : new Date(v as string).toISOSt
 
 function mapRow(row: DbRow): CourseRecord {
   const holeData = typeof row.hole_data === "string" ? JSON.parse(row.hole_data) : row.hole_data;
+  const hints =
+    typeof row.facility_hints === "string" ? JSON.parse(row.facility_hints) : row.facility_hints;
   return {
     id: asString(row.id),
     slug: asString(row.slug),
@@ -56,6 +66,7 @@ function mapRow(row: DbRow): CourseRecord {
     slopeRating: asNumber(row.slope_rating),
     holeData: (holeData as Hole[]) ?? [],
     facilityNotes: asString(row.facility_notes),
+    facilityHints: (hints as CourseHint[]) ?? [],
     welcome: asString(row.welcome),
     website: asString(row.website),
     phone: asString(row.phone),
@@ -116,9 +127,9 @@ export async function createSubmission(input: SubmissionInput): Promise<CourseRe
   const rows = await query<DbRow>(
     `INSERT INTO courses (
        slug, kind, status, name, location, country, holes, latitude, longitude,
-       course_rating, slope_rating, hole_data, facility_notes, welcome, website, phone,
-       public_email, submitter_name, submitter_email, submitter_role, source
-     ) VALUES ($1,$2,'pending',$3,$4,$5,$6,$7,$8,$9,$10,$11::jsonb,$12,$13,$14,$15,$16,$17,$18,$19,'form')
+       course_rating, slope_rating, hole_data, facility_notes, facility_hints, welcome,
+       website, phone, public_email, submitter_name, submitter_email, submitter_role, source
+     ) VALUES ($1,$2,'pending',$3,$4,$5,$6,$7,$8,$9,$10,$11::jsonb,$12,$13::jsonb,$14,$15,$16,$17,$18,$19,$20,'form')
      RETURNING *`,
     [
       slug,
@@ -133,6 +144,7 @@ export async function createSubmission(input: SubmissionInput): Promise<CourseRe
       input.slopeRating,
       JSON.stringify(input.holeData ?? []),
       input.facilityNotes,
+      JSON.stringify(input.facilityHints ?? []),
       input.welcome,
       input.website,
       input.phone,
@@ -200,6 +212,7 @@ const COLUMN_FOR: Record<keyof AdminUpdate, string> = {
   slopeRating: "slope_rating",
   holeData: "hole_data",
   facilityNotes: "facility_notes",
+  facilityHints: "facility_hints",
   welcome: "welcome",
   website: "website",
   phone: "phone",
@@ -216,7 +229,7 @@ export async function updateCourse(id: string, patch: AdminUpdate): Promise<Cour
     if (value === undefined) continue;
     const column = COLUMN_FOR[key];
     if (!column) continue;
-    if (key === "holeData") {
+    if (key === "holeData" || key === "facilityHints") {
       params.push(JSON.stringify(value));
       assignments.push(`${column} = $${params.length}::jsonb`);
     } else {

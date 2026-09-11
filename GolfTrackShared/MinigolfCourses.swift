@@ -20,9 +20,13 @@ struct MinigolfCourseEntry: Identifiable, Hashable {
     let welcome: String
     /// Zusatzinfos (Ausleihe, Öffnungszeiten …). Leer = wird ausgeblendet.
     let notes: String
+    /// Einzelne Hinweise mit Symbol – Toiletten, Unterstellhaus bei Gewitter.
+    /// Anders als `notes` erscheinen sie auch während der Runde.
+    let hints: [CourseHint]
 
     init(id: String, name: String, location: String, holes: Int,
-         lat: Double, lon: Double, welcome: String, notes: String = "") {
+         lat: Double, lon: Double, welcome: String, notes: String = "",
+         hints: [CourseHint] = []) {
         self.id = id
         self.name = name
         self.location = location
@@ -31,6 +35,7 @@ struct MinigolfCourseEntry: Identifiable, Hashable {
         self.lon = lon
         self.welcome = welcome
         self.notes = notes
+        self.hints = hints
     }
 
     var coordinate: CLLocationCoordinate2D { .init(latitude: lat, longitude: lon) }

@@ -1,8 +1,10 @@
 "use client";
 
 import { useCallback, useMemo, useState } from "react";
+import { HintsEditor } from "@/components/HintsEditor";
 import { t } from "@/i18n/content";
 import type { Lang } from "@/i18n/routes";
+import type { CourseHint } from "@/lib/schema";
 
 type Kind = "golf" | "minigolf";
 
@@ -48,6 +50,7 @@ export function SubmitForm({ lang }: { lang: Lang }) {
     submitterRole: "",
     company: "",
   });
+  const [hints, setHints] = useState<CourseHint[]>([]);
   const [consent, setConsent] = useState(false);
   const [state, setState] = useState<"idle" | "sending" | "done">("idle");
   const [error, setError] = useState<string | null>(null);
@@ -138,6 +141,7 @@ export function SubmitForm({ lang }: { lang: Lang }) {
       slopeRating: kind === "golf" ? numberOrNull(values.slopeRating) : null,
       holeData: holeData.length === holes ? holeData : [],
       facilityNotes: values.facilityNotes,
+      facilityHints: hints.filter((hint) => hint.text.trim().length > 1),
       welcome: values.welcome,
       website: values.website,
       phone: values.phone,
@@ -437,6 +441,17 @@ export function SubmitForm({ lang }: { lang: Lang }) {
             value={values.facilityNotes}
             onChange={(e) => set("facilityNotes", e.target.value)}
             rows={3}
+          />
+        </Field>
+        <Field label={copy.hints} hint={copy.hintsHint}>
+          <HintsEditor
+            labels={{
+              add: copy.hintAdd,
+              remove: copy.hintRemove,
+              placeholder: copy.hintPlaceholder,
+              kinds: copy.hintKinds,
+            }}
+            onChange={setHints}
           />
         </Field>
         <Field label={copy.welcome} hint={copy.welcomeHint}>

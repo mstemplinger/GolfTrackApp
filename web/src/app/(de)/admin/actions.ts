@@ -94,6 +94,15 @@ export async function save(_state: string | null, formData: FormData): Promise<s
 
   const hasHoleValues = holeData.some((hole) => hole.par !== null || hole.hcp !== null || hole.length !== null);
 
+  // Die Hinweise kommen als ein JSON-Feld aus `HintsEditor`. Unlesbares
+  // verwerfen wir nicht stillschweigend – zod meldet es als Fehler zurück.
+  let facilityHints: unknown = [];
+  try {
+    facilityHints = JSON.parse(String(formData.get("facilityHints") ?? "[]"));
+  } catch {
+    return "facilityHints: konnte nicht gelesen werden";
+  }
+
   const parsed = adminUpdateSchema.safeParse({
     name: String(formData.get("name") ?? ""),
     location: String(formData.get("location") ?? ""),
@@ -106,6 +115,7 @@ export async function save(_state: string | null, formData: FormData): Promise<s
     slopeRating: numberOrNull(formData.get("slopeRating")),
     holeData: hasHoleValues ? holeData : [],
     facilityNotes: String(formData.get("facilityNotes") ?? ""),
+    facilityHints,
     welcome: String(formData.get("welcome") ?? ""),
     website: String(formData.get("website") ?? ""),
     phone: String(formData.get("phone") ?? ""),

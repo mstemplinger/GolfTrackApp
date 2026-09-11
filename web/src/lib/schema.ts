@@ -15,6 +15,25 @@ export const holeSchema = z.object({
 export type Hole = z.infer<typeof holeSchema>;
 
 export const courseKind = z.enum(["golf", "minigolf"]);
+
+/**
+ * Art eines Platzhinweises. Die Werte stehen genauso in `CourseHintKind`
+ * (Swift) – wer hier etwas ergänzt, muss es dort ebenfalls tun, sonst fällt
+ * der Hinweis im Gerät auf das Fragezeichen zurück.
+ */
+export const hintKind = z.enum([
+  "toilet",
+  "shelter",
+  "drinks",
+  "food",
+  "rental",
+  "parking",
+  "water",
+  "firstAid",
+  "info",
+]);
+
+export type HintKind = z.infer<typeof hintKind>;
 export const courseStatus = z.enum(["pending", "approved", "rejected"]);
 
 export type CourseKind = z.infer<typeof courseKind>;
@@ -27,6 +46,18 @@ const optionalUrl = z
   .max(200)
   .refine((v) => v === "" || /^https?:\/\/\S+\.\S+/.test(v), "invalid_url")
   .default("");
+
+/**
+ * Ein einzelner Hinweis der Anlage – „Toiletten beim Clubhaus", „Unterstellhaus
+ * an Bahn 5". Im App Clip stehen sie an der Stelle, an der die volle App
+ * Werbung zeigt; dort ist Werbung untersagt (Richtlinie 2.5.16(a)).
+ */
+export const hintSchema = z.object({
+  kind: hintKind,
+  text: trimmed(140).min(2),
+});
+
+export type CourseHint = z.infer<typeof hintSchema>;
 
 /** Was das öffentliche Formular schickt. */
 export const submissionSchema = z
@@ -42,6 +73,7 @@ export const submissionSchema = z
     slopeRating: z.number().int().min(55).max(155).nullable().default(null),
     holeData: z.array(holeSchema).max(36).default([]),
     facilityNotes: trimmed(2000).default(""),
+    facilityHints: z.array(hintSchema).max(12).default([]),
     welcome: trimmed(400).default(""),
     website: optionalUrl,
     phone: trimmed(60).default(""),
@@ -80,6 +112,7 @@ export const adminUpdateSchema = z.object({
   slopeRating: z.number().int().min(55).max(155).nullable().optional(),
   holeData: z.array(holeSchema).max(36).optional(),
   facilityNotes: trimmed(2000).optional(),
+  facilityHints: z.array(hintSchema).max(12).optional(),
   welcome: trimmed(400).optional(),
   website: optionalUrl.optional(),
   phone: trimmed(60).optional(),

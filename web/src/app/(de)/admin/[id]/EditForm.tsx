@@ -1,6 +1,7 @@
 "use client";
 
 import { useActionState, useState } from "react";
+import { HintsEditor } from "@/components/HintsEditor";
 import type { CourseRecord } from "@/lib/courses";
 import { save } from "../actions";
 
@@ -53,6 +54,29 @@ export function EditForm({ course }: { course: CourseRecord }) {
 
       <div className="mt-6 grid gap-4">
         <TextArea label="Platzinfos" name="facilityNotes" defaultValue={course.facilityNotes} />
+        <div>
+          <span className="label">Hinweise für Gäste</span>
+          <HintsEditor
+            name="facilityHints"
+            initial={course.facilityHints}
+            labels={{
+              add: "Hinweis hinzufügen",
+              remove: "Hinweis entfernen",
+              placeholder: "z. B. Unterstellhaus bei Gewitter an Bahn 5",
+              kinds: {
+                toilet: "Toiletten",
+                shelter: "Unterstellhaus",
+                drinks: "Getränke",
+                food: "Gastronomie",
+                rental: "Ausleihe",
+                parking: "Parkplatz",
+                water: "Wasserstelle",
+                firstAid: "Erste Hilfe",
+                info: "Sonstiges",
+              },
+            }}
+          />
+        </div>
         <TextArea label="Begrüßung" name="welcome" defaultValue={course.welcome} rows={2} />
       </div>
 

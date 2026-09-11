@@ -21,6 +21,9 @@ struct GolfLiteCourse: Identifiable, Hashable, Codable {
     /// Par je Loch. Leer, wenn der Platz im Verzeichnis keine Werte hat –
     /// dann wird ohne Par gezählt, statt falsche Zahlen zu zeigen.
     let parValues: [Int]
+    /// Hinweise des Betreibers – im Clip stehen sie dort, wo die volle App
+    /// Werbung zeigt.
+    var hints: [CourseHint] = []
 
     var hasPar: Bool { parValues.count == holes }
 

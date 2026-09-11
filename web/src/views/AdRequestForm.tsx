@@ -1,25 +1,44 @@
 "use client";
 
-import { useState } from "react";
+import { useMemo, useState } from "react";
 
-export interface AdCourseOption {
+export interface CourseMarker {
   slug: string;
   name: string;
-  location: string;
+  kind: "golf" | "minigolf";
+  lat: number;
+  lon: number;
+}
+
+/** Wählbare Umkreise. Mehr Stufen helfen niemandem beim Entscheiden. */
+const RADII = [5, 10, 25, 50, 100];
+/** Wählbare Laufzeiten in Monaten. */
+const DURATIONS = [1, 3, 6, 12];
+
+/** Entfernung zweier Punkte in Kilometern (Haversine). */
+function distanceKm(aLat: number, aLon: number, bLat: number, bLon: number): number {
+  const toRad = (v: number) => (v * Math.PI) / 180;
+  const dLat = toRad(bLat - aLat);
+  const dLon = toRad(bLon - aLon);
+  const h =
+    Math.sin(dLat / 2) ** 2 +
+    Math.cos(toRad(aLat)) * Math.cos(toRad(bLat)) * Math.sin(dLon / 2) ** 2;
+  return 6371 * 2 * Math.asin(Math.min(1, Math.sqrt(h)));
 }
 
 /**
- * Buchungsanfrage für den Werbeplatz. Bewusst kurz: Anlage wählen, zwei
- * Zeilen tippen, Kontakt dazu. Alles andere klären wir per Mail – ein
- * Selbstbedienungsportal mit Bezahlung wäre für eine Handvoll Anlagen
- * mehr Aufwand als Nutzen.
+ * Buchungsanfrage für den Werbeplatz.
  *
- * Rechts wächst die Vorschau mit: Wer sieht, wie wenig Platz eine Zeile hat,
- * schreibt von selbst kürzer.
+ * Gebucht wird **kein einzelner Platz**, sondern ein Umkreis: Wer wirbt, sitzt
+ * an einem Ort und will die Gäste der Anlagen ringsum erreichen. Wie viele das
+ * sind, steht sofort daneben – das ist die Zahl, die über die Buchung
+ * entscheidet, und sie soll nicht erst in einer Mail auftauchen.
  */
-export function AdRequestForm({ courses }: { courses: AdCourseOption[] }) {
+export function AdRequestForm({ markers }: { markers: CourseMarker[] }) {
   const [values, setValues] = useState({
-    courseSlug: courses[0]?.slug ?? "",
+    placeName: "",
+    latitude: "",
+    longitude: "",
     title: "",
     subtitle: "",
     linkURL: "",
@@ -31,6 +50,9 @@ export function AdRequestForm({ courses }: { courses: AdCourseOption[] }) {
     requestNote: "",
     company: "",
   });
+  const [radiusKm, setRadiusKm] = useState(25);
+  const [months, setMonths] = useState(3);
+  const [geoError, setGeoError] = useState(false);
   const [consent, setConsent] = useState(false);
   const [state, setState] = useState<"idle" | "sending" | "done">("idle");
   const [error, setError] = useState<string | null>(null);
@@ -38,6 +60,40 @@ export function AdRequestForm({ courses }: { courses: AdCourseOption[] }) {
 
   const set = (key: keyof typeof values, value: string) =>
     setValues((previous) => ({ ...previous, [key]: value }));
+
+  const centre = useMemo(() => {
+    const lat = Number(values.latitude.replace(",", "."));
+    const lon = Number(values.longitude.replace(",", "."));
+    if (!values.latitude || !values.longitude || !Number.isFinite(lat) || !Number.isFinite(lon)) {
+      return null;
+    }
+    return { lat, lon };
+  }, [values.latitude, values.longitude]);
+
+  /** Welche Plätze der gewählte Umkreis trifft – dieselbe Rechnung wie im Gerät. */
+  const reached = useMemo(() => {
+    if (!centre) return [];
+    return markers
+      .map((m) => ({ ...m, km: distanceKm(centre.lat, centre.lon, m.lat, m.lon) }))
+      .filter((m) => m.km <= radiusKm)
+      .sort((a, b) => a.km - b.km);
+  }, [centre, markers, radiusKm]);
+
+  function applyCurrentLocation() {
+    if (!navigator.geolocation) {
+      setGeoError(true);
+      return;
+    }
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        setGeoError(false);
+        set("latitude", position.coords.latitude.toFixed(6));
+        set("longitude", position.coords.longitude.toFixed(6));
+      },
+      () => setGeoError(true),
+      { enableHighAccuracy: true, timeout: 10_000 },
+    );
+  }
 
   async function submit(event: React.FormEvent) {
     event.preventDefault();
@@ -49,7 +105,14 @@ export function AdRequestForm({ courses }: { courses: AdCourseOption[] }) {
       const response = await fetch("/api/ads/request", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ...values, consent }),
+        body: JSON.stringify({
+          ...values,
+          latitude: Number(values.latitude.replace(",", ".")),
+          longitude: Number(values.longitude.replace(",", ".")),
+          radiusKm,
+          requestedMonths: months,
+          consent,
+        }),
       });
 
       if (response.ok) {
@@ -61,8 +124,8 @@ export function AdRequestForm({ courses }: { courses: AdCourseOption[] }) {
       const body = await response.json().catch(() => null);
       if (response.status === 429) {
         setError("Zu viele Anfragen von hier. Bitte später noch einmal versuchen.");
-      } else if (response.status === 422 && body?.error === "unknown_course") {
-        setError("Diese Anlage ist noch nicht freigegeben. Bitte zuerst eintragen lassen.");
+      } else if (response.status === 422 && body?.error === "no_courses_in_radius") {
+        setError("In diesem Umkreis liegt noch kein eingetragener Platz. Größeren Umkreis wählen oder die Anlage zuerst eintragen lassen.");
       } else if (response.status === 422) {
         setError("Bitte die markierten Felder prüfen.");
         const map: Record<string, string> = {};
@@ -78,13 +141,13 @@ export function AdRequestForm({ courses }: { courses: AdCourseOption[] }) {
     }
   }
 
-  if (!courses.length) {
+  if (!markers.length) {
     return (
       <div className="paper rounded-[4px] p-8">
-        <h2 className="font-display text-xl tracking-tight">Noch keine Anlage freigegeben</h2>
+        <h2 className="font-display text-xl tracking-tight">Noch kein Platz mit Koordinaten</h2>
         <p className="mt-3 max-w-md leading-relaxed text-ink/70">
-          Werbung gibt es nur dort, wo auch ein QR-Code hängt. Tragen Sie Ihre Anlage zuerst ein –
-          sobald sie freigegeben ist, steht hier das Formular.
+          Umkreis-Werbung braucht Plätze, die auf der Karte liegen. Sobald der erste eingetragen und
+          freigegeben ist, steht hier das Formular.
         </p>
       </div>
     );
@@ -115,23 +178,100 @@ export function AdRequestForm({ courses }: { courses: AdCourseOption[] }) {
           Unverbindlich. Wir schreiben zurück, bevor irgendetwas läuft.
         </p>
 
-        <Section title="Wo und was">
-          <Field label="Anlage" required htmlFor="courseSlug" error={fieldErrors.courseSlug}>
-            <select
-              id="courseSlug"
+        <Section title="Wo und wie weit">
+          <Field
+            label="Ihr Standort"
+            htmlFor="placeName"
+            hint="Nur zur Orientierung für uns – etwa „Kiosk am Seeufer, Musterdorf“."
+            error={fieldErrors.placeName}
+          >
+            <input
+              id="placeName"
               className="field"
-              value={values.courseSlug}
-              onChange={(event) => set("courseSlug", event.target.value)}
-              required
-            >
-              {courses.map((course) => (
-                <option key={course.slug} value={course.slug}>
-                  {course.name}
-                  {course.location ? ` · ${course.location}` : ""}
-                </option>
-              ))}
-            </select>
+              value={values.placeName}
+              maxLength={120}
+              onChange={(event) => set("placeName", event.target.value)}
+              placeholder="Seebad Musterdorf"
+            />
           </Field>
+
+          <div className="grid gap-4 sm:grid-cols-[1fr_1fr_auto] sm:items-end">
+            <Field label="Breite" htmlFor="latitude" required error={fieldErrors.latitude}>
+              <input
+                id="latitude"
+                className="field font-mono"
+                value={values.latitude}
+                onChange={(event) => set("latitude", event.target.value)}
+                placeholder="48.9906"
+                inputMode="decimal"
+                required
+              />
+            </Field>
+            <Field label="Länge" htmlFor="longitude" required error={fieldErrors.longitude}>
+              <input
+                id="longitude"
+                className="field font-mono"
+                value={values.longitude}
+                onChange={(event) => set("longitude", event.target.value)}
+                placeholder="12.8114"
+                inputMode="decimal"
+                required
+              />
+            </Field>
+            <button type="button" onClick={applyCurrentLocation} className="btn-ghost !py-2.5 text-sm">
+              Standort verwenden
+            </button>
+          </div>
+          {geoError ? (
+            <p className="text-xs text-[#a6321f]">
+              Der Standort ließ sich nicht ermitteln – bitte die Werte von Hand eintragen.
+            </p>
+          ) : null}
+
+          <Field label="Umkreis" htmlFor="radius">
+            <div className="flex flex-wrap gap-2" id="radius">
+              {RADII.map((km) => (
+                <button
+                  key={km}
+                  type="button"
+                  onClick={() => setRadiusKm(km)}
+                  aria-pressed={radiusKm === km}
+                  className={`tap min-h-11 rounded-full border px-4 text-sm transition-colors ${
+                    radiusKm === km
+                      ? "border-fairway bg-fairway/10 text-ink"
+                      : "border-ink/25 text-ink/70 hover:border-ink/50"
+                  }`}
+                >
+                  {km} km
+                </button>
+              ))}
+            </div>
+          </Field>
+
+          <ReachNote centre={Boolean(centre)} reached={reached} radiusKm={radiusKm} />
+
+          <Field label="Laufzeit" htmlFor="months">
+            <div className="flex flex-wrap gap-2" id="months">
+              {DURATIONS.map((m) => (
+                <button
+                  key={m}
+                  type="button"
+                  onClick={() => setMonths(m)}
+                  aria-pressed={months === m}
+                  className={`tap min-h-11 rounded-full border px-4 text-sm transition-colors ${
+                    months === m
+                      ? "border-fairway bg-fairway/10 text-ink"
+                      : "border-ink/25 text-ink/70 hover:border-ink/50"
+                  }`}
+                >
+                  {m === 1 ? "1 Monat" : `${m} Monate`}
+                </button>
+              ))}
+            </div>
+          </Field>
+        </Section>
+
+        <Section title="Was auf der Karte steht">
 
           <Field
             label="Überschrift"
@@ -363,6 +503,59 @@ function Field({
       {children}
       {hint ? <p className="mt-1.5 text-xs leading-relaxed text-ink/65">{hint}</p> : null}
       {error ? <p className="mt-1.5 text-xs text-[#a6321f]">{error}</p> : null}
+    </div>
+  );
+}
+
+/**
+ * Wie viele Plätze der gewählte Umkreis trifft. Die Zahl entscheidet über die
+ * Buchung – sie gehört neben den Regler und nicht in die Antwortmail.
+ */
+function ReachNote({
+  centre,
+  reached,
+  radiusKm,
+}: {
+  centre: boolean;
+  reached: { slug: string; name: string; kind: "golf" | "minigolf"; km: number }[];
+  radiusKm: number;
+}) {
+  if (!centre) {
+    return (
+      <p className="rounded-[3px] border border-ink/15 bg-ink/[0.03] p-4 text-sm leading-relaxed text-ink/65">
+        Sobald ein Standort steht, zeigen wir hier, wie viele Plätze im Umkreis liegen.
+      </p>
+    );
+  }
+
+  if (!reached.length) {
+    return (
+      <p className="rounded-[3px] border border-[#a6321f]/30 bg-[#a6321f]/5 p-4 text-sm leading-relaxed text-ink/75">
+        In {radiusKm} km liegt kein eingetragener Platz. Größerer Umkreis oder Anlage zuerst eintragen.
+      </p>
+    );
+  }
+
+  const golf = reached.filter((r) => r.kind === "golf").length;
+  const mini = reached.length - golf;
+
+  return (
+    <div className="rounded-[3px] border border-fairway/30 bg-fairway/5 p-4">
+      <p className="text-sm leading-relaxed text-ink/80">
+        <strong className="font-semibold">
+          {reached.length} {reached.length === 1 ? "Platz" : "Plätze"}
+        </strong>{" "}
+        im Umkreis von {radiusKm} km
+        {golf && mini ? ` – ${golf} Golf, ${mini} Minigolf` : ""}.
+      </p>
+      <ul className="mt-2 flex flex-wrap gap-x-4 gap-y-1 text-xs text-ink/60">
+        {reached.slice(0, 6).map((r) => (
+          <li key={r.slug}>
+            {r.name} · {r.km < 1 ? "<1" : Math.round(r.km)} km
+          </li>
+        ))}
+        {reached.length > 6 ? <li>und {reached.length - 6} weitere</li> : null}
+      </ul>
     </div>
   );
 }

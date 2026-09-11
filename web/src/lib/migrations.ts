@@ -119,6 +119,16 @@ const STATEMENTS = [
   `ALTER TABLE ads ADD COLUMN IF NOT EXISTS submitter_email text NOT NULL DEFAULT ''`,
   `ALTER TABLE ads ADD COLUMN IF NOT EXISTS submitter_phone text NOT NULL DEFAULT ''`,
   `ALTER TABLE ads ADD COLUMN IF NOT EXISTS request_note    text NOT NULL DEFAULT ''`,
+  // Umkreis statt einzelner Platz: Der Werbende gibt an, wo er sitzt und wie
+  // weit die Anzeige reichen soll. Welche Plätze das trifft, rechnet das
+  // Gerät aus – es kennt die Koordinaten des Platzes, auf dem gespielt wird.
+  `ALTER TABLE ads ADD COLUMN IF NOT EXISTS latitude        double precision`,
+  `ALTER TABLE ads ADD COLUMN IF NOT EXISTS longitude       double precision`,
+  `ALTER TABLE ads ADD COLUMN IF NOT EXISTS radius_km       integer`,
+  // Was der Werbende sich gewünscht hat. Die tatsächliche Laufzeit setzt das
+  // Adminpanel in starts_on/ends_on – erst nach Rückfrage und Preis.
+  `ALTER TABLE ads ADD COLUMN IF NOT EXISTS requested_months integer`,
+  `ALTER TABLE ads ADD COLUMN IF NOT EXISTS place_name      text NOT NULL DEFAULT ''`,
   `CREATE INDEX IF NOT EXISTS ads_status_placement_idx ON ads (status, placement)`,
   `CREATE INDEX IF NOT EXISTS ads_course_slug_idx ON ads (course_slug)`,
   // Reichweite pro Anzeige und Tag. Bewusst nur Zähler – keine Gerätekennung,

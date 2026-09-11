@@ -173,8 +173,20 @@ export const adSchema = z
   .object({
     status: adStatus.default("draft"),
     placement: adPlacement.default("minigolf_scoring"),
-    /** Leer = überall. Sonst nur auf dieser Anlage. */
+    /** Leer = überall bzw. per Umkreis. Sonst nur auf dieser Anlage. */
     courseSlug: slugOrEmpty,
+    /**
+     * Umkreis-Werbung: Mittelpunkt und Reichweite. Welche Plätze das trifft,
+     * rechnet das Gerät aus – es kennt die Koordinaten des Platzes, auf dem
+     * gerade gespielt wird. Ohne Radius gilt die Anzeige wie bisher überall.
+     */
+    latitude: z.number().min(-90).max(90).nullable().default(null),
+    longitude: z.number().min(-180).max(180).nullable().default(null),
+    radiusKm: z.number().int().min(1).max(500).nullable().default(null),
+    /** Ortsangabe im Klartext, nur zur Anzeige im Adminpanel. */
+    placeName: trimmed(120).default(""),
+    /** Gewünschte Laufzeit aus dem Formular; die echte steht in startsOn/endsOn. */
+    requestedMonths: z.number().int().min(1).max(36).nullable().default(null),
     title: trimmed(40).min(2),
     subtitle: trimmed(80).default(""),
     imageURL: optionalUrl,
@@ -189,6 +201,11 @@ export const adSchema = z
     if (value.startsOn && value.endsOn && value.startsOn > value.endsOn) {
       ctx.addIssue({ code: "custom", path: ["endsOn"], message: "end_before_start" });
     }
+    // Ein Radius ohne Mittelpunkt trifft nichts – das wäre still wirkungslos.
+    const hasCentre = value.latitude !== null && value.longitude !== null;
+    if (value.radiusKm !== null && !hasCentre) {
+      ctx.addIssue({ code: "custom", path: ["radiusKm"], message: "radius_without_centre" });
+    }
   });
 
 export type AdInput = z.infer<typeof adSchema>;
@@ -198,11 +215,16 @@ export type AdInput = z.infer<typeof adSchema>;
  * im Adminpanel – geschaltet wird erst nach Rückfrage und von Hand.
  */
 export const adRequestSchema = z.object({
-  courseSlug: z
-    .string()
-    .trim()
-    .regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/, "invalid_slug")
-    .max(80),
+  /**
+   * Umkreis statt einzelner Platz: Wer wirbt, sitzt an einem Ort und will die
+   * Gäste der Plätze ringsum erreichen – nicht die eines bestimmten.
+   */
+  latitude: z.number().min(-90).max(90),
+  longitude: z.number().min(-180).max(180),
+  radiusKm: z.number().int().min(1).max(200),
+  placeName: trimmed(120).default(""),
+  /** Wunschlaufzeit in Monaten. Preis und genaue Daten klärt die Rückfrage. */
+  requestedMonths: z.number().int().min(1).max(36),
   title: trimmed(40).min(2),
   subtitle: trimmed(80).default(""),
   linkURL: optionalUrl,

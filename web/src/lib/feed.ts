@@ -113,6 +113,14 @@ export interface FeedAd {
   weight: number;
   startsOn: string | null;
   endsOn: string | null;
+  /**
+   * Umkreis: Mittelpunkt und Reichweite in Kilometern. Ob ein Platz darin
+   * liegt, rechnet das Gerät aus – es kennt dessen Koordinaten und braucht
+   * dafür kein Netz.
+   */
+  lat: number | null;
+  lon: number | null;
+  radiusKm: number | null;
 }
 
 export interface AdFeed {
@@ -135,6 +143,9 @@ export function toFeedAd(record: AdRecord): FeedAd {
     weight: record.weight,
     startsOn: record.startsOn,
     endsOn: record.endsOn,
+    lat: record.latitude,
+    lon: record.longitude,
+    radiusKm: record.radiusKm,
   };
 }
 

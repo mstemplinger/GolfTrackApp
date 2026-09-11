@@ -79,6 +79,15 @@ export default async function AdDetailPage({ params }: PageProps<"/admin/werbung
               }
             />
             <Detail label="Telefon" value={ad.submitterPhone || "–"} />
+            <Detail label="Ort" value={ad.placeName || "–"} />
+            <Detail
+              label="Umkreis"
+              value={ad.radiusKm ? `${ad.radiusKm} km` : "–"}
+            />
+            <Detail
+              label="Wunschlaufzeit"
+              value={ad.requestedMonths ? `${ad.requestedMonths} Monate` : "–"}
+            />
           </dl>
           {ad.requestNote ? (
             <p className="mt-4 max-w-2xl whitespace-pre-line text-sm leading-relaxed text-cream/75">

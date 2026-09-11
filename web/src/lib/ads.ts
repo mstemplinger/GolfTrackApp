@@ -25,6 +25,12 @@ export interface AdRecord {
   startsOn: string | null;
   endsOn: string | null;
   adminNotes: string;
+  /** Mittelpunkt und Reichweite der Umkreis-Werbung; null = kein Umkreis. */
+  latitude: number | null;
+  longitude: number | null;
+  radiusKm: number | null;
+  placeName: string;
+  requestedMonths: number | null;
   /** `admin` = von Hand angelegt, `form` = über /werbung eingegangen. */
   source: string;
   submitterName: string;
@@ -65,6 +71,11 @@ function mapRow(row: DbRow): AdRecord {
     startsOn: asDay(row.starts_on),
     endsOn: asDay(row.ends_on),
     adminNotes: asString(row.admin_notes),
+    latitude: row.latitude == null ? null : Number(row.latitude),
+    longitude: row.longitude == null ? null : Number(row.longitude),
+    radiusKm: row.radius_km == null ? null : Number(row.radius_km),
+    placeName: asString(row.place_name),
+    requestedMonths: row.requested_months == null ? null : Number(row.requested_months),
     source: asString(row.source),
     submitterName: asString(row.submitter_name),
     submitterEmail: asString(row.submitter_email),
@@ -96,6 +107,11 @@ const VALUES = (input: AdInput): unknown[] => [
   input.startsOn,
   input.endsOn,
   input.adminNotes,
+  input.latitude,
+  input.longitude,
+  input.radiusKm,
+  input.placeName,
+  input.requestedMonths,
 ];
 
 export async function createAd(input: AdInput): Promise<AdRecord> {
@@ -103,8 +119,9 @@ export async function createAd(input: AdInput): Promise<AdRecord> {
   const rows = await query<DbRow>(
     `INSERT INTO ads (
        status, placement, course_slug, title, subtitle, image_url, link_url,
-       advertiser, weight, starts_on, ends_on, admin_notes
-     ) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12)
+       advertiser, weight, starts_on, ends_on, admin_notes,
+       latitude, longitude, radius_km, place_name, requested_months
+     ) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17)
      RETURNING *`,
     VALUES(input),
   );
@@ -120,11 +137,11 @@ export async function createAdRequest(input: AdRequestInput): Promise<AdRecord> 
   const rows = await query<DbRow>(
     `INSERT INTO ads (
        status, placement, course_slug, title, subtitle, image_url, link_url,
-       advertiser, source, submitter_name, submitter_email, submitter_phone, request_note
-     ) VALUES ('draft','minigolf_scoring',$1,$2,$3,$4,$5,$6,'form',$7,$8,$9,$10)
+       advertiser, source, submitter_name, submitter_email, submitter_phone, request_note,
+       latitude, longitude, radius_km, place_name, requested_months
+     ) VALUES ('draft','minigolf_scoring','',$1,$2,$3,$4,$5,'form',$6,$7,$8,$9,$10,$11,$12,$13,$14)
      RETURNING *`,
     [
-      input.courseSlug,
       input.title,
       input.subtitle,
       input.imageURL,
@@ -134,6 +151,11 @@ export async function createAdRequest(input: AdRequestInput): Promise<AdRecord> 
       input.submitterEmail,
       input.submitterPhone,
       input.requestNote,
+      input.latitude,
+      input.longitude,
+      input.radiusKm,
+      input.placeName,
+      input.requestedMonths,
     ],
   );
   return mapRow(rows[0]);
@@ -145,8 +167,10 @@ export async function updateAd(id: string, input: AdInput): Promise<AdRecord | n
     `UPDATE ads SET
        status = $1, placement = $2, course_slug = $3, title = $4, subtitle = $5,
        image_url = $6, link_url = $7, advertiser = $8, weight = $9,
-       starts_on = $10, ends_on = $11, admin_notes = $12, updated_at = now()
-     WHERE id = $13
+       starts_on = $10, ends_on = $11, admin_notes = $12,
+       latitude = $13, longitude = $14, radius_km = $15,
+       place_name = $16, requested_months = $17, updated_at = now()
+     WHERE id = $18
      RETURNING *`,
     [...VALUES(input), id],
   );

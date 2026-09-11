@@ -300,3 +300,52 @@ export async function tooManyAttempts(ipHash: string, max = 5): Promise<boolean>
 export async function recordAttempt(ipHash: string): Promise<void> {
   await query("INSERT INTO submission_attempts (ip_hash) VALUES ($1)", [ipHash]);
 }
+
+/**
+ * Wie viele freigegebene Plätze in einem Umkreis liegen.
+ *
+ * Grundlage der Umkreis-Werbung: Wer bucht, soll vorher sehen, wie viele
+ * Anlagen er damit erreicht. Gerechnet wird mit der Haversine-Formel direkt
+ * in SQL – für ein paar hundert Zeilen braucht es dafür kein PostGIS.
+ */
+export async function coursesWithin(
+  latitude: number,
+  longitude: number,
+  radiusKm: number,
+): Promise<number> {
+  await ensureSchema();
+  const rows = await query<{ count: string }>(
+    `SELECT count(*) AS count FROM courses
+      WHERE status = 'approved'
+        AND latitude IS NOT NULL AND longitude IS NOT NULL
+        AND 6371 * acos(
+              least(1, greatest(-1,
+                cos(radians($1)) * cos(radians(latitude))
+                  * cos(radians(longitude) - radians($2))
+                + sin(radians($1)) * sin(radians(latitude))
+              ))
+            ) <= $3`,
+    [latitude, longitude, radiusKm],
+  );
+  return Number(rows[0]?.count ?? 0);
+}
+
+/** Koordinaten aller freigegebenen Plätze – für die Umkreis-Vorschau im Formular. */
+export async function courseMarkers(): Promise<
+  { slug: string; name: string; kind: CourseKind; lat: number; lon: number }[]
+> {
+  await ensureSchema();
+  const rows = await query<DbRow>(
+    `SELECT slug, name, kind, latitude, longitude FROM courses
+      WHERE status = 'approved' AND latitude IS NOT NULL AND longitude IS NOT NULL
+      ORDER BY name
+      LIMIT 2000`,
+  );
+  return rows.map((row) => ({
+    slug: String(row.slug),
+    name: String(row.name),
+    kind: String(row.kind) as CourseKind,
+    lat: Number(row.latitude),
+    lon: Number(row.longitude),
+  }));
+}

@@ -34,9 +34,11 @@ export function Wordmark({ lang, className = "" }: { lang: Lang; className?: str
   );
 }
 
-const NAV: { key: RouteKey; label: (l: Lang) => string }[] = [
+const NAV: { key: RouteKey; label: (l: Lang) => string; langs?: Lang[] }[] = [
   { key: "directory", label: (l) => t(l).nav.directory },
   { key: "submit", label: (l) => t(l).nav.submit },
+  // Nur im deutschen Menü: die Seite dahinter gibt es nicht auf Englisch.
+  { key: "advertise", label: (l) => t(l).nav.advertise, langs: ["de"] },
   { key: "support", label: (l) => t(l).nav.support },
 ];
 
@@ -55,7 +57,7 @@ export function Header({ lang, current }: { lang: Lang; current?: RouteKey }) {
         <Wordmark lang={lang} />
 
         <nav aria-label={copy.nav.menu} className="hidden items-center gap-7 text-sm text-cream/75 md:flex">
-          {NAV.map((item) => (
+          {NAV.filter((item) => !item.langs || item.langs.includes(lang)).map((item) => (
             <Link
               key={item.key}
               href={path(item.key, lang)}
@@ -96,7 +98,7 @@ export function Header({ lang, current }: { lang: Lang; current?: RouteKey }) {
             </summary>
             <div className="absolute right-0 top-[calc(100%+0.7rem)] z-50 w-56 rounded-sm border rule bg-[#0a1d12]/97 p-2 shadow-[0_24px_60px_-20px_rgba(0,0,0,0.9)] backdrop-blur-md">
               <ul className="divide-y rule">
-                {NAV.map((item) => (
+                {NAV.filter((item) => !item.langs || item.langs.includes(lang)).map((item) => (
                   <li key={item.key}>
                     <Link
                       href={path(item.key, lang)}

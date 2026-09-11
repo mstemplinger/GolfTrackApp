@@ -1,3 +1,4 @@
+import CoreLocation
 import Foundation
 import Observation
 
@@ -47,19 +48,33 @@ final class AdCatalogService {
     /// - Parameters:
     ///   - placement: Welcher Platz in der App gefüllt wird.
     ///   - courseID: Kennung der Anlage, auf der gerade gespielt wird.
+    ///   - coordinate: Wo diese Anlage liegt. Fehlt die Angabe, bleibt
+    ///     Umkreis-Werbung außen vor, statt blind zu erscheinen.
     ///   - rotation: Zählwert, der die Anzeige weiterschaltet – in der
     ///     Scorecard die Bahnnummer.
     ///
-    /// Eine für die Anlage gebuchte Anzeige geht immer vor: Wer den Platz vor
-    /// Ort bezahlt hat, soll ihn auch bekommen. Nur wenn es keine gibt, kommen
-    /// die allgemeinen Anzeigen zum Zug, gewichtet nach `weight`.
-    func ad(placement: AdPlacement, courseID: String?, rotation: Int = 0) -> RemoteAd? {
+    /// Rangfolge: die auf diese Anlage gebuchte Anzeige, dann die Anzeigen,
+    /// deren Umkreis sie abdeckt, zuletzt die allgemeinen. Wer den Platz vor
+    /// Ort bezahlt hat, wird nicht von einer Regionalanzeige verdrängt.
+    /// Innerhalb einer Stufe entscheidet `weight`.
+    func ad(placement: AdPlacement,
+            courseID: String?,
+            coordinate: CLLocationCoordinate2D? = nil,
+            rotation: Int = 0) -> RemoteAd? {
         let today = Date()
         let candidates = ads.filter { $0.placement == placement.rawValue && $0.isRunning(on: today) }
         guard !candidates.isEmpty else { return nil }
 
+        // Rangfolge: der gebuchte Platz vor dem Umkreis vor „überall".
+        // Wer diesen Platz bezahlt hat, wird nicht von einer Regionalanzeige
+        // verdrängt.
         let local = courseID.map { id in candidates.filter { $0.courseID == id } } ?? []
-        let pool = local.isEmpty ? candidates.filter(\.isEverywhere) : local
+        let nearby = local.isEmpty && coordinate != nil
+            ? candidates.filter { $0.covers(coordinate!) }
+            : []
+        let pool = !local.isEmpty ? local
+                 : !nearby.isEmpty ? nearby
+                 : candidates.filter(\.isEverywhere)
         guard !pool.isEmpty else { return nil }
 
         // Gewichtung als Wiederholung im Los: Gewicht 3 liegt dreimal drin.
@@ -187,8 +202,23 @@ struct RemoteAd: Codable, Identifiable, Hashable {
     /// Tagesdaten im Format `JJJJ-MM-TT`, `nil` heißt unbegrenzt.
     let startsOn: String?
     let endsOn: String?
+    /// Mittelpunkt und Reichweite der Umkreis-Werbung. Fehlen sie, ist es
+    /// keine Umkreisanzeige. Optional dekodiert, damit ältere Feeds im Cache
+    /// weiter gelesen werden können.
+    let lat: Double?
+    let lon: Double?
+    let radiusKm: Int?
 
-    var isEverywhere: Bool { courseID.isEmpty }
+    /// Gilt überall: weder auf einen Platz gebucht noch auf einen Umkreis.
+    var isEverywhere: Bool { courseID.isEmpty && radiusKm == nil }
+
+    /// Liegt der Platz im gebuchten Umkreis?
+    func covers(_ coordinate: CLLocationCoordinate2D) -> Bool {
+        guard let lat, let lon, let radiusKm, radiusKm > 0 else { return false }
+        let centre = CLLocation(latitude: lat, longitude: lon)
+        let here = CLLocation(latitude: coordinate.latitude, longitude: coordinate.longitude)
+        return here.distance(from: centre) <= Double(radiusKm) * 1000
+    }
 
     var link: URL? { linkURL.isEmpty ? nil : URL(string: linkURL) }
     var image: URL? { imageURL.isEmpty ? nil : URL(string: imageURL) }

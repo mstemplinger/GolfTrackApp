@@ -17,6 +17,14 @@ function revalidateAds(id?: string): void {
   revalidatePath("/api/v1/ads");
 }
 
+/** Leere Eingabe heißt „nicht gesetzt", nicht „null als Zahl". */
+const numberOrNull = (value: FormDataEntryValue | null): number | null => {
+  const text = String(value ?? "").trim().replace(",", ".");
+  if (!text) return null;
+  const parsed = Number(text);
+  return Number.isFinite(parsed) ? parsed : null;
+};
+
 const textOrNull = (value: FormDataEntryValue | null): string | null => {
   const text = String(value ?? "").trim();
   return text ? text : null;
@@ -35,6 +43,11 @@ function readForm(formData: FormData) {
     weight: Number(formData.get("weight") ?? 1) || 1,
     startsOn: textOrNull(formData.get("startsOn")),
     endsOn: textOrNull(formData.get("endsOn")),
+    latitude: numberOrNull(formData.get("latitude")),
+    longitude: numberOrNull(formData.get("longitude")),
+    radiusKm: numberOrNull(formData.get("radiusKm")),
+    placeName: String(formData.get("placeName") ?? ""),
+    requestedMonths: numberOrNull(formData.get("requestedMonths")),
     adminNotes: String(formData.get("adminNotes") ?? ""),
   });
 }
@@ -43,6 +56,7 @@ const MESSAGES: Record<string, string> = {
   invalid_url: "Bitte eine vollständige Adresse mit https:// angeben.",
   invalid_slug: "Die Kennung der Anlage passt nicht.",
   invalid_date: "Bitte ein Datum im Format JJJJ-MM-TT angeben.",
+  radius_without_centre: "Ein Umkreis braucht auch Breite und Länge.",
   end_before_start: "Das Ende liegt vor dem Beginn.",
 };
 

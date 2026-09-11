@@ -7,6 +7,13 @@ const PATHS = {
   submit: { de: "/platz-melden", en: "/en/submit-course" },
   directory: { de: "/plaetze", en: "/en/courses" },
   support: { de: "/support", en: "/en/support" },
+  /**
+   * Die Betreiberseite gibt es nur auf Deutsch – das Angebot richtet sich an
+   * Anlagen im deutschsprachigen Raum, und das Buchungsformular ist es auch.
+   * Der englische Pfad zeigt deshalb bewusst auf dieselbe Seite statt ins
+   * Leere; im englischen Menü taucht sie gar nicht erst auf.
+   */
+  advertise: { de: "/werbung", en: "/werbung" },
   privacy: { de: "/datenschutz", en: "/en/privacy" },
   imprint: { de: "/impressum", en: "/en/legal-notice" },
   api: { de: "/api-docs", en: "/en/api-docs" },

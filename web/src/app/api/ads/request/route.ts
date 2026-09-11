@@ -1,7 +1,7 @@
 import { headers } from "next/headers";
 import { createAdRequest } from "@/lib/ads";
 import { hashIp } from "@/lib/auth";
-import { getCourse, recordAttempt, tooManyAttempts } from "@/lib/courses";
+import { coursesWithin, recordAttempt, tooManyAttempts } from "@/lib/courses";
 import { adRequestSchema } from "@/lib/schema";
 
 /**
@@ -35,11 +35,11 @@ export async function POST(request: Request) {
     return Response.json({ ok: true }, { status: 202 });
   }
 
-  // Nur für freigegebene Minigolfanlagen – ohne QR-Code gibt es keinen Platz,
-  // auf dem die Anzeige erscheinen könnte.
-  const course = await getCourse(parsed.data.courseSlug);
-  if (!course || course.status !== "approved" || course.kind !== "minigolf") {
-    return Response.json({ error: "unknown_course" }, { status: 422 });
+  // Ein Umkreis, in dem kein einziger Platz liegt, wäre eine Anzeige ins
+  // Leere. Lieber gleich sagen als später erklären.
+  const reach = await coursesWithin(parsed.data.latitude, parsed.data.longitude, parsed.data.radiusKm);
+  if (reach === 0) {
+    return Response.json({ error: "no_courses_in_radius" }, { status: 422 });
   }
 
   const headerList = await headers();

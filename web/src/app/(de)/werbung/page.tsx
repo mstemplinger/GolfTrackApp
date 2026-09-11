@@ -2,34 +2,37 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { Footer, Header, PageHeader } from "@/components/Chrome";
 import { SITE_URL } from "@/i18n/routes";
-import { listCourses } from "@/lib/courses";
+import { courseMarkers } from "@/lib/courses";
 import { isPlaceholder, site } from "@/lib/site";
 import { AdRequestForm } from "@/views/AdRequestForm";
 
 /**
- * Angebotsseite für Anlagenbetreiber. Erreichbar aus der App: im freien Feld
- * unter den Spielernamen steht „Hier könnte Ihre Anlage stehen" – wer darauf
- * tippt, landet hier. Bewusst nicht in der Hauptnavigation; die Seite richtet
- * sich an eine Handvoll Betreiber, nicht an Besucher.
+ * Angebotsseite für Werbende. Zwei Wege führen her: der Menüpunkt „Werbung"
+ * und das freie Feld unter den Spielernamen in der App, wo „Hier könnte Ihre
+ * Anlage stehen" steht.
+ *
+ * Gebucht wird ein **Umkreis**, kein einzelner Platz: Wer wirbt – Kiosk,
+ * Verleih, Hotel – sitzt an einem Ort und will die Gäste der Anlagen ringsum
+ * erreichen. Nur auf Deutsch; das Angebot gilt dem deutschsprachigen Raum.
  */
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
-  title: "Werbung auf der Anlage · GolfTrack",
+  title: "Werbung in der GolfTrack-App · Umkreis buchen",
   description:
-    "Der Werbeplatz in der Minigolf-Zählkarte: sichtbar bei jeder Runde auf Ihrer Anlage, direkt in der Hand Ihrer Gäste.",
+    "Werben Sie bei den Gästen der Golf- und Minigolfplätze in Ihrer Nähe: Umkreis und Laufzeit wählen, der Rest läuft in der Zählkarte der App.",
   alternates: { canonical: "/werbung" },
 };
 
 const STEPS = [
   {
     index: "01",
-    title: "QR-Code aufhängen",
-    text: "Am Kassenhäuschen oder an Bahn 1. Wer ihn scannt, startet die Runde direkt auf Ihrer Anlage – ohne Suchen, ohne Anmeldung.",
+    title: "Umkreis wählen",
+    text: "Standort setzen, Reichweite von 5 bis 100 km festlegen. Noch beim Ausfüllen steht daneben, welche Golf- und Minigolfplätze darin liegen.",
   },
   {
     index: "02",
     title: "Ihre Anzeige läuft mit",
-    text: "Unter den Spielernamen steht während der ganzen Runde ein Feld: Bild, eine Zeile Text, ein Ziel beim Antippen. Der Kiosk, der Verleih, das Restaurant nebenan.",
+    text: "Auf jeder dieser Anlagen steht sie während der ganzen Runde unter den Spielernamen: Bild, eine Zeile Text, ein Ziel beim Antippen.",
   },
   {
     index: "03",
@@ -42,15 +45,15 @@ const STEPS = [
 export const revalidate = 86400;
 
 export default async function Page() {
-  const courses = await listCourses({ status: "approved", kind: "minigolf", limit: 500 });
+  const markers = await courseMarkers();
 
   return (
     <>
-      <Header lang="de" />
+      <Header lang="de" current="advertise" />
       <PageHeader
-        index="14 — Für Betreiber"
-        title="Ihre Anlage im Blick der Gäste"
-        lead="Eine Minigolfrunde dauert eine Dreiviertelstunde. So lange liegt die Zählkarte in der Hand – und darunter ist Platz für Sie."
+        index="14 — Werbung"
+        title="Die Gäste der Plätze um Sie herum"
+        lead="Eine Runde dauert Stunden. So lange liegt die Zählkarte in der Hand – und darunter ist Platz für Sie. Sie wählen den Umkreis, wir zeigen Ihnen sofort, wie viele Anlagen darin liegen."
       />
 
       <main className="mx-auto max-w-6xl px-5 py-14 sm:px-8 sm:py-16">
@@ -101,11 +104,11 @@ export default async function Page() {
 
             <h2 className="marginal mt-12">Wie gebucht wird</h2>
             <p className="mt-4 max-w-2xl leading-relaxed text-cream/75">
-              Über das Formular weiter unten: Anlage wählen, die zwei Zeilen tippen, abschicken.
-              Die Anfrage landet als Entwurf bei uns – nichts geht ungesehen in die App. Laufzeit
-              und Preis klären wir per Mail, danach wird geschaltet. Keine Auktion, kein
-              Werbenetzwerk. Eine Anzeige für Ihre eigene Anlage hat dort immer Vorrang vor
-              allgemeiner Werbung.
+              Über das Formular weiter unten: Standort setzen, Umkreis und Laufzeit wählen, die
+              zwei Zeilen tippen, abschicken. Noch beim Ausfüllen steht daneben, wie viele Plätze
+              der Umkreis trifft. Die Anfrage landet als Entwurf bei uns – nichts geht ungesehen in
+              die App. Preis und genaue Daten klären wir per Mail, danach wird geschaltet. Keine
+              Auktion, kein Werbenetzwerk.
             </p>
 
             <h2 className="marginal mt-12">Was nicht passiert</h2>
@@ -143,13 +146,7 @@ export default async function Page() {
         </section>
 
         <section id="anfragen" className="mt-16 scroll-mt-8 border-t rule pt-14">
-          <AdRequestForm
-            courses={courses.map((course) => ({
-              slug: course.slug,
-              name: course.name,
-              location: course.location,
-            }))}
-          />
+          <AdRequestForm markers={markers} />
         </section>
       </main>
 

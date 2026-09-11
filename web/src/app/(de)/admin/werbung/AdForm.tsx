@@ -100,6 +100,25 @@ export function AdForm({ ad, courses }: { ad?: AdRecord; courses: CourseOption[]
           <Field label="Läuft bis" name="endsOn" type="date" defaultValue={ad?.endsOn ?? ""} mono />
         </div>
 
+        {/* Umkreis: greift nur, wenn keine Anlage gewählt ist. */}
+        <div className="mt-6 grid gap-4 sm:grid-cols-2">
+          <Field label="Ort (nur zur Orientierung)" name="placeName" defaultValue={ad?.placeName ?? ""} />
+          <Field
+            label="Umkreis in km (leer = kein Umkreis)"
+            name="radiusKm"
+            defaultValue={ad?.radiusKm?.toString() ?? ""}
+            mono
+          />
+          <Field label="Breite" name="latitude" defaultValue={ad?.latitude?.toString() ?? ""} mono />
+          <Field label="Länge" name="longitude" defaultValue={ad?.longitude?.toString() ?? ""} mono />
+          <Field
+            label="Wunschlaufzeit in Monaten"
+            name="requestedMonths"
+            defaultValue={ad?.requestedMonths?.toString() ?? ""}
+            mono
+          />
+        </div>
+
         <div className="mt-6">
           <label className="label" htmlFor="adminNotes">
             Interne Notiz (Preis, Ansprechpartner, Rechnung)
@@ -121,7 +140,14 @@ export function AdForm({ ad, courses }: { ad?: AdRecord; courses: CourseOption[]
         </div>
       </form>
 
-      <Preview title={title} subtitle={subtitle} imageURL={imageURL} everywhere={courseSlug === ""} />
+      <Preview
+        title={title}
+        subtitle={subtitle}
+        imageURL={imageURL}
+        scope={
+          courseSlug !== "" ? "course" : ad?.radiusKm ? "radius" : "everywhere"
+        }
+      />
     </div>
   );
 }
@@ -134,12 +160,12 @@ function Preview({
   title,
   subtitle,
   imageURL,
-  everywhere,
+  scope,
 }: {
   title: string;
   subtitle: string;
   imageURL: string;
-  everywhere: boolean;
+  scope: "course" | "radius" | "everywhere";
 }) {
   return (
     <aside className="lg:sticky lg:top-8 lg:self-start">
@@ -178,9 +204,11 @@ function Preview({
         </div>
       </div>
       <p className="mt-3 text-xs leading-relaxed text-cream/60">
-        {everywhere
-          ? "Läuft auf allen Anlagen – nur wenn dort keine eigene Anzeige gebucht ist."
-          : "Läuft nur auf der gewählten Anlage und hat dort Vorrang vor allgemeinen Anzeigen."}
+        {scope === "course"
+          ? "Läuft nur auf der gewählten Anlage und hat dort Vorrang vor allem anderen."
+          : scope === "radius"
+            ? "Läuft auf allen Anlagen im Umkreis – hinter Anzeigen, die dort fest gebucht sind."
+            : "Läuft überall, wo weder eine Anlagen- noch eine Umkreisanzeige greift."}
       </p>
     </aside>
   );

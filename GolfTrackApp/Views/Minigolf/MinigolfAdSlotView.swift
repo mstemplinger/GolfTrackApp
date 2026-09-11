@@ -1,3 +1,4 @@
+import CoreLocation
 import SwiftUI
 
 /// Die freie Fläche unter den Spielernamen in der Minigolfkarte.
@@ -27,8 +28,20 @@ struct MinigolfAdSlotView: View {
 
     @State private var promoSheet: HousePromo?
 
+    /// Wo die Anlage liegt – für Umkreis-Werbung. Aus dem Katalog geholt statt
+    /// durchgereicht: die Kennung steht ohnehin in der Runde, die Koordinaten
+    /// müssten sonst durch vier Ansichten mitwandern.
+    private var courseCoordinate: CLLocationCoordinate2D? {
+        guard let courseID,
+              let entry = CourseCatalogService.shared.minigolfCourse(id: courseID) else { return nil }
+        return entry.coordinate
+    }
+
     private var bookedAd: RemoteAd? {
-        catalog.ad(placement: .minigolfScoring, courseID: courseID, rotation: rotation)
+        catalog.ad(placement: .minigolfScoring,
+                   courseID: courseID,
+                   coordinate: courseCoordinate,
+                   rotation: rotation)
     }
 
     private var housePromo: HousePromo? {

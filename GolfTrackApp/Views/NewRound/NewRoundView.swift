@@ -19,8 +19,12 @@ struct NewRoundView: View {
 
     private let availableModes = GameMode.allCases.filter(\.isAvailable)
 
-    init(preselectedMode: GameMode = .strokePlay) {
+    /// `preselectedCourse` kommt vom QR-Code am Abschlag: Platz steht fest,
+    /// alles andere – Bag, Spielform, Mitspieler – wählt der Spieler hier wie
+    /// sonst auch.
+    init(preselectedMode: GameMode = .strokePlay, preselectedCourse: Course? = nil) {
         _selectedMode = State(initialValue: preselectedMode)
+        _selectedCourse = State(initialValue: preselectedCourse)
         let needed = max(1, preselectedMode.minOtherPlayers)
         _otherPlayers = State(initialValue: Array(repeating: "", count: needed))
     }

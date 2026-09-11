@@ -49,6 +49,15 @@ final class CourseCatalogService {
 
     /// Anlage hinter einem QR-Code oder Universal Link – erst die eingebauten,
     /// dann die von der Website nachgeladenen.
+    /// Golfplatz zu einer Kennung aus dem QR-Code.
+    ///
+    /// Nur das Verzeichnis kennt Kennungen – die eingebauten Plätze tragen
+    /// keine. Steht der Platz noch nicht im Zwischenspeicher, lädt der
+    /// Aufrufer einmal nach und fragt erneut.
+    func golfCourse(slug: String) -> BundledCourseEntry? {
+        remoteGolfCourses.first { $0.slug == slug }
+    }
+
     func course(fromDeepLink url: URL) -> MinigolfCourseEntry? {
         guard let id = MinigolfDeepLink.courseID(from: url) else { return nil }
         return minigolfCourse(id: id)
@@ -172,7 +181,8 @@ struct RemoteCourse: Decodable {
             teeLatitudes: teeLatitudes,
             teeLongitudes: teeLongitudes,
             flagLatitudes: flagLatitudes,
-            flagLongitudes: flagLongitudes
+            flagLongitudes: flagLongitudes,
+            slug: id
         )
     }
 

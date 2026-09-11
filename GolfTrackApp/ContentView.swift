@@ -16,6 +16,10 @@ struct ContentView: View {
     /// Über QR-Code / Universal Link gestartete Anlage – zeigt sofort den
     /// Begrüßungs- und Startbildschirm der Minigolfrunde.
     @State private var scannedMinigolfCourse: MinigolfCourseEntry?
+    /// Über QR-Code gestarteter Golfplatz – öffnet den gewohnten Rundenstart
+    /// mit vorgewähltem Platz, damit Bag, Spielform und Mitspieler noch
+    /// gewählt werden können.
+    @State private var scannedGolfCourse: Course?
     /// Läuft, während der Platzkatalog wegen eines unbekannten Codes nachgeladen wird.
     @State private var deepLinkLoading = false
     /// Text der Meldung, wenn ein gescannter Code zu keiner Anlage führt.
@@ -97,6 +101,17 @@ struct ContentView: View {
         .onOpenURL { url in
             Task { await handleDeepLink(url) }
         }
+        #if DEBUG
+        // Zum Durchspielen ohne echten Scan. `simctl openurl` legt vor jedem
+        // eigenen Schema eine Rückfrage vor, die nur von Hand zu beantworten
+        // ist – im Simulator ist der Weg damit sonst nicht prüfbar. Der Clip
+        // hat aus demselben Grund `_XCAppClipURL`.
+        .task {
+            guard let raw = ProcessInfo.processInfo.environment["GOLFTRACK_DEEPLINK"],
+                  let url = URL(string: raw) else { return }
+            await handleDeepLink(url)
+        }
+        #endif
         // Universal Link bzw. App-Clip-Aufruf (…/minigolf/<anlage>)
         .onContinueUserActivity(NSUserActivityTypeBrowsingWeb) { activity in
             guard let url = activity.webpageURL else { return }
@@ -104,6 +119,10 @@ struct ContentView: View {
         }
         .fullScreenCover(item: $scannedMinigolfCourse) { course in
             MinigolfCourseStartView(course: course)
+                .preferredColorScheme(.dark)
+        }
+        .fullScreenCover(item: $scannedGolfCourse) { course in
+            NewRoundView(preselectedCourse: course)
                 .preferredColorScheme(.dark)
         }
         .overlay {
@@ -159,16 +178,13 @@ struct ContentView: View {
     /// nachgeladen, und wenn die Anlage dann immer noch fehlt, sagt die App es.
     @MainActor
     private func handleDeepLink(_ url: URL) async {
-        if let course = CourseCatalogService.shared.course(fromDeepLink: url) {
-            openScanned(course)
-            return
-        }
-
-        // Kein Anlagen-Link: die übrigen Adressen wie bisher behandeln.
-        guard MinigolfDeepLink.courseID(from: url) != nil else {
+        // Golf und Minigolf über dieselbe Auswertung wie im App Clip. Vorher
+        // kannte diese Stelle nur Minigolf – ein Golfplatz-Code öffnete die
+        // App und tat dann nichts.
+        guard let link = CourseDeepLink.link(from: url) else {
             // golftrack://home  → Home-Tab öffnen
             // golftrack://shottracker → Home-Tab + Runde fortsetzen
-            if url.scheme == "golftrack" {
+            if url.scheme == CourseDeepLink.scheme {
                 selectedTab = 0
                 if url.host == "shottracker" {
                     NotificationCenter.default.post(name: .openShotTracker, object: nil)
@@ -177,19 +193,33 @@ struct ContentView: View {
             return
         }
 
+        if open(link) { return }
+
         deepLinkLoading = true
         await CourseCatalogService.shared.refresh()
         deepLinkLoading = false
 
-        if let course = CourseCatalogService.shared.course(fromDeepLink: url) {
-            openScanned(course)
-        } else if CourseCatalogService.shared.lastError != nil {
-            Haptics.error()
-            deepLinkFehler = "Das Platzverzeichnis ließ sich nicht laden. Prüf die Internetverbindung und scanne den Code noch einmal."
-        } else {
-            Haptics.error()
-            deepLinkFehler = "Diese Anlage steht noch nicht im Verzeichnis. Wurde sie gerade erst freigegeben, versuch es in ein paar Minuten noch einmal."
+        if open(link) { return }
+
+        Haptics.error()
+        deepLinkFehler = CourseCatalogService.shared.lastError != nil
+            ? "Das Platzverzeichnis ließ sich nicht laden. Prüf die Internetverbindung und scanne den Code noch einmal."
+            : "Diese Anlage steht noch nicht im Verzeichnis. Wurde sie gerade erst freigegeben, versuch es in ein paar Minuten noch einmal."
+    }
+
+    /// Öffnet den Platz hinter dem Link. `false`, wenn er im Katalog fehlt –
+    /// dann lädt der Aufrufer einmal nach und fragt erneut.
+    @MainActor
+    private func open(_ link: CourseLink) -> Bool {
+        switch link.kind {
+        case .minigolf:
+            guard let entry = CourseCatalogService.shared.minigolfCourse(id: link.slug) else { return false }
+            openScanned(entry)
+        case .golf:
+            guard let entry = CourseCatalogService.shared.golfCourse(slug: link.slug) else { return false }
+            openScanned(golf: entry)
         }
+        return true
     }
 
     private func openScanned(_ course: MinigolfCourseEntry) {
@@ -200,6 +230,49 @@ struct ContentView: View {
             hasSeenOnboarding = true
         }
         scannedMinigolfCourse = course
+    }
+
+    private func openScanned(golf entry: BundledCourseEntry) {
+        Haptics.success()
+        if !hasChosenAppFocus {
+            appFocus = .golf
+            hasChosenAppFocus = true
+            hasSeenOnboarding = true
+        }
+        scannedGolfCourse = storedCourse(for: entry)
+    }
+
+    /// Der Platz aus dem Verzeichnis als Eintrag in der eigenen Datenbank.
+    ///
+    /// Wiedererkannt wird über den Namen – sonst entstünde bei jedem Scan ein
+    /// zweiter Eintrag, und die Runden desselben Platzes lägen verstreut.
+    @MainActor
+    private func storedCourse(for entry: BundledCourseEntry) -> Course {
+        let name = entry.name.lowercased()
+        if let vorhanden = (try? modelContext.fetch(FetchDescriptor<Course>()))?
+            .first(where: { $0.name.lowercased() == name }) {
+            return vorhanden
+        }
+
+        let course = Course(
+            name: entry.name,
+            location: entry.location,
+            numberOfHoles: entry.holes,
+            parValues: entry.parValues.isEmpty ? nil : entry.parValues,
+            courseRating: entry.courseRating,
+            slopeRating: entry.slopeRating,
+            hcpValues: entry.hcpValues,
+            holeLengths: entry.holeLengths,
+            facilityNotes: entry.facilityNotes,
+            latitude: entry.lat,
+            longitude: entry.lon,
+            teeLatitudes: entry.teeLatitudes,
+            teeLongitudes: entry.teeLongitudes,
+            flagLatitudes: entry.flagLatitudes,
+            flagLongitudes: entry.flagLongitudes
+        )
+        modelContext.insert(course)
+        return course
     }
 
     /// Bestandsinstallationen haben das Tutorial bereits gesehen – die

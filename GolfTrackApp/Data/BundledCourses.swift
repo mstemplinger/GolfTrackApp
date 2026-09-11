@@ -2,6 +2,9 @@ import CoreLocation
 
 struct BundledCourseEntry: Identifiable {
     let name: String
+    /// Kennung aus dem Platzverzeichnis – steckt im QR-Code am Abschlag.
+    /// Leer bei den fest eingebauten Plätzen, die nie über einen Link kommen.
+    var slug: String = ""
     let location: String
     let holes: Int
     let lat: Double
@@ -31,8 +34,10 @@ struct BundledCourseEntry: Identifiable {
          parValues: [Int] = [], hcpValues: [Int] = [], holeLengths: [Int] = [],
          courseRating: Double = 72.0, slopeRating: Int = 113, facilityNotes: String = "",
          teeLatitudes:  [Double] = [], teeLongitudes: [Double] = [],
-         flagLatitudes:  [Double] = [], flagLongitudes: [Double] = []) {
+         flagLatitudes:  [Double] = [], flagLongitudes: [Double] = [],
+         slug: String = "") {
         self.name = name
+        self.slug = slug
         self.location = location
         self.holes = holes
         self.lat = lat

@@ -15,6 +15,11 @@ enum ClipCourseDirectory {
         URL(string: "https://golftrack.app/api/v1/courses?kind=\(kind.rawValue)")!
     }
 
+    private static func courseURL(id: String) -> URL? {
+        guard let encoded = id.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) else { return nil }
+        return URL(string: "https://golftrack.app/api/v1/courses/\(encoded)")
+    }
+
     private static func fetch(kind: CourseLinkKind) async -> [Course] {
         var request = URLRequest(url: feedURL(kind: kind))
         request.timeoutInterval = 12
@@ -33,6 +38,29 @@ enum ClipCourseDirectory {
         await fetch(kind: .golf).first { $0.id == id }?.golfEntry
     }
 
+    /// Ein Platz, dessen Art nicht im Link stand – der Fall der Kurzform
+    /// `play.golftrack.app/p/<kennung>`.
+    ///
+    /// Holt gezielt **einen** Platz statt der ganzen Liste: die Antwort trägt
+    /// die Art selbst, und der Clip lädt nicht 97 Golfplätze, um einen zu
+    /// finden.
+    static func course(id: String) async -> ClipCourse? {
+        guard let url = courseURL(id: id) else { return nil }
+        var request = URLRequest(url: url)
+        request.timeoutInterval = 12
+
+        guard let (data, response) = try? await URLSession.shared.data(for: request),
+              let http = response as? HTTPURLResponse, (200..<300).contains(http.statusCode),
+              let course = try? JSONDecoder().decode(Course.self, from: data),
+              let kind = course.kind.flatMap(CourseLinkKind.init(rawValue:))
+        else { return nil }
+
+        switch kind {
+        case .minigolf: return .minigolf(course.minigolfEntry)
+        case .golf:     return .golf(course.golfEntry)
+        }
+    }
+
     // MARK: – Format der API
 
     /// Nur die Felder, die der Clip braucht. Alles andere ignoriert der Decoder.
@@ -42,6 +70,9 @@ enum ClipCourseDirectory {
 
     private struct Course: Decodable {
         let id: String
+        /// Nur die Einzelabfrage liefert die Art mit; in den nach Art
+        /// gefilterten Listen steht sie ohnehin fest.
+        var kind: String? = nil
         let name: String
         let location: String
         let holes: Int
@@ -82,4 +113,10 @@ enum ClipCourseDirectory {
             )
         }
     }
+}
+
+/// Ein nachgeschlagener Platz, dessen Art erst die Antwort verraten hat.
+enum ClipCourse {
+    case minigolf(MinigolfCourseEntry)
+    case golf(GolfLiteCourse)
 }

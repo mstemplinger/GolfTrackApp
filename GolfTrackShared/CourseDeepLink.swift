@@ -11,8 +11,15 @@ enum CourseLinkKind: String, Codable, Sendable {
 
 /// Ein eingehender Link auf einen bestimmten Platz.
 struct CourseLink: Equatable, Sendable {
-    let kind: CourseLinkKind
+    /// `nil` bei der kurzen Form `play.golftrack.app/p/<kennung>`: dort steht
+    /// die Art nicht im Link, sie kommt aus dem Verzeichnis.
+    let kind: CourseLinkKind?
     let slug: String
+
+    init(kind: CourseLinkKind?, slug: String) {
+        self.kind = kind
+        self.slug = slug
+    }
 }
 
 /// Links, die direkt an einem bestimmten Platz eine Runde starten – aus dem
@@ -25,6 +32,11 @@ struct CourseLink: Equatable, Sendable {
 /// - `https://golftrack.app/golf/bayerwald` bzw. `…/minigolf/…`
 ///   Universal Link und zugleich die Adresse für den App Clip. Dafür müssen
 ///   beide Pfade in der `apple-app-site-association` stehen.
+/// - `https://play.golftrack.app/p/bayerwald`
+///   Die kurze Form für gedruckte Codes: weniger Zeichen, also ein gröberes
+///   und aus der Entfernung besser lesbares Muster. Die Platzart fehlt hier
+///   bewusst – sie steht im Verzeichnis, und ein Schild am Abschlag soll nicht
+///   davon abhängen, ob jemand „golf" oder „minigolf" richtig abgetippt hat.
 ///
 /// `MinigolfDeepLink` bleibt daneben bestehen; es ist die ältere, engere
 /// Fassung und wird von den Stellen benutzt, die es ohnehin nur mit Minigolf
@@ -34,6 +46,17 @@ enum CourseDeepLink {
     static let scheme = "golftrack"
     static let courseQueryItem = "platz"
     static let webBaseURL = URL(string: "https://golftrack.app")!
+    /// Kurzform für QR-Codes. Eigene Subdomain, damit ein einziger Eintrag als
+    /// Advanced App Clip Experience alle Plätze abdeckt (Präfix-Vergleich).
+    static let playBaseURL = URL(string: "https://play.golftrack.app")!
+    /// Das Pfadsegment der Kurzform. Bewusst eines und nicht die Wurzel: als
+    /// Präfix eindeutig, und die Wurzel bleibt für eine eigene Seite frei.
+    static let shortPath = "p"
+
+    /// Die Adresse, die in den gedruckten QR-Code gehört.
+    static func shortURL(slug: String) -> URL {
+        playBaseURL.appendingPathComponent(shortPath).appendingPathComponent(slug)
+    }
 
     static func webURL(kind: CourseLinkKind, slug: String) -> URL {
         webBaseURL.appendingPathComponent(kind.path).appendingPathComponent(slug)
@@ -68,6 +91,10 @@ enum CourseDeepLink {
         for (index, part) in parts.enumerated() {
             guard let kind = CourseLinkKind(rawValue: part), index + 1 < parts.count else { continue }
             return CourseLink(kind: kind, slug: parts[index + 1])
+        }
+        // …/p/<kennung> – Kurzform ohne Art
+        if let index = parts.firstIndex(of: shortPath), index + 1 < parts.count {
+            return CourseLink(kind: nil, slug: parts[index + 1])
         }
         return nil
     }

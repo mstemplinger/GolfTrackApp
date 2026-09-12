@@ -5,6 +5,7 @@
 	<key>com.apple.developer.associated-domains</key>
 	<array>
 		<string>appclips:golftrack.app</string>
+		<string>appclips:play.golftrack.app</string>
 	</array>
 	<!--
 	  Gemeinsamer Speicher mit der vollen App. Ohne ihn wäre eine im Clip

@@ -32,3 +32,12 @@ export function alternatePath(key: RouteKey, lang: Lang): string {
 
 export const APP_STORE_URL = "https://apps.apple.com/app/id6767996957";
 export const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://golftrack.app";
+/**
+ * Kurzform für gedruckte QR-Codes: `play.golftrack.app/p/<kennung>`.
+ *
+ * Eigene Subdomain aus zwei Gründen. Erstens kürzer, also ein gröberes
+ * QR-Muster, das vom Schild am Abschlag auch aus zwei Metern liest. Zweitens
+ * deckt ein einziger Eintrag als Advanced App Clip Experience über den
+ * Präfix-Vergleich alle Plätze ab – sonst bräuchte jeder Platz seinen eigenen.
+ */
+export const PLAY_URL = process.env.NEXT_PUBLIC_PLAY_URL ?? "https://play.golftrack.app";

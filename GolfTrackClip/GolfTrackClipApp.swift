@@ -89,6 +89,28 @@ struct GolfTrackClipApp: App {
         }
 
         switch link.kind {
+        case nil:
+            // Kurzform `…/p/<kennung>`: Die Art steht nicht im Link. Eingebaute
+            // Minigolfanlagen zuerst – die gehen ohne Empfang.
+            if let known = MinigolfCourses.course(id: link.slug) {
+                minigolfCourse = known
+                status = .ready
+                return
+            }
+            status = .loading
+            Task {
+                switch await ClipCourseDirectory.course(id: link.slug) {
+                case .minigolf(let entry):
+                    minigolfCourse = entry
+                    status = .ready
+                case .golf(let entry):
+                    golfCourse = entry
+                    status = .ready
+                case nil:
+                    status = .failed("Diesen Platz kennen wir noch nicht. Prüf die Verbindung und scanne noch einmal.")
+                }
+            }
+
         case .minigolf:
             // Eingebaute Anlagen kennt der Clip sofort – das ist der Normalfall
             // und funktioniert auch ohne Empfang.

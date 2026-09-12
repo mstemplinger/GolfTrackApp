@@ -20,6 +20,28 @@ struct GolfDeepLinkTests {
         #expect(link.slug == "bayerwald")
     }
 
+    @Test("Die Kurzform vom Schild trägt die Kennung, aber keine Art")
+    func shortLinkHasNoKind() throws {
+        let url = URL(string: "https://play.golftrack.app/p/sankt-englmar")!
+        let link = try #require(CourseDeepLink.link(from: url))
+        #expect(link.kind == nil)
+        #expect(link.slug == "sankt-englmar")
+    }
+
+    @Test("Die Kurzform entsteht aus der Kennung")
+    func shortURLIsBuilt() {
+        #expect(CourseDeepLink.shortURL(slug: "sankt-englmar").absoluteString
+                == "https://play.golftrack.app/p/sankt-englmar")
+    }
+
+    /// Die lange Form muss weiter gewinnen: dort steht die Art im Pfad, und
+    /// ein Griff ins Verzeichnis bleibt erspart.
+    @Test("Die lange Form behält ihre Art")
+    func longFormKeepsKind() throws {
+        let link = try #require(CourseDeepLink.link(from: URL(string: "https://golftrack.app/minigolf/englmar")!))
+        #expect(link.kind == .minigolf)
+    }
+
     @Test("golftrack://home ist kein Platz")
     func homeIsNoCourse() {
         #expect(CourseDeepLink.link(from: URL(string: "golftrack://home")!) == nil)

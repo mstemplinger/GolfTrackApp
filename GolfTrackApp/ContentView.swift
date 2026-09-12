@@ -223,6 +223,17 @@ struct ContentView: View {
         case .golf:
             guard let entry = CourseCatalogService.shared.golfCourse(slug: link.slug) else { return false }
             openScanned(golf: entry)
+        case nil:
+            // Kurzform `play.golftrack.app/p/<kennung>` – die Art steht nicht
+            // im Link. Die Kennungen sind über beide Arten hinweg eindeutig,
+            // also genügt es, der Reihe nach zu suchen.
+            if let entry = CourseCatalogService.shared.minigolfCourse(id: link.slug) {
+                openScanned(entry)
+            } else if let entry = CourseCatalogService.shared.golfCourse(slug: link.slug) {
+                openScanned(golf: entry)
+            } else {
+                return false
+            }
         }
         return true
     }

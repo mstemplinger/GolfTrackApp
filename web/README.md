@@ -137,6 +137,37 @@ Die Kennung (`slug`) landet in QR-Codes und Universal Links. Sie lässt sich än
 
 Die Feldnamen entsprechen `BundledCourseEntry` und `MinigolfCourseEntry` in der iOS-App, damit dort nichts umgerechnet werden muss. Beschreibung der Felder: `/api-docs`.
 
+## Der QR-Code am Abschlag
+
+Gedruckt wird die Kurzform **`play.golftrack.app/p/<kennung>`** (`/qr/<kennung>`
+liefert sie als SVG, `?format=png` als Rasterbild). Dieselbe Anwendung bedient
+beide Namen; die Subdomain ist keine zweite Seite, nur ein kürzerer Weg hinein.
+
+Eine Adresse, drei Wege – entschieden wird auf dem Gerät, nicht auf dem Server:
+
+| Gerät                  | Was passiert                                             |
+|------------------------|----------------------------------------------------------|
+| iPhone mit GolfTrack   | iOS fängt den Universal Link ab, die App öffnet die Runde |
+| iPhone ohne GolfTrack  | Safari bietet die App-Clip-Karte an, der Clip startet     |
+| Android, Rechner       | die Zählkarte auf `/p/<kennung>` im Browser               |
+
+Warum kurz und ohne Platzart im Pfad: weniger Zeichen heißt ein gröberes
+QR-Muster (33 statt 37 Module), das vom Schild auch aus zwei Metern liest. Die
+Art steht im Verzeichnis, der Code muss sie nicht tragen.
+
+**Was dafür eingerichtet sein muss**
+
+1. A-Eintrag `play.golftrack.app` auf denselben Server.
+2. nginx kennt den Namen (`deploy/nginx-golftrack.conf`), Zertifikat erweitern:
+   `certbot --nginx --expand -d golftrack.app -d www.golftrack.app -d play.golftrack.app`
+3. `NEXT_PUBLIC_PLAY_URL` setzen, falls die Adresse einmal abweicht
+   (Voreinstellung: `https://play.golftrack.app`).
+4. **Eine Advanced App Clip Experience** in App Store Connect auf das Präfix
+   `https://play.golftrack.app/p/` – ohne sie zeigt der Scan ohne installierte
+   App keine Clip-Karte. Die Default Experience allein greift nur für Apples
+   eigene `appclip.apple.com`-Links. Der Präfix-Vergleich deckt alle Plätze mit
+   einem Eintrag ab.
+
 ## Anbindung in der App
 
 `GolfTrackApp/Services/CourseCatalogService.swift` lädt den Katalog, legt ihn in Application Support ab und führt ihn mit den eingebauten Plätzen zusammen (bei Namensgleichheit gewinnt der eingebaute Eintrag). Ohne Netz bleibt der letzte Stand nutzbar; die eingebauten Plätze funktionieren immer.

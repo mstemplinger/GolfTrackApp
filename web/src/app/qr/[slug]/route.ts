@@ -1,13 +1,18 @@
 import QRCode from "qrcode";
 import { getCourse } from "@/lib/courses";
-import { SITE_URL } from "@/i18n/routes";
+import { PLAY_URL } from "@/i18n/routes";
 
 /**
  * QR-Code zum Aushängen am Platz – bewusst hier und nicht in der App.
  *
- * Codiert wird der Universal Link `…/minigolf/<slug>`: Mit installierter App
- * fängt iOS ihn ab und die Runde startet sofort, ohne App startet der
- * App Clip, und ganz ohne beides landet der Gast auf der Platzseite.
+ * Codiert wird die Kurzform `play.golftrack.app/p/<kennung>`: Mit installierter
+ * App fängt iOS sie ab und die Runde startet sofort, ohne App startet der
+ * App Clip, und ganz ohne beides steht dort die Zählkarte im Browser.
+ *
+ * Warum die kurze Form und nicht `golftrack.app/<art>/<kennung>`: weniger
+ * Zeichen heißt ein gröberes Muster, das vom Schild am Abschlag auch aus zwei
+ * Metern liest – und ein einziger Eintrag als Advanced App Clip Experience
+ * deckt über den Präfix-Vergleich alle Plätze ab.
  *
  * `/qr/<slug>` liefert SVG (verlustfrei skalierbar, ideal für den Druck),
  * `/qr/<slug>?format=png` ein Rasterbild für Programme, die kein SVG mögen.
@@ -20,9 +25,7 @@ export async function GET(request: Request, ctx: RouteContext<"/qr/[slug]">) {
     return Response.json({ error: "not_found" }, { status: 404 });
   }
 
-  // Golf und Minigolf haben je eine eigene Landeseite; der Pfad entscheidet
-  // zugleich, welchen Ablauf App und App Clip starten.
-  const target = `${SITE_URL}/${course.kind}/${course.slug}`;
+  const target = `${PLAY_URL}/p/${course.slug}`;
   const wantsPng = new URL(request.url).searchParams.get("format") === "png";
   // Fehlerkorrektur M: verkraftet Kratzer und Regentropfen auf dem Aushang,
   // ohne das Muster unnötig dicht zu machen.

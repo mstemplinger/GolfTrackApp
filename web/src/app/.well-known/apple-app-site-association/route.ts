@@ -3,6 +3,11 @@
  * Minigolf.
  * Muss ohne Dateiendung und als `application/json` ausgeliefert werden –
  * genau dafür dieser Route Handler.
+ *
+ * Dieselbe Datei wird unter beiden Namen ausgeliefert, `golftrack.app` und
+ * `play.golftrack.app`; iOS holt sie je Domain einzeln ab. Deshalb stehen hier
+ * alle drei Pfade nebeneinander – ein Muster, das auf der jeweiligen Domain
+ * nie vorkommt, greift dort schlicht nie.
  */
 /**
  * Muss die Team-Kennung sein, mit der die **ausgelieferte** App signiert ist –
@@ -29,6 +34,7 @@ export async function GET() {
           components: [
             { "/": "/minigolf/*", comment: "Startet eine Minigolfrunde an dieser Anlage" },
             { "/": "/golf/*", comment: "Startet eine Runde auf diesem Golfplatz" },
+            { "/": "/p/*", comment: "Kurzform vom Schild: play.golftrack.app/p/<kennung>" },
           ],
         },
       ],

@@ -4,13 +4,15 @@ import { notFound } from "next/navigation";
 import { Footer, Header } from "@/components/Chrome";
 import { CourseHintList } from "@/components/CourseHintList";
 import { getCourse } from "@/lib/courses";
-import { APP_STORE_URL, SITE_URL } from "@/i18n/routes";
+import { APP_STORE_URL, PLAY_URL, SITE_URL } from "@/i18n/routes";
 
 /**
- * Ziel der QR-Codes an den Golfplätzen – das Gegenstück zu `/minigolf/<slug>`.
- * Ist die App installiert, fängt der Universal Link sie ab; ohne App startet
- * der App Clip mit der schlanken Zählkarte; ganz ohne beides landet der Gast
- * hier.
+ * Der Katalogeintrag eines Golfplatzes – das Gegenstück zu `/minigolf/<slug>`.
+ *
+ * Zum Spielen geht es von hier weiter auf `play.golftrack.app/p/<kennung>`;
+ * dort entscheidet sich App, App Clip oder Browser. Bewusst **kein**
+ * `apple-itunes-app`-Hinweis auf dieser Seite: Wer im Verzeichnis stöbert,
+ * soll nicht bei jedem Platz eine App-Clip-Karte vorgesetzt bekommen.
  */
 export async function generateMetadata({
   params,
@@ -26,27 +28,14 @@ export async function generateMetadata({
       `Zähle deine Runde auf ${course.name} mit GolfTrack mit – Loch für Loch, gegen Par.`,
     alternates: { canonical: `${SITE_URL}/golf/${course.slug}` },
     robots: { index: true, follow: true },
-    other: {
-      // Landet jemand doch im Browser, bietet Safari oben den App Clip an.
-      //
-      // `app-clip-display=card` ist der Unterschied zwischen dem schmalen
-      // Standardbanner („Öffnen" für die App) und der großen App-Clip-Karte
-      // mit Bild und Untertitel. Ohne den Zusatz zeigt Safari nur den Balken,
-      // und wer die App nicht hat, sieht den Clip gar nicht angeboten.
-      "apple-itunes-app": `app-id=${APP_STORE_ID}, app-clip-bundle-id=${APP_CLIP_BUNDLE_ID}, app-clip-display=card`,
-    },
   };
 }
-
-const APP_STORE_ID = "6767996957";
-const APP_CLIP_BUNDLE_ID = "com.TobiasAufschlaeger.GolfTrackandwatch.Clip";
 
 export default async function GolfLandingPage({ params }: PageProps<"/golf/[slug]">) {
   const { slug } = await params;
   const course = await getCourse(slug);
   if (!course || course.status !== "approved" || course.kind !== "golf") notFound();
 
-  const deepLink = `golftrack://golf?platz=${encodeURIComponent(course.slug)}`;
   const pars = course.holeData
     .map((hole) => hole.par)
     .filter((par): par is number => par !== null);
@@ -77,16 +66,23 @@ export default async function GolfLandingPage({ params }: PageProps<"/golf/[slug
           </div>
         </dl>
 
+        {/*
+          Führt auf die Spielseite, nicht direkt in die App. Diese Seite hier
+          ist der Katalogeintrag – wer sie durchblättert, sucht einen Platz und
+          will nicht mitten im Stöbern eine App-Clip-Karte vorgesetzt bekommen.
+          Erst auf play.golftrack.app entscheidet sich App, App Clip oder
+          Browser, und zwar dann, wenn jemand wirklich spielen will.
+        */}
         <div className="mt-10 flex flex-wrap justify-center gap-3">
-          <a href={deepLink} className="btn-brass">
-            Runde in der App starten
+          <a href={`${PLAY_URL}/p/${course.slug}`} className="btn-brass">
+            Runde starten
           </a>
           <a href={APP_STORE_URL} target="_blank" rel="noreferrer" className="btn-ghost">
             GolfTrack laden
           </a>
         </div>
         <p className="mt-4 text-sm text-cream/45">
-          Ohne installierte App führt der erste Knopf ins Leere – dann zuerst GolfTrack laden.
+          Mit App, ohne Installation oder direkt im Browser – das entscheidet sich beim Start.
         </p>
 
         <CourseHintList hints={course.facilityHints} />

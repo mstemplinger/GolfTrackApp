@@ -38,6 +38,11 @@ struct MinigolfCourseStartView: View {
             .navigationTitle(course.name)
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
+                // Im App Clip gibt es nichts, wohin man abbrechen könnte: Die
+                // Begrüßung ist dort der erste Bildschirm, `dismiss()` läuft
+                // ins Leere. In der App liegt der Ablauf über der Anlagenliste,
+                // dort führt der Knopf zurück.
+                #if !APPCLIP
                 ToolbarItem(placement: .topBarLeading) {
                     Button("Abbrechen") {
                         Haptics.tap()
@@ -45,6 +50,7 @@ struct MinigolfCourseStartView: View {
                     }
                         .foregroundStyle(AppTheme.gold)
                 }
+                #endif
             }
             .navigationDestination(item: $config) { config in
                 MinigolfScoringView(config: config)

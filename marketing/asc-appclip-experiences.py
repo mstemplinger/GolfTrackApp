@@ -1,20 +1,27 @@
 #!/usr/bin/env python3
-"""Advanced App Clip Experiences abgleichen – eine je Minigolfanlage.
+"""Advanced App Clip Experiences abgleichen.
 
 Ohne einen solchen Eintrag zeigt iOS beim Scannen des QR-Codes **keine**
-App-Clip-Karte. Und er gilt je Adresse: `…/minigolf/sankt-englmar` und
-`…/minigolf/bad-koetzting` brauchen zwei Einträge. Von Hand ist das ab einer
-Handvoll Anlagen nicht mehr zu machen – deshalb dieses Skript.
+App-Clip-Karte, egal wie richtig alles andere ist.
 
-    # nur nachsehen, nichts ändern
+**Ein Eintrag genügt.** Zugeordnet wird über den Präfix-Vergleich, und alle
+gedruckten Codes tragen seit dem 12.9.2026 die Kurzform
+`https://play.golftrack.app/p/<kennung>`. Ein Eintrag auf
+`https://play.golftrack.app/p/` deckt damit jeden Platz ab – vorher wäre je
+Adresse einer nötig gewesen.
+
+    # nachsehen, was vorhanden ist
     python3 marketing/asc-appclip-experiences.py --issuer <ISSUER-UUID>
 
-    # anlegen, was fehlt
-    python3 marketing/asc-appclip-experiences.py --issuer <ISSUER-UUID> \\
-        --image marketing/appclip-karte.png --apply
+    # je Anlage einen eigenen Eintrag prüfen (eigenes Kartenbild pro Betreiber)
+    python3 marketing/asc-appclip-experiences.py --issuer <ISSUER-UUID> --pro-anlage
 
-Die Anlagen kommen aus dem öffentlichen Verzeichnis der Website, damit hier
-keine zweite Liste gepflegt werden muss.
+Die Anlagen für `--pro-anlage` kommen aus dem öffentlichen Verzeichnis der
+Website, damit hier keine zweite Liste gepflegt werden muss.
+
+**Anlegen geht nur von Hand** – siehe den Kommentar in `create_experience()`.
+Am 12.9.2026 noch einmal mit fünf weiteren Kennungsformaten geprüft, Apple
+weist jedes ab. Dieses Skript ist deshalb in erster Linie zum Nachsehen da.
 
 **Reihenfolge beachten:** Die App-Clip-Ressource entsteht in App Store Connect
 erst, wenn eine App-Version mit dem Clip hochgeladen wurde. Vorher meldet das
@@ -40,6 +47,11 @@ from asc_api import APP_ID, ASC, APIError, ssl_context  # noqa: E402
 
 COURSES_URL = "https://golftrack.app/api/v1/courses?kind=minigolf"
 SITE = "https://golftrack.app"
+# Die Adresse auf den gedruckten Codes. Der Schrägstrich am Ende gehört dazu:
+# verglichen wird als Präfix.
+PREFIX_LINK = "https://play.golftrack.app/p/"
+PREFIX_TITLE = "GolfTrack"
+PREFIX_SUBTITLE = "Runde starten und mitzählen"
 
 # Apple erwartet die Karte in 3000 × 2000. Kleinere Bilder weist die API ab.
 IMAGE_SIZE = (3000, 2000)
@@ -156,7 +168,7 @@ def existing_links(asc: ASC, clip_id: str) -> dict[str, dict]:
 
 def create_experience(asc: ASC, clip_id: str, link: str, title: str, subtitle: str,
                       image_id: str, language: str, category: str, action: str) -> dict:
-    # ACHTUNG – hier klemmt es (Stand 1.9.2026).
+    # ACHTUNG – hier klemmt es (Stand 1.9.2026, erneut geprüft am 12.9.2026).
     #
     # Die Übersetzung muss mitgeschickt werden, die Beziehung `localizations`
     # ist Pflicht (ohne sie: „missing a required relationship"). Der Eintrag
@@ -164,7 +176,8 @@ def create_experience(asc: ASC, clip_id: str, link: str, title: str, subtitle: s
     # das wir gefunden haben:
     #
     #   'DE', 'de', 'de-DE', 'DE-DE', '1', '0', <UUID> in Groß- und
-    #   Kleinschreibung, UUID ohne Bindestriche, '<clipId>_DE'
+    #   Kleinschreibung, UUID ohne Bindestriche, '<clipId>_DE', die Kennung des
+    #   Clips selbst, ein kurzes Wort wie 'loc1'
     #     → „The provided included entity id '…' has invalid format"
     #
     # Die Dokumentation nennt das Feld nur „opaque resource ID" und als
@@ -221,7 +234,9 @@ def main() -> int:
                     help="Geschäftsfeld, z. B. ENTERTAINMENT, FITNESS, FOOD_AND_DRINK")
     ap.add_argument("--action", default="OPEN", choices=["OPEN", "VIEW", "PLAY"],
                     help="Aufschrift des Knopfs auf der Karte")
-    ap.add_argument("--only", help="nur diese Anlage (Kennung)")
+    ap.add_argument("--pro-anlage", action="store_true",
+                    help="je Anlage einen eigenen Eintrag statt des einen Präfixes")
+    ap.add_argument("--only", help="nur diese Anlage (Kennung, mit --pro-anlage)")
     ap.add_argument("--show-localization-ids", action="store_true",
                     help="Kennungen der Übersetzungen vorhandener Erlebnisse zeigen")
     ap.add_argument("--verbose", action="store_true")
@@ -248,12 +263,17 @@ def main() -> int:
     clip_id = clip["id"]
     print(f"App Clip: {clip['attributes'].get('bundleId', clip_id)}")
 
-    courses = minigolf_courses()
-    if args.only:
-        courses = [c for c in courses if c["id"] == args.only]
-    if not courses:
-        print("Keine Anlagen gefunden.")
-        return 1
+    # Was soll es geben: der eine Eintrag auf das Präfix – oder je Anlage einer.
+    if args.pro_anlage:
+        courses = minigolf_courses()
+        if args.only:
+            courses = [c for c in courses if c["id"] == args.only]
+        if not courses:
+            print("Keine Anlagen gefunden.")
+            return 1
+        soll = [(f"{SITE}/minigolf/{c['id']}", *card_texts(c)) for c in courses]
+    else:
+        soll = [(PREFIX_LINK, PREFIX_TITLE, PREFIX_SUBTITLE)]
 
     if args.show_localization_ids:
         found = False
@@ -270,57 +290,43 @@ def main() -> int:
         return 0
 
     have = existing_links(asc, clip_id)
-    print(f"{len(courses)} Anlage(n), {len(have)} Erlebnis(se) vorhanden\n")
+    print(f"{len(soll)} gewünscht, {len(have)} vorhanden\n")
 
-    missing = [c for c in courses if f"{SITE}/minigolf/{c['id']}" not in have]
-
-    for course in courses:
-        link = f"{SITE}/minigolf/{course['id']}"
+    for link, _, _ in soll:
         if link in have:
-            print(f"  ✓ {course['name']} – {have[link]['attributes'].get('status', '?')}")
+            print(f"  ✓ {link} – {have[link]['attributes'].get('status', '?')}")
 
-    if not missing:
+    fehlen = [eintrag for eintrag in soll if eintrag[0] not in have]
+    for link, entry in have.items():
+        if link not in {s[0] for s in soll}:
+            print(f"  · zusätzlich vorhanden: {link}")
+
+    if not fehlen:
         print("\nNichts zu tun.")
         return 0
 
-    print(f"\nEs fehlen {len(missing)}:")
-    for course in missing:
-        title, subtitle = card_texts(course)
-        print(f"  + {course['name']}")
-        print(f"      {SITE}/minigolf/{course['id']}")
+    print(f"\nEs fehlen {len(fehlen)}:")
+    for link, title, subtitle in fehlen:
+        print(f"  + {link}")
         print(f"      Titel: {title}  |  Unterzeile: {subtitle}")
 
-    if not args.apply:
-        print("\nProbelauf – nichts geändert. Mit --apply und --image anlegen.")
-        return 0
-
-    if not args.image:
-        print("\n--image fehlt. Ohne Karte nimmt Apple kein Erlebnis an.")
-        return 1
-
-    angelegt = 0
-    for course in missing:
-        title, subtitle = card_texts(course)
-        link = f"{SITE}/minigolf/{course['id']}"
-        try:
-            image_id = upload_image(asc, args.image)
-            create_experience(asc, clip_id, link, title, subtitle,
-                              image_id, args.language, args.category, args.action)
-            print(f"  angelegt: {course['name']}")
-            angelegt += 1
-        except APIError as e:
-            print(f"  FEHLER bei {course['name']}: {e}")
-            if "included entity id" in e.detail:
-                print("\n  Das ist der bekannte Haken: Apple nimmt keine der")
-                print("  Kennungen an, die für die Übersetzung in Frage kommen.")
-                print("  Lege die erste Experience von Hand in App Store Connect an")
-                print("  und rufe danach dieses Skript mit --show-localization-ids auf –")
-                print("  dann steht das erwartete Format fest. Siehe den Kommentar in")
-                print("  create_experience().")
-                break
-
-    print(f"\n{angelegt} von {len(missing)} angelegt.")
-    return 0 if angelegt == len(missing) else 1
+    print()
+    print("Anlegen kann dieses Skript nicht – Apple weist über die API jede")
+    print("Kennung für die Übersetzung ab (siehe create_experience()). Also in")
+    print("App Store Connect unter App Clip → Advanced App Clip Experiences")
+    print("von Hand eintragen, mit diesen Werten:")
+    for link, title, subtitle in fehlen:
+        print(f"    Adresse:   {link}")
+        print(f"    Titel:     {title}")
+        print(f"    Unterzeile: {subtitle}")
+        print(f"    Aktion:    {args.action}")
+        print(f"    Sprache:   {args.language}")
+        print( "    Kartenbild: marketing/appclip/appclip-karte.png (3000×2000)")
+    print()
+    print("Danach `--show-localization-ids` aufrufen: daran lässt sich das")
+    print("Kennungsformat ablesen, das Apple selbst vergibt – dann ließe sich")
+    print("create_experience() reparieren.")
+    return 1
 
 
 if __name__ == "__main__":

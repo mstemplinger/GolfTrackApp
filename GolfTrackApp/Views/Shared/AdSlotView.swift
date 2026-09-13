@@ -1,24 +1,31 @@
 import CoreLocation
 import SwiftUI
 
-/// Die freie Fläche unter den Spielernamen in der Minigolfkarte.
+/// Die Werbefläche in der Zählkarte – bei Minigolf wie bei Golf.
 ///
 /// Drei Fälle, in dieser Reihenfolge:
 /// 1. Wer ein Abo hat, sieht hier nichts – die Fläche verschwindet ganz.
-/// 2. Gibt es eine gebuchte Anzeige für diese Anlage (oder allgemein), steht
-///    sie hier, sichtbar als „Anzeige" gekennzeichnet.
+///    Die **Hinweise der Anlage** bleiben davon unberührt; die stehen
+///    außerhalb dieser Ansicht und sind keine Werbung.
+/// 2. Gibt es eine gebuchte Anzeige für diesen Platz, für seinen Umkreis oder
+///    allgemein, steht sie hier – sichtbar als „Anzeige" gekennzeichnet.
 /// 3. Sonst bewirbt sich die App selbst: Abo, Caddy oder der Hinweis für
-///    Anlagenbetreiber, dass dieser Platz buchbar ist.
+///    Betreiber, dass dieser Platz buchbar ist.
 ///
-/// Die Anzeige wechselt mit der Bahn – so bekommt jeder Werbepartner im Lauf
-/// einer Runde seine Einblendungen, statt dass die erste Anzeige 18 Bahnen
+/// Die Anzeige wechselt mit dem Loch – so bekommt jeder Werbepartner im Lauf
+/// einer Runde seine Einblendungen, statt dass die erste Anzeige 18 Löcher
 /// lang klebt.
-struct MinigolfAdSlotView: View {
+struct AdSlotView: View {
 
-    /// Kennung der Anlage, auf der gespielt wird – `nil` bei einer Runde ohne
-    /// hinterlegte Anlage.
+    /// Wo in der App die Fläche steht – Minigolf- oder Golf-Zählkarte.
+    let placement: AdPlacement
+    /// Kennung des Platzes – `nil` bei einer Runde ohne hinterlegten Platz.
     let courseID: String?
-    /// Schaltet die Anzeige weiter; in der Scorecard die Bahnnummer.
+    /// Wo der Platz liegt, für Umkreis-Werbung. Wird nichts übergeben,
+    /// schlägt die Ansicht selbst im Katalog nach – die geteilten Zählkarten
+    /// können das nicht, weil `CourseCatalogService` nicht im App Clip steckt.
+    var coordinate: CLLocationCoordinate2D? = nil
+    /// Schaltet die Anzeige weiter; in der Zählkarte die Lochnummer.
     let rotation: Int
 
     @EnvironmentObject private var subscriptionManager: SubscriptionManager
@@ -28,19 +35,22 @@ struct MinigolfAdSlotView: View {
 
     @State private var promoSheet: HousePromo?
 
-    /// Wo die Anlage liegt – für Umkreis-Werbung. Aus dem Katalog geholt statt
-    /// durchgereicht: die Kennung steht ohnehin in der Runde, die Koordinaten
-    /// müssten sonst durch vier Ansichten mitwandern.
-    private var courseCoordinate: CLLocationCoordinate2D? {
-        guard let courseID,
-              let entry = CourseCatalogService.shared.minigolfCourse(id: courseID) else { return nil }
-        return entry.coordinate
+    /// Übergebene Koordinate, sonst die aus dem Katalog.
+    private var effectiveCoordinate: CLLocationCoordinate2D? {
+        if let coordinate { return coordinate }
+        guard let courseID else { return nil }
+        let courses = CourseCatalogService.shared
+        if let entry = courses.minigolfCourse(id: courseID) { return entry.coordinate }
+        if let entry = courses.allGolfCourses.first(where: { $0.slug == courseID }) {
+            return CLLocationCoordinate2D(latitude: entry.lat, longitude: entry.lon)
+        }
+        return nil
     }
 
     private var bookedAd: RemoteAd? {
-        catalog.ad(placement: .minigolfScoring,
+        catalog.ad(placement: placement,
                    courseID: courseID,
-                   coordinate: courseCoordinate,
+                   coordinate: effectiveCoordinate,
                    rotation: rotation)
     }
 
@@ -252,8 +262,8 @@ enum HousePromo: String, Identifiable, CaseIterable {
 
 #Preview {
     VStack(spacing: 16) {
-        MinigolfAdSlotView(courseID: "sankt-englmar", rotation: 0)
-        MinigolfAdSlotView(courseID: nil, rotation: 1)
+        AdSlotView(placement: .minigolfScoring, courseID: "sankt-englmar", rotation: 0)
+        AdSlotView(placement: .golfScoring, courseID: nil, rotation: 1)
     }
     .padding()
     .frame(maxWidth: .infinity, maxHeight: .infinity)

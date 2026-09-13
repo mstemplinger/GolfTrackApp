@@ -24,6 +24,9 @@ struct BundledCourseEntry: Identifiable {
     let slopeRating: Int
     /// Zusätzliche Platzinfos (Toiletten, Defibrillator, Wasserstellen usw.)
     let facilityNotes: String
+    /// Hinweise der Anlage – Toiletten, Ausschank, Unterstand. Kommen über die
+    /// API; eingebaute Plätze haben keine.
+    var hints: [CourseHint] = []
     /// Abschlag-Koordinaten, 1 Eintrag pro Loch (gleiche Reihenfolge)
     let teeLatitudes:  [Double]
     let teeLongitudes: [Double]
@@ -46,6 +49,7 @@ struct BundledCourseEntry: Identifiable {
     init(name: String, location: String, holes: Int, lat: Double, lon: Double,
          parValues: [Int] = [], hcpValues: [Int] = [], holeLengths: [Int] = [],
          courseRating: Double = 72.0, slopeRating: Int = 113, facilityNotes: String = "",
+         hints: [CourseHint] = [],
          teeLatitudes:  [Double] = [], teeLongitudes: [Double] = [],
          flagLatitudes:  [Double] = [], flagLongitudes: [Double] = [],
          slug: String = "",
@@ -64,6 +68,7 @@ struct BundledCourseEntry: Identifiable {
         self.courseRating = courseRating
         self.slopeRating = slopeRating
         self.facilityNotes = facilityNotes
+        self.hints = hints
         self.teeLatitudes  = teeLatitudes
         self.teeLongitudes = teeLongitudes
         self.flagLatitudes  = flagLatitudes

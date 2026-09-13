@@ -45,6 +45,30 @@ struct HoleScoringView: View {
         return s <= 2 ? .orange : .red
     }
 
+    /// Der Platz im Verzeichnis – über den Namen gesucht, weil das
+    /// `Course`-Modell keine Kennung der Website trägt.
+    private var catalogEntry: BundledCourseEntry? {
+        guard let name = round.course?.name.lowercased() else { return nil }
+        return CourseCatalogService.shared.allGolfCourses
+            .first { $0.name.lowercased() == name }
+    }
+
+    /// Leer, solange der Platz nicht im Verzeichnis steht – dann zeigt die
+    /// Karte nichts an, statt eine leere Fläche zu hinterlassen.
+    private var courseHints: [CourseHint] { catalogEntry?.hints ?? [] }
+
+    /// Für Umkreis-Werbung: erst die Kennung des Verzeichnisses, sonst nichts.
+    private var courseSlug: String? {
+        let slug = catalogEntry?.slug ?? ""
+        return slug.isEmpty ? nil : slug
+    }
+
+    private var courseCoordinate: CLLocationCoordinate2D? {
+        guard let course = round.course,
+              let lat = course.latitude, let lon = course.longitude else { return nil }
+        return CLLocationCoordinate2D(latitude: lat, longitude: lon)
+    }
+
     private var opponentScores: [PlayerHoleScore] {
         round.playerHoleScores
             .filter { $0.holeNumber == score.holeNumber }
@@ -81,6 +105,16 @@ struct HoleScoringView: View {
 
             scoreGesamtBar
             shotTrackerButton
+
+            // Hinweise der Anlage – immer, auch mit Abo. Sie sind keine
+            // Werbung, sondern das, was der Betreiber seinen Gästen sagt.
+            CourseHintRotatingCard(hints: courseHints, rotation: score.holeNumber)
+
+            // Werbung dagegen entfällt mit Abo; das entscheidet AdSlotView.
+            AdSlotView(placement: .golfScoring,
+                       courseID: courseSlug,
+                       coordinate: courseCoordinate,
+                       rotation: score.holeNumber)
         }
         .padding(.horizontal, 16)
         .padding(.top, 8)

@@ -162,6 +162,8 @@ struct RemoteCourse: Decodable {
     let courseRating: Double?
     let slopeRating: Int?
     let facilityNotes: String
+    /// Fehlt bei Plätzen, die vor der Einführung freigegeben wurden.
+    let facilityHints: [CourseHint]?
     let welcome: String
     let teeLatitudes: [Double]
     let teeLongitudes: [Double]
@@ -182,6 +184,7 @@ struct RemoteCourse: Decodable {
             courseRating: courseRating ?? 72.0,
             slopeRating: slopeRating ?? 113,
             facilityNotes: facilityNotes,
+            hints: facilityHints ?? [],
             teeLatitudes: teeLatitudes,
             teeLongitudes: teeLongitudes,
             flagLatitudes: flagLatitudes,
@@ -205,6 +208,7 @@ struct RemoteCourse: Decodable {
                 ? "Willkommen! Ab jetzt zählen wir für dich mit – Bahn für Bahn."
                 : welcome,
             notes: facilityNotes,
+            hints: facilityHints ?? [],
             firstTeeLat: firstTeeLat,
             firstTeeLon: firstTeeLon
         )

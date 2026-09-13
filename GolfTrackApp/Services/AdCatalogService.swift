@@ -2,7 +2,7 @@ import CoreLocation
 import Foundation
 import Observation
 
-/// Anzeigen für den freien Platz unter den Spielernamen in der Minigolfkarte.
+/// Anzeigen für die Werbefläche in den Zählkarten – Minigolf wie Golf.
 ///
 /// Der Aufbau entspricht `CourseCatalogService`: einmal geladen, liegt die
 /// Liste im Cache und funktioniert auch ohne Netz weiter – auf einer Anlage
@@ -173,11 +173,11 @@ final class AdCatalogService {
 
 // MARK: – Plätze in der Oberfläche
 
-/// Wo eine Anzeige stehen kann. Bislang nur die Fläche unter den Namen in der
-/// Minigolfkarte; weitere Plätze kommen hier dazu und müssen im Adminpanel
-/// dieselbe Kennung tragen.
-enum AdPlacement: String {
+/// Wo eine Anzeige stehen kann. Jede Kennung muss im Adminpanel und in der
+/// zod-Aufzählung `adPlacement` auf der Website genauso heißen.
+enum AdPlacement: String, CaseIterable {
     case minigolfScoring = "minigolf_scoring"
+    case golfScoring = "golf_scoring"
 }
 
 // MARK: – Format der API

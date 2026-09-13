@@ -68,15 +68,18 @@ struct MinigolfScoringView: View {
                         )
                     }
 
-                    #if !APPCLIP
-                    MinigolfAdSlotView(courseID: config.courseID, rotation: currentHole)
-                    // Statt der Werbefläche: Wer das Trainings-Abo hat, findet
-                    // hier die Putt-Audios.
-                    PuttTrainingCard(compact: true)
-                    #else
-                    // Im Clip ist Werbung untersagt. An derselben Stelle stehen
-                    // deshalb die Hinweise der Anlage – ein anderer je Bahn.
+                    // Hinweise der Anlage stehen **immer** – in der App wie
+                    // im Clip, mit Abo wie ohne. Sie sind keine Werbung,
+                    // sondern das, was der Betreiber seinen Gästen sagen will.
                     CourseHintRotatingCard(hints: config.hints, rotation: currentHole)
+
+                    #if !APPCLIP
+                    // Werbung dagegen entfällt mit Abo, und im Clip ist sie
+                    // ohnehin untersagt (Richtlinie 2.5.16(a)).
+                    AdSlotView(placement: .minigolfScoring,
+                               courseID: config.courseID,
+                               rotation: currentHole)
+                    PuttTrainingCard(compact: true)
                     #endif
                 }
                 .padding()

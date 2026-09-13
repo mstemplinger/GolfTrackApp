@@ -25,6 +25,10 @@ struct MinigolfView: View {
     @ObservedObject private var wc = WatchConnectivityManager.shared
     /// Anlagen von golftrack.app zusätzlich zu den eingebauten
     private let catalog = CourseCatalogService.shared
+    /// Nur für die Entfernungen in der Anlagenliste – ohne Standort zeigt die
+    /// Liste einfach keine Kilometer an.
+    @State private var locationManager = CLLocationManager()
+    @State private var userLocation: CLLocation?
 
     var body: some View {
         NavigationStack {
@@ -112,6 +116,7 @@ struct MinigolfView: View {
                 // Anzeigen schon hier holen, nicht erst in der Zählkarte: auf
                 // der Anlage selbst ist oft kein Netz mehr.
                 await AdCatalogService.shared.refreshIfNeeded()
+                await updateLocation()
             }
             .onChange(of: activeConfig) { _, newValue in
                 // Returning from a running game — pick up the persisted state
@@ -163,7 +168,7 @@ struct MinigolfView: View {
                 .foregroundStyle(.secondary)
 
             VStack(spacing: 8) {
-                ForEach(catalog.allMinigolfCourses) { course in
+                ForEach(sortedCourses) { course in
                     Button {
                         Haptics.tap()
                         startingCourse = course
@@ -178,6 +183,27 @@ struct MinigolfView: View {
         .background(AppTheme.card, in: RoundedRectangle(cornerRadius: 16))
     }
 
+    /// Die Anlagen in der Reihenfolge, in der sie angezeigt werden – mit
+    /// Standort nach Entfernung, sonst alphabetisch (siehe
+    /// `MinigolfCourses.sorted(_:near:)`).
+    private var sortedCourses: [MinigolfCourseEntry] {
+        MinigolfCourses.sorted(catalog.allMinigolfCourses, near: userLocation)
+    }
+
+    /// Letzten bekannten Standort abholen. Die Berechtigung wird hier
+    /// angefragt, weil die Entfernungen der sichtbare Grund dafür sind; lehnt
+    /// jemand ab, bleibt `userLocation` nil und die Liste steht alphabetisch da.
+    private func updateLocation() async {
+        if locationManager.authorizationStatus == .notDetermined {
+            locationManager.requestWhenInUseAuthorization()
+            // Dem Dialog und dem ersten Fix einen Moment geben.
+            try? await Task.sleep(for: .milliseconds(700))
+        }
+        guard locationManager.authorizationStatus == .authorizedWhenInUse
+                || locationManager.authorizationStatus == .authorizedAlways else { return }
+        userLocation = locationManager.location
+    }
+
     private func courseRow(_ course: MinigolfCourseEntry) -> some View {
         HStack(spacing: 10) {
             VStack(alignment: .leading, spacing: 3) {
@@ -189,6 +215,12 @@ struct MinigolfView: View {
                     .lineLimit(1)
             }
             Spacer(minLength: 0)
+            if let loc = userLocation {
+                Text(course.formattedDistance(from: loc))
+                    .font(.caption.bold())
+                    .foregroundStyle(AppTheme.gold)
+                    .monospacedDigit()
+            }
             Image(systemName: "chevron.right")
                 .font(.caption.bold())
                 .foregroundStyle(.secondary)

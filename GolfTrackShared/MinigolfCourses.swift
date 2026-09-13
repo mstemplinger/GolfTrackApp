@@ -67,6 +67,16 @@ struct MinigolfCourseEntry: Identifiable, Hashable {
     func distance(from userLocation: CLLocation) -> CLLocationDistance {
         clLocation.distance(from: userLocation)
     }
+
+    /// Entfernung als Text – gleiche Staffelung wie bei den Golfplätzen
+    /// (`BundledCourseEntry.formattedDistance`), damit beide Listen gleich
+    /// aussehen.
+    func formattedDistance(from userLocation: CLLocation) -> String {
+        let km = distance(from: userLocation) / 1000
+        if km < 1 { return "< 1 km" }
+        if km < 10 { return String(format: "%.1f km", km) }
+        return String(format: "%.0f km", km)
+    }
 }
 
 enum MinigolfCourses {
@@ -86,6 +96,30 @@ enum MinigolfCourses {
 
     static func course(id: String) -> MinigolfCourseEntry? {
         all.first { $0.id == id }
+    }
+
+    /// Reihenfolge für die Anlagenliste: mit Standort nach Entfernung, sonst
+    /// alphabetisch.
+    ///
+    /// **Es wird bewusst nichts weggefiltert.** Bei den Golfplätzen begrenzt
+    /// die Auswahl auf 30 km, weil die Liste sonst hundert Einträge lang wäre;
+    /// hier ist das Verzeichnis kurz, und wer keine Anlage in der Nähe hat,
+    /// soll trotzdem sehen, welche es überhaupt gibt.
+    static func sorted(_ courses: [MinigolfCourseEntry],
+                       near location: CLLocation?) -> [MinigolfCourseEntry] {
+        guard let location else {
+            return courses.sorted { $0.name.localizedStandardCompare($1.name) == .orderedAscending }
+        }
+        return courses.sorted { a, b in
+            let da = a.distance(from: location)
+            let db = b.distance(from: location)
+            // Gleich weit entfernt (oder beide ohne Koordinaten): nach Namen,
+            // damit die Reihenfolge nicht bei jedem Neuzeichnen springt.
+            if da == db {
+                return a.name.localizedStandardCompare(b.name) == .orderedAscending
+            }
+            return da < db
+        }
     }
 
     /// Nächstgelegene Anlage – für „Du stehst gerade hier"-Hinweise.

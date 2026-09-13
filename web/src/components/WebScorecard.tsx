@@ -2,6 +2,7 @@
 
 import { useEffect, useState, useSyncExternalStore } from "react";
 import type { CourseKind } from "@/lib/schema";
+import { CHALLENGES, results as challengeResults, type ChallengeResult } from "@/lib/minigolfChallenges";
 
 /**
  * Mitzählen im Browser – für alle, die weder App noch App Clip bekommen:
@@ -35,6 +36,8 @@ interface SavedRound {
   scores: number[][];
   hole: number;
   finished: boolean;
+  /** Eingeschaltete Wettkämpfe. Fehlt bei Runden von vor der Einführung. */
+  challenges?: string[];
 }
 
 /** Wie viele Namensfelder am Anfang dastehen. */
@@ -104,6 +107,8 @@ export function WebScorecard({
     saved ? Math.min(Math.max(saved.hole, 0), holes - 1) : 0,
   );
   const [finished, setFinished] = useState(() => Boolean(saved?.finished));
+  /** Eingeschaltete Wettkämpfe – nur bei Minigolf, wie in der App. */
+  const [challenges, setChallenges] = useState<string[]>(() => saved?.challenges ?? []);
   /** Runde läuft, aber der Gast hat den Zähler zugeklappt. */
   const [minimized, setMinimized] = useState(false);
 
@@ -117,12 +122,12 @@ export function WebScorecard({
         window.localStorage.removeItem(storageKey);
         return;
       }
-      const payload: SavedRound = { players: names, scores, hole, finished };
+      const payload: SavedRound = { players: names, scores, hole, finished, challenges };
       window.localStorage.setItem(storageKey, JSON.stringify(payload));
     } catch {
       // Nicht speichern können ist ärgerlich, aber kein Grund abzubrechen.
     }
-  }, [storageKey, names, scores, hole, finished]);
+  }, [storageKey, names, scores, hole, finished, challenges]);
 
   // Solange der Zähler den Bildschirm füllt, soll die Seite darunter nicht
   // mitscrollen.
@@ -165,12 +170,30 @@ export function WebScorecard({
   // nicht übernommen ist, zeigen beide Seiten dasselbe: die leere Aufstellung.
   if (!hydrated) {
     return (
-      <Setup kind={kind} names={emptyNames(kind)} setNames={() => {}} onStart={() => {}} holes={holes} />
+      <Setup
+        kind={kind}
+        names={emptyNames(kind)}
+        setNames={() => {}}
+        onStart={() => {}}
+        holes={holes}
+        challenges={[]}
+        setChallenges={() => {}}
+      />
     );
   }
 
   if (!scores) {
-    return <Setup kind={kind} names={names} setNames={setNames} onStart={start} holes={holes} />;
+    return (
+      <Setup
+        kind={kind}
+        names={names}
+        setNames={setNames}
+        onStart={start}
+        holes={holes}
+        challenges={challenges}
+        setChallenges={setChallenges}
+      />
+    );
   }
 
   if (minimized) {
@@ -192,6 +215,7 @@ export function WebScorecard({
           names={names}
           scores={scores}
           pars={hasPar ? pars : []}
+          awards={challengeResults(challenges, scores, names)}
           onBack={() => setFinished(false)}
           onReset={reset}
           onClose={() => setMinimized(true)}
@@ -204,6 +228,8 @@ export function WebScorecard({
           holes={holes}
           par={hasPar ? pars[hole] : null}
           kind={kind}
+          challenges={challenges}
+          setChallenges={setChallenges}
           onChange={change}
           onHole={setHole}
           onFinish={() => setFinished(true)}
@@ -234,12 +260,16 @@ function Setup({
   setNames,
   onStart,
   holes,
+  challenges,
+  setChallenges,
 }: {
   kind: CourseKind;
   names: string[];
   setNames: (next: string[]) => void;
   onStart: () => void;
   holes: number;
+  challenges: string[];
+  setChallenges: (next: string[]) => void;
 }) {
   const einheit = kind === "golf" ? "Löcher" : "Bahnen";
 
@@ -304,6 +334,11 @@ function Setup({
           </button>
         ) : null}
       </div>
+
+      {/* Wettkämpfe gibt es nur beim Minigolf – wie in der App. */}
+      {kind === "minigolf" ? (
+        <ChallengePicker challenges={challenges} setChallenges={setChallenges} />
+      ) : null}
 
       <button
         type="button"
@@ -371,6 +406,8 @@ function Scoring({
   holes,
   par,
   kind,
+  challenges,
+  setChallenges,
   onChange,
   onHole,
   onFinish,
@@ -382,11 +419,14 @@ function Scoring({
   holes: number;
   par: number | null;
   kind: CourseKind;
+  challenges: string[];
+  setChallenges: (next: string[]) => void;
   onChange: (player: number, delta: number) => void;
   onHole: (hole: number) => void;
   onFinish: () => void;
   onClose: () => void;
 }) {
+  const [zeigeAuswahl, setZeigeAuswahl] = useState(false);
   const einheit = kind === "golf" ? "Loch" : "Bahn";
   const letzte = hole === holes - 1;
   // Rang wie in der App: wenige Schläge zuerst.
@@ -446,6 +486,34 @@ function Scoring({
             </li>
           ))}
         </ul>
+
+        {/* Wettkämpfe laufen neben der Schlagwertung mit – wie in der App. */}
+        {kind === "minigolf" ? (
+          <div className="mx-auto mt-2.5 max-w-lg">
+            {zeigeAuswahl ? (
+              <div className="rounded-2xl p-4" style={{ backgroundColor: APP.card }}>
+                <ChallengePicker
+                  challenges={challenges}
+                  setChallenges={setChallenges}
+                  offen
+                />
+                <button
+                  type="button"
+                  className="mt-4 w-full rounded-xl py-3 text-center text-sm font-semibold"
+                  style={{ backgroundColor: APP.cardAlt }}
+                  onClick={() => setZeigeAuswahl(false)}
+                >
+                  Fertig
+                </button>
+              </div>
+            ) : (
+              <ChallengeLiveCard
+                results={challengeResults(challenges, scores, names)}
+                onEdit={() => setZeigeAuswahl(true)}
+              />
+            )}
+          </div>
+        ) : null}
       </div>
 
       <nav className="flex gap-3 px-4 pb-[max(1rem,env(safe-area-inset-bottom))] pt-2">
@@ -537,6 +605,7 @@ function Result({
   names,
   scores,
   pars,
+  awards,
   onBack,
   onReset,
   onClose,
@@ -545,6 +614,8 @@ function Result({
   scores: number[][];
   /** Leer bei Minigolf und bei Plätzen ohne vollständige Par-Werte. */
   pars: number[];
+  /** Wettkämpfe der Runde – leer, wenn keiner eingeschaltet war. */
+  awards: ChallengeResult[];
   onBack: () => void;
   onReset: () => void;
   onClose: () => void;
@@ -583,6 +654,36 @@ function Result({
             </li>
           ))}
         </ol>
+
+        {awards.length ? (
+          <section className="mx-auto mt-8 max-w-lg">
+            <h2 className="mb-2.5 font-display text-lg">Pokale</h2>
+            <ul className="flex flex-col gap-2">
+              {awards.map((result) => (
+                <li
+                  key={result.challenge.id}
+                  className="flex items-center gap-3 rounded-2xl p-4"
+                  style={{ backgroundColor: APP.card }}
+                >
+                  <span aria-hidden className="text-xl">
+                    {result.challenge.trophy}
+                  </span>
+                  <span className="min-w-0 flex-1">
+                    <span className="block text-xs text-cream/50">{result.challenge.name}</span>
+                    <span className="block truncate font-semibold">
+                      {result.leaders.length ? result.leaderNames : "niemand"}
+                    </span>
+                  </span>
+                  {result.leaderValueText ? (
+                    <span className="font-mono text-xs" style={{ color: APP.gold }}>
+                      {result.leaderValueText}
+                    </span>
+                  ) : null}
+                </li>
+              ))}
+            </ul>
+          </section>
+        ) : null}
       </div>
 
       <nav className="flex gap-3 px-4 pb-[max(1rem,env(safe-area-inset-bottom))] pt-2">
@@ -643,4 +744,152 @@ function TitleBar({
 function zuPar(delta: number): string {
   if (delta === 0) return "Par";
   return delta > 0 ? `+${delta}` : `${delta}`;
+}
+
+// MARK: – Wettkämpfe
+
+/** Auswahl der Wettkämpfe – vor dem Start und jederzeit während der Runde. */
+function ChallengePicker({
+  challenges,
+  setChallenges,
+  offen = false,
+}: {
+  challenges: string[];
+  setChallenges: (next: string[]) => void;
+  /** In der laufenden Runde ist die Liste schon ausgeklappt. */
+  offen?: boolean;
+}) {
+  const [ausgeklappt, setAusgeklappt] = useState(offen);
+
+  function umschalten(id: string) {
+    setChallenges(
+      challenges.includes(id) ? challenges.filter((c) => c !== id) : [...challenges, id],
+    );
+  }
+
+  const kopf = (
+    <>
+      <span className="font-semibold">Wettkämpfe</span>
+      <span className="font-mono text-xs text-cream/50">
+        {challenges.length ? `${challenges.length} aktiv` : "keine"}
+      </span>
+    </>
+  );
+
+  return (
+    <div className={offen ? "" : "mt-6"}>
+      {/* In der laufenden Runde ist die Liste fest offen – ein Aufklapper, der
+          sie wieder verschwinden lässt, wäre dort nur eine Falle. */}
+      {offen ? (
+        <div className="flex items-center gap-2">{kopf}</div>
+      ) : (
+        <button
+          type="button"
+          className="flex w-full items-center gap-2 text-left"
+          onClick={() => setAusgeklappt((a) => !a)}
+          aria-expanded={ausgeklappt}
+        >
+          {kopf}
+          <span aria-hidden className="ml-auto text-sm" style={{ color: APP.gold }}>
+            {ausgeklappt ? "▾" : "▸"}
+          </span>
+        </button>
+      )}
+
+      {ausgeklappt ? (
+        <>
+          <p className="mt-1.5 text-xs leading-relaxed text-cream/50">
+            Laufen neben der Schlagwertung mit. Gewertet wird immer die ganze Karte,
+            egal wann du einen dazunimmst.
+          </p>
+          <ul className="mt-3 flex flex-col gap-2">
+            {CHALLENGES.map((challenge) => {
+              const an = challenges.includes(challenge.id);
+              return (
+                <li key={challenge.id}>
+                  <button
+                    type="button"
+                    aria-pressed={an}
+                    onClick={() => umschalten(challenge.id)}
+                    className="flex w-full items-start gap-3 rounded-xl p-3 text-left"
+                    style={{
+                      backgroundColor: APP.cardAlt,
+                      outline: an ? `1.5px solid ${APP.gold}` : "none",
+                    }}
+                  >
+                    <span aria-hidden className="text-lg leading-6">
+                      {challenge.trophy}
+                    </span>
+                    <span className="min-w-0 flex-1">
+                      <span className="block text-sm font-semibold">{challenge.name}</span>
+                      <span className="block text-xs leading-snug text-cream/50">
+                        {challenge.rule}
+                      </span>
+                    </span>
+                    <span
+                      aria-hidden
+                      className="mt-0.5 text-sm"
+                      style={{ color: an ? APP.gold : "#ffffff40" }}
+                    >
+                      {an ? "✓" : "+"}
+                    </span>
+                  </button>
+                </li>
+              );
+            })}
+          </ul>
+        </>
+      ) : null}
+    </div>
+  );
+}
+
+/** Der Zwischenstand der Wettkämpfe während der Runde. */
+function ChallengeLiveCard({
+  results,
+  onEdit,
+}: {
+  results: ChallengeResult[];
+  onEdit: () => void;
+}) {
+  return (
+    <div className="rounded-2xl p-4" style={{ backgroundColor: APP.card }}>
+      <div className="flex items-baseline gap-2">
+        <span className="text-sm font-semibold">Wettkämpfe</span>
+        <button
+          type="button"
+          className="ml-auto text-xs font-semibold"
+          style={{ color: APP.gold }}
+          onClick={onEdit}
+        >
+          {results.length ? "Ändern" : "Hinzufügen"}
+        </button>
+      </div>
+
+      {results.length ? (
+        <ul className="mt-2.5 flex flex-col gap-1.5">
+          {results.map((result) => (
+            <li key={result.challenge.id} className="flex items-center gap-2 text-xs">
+              <span aria-hidden>{result.challenge.trophy}</span>
+              <span className="text-cream/50">{result.challenge.name}</span>
+              {result.leaderValueText ? (
+                <>
+                  <span className="ml-auto truncate font-semibold">{result.leaderNames}</span>
+                  <span className="font-mono tabular-nums" style={{ color: APP.gold }}>
+                    {result.leaderValueText}
+                  </span>
+                </>
+              ) : (
+                <span className="ml-auto text-cream/40">noch offen</span>
+              )}
+            </li>
+          ))}
+        </ul>
+      ) : (
+        <p className="mt-1.5 text-xs text-cream/40">
+          Serie, Asse, Bahnenduell und mehr – laufen nebenher mit.
+        </p>
+      )}
+    </div>
+  );
 }

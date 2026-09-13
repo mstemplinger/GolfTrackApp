@@ -51,8 +51,12 @@ export function Header({ lang, current }: { lang: Lang; current?: RouteKey }) {
   const copy = t(lang);
   const langHref = current ? alternatePath(current, lang) : alternatePath("home", lang);
 
+  // Deckend, nicht durchscheinend: Bei 85 % Deckkraft lief der Inhalt beim
+  // Scrollen sichtbar hinter der Leiste durch. Das obere Polster reicht in die
+  // Statusleiste hinein, seit die Seite mit `viewport-fit=cover` bis dort
+  // hinaufgeht.
   return (
-    <header className="sticky top-0 z-50 border-b rule bg-[#0a1d12]/85 backdrop-blur-md">
+    <header className="sticky top-0 z-50 border-b rule bg-[#0a1d12] pt-[env(safe-area-inset-top)]">
       <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-5 py-2.5 sm:px-8">
         <Wordmark lang={lang} />
 
@@ -135,7 +139,7 @@ export function Footer({ lang }: { lang: Lang }) {
   const copy = t(lang);
   const year = new Date().getFullYear();
   return (
-    <footer className="mt-24 border-t rule bg-black/20">
+    <footer className="mt-24 border-t rule bg-black/20 pb-[env(safe-area-inset-bottom)]">
       <div className="mx-auto grid max-w-6xl gap-8 px-5 py-14 sm:px-8 md:grid-cols-[1.4fr_1fr_1fr_1fr] md:gap-10">
         <div>
           <Wordmark lang={lang} />

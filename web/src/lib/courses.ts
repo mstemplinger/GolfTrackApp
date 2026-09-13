@@ -301,21 +301,27 @@ export async function recordAttempt(ipHash: string): Promise<void> {
   await query("INSERT INTO submission_attempts (ip_hash) VALUES ($1)", [ipHash]);
 }
 
+/** Wie viele Plätze ein Umkreis trifft, getrennt nach Art. */
+export type CourseReach = { golf: number; minigolf: number; total: number };
+
 /**
  * Wie viele freigegebene Plätze in einem Umkreis liegen.
  *
  * Grundlage der Umkreis-Werbung: Wer bucht, soll vorher sehen, wie viele
  * Anlagen er damit erreicht. Gerechnet wird mit der Haversine-Formel direkt
  * in SQL – für ein paar hundert Zeilen braucht es dafür kein PostGIS.
+ *
+ * Nach Art getrennt, weil daraus die Werbeplätze folgen: Golfplätze im
+ * Umkreis heißen `golf_scoring`, Minigolfanlagen `minigolf_scoring`.
  */
 export async function coursesWithin(
   latitude: number,
   longitude: number,
   radiusKm: number,
-): Promise<number> {
+): Promise<CourseReach> {
   await ensureSchema();
-  const rows = await query<{ count: string }>(
-    `SELECT count(*) AS count FROM courses
+  const rows = await query<{ kind: string; count: string }>(
+    `SELECT kind, count(*) AS count FROM courses
       WHERE status = 'approved'
         AND latitude IS NOT NULL AND longitude IS NOT NULL
         AND 6371 * acos(
@@ -324,10 +330,15 @@ export async function coursesWithin(
                   * cos(radians(longitude) - radians($2))
                 + sin(radians($1)) * sin(radians(latitude))
               ))
-            ) <= $3`,
+            ) <= $3
+      GROUP BY kind`,
     [latitude, longitude, radiusKm],
   );
-  return Number(rows[0]?.count ?? 0);
+  const count = (kind: CourseKind) =>
+    Number(rows.find((row) => row.kind === kind)?.count ?? 0);
+  const golf = count("golf");
+  const minigolf = count("minigolf");
+  return { golf, minigolf, total: golf + minigolf };
 }
 
 /** Koordinaten aller freigegebenen Plätze – für die Umkreis-Vorschau im Formular. */

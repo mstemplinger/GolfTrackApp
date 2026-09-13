@@ -27,7 +27,6 @@ export function AdForm({ ad, courses }: { ad?: AdRecord; courses: CourseOption[]
     <div className="mt-8 grid gap-8 lg:grid-cols-[minmax(0,1fr)_18rem]">
       <form action={action} className="paper rounded-[4px] p-6 sm:p-8">
         {ad ? <input type="hidden" name="id" value={ad.id} /> : null}
-        <input type="hidden" name="placement" value="minigolf_scoring" />
 
         <h2 className="font-display text-xl tracking-tight">
           {ad ? "Anzeige bearbeiten" : "Neue Anzeige"}
@@ -42,6 +41,21 @@ export function AdForm({ ad, courses }: { ad?: AdRecord; courses: CourseOption[]
               <option value="draft">Entwurf – wird nicht ausgeliefert</option>
               <option value="active">Aktiv – läuft in der App</option>
               <option value="paused">Pausiert</option>
+            </select>
+          </div>
+
+          <div>
+            <label className="label" htmlFor="placement">
+              Wo in der App
+            </label>
+            <select
+              id="placement"
+              name="placement"
+              defaultValue={ad?.placement ?? "minigolf_scoring"}
+              className="field"
+            >
+              <option value="minigolf_scoring">Minigolf-Zählkarte</option>
+              <option value="golf_scoring">Golf-Zählkarte</option>
             </select>
           </div>
 

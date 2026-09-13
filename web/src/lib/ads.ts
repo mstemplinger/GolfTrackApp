@@ -131,17 +131,35 @@ export async function createAd(input: AdInput): Promise<AdRecord> {
 /**
  * Anfrage vom öffentlichen Formular. Sie landet als Entwurf – nichts geht
  * ungesehen in die App.
+ *
+ * Je Werbeplatz entsteht ein eigener Entwurf: Wer einen Umkreis bucht, in dem
+ * Golfplätze *und* Minigolfanlagen liegen, bekommt zwei Zeilen im Adminpanel
+ * und damit beide Zählkarten. Getrennt deshalb, weil sich Bild und Text je
+ * nach Publikum unterscheiden dürfen – und weil man einen der beiden Plätze
+ * pausieren können muss, ohne den anderen mitzunehmen.
  */
-export async function createAdRequest(input: AdRequestInput): Promise<AdRecord> {
+export async function createAdRequest(
+  input: AdRequestInput,
+  placements: AdPlacement[],
+): Promise<AdRecord[]> {
   await ensureSchema();
+  const created: AdRecord[] = [];
+  for (const placement of placements) {
+    created.push(await insertAdRequest(input, placement));
+  }
+  return created;
+}
+
+async function insertAdRequest(input: AdRequestInput, placement: AdPlacement): Promise<AdRecord> {
   const rows = await query<DbRow>(
     `INSERT INTO ads (
        status, placement, course_slug, title, subtitle, image_url, link_url,
        advertiser, source, submitter_name, submitter_email, submitter_phone, request_note,
        latitude, longitude, radius_km, place_name, requested_months
-     ) VALUES ('draft','minigolf_scoring','',$1,$2,$3,$4,$5,'form',$6,$7,$8,$9,$10,$11,$12,$13,$14)
+     ) VALUES ('draft',$1,'',$2,$3,$4,$5,$6,'form',$7,$8,$9,$10,$11,$12,$13,$14,$15)
      RETURNING *`,
     [
+      placement,
       input.title,
       input.subtitle,
       input.imageURL,

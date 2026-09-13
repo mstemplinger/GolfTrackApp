@@ -538,6 +538,10 @@ function ReachNote({
 
   const golf = reached.filter((r) => r.kind === "golf").length;
   const mini = reached.length - golf;
+  // Nur ausschreiben, wenn beide Arten dabei sind – sonst steht da „5 Golf,
+  // 0 Minigolf". (`golf && mini` hätte hier eine nackte 0 in die Seite
+  // geschrieben; in JSX ist 0 ein sichtbarer Wert.)
+  const split = golf > 0 && mini > 0 ? ` – ${golf} Golf, ${mini} Minigolf` : "";
 
   return (
     <div className="rounded-[3px] border border-fairway/30 bg-fairway/5 p-4">
@@ -545,8 +549,10 @@ function ReachNote({
         <strong className="font-semibold">
           {reached.length} {reached.length === 1 ? "Platz" : "Plätze"}
         </strong>{" "}
-        im Umkreis von {radiusKm} km
-        {golf && mini ? ` – ${golf} Golf, ${mini} Minigolf` : ""}.
+        im Umkreis von {radiusKm} km{split}.
+      </p>
+      <p className="mt-1 text-xs leading-relaxed text-ink/60">
+        Die Anzeige läuft auf der Zählkarte – bei Golfrunden wie bei Minigolf.
       </p>
       <ul className="mt-2 flex flex-wrap gap-x-4 gap-y-1 text-xs text-ink/60">
         {reached.slice(0, 6).map((r) => (

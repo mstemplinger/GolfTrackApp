@@ -2,6 +2,7 @@ import { headers } from "next/headers";
 import { createAdRequest } from "@/lib/ads";
 import { hashIp } from "@/lib/auth";
 import { coursesWithin, recordAttempt, tooManyAttempts } from "@/lib/courses";
+import type { AdPlacement } from "@/lib/schema";
 import { adRequestSchema } from "@/lib/schema";
 
 /**
@@ -38,9 +39,16 @@ export async function POST(request: Request) {
   // Ein Umkreis, in dem kein einziger Platz liegt, wäre eine Anzeige ins
   // Leere. Lieber gleich sagen als später erklären.
   const reach = await coursesWithin(parsed.data.latitude, parsed.data.longitude, parsed.data.radiusKm);
-  if (reach === 0) {
+  if (reach.total === 0) {
     return Response.json({ error: "no_courses_in_radius" }, { status: 422 });
   }
+
+  // Welche Zählkarten der Umkreis überhaupt trifft. Liegt dort kein Golfplatz,
+  // entsteht auch kein Entwurf dafür – sonst stünden im Adminpanel Anzeigen,
+  // die nie jemand sehen kann.
+  const placements: AdPlacement[] = [];
+  if (reach.minigolf > 0) placements.push("minigolf_scoring");
+  if (reach.golf > 0) placements.push("golf_scoring");
 
   const headerList = await headers();
   const ip =
@@ -53,8 +61,8 @@ export async function POST(request: Request) {
     return Response.json({ error: "rate_limited" }, { status: 429 });
   }
 
-  await createAdRequest(parsed.data);
+  await createAdRequest(parsed.data, placements);
   await recordAttempt(ipHash);
 
-  return Response.json({ ok: true }, { status: 201 });
+  return Response.json({ ok: true, placements }, { status: 201 });
 }

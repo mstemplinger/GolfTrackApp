@@ -141,8 +141,12 @@ export type AdminUpdate = z.infer<typeof adminUpdateSchema>;
 
 /** `draft` = nur im Adminpanel, `active` = wird ausgeliefert, `paused` = ruht. */
 export const adStatus = z.enum(["draft", "active", "paused"]);
-/** Bislang nur ein Platz: die freie Fläche unter den Namen in der Minigolfkarte. */
-export const adPlacement = z.enum(["minigolf_scoring"]);
+/**
+ * Wo eine Anzeige in der App steht. Die Werte müssen genauso in `AdPlacement`
+ * (Swift) stehen – wer hier etwas ergänzt, muss es dort ebenfalls tun, sonst
+ * findet die App die Anzeige nie.
+ */
+export const adPlacement = z.enum(["minigolf_scoring", "golf_scoring"]);
 
 export type AdStatus = z.infer<typeof adStatus>;
 export type AdPlacement = z.infer<typeof adPlacement>;

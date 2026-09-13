@@ -7,7 +7,10 @@
     "build": "next build",
     "start": "next start -p ${PORT:-3200}",
     "lint": "eslint",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "icloud-ignore": "sh tools/icloud-ignore.sh",
+    "predev": "sh tools/icloud-ignore.sh",
+    "prebuild": "sh tools/icloud-ignore.sh"
   },
   "dependencies": {
     "@types/qrcode": "^1.5.6",

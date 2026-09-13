@@ -105,6 +105,33 @@ npm run typecheck && npm run lint
 
 Dazu am Browser bei 380 px messen, nicht schauen: kein waagerechter Überlauf (`scrollWidth === innerWidth`), jede Trefferfläche mindestens 44 px hoch, jede Farbkombination mit Schrift über 4,5:1. Ausgenommen sind allein Verweise mitten im Fließtext und die Zahlenfelder der Lochtabelle (36 px, begründet in `globals.css` bei `.field--tight`).
 
+## iCloud und die Konfliktkopien
+
+Das Repo liegt unter `~/Documents`, und iCloud synchronisiert diesen Ordner. In
+`.next` und `node_modules` legt iCloud dabei Konfliktkopien an – Dateien wie
+`routes.d 2.ts` neben `routes.d.ts`. TypeScript liest sie mit und bricht mit
+Fehlern ab, die nichts mit dem Quelltext zu tun haben:
+
+```
+.next/types/routes.d 2.ts(84,8): error TS2300: Duplicate identifier 'LayoutProps'
+```
+
+Beide Ordner tragen deshalb das Attribut `com.apple.fileprovider.ignore#P`, mit
+dem iCloud sie in Ruhe lässt. Es hängt am Ordner selbst und verschwindet mit
+ihm, also setzen `npm run dev` und `npm run build` es über `tools/icloud-ignore.sh`
+vorher neu. Von Hand:
+
+```bash
+npm run icloud-ignore
+```
+
+Auf dem Server tut das Skript nichts – dort gibt es weder iCloud noch `xattr`.
+Sind schon Kopien da, weg damit:
+
+```bash
+find .next node_modules -name "* [0-9].*" -delete
+```
+
 ## Wenn `next dev` scheinbar hängt
 
 Das Projekt liegt unter `~/Documents` und damit in einem Ordner, den iCloud synchronisiert. Werden Dateien in die Cloud ausgelagert, liest Node sie einzeln zurück: `next dev` gibt dann minutenlang gar nichts aus, und Seitenaufrufe brauchen Minuten statt Millisekunden. Erkennen lässt sich das an `compressed,dataless`:

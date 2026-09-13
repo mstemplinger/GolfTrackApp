@@ -66,6 +66,10 @@ struct AdSlotView: View {
     var body: some View {
         if !AppClipEnvironment.isRunningAsAppClip && subscriptionManager.showsAds {
             content
+                // Der Slot holt seine Anzeigen selbst. Vorher tat das nur die
+                // Minigolf-Seite – wer ausschließlich Golf spielt, bekam nie
+                // einen Feed und sah dauerhaft nur die Eigenwerbung.
+                .task { await catalog.refreshIfNeeded() }
         }
     }
 

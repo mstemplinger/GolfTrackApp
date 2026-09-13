@@ -8,9 +8,9 @@
     "start": "next start -p ${PORT:-3200}",
     "lint": "eslint",
     "typecheck": "tsc --noEmit",
-    "icloud-ignore": "sh tools/icloud-ignore.sh",
-    "predev": "sh tools/icloud-ignore.sh",
-    "prebuild": "sh tools/icloud-ignore.sh"
+    "icloud-ignore": "sh ../tools/icloud-ignore.sh",
+    "predev": "sh ../tools/icloud-ignore.sh 2>/dev/null || true",
+    "prebuild": "sh ../tools/icloud-ignore.sh 2>/dev/null || true"
   },
   "dependencies": {
     "@types/qrcode": "^1.5.6",

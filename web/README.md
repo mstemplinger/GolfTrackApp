@@ -118,14 +118,23 @@ Fehlern ab, die nichts mit dem Quelltext zu tun haben:
 
 Beide Ordner tragen deshalb das Attribut `com.apple.fileprovider.ignore#P`, mit
 dem iCloud sie in Ruhe lässt. Es hängt am Ordner selbst und verschwindet mit
-ihm, also setzen `npm run dev` und `npm run build` es über `tools/icloud-ignore.sh`
-vorher neu. Von Hand:
+ihm, also setzen `npm run dev` und `npm run build` es über
+`../tools/icloud-ignore.sh` vorher neu. Von Hand:
 
 ```bash
 npm run icloud-ignore
 ```
 
-Auf dem Server tut das Skript nichts – dort gibt es weder iCloud noch `xattr`.
+Dasselbe Skript kümmert sich um die Ordner im Marketing – `node_modules`, die
+erzeugten Bilder unter `out` und Pythons `__pycache__`. Die entstehen seltener
+neu, deshalb hängt dort kein Haken dran; nach einem `rm -rf` einmal aufrufen:
+
+```bash
+sh tools/icloud-ignore.sh
+```
+
+Auf dem Server tut das Skript nichts – es wird gar nicht erst übertragen, und
+der Haken vor dem Bau greift dort ins Leere, ohne ihn abzubrechen.
 Sind schon Kopien da, weg damit:
 
 ```bash

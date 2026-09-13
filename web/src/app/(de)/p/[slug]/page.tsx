@@ -62,7 +62,6 @@ export default async function PlayPage({ params }: PageProps<"/p/[slug]">) {
   const pars = course.holeData
     .map((hole) => hole.par)
     .filter((par): par is number => par !== null);
-  const totalPar = pars.length === course.holes ? pars.reduce((sum, par) => sum + par, 0) : null;
 
   return (
     <>
@@ -81,23 +80,12 @@ export default async function PlayPage({ params }: PageProps<"/p/[slug]">) {
               : "Schön, dass du da bist! Ab jetzt zählen wir für dich mit – Bahn für Bahn.")}
         </p>
 
-        <dl className="mx-auto mt-8 grid max-w-md gap-px overflow-hidden rounded-sm border rule bg-brass/15 sm:grid-cols-2">
-          <div className="bg-night/85 p-5">
-            <dt className="marginal">{isGolf ? "Löcher" : "Bahnen"}</dt>
-            <dd className="mt-1.5 font-mono text-3xl text-brass">{course.holes}</dd>
-          </div>
-          <div className="bg-night/85 p-5">
-            <dt className="marginal">Par</dt>
-            <dd className="mt-1.5 font-mono text-3xl text-cream/80">{totalPar ?? "–"}</dd>
-          </div>
-        </dl>
-
         {/*
           Der Knopf hilft nur, wenn die App schon installiert ist. Sie fängt
           diese Adresse dann ohnehin selbst ab – dieser Weg bleibt für den
           Fall, dass jemand den Link weitergeschickt hat.
         */}
-        <div className="mt-8 flex flex-wrap justify-center gap-3">
+        <div className="mt-9 flex flex-wrap justify-center gap-3">
           <a href={deepLink} className="btn-brass">
             In der App öffnen
           </a>

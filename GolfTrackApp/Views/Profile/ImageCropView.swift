@@ -34,17 +34,19 @@ struct ImageCropView: View {
                             SimultaneousGesture(
                                 MagnificationGesture()
                                     .onChanged { value in
-                                        scale = max(1.0, lastScale * value)
+                                        scale = min(maxScale, max(minScale, lastScale * value))
+                                        offset = clampedOffset(offset)
                                     }
                                     .onEnded { _ in
                                         lastScale = scale
+                                        lastOffset = offset
                                     },
                                 DragGesture()
                                     .onChanged { value in
-                                        offset = CGSize(
+                                        offset = clampedOffset(CGSize(
                                             width: lastOffset.width + value.translation.width,
                                             height: lastOffset.height + value.translation.height
-                                        )
+                                        ))
                                     }
                                     .onEnded { _ in
                                         lastOffset = offset
@@ -94,42 +96,47 @@ struct ImageCropView: View {
                     .padding(.bottom, 40)
             }
         }
-        .onAppear { fitImageToCircle() }
     }
 
-    private func fitImageToCircle() {
-        // Scale image so it at least fills the crop circle
-        let imgW = image.size.width
-        let imgH = image.size.height
-        let minDim = min(imgW, imgH)
-        let needed = cropSize / min(UIScreen.main.bounds.width, UIScreen.main.bounds.height) * max(imgW, imgH)
-        scale = max(1.0, cropSize / minDim * (UIScreen.main.bounds.width / max(imgW, imgH)) * (imgW / imgH))
-        lastScale = scale
+    private let maxScale: CGFloat = 6
+
+    /// Bildgröße bei Zoom 1 (scaledToFill im Rahmen).
+    private var baseSize: CGSize {
+        let viewW = containerSize.width
+        let viewH = containerSize.height
+        let imgAspect = image.size.width / image.size.height
+        if imgAspect > viewW / viewH {
+            return CGSize(width: viewH * imgAspect, height: viewH)
+        }
+        return CGSize(width: viewW, height: viewW / imgAspect)
+    }
+
+    /// Kleinster Zoom, bei dem das Bild den Ring gerade noch ausfüllt.
+    private var minScale: CGFloat {
+        let base = baseSize
+        return min(1, cropSize / min(base.width, base.height))
+    }
+
+    /// Hält den Ring immer vollständig mit Bild bedeckt.
+    private func clampedOffset(_ proposed: CGSize) -> CGSize {
+        let base = baseSize
+        let maxX = max(0, (base.width * scale - cropSize) / 2)
+        let maxY = max(0, (base.height * scale - cropSize) / 2)
+        return CGSize(
+            width: min(maxX, max(-maxX, proposed.width)),
+            height: min(maxY, max(-maxY, proposed.height))
+        )
     }
 
     private func cropImage() -> UIImage {
-        let screenScale = UIScreen.main.scale
-        let viewW = containerSize.width
-        let viewH = containerSize.height
-
         // Render the current state into a UIImage
         let renderer = UIGraphicsImageRenderer(size: CGSize(width: cropSize, height: cropSize))
         return renderer.image { ctx in
             ctx.cgContext.translateBy(x: cropSize / 2, y: cropSize / 2)
 
-            let imgAspect = image.size.width / image.size.height
-            let baseW: CGFloat
-            let baseH: CGFloat
-            if imgAspect > viewW / viewH {
-                baseH = viewH
-                baseW = baseH * imgAspect
-            } else {
-                baseW = viewW
-                baseH = baseW / imgAspect
-            }
-
-            let scaledW = baseW * scale
-            let scaledH = baseH * scale
+            let base = baseSize
+            let scaledW = base.width * scale
+            let scaledH = base.height * scale
 
             ctx.cgContext.translateBy(x: offset.width, y: offset.height)
             image.draw(in: CGRect(x: -scaledW / 2, y: -scaledH / 2, width: scaledW, height: scaledH))

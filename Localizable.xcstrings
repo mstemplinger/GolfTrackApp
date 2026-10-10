@@ -29,6 +29,62 @@
         }
       }
     },
+    "\n\nDas Positions-Tracking zeichnet dazwischen weiter deine Laufspur auf." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "\n\nPosition tracking keeps recording your walking path in between."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "\n\nEl seguimiento de posición sigue registrando tu recorrido entre golpes."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "\n\nLe suivi de position continue d’enregistrer ton parcours entre les coups."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "\n\nIl tracciamento della posizione continua a registrare il tuo percorso tra un colpo e l’altro."
+          }
+        }
+      }
+    },
+    "\n\nMit eingeschaltetem Positions-Tracking lernt die App Abschläge und Grüns zusätzlich aus deiner Laufspur." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "\n\nWith position tracking turned on, the app also learns tees and greens from your walking path."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "\n\nCon el seguimiento de posición activado, la app aprende además los tees y greens de tu recorrido."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "\n\nAvec le suivi de position activé, l’app apprend aussi les départs et les greens à partir de ton parcours."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "\n\nCon il tracciamento della posizione attivo, l’app impara anche tee e green dal tuo percorso."
+          }
+        }
+      }
+    },
     "-" : {
       "localizations" : {
         "en" : {
@@ -14414,6 +14470,34 @@
         }
       }
     },
+    "Kein GPS-Signal" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No GPS signal"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sin señal GPS"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pas de signal GPS"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nessun segnale GPS"
+          }
+        }
+      }
+    },
     "Kein GPS-Signal – Position nicht gespeichert" : {
       "localizations" : {
         "en" : {
@@ -23664,6 +23748,34 @@
         }
       }
     },
+    "So funktioniert's" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "How it works"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Así funciona"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Comment ça marche"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Come funziona"
+          }
+        }
+      }
+    },
     "Sobald du ein Minigolf-Spiel beendest, landet es hier." : {
       "localizations" : {
         "en" : {
@@ -25011,6 +25123,34 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Stato"
+          }
+        }
+      }
+    },
+    "Stell dich auf den Abschlag und tippe auf „Abschlag setzen“. Deine Position wird als Abschlag dieses Lochs gespeichert.\n\nDanach zählst du wie gewohnt mit Plus: Jeder Tipp nimmt deinen aktuellen Standort als Lage des nächsten Schlags. Beim nächsten Mal kennt die App den Abschlag schon." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Stand on the tee and tap “Set Tee”. Your position is saved as the tee of this hole.\n\nThen count as usual with plus: every tap takes your current location as the position of the next shot. Next time, the app already knows the tee."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Colócate en el tee y toca «Colocar tee». Tu posición se guarda como el tee de este hoyo.\n\nDespués cuenta como siempre con el más: cada toque toma tu ubicación actual como la posición del siguiente golpe. La próxima vez, la app ya conocerá el tee."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Place-toi sur le départ et touche « Définir le tee ». Ta position est enregistrée comme départ de ce trou.\n\nEnsuite, compte comme d’habitude avec le plus : chaque appui prend ta position actuelle comme emplacement du coup suivant. La prochaine fois, l’app connaîtra déjà le départ."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mettiti sul tee e tocca «Imposta tee». La tua posizione viene salvata come tee di questa buca.\n\nPoi conta come sempre con il più: ogni tocco prende la tua posizione attuale come punto del colpo successivo. La prossima volta l’app conoscerà già il tee."
           }
         }
       }
@@ -27086,6 +27226,34 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "In attesa del GPS…"
+          }
+        }
+      }
+    },
+    "Warte kurz, bis dein Standort gefunden ist, und versuch es dann noch einmal." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wait a moment until your location is found, then try again."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Espera un momento hasta que se encuentre tu ubicación y vuelve a intentarlo."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Attends un instant que ta position soit trouvée, puis réessaie."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Attendi un attimo finché la tua posizione viene trovata, poi riprova."
           }
         }
       }

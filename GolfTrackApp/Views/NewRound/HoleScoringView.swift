@@ -28,6 +28,10 @@ struct HoleScoringView: View {
     @State private var showClubPicker = false
     @State private var pendingGPSLocation: CLLocation?
     @State private var pendingShotNumber: Int = 0
+    @State private var showTeeHint = false
+    @State private var showNoGPSAlert = false
+    @AppStorage("hint.teeSetter.shown") private var teeHintShown = false
+    @AppStorage(RoundTrackingService.enabledKey) private var trackingEnabled = false
 
     private var diff: Int { score.strokes - par }
 
@@ -156,6 +160,23 @@ struct HoleScoringView: View {
         }
         .onReceive(NotificationCenter.default.publisher(for: .openShotTracker)) { _ in
             showShotTracker = true
+        }
+        .alert("So funktioniert's", isPresented: $showTeeHint) {
+            Button("Abschlag setzen") {
+                teeHintShown = true
+                setTee()
+            }
+            Button("Abbrechen", role: .cancel) {}
+        } message: {
+            Text("Stell dich auf den Abschlag und tippe auf „Abschlag setzen“. Deine Position wird als Abschlag dieses Lochs gespeichert.\n\nDanach zählst du wie gewohnt mit Plus: Jeder Tipp nimmt deinen aktuellen Standort als Lage des nächsten Schlags. Beim nächsten Mal kennt die App den Abschlag schon.")
+            + Text(trackingEnabled
+                   ? "\n\nDas Positions-Tracking zeichnet dazwischen weiter deine Laufspur auf."
+                   : "\n\nMit eingeschaltetem Positions-Tracking lernt die App Abschläge und Grüns zusätzlich aus deiner Laufspur.")
+        }
+        .alert("Kein GPS-Signal", isPresented: $showNoGPSAlert) {
+            Button("OK", role: .cancel) {}
+        } message: {
+            Text("Warte kurz, bis dein Standort gefunden ist, und versuch es dann noch einmal.")
         }
         .task {
             locationManager.requestWhenInUseAuthorization()
@@ -522,6 +543,11 @@ struct HoleScoringView: View {
                         prev.toLongitude = c.longitude
                         prev.distanceMeters = Shot.haversineDistance(from: prev.fromCoordinate, to: c)
                     }
+                    // Die Lage sofort speichern – auch wenn die Schlägerwahl
+                    // übersprungen wird, bleibt die Kette der GPS-Punkte geschlossen.
+                    if let loc = userLocation {
+                        insertShot(number: shotNum, at: loc.coordinate)
+                    }
                     pendingGPSLocation = userLocation
                     pendingShotNumber = shotNum
                     if !clubs.isEmpty { showClubPicker = true }
@@ -645,7 +671,71 @@ struct HoleScoringView: View {
 
     // MARK: - Shot Tracker Button
 
+    /// Für dieses Loch ist noch kein Abschlag bekannt – weder aus dem Verzeichnis
+    /// noch aus dem Positions-Tracking – und in dieser Runde noch nichts erfasst.
+    private var needsTee: Bool {
+        guard let course = round.course else { return false }
+        return course.teeCoordinate(forHole: score.holeNumber) == nil && score.shots.isEmpty
+    }
+
+    @ViewBuilder
     private var shotTrackerButton: some View {
+        if needsTee {
+            teeSetterButton
+        } else {
+            shotRecorderButton
+        }
+    }
+
+    private var teeSetterButton: some View {
+        Button {
+            Haptics.tap()
+            if teeHintShown {
+                setTee()
+            } else {
+                showTeeHint = true
+            }
+        } label: {
+            HStack(spacing: 8) {
+                Image(systemName: "figure.golf")
+                Text("Abschlag setzen")
+            }
+            .font(.headline)
+            .foregroundStyle(Color(red: 0.06, green: 0.14, blue: 0.08))
+            .frame(maxWidth: .infinity)
+            .padding(.vertical, 16)
+            .background(AppTheme.gold, in: RoundedRectangle(cornerRadius: 14))
+        }
+    }
+
+    /// Nimmt den aktuellen Standort als Abschlag: für den Platz (damit das Loch
+    /// ihn ab jetzt kennt) und als Startpunkt von Schlag 1. Jeder weitere Tipp
+    /// auf Plus hängt dann den nächsten GPS-Punkt an.
+    private func setTee() {
+        guard let loc = userLocation else {
+            Haptics.warning()
+            showNoGPSAlert = true
+            return
+        }
+        Haptics.stroke()
+        let c = loc.coordinate
+        round.course?.setTeeCoordinate(c, forHole: score.holeNumber)
+        if score.strokes == 0 { score.strokes = 1 }
+        insertShot(number: 1, at: c)
+        pendingGPSLocation = loc
+        pendingShotNumber = 1
+        if !clubs.isEmpty { showClubPicker = true }
+    }
+
+    private func insertShot(number: Int, at coordinate: CLLocationCoordinate2D) {
+        guard !score.shots.contains(where: { $0.shotNumber == number }) else { return }
+        let shot = Shot(shotNumber: number, from: coordinate, to: coordinate)
+        shot.holeScore = score
+        score.shots.append(shot)
+        context.insert(shot)
+    }
+
+    private var shotRecorderButton: some View {
         Button {
             Haptics.tap()
             showShotTracker = true
@@ -1031,6 +1121,11 @@ private struct ClubPickerSheet: View {
     }
 
     private func recordShot(club: String) {
+        // Mit GPS legt der Plus-Knopf den Schlag schon an – dann nur den Schläger nachtragen.
+        if let existing = holeScore.shots.first(where: { $0.shotNumber == strokeNumber }) {
+            existing.club = club
+            return
+        }
         let coord = gpsLocation?.coordinate ?? CLLocationCoordinate2D(latitude: 0, longitude: 0)
         let shot = Shot(shotNumber: strokeNumber, from: coord, to: coord, club: club)
         shot.holeScore = holeScore

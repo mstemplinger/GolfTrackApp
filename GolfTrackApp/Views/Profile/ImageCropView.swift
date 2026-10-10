@@ -9,6 +9,7 @@ struct ImageCropView: View {
     @State private var lastScale: CGFloat = 1.0
     @State private var offset: CGSize = .zero
     @State private var lastOffset: CGSize = .zero
+    @State private var containerSize: CGSize = UIScreen.main.bounds.size
 
     private let cropSize: CGFloat = 280
 
@@ -16,48 +17,55 @@ struct ImageCropView: View {
         ZStack {
             Color.black.ignoresSafeArea()
 
-            // Image with gestures
+            // Bild, Abdunklung und Ring teilen sich denselben Rahmen,
+            // damit Ausschnitt und Ring exakt übereinanderliegen.
             GeometryReader { geo in
-                let center = CGPoint(x: geo.size.width / 2, y: geo.size.height / 2)
-                Image(uiImage: image)
-                    .resizable()
-                    .scaledToFill()
-                    .frame(width: geo.size.width, height: geo.size.height)
-                    .scaleEffect(scale)
-                    .offset(offset)
-                    .gesture(
-                        SimultaneousGesture(
-                            MagnificationGesture()
-                                .onChanged { value in
-                                    scale = max(1.0, lastScale * value)
-                                }
-                                .onEnded { _ in
-                                    lastScale = scale
-                                },
-                            DragGesture()
-                                .onChanged { value in
-                                    offset = CGSize(
-                                        width: lastOffset.width + value.translation.width,
-                                        height: lastOffset.height + value.translation.height
-                                    )
-                                }
-                                .onEnded { _ in
-                                    lastOffset = offset
-                                }
+                ZStack {
+                    Image(uiImage: image)
+                        .resizable()
+                        .scaledToFill()
+                        .frame(width: geo.size.width, height: geo.size.height)
+                        .scaleEffect(scale)
+                        .offset(offset)
+                        .frame(width: geo.size.width, height: geo.size.height)
+                        .clipped()
+                        .contentShape(Rectangle())
+                        .gesture(
+                            SimultaneousGesture(
+                                MagnificationGesture()
+                                    .onChanged { value in
+                                        scale = max(1.0, lastScale * value)
+                                    }
+                                    .onEnded { _ in
+                                        lastScale = scale
+                                    },
+                                DragGesture()
+                                    .onChanged { value in
+                                        offset = CGSize(
+                                            width: lastOffset.width + value.translation.width,
+                                            height: lastOffset.height + value.translation.height
+                                        )
+                                    }
+                                    .onEnded { _ in
+                                        lastOffset = offset
+                                    }
+                            )
                         )
-                    )
-                    .clipped()
+
+                    // Dimming overlay with circular cutout
+                    CropOverlay(cropSize: cropSize)
+                        .allowsHitTesting(false)
+
+                    // Crop circle border
+                    Circle()
+                        .stroke(AppTheme.gold, lineWidth: 2)
+                        .frame(width: cropSize, height: cropSize)
+                        .allowsHitTesting(false)
+                }
+                .onAppear { containerSize = geo.size }
+                .onChange(of: geo.size) { _, newSize in containerSize = newSize }
             }
-
-            // Dimming overlay with circular cutout
-            CropOverlay(cropSize: cropSize)
-                .allowsHitTesting(false)
-
-            // Crop circle border
-            Circle()
-                .stroke(AppTheme.gold, lineWidth: 2)
-                .frame(width: cropSize, height: cropSize)
-                .allowsHitTesting(false)
+            .ignoresSafeArea()
 
             // Buttons
             VStack {
@@ -101,8 +109,8 @@ struct ImageCropView: View {
 
     private func cropImage() -> UIImage {
         let screenScale = UIScreen.main.scale
-        let viewW = UIScreen.main.bounds.width
-        let viewH = UIScreen.main.bounds.height
+        let viewW = containerSize.width
+        let viewH = containerSize.height
 
         // Render the current state into a UIImage
         let renderer = UIGraphicsImageRenderer(size: CGSize(width: cropSize, height: cropSize))
@@ -112,7 +120,7 @@ struct ImageCropView: View {
             let imgAspect = image.size.width / image.size.height
             let baseW: CGFloat
             let baseH: CGFloat
-            if imgAspect > 1 {
+            if imgAspect > viewW / viewH {
                 baseH = viewH
                 baseW = baseH * imgAspect
             } else {
@@ -144,7 +152,6 @@ private struct CropOverlay: View {
             context.blendMode = .destinationOut
             context.fill(circle, with: .color(.black))
         }
-        .ignoresSafeArea()
         .allowsHitTesting(false)
         .compositingGroup()
     }

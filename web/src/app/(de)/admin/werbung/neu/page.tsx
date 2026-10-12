@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import { isAuthenticated } from "@/lib/auth";
-import { listCourses } from "@/lib/courses";
+import { courseMarkers, listCourses } from "@/lib/courses";
 import { AdForm } from "../AdForm";
 
 export const metadata: Metadata = {
@@ -13,7 +13,10 @@ export const metadata: Metadata = {
 export default async function NewAdPage() {
   if (!(await isAuthenticated())) redirect("/admin");
 
-  const courses = await listCourses({ status: "approved", kind: "minigolf", limit: 500 });
+  const [courses, markers] = await Promise.all([
+    listCourses({ status: "approved", kind: "minigolf", limit: 500 }),
+    courseMarkers(),
+  ]);
 
   return (
     <div className="mx-auto max-w-5xl px-5 py-12 sm:px-8">
@@ -22,6 +25,8 @@ export default async function NewAdPage() {
       </Link>
       <h1 className="mt-4 border-b rule pb-6 font-display text-3xl tracking-tight">Neue Anzeige</h1>
       <AdForm
+        markers={markers}
+        mapsKey={process.env.GOOGLE_MAPS_API_KEY ?? ""}
         courses={courses.map((course) => ({
           slug: course.slug,
           name: course.name,

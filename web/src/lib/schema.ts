@@ -225,7 +225,7 @@ export const adRequestSchema = z.object({
    */
   latitude: z.number().min(-90).max(90),
   longitude: z.number().min(-180).max(180),
-  radiusKm: z.number().int().min(1).max(200),
+  radiusKm: z.number().int().min(5).max(100),
   placeName: trimmed(120).default(""),
   /** Wunschlaufzeit in Monaten. Preis und genaue Daten klärt die Rückfrage. */
   requestedMonths: z.number().int().min(1).max(36),

@@ -4,6 +4,12 @@ import { Footer, Header, PageHeader } from "@/components/Chrome";
 import { SITE_URL } from "@/i18n/routes";
 import { courseMarkers } from "@/lib/courses";
 import { isPlaceholder, site } from "@/lib/site";
+import {
+  formatEuro,
+  GOLF_COURSE_MONTHLY_CENTS,
+  MINIGOLF_COURSE_MONTHLY_CENTS,
+  MINIMUM_MONTHLY_CENTS,
+} from "@/lib/adPricing";
 import { AdRequestForm } from "@/views/AdRequestForm";
 
 /**
@@ -27,7 +33,7 @@ const STEPS = [
   {
     index: "01",
     title: "Umkreis wählen",
-    text: "Standort setzen, Reichweite von 5 bis 100 km festlegen. Noch beim Ausfüllen steht daneben, welche Golf- und Minigolfplätze darin liegen.",
+    text: "Standort auf der Karte setzen, Kreis von 5 bis 100 km aufziehen. Sofort steht daneben, welche Golf- und Minigolfplätze darin liegen – und was es kostet.",
   },
   {
     index: "02",
@@ -104,11 +110,14 @@ export default async function Page() {
 
             <h2 className="marginal mt-12">Wie gebucht wird</h2>
             <p className="mt-4 max-w-2xl leading-relaxed text-cream/75">
-              Über das Formular weiter unten: Standort setzen, Umkreis und Laufzeit wählen, die
-              zwei Zeilen tippen, abschicken. Noch beim Ausfüllen steht daneben, wie viele Plätze
-              der Umkreis trifft. Die Anfrage landet als Entwurf bei uns – nichts geht ungesehen in
-              die App. Preis und genaue Daten klären wir per Mail, danach wird geschaltet. Keine
-              Auktion, kein Werbenetzwerk.
+              Über das Formular weiter unten: Standort auf der Karte setzen, Umkreis und Laufzeit
+              wählen, die zwei Zeilen tippen, abschicken. Noch beim Ausfüllen steht daneben, wie
+              viele Plätze der Umkreis trifft und was das kostet: {formatEuro(GOLF_COURSE_MONTHLY_CENTS)} im
+              Monat je Golfplatz, {formatEuro(MINIGOLF_COURSE_MONTHLY_CENTS)} je Minigolfanlage, mindestens{" "}
+              {formatEuro(MINIMUM_MONTHLY_CENTS)} – ab drei Monaten günstiger. Die Anfrage landet als
+              Entwurf bei uns, nichts geht ungesehen in die App. Danach bestätigen wir per Mail und
+              schalten. Keine Auktion, kein Werbenetzwerk. Plätze, die in keinem gebuchten Umkreis liegen,
+              zeigen die Anzeigen des nächstgelegenen Umkreises – ohne Aufpreis für Sie.
             </p>
 
             <h2 className="marginal mt-12">Was nicht passiert</h2>
@@ -116,7 +125,7 @@ export default async function Page() {
               <li>Kein Werbenetzwerk, keine fremden Skripte, keine Profilbildung.</li>
               <li>Gezählt wird nur, wie oft eine Anzeige zu sehen war und wie oft jemand tippte.</li>
               <li>Keine Gerätekennung, kein Standort, nichts, was auf einen Gast zurückführt.</li>
-              <li>Wer ein Abo hat, sieht die Fläche gar nicht.</li>
+              <li>Wer „Werbefrei“ gekauft oder ein Abo hat, sieht die Fläche gar nicht.</li>
             </ul>
           </div>
 
@@ -146,7 +155,7 @@ export default async function Page() {
         </section>
 
         <section id="anfragen" className="mt-16 scroll-mt-8 border-t rule pt-14">
-          <AdRequestForm markers={markers} />
+          <AdRequestForm markers={markers} mapsKey={process.env.GOOGLE_MAPS_API_KEY ?? ""} />
         </section>
       </main>
 

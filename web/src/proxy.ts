@@ -35,6 +35,8 @@ const OPEN = [
   "/start",
   "/minigolf/", // Universal Links und App Clip
   "/golf/",
+  "/werbung/", // Ziel der Anzeigen in der App (nur mit Kennung, nicht /werbung selbst)
+  "/en/ad/",
   "/datenschutz", // Datenschutz- und Support-Adresse im App Store
   "/en/privacy",
   "/support",

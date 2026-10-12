@@ -2,8 +2,9 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound, redirect } from "next/navigation";
 import { adReach, getAd } from "@/lib/ads";
+import { formatEuro } from "@/lib/adPricing";
 import { isAuthenticated } from "@/lib/auth";
-import { listCourses } from "@/lib/courses";
+import { courseMarkers, listCourses } from "@/lib/courses";
 import { AdForm } from "../AdForm";
 import { AdStatusPill } from "../AdStatusPill";
 import { removeAd, switchAdStatus } from "../actions";
@@ -20,9 +21,10 @@ export default async function AdDetailPage({ params }: PageProps<"/admin/werbung
   const ad = await getAd(id);
   if (!ad) notFound();
 
-  const [reach, courses] = await Promise.all([
+  const [reach, courses, markers] = await Promise.all([
     adReach(ad.id),
     listCourses({ status: "approved", kind: "minigolf", limit: 500 }),
+    courseMarkers(),
   ]);
 
   const rate = reach.total.impressions
@@ -88,6 +90,14 @@ export default async function AdDetailPage({ params }: PageProps<"/admin/werbung
               label="Wunschlaufzeit"
               value={ad.requestedMonths ? `${ad.requestedMonths} Monate` : "–"}
             />
+            <Detail
+              label="Richtpreis (netto, ganze Anfrage)"
+              value={
+                ad.quotedTotalCents != null && ad.quotedMonthlyCents != null
+                  ? `${formatEuro(ad.quotedMonthlyCents)} / Monat · gesamt ${formatEuro(ad.quotedTotalCents)}`
+                  : "–"
+              }
+            />
           </dl>
           {ad.requestNote ? (
             <p className="mt-4 max-w-2xl whitespace-pre-line text-sm leading-relaxed text-cream/75">
@@ -132,6 +142,8 @@ export default async function AdDetailPage({ params }: PageProps<"/admin/werbung
 
       <AdForm
         ad={ad}
+        markers={markers}
+        mapsKey={process.env.GOOGLE_MAPS_API_KEY ?? ""}
         courses={courses.map((course) => ({
           slug: course.slug,
           name: course.name,

@@ -110,6 +110,18 @@ export function Privacy({ lang }: { lang: Lang }) {
           : "To guard against automated submissions, a value derived from your IP address is stored. The IP address itself is not stored; the derived value is deleted after 24 hours."}
       </p>
 
+      <h2>{de ? "Werbeplatz anfragen und Karte" : "Ad requests and map"}</h2>
+      <p>
+        {de
+          ? "Wer auf /werbung einen Werbeplatz anfragt, übermittelt Standort, Umkreis, Anzeigentext sowie Name, E-Mail-Adresse und auf Wunsch Telefonnummer. Die Angaben dienen nur der Bearbeitung der Anfrage. Rechtsgrundlage ist Art. 6 Abs. 1 lit. b DSGVO."
+          : "Anyone requesting an ad slot on /werbung submits a location, radius, ad text as well as name, email address and optionally a phone number. The data is only used to handle the request. Legal basis: Art. 6(1)(b) GDPR."}
+      </p>
+      <p>
+        {de
+          ? "Zum Setzen des Standorts lässt sich dort eine Karte von Google Maps (Google Ireland Limited, Gordon House, Barrow Street, Dublin 4, Irland) einblenden. Sie wird erst nach einem Klick auf „Karte laden“ abgerufen; erst dann erhält Google deine IP-Adresse und die üblichen Browserangaben, und es kann dabei zu einer Übermittlung in die USA kommen. Rechtsgrundlage ist deine Einwilligung durch den Klick (Art. 6 Abs. 1 lit. a DSGVO). Ohne Karte funktioniert das Formular mit den Koordinatenfeldern genauso. Näheres: policies.google.com/privacy."
+          : "To set the location you can show a Google Maps map there (Google Ireland Limited, Gordon House, Barrow Street, Dublin 4, Ireland). It is only loaded after you click “Karte laden” (load map); only then does Google receive your IP address and the usual browser information, which may involve a transfer to the USA. The legal basis is your consent given by that click (Art. 6(1)(a) GDPR). Without the map the form works just as well using the coordinate fields. Details: policies.google.com/privacy."}
+      </p>
+
       <h2>{de ? "Die App" : "The app"}</h2>
       <p>
         {de

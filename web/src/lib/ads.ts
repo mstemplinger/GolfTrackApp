@@ -1,6 +1,7 @@
 import "server-only";
 import { query, queryOne } from "./db";
 import { ensureSchema } from "./migrations";
+import type { AdQuote } from "./adPricing";
 import type { AdInput, AdPlacement, AdRequestInput, AdStatus } from "./schema";
 
 /**
@@ -31,6 +32,9 @@ export interface AdRecord {
   radiusKm: number | null;
   placeName: string;
   requestedMonths: number | null;
+  /** Richtpreis aus dem Formular, netto in Cent; null bei Anzeigen aus dem Adminpanel. */
+  quotedMonthlyCents: number | null;
+  quotedTotalCents: number | null;
   /** `admin` = von Hand angelegt, `form` = über /werbung eingegangen. */
   source: string;
   submitterName: string;
@@ -76,6 +80,8 @@ function mapRow(row: DbRow): AdRecord {
     radiusKm: row.radius_km == null ? null : Number(row.radius_km),
     placeName: asString(row.place_name),
     requestedMonths: row.requested_months == null ? null : Number(row.requested_months),
+    quotedMonthlyCents: row.quoted_monthly_cents == null ? null : Number(row.quoted_monthly_cents),
+    quotedTotalCents: row.quoted_total_cents == null ? null : Number(row.quoted_total_cents),
     source: asString(row.source),
     submitterName: asString(row.submitter_name),
     submitterEmail: asString(row.submitter_email),
@@ -141,22 +147,28 @@ export async function createAd(input: AdInput): Promise<AdRecord> {
 export async function createAdRequest(
   input: AdRequestInput,
   placements: AdPlacement[],
+  quote: AdQuote,
 ): Promise<AdRecord[]> {
   await ensureSchema();
   const created: AdRecord[] = [];
   for (const placement of placements) {
-    created.push(await insertAdRequest(input, placement));
+    created.push(await insertAdRequest(input, placement, quote));
   }
   return created;
 }
 
-async function insertAdRequest(input: AdRequestInput, placement: AdPlacement): Promise<AdRecord> {
+async function insertAdRequest(
+  input: AdRequestInput,
+  placement: AdPlacement,
+  quote: AdQuote,
+): Promise<AdRecord> {
   const rows = await query<DbRow>(
     `INSERT INTO ads (
        status, placement, course_slug, title, subtitle, image_url, link_url,
        advertiser, source, submitter_name, submitter_email, submitter_phone, request_note,
-       latitude, longitude, radius_km, place_name, requested_months
-     ) VALUES ('draft',$1,'',$2,$3,$4,$5,$6,'form',$7,$8,$9,$10,$11,$12,$13,$14,$15)
+       latitude, longitude, radius_km, place_name, requested_months,
+       quoted_monthly_cents, quoted_total_cents
+     ) VALUES ('draft',$1,'',$2,$3,$4,$5,$6,'form',$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17)
      RETURNING *`,
     [
       placement,
@@ -174,6 +186,8 @@ async function insertAdRequest(input: AdRequestInput, placement: AdPlacement): P
       input.radiusKm,
       input.placeName,
       input.requestedMonths,
+      quote.monthlyDiscountedCents,
+      quote.totalCents,
     ],
   );
   return mapRow(rows[0]);

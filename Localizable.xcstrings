@@ -9939,6 +9939,90 @@
         }
       }
     },
+    "Einmal bezahlen – kein Abo, keine Verlängerung" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pay once – no subscription, no renewal"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Un solo pago: sin suscripción ni renovación"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Un seul paiement – sans abonnement ni renouvellement"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Paghi una volta – nessun abbonamento, nessun rinnovo"
+          }
+        }
+      }
+    },
+    "Einmal kaufen, Anzeigen weg" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Buy once, ads gone"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Compra una vez y adiós anuncios"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Un achat, plus de pub"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Acquista una volta, niente pubblicità"
+          }
+        }
+      }
+    },
+    "einmalig" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "one-time"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "pago único"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "paiement unique"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "una tantum"
+          }
+        }
+      }
+    },
     "Einstellungen" : {
       "localizations" : {
         "de" : {
@@ -12219,6 +12303,34 @@
         }
       }
     },
+    "Gilt auf allen Geräten mit derselben Apple-ID" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Works on all devices with the same Apple ID"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Válido en todos los dispositivos con el mismo Apple ID"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Valable sur tous les appareils avec le même identifiant Apple"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vale su tutti i dispositivi con lo stesso ID Apple"
+          }
+        }
+      }
+    },
     "GIR" : {
       "localizations" : {
         "de" : {
@@ -13491,6 +13603,34 @@
         }
       }
     },
+    "Hinweise der Anlage wie Toiletten oder Unterstand bleiben sichtbar" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Course notes such as toilets or shelter stay visible"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Los avisos del campo, como aseos o refugio, siguen visibles"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Les infos du parcours (toilettes, abri…) restent visibles"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Le indicazioni del campo, come bagni o riparo, restano visibili"
+          }
+        }
+      }
+    },
     "Hinzufügen" : {
       "localizations" : {
         "de" : {
@@ -14584,6 +14724,34 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Nessun vincitore: non ci è riuscito nessuno."
+          }
+        }
+      }
+    },
+    "Keine Anzeigen mehr in den Zählkarten" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No more ads on your scorecards"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sin anuncios en tus tarjetas"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Plus de publicité sur vos cartes de score"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Niente più pubblicità nelle schede segnapunti"
           }
         }
       }
@@ -18942,6 +19110,34 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Senza accesso alla posizione non è possibile registrare alcun tracciato."
+          }
+        }
+      }
+    },
+    "Ohne Werbung spielen" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Play without ads"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Juega sin anuncios"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Jouer sans publicité"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gioca senza pubblicità"
           }
         }
       }
@@ -24006,6 +24202,34 @@
         }
       }
     },
+    "Spiel deine Runden ohne Anzeigen." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Play your rounds without ads."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Juega tus vueltas sin anuncios."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Jouez vos parties sans publicité."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gioca i tuoi giri senza pubblicità."
+          }
+        }
+      }
+    },
     "Spiel starten" : {
       "localizations" : {
         "de" : {
@@ -27286,6 +27510,34 @@
         }
       }
     },
+    "Warum sehe ich das?" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Why am I seeing this?"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "¿Por qué veo esto?"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pourquoi est-ce que je vois ça ?"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Perché vedo questo?"
+          }
+        }
+      }
+    },
     "Was ist neu" : {
       "localizations" : {
         "en" : {
@@ -27702,6 +27954,34 @@
         }
       }
     },
+    "Wer ein Training- oder Caddy-Abo hat, sieht ohnehin keine Werbung." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "With a Training or Caddy subscription you won't see ads anyway."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Con una suscripción Training o Caddy ya no ves anuncios."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Avec un abonnement Training ou Caddy, vous ne voyez déjà aucune publicité."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Con un abbonamento Training o Caddy non vedi comunque pubblicità."
+          }
+        }
+      }
+    },
     "Wer gewinnt die meisten Bahnen allein? Bei Gleichstand auf einer Bahn bekommt sie niemand." : {
       "localizations" : {
         "de" : {
@@ -27900,6 +28180,62 @@
         }
       }
     },
+    "Werbefrei" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ad-free"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sin anuncios"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sans publicité"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Senza pubblicità"
+          }
+        }
+      }
+    },
+    "Werbefrei gekauft" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ad-free purchased"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sin anuncios comprado"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sans publicité acheté"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Senza pubblicità acquistato"
+          }
+        }
+      }
+    },
     "Werbeplatz für Betreiber – golftrack.app" : {
       "localizations" : {
         "de" : {
@@ -27930,6 +28266,34 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Spazio pubblicitario per gestori – golftrack.app"
+          }
+        }
+      }
+    },
+    "Werbung entfernen" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Remove ads"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Quitar anuncios"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Supprimer la publicité"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Rimuovi pubblicità"
           }
         }
       }
@@ -28614,6 +28978,34 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Verrà richiesto all'inizio del prossimo giro"
+          }
+        }
+      }
+    },
+    "Wird geladen…" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Loading…"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cargando…"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Chargement…"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Caricamento…"
           }
         }
       }

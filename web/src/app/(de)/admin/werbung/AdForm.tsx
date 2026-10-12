@@ -1,6 +1,7 @@
 "use client";
 
-import { useActionState, useState } from "react";
+import { useActionState, useMemo, useState } from "react";
+import { RadiusMap, type MapCourse } from "@/components/RadiusMap";
 import type { AdRecord } from "@/lib/ads";
 import { createAdAction, saveAdAction } from "./actions";
 
@@ -15,13 +16,35 @@ export interface CourseOption {
  * Rechts daneben steht die Vorschau: der Platz im Banner ist knapp, das soll
  * man beim Tippen sehen und nicht erst auf dem Gerät.
  */
-export function AdForm({ ad, courses }: { ad?: AdRecord; courses: CourseOption[] }) {
+export function AdForm({
+  ad,
+  courses,
+  markers = [],
+  mapsKey = "",
+}: {
+  ad?: AdRecord;
+  courses: CourseOption[];
+  /** Alle Plätze mit Koordinaten – für die Karte beim Umkreis. */
+  markers?: MapCourse[];
+  mapsKey?: string;
+}) {
   const [message, action, pending] = useActionState(ad ? saveAdAction : createAdAction, null);
 
   const [title, setTitle] = useState(ad?.title ?? "");
   const [subtitle, setSubtitle] = useState(ad?.subtitle ?? "");
   const [imageURL, setImageURL] = useState(ad?.imageURL ?? "");
   const [courseSlug, setCourseSlug] = useState(ad?.courseSlug ?? "");
+  const [latitude, setLatitude] = useState(ad?.latitude?.toString() ?? "");
+  const [longitude, setLongitude] = useState(ad?.longitude?.toString() ?? "");
+  const [radius, setRadius] = useState(ad?.radiusKm?.toString() ?? "");
+
+  const centre = useMemo(() => {
+    const lat = Number(latitude.replace(",", "."));
+    const lon = Number(longitude.replace(",", "."));
+    if (!latitude || !longitude || !Number.isFinite(lat) || !Number.isFinite(lon)) return null;
+    return { lat, lon };
+  }, [latitude, longitude]);
+  const radiusKm = Number(radius) > 0 ? Number(radius) : 25;
 
   return (
     <div className="mt-8 grid gap-8 lg:grid-cols-[minmax(0,1fr)_18rem]">
@@ -120,11 +143,30 @@ export function AdForm({ ad, courses }: { ad?: AdRecord; courses: CourseOption[]
           <Field
             label="Umkreis in km (leer = kein Umkreis)"
             name="radiusKm"
-            defaultValue={ad?.radiusKm?.toString() ?? ""}
+            value={radius}
+            onChange={setRadius}
             mono
           />
-          <Field label="Breite" name="latitude" defaultValue={ad?.latitude?.toString() ?? ""} mono />
-          <Field label="Länge" name="longitude" defaultValue={ad?.longitude?.toString() ?? ""} mono />
+          {courseSlug === "" ? (
+            <div className="sm:col-span-2">
+              <RadiusMap
+                apiKey={mapsKey}
+                courses={markers}
+                centre={centre}
+                radiusKm={radiusKm}
+                minKm={1}
+                maxKm={500}
+                onCentreChange={(lat, lon) => {
+                  setLatitude(lat.toFixed(6));
+                  setLongitude(lon.toFixed(6));
+                  if (!radius) setRadius("25");
+                }}
+                onRadiusChange={(km) => setRadius(String(km))}
+              />
+            </div>
+          ) : null}
+          <Field label="Breite" name="latitude" value={latitude} onChange={setLatitude} mono />
+          <Field label="Länge" name="longitude" value={longitude} onChange={setLongitude} mono />
           <Field
             label="Wunschlaufzeit in Monaten"
             name="requestedMonths"

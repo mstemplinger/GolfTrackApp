@@ -7,8 +7,10 @@ import SwiftUI
 /// 1. Wer ein Abo hat, sieht hier nichts – die Fläche verschwindet ganz.
 ///    Die **Hinweise der Anlage** bleiben davon unberührt; die stehen
 ///    außerhalb dieser Ansicht und sind keine Werbung.
-/// 2. Gibt es eine gebuchte Anzeige für diesen Platz, für seinen Umkreis oder
-///    allgemein, steht sie hier – sichtbar als „Anzeige" gekennzeichnet.
+/// 2. Gibt es eine gebuchte Anzeige für diesen Platz, für seinen Umkreis, den
+///    nächstgelegenen Umkreis oder allgemein, steht sie hier – sichtbar als
+///    „Anzeige" gekennzeichnet. Ein Tipp öffnet erst `golftrack.app/werbung/<id>`:
+///    dort steht der Weg zur Website und warum genau diese Anzeige hier steht.
 /// 3. Sonst bewirbt sich die App selbst: Abo, Caddy oder der Hinweis für
 ///    Betreiber, dass dieser Platz buchbar ist.
 ///
@@ -34,6 +36,7 @@ struct AdSlotView: View {
     private let catalog = AdCatalogService.shared
 
     @State private var promoSheet: HousePromo?
+    @State private var showsAdFree = false
 
     /// Übergebene Koordinate, sonst die aus dem Katalog.
     private var effectiveCoordinate: CLLocationCoordinate2D? {
@@ -84,24 +87,31 @@ struct AdSlotView: View {
                 subtitle: Text(verbatim: ad.subtitle.isEmpty ? ad.advertiser : ad.subtitle),
                 imageURL: ad.image,
                 symbol: "megaphone.fill",
-                tappable: ad.link != nil
+                tappable: true
             )
-            Group {
-                // Ohne Ziel bleibt es eine reine Einblendung – ein Button, der
-                // nichts tut (oder ausgegraut wirkt), wäre schlechter.
-                if let link = ad.link {
-                    Button {
-                        Haptics.tap()
-                        catalog.countClick(ad)
-                        openURL(link)
-                    } label: {
-                        banner
-                    }
-                    .buttonStyle(.plain)
-                } else {
-                    banner
+            // Immer antippbar, auch ohne Website des Werbenden: die
+            // Zwischenseite erklärt, warum die Anzeige hier steht.
+            Button {
+                Haptics.tap()
+                catalog.countClick(ad)
+                openURL(ad.landingURL)
+            } label: {
+                banner
+            }
+            .buttonStyle(.plain)
+            .contextMenu {
+                Button {
+                    showsAdFree = true
+                } label: {
+                    Label("Werbung entfernen", systemImage: "rectangle.slash")
+                }
+                Button {
+                    openURL(ad.landingURL)
+                } label: {
+                    Label("Warum sehe ich das?", systemImage: "questionmark.circle")
                 }
             }
+            .sheet(isPresented: $showsAdFree) { AdFreePaywallView() }
             .task(id: "\(ad.id)-\(rotation)") { catalog.countImpression(ad) }
         } else if let promo = housePromo {
             Button {
@@ -125,6 +135,7 @@ struct AdSlotView: View {
                 switch promo {
                 case .training:  TrainingPaywallView()
                 case .caddy:     CaddyPaywallView()
+                case .adFree:    AdFreePaywallView()
                 case .advertise: EmptyView()
                 }
             }
@@ -210,6 +221,7 @@ struct AdSlotView: View {
 enum HousePromo: String, Identifiable, CaseIterable {
     case training
     case caddy
+    case adFree
     case advertise
 
     var id: String { rawValue }
@@ -223,6 +235,7 @@ enum HousePromo: String, Identifiable, CaseIterable {
         switch self {
         case .training:  return "Besser putten lernen"
         case .caddy:     return "Caddy fragen"
+        case .adFree:    return "Ohne Werbung spielen"
         case .advertise: return "Hier könnte Ihre Anlage stehen"
         }
     }
@@ -231,6 +244,7 @@ enum HousePromo: String, Identifiable, CaseIterable {
         switch self {
         case .training:  return "Audio-Trainings für Technik und Kopf"
         case .caddy:     return "Der Assistent für Schlagwahl und Taktik"
+        case .adFree:    return "Einmal kaufen, Anzeigen weg"
         case .advertise: return "Werbeplatz für Betreiber – golftrack.app"
         }
     }
@@ -239,13 +253,14 @@ enum HousePromo: String, Identifiable, CaseIterable {
         switch self {
         case .training:  return "headphones"
         case .caddy:     return "waveform.circle.fill"
+        case .adFree:    return "rectangle.slash"
         case .advertise: return "megaphone.fill"
         }
     }
 
     var destination: Destination {
         switch self {
-        case .training, .caddy:
+        case .training, .caddy, .adFree:
             return .sheet
         case .advertise:
             return .link(URL(string: "https://golftrack.app/werbung")!)
@@ -258,6 +273,9 @@ enum HousePromo: String, Identifiable, CaseIterable {
             switch promo {
             case .training:  return !hasTraining
             case .caddy:     return !hasCaddy
+            // Wer hier überhaupt etwas sieht, hat weder Abo noch Werbefrei –
+            // der Slot verschwindet sonst ganz (`showsAds`).
+            case .adFree:    return true
             case .advertise: return true
             }
         }

@@ -1,5 +1,6 @@
 import { headers } from "next/headers";
 import { createAdRequest } from "@/lib/ads";
+import { quoteAd } from "@/lib/adPricing";
 import { hashIp } from "@/lib/auth";
 import { coursesWithin, recordAttempt, tooManyAttempts } from "@/lib/courses";
 import type { AdPlacement } from "@/lib/schema";
@@ -61,8 +62,11 @@ export async function POST(request: Request) {
     return Response.json({ error: "rate_limited" }, { status: 429 });
   }
 
-  await createAdRequest(parsed.data, placements);
+  // Der Preis wird hier neu gerechnet – was das Formular anzeigt, ist nur die
+  // Vorschau derselben Rechnung.
+  const quote = quoteAd(reach.golf, reach.minigolf, parsed.data.requestedMonths);
+  await createAdRequest(parsed.data, placements, quote);
   await recordAttempt(ipHash);
 
-  return Response.json({ ok: true, placements }, { status: 201 });
+  return Response.json({ ok: true, placements, quote }, { status: 201 });
 }

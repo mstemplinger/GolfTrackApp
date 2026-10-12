@@ -1,6 +1,8 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import { RadiusMap } from "@/components/RadiusMap";
+import { formatEuro, GOLF_COURSE_MONTHLY_CENTS, MINIGOLF_COURSE_MONTHLY_CENTS, quoteAd } from "@/lib/adPricing";
 
 export interface CourseMarker {
   slug: string;
@@ -10,8 +12,10 @@ export interface CourseMarker {
   lon: number;
 }
 
-/** Wählbare Umkreise. Mehr Stufen helfen niemandem beim Entscheiden. */
+/** Schnellwahl für den Umkreis. Auf der Karte geht jeder Wert dazwischen. */
 const RADII = [5, 10, 25, 50, 100];
+const MIN_RADIUS_KM = 5;
+const MAX_RADIUS_KM = 100;
 /** Wählbare Laufzeiten in Monaten. */
 const DURATIONS = [1, 3, 6, 12];
 
@@ -34,7 +38,7 @@ function distanceKm(aLat: number, aLon: number, bLat: number, bLon: number): num
  * sind, steht sofort daneben – das ist die Zahl, die über die Buchung
  * entscheidet, und sie soll nicht erst in einer Mail auftauchen.
  */
-export function AdRequestForm({ markers }: { markers: CourseMarker[] }) {
+export function AdRequestForm({ markers, mapsKey = "" }: { markers: CourseMarker[]; mapsKey?: string }) {
   const [values, setValues] = useState({
     placeName: "",
     latitude: "",
@@ -79,6 +83,17 @@ export function AdRequestForm({ markers }: { markers: CourseMarker[] }) {
       .sort((a, b) => a.km - b.km);
   }, [centre, markers, radiusKm]);
 
+  /** Was der Umkreis kostet – dieselbe Rechnung wie auf dem Server. */
+  const quote = useMemo(() => {
+    if (!reached.length) return null;
+    const golf = reached.filter((r) => r.kind === "golf").length;
+    return quoteAd(golf, reached.length - golf, months);
+  }, [reached, months]);
+
+  function setCentre(lat: number, lon: number) {
+    setValues((previous) => ({ ...previous, latitude: lat.toFixed(6), longitude: lon.toFixed(6) }));
+  }
+
   function applyCurrentLocation() {
     if (!navigator.geolocation) {
       setGeoError(true);
@@ -87,8 +102,7 @@ export function AdRequestForm({ markers }: { markers: CourseMarker[] }) {
     navigator.geolocation.getCurrentPosition(
       (position) => {
         setGeoError(false);
-        set("latitude", position.coords.latitude.toFixed(6));
-        set("longitude", position.coords.longitude.toFixed(6));
+        setCentre(position.coords.latitude, position.coords.longitude);
       },
       () => setGeoError(true),
       { enableHighAccuracy: true, timeout: 10_000 },
@@ -195,6 +209,17 @@ export function AdRequestForm({ markers }: { markers: CourseMarker[] }) {
             />
           </Field>
 
+          <RadiusMap
+            apiKey={mapsKey}
+            courses={markers}
+            centre={centre}
+            radiusKm={radiusKm}
+            minKm={MIN_RADIUS_KM}
+            maxKm={MAX_RADIUS_KM}
+            onCentreChange={setCentre}
+            onRadiusChange={setRadiusKm}
+          />
+
           <div className="grid gap-4 sm:grid-cols-[1fr_1fr_auto] sm:items-end">
             <Field label="Breite" htmlFor="latitude" required error={fieldErrors.latitude}>
               <input
@@ -228,7 +253,17 @@ export function AdRequestForm({ markers }: { markers: CourseMarker[] }) {
             </p>
           ) : null}
 
-          <Field label="Umkreis" htmlFor="radius">
+          <Field label={`Umkreis: ${radiusKm} km`} htmlFor="radius">
+            <input
+              type="range"
+              min={MIN_RADIUS_KM}
+              max={MAX_RADIUS_KM}
+              step={1}
+              value={radiusKm}
+              onChange={(event) => setRadiusKm(Number(event.target.value))}
+              className="mb-3 w-full accent-[#28824b]"
+              aria-label="Umkreis in Kilometern"
+            />
             <div className="flex flex-wrap gap-2" id="radius">
               {RADII.map((km) => (
                 <button
@@ -269,6 +304,8 @@ export function AdRequestForm({ markers }: { markers: CourseMarker[] }) {
               ))}
             </div>
           </Field>
+
+          <PriceNote quote={quote} />
         </Section>
 
         <Section title="Was auf der Karte steht">
@@ -464,6 +501,39 @@ export function AdRequestForm({ markers }: { markers: CourseMarker[] }) {
           das den QR-Code Ihrer Anlage gescannt hat.
         </p>
       </aside>
+    </div>
+  );
+}
+
+/**
+ * Richtpreis zum gewählten Umkreis und zur Laufzeit. Verbindlich wird er mit
+ * unserer Antwort – bis dahin kann sich die Zahl der Plätze noch ändern.
+ */
+function PriceNote({ quote }: { quote: ReturnType<typeof quoteAd> | null }) {
+  if (!quote) return null;
+  const parts = [
+    quote.golf ? `${quote.golf} × Golf` : null,
+    quote.minigolf ? `${quote.minigolf} × Minigolf` : null,
+  ].filter(Boolean);
+  return (
+    <div className="rounded-[3px] border border-ink/20 bg-ink/[0.03] p-4" aria-live="polite">
+      <p className="flex flex-wrap items-baseline justify-between gap-2">
+        <span className="text-sm text-ink/70">Preis</span>
+        <span className="font-display text-2xl tracking-tight">
+          {formatEuro(quote.monthlyDiscountedCents)}
+          <span className="text-sm font-normal text-ink/60"> / Monat</span>
+        </span>
+      </p>
+      <p className="mt-1 text-right text-sm text-ink/75">
+        {quote.months === 1 ? "1 Monat" : `${quote.months} Monate`}: <strong>{formatEuro(quote.totalCents)}</strong>
+        {quote.discountPercent ? <span className="text-ink/60"> (−{quote.discountPercent} % Laufzeitrabatt)</span> : null}
+      </p>
+      <p className="mt-2 text-xs leading-relaxed text-ink/60">
+        {parts.join(" + ")} im Umkreis
+        {quote.monthlyCents > quote.golf * GOLF_COURSE_MONTHLY_CENTS + quote.minigolf * MINIGOLF_COURSE_MONTHLY_CENTS ? " · Mindestpreis" : ""}. Netto, zzgl.
+        MwSt. Plätze außerhalb jedes gebuchten Umkreises zeigen zusätzlich die Anzeige des nächstgelegenen –
+        ohne Aufpreis. Verbindlich wird der Preis mit unserer Antwort.
+      </p>
     </div>
   );
 }

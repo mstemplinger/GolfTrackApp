@@ -54,9 +54,10 @@ final class AdCatalogService {
     ///     Scorecard die Bahnnummer.
     ///
     /// Rangfolge: die auf diese Anlage gebuchte Anzeige, dann die Anzeigen,
-    /// deren Umkreis sie abdeckt, zuletzt die allgemeinen. Wer den Platz vor
-    /// Ort bezahlt hat, wird nicht von einer Regionalanzeige verdrängt.
-    /// Innerhalb einer Stufe entscheidet `weight`.
+    /// deren Umkreis sie abdeckt, dann – liegt der Platz in keinem Umkreis –
+    /// die des nächstgelegenen Umkreises, zuletzt die allgemeinen. Wer den
+    /// Platz vor Ort bezahlt hat, wird nicht von einer Regionalanzeige
+    /// verdrängt. Innerhalb einer Stufe entscheidet `weight`.
     func ad(placement: AdPlacement,
             courseID: String?,
             coordinate: CLLocationCoordinate2D? = nil,
@@ -68,19 +69,43 @@ final class AdCatalogService {
         // Rangfolge: der gebuchte Platz vor dem Umkreis vor „überall".
         // Wer diesen Platz bezahlt hat, wird nicht von einer Regionalanzeige
         // verdrängt.
-        let local = courseID.map { id in candidates.filter { $0.courseID == id } } ?? []
-        let nearby = local.isEmpty && coordinate != nil
-            ? candidates.filter { $0.covers(coordinate!) }
-            : []
-        let pool = !local.isEmpty ? local
-                 : !nearby.isEmpty ? nearby
-                 : candidates.filter(\.isEverywhere)
+        let pool = Self.pool(from: candidates, courseID: courseID, coordinate: coordinate)
         guard !pool.isEmpty else { return nil }
 
         // Gewichtung als Wiederholung im Los: Gewicht 3 liegt dreimal drin.
         let weighted = pool.flatMap { ad in Array(repeating: ad, count: max(1, min(ad.weight, 100))) }
         let index = abs(rotation &+ rotationSeed) % weighted.count
         return weighted[index]
+    }
+
+    /// Wie weit der Rand eines anderen Umkreises entfernt sein darf, um noch
+    /// als „gleich nah" zu gelten. Ohne Spielraum bekäme bei zwei fast gleich
+    /// weit entfernten Regionen immer nur eine die freien Plätze.
+    static let nearestTolerance: Double = 5_000
+
+    /// Die Stufe, aus der gelost wird – ohne Zufall, damit sie testbar ist.
+    static func pool(from candidates: [RemoteAd],
+                     courseID: String?,
+                     coordinate: CLLocationCoordinate2D?) -> [RemoteAd] {
+        if let courseID {
+            let local = candidates.filter { $0.courseID == courseID }
+            if !local.isEmpty { return local }
+        }
+        if let coordinate {
+            // Platzgebundene Anzeigen anderer Anlagen gehören nie hierher.
+            let regional = candidates.compactMap { ad -> (ad: RemoteAd, gap: Double)? in
+                guard ad.courseID.isEmpty, let gap = ad.distanceToArea(from: coordinate) else { return nil }
+                return (ad, gap)
+            }
+            let inside = regional.filter { $0.gap == 0 }.map(\.ad)
+            if !inside.isEmpty { return inside }
+            // Außerhalb jedes Umkreises: die nächstgelegene Region springt
+            // ein, statt dass der Platz nur Eigenwerbung zeigt.
+            if let nearest = regional.map(\.gap).min() {
+                return regional.filter { $0.gap <= nearest + nearestTolerance }.map(\.ad)
+            }
+        }
+        return candidates.filter(\.isEverywhere)
     }
 
     // MARK: – Zählen
@@ -212,15 +237,21 @@ struct RemoteAd: Codable, Identifiable, Hashable {
     /// Gilt überall: weder auf einen Platz gebucht noch auf einen Umkreis.
     var isEverywhere: Bool { courseID.isEmpty && radiusKm == nil }
 
-    /// Liegt der Platz im gebuchten Umkreis?
-    func covers(_ coordinate: CLLocationCoordinate2D) -> Bool {
-        guard let lat, let lon, let radiusKm, radiusKm > 0 else { return false }
+    var link: URL? { linkURL.isEmpty ? nil : URL(string: linkURL) }
+
+    /// Wohin ein Tipp auf die Anzeige führt: nicht direkt zum Werbenden,
+    /// sondern auf die Zwischenseite mit Link und Erklärung. Die Website
+    /// leitet nicht deutschsprachige Browser selbst auf `/en/ad/<id>` um.
+    var landingURL: URL { URL(string: "https://golftrack.app/werbung/\(id)")! }
+
+    /// Abstand vom Platz bis zum Rand des gebuchten Umkreises in Metern –
+    /// 0, wenn der Platz darin liegt; `nil` ohne Umkreis.
+    func distanceToArea(from coordinate: CLLocationCoordinate2D) -> Double? {
+        guard let lat, let lon, let radiusKm, radiusKm > 0 else { return nil }
         let centre = CLLocation(latitude: lat, longitude: lon)
         let here = CLLocation(latitude: coordinate.latitude, longitude: coordinate.longitude)
-        return here.distance(from: centre) <= Double(radiusKm) * 1000
+        return max(0, here.distance(from: centre) - Double(radiusKm) * 1000)
     }
-
-    var link: URL? { linkURL.isEmpty ? nil : URL(string: linkURL) }
     var image: URL? { imageURL.isEmpty ? nil : URL(string: imageURL) }
 
     /// Der Server filtert schon nach Zeitraum. Weil der Cache Tage alt sein

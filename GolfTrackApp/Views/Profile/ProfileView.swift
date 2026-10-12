@@ -1,3 +1,4 @@
+import StoreKit
 import SwiftUI
 import SwiftData
 import PhotosUI
@@ -18,8 +19,10 @@ struct ProfileView: View {
     @AppStorage(DistanceUnit.storageKey) private var distanceUnit: DistanceUnit = .meters
     @AppStorage(AppFocus.storageKey) private var appFocus: AppFocus = .golf
     @ObservedObject private var gc = GameCenterManager.shared
+    @EnvironmentObject private var subscriptionManager: SubscriptionManager
     @State private var selectedAchievement: GCAchievement?
     @State private var showWhatsNew = false
+    @State private var showAdFree = false
 
     private var completedRounds: [Round] { allRounds.filter(\.isComplete) }
 
@@ -189,6 +192,7 @@ struct ProfileView: View {
             .navigationBarHidden(true)
         }
         .sheet(isPresented: $showWhatsNew) { WhatsNewView() }
+        .sheet(isPresented: $showAdFree) { AdFreePaywallView() }
     }
 
     // MARK: - Avatar
@@ -324,6 +328,37 @@ struct ProfileView: View {
             settingsRow(icon: "questionmark.circle.fill", color: Color(red: 1.0, green: 0.6, blue: 0.3), title: "Hilfe & Anleitung") {
                 AnyView(HelpView())
             }
+            Divider().background(AppTheme.cardAlt).padding(.leading, 62)
+            Button {
+                Haptics.tap()
+                showAdFree = true
+            } label: {
+                HStack(spacing: 14) {
+                    ZStack {
+                        RoundedRectangle(cornerRadius: 9)
+                            .fill(AppTheme.gold.opacity(0.18))
+                            .frame(width: 40, height: 40)
+                        Image(systemName: subscriptionManager.isAdFree ? "checkmark.seal.fill" : "rectangle.slash")
+                            .font(.system(size: 16))
+                            .foregroundStyle(AppTheme.gold)
+                    }
+                    Text(subscriptionManager.isAdFree ? "Werbefrei gekauft" : "Werbung entfernen")
+                        .font(.subheadline)
+                        .foregroundStyle(AppTheme.text)
+                    Spacer()
+                    if !subscriptionManager.isAdFree, let price = subscriptionManager.adFreeProduct?.displayPrice {
+                        Text(verbatim: price)
+                            .font(.subheadline)
+                            .foregroundStyle(AppTheme.textSec)
+                    }
+                    Image(systemName: "chevron.right")
+                        .font(.caption)
+                        .foregroundStyle(AppTheme.textTer)
+                }
+                .padding(.horizontal, 18)
+                .padding(.vertical, 14)
+            }
+            .disabled(subscriptionManager.isAdFree)
             Divider().background(AppTheme.cardAlt).padding(.leading, 62)
             Button {
                 Haptics.tap()

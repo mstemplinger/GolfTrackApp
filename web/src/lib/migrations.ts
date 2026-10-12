@@ -129,6 +129,10 @@ const STATEMENTS = [
   // Adminpanel in starts_on/ends_on – erst nach Rückfrage und Preis.
   `ALTER TABLE ads ADD COLUMN IF NOT EXISTS requested_months integer`,
   `ALTER TABLE ads ADD COLUMN IF NOT EXISTS place_name      text NOT NULL DEFAULT ''`,
+  // Richtpreis, den das Formular beim Absenden genannt hat (netto, Cent) – für
+  // die ganze Anfrage, steht deshalb bei beiden Entwürfen derselbe Betrag.
+  `ALTER TABLE ads ADD COLUMN IF NOT EXISTS quoted_monthly_cents integer`,
+  `ALTER TABLE ads ADD COLUMN IF NOT EXISTS quoted_total_cents   integer`,
   `CREATE INDEX IF NOT EXISTS ads_status_placement_idx ON ads (status, placement)`,
   `CREATE INDEX IF NOT EXISTS ads_course_slug_idx ON ads (course_slug)`,
   // Reichweite pro Anzeige und Tag. Bewusst nur Zähler – keine Gerätekennung,

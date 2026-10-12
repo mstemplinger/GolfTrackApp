@@ -6,8 +6,19 @@ struct CourseListView: View {
     @Environment(\.modelContext) private var context
     private var api: GolfCourseAPIService = .shared
 
+    @Environment(\.dismiss) private var dismiss
+
     @State private var showAddSheet = false
     @State private var showAPISettings = false
+
+    /// Aus dem Rundenstart geöffnet: Ein Tipp auf einen Platz wählt ihn für
+    /// die Runde und schließt die Liste. Ein neu hinzugefügter Platz wird
+    /// gleich vorgewählt. In Einstellungen/Profil bleibt das `nil`.
+    private var selection: Binding<Course?>?
+
+    init(selection: Binding<Course?>? = nil) {
+        self.selection = selection
+    }
 
     var body: some View {
         NavigationStack {
@@ -18,11 +29,17 @@ struct CourseListView: View {
                     ZStack {
                         AppTheme.bg.ignoresSafeArea()
                         List {
-                            ForEach(courses) { course in
-                                courseRow(course)
-                                    .listRowBackground(AppTheme.card)
+                            Section {
+                                ForEach(courses) { course in
+                                    selectableRow(course)
+                                }
+                                .onDelete(perform: delete)
+                            } footer: {
+                                if selection != nil {
+                                    Text("Tippe auf einen Platz, um ihn für die Runde zu wählen.")
+                                        .font(.caption)
+                                }
                             }
-                            .onDelete(perform: delete)
                         }
                         .scrollContentBackground(.hidden)
                     }
@@ -50,6 +67,20 @@ struct CourseListView: View {
                     }
                     .tint(AppTheme.gold)
                 }
+                if selection != nil {
+                    ToolbarItem(placement: .confirmationAction) {
+                        Button("Fertig") {
+                            Haptics.tap()
+                            dismiss()
+                        }
+                    }
+                }
+            }
+            .onChange(of: courses.map(\.persistentModelID)) { old, new in
+                // Neu hinzugefügten Platz gleich für die Runde vorwählen –
+                // egal ob aus der Liste, der Online-Suche, dem Scan oder manuell.
+                guard let selection, let added = new.first(where: { !old.contains($0) }) else { return }
+                selection.wrappedValue = courses.first { $0.persistentModelID == added }
             }
             .sheet(isPresented: $showAddSheet) {
                 AddCourseSheetView { entry in
@@ -104,6 +135,31 @@ struct CourseListView: View {
     }
 
     // MARK: - Row
+
+    @ViewBuilder
+    private func selectableRow(_ course: Course) -> some View {
+        if let selection {
+            let isSelected = selection.wrappedValue?.persistentModelID == course.persistentModelID
+            Button {
+                Haptics.selection()
+                selection.wrappedValue = course
+                dismiss()
+            } label: {
+                HStack(spacing: 10) {
+                    courseRow(course)
+                    Image(systemName: isSelected ? "checkmark.circle.fill" : "circle")
+                        .font(.title3)
+                        .foregroundStyle(isSelected ? AppTheme.gold : AppTheme.textTer)
+                }
+                .contentShape(Rectangle())
+            }
+            .buttonStyle(.plain)
+            .listRowBackground(isSelected ? AppTheme.gold.opacity(0.08) : AppTheme.card)
+        } else {
+            courseRow(course)
+                .listRowBackground(AppTheme.card)
+        }
+    }
 
     private func courseRow(_ course: Course) -> some View {
         HStack(spacing: 10) {

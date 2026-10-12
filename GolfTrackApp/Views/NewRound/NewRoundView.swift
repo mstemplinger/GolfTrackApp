@@ -267,7 +267,7 @@ struct NewRoundView: View {
                     selectedBag = bags.first
                 }
             }
-            .sheet(isPresented: $showCourseManager) { CourseListView() }
+            .sheet(isPresented: $showCourseManager) { CourseListView(selection: $selectedCourse) }
             .sheet(isPresented: $showCourseSelector) {
                 CourseSelectorView(selectedCourse: $selectedCourse)
             }

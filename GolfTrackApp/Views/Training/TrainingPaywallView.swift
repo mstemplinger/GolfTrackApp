@@ -17,6 +17,7 @@ struct TrainingPaywallView: View {
         ("arrow.clockwise",      Color(red: 0.4, green: 0.7,  blue: 1.0),   "Neue Lektionen regelmäßig"),
         ("play.circle.fill",     Color(red: 1.0, green: 0.6,  blue: 0.3),   "Offline anhören, jederzeit"),
         ("speedometer",          Color(red: 0.6, green: 0.5,  blue: 1.0),   "Wiedergabegeschwindigkeit"),
+        ("nosign",               Color(red: 1.0, green: 0.4,  blue: 0.5),   "Keine Werbung in der App"),
         ]
     }
 
@@ -26,6 +27,7 @@ struct TrainingPaywallView: View {
         ("figure.golf",          Color(red: 0.3, green: 0.85, blue: 0.5),   "Drive, Technik, Mental & mehr"),
         ("arrow.clockwise",      Color(red: 1.0, green: 0.6,  blue: 0.3),   "Neue Inhalte regelmäßig"),
         ("infinity",             Color(red: 0.6, green: 0.5,  blue: 1.0),   "Unbegrenzte Caddy-Gespräche"),
+        ("nosign",               Color(red: 1.0, green: 0.4,  blue: 0.5),   "Keine Werbung in der App"),
     ]
 
     private var activeProduct: Product? {

@@ -14964,6 +14964,34 @@
         }
       }
     },
+    "Keine Werbung in der App" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No ads in the app"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sin anuncios en la app"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aucune publicité dans l’app"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nessuna pubblicità nell’app"
+          }
+        }
+      }
+    },
     "Klassisches Zählspiel – jeder Schlag zählt" : {
       "localizations" : {
         "en" : {
@@ -26130,6 +26158,34 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Tocca la mappa per posizionare il pin"
+          }
+        }
+      }
+    },
+    "Tippe auf einen Platz, um ihn für die Runde zu wählen." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tap a course to select it for the round."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Toca un campo para elegirlo para la vuelta."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Touche un parcours pour le choisir pour la partie."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tocca un campo per sceglierlo per il giro."
           }
         }
       }

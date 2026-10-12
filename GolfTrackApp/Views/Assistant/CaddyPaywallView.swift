@@ -15,6 +15,7 @@ struct CaddyPaywallView: View {
         ("mic.fill",             Color(red: 0.4, green: 0.7,  blue: 1.0),   "Gesprächsbasierte Golf-Beratung"),
         ("location.fill",        Color(red: 1.0, green: 0.6,  blue: 0.3),   "Auch unterwegs auf dem Platz nutzbar"),
         ("infinity",             Color(red: 0.6, green: 0.5,  blue: 1.0),   "Unbegrenzte Gespräche"),
+        ("nosign",               Color(red: 1.0, green: 0.4,  blue: 0.5),   "Keine Werbung in der App"),
     ]
 
     private let proFeatures: [(icon: String, color: Color, text: String)] = [
@@ -23,6 +24,7 @@ struct CaddyPaywallView: View {
         ("figure.golf",          Color(red: 0.4, green: 0.7,  blue: 1.0),   "Drive, Technik, Mental & mehr"),
         ("arrow.clockwise",      Color(red: 1.0, green: 0.6,  blue: 0.3),   "Neue Inhalte regelmäßig"),
         ("infinity",             Color(red: 0.6, green: 0.5,  blue: 1.0),   "Unbegrenzte Caddy-Gespräche"),
+        ("nosign",               Color(red: 1.0, green: 0.4,  blue: 0.5),   "Keine Werbung in der App"),
     ]
 
     private var activeProduct: Product? {

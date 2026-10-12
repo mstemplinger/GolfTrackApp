@@ -360,3 +360,82 @@
     text-underline-offset: 4px;
   }
 }
+
+/*
+  Putt-Szene auf der Wartezeit-Seite (components/PuttScene.tsx).
+  Ein Durchlauf dauert 6 s: Ausholen, Schlag bei 16 %, Rollen bis 60 %,
+  Einlochen, Funken, Ball taucht am Start wieder auf.
+*/
+.putt * {
+  transform-box: fill-box;
+}
+.putt-club {
+  transform-box: view-box;
+  transform-origin: 38px 22px;
+  animation: putt-club 6s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+@keyframes putt-club {
+  0%, 4% { transform: rotate(0deg); }
+  13% { transform: rotate(16deg); }
+  17% { transform: rotate(-12deg); }
+  28%, 100% { transform: rotate(0deg); }
+}
+.putt-ball {
+  animation: putt-ball 6s infinite;
+}
+@keyframes putt-ball {
+  0%, 16% { transform: translate(0, 0) scale(1); opacity: 1; animation-timing-function: cubic-bezier(0.15, 0.6, 0.35, 1); }
+  58% { transform: translate(160px, 0) scale(1); opacity: 1; animation-timing-function: ease-in; }
+  64% { transform: translate(166px, 6px) scale(0.55); opacity: 0; }
+  88% { transform: translate(0, 0) scale(0.6); opacity: 0; }
+  94%, 100% { transform: translate(0, 0) scale(1); opacity: 1; }
+}
+.putt-roll {
+  transform-origin: center;
+  animation: putt-roll 6s infinite;
+}
+@keyframes putt-roll {
+  0%, 16% { transform: rotate(0deg); animation-timing-function: cubic-bezier(0.15, 0.6, 0.35, 1); }
+  58%, 100% { transform: rotate(960deg); }
+}
+.putt-eyes {
+  transform-origin: center;
+  animation: putt-blink 6s infinite;
+}
+@keyframes putt-blink {
+  0%, 6%, 10%, 70%, 74%, 100% { transform: scaleY(1); }
+  8%, 72% { transform: scaleY(0.1); }
+}
+.putt-sparks {
+  transform-origin: center;
+  opacity: 0;
+  animation: putt-sparks 6s infinite;
+}
+@keyframes putt-sparks {
+  0%, 62% { opacity: 0; transform: scale(0.4); }
+  68% { opacity: 1; transform: scale(1); }
+  80%, 100% { opacity: 0; transform: scale(1.35); }
+}
+.putt-flag {
+  transform-origin: 50% 100%;
+  animation: putt-flag 6s infinite;
+}
+@keyframes putt-flag {
+  0%, 62% { transform: translateY(0); }
+  66% { transform: translateY(-9px); }
+  71% { transform: translateY(0); }
+  74% { transform: translateY(-3px); }
+  77%, 100% { transform: translateY(0); }
+}
+.putt-cloth {
+  transform-origin: 0% 50%;
+  animation: putt-wave 1.6s ease-in-out infinite alternate;
+}
+@keyframes putt-wave {
+  from { transform: scaleX(1) skewY(0deg); }
+  to { transform: scaleX(0.86) skewY(4deg); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .putt * { animation: none !important; }
+  .putt-ball { transform: translate(140px, 0); }
+}

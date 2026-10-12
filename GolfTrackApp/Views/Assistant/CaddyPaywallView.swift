@@ -345,9 +345,9 @@ struct CaddyPaywallView: View {
 
     private var footerLinks: some View {
         HStack(spacing: 16) {
-            Link("Datenschutz", destination: URL(string: "https://mstemplinger.github.io/GolfTrackApp/")!)
+            Link("Datenschutz", destination: LegalLinks.privacy)
             Text("·")
-            Link("Nutzungsbedingungen", destination: URL(string: "https://www.apple.com/legal/internet-services/itunes/dev/stdeula/")!)
+            Link("Nutzungsbedingungen", destination: LegalLinks.terms)
         }
         .font(.caption2)
         .foregroundStyle(AppTheme.textTer)

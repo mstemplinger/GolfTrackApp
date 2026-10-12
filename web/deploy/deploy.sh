@@ -11,6 +11,11 @@ REMOTE="${REMOTE:-root@178.104.241.202}"
 TARGET="${TARGET:-/var/www/golftrack}"
 HERE=$(cd "$(dirname "$0")/.." && pwd)
 
+# Zahlen gegen den App-Code pruefen, bevor sie live gehen (Platzzahl,
+# Spielformen). Schlaegt fehl, wenn Website und Code auseinanderlaufen.
+echo "→ Zahlen pruefen"
+python3 "$HERE/../tools/check-facts.py"
+
 echo "→ uebertrage nach $REMOTE:$TARGET"
 ssh "$REMOTE" "mkdir -p $TARGET"
 

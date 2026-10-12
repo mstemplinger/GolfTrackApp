@@ -17,7 +17,7 @@ export const site = {
   phone: process.env.NEXT_PUBLIC_CONTACT_PHONE ?? "",
   vatId: process.env.NEXT_PUBLIC_VAT_ID ?? "",
   /** Datum der letzten inhaltlichen Änderung der Rechtstexte. */
-  legalUpdated: "2026-08-30",
+  legalUpdated: "2026-09-14",
 };
 
 export function isPlaceholder(value: string): boolean {

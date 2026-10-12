@@ -241,6 +241,18 @@ struct PrivacyView: View {
                         body: "Für die Wetteranzeige werden die ungefähren Koordinaten deines Standorts bzw. des Golfplatzes an den Wetterdienst Open-Meteo (open-meteo.com) übertragen. Es werden keine weiteren personenbezogenen Daten übermittelt."
                     )
                     legalBlock(
+                        title: "Platzverzeichnis (golftrack.app)",
+                        body: "Die App lädt das Verzeichnis der eingetragenen Golf- und Minigolfanlagen von golftrack.app. Dabei wird nur der Abruf selbst übertragen; dein Standort oder deine Runden werden nicht mitgeschickt. Wie bei jedem Abruf im Netz sieht der Server dabei deine IP-Adresse."
+                    )
+                    legalBlock(
+                        title: "Anzeigen in der Zählkarte",
+                        body: "Anzeigen der Anlagen kommen ebenfalls von golftrack.app. Damit die Anlagen wissen, wie oft ihre Anzeige gesehen und angetippt wurde, meldet die App gebündelt die Kennung der Anzeige, die Art des Ereignisses und die Anzahl zurück. Es wird keine Kennung deines Geräts und kein Profil über dich gebildet."
+                    )
+                    legalBlock(
+                        title: "Abos (App Store)",
+                        body: "Training, Caddy und Pro werden über den App Store von Apple abgeschlossen und abgerechnet. Ich erhalte dabei keine Zahlungsdaten, sondern von Apple nur die Auskunft, ob ein Abo aktiv ist."
+                    )
+                    legalBlock(
                         title: "Deine Rechte",
                         body: "Da alle Daten lokal auf deinem Gerät gespeichert sind, hast du jederzeit die volle Kontrolle. Du kannst alle Daten durch Löschen der App vollständig entfernen."
                     )
@@ -268,18 +280,33 @@ struct ImprintView: View {
         ScrollView {
             VStack(alignment: .leading, spacing: 16) {
                 imprintBlock(
-                    title: "Angaben gemäß § 5 TMG",
+                    title: "Angaben gemäß § 5 DDG",
                     lines: [
                         "Name: Tobias Aufschläger",
-                        "Adresse: Hadamarstraße 22e, 93051 Regensburg, Deutschland",
-                        "E-Mail: tobi@triline.de"
+                        "Adresse: Ilztalstraße 5, 94116 Hutthurm, Deutschland",
+                        "E-Mail: contact@golftrack.app"
                     ]
                 )
                 imprintBlock(
-                    title: "Hinweis",
+                    title: "Verantwortlich für den Inhalt",
                     lines: [
-                        "Diese App wird als privates, nicht-kommerzielles Projekt bereitgestellt.",
-                        "Die App wird ohne Gewinnerzielungsabsicht betrieben."
+                        "Tobias Aufschläger, Anschrift wie oben"
+                    ]
+                )
+                // Die App verkauft Abos, deshalb steht hier kein Hinweis mehr
+                // auf ein nicht-kommerzielles Projekt ohne Gewinnerzielungsabsicht.
+                imprintBlock(
+                    title: "Streitbeilegung",
+                    lines: [
+                        "Plattform der EU-Kommission zur Online-Streitbeilegung: ec.europa.eu/consumers/odr",
+                        "Ich bin nicht verpflichtet und nicht bereit, an Streitbeilegungsverfahren vor einer Verbraucherschlichtungsstelle teilzunehmen."
+                    ]
+                )
+                imprintBlock(
+                    title: "Abrechnung",
+                    lines: [
+                        "Abos werden über den App Store von Apple abgeschlossen und abgerechnet.",
+                        "Apple Inc. ist nicht Betreiber dieser App."
                     ]
                 )
                 imprintBlock(

@@ -1,0 +1,95 @@
+# Release Notes 2.4 – Plätze aus dem Verzeichnis
+
+Für App Store Connect → „Neue Funktionen dieser Version". Pro Sprache einfügen.
+Grenze: 4.000 Zeichen, alle Fassungen liegen weit darunter.
+
+Geschrieben wird das über `asc-fill-metadata.py --version 2.4`; die Abschnitte
+unten sind genau so aufgebaut, wie das Skript sie erwartet (Sprachkürzel in
+Klammern in der Überschrift, Review-Notizen als Blockquote unter „Einreichung").
+
+---
+
+## Deutsch (de)
+
+Plätze bleiben aktuell
+
+• Was der Club pflegt, gilt: Par, Stroke Index, Längen und Rating kommen jetzt bevorzugt aus dem Verzeichnis auf golftrack.app. Trägt eine Anlage dort eine neue Scorecard ein, steht sie in der App, ohne auf ein Update zu warten. Fehlt online etwas, bleibt der geprüfte eingebaute Wert stehen.
+• Hinweise der Anlage in der Zählkarte: Platzregeln, Öffnungszeiten, Gastronomie – beim Golf jetzt genauso wie beim Minigolf, wechselnd von Loch zu Loch. Sie bleiben auch mit Abo sichtbar. An derselben Stelle kann eine Anzeige der Anlage stehen; die entfällt mit jedem Abo.
+• Minigolf: Die Liste zeigt die nächstgelegene Anlage zuerst. Nach unten ziehen holt das Verzeichnis sofort, statt bis zu sechs Stunden auf die nächste Aktualisierung zu warten.
+
+Außerdem: Impressum und Datenschutzerklärung überarbeitet. Die Links in der App führen jetzt auf golftrack.app statt auf die alte Projektseite.
+
+---
+
+## English (en)
+
+Courses stay up to date
+
+• What the club maintains is what counts: par, stroke index, lengths and rating now come from the directory on golftrack.app first. When a venue enters a new scorecard there, it shows up in the app without waiting for an update. Whatever is missing online keeps the checked built-in value.
+• Venue notes on the scorecard: local rules, opening hours, food and drink – now in golf just as in minigolf, changing from hole to hole. They stay visible with a subscription. An ad from the venue can appear in the same place; that one disappears with any subscription.
+• Minigolf: the list shows the nearest venue first. Pull down to fetch the directory straight away instead of waiting up to six hours for the next refresh.
+
+Also: the legal notice and the privacy policy have been revised. The links in the app now lead to golftrack.app instead of the old project page.
+
+---
+
+## Français (fr)
+
+Des parcours toujours à jour
+
+• Ce que le club entretient fait foi : le par, le stroke index, les longueurs et le rating viennent désormais en priorité du répertoire sur golftrack.app. Si un site y saisit une nouvelle carte de score, elle apparaît dans l'app sans attendre une mise à jour. Ce qui manque en ligne garde la valeur intégrée, elle-même vérifiée.
+• Informations du site sur la carte de score : règles locales, horaires, restauration – au golf comme au minigolf désormais, changeant d'un trou à l'autre. Elles restent visibles avec un abonnement. Une annonce du site peut figurer au même endroit ; celle-ci disparaît avec n'importe quel abonnement.
+• Minigolf : la liste affiche d'abord le site le plus proche. Tirer vers le bas récupère le répertoire tout de suite, au lieu d'attendre jusqu'à six heures.
+
+Par ailleurs : mentions légales et politique de confidentialité revues. Les liens dans l'app mènent maintenant à golftrack.app et non plus à l'ancienne page du projet.
+
+---
+
+## Italiano (it)
+
+Campi sempre aggiornati
+
+• Vale quello che cura il circolo: par, stroke index, lunghezze e rating arrivano ora in primo luogo dall'elenco su golftrack.app. Se una struttura vi inserisce un nuovo score, compare nell'app senza aspettare un aggiornamento. Ciò che manca online mantiene il valore integrato, già verificato.
+• Indicazioni della struttura nello score: regole locali, orari, ristorazione – nel golf come nel minigolf, che cambiano di buca in buca. Restano visibili anche con un abbonamento. Nello stesso punto può comparire un annuncio della struttura; quello scompare con qualsiasi abbonamento.
+• Minigolf: l'elenco mostra prima la struttura più vicina. Tirando verso il basso l'elenco si aggiorna subito, invece di aspettare fino a sei ore.
+
+Inoltre: note legali e informativa sulla privacy riviste. I link nell'app portano ora a golftrack.app e non più alla vecchia pagina del progetto.
+
+---
+
+## Español (es)
+
+Campos siempre al día
+
+• Vale lo que mantiene el club: par, stroke index, longitudes y rating vienen ahora en primer lugar del directorio en golftrack.app. Si una instalación introduce allí una tarjeta nueva, aparece en la app sin esperar a una actualización. Lo que falte en línea conserva el valor integrado y ya comprobado.
+• Indicaciones de la instalación en la tarjeta: reglas locales, horarios, restauración – en golf igual que en minigolf, cambiando de hoyo en hoyo. Siguen visibles con una suscripción. En el mismo sitio puede aparecer un anuncio de la instalación; ese desaparece con cualquier suscripción.
+• Minigolf: la lista muestra primero la instalación más cercana. Tirar hacia abajo trae el directorio al momento, en vez de esperar hasta seis horas.
+
+Además: aviso legal y política de privacidad revisados. Los enlaces de la app llevan ahora a golftrack.app en lugar de a la antigua página del proyecto.
+
+---
+
+## Hinweise für die Einreichung
+
+**Review-Notizen.** Der Hintergrund-Standort aus 2.2 gilt unverändert; dazu kommt
+die Frage nach den Anzeigen, die Apple bei Werbeflächen regelmäßig stellt.
+Beides steht hier zusammen, weil `asc-fill-metadata.py` den Blockquote in die
+„App Review Information → Notes" schreibt:
+
+> Während einer laufenden Golfrunde zeichnet die App auf Wunsch des Nutzers die Positionen auf, um daraus Abschlag- und Grünpositionen der Löcher abzuleiten und die Entfernung zur Fahne anzuzeigen. Eine Runde dauert vier bis fünf Stunden, das Display ist dabei meist gesperrt – deshalb wird der Background-Mode benötigt. Die Aufzeichnung ist standardmäßig deaktiviert, wird ausschließlich vom Nutzer in den Einstellungen aktiviert, läuft nur während einer Runde und endet mit deren Abschluss. Die Daten verlassen das Gerät nicht.
+> Die Anzeigen in der Zählkarte stammen nicht aus einem Werbenetzwerk: Die Betreiber der Anlagen buchen sie direkt beim Entwickler, und die App lädt sie als einfache Liste von golftrack.app. Es wird kein Werbe-SDK eingebunden, keine Gerätekennung und keine IDFA verwendet und kein Profil gebildet. Zurückgemeldet werden ausschließlich Kennung der Anzeige, Art des Ereignisses (Einblendung oder Antippen) und eine Anzahl, gebündelt und ohne Bezug zu einem Nutzer. Mit jedem Abo entfallen die Anzeigen vollständig.
+
+**App-Datenschutz.** Unverändert gegenüber 2.3: Positionsdaten bleiben lokal, die
+Anzeigenmessung erhebt keine nutzerbezogenen Daten. `PrivacyInfo.xcprivacy`
+braucht deshalb keine Anpassung.
+
+**Vorher zu erledigen.**
+- `MARKETING_VERSION` steht noch auf 2.3 – vor dem Archivieren auf 2.4 ziehen.
+- Die Änderungen an Impressum und Datenschutz in `HelpView.swift` sowie
+  `LegalLinks.swift` müssen im Build sein, sonst zeigen die Paywalls weiter auf
+  die alte Seite.
+- Die Datenschutzadresse im Store steht bereits auf golftrack.app
+  (`asc-legal-urls.py`, 14.09.2026).
+
+**Screenshots.** Unverändert gültig; für die drei Punkte oben gibt es nichts
+Neues zu zeigen.

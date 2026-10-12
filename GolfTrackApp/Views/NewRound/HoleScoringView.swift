@@ -140,6 +140,7 @@ struct HoleScoringView: View {
         .sheet(isPresented: $showClubPicker) {
             ClubPickerSheet(
                 clubs: clubs,
+                recommendedClub: pendingRecommendedClub,
                 strokeNumber: pendingShotNumber,
                 gpsLocation: pendingGPSLocation,
                 holeScore: score,
@@ -240,6 +241,13 @@ struct HoleScoringView: View {
         guard let lat = score.pinLatitude, let lon = score.pinLongitude,
               let loc = userLocation else { return nil }
         return CLLocation(latitude: lat, longitude: lon).distance(from: loc)
+    }
+
+    /// Empfehlung für den Schlag, der gerade gezählt wurde – aus der Position beim Tippen.
+    private var pendingRecommendedClub: GolfClub? {
+        guard let lat = score.pinLatitude, let lon = score.pinLongitude,
+              let loc = pendingGPSLocation else { return nil }
+        return recommendedClub(for: CLLocation(latitude: lat, longitude: lon).distance(from: loc))
     }
 
     private func recommendedClub(for distanceMeters: Double) -> GolfClub? {
@@ -1029,6 +1037,7 @@ struct HoleScoringView: View {
 
 private struct ClubPickerSheet: View {
     let clubs: [GolfClub]
+    let recommendedClub: GolfClub?
     let strokeNumber: Int
     let gpsLocation: CLLocation?
     @Bindable var holeScore: HoleScore
@@ -1056,49 +1065,19 @@ private struct ClubPickerSheet: View {
                             .padding(.horizontal, 16)
                             .padding(.vertical, 10)
                         }
-                        ForEach(clubs) { club in
-                            Button {
-                                Haptics.tap()
-                                if club.isPutter { onPutterSelected() }
-                                recordShot(club: club.name)
-                                dismiss()
-                            } label: {
-                                HStack(spacing: 14) {
-                                    ZStack {
-                                        Circle()
-                                            .fill(club.isPutter ? Color.blue.opacity(0.15) : AppTheme.gold.opacity(0.15))
-                                            .frame(width: 40, height: 40)
-                                        Image(systemName: club.isPutter ? "flag.fill" : "figure.golf")
-                                            .font(.system(size: 16))
-                                            .foregroundStyle(club.isPutter ? Color.blue : AppTheme.gold)
-                                    }
-                                    VStack(alignment: .leading, spacing: 2) {
-                                        HStack(spacing: 6) {
-                                            Text(club.name)
-                                                .font(.subheadline.bold())
-                                                .foregroundStyle(AppTheme.text)
-                                            if club.isPutter {
-                                                Text("PUTTER")
-                                                    .font(.system(size: 9, weight: .bold))
-                                                    .tracking(1)
-                                                    .foregroundStyle(.blue)
-                                                    .padding(.horizontal, 5).padding(.vertical, 2)
-                                                    .background(Color.blue.opacity(0.15), in: Capsule())
-                                            }
-                                        }
-                                        Text(club.isPutter ? "Putts +1 automatisch" : "Ø \(distanceUnit.format(Double(club.averageDistance)))")
-                                            .font(.caption)
-                                            .foregroundStyle(club.isPutter ? Color.blue.opacity(0.7) : AppTheme.textSec)
-                                    }
-                                    Spacer()
-                                    Image(systemName: "chevron.right")
-                                        .font(.caption)
-                                        .foregroundStyle(AppTheme.textTer)
-                                }
-                                .padding(.horizontal, 16)
-                                .padding(.vertical, 12)
-                                .background(AppTheme.card, in: RoundedRectangle(cornerRadius: 14))
+                        if let recommended = recommendedClub {
+                            clubButton(recommended, isRecommended: true)
+                            if clubs.count > 1 {
+                                Text("Weitere Schläger")
+                                    .font(.caption.bold())
+                                    .foregroundStyle(AppTheme.textSec)
+                                    .frame(maxWidth: .infinity, alignment: .leading)
+                                    .padding(.horizontal, 4)
+                                    .padding(.top, 8)
                             }
+                        }
+                        ForEach(otherClubs) { club in
+                            clubButton(club, isRecommended: false)
                         }
                     }
                     .padding(.horizontal, 16)
@@ -1115,6 +1094,70 @@ private struct ClubPickerSheet: View {
                         dismiss()
                     }
                         .foregroundStyle(AppTheme.textSec)
+                }
+            }
+        }
+    }
+
+    private var otherClubs: [GolfClub] {
+        guard let recommended = recommendedClub else { return clubs }
+        return clubs.filter { $0.persistentModelID != recommended.persistentModelID }
+    }
+
+    private func clubButton(_ club: GolfClub, isRecommended: Bool) -> some View {
+        Button {
+            Haptics.tap()
+            if club.isPutter { onPutterSelected() }
+            recordShot(club: club.name)
+            dismiss()
+        } label: {
+            HStack(spacing: 14) {
+                ZStack {
+                    Circle()
+                        .fill(club.isPutter ? Color.blue.opacity(0.15) : AppTheme.gold.opacity(0.15))
+                        .frame(width: 40, height: 40)
+                    Image(systemName: club.isPutter ? "flag.fill" : "figure.golf")
+                        .font(.system(size: 16))
+                        .foregroundStyle(club.isPutter ? Color.blue : AppTheme.gold)
+                }
+                VStack(alignment: .leading, spacing: 2) {
+                    HStack(spacing: 6) {
+                        Text(club.name)
+                            .font(.subheadline.bold())
+                            .foregroundStyle(AppTheme.text)
+                        if club.isPutter {
+                            Text("PUTTER")
+                                .font(.system(size: 9, weight: .bold))
+                                .tracking(1)
+                                .foregroundStyle(.blue)
+                                .padding(.horizontal, 5).padding(.vertical, 2)
+                                .background(Color.blue.opacity(0.15), in: Capsule())
+                        }
+                        if isRecommended {
+                            Text("EMPFOHLEN")
+                                .font(.system(size: 9, weight: .bold))
+                                .tracking(1)
+                                .foregroundStyle(AppTheme.gold)
+                                .padding(.horizontal, 5).padding(.vertical, 2)
+                                .background(AppTheme.gold.opacity(0.15), in: Capsule())
+                        }
+                    }
+                    Text(club.isPutter ? "Putts +1 automatisch" : "Ø \(distanceUnit.format(Double(club.averageDistance)))")
+                        .font(.caption)
+                        .foregroundStyle(club.isPutter ? Color.blue.opacity(0.7) : AppTheme.textSec)
+                }
+                Spacer()
+                Image(systemName: "chevron.right")
+                    .font(.caption)
+                    .foregroundStyle(AppTheme.textTer)
+            }
+            .padding(.horizontal, 16)
+            .padding(.vertical, 12)
+            .background(AppTheme.card, in: RoundedRectangle(cornerRadius: 14))
+            .overlay {
+                if isRecommended {
+                    RoundedRectangle(cornerRadius: 14)
+                        .strokeBorder(AppTheme.gold.opacity(0.6), lineWidth: 1.5)
                 }
             }
         }

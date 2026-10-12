@@ -59,7 +59,7 @@ struct GolfDeepLinkTests {
         "teeLatitudes":[],"teeLongitudes":[],"flagLatitudes":[],"flagLongitudes":[]}]}
         """
         let feed = try JSONDecoder().decode(RemoteCourseFeed.self, from: Data(json.utf8))
-        let entry = try #require(feed.courses.first).bundledEntry
+        let entry = try #require(feed.courses.first).bundledEntry()
         #expect(entry.slug == "mein-platz")
         #expect(entry.name == "Mein Platz")
         #expect(entry.parValues.reduce(0, +) == 72)

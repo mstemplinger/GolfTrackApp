@@ -43,7 +43,7 @@ const de = {
       {
         shot: "18-neue-runde",
         title: "Anlegen",
-        body: "Platz, Bag, Datum, Spielform. Den Platz suchst du nach Entfernung, die Schläger kommen aus deinem Bag.",
+        body: "Platz, Bag, Datum, Spielform. 97 Golfplätze sind eingebaut, weitere kommen aus dem Verzeichnis oder der weltweiten Suche; gesucht wird nach Entfernung. Die Schläger kommen aus deinem Bag.",
         alt: "Runden-Setup mit Platzauswahl, Bag, Datum und Spielmodus",
       },
       {
@@ -133,7 +133,7 @@ const de = {
     ],
 
     modesEyebrow: "07 — Spielformen",
-    modesTitle: "19 Spielformen",
+    modesTitle: "14 Spielformen",
     modesLead:
       "Gewählt wird beim Anlegen der Runde, gerechnet wird danach von allein. Einige Namen stehen mehrfach da, weil dieselbe Form nach Zählspiel, Stableford oder Matchplay gewertet werden kann.",
     modeGroups: [
@@ -144,7 +144,6 @@ const de = {
           ["Stableford", ""],
           ["Erado®", "Zählspiel"],
           ["Skins", "Zählspiel"],
-          ["Duplicate®", "Stableford"],
           ["Matchplay", ""],
         ],
       },
@@ -155,7 +154,6 @@ const de = {
           ["Better Ball", "Stableford"],
           ["Better Ball", "Matchplay"],
           ["2-Mann Scramble", "Zählspiel"],
-          ["Scramble", "Matchplay"],
           ["Vierer", "Matchplay"],
           ["Greensome", "Matchplay"],
         ],
@@ -166,9 +164,6 @@ const de = {
           ["Best Ball", "Zählspiel"],
           ["Best Ball", "Stableford"],
           ["Scramble", "Zählspiel"],
-          ["Match/Net", "Zählspiel"],
-          ["Duplicate® Scramble", "Stableford"],
-          ["Irish Rumble", "Best Ball"],
         ],
       },
     ],
@@ -399,7 +394,7 @@ const en: Content = {
       {
         shot: "18-neue-runde",
         title: "Set up",
-        body: "Course, bag, date, format. You pick the course by distance, the clubs come from your bag.",
+        body: "Course, bag, date, format. 97 courses are built in, more come from the directory or from worldwide search; you pick one by distance. The clubs come from your bag.",
         alt: "Round setup with course selection, bag, date and game mode",
       },
       {
@@ -489,7 +484,7 @@ const en: Content = {
     ],
 
     modesEyebrow: "07 — Formats",
-    modesTitle: "19 game formats",
+    modesTitle: "14 game formats",
     modesLead:
       "You choose when setting up the round, the app does the scoring from there. Some names appear more than once because the same format can be scored as stroke play, Stableford or match play.",
     modeGroups: [
@@ -500,7 +495,6 @@ const en: Content = {
           ["Stableford", ""],
           ["Erado®", "Stroke Play"],
           ["Skins", "Stroke Play"],
-          ["Duplicate®", "Stableford"],
           ["Matchplay", ""],
         ],
       },
@@ -511,7 +505,6 @@ const en: Content = {
           ["Better Ball", "Stableford"],
           ["Better Ball", "Matchplay"],
           ["2-Mann Scramble", "Stroke Play"],
-          ["Scramble", "Matchplay"],
           ["Vierer", "Matchplay"],
           ["Greensome", "Matchplay"],
         ],
@@ -522,9 +515,6 @@ const en: Content = {
           ["Best Ball", "Stroke Play"],
           ["Best Ball", "Stableford"],
           ["Scramble", "Stroke Play"],
-          ["Match/Net", "Stroke Play"],
-          ["Duplicate® Scramble", "Stableford"],
-          ["Irish Rumble", "Best Ball"],
         ],
       },
     ],

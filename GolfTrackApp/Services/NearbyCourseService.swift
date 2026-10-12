@@ -180,9 +180,9 @@ final class NearbyCourseService: NSObject, ObservableObject {
 
     private func candidates() -> [Candidate] {
         let katalog = CourseCatalogService.shared
-        // **Nicht** `allGolfCourses`: dort gewinnen bei Namensgleichheit die
-        // eingebauten Plätze, und die tragen keine Kennung – ohne Kennung gibt
-        // es weder Zone noch Link. Das Verzeichnis enthält ohnehin alle.
+        // Bewusst nur das Verzeichnis: Ohne Kennung gibt es weder Zone noch
+        // Link, und die tragen allein die nachgeladenen Plätze. Die
+        // eingebauten fügen der Liste hier nichts hinzu.
         let golf = katalog.remoteGolfCourses.compactMap { entry -> Candidate? in
             guard !entry.slug.isEmpty, let punkt = entry.startCoordinate else { return nil }
             return Candidate(kind: .golf, slug: entry.slug, name: entry.name,

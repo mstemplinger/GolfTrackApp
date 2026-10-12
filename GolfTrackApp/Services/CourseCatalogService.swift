@@ -32,19 +32,23 @@ final class CourseCatalogService {
     // MARK: – Zusammengeführte Listen
 
     /// Eingebaute und nachgeladene Golfplätze. Bei gleichem Namen gewinnt der
-    /// eingebaute Eintrag – der ist geprüft und enthält oft mehr Details.
+    /// Eintrag der Website: Den pflegt der Betreiber, er ist damit aktueller
+    /// als die eingebaute Fassung. Was dort leer bleibt (Scorecard,
+    /// Koordinaten), füllt beim Zusammenführen weiterhin der eingebaute Platz –
+    /// siehe `RemoteCourse.bundledEntry(fallback:)`.
     var allGolfCourses: [BundledCourseEntry] {
-        let known = Set(BundledCourses.all.map { $0.name.lowercased() })
-        return BundledCourses.all + remoteGolfCourses.filter { !known.contains($0.name.lowercased()) }
+        let ersetzt = Set(remoteGolfCourses.map { $0.name.lowercased() })
+        return BundledCourses.all.filter { !ersetzt.contains($0.name.lowercased()) } + remoteGolfCourses
     }
 
+    /// Dasselbe für die Minigolfanlagen, hier über die Kennung.
     var allMinigolfCourses: [MinigolfCourseEntry] {
-        let known = Set(MinigolfCourses.all.map { $0.id })
-        return MinigolfCourses.all + remoteMinigolfCourses.filter { !known.contains($0.id) }
+        let ersetzt = Set(remoteMinigolfCourses.map { $0.id })
+        return MinigolfCourses.all.filter { !ersetzt.contains($0.id) } + remoteMinigolfCourses
     }
 
     func minigolfCourse(id: String) -> MinigolfCourseEntry? {
-        MinigolfCourses.course(id: id) ?? remoteMinigolfCourses.first { $0.id == id }
+        remoteMinigolfCourses.first { $0.id == id } ?? MinigolfCourses.course(id: id)
     }
 
     /// Anlage hinter einem QR-Code oder Universal Link – erst die eingebauten,
@@ -105,9 +109,25 @@ final class CourseCatalogService {
     }
 
     private func apply(_ feed: RemoteCourseFeed) {
-        remoteGolfCourses = feed.courses.filter { $0.kind == "golf" }.map(\.bundledEntry)
-        remoteMinigolfCourses = feed.courses.filter { $0.kind == "minigolf" }.map(\.minigolfEntry)
+        adopt(feed)
         lastUpdated = Date()
+    }
+
+    /// Übernimmt den Feed in die beiden Listen – jeder Platz mit dem
+    /// gleichnamigen eingebauten Eintrag als Rückfallebene.
+    private func adopt(_ feed: RemoteCourseFeed) {
+        remoteGolfCourses = feed.courses
+            .filter { $0.kind == "golf" }
+            .map { remote in
+                remote.bundledEntry(fallback: BundledCourses.all.first {
+                    $0.name.lowercased() == remote.name.lowercased()
+                })
+            }
+        remoteMinigolfCourses = feed.courses
+            .filter { $0.kind == "minigolf" }
+            .map { remote in
+                remote.minigolfEntry(fallback: MinigolfCourses.course(id: remote.id))
+            }
     }
 
     // MARK: – Cache auf der Platte
@@ -123,8 +143,7 @@ final class CourseCatalogService {
         loadedFromDisk = true
         guard let cacheURL, let data = try? Data(contentsOf: cacheURL),
               let feed = try? JSONDecoder().decode(RemoteCourseFeed.self, from: data) else { return }
-        remoteGolfCourses = feed.courses.filter { $0.kind == "golf" }.map(\.bundledEntry)
-        remoteMinigolfCourses = feed.courses.filter { $0.kind == "minigolf" }.map(\.minigolfEntry)
+        adopt(feed)
         lastUpdated = (try? cacheURL.resourceValues(forKeys: [.contentModificationDateKey]))?.contentModificationDate
     }
 
@@ -171,46 +190,53 @@ struct RemoteCourse: Decodable {
     let flagLongitudes: [Double]
 
     /// Als Golfplatz für die Platzauswahl.
-    var bundledEntry: BundledCourseEntry {
+    ///
+    /// `fallback` ist der gleichnamige eingebaute Platz, falls es ihn gibt.
+    /// Der Eintrag der Website gewinnt – nur wo er nichts liefert (die API
+    /// schickt lieber gar keine Scorecard als eine halbe), bleibt der geprüfte
+    /// eingebaute Wert stehen.
+    func bundledEntry(fallback: BundledCourseEntry? = nil) -> BundledCourseEntry {
         BundledCourseEntry(
             name: name,
-            location: location,
-            holes: holes,
-            lat: lat ?? 0,
-            lon: lon ?? 0,
-            parValues: parValues,
-            hcpValues: hcpValues,
-            holeLengths: holeLengths,
-            courseRating: courseRating ?? 72.0,
-            slopeRating: slopeRating ?? 113,
-            facilityNotes: facilityNotes,
-            hints: facilityHints ?? [],
-            teeLatitudes: teeLatitudes,
-            teeLongitudes: teeLongitudes,
-            flagLatitudes: flagLatitudes,
-            flagLongitudes: flagLongitudes,
+            location: location.isEmpty ? (fallback?.location ?? "") : location,
+            holes: holes > 0 ? holes : (fallback?.holes ?? holes),
+            lat: lat ?? fallback?.lat ?? 0,
+            lon: lon ?? fallback?.lon ?? 0,
+            parValues: parValues.isEmpty ? (fallback?.parValues ?? []) : parValues,
+            hcpValues: hcpValues.isEmpty ? (fallback?.hcpValues ?? []) : hcpValues,
+            holeLengths: holeLengths.isEmpty ? (fallback?.holeLengths ?? []) : holeLengths,
+            courseRating: courseRating ?? fallback?.courseRating ?? 72.0,
+            slopeRating: slopeRating ?? fallback?.slopeRating ?? 113,
+            facilityNotes: facilityNotes.isEmpty ? (fallback?.facilityNotes ?? "") : facilityNotes,
+            hints: facilityHints ?? fallback?.hints ?? [],
+            teeLatitudes: teeLatitudes.isEmpty ? (fallback?.teeLatitudes ?? []) : teeLatitudes,
+            teeLongitudes: teeLongitudes.isEmpty ? (fallback?.teeLongitudes ?? []) : teeLongitudes,
+            flagLatitudes: flagLatitudes.isEmpty ? (fallback?.flagLatitudes ?? []) : flagLatitudes,
+            flagLongitudes: flagLongitudes.isEmpty ? (fallback?.flagLongitudes ?? []) : flagLongitudes,
             slug: id,
-            firstTeeLat: firstTeeLat,
-            firstTeeLon: firstTeeLon
+            firstTeeLat: firstTeeLat ?? fallback?.firstTeeLat,
+            firstTeeLon: firstTeeLon ?? fallback?.firstTeeLon
         )
     }
 
-    /// Als Minigolfanlage für QR-Start und Anlagenliste.
-    var minigolfEntry: MinigolfCourseEntry {
-        MinigolfCourseEntry(
+    /// Als Minigolfanlage für QR-Start und Anlagenliste – wie oben mit dem
+    /// eingebauten Eintrag als Rückfallebene.
+    func minigolfEntry(fallback: MinigolfCourseEntry? = nil) -> MinigolfCourseEntry {
+        let gruss = welcome.isEmpty ? (fallback?.welcome ?? "") : welcome
+        return MinigolfCourseEntry(
             id: id,
             name: name,
-            location: location,
-            holes: holes,
-            lat: lat ?? 0,
-            lon: lon ?? 0,
-            welcome: welcome.isEmpty
+            location: location.isEmpty ? (fallback?.location ?? "") : location,
+            holes: holes > 0 ? holes : (fallback?.holes ?? holes),
+            lat: lat ?? fallback?.lat ?? 0,
+            lon: lon ?? fallback?.lon ?? 0,
+            welcome: gruss.isEmpty
                 ? "Willkommen! Ab jetzt zählen wir für dich mit – Bahn für Bahn."
-                : welcome,
-            notes: facilityNotes,
-            hints: facilityHints ?? [],
-            firstTeeLat: firstTeeLat,
-            firstTeeLon: firstTeeLon
+                : gruss,
+            notes: facilityNotes.isEmpty ? (fallback?.notes ?? "") : facilityNotes,
+            hints: facilityHints ?? fallback?.hints ?? [],
+            firstTeeLat: firstTeeLat ?? fallback?.firstTeeLat,
+            firstTeeLon: firstTeeLon ?? fallback?.firstTeeLon
         )
     }
 }

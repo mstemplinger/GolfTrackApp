@@ -22,6 +22,7 @@ from __future__ import annotations
 
 import argparse
 import re
+import subprocess
 import sys
 import unicodedata
 from pathlib import Path
@@ -188,6 +189,16 @@ def main() -> None:
     parser.add_argument("--apply", action="store_true", help="wirklich schreiben")
     parser.add_argument("--verbose", action="store_true")
     args = parser.parse_args()
+
+    # Zahlen im Text gegen den App-Code prüfen, bevor sie in den Store gehen.
+    # Ohne das stand dort „98 Golfplätze" und „18 Spielmodi", während die App
+    # 97 bzw. 14 kennt – ein Ablehnungsgrund und ein Grund für Rückerstattungen.
+    pruefung = subprocess.run(
+        [sys.executable, str(Path(__file__).resolve().parent.parent / "tools/check-facts.py")]
+    )
+    if pruefung.returncode != 0:
+        sys.exit("\nAbbruch: Der Store-Text nennt andere Zahlen als der App-Code.")
+    print()
 
     texte = lies_texte(TEXT_DATEI)
     print(f"{TEXT_DATEI.name}: {len(texte)} Sprachen gelesen, alle Felder innerhalb der Grenzen.\n")

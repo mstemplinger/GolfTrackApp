@@ -57,7 +57,7 @@ struct NearbyCourseTests {
         """
         let feed = try JSONDecoder().decode(RemoteCourseFeed.self, from: Data(json.utf8))
         let eintrag = try #require(feed.courses.first)
-        let punkt = try #require(eintrag.bundledEntry.startCoordinate)
+        let punkt = try #require(eintrag.bundledEntry().startCoordinate)
         #expect(punkt.latitude == 48.111)
     }
 
@@ -72,7 +72,7 @@ struct NearbyCourseTests {
         "flagLatitudes":[],"flagLongitudes":[]}]}
         """
         let feed = try JSONDecoder().decode(RemoteCourseFeed.self, from: Data(json.utf8))
-        let entry = try #require(feed.courses.first).bundledEntry
+        let entry = try #require(feed.courses.first).bundledEntry()
         #expect(entry.firstTeeLat == nil)
         let punkt = try #require(entry.startCoordinate)
         #expect(punkt.latitude == 48.0)

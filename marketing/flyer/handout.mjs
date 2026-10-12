@@ -311,7 +311,7 @@ const html = `<!doctype html><html><head><meta charset="utf-8"><style>
         <div class="foot-qr"><img src="${qrStoreSmall}"></div>
         <div class="foot-text">
           <div class="f-big">golftrack.app</div>
-          <div class="f-small">Fragen? <b>tobi@triline.de</b><br>Deutsch, Englisch, Französisch, Italienisch, Spanisch</div>
+          <div class="f-small">Fragen? <b>contact@golftrack.app</b><br>Deutsch, Englisch, Französisch, Italienisch, Spanisch</div>
         </div>
         <div class="price">
           <div class="p-big">0 €</div>

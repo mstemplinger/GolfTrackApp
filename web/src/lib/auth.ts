@@ -6,7 +6,7 @@ import { cookies } from "next/headers";
  * ist das die kleinste Lösung, die sauber trägt.
  */
 
-const COOKIE = "gt_admin";
+export const COOKIE = "gt_admin";
 const MAX_AGE_SECONDS = 60 * 60 * 12;
 
 function secret(): string {
@@ -58,8 +58,12 @@ export async function destroySession(): Promise<void> {
 }
 
 export async function isAuthenticated(): Promise<boolean> {
+  return validSession((await cookies()).get(COOKIE)?.value);
+}
+
+/** Prüft den Wert des Sitzungs-Cookies – auch für den Proxy, der kein `cookies()` hat. */
+export async function validSession(raw: string | undefined): Promise<boolean> {
   if (!adminConfigured()) return false;
-  const raw = (await cookies()).get(COOKIE)?.value;
   if (!raw) return false;
   const [expires, signature] = raw.split(".");
   if (!expires || !signature) return false;

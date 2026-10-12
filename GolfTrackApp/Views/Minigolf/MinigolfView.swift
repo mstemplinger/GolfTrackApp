@@ -86,6 +86,13 @@ struct MinigolfView: View {
                 }
             }
             .appBackground()
+            // Nach unten ziehen holt das Verzeichnis sofort. Sonst wartet die
+            // Liste bis zu sechs Stunden – ändert ein Betreiber online seine
+            // Hinweise, soll er das nicht so lange prüfen müssen.
+            .refreshable {
+                await catalog.refresh()
+                await updateLocation()
+            }
             .navigationTitle("Minigolf & Putten")
             .toolbar {
                 if showsCloseButton {

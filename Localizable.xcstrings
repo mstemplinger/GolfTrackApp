@@ -10091,6 +10091,34 @@
         }
       }
     },
+    "EMPFOHLEN" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "RECOMMENDED"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "RECOMENDADO"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "RECOMMANDÉ"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "CONSIGLIATA"
+          }
+        }
+      }
+    },
     "Ende" : {
       "localizations" : {
         "en" : {
@@ -27462,6 +27490,34 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Altri campi sono raggiungibili tramite ricerca."
+          }
+        }
+      }
+    },
+    "Weitere Schläger" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Other clubs"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Otros palos"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Autres clubs"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Altre mazze"
           }
         }
       }

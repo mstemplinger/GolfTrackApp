@@ -122,6 +122,12 @@ export function Privacy({ lang }: { lang: Lang }) {
           : "For weather data the app queries a weather service, transmitting the approximate location of the course. For the voice caddy the given text is sent to ElevenLabs to be turned into speech. Purchases and subscriptions are handled by Apple through the App Store; I receive no payment data."}
       </p>
 
+      <p>
+        {de
+          ? "Das Verzeichnis der Anlagen und die Anzeigen der Anlagen lädt die App von dieser Website; dabei wird nichts über deine Runden übertragen. Damit eine Anlage weiß, wie oft ihre Anzeige gesehen und angetippt wurde, meldet die App gebündelt die Kennung der Anzeige, die Art des Ereignisses und die Anzahl zurück – ohne Gerätekennung und ohne Profilbildung."
+          : "The app loads the venue directory and the venues' ads from this website; nothing about your rounds is transmitted. So that a venue knows how often its ad was seen and tapped, the app reports back the ad's identifier, the type of event and a count, in batches – with no device identifier and no profiling."}
+      </p>
+
       <h2>{de ? "Deine Rechte" : "Your rights"}</h2>
       <p>
         {de

@@ -138,6 +138,7 @@ struct HomeView: View {
                         Spacer(minLength: 30)
                     }
                     .padding(.top, 8)
+                    .readableContentWidth()
                 }
             }
             .navigationBarHidden(true)

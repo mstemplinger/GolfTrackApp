@@ -187,6 +187,7 @@ struct ProfileView: View {
                         Spacer(minLength: 30)
                     }
                     .padding(.top, 4)
+                    .readableContentWidth()
                 }
             }
             .navigationBarHidden(true)

@@ -525,8 +525,10 @@ struct TrainingView: View {
     private var lessonList: some View {
         ScrollView(showsIndicators: false) {
             VStack(spacing: 10) {
-                ForEach(filteredLessons) { lesson in
-                    lessonCard(lesson)
+                LazyVGrid(columns: AdaptiveLayout.cardColumns, spacing: 10) {
+                    ForEach(filteredLessons) { lesson in
+                        lessonCard(lesson)
+                    }
                 }
                 updateHint
                 Spacer(minLength: playerModel.currentLesson != nil ? 90 : 30)
@@ -804,6 +806,7 @@ struct TrainingPlayerSheet: View {
                     }
                     .padding(.horizontal, 24)
                     .padding(.top, 4)
+                    .readableContentWidth(600)
                 }
             }
         }

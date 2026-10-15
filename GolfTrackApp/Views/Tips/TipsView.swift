@@ -109,6 +109,7 @@ struct TipsView: View {
                         Spacer(minLength: 30)
                     }
                     .padding(.top, 4)
+                    .readableContentWidth()
                 }
             }
             .navigationBarHidden(true)
@@ -409,6 +410,7 @@ struct DailyTipDetailView: View {
                         Spacer(minLength: 40)
                     }
                     .padding(.horizontal, 24)
+                    .readableContentWidth(600)
                 }
             }
         }

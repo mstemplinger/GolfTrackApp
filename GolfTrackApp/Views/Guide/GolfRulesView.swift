@@ -41,6 +41,7 @@ struct GolfRulesView: View {
             }
             .listStyle(.insetGrouped)
             .scrollContentBackground(.hidden)
+            .readableContentWidth()
             .navigationTitle("Golfregeln 2023")
         }
     }
@@ -100,6 +101,7 @@ struct RulesCategoryView: View {
             }
             .listStyle(.insetGrouped)
             .scrollContentBackground(.hidden)
+            .readableContentWidth()
             .navigationTitle(category.title)
             .navigationBarTitleDisplayMode(.large)
         }
@@ -235,6 +237,7 @@ struct RuleDetailView: View {
                 }
             }
             .padding()
+            .readableContentWidth()
         }
         .navigationTitle(rule.title)
         .navigationBarTitleDisplayMode(.large)

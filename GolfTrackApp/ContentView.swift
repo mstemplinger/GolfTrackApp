@@ -3,6 +3,13 @@ import SwiftData
 
 extension Notification.Name {
     static let openShotTracker = Notification.Name("openShotTracker")
+    static let openPlatzreife = Notification.Name("openPlatzreife")
+}
+
+/// Ziel eines Deep Links, das beim Kaltstart eintreffen kann, bevor der Home-Tab
+/// steht – die Benachrichtigung allein ginge dann ins Leere.
+enum PendingNavigation {
+    static var platzreife = false
 }
 
 struct ContentView: View {
@@ -189,10 +196,15 @@ struct ContentView: View {
         guard let link = CourseDeepLink.link(from: url) else {
             // golftrack://home  → Home-Tab öffnen
             // golftrack://shottracker → Home-Tab + Runde fortsetzen
+            // golftrack://platzreife → Home-Tab + Platzreife lernen (z. B. aus
+            // der eigenen Produktseite im App Store)
             if url.scheme == CourseDeepLink.scheme {
                 selectedTab = 0
                 if url.host == "shottracker" {
                     NotificationCenter.default.post(name: .openShotTracker, object: nil)
+                } else if url.host == "platzreife" {
+                    PendingNavigation.platzreife = true
+                    NotificationCenter.default.post(name: .openPlatzreife, object: nil)
                 }
             }
             return

@@ -163,12 +163,48 @@ enum DemoDataSeeder {
             date = Calendar.current.date(byAdding: .day, value: -rng.int(in: 9...16), to: date) ?? date
         }
 
+        // 4) Platzreife: gut zwei Drittel gelernt, ein paar Fehler offen,
+        //    drei Probeprüfungen – so sieht die Lernübersicht nach einigen Tagen aus.
+        seedPlatzreife(into: context, rng: &rng)
+
         try? context.save()
 
-        // 4) Profil-Einstellungen
+        // 5) Profil-Einstellungen
         let defaults = UserDefaults.standard
         defaults.set("Alex", forKey: "playerName")
         defaults.set(true, forKey: "hasSeenOnboarding")
+    }
+
+    // MARK: Platzreife
+
+    @MainActor
+    private static func seedPlatzreife(into context: ModelContext, rng: inout SeededRandom) {
+        let store = PlatzreifeProgressStore.shared
+        store.reset()
+        let start = Date.now.addingTimeInterval(-6 * 86_400)
+        for (index, question) in PlatzreifeQuestions.all.enumerated() {
+            let when = start.addingTimeInterval(Double(index) * 1_800)
+            switch rng.next(100) {
+            case 0..<68:
+                store.record(question, correct: true, at: when)
+            case 68..<76:
+                store.record(question, correct: false, at: when)
+            case 76..<84:
+                store.record(question, correct: false, at: when)
+                store.record(question, correct: true, at: when.addingTimeInterval(600))
+            default:
+                break
+            }
+        }
+
+        for (daysAgo, score, minutes) in [(5, 19, 24), (3, 22, 21), (1, 26, 18)] {
+            let date = Calendar.current.date(byAdding: .day, value: -daysAgo, to: .now) ?? .now
+            context.insert(QuizResult(date: date, mode: "exam", score: score, total: 30, durationSeconds: minutes * 60))
+        }
+        for daysAgo in [6, 4, 2] {
+            let date = Calendar.current.date(byAdding: .hour, value: -daysAgo * 24 - 3, to: .now) ?? .now
+            context.insert(QuizResult(date: date, mode: "smart", score: 15 + rng.next(5), total: 20, durationSeconds: 300 + rng.next(240)))
+        }
     }
 
     // MARK: Aufräumen
@@ -187,6 +223,7 @@ enum DemoDataSeeder {
         deleteAll(RoundTrack.self, in: context)
         deleteAll(GolfBag.self, in: context)
         deleteAll(GolfClub.self, in: context)
+        deleteAll(QuizResult.self, in: context)
         try? context.save()
     }
 

@@ -1,218 +1,299 @@
 import SwiftUI
 import SwiftData
+import Combine
 
-// MARK: - Quiz Hub
+// MARK: - Übersicht
 
 struct PlatzreifeQuizView: View {
     @Query(sort: \QuizResult.date, order: .reverse) private var results: [QuizResult]
     @Environment(\.modelContext) private var context
-    @State private var showSmartMode    = false
-    @State private var showExamMode     = false
-    @State private var selectedCategory: QuizCategory? = nil
-    @State private var showCategoryPicker = false
+    @Environment(\.horizontalSizeClass) private var sizeClass
+    @State private var store = PlatzreifeProgressStore.shared
+    @State private var activeSession: QuizSessionRequest?
+    @State private var showExamMode = false
     @State private var showDeleteAllConfirm = false
-    @State private var showAllResults   = false
+    @State private var showResetConfirm = false
+    @State private var showAllResults = false
 
+    private var isRegular: Bool { sizeClass == .regular }
+    private var catalog: [QuizQuestion] { PlatzreifeQuestions.all }
+    private var counts: QuizStatusCounts { store.counts(in: catalog) }
     private var examResults: [QuizResult] { results.filter { $0.mode == "exam" } }
     private var bestExam: QuizResult? { examResults.max(by: { $0.percentage < $1.percentage }) }
 
     var body: some View {
         ScrollView {
-            VStack(spacing: 20) {
-                // Hero banner
-                heroBanner
-
-                // Stats row
-                if !examResults.isEmpty {
-                    statsRow
+            VStack(spacing: 24) {
+                if isRegular {
+                    HStack(alignment: .top, spacing: 20) {
+                        readinessCard
+                        learnActions
+                    }
+                    // Lässt die Prüfungsreife-Karte so hoch werden wie die Knopfspalte daneben.
+                    .fixedSize(horizontal: false, vertical: true)
+                } else {
+                    readinessCard
+                    learnActions
                 }
 
-                // Mode cards
-                VStack(spacing: 14) {
-                    modeCard(
-                        title: "Smart-Modus",
-                        subtitle: "Übe alle Fragen adaptiv",
-                        description: "Falsch beantwortete Fragen wiederholen sich – bis du sie sicher beherrschst. Wie in der Fahrschule.",
-                        icon: "brain.head.profile",
-                        color: AppTheme.gold,
-                        badge: "\(PlatzreifeQuestions.all.count) Fragen"
-                    ) {
-                        showCategoryPicker = true
-                    }
+                categorySection
 
-                    modeCard(
-                        title: "Probeprüfung",
-                        subtitle: "30 Fragen · 30 Minuten",
-                        description: "Simuliere die echte Platzreife-Theorieprüfung. Bestanden bei 75 % (23/30 Fragen).",
-                        icon: "checkmark.seal.fill",
-                        color: AppTheme.gold,
-                        badge: "Bestanden ab 75 %"
-                    ) {
-                        showExamMode = true
-                    }
-                }
-                .padding(.horizontal)
-
-                // Results history
                 if !results.isEmpty {
-                    resultsSection
+                    historySection
                 }
 
-                Spacer(minLength: 20)
+                rulesLink
             }
-            .padding(.top)
+            .padding(isRegular ? 28 : 16)
+            .readableWidth(1000)
         }
-        .navigationTitle("Platzreife Quiz")
-        .navigationBarTitleDisplayMode(.large)
         .background(AppTheme.bg)
-        .confirmationDialog("Kategorie wählen", isPresented: $showCategoryPicker, titleVisibility: .visible) {
-            Button("Alle Kategorien (\(PlatzreifeQuestions.all.count) Fragen)") {
-                Haptics.tap()
-                selectedCategory = nil
-                showSmartMode = true
-            }
-            ForEach(QuizCategory.allCases, id: \.self) { cat in
-                let count = PlatzreifeQuestions.all.filter { $0.category == cat }.count
-                Button("\(cat.rawValue) (\(count) Fragen)") {
-                    Haptics.tap()
-                    selectedCategory = cat
-                    showSmartMode = true
+        .navigationTitle("Platzreife lernen")
+        // Der große Titel bleibt unter der App-eigenen Navigationsleiste leer.
+        .navigationBarTitleDisplayMode(.inline)
+        .toolbar {
+            ToolbarItem(placement: .topBarTrailing) {
+                Menu {
+                    Button(role: .destructive) {
+                        Haptics.tap()
+                        showResetConfirm = true
+                    } label: {
+                        Label("Lernfortschritt zurücksetzen", systemImage: "arrow.counterclockwise")
+                    }
+                } label: {
+                    Image(systemName: "ellipsis.circle")
                 }
+                .accessibilityLabel("Weitere Optionen")
+            }
+        }
+        .confirmationDialog("Lernfortschritt zurücksetzen?", isPresented: $showResetConfirm, titleVisibility: .visible) {
+            Button("Zurücksetzen", role: .destructive) {
+                Haptics.warning()
+                withAnimation { store.reset() }
             }
             Button("Abbrechen", role: .cancel) { Haptics.tap() }
+        } message: {
+            Text("Alle Fragen gelten danach wieder als neu. Deine Prüfungsergebnisse bleiben erhalten.")
         }
-        .fullScreenCover(isPresented: $showSmartMode) {
-            SmartModeView(category: selectedCategory)
+        .fullScreenCover(item: $activeSession) { request in
+            PlatzreifeSessionView(request: request)
         }
         .fullScreenCover(isPresented: $showExamMode) {
             ExamModeView()
         }
     }
 
-    // MARK: Hero
-    private var heroBanner: some View {
-        VStack(spacing: 10) {
-            Image(systemName: "graduationcap.fill")
-                .font(.system(size: 40))
-                .foregroundStyle(.white)
-                .padding(18)
-                .background(
-                    LinearGradient(colors: [AppTheme.gold, AppTheme.cardAlt], startPoint: .topLeading, endPoint: .bottomTrailing),
-                    in: Circle()
-                )
-                .shadow(color: AppTheme.gold.opacity(0.4), radius: 12, y: 4)
+    // MARK: Prüfungsreife
 
-            Text("Platzreife Theorie")
-                .font(.title2.bold())
+    private var readinessCard: some View {
+        VStack(alignment: .leading, spacing: 18) {
+            HStack(spacing: 20) {
+                ReadinessRing(value: counts.readiness)
+                    .frame(width: 112, height: 112)
 
-            Text("Offizieller Fragenkatalog · \(PlatzreifeQuestions.all.count) Fragen · 6 Themengebiete")
-                .font(.subheadline)
-                .foregroundStyle(AppTheme.textSec)
-                .multilineTextAlignment(.center)
-        }
-        .padding()
-    }
+                VStack(alignment: .leading, spacing: 6) {
+                    Text("Prüfungsreife")
+                        .font(.caption.bold())
+                        .textCase(.uppercase)
+                        .foregroundStyle(AppTheme.textSec)
+                    Text("\(counts.mastered) von \(counts.total) Fragen sitzen")
+                        .font(.title3.bold())
+                        .fixedSize(horizontal: false, vertical: true)
+                    hintText
+                        .font(.subheadline)
+                        .foregroundStyle(AppTheme.textSec)
+                        .fixedSize(horizontal: false, vertical: true)
+                }
+                Spacer(minLength: 0)
+            }
 
-    // MARK: Stats
-    private var statsRow: some View {
-        HStack(spacing: 12) {
-            statCell(
-                value: "\(examResults.count)",
-                label: "Prüfungen",
-                icon: "doc.text.fill",
-                color: AppTheme.gold
-            )
-            statCell(
-                value: examResults.filter(\.passed).count.description,
-                label: "Bestanden",
-                icon: "checkmark.circle.fill",
-                color: AppTheme.gold
-            )
-            if let best = bestExam {
-                statCell(
-                    value: "\(Int(best.percentage)) %",
-                    label: "Bestleistung",
-                    icon: "star.fill",
-                    color: .orange
-                )
+            HStack(spacing: 10) {
+                statusChip(count: counts.mastered, label: Text("Sicher"), color: AppTheme.gold)
+                statusChip(count: counts.toRepeat, label: Text("Wiederholen"), color: .orange)
+                statusChip(count: counts.new, label: Text("Neu"), color: AppTheme.textSec)
             }
         }
-        .padding(.horizontal)
+        .padding(20)
+        .frame(maxWidth: .infinity, maxHeight: isRegular ? .infinity : nil, alignment: .topLeading)
+        .background(AppTheme.card, in: RoundedRectangle(cornerRadius: 20))
     }
 
-    private func statCell(value: String, label: String, icon: String, color: Color) -> some View {
-        VStack(spacing: 6) {
-            Image(systemName: icon)
-                .foregroundStyle(color)
-                .font(.title3)
-            Text(value)
-                .font(.title3.bold())
-            Text(label)
-                .font(.caption2)
-                .foregroundStyle(AppTheme.textSec)
+    private var hintText: Text {
+        if counts.total == counts.new {
+            return Text("Starte mit einer Lernrunde: 20 gemischte Fragen aus allen Themen.")
         }
-        .frame(maxWidth: .infinity)
-        .padding(.vertical, 14)
-        .background(AppTheme.card, in: RoundedRectangle(cornerRadius: 14))
+        if counts.readiness >= 0.9 {
+            return Text("Du bist gut vorbereitet. Teste dich jetzt in einer Probeprüfung.")
+        }
+        if counts.toRepeat > 0 {
+            return Text("\(counts.toRepeat) Fragen solltest du noch einmal üben.")
+        }
+        return Text("Weiter so – jede Lernrunde bringt dich näher an die Prüfung.")
     }
 
-    // MARK: Mode Card
-    private func modeCard(
-        title: String,
-        subtitle: String,
-        description: String,
-        icon: String,
-        color: Color,
-        badge: String,
-        action: @escaping () -> Void
-    ) -> some View {
+    private func statusChip(count: Int, label: Text, color: Color) -> some View {
+        VStack(alignment: .leading, spacing: 2) {
+            Text(verbatim: "\(count)")
+                .font(.headline)
+                .monospacedDigit()
+                .foregroundStyle(color)
+                .contentTransition(.numericText())
+            label
+                .font(.caption)
+                .foregroundStyle(AppTheme.textSec)
+                .lineLimit(1)
+                .minimumScaleFactor(0.8)
+        }
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .padding(.horizontal, 12)
+        .padding(.vertical, 10)
+        .background(AppTheme.cardAlt, in: RoundedRectangle(cornerRadius: 12))
+    }
+
+    // MARK: Lernen & Prüfen
+
+    private var learnActions: some View {
+        VStack(spacing: 12) {
+            Button {
+                Haptics.medium()
+                activeSession = QuizSessionRequest(category: nil, mistakesOnly: false)
+            } label: {
+                HStack(spacing: 14) {
+                    Image(systemName: "brain.head.profile")
+                        .font(.title2)
+                    VStack(alignment: .leading, spacing: 2) {
+                        Text(counts.total == counts.new ? "Erste Lernrunde starten" : "Weiterlernen")
+                            .font(.headline)
+                        Text("20 Fragen · Fehler kommen zuerst dran")
+                            .font(.caption)
+                            .opacity(0.8)
+                    }
+                    Spacer()
+                    Image(systemName: "chevron.right")
+                        .font(.subheadline.bold())
+                }
+                .foregroundStyle(Color(red: 0.10, green: 0.22, blue: 0.13))
+                .padding(18)
+                .background(AppTheme.gold, in: RoundedRectangle(cornerRadius: 16))
+            }
+            .buttonStyle(.plain)
+
+            if counts.toRepeat > 0 {
+                actionRow(
+                    icon: "arrow.uturn.backward.circle.fill",
+                    color: .orange,
+                    title: Text("Fehler üben"),
+                    subtitle: Text("\(counts.toRepeat) Fragen, die noch wackeln")
+                ) {
+                    activeSession = QuizSessionRequest(category: nil, mistakesOnly: true)
+                }
+            }
+
+            actionRow(
+                icon: "checkmark.seal.fill",
+                color: AppTheme.gold,
+                title: Text("Probeprüfung"),
+                subtitle: bestExam.map { Text("30 Fragen · 30 Minuten · Bestwert \(Int($0.percentage)) %") }
+                    ?? Text("30 Fragen · 30 Minuten · bestanden ab 75 %")
+            ) {
+                showExamMode = true
+            }
+        }
+        .frame(maxWidth: .infinity, alignment: .top)
+    }
+
+    private func actionRow(icon: String, color: Color, title: Text, subtitle: Text, action: @escaping () -> Void) -> some View {
         Button {
             Haptics.medium()
             action()
         } label: {
-            HStack(alignment: .top, spacing: 16) {
-                ZStack {
-                    RoundedRectangle(cornerRadius: 14)
-                        .fill(color.opacity(0.15))
-                        .frame(width: 52, height: 52)
-                    Image(systemName: icon)
-                        .font(.system(size: 24))
-                        .foregroundStyle(color)
-                }
-
-                VStack(alignment: .leading, spacing: 4) {
-                    HStack {
-                        Text(title)
-                            .font(.headline)
-                            .foregroundStyle(AppTheme.text)
-                        Spacer()
-                        Text(badge)
-                            .font(.caption2.bold())
-                            .foregroundStyle(color)
-                            .padding(.horizontal, 8)
-                            .padding(.vertical, 3)
-                            .background(color.opacity(0.12), in: Capsule())
-                    }
-                    Text(subtitle)
-                        .font(.subheadline)
-                        .foregroundStyle(color)
-                        .fontWeight(.semibold)
-                    Text(description)
+            HStack(spacing: 14) {
+                Image(systemName: icon)
+                    .font(.title3)
+                    .foregroundStyle(color)
+                    .frame(width: 44, height: 44)
+                    .background(color.opacity(0.15), in: RoundedRectangle(cornerRadius: 12))
+                VStack(alignment: .leading, spacing: 2) {
+                    title
+                        .font(.headline)
+                        .foregroundStyle(AppTheme.text)
+                    subtitle
                         .font(.caption)
                         .foregroundStyle(AppTheme.textSec)
-                        .multilineTextAlignment(.leading)
-                        .fixedSize(horizontal: false, vertical: true)
                 }
+                Spacer()
+                Image(systemName: "chevron.right")
+                    .font(.subheadline.bold())
+                    .foregroundStyle(AppTheme.textTer)
             }
-            .padding()
+            .padding(14)
             .background(AppTheme.card, in: RoundedRectangle(cornerRadius: 16))
         }
         .buttonStyle(.plain)
     }
 
-    // MARK: Results
-    private var resultsSection: some View {
-        VStack(alignment: .leading, spacing: 10) {
+    // MARK: Themengebiete
+
+    private var categorySection: some View {
+        VStack(alignment: .leading, spacing: 12) {
+            Text("Themengebiete")
+                .font(.headline)
+            LazyVGrid(
+                columns: [GridItem(.adaptive(minimum: isRegular ? 210 : 150), spacing: 12)],
+                spacing: 12
+            ) {
+                ForEach(QuizCategory.allCases, id: \.self) { category in
+                    categoryCard(category)
+                }
+            }
+        }
+    }
+
+    private func categoryCard(_ category: QuizCategory) -> some View {
+        let catCounts = store.counts(in: catalog.filter { $0.category == category })
+        return Button {
+            Haptics.medium()
+            activeSession = QuizSessionRequest(category: category, mistakesOnly: false)
+        } label: {
+            VStack(alignment: .leading, spacing: 10) {
+                HStack {
+                    Image(systemName: category.icon)
+                        .font(.body)
+                        .foregroundStyle(category.color)
+                        .frame(width: 36, height: 36)
+                        .background(category.color.opacity(0.15), in: RoundedRectangle(cornerRadius: 10))
+                    Spacer()
+                    if catCounts.wrong > 0 {
+                        Text(verbatim: "\(catCounts.wrong)")
+                            .font(.caption2.bold())
+                            .foregroundStyle(.white)
+                            .padding(.horizontal, 7)
+                            .padding(.vertical, 3)
+                            .background(Color.orange, in: Capsule())
+                            .accessibilityLabel(Text("\(catCounts.wrong) Fehler"))
+                    }
+                }
+                Text(verbatim: category.rawValue)
+                    .font(.subheadline.bold())
+                    .foregroundStyle(AppTheme.text)
+                    .lineLimit(2, reservesSpace: true)
+                    .multilineTextAlignment(.leading)
+                Text("\(catCounts.mastered) von \(catCounts.total) sicher")
+                    .font(.caption)
+                    .foregroundStyle(AppTheme.textSec)
+                ProgressSegments(counts: catCounts, tint: category.color)
+            }
+            .padding(14)
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .background(AppTheme.card, in: RoundedRectangle(cornerRadius: 16))
+        }
+        .buttonStyle(.plain)
+    }
+
+    // MARK: Ergebnisse
+
+    private var historySection: some View {
+        VStack(alignment: .leading, spacing: 12) {
             HStack {
                 Text("Ergebnisse")
                     .font(.headline)
@@ -233,7 +314,16 @@ struct PlatzreifeQuizView: View {
                     Button("Abbrechen", role: .cancel) { Haptics.tap() }
                 }
             }
-            .padding(.horizontal)
+
+            if !examResults.isEmpty {
+                HStack(spacing: 12) {
+                    statCell(value: "\(examResults.count)", label: Text("Prüfungen"), icon: "doc.text.fill", color: AppTheme.gold)
+                    statCell(value: "\(examResults.filter(\.passed).count)", label: Text("Bestanden"), icon: "checkmark.circle.fill", color: AppTheme.gold)
+                    if let best = bestExam {
+                        statCell(value: "\(Int(best.percentage)) %", label: Text("Bestleistung"), icon: "star.fill", color: .orange)
+                    }
+                }
+            }
 
             let displayed = showAllResults ? results : Array(results.prefix(5))
             VStack(spacing: 0) {
@@ -245,7 +335,6 @@ struct PlatzreifeQuizView: View {
                 }
             }
             .background(AppTheme.card, in: RoundedRectangle(cornerRadius: 14))
-            .padding(.horizontal)
 
             if results.count > 5 {
                 Button {
@@ -260,40 +349,48 @@ struct PlatzreifeQuizView: View {
                     .foregroundStyle(AppTheme.gold)
                     .frame(maxWidth: .infinity)
                 }
-                .padding(.horizontal)
             }
         }
     }
 
+    private func statCell(value: String, label: Text, icon: String, color: Color) -> some View {
+        VStack(spacing: 6) {
+            Image(systemName: icon)
+                .foregroundStyle(color)
+                .font(.title3)
+            Text(verbatim: value)
+                .font(.title3.bold())
+            label
+                .font(.caption2)
+                .foregroundStyle(AppTheme.textSec)
+        }
+        .frame(maxWidth: .infinity)
+        .padding(.vertical, 14)
+        .background(AppTheme.card, in: RoundedRectangle(cornerRadius: 14))
+    }
+
     private func resultRow(_ result: QuizResult) -> some View {
-        HStack(spacing: 14) {
-            ZStack {
-                Circle()
-                    .fill(result.mode == "exam"
-                          ? (result.passed ? AppTheme.gold.opacity(0.15) : Color.red.opacity(0.12))
-                          : AppTheme.gold.opacity(0.12))
-                    .frame(width: 36, height: 36)
-                Image(systemName: result.mode == "exam"
-                      ? (result.passed ? "checkmark.seal.fill" : "xmark.seal.fill")
-                      : "brain.head.profile")
+        let isExam = result.mode == "exam"
+        let tint: Color = isExam ? (result.passed ? AppTheme.gold : .red) : .blue
+        return HStack(spacing: 14) {
+            Image(systemName: isExam ? (result.passed ? "checkmark.seal.fill" : "xmark.seal.fill") : "brain.head.profile")
                 .font(.system(size: 15))
-                .foregroundStyle(result.mode == "exam"
-                                 ? (result.passed ? AppTheme.gold : .red)
-                                 : .blue)
-            }
+                .foregroundStyle(tint)
+                .frame(width: 36, height: 36)
+                .background(tint.opacity(0.13), in: Circle())
 
             VStack(alignment: .leading, spacing: 2) {
-                Text(result.mode == "exam" ? "Probeprüfung" : "Smart-Modus")
+                Text(isExam ? "Probeprüfung" : "Lernrunde")
                     .font(.subheadline.bold())
                 Text(result.date.formatted(date: .abbreviated, time: .shortened))
                     .font(.caption)
                     .foregroundStyle(AppTheme.textSec)
-                if result.mode == "exam" {
+                if isExam {
                     Text(result.passed ? "Bestanden ✓" : "Nicht bestanden")
                         .font(.caption2.bold())
-                        .foregroundStyle(result.passed ? AppTheme.gold : .red)
+                        .foregroundStyle(tint)
                 } else {
-                    Text(result.durationFormatted)
+                    Text(verbatim: result.durationFormatted)
                         .font(.caption2)
                         .foregroundStyle(AppTheme.textSec)
                 }
@@ -302,12 +399,10 @@ struct PlatzreifeQuizView: View {
             Spacer()
 
             VStack(alignment: .trailing, spacing: 2) {
-                Text("\(result.score)/\(result.total)")
+                Text(verbatim: "\(result.score)/\(result.total)")
                     .font(.subheadline.bold())
-                    .foregroundStyle(result.mode == "exam"
-                                     ? (result.passed ? AppTheme.gold : .red)
-                                     : .blue)
-                Text("\(Int(result.percentage)) %")
+                    .foregroundStyle(tint)
+                Text(verbatim: "\(Int(result.percentage)) %")
                     .font(.caption)
                     .foregroundStyle(AppTheme.textSec)
             }
@@ -322,412 +417,633 @@ struct PlatzreifeQuizView: View {
                     .padding(8)
                     .background(Color.red.opacity(0.08), in: Circle())
             }
+            .accessibilityLabel("Löschen")
         }
         .padding(.horizontal)
         .padding(.vertical, 10)
     }
+
+    // MARK: Regeln
+
+    private var rulesLink: some View {
+        NavigationLink {
+            GolfRulesView()
+        } label: {
+            HStack(spacing: 14) {
+                Image(systemName: "book.closed.fill")
+                    .font(.title3)
+                    .foregroundStyle(.red)
+                    .frame(width: 44, height: 44)
+                    .background(Color.red.opacity(0.15), in: RoundedRectangle(cornerRadius: 12))
+                VStack(alignment: .leading, spacing: 2) {
+                    Text("Golfregeln nachlesen")
+                        .font(.headline)
+                        .foregroundStyle(AppTheme.text)
+                    Text("Das Regelwerk mit Diagrammen – zum Nachschlagen beim Lernen")
+                        .font(.caption)
+                        .foregroundStyle(AppTheme.textSec)
+                }
+                Spacer()
+                Image(systemName: "chevron.right")
+                    .font(.subheadline.bold())
+                    .foregroundStyle(AppTheme.textTer)
+            }
+            .padding(14)
+            .background(AppTheme.card, in: RoundedRectangle(cornerRadius: 16))
+        }
+        .buttonStyle(.plain)
+    }
 }
 
-// MARK: - Smart Mode
+// MARK: - Bausteine
 
-struct SmartModeView: View {
+extension View {
+    /// Hält Fragen und Karten auf dem iPad auf einer gut lesbaren Breite, statt sie über
+    /// den ganzen Bildschirm zu ziehen.
+    func readableWidth(_ maxWidth: CGFloat = 720) -> some View {
+        frame(maxWidth: maxWidth).frame(maxWidth: .infinity)
+    }
+}
+
+struct QuizSessionRequest: Identifiable {
+    let id = UUID()
     let category: QuizCategory?
-    @Environment(\.modelContext) private var context
-    @Environment(\.dismiss) private var dismiss
+    let mistakesOnly: Bool
+}
 
-    // All questions filtered by category
-    private var allQuestions: [QuizQuestion] {
-        if let cat = category {
-            return PlatzreifeQuestions.all.filter { $0.category == cat }
+private struct ReadinessRing: View {
+    let value: Double
+    @State private var shown = 0.0
+
+    var body: some View {
+        ZStack {
+            Circle()
+                .stroke(Color.white.opacity(0.08), lineWidth: 12)
+            Circle()
+                .trim(from: 0, to: shown)
+                .stroke(AppTheme.gold, style: StrokeStyle(lineWidth: 12, lineCap: .round))
+                .rotationEffect(.degrees(-90))
+            Text(verbatim: "\(Int((value * 100).rounded())) %")
+                .font(.title2.bold())
+                .monospacedDigit()
+                .contentTransition(.numericText())
         }
-        return PlatzreifeQuestions.all
+        .onAppear { withAnimation(.easeOut(duration: 0.8)) { shown = value } }
+        .onChange(of: value) { _, new in withAnimation(.easeOut(duration: 0.5)) { shown = new } }
+        .accessibilityElement(children: .ignore)
+        .accessibilityLabel(Text("Prüfungsreife"))
+        .accessibilityValue(Text(verbatim: "\(Int((value * 100).rounded())) %"))
+    }
+}
+
+/// Fortschrittsbalken mit zwei Stufen: sicher (voll) und angefangen (blass).
+private struct ProgressSegments: View {
+    let counts: QuizStatusCounts
+    let tint: Color
+
+    var body: some View {
+        GeometryReader { geo in
+            let total = max(counts.total, 1)
+            let mastered = geo.size.width * Double(counts.mastered) / Double(total)
+            let started = geo.size.width * Double(counts.learning + counts.wrong) / Double(total)
+            ZStack(alignment: .leading) {
+                Capsule().fill(Color.white.opacity(0.08))
+                Capsule().fill(tint.opacity(0.35)).frame(width: mastered + started)
+                Capsule().fill(tint).frame(width: mastered)
+            }
+        }
+        .frame(height: 6)
+    }
+}
+
+enum QuizOptionState {
+    case idle, selected, correct, wrong, dimmed
+}
+
+/// Eine Antwortmöglichkeit – dieselbe Karte in Lernrunde, Prüfung und Auswertung.
+struct QuizOptionRow: View {
+    let index: Int
+    let text: String
+    let state: QuizOptionState
+
+    static func letter(_ index: Int) -> String {
+        String(UnicodeScalar(UInt8(65 + index)))
     }
 
+    private var accent: Color {
+        switch state {
+        case .idle, .dimmed: return Color.white.opacity(0.25)
+        case .selected, .correct: return AppTheme.gold
+        case .wrong: return .red
+        }
+    }
+
+    var body: some View {
+        HStack(spacing: 12) {
+            Text(verbatim: Self.letter(index))
+                .font(.caption.bold())
+                .frame(width: 28, height: 28)
+                .background(accent, in: Circle())
+                .foregroundStyle(.white)
+
+            Text(verbatim: text)
+                .font(.body)
+                .foregroundStyle(AppTheme.text.opacity(state == .dimmed ? 0.6 : 1))
+                .multilineTextAlignment(.leading)
+                .fixedSize(horizontal: false, vertical: true)
+
+            Spacer(minLength: 0)
+
+            switch state {
+            case .selected, .correct:
+                Image(systemName: "checkmark.circle.fill").foregroundStyle(AppTheme.gold)
+            case .wrong:
+                Image(systemName: "xmark.circle.fill").foregroundStyle(.red)
+            case .idle, .dimmed:
+                EmptyView()
+            }
+        }
+        .padding()
+        .frame(minHeight: 56)
+        .background(background, in: RoundedRectangle(cornerRadius: 12))
+        .overlay(
+            RoundedRectangle(cornerRadius: 12)
+                .stroke(border, lineWidth: 1.5)
+        )
+        .contentShape(RoundedRectangle(cornerRadius: 12))
+    }
+
+    private var background: Color {
+        switch state {
+        case .idle, .dimmed: return AppTheme.card
+        case .selected, .correct: return AppTheme.gold.opacity(0.10)
+        case .wrong: return Color.red.opacity(0.10)
+        }
+    }
+
+    private var border: Color {
+        switch state {
+        case .idle: return Color.white.opacity(0.12)
+        case .dimmed: return Color.white.opacity(0.06)
+        case .selected, .correct: return AppTheme.gold.opacity(0.6)
+        case .wrong: return Color.red.opacity(0.45)
+        }
+    }
+}
+
+struct QuizQuestionHeader: View {
+    let question: QuizQuestion
+    @Environment(\.horizontalSizeClass) private var sizeClass
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 14) {
+            QuizCategoryBadge(category: question.category)
+            Text(verbatim: question.question)
+                .font(sizeClass == .regular ? .title2.bold() : .title3.bold())
+                .fixedSize(horizontal: false, vertical: true)
+                .frame(maxWidth: .infinity, alignment: .leading)
+        }
+    }
+}
+
+struct QuizCategoryBadge: View {
+    let category: QuizCategory
+
+    var body: some View {
+        Label {
+            Text(verbatim: category.rawValue)
+        } icon: {
+            Image(systemName: category.icon)
+        }
+        .font(.caption.bold())
+        .foregroundStyle(category.color)
+        .padding(.horizontal, 10)
+        .padding(.vertical, 5)
+        .background(category.color.opacity(0.12), in: Capsule())
+    }
+}
+
+struct QuizExplanationCard: View {
+    let question: QuizQuestion
+    /// `nil` in der Auswertung – dort gibt es kein „Richtig/Falsch“, nur die Erklärung.
+    var wasCorrect: Bool? = nil
+
+    private var tint: Color {
+        guard let wasCorrect else { return AppTheme.gold }
+        return wasCorrect ? AppTheme.gold : .orange
+    }
+
+    var body: some View {
+        HStack(alignment: .top, spacing: 12) {
+            Image(systemName: wasCorrect == false ? "arrow.uturn.right.circle.fill"
+                  : wasCorrect == true ? "checkmark.circle.fill" : "lightbulb.fill")
+                .foregroundStyle(tint)
+                .font(.title3)
+                .padding(.top, 1)
+            VStack(alignment: .leading, spacing: 4) {
+                Group {
+                    switch wasCorrect {
+                    case true?:  Text("Richtig!")
+                    case false?: Text("Nicht ganz – die Frage kommt gleich noch einmal")
+                    case nil:    Text("Erklärung")
+                    }
+                }
+                .font(.caption.bold())
+                .foregroundStyle(wasCorrect == nil ? AppTheme.textSec : tint)
+                Text(verbatim: question.explanation)
+                    .font(.body)
+                    .fixedSize(horizontal: false, vertical: true)
+            }
+            Spacer(minLength: 0)
+        }
+        .padding()
+        .background(tint.opacity(0.12), in: RoundedRectangle(cornerRadius: 14))
+    }
+}
+
+// MARK: - Lernrunde
+
+struct PlatzreifeSessionView: View {
+    let request: QuizSessionRequest
+    @Environment(\.modelContext) private var context
+    @Environment(\.dismiss) private var dismiss
+    @Environment(\.horizontalSizeClass) private var sizeClass
+    @State private var store = PlatzreifeProgressStore.shared
+
+    @State private var sessionQuestions: [QuizQuestion] = []
+    /// Die aktuelle Frage ist immer `queue.first`. Falsch beantwortete Fragen
+    /// werden drei Plätze weiter hinten wieder eingereiht.
     @State private var queue: [QuizQuestion] = []
-    @State private var masteredIDs: Set<UUID> = []
-    // currentQuestion is stored as @State so it never changes mid-render
-    @State private var currentQuestion: QuizQuestion? = nil
-    @State private var selectedAnswer: Int? = nil
-    @State private var showExplanation = false
-    @State private var sessionCorrect = 0
-    @State private var sessionTotal = 0
+    @State private var selectedAnswer: Int?
+    @State private var answeredOnce: Set<String> = []
+    @State private var firstTryCorrect: Set<String> = []
+    @State private var wrongAnswers: [(question: QuizQuestion, chosen: Int)] = []
+    @State private var masteredBefore = 0
+    @State private var readinessBefore = 0.0
     @State private var startTime = Date()
     @State private var isFinished = false
+    @State private var resultSaved = false
     @State private var showQuitConfirm = false
-    @State private var wrongAnswers: [(question: QuizQuestion, chosen: Int)] = []
     @State private var showWrongReview = false
     @State private var wrongReviewIndex = 0
+    @State private var didStart = false
 
-    private var progress: Double { allQuestions.isEmpty ? 1 : Double(masteredIDs.count) / Double(allQuestions.count) }
+    private var isRegular: Bool { sizeClass == .regular }
+
+    private var pool: [QuizQuestion] {
+        guard let category = request.category else { return PlatzreifeQuestions.all }
+        return PlatzreifeQuestions.all.filter { $0.category == category }
+    }
+
+    private var titleText: Text {
+        if request.mistakesOnly { return Text("Fehler üben") }
+        if let category = request.category { return Text(verbatim: category.rawValue) }
+        return Text("Lernrunde")
+    }
 
     var body: some View {
         NavigationStack {
             Group {
                 if isFinished {
-                    smartFinishView
-                } else if let q = currentQuestion {
-                    smartQuestionView(q)
+                    finishView
+                } else if let question = queue.first {
+                    questionView(question)
                 } else {
-                    ProgressView("Lädt…")
+                    ProgressView()
                 }
             }
-            .navigationTitle(category?.rawValue ?? "Smart-Modus")
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+            .background(AppTheme.bg)
+            .navigationTitle(titleText)
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .topBarLeading) {
-                    Button("Beenden") {
-                        Haptics.tap()
-                        showQuitConfirm = true
+                    if isFinished {
+                        Button("Schließen") {
+                            Haptics.tap()
+                            dismiss()
+                        }
+                    } else {
+                        Button("Beenden") {
+                            Haptics.tap()
+                            if answeredOnce.isEmpty { dismiss() } else { showQuitConfirm = true }
+                        }
                     }
                 }
             }
-            .alert("Modus beenden?", isPresented: $showQuitConfirm) {
-                Button("Abbrechen", role: .cancel) { Haptics.tap() }
+            .alert("Lernrunde beenden?", isPresented: $showQuitConfirm) {
+                Button("Weiterlernen", role: .cancel) { Haptics.tap() }
                 Button("Beenden", role: .destructive) {
                     Haptics.tap()
-                    saveAndDismiss()
+                    saveResult()
+                    dismiss()
                 }
             } message: {
-                Text("Dein Fortschritt wird gespeichert.")
+                Text("Was du bisher beantwortet hast, ist gespeichert.")
             }
         }
-        .onAppear { setupQueue() }
-    }
-
-    // MARK: Question card
-    private func smartQuestionView(_ q: QuizQuestion) -> some View {
-        ScrollView {
-            VStack(spacing: 18) {
-                // Progress header
-                VStack(spacing: 6) {
-                    HStack {
-                        Label("\(masteredIDs.count) gelernt", systemImage: "checkmark.circle.fill")
-                            .font(.caption.bold())
-                            .foregroundStyle(AppTheme.gold)
-                        Spacer()
-                        Text("\(queue.count) verbleibend")
-                            .font(.caption)
-                            .foregroundStyle(AppTheme.textSec)
-                    }
-                    ProgressView(value: progress)
-                        .tint(AppTheme.gold)
-                }
-                .padding()
-                .background(AppTheme.card, in: RoundedRectangle(cornerRadius: 14))
-
-                // Category badge
-                Label(q.category.rawValue, systemImage: q.category.icon)
-                    .font(.caption.bold())
-                    .foregroundStyle(q.category.color)
-                    .padding(.horizontal, 10)
-                    .padding(.vertical, 5)
-                    .background(q.category.color.opacity(0.12), in: Capsule())
-                    .frame(maxWidth: .infinity, alignment: .leading)
-
-                // Question
-                Text(q.question)
-                    .font(.title3.bold())
-                    .fixedSize(horizontal: false, vertical: true)
-                    .frame(maxWidth: .infinity, alignment: .leading)
-
-                // Options
-                VStack(spacing: 10) {
-                    ForEach(Array(q.options.enumerated()), id: \.offset) { idx, option in
-                        optionButton(text: option, index: idx, question: q)
-                    }
-                }
-
-                // Explanation
-                if showExplanation {
-                    explanationCard(q)
-
-                    Button {
-                        Haptics.tap()
-                        nextQuestion()
-                    } label: {
-                        Text(masteredIDs.count == allQuestions.count ? "Abschließen" : "Nächste Frage")
-                            .font(.headline)
-                            .frame(maxWidth: .infinity)
-                            .padding(.vertical, 14)
-                            .background(
-                                selectedAnswer == q.correctIndex ? AppTheme.gold : Color.orange,
-                                in: RoundedRectangle(cornerRadius: 14)
-                            )
-                            .foregroundStyle(.white)
-                    }
-                    .buttonStyle(.plain)
-                }
-            }
-            .padding()
+        .onAppear {
+            guard !didStart else { return }
+            didStart = true
+            startSession()
         }
-        .background(AppTheme.bg)
     }
 
-    private func optionButton(text: String, index: Int, question: QuizQuestion) -> some View {
-        Button {
-            guard selectedAnswer == nil else { return }
-            index == question.correctIndex ? Haptics.success() : Haptics.error()
-            selectedAnswer = index
-            showExplanation = true
-            sessionTotal += 1
-            if index == question.correctIndex {
-                sessionCorrect += 1
-                masteredIDs.insert(question.id)
-            } else {
-                // Track first-time wrong answers only
-                if !wrongAnswers.contains(where: { $0.question.id == question.id }) {
-                    wrongAnswers.append((question: question, chosen: index))
+    // MARK: Frage
+
+    private func questionView(_ question: QuizQuestion) -> some View {
+        ScrollViewReader { proxy in
+            ScrollView {
+                VStack(spacing: 20) {
+                    progressHeader
+
+                    QuizQuestionHeader(question: question)
+
+                    VStack(spacing: 10) {
+                        ForEach(Array(question.options.enumerated()), id: \.offset) { index, option in
+                            Button {
+                                answer(index, for: question)
+                            } label: {
+                                QuizOptionRow(index: index, text: option, state: optionState(index, question))
+                            }
+                            .buttonStyle(.plain)
+                            // Kein `.disabled`: das würde auch die richtige Antwort ausgrauen.
+                            // `answer(_:for:)` ignoriert weitere Antippen ohnehin.
+                            .keyboardShortcut(KeyEquivalent(Character(QuizOptionRow.letter(index).lowercased())), modifiers: [])
+                        }
+                    }
+
+                    if let selected = selectedAnswer {
+                        QuizExplanationCard(question: question, wasCorrect: selected == question.correctIndex)
+                            .transition(.opacity.combined(with: .move(edge: .bottom)))
+
+                        Button {
+                            Haptics.tap()
+                            nextQuestion()
+                        } label: {
+                            Text(queue.count == 1 && selected == question.correctIndex ? "Runde abschließen" : "Nächste Frage")
+                                .goldButton()
+                        }
+                        .buttonStyle(.plain)
+                        .keyboardShortcut(.return, modifiers: [])
+                        .id("next")
+                    }
                 }
+                .padding(isRegular ? 32 : 16)
+                .readableWidth()
             }
-            // Queue is only modified in nextQuestion() to avoid mid-render changes
-        } label: {
-            HStack(spacing: 12) {
-                // Letter badge
-                Text(["A", "B", "C", "D"][index])
+            .onChange(of: selectedAnswer) { _, new in
+                guard new != nil else { return }
+                withAnimation(.easeOut(duration: 0.3)) { proxy.scrollTo("next", anchor: .bottom) }
+            }
+        }
+    }
+
+    private var progressHeader: some View {
+        let done = sessionQuestions.count - queue.count
+        return VStack(spacing: 6) {
+            HStack {
+                Label("\(done) von \(sessionQuestions.count) geschafft", systemImage: "checkmark.circle.fill")
                     .font(.caption.bold())
-                    .frame(width: 28, height: 28)
-                    .background(optionBadgeColor(index, question: question), in: Circle())
-                    .foregroundStyle(.white)
-
-                Text(text)
-                    .font(.subheadline)
-                    .foregroundStyle(AppTheme.text)
-                    .multilineTextAlignment(.leading)
-                    .fixedSize(horizontal: false, vertical: true)
-
+                    .foregroundStyle(AppTheme.gold)
                 Spacer()
-
-                if let sel = selectedAnswer {
-                    if index == question.correctIndex {
-                        Image(systemName: "checkmark.circle.fill").foregroundStyle(AppTheme.gold)
-                    } else if sel == index {
-                        Image(systemName: "xmark.circle.fill").foregroundStyle(.red)
-                    }
+                if !wrongAnswers.isEmpty {
+                    Label("\(wrongAnswers.count) Fehler", systemImage: "arrow.uturn.backward")
+                        .font(.caption)
+                        .foregroundStyle(.orange)
                 }
             }
-            .padding()
-            .background(optionBackground(index, question: question), in: RoundedRectangle(cornerRadius: 12))
-            .overlay(
-                RoundedRectangle(cornerRadius: 12)
-                    .stroke(optionBorderColor(index, question: question), lineWidth: 1.5)
-            )
-        }
-        .buttonStyle(.plain)
-        .disabled(selectedAnswer != nil)
-    }
-
-    private func optionBadgeColor(_ i: Int, question: QuizQuestion) -> Color {
-        guard let sel = selectedAnswer else { return .secondary.opacity(0.5) }
-        if i == question.correctIndex { return AppTheme.gold }
-        if i == sel { return .red }
-        return .secondary.opacity(0.3)
-    }
-
-    private func optionBackground(_ i: Int, question: QuizQuestion) -> Color {
-        guard let sel = selectedAnswer else { return AppTheme.card }
-        if i == question.correctIndex { return AppTheme.gold.opacity(0.08) }
-        if i == sel { return .red.opacity(0.08) }
-        return AppTheme.card
-    }
-
-    private func optionBorderColor(_ i: Int, question: QuizQuestion) -> Color {
-        guard let sel = selectedAnswer else { return Color.secondary.opacity(0.2) }
-        if i == question.correctIndex { return AppTheme.gold.opacity(0.6) }
-        if i == sel { return .red.opacity(0.4) }
-        return Color.secondary.opacity(0.1)
-    }
-
-    private func explanationCard(_ q: QuizQuestion) -> some View {
-        let correct = selectedAnswer == q.correctIndex
-        return HStack(alignment: .top, spacing: 12) {
-            Image(systemName: correct ? "checkmark.circle.fill" : "arrow.uturn.right.circle.fill")
-                .foregroundStyle(correct ? AppTheme.gold : .orange)
-                .font(.title3)
-                .padding(.top, 1)
-            VStack(alignment: .leading, spacing: 4) {
-                Text(correct ? "Richtig!" : "Nicht ganz – die Frage kommt wieder")
-                    .font(.caption.bold())
-                    .foregroundStyle(correct ? AppTheme.gold : .orange)
-                Text(q.explanation)
-                    .font(.subheadline)
-                    .fixedSize(horizontal: false, vertical: true)
-            }
+            ProgressView(value: Double(done), total: Double(max(sessionQuestions.count, 1)))
+                .tint(AppTheme.gold)
         }
         .padding()
-        .background(
-            (correct ? AppTheme.gold : Color.orange).opacity(0.1),
-            in: RoundedRectangle(cornerRadius: 14)
-        )
+        .background(AppTheme.card, in: RoundedRectangle(cornerRadius: 14))
     }
 
-    // MARK: Finish
-    private var smartFinishView: some View {
-        VStack(spacing: 24) {
-            Spacer()
-            Image(systemName: "star.fill")
-                .font(.system(size: 60))
-                .foregroundStyle(AppTheme.gold)
-                .shadow(color: .yellow.opacity(0.4), radius: 12, y: 4)
+    private func optionState(_ index: Int, _ question: QuizQuestion) -> QuizOptionState {
+        guard let selected = selectedAnswer else { return .idle }
+        if index == question.correctIndex { return .correct }
+        if index == selected { return .wrong }
+        return .dimmed
+    }
 
-            VStack(spacing: 8) {
-                Text("Alle Fragen gelernt!")
-                    .font(.title.bold())
-                Text("Du hast alle \(allQuestions.count) Fragen beherrscht.")
-                    .font(.subheadline)
-                    .foregroundStyle(AppTheme.textSec)
-                    .multilineTextAlignment(.center)
-            }
+    // MARK: Abschluss
 
-            VStack(spacing: 10) {
-                HStack(spacing: 20) {
-                    VStack {
-                        Text("\(sessionCorrect)")
-                            .font(.title2.bold())
-                            .foregroundStyle(AppTheme.gold)
-                        Text("Richtig")
-                            .font(.caption)
-                            .foregroundStyle(AppTheme.textSec)
-                    }
-                    Divider().frame(height: 40)
-                    VStack {
-                        Text("\(sessionTotal - sessionCorrect)")
-                            .font(.title2.bold())
-                            .foregroundStyle(.orange)
-                        Text("Wiederholt")
-                            .font(.caption)
-                            .foregroundStyle(AppTheme.textSec)
-                    }
-                    Divider().frame(height: 40)
-                    VStack {
-                        Text(durationString)
-                            .font(.title2.bold())
-                        Text("Zeit")
-                            .font(.caption)
-                            .foregroundStyle(AppTheme.textSec)
+    private var finishView: some View {
+        let counts = store.counts(in: pool)
+        let newlyMastered = max(counts.mastered - masteredBefore, 0)
+        return ScrollView {
+            VStack(spacing: 24) {
+                if sessionQuestions.isEmpty {
+                    finishHeader(
+                        icon: "checkmark.seal.fill",
+                        title: Text("Nichts zu wiederholen"),
+                        subtitle: Text("Alle Fehler sind ausgebügelt. Starte eine normale Lernrunde oder eine Probeprüfung.")
+                    )
+                } else {
+                    finishHeader(
+                        icon: "star.fill",
+                        title: Text("Lernrunde geschafft!"),
+                        subtitle: Text("\(firstTryCorrect.count) von \(sessionQuestions.count) Fragen auf Anhieb richtig.")
+                    )
+
+                    HStack(spacing: 12) {
+                        finishTile(value: "+\(newlyMastered)", label: Text("Neu sicher"), color: AppTheme.gold)
+                        finishTile(
+                            value: "\(Int((counts.readiness * 100).rounded())) %",
+                            label: Text("Prüfungsreife"),
+                            color: counts.readiness > readinessBefore ? AppTheme.gold : AppTheme.text
+                        )
+                        finishTile(value: durationString, label: Text("Zeit"), color: AppTheme.text)
                     }
                 }
-                .padding()
-                .background(AppTheme.cardAlt, in: RoundedRectangle(cornerRadius: 14))
-            }
-            .padding(.horizontal)
 
-            VStack(spacing: 12) {
-                if !wrongAnswers.isEmpty {
+                VStack(spacing: 12) {
+                    if !request.mistakesOnly || counts.toRepeat > 0 {
+                        Button {
+                            Haptics.medium()
+                            startSession()
+                        } label: {
+                            Label("Nächste Lernrunde", systemImage: "arrow.right.circle.fill")
+                                .goldButton()
+                        }
+                        .buttonStyle(.plain)
+                    }
+
+                    if !wrongAnswers.isEmpty {
+                        Button {
+                            Haptics.tap()
+                            wrongReviewIndex = 0
+                            showWrongReview = true
+                        } label: {
+                            Label("\(wrongAnswers.count) Fehler noch einmal ansehen", systemImage: "exclamationmark.circle")
+                                .font(.headline)
+                                .frame(maxWidth: .infinity)
+                                .padding(.vertical, 14)
+                                .background(Color.orange.opacity(0.12), in: RoundedRectangle(cornerRadius: 14))
+                                .foregroundStyle(.orange)
+                        }
+                        .buttonStyle(.plain)
+                    }
+
                     Button {
                         Haptics.tap()
-                        wrongReviewIndex = 0
-                        showWrongReview = true
+                        dismiss()
                     } label: {
-                        Label("\(wrongAnswers.count) falsche Antworten ansehen", systemImage: "exclamationmark.circle")
+                        Text("Fertig")
                             .font(.headline)
                             .frame(maxWidth: .infinity)
                             .padding(.vertical, 14)
-                            .background(Color.orange.opacity(0.12), in: RoundedRectangle(cornerRadius: 14))
-                            .foregroundStyle(.orange)
+                            .background(AppTheme.card, in: RoundedRectangle(cornerRadius: 14))
+                            .foregroundStyle(AppTheme.text)
                     }
                     .buttonStyle(.plain)
-                    .padding(.horizontal)
                 }
-                Button("Fertig") {
-                    Haptics.tap()
-                    saveAndDismiss()
-                }
-                    .font(.headline)
-                    .frame(maxWidth: .infinity)
-                    .padding(.vertical, 16)
-                    .background(AppTheme.gold, in: RoundedRectangle(cornerRadius: 14))
-                    .foregroundStyle(.white)
-                    .padding(.horizontal)
             }
-
-            Spacer()
+            .padding(isRegular ? 40 : 20)
+            .readableWidth(560)
         }
-        .background(AppTheme.bg)
         .sheet(isPresented: $showWrongReview) {
-            WrongAnswerReviewSheet(
-                wrongAnswers: wrongAnswers,
-                currentIndex: $wrongReviewIndex
-            )
+            WrongAnswerReviewSheet(wrongAnswers: wrongAnswers, currentIndex: $wrongReviewIndex)
         }
     }
 
-    // MARK: Helpers
-    private func setupQueue() {
-        queue = allQuestions.shuffled()
-        currentQuestion = queue.first
-        startTime = Date()
+    private func finishHeader(icon: String, title: Text, subtitle: Text) -> some View {
+        VStack(spacing: 12) {
+            Image(systemName: icon)
+                .font(.system(size: 56))
+                .foregroundStyle(AppTheme.gold)
+                .shadow(color: AppTheme.gold.opacity(0.4), radius: 12, y: 4)
+                .padding(.top, 24)
+            title
+                .font(.title.bold())
+                .multilineTextAlignment(.center)
+            subtitle
+                .font(.subheadline)
+                .foregroundStyle(AppTheme.textSec)
+                .multilineTextAlignment(.center)
+        }
+    }
+
+    private func finishTile(value: String, label: Text, color: Color) -> some View {
+        VStack(spacing: 4) {
+            Text(verbatim: value)
+                .font(.title2.bold())
+                .monospacedDigit()
+                .foregroundStyle(color)
+                .lineLimit(1)
+                .minimumScaleFactor(0.7)
+            label
+                .font(.caption)
+                .foregroundStyle(AppTheme.textSec)
+        }
+        .frame(maxWidth: .infinity)
+        .padding(.vertical, 14)
+        .background(AppTheme.card, in: RoundedRectangle(cornerRadius: 14))
+    }
+
+    // MARK: Ablauf
+
+    private func startSession() {
+        let counts = store.counts(in: pool)
+        masteredBefore = counts.mastered
+        readinessBefore = counts.readiness
+        sessionQuestions = store.session(from: pool, mistakesOnly: request.mistakesOnly)
+        queue = sessionQuestions
+        selectedAnswer = nil
+        answeredOnce = []
+        firstTryCorrect = []
+        wrongAnswers = []
+        resultSaved = false
+        startTime = .now
+        withAnimation { isFinished = sessionQuestions.isEmpty }
+    }
+
+    private func answer(_ index: Int, for question: QuizQuestion) {
+        guard selectedAnswer == nil else { return }
+        let correct = index == question.correctIndex
+        correct ? Haptics.success() : Haptics.error()
+        withAnimation(.easeOut(duration: 0.2)) { selectedAnswer = index }
+        store.record(question, correct: correct)
+        if answeredOnce.insert(question.id).inserted {
+            if correct {
+                firstTryCorrect.insert(question.id)
+            } else {
+                wrongAnswers.append((question: question, chosen: index))
+            }
+        }
     }
 
     private func nextQuestion() {
-        guard let q = currentQuestion else { return }
-
-        if selectedAnswer == q.correctIndex {
-            // Correct: remove from queue permanently
-            queue.removeAll { $0.id == q.id }
-        } else {
-            // Wrong: rotate to end of queue so it comes back later
-            if let pos = queue.firstIndex(where: { $0.id == q.id }) {
-                let item = queue.remove(at: pos)
-                queue.append(item)
-            }
+        guard let question = queue.first else { return }
+        queue.removeFirst()
+        if selectedAnswer != question.correctIndex {
+            queue.insert(question, at: min(3, queue.count))
         }
-
         selectedAnswer = nil
-        showExplanation = false
 
         if queue.isEmpty {
-            // Alle Fragen gemeistert – das darf man fühlen.
             Haptics.celebrate()
-            isFinished = true
-        } else {
-            currentQuestion = queue.first
+            saveResult()
+            withAnimation { isFinished = true }
         }
     }
 
     private var durationString: String {
-        let s = Int(Date().timeIntervalSince(startTime))
-        let m = s / 60; let sec = s % 60
-        return m > 0 ? "\(m)m \(sec)s" : "\(sec)s"
+        let seconds = Int(Date().timeIntervalSince(startTime))
+        let m = seconds / 60, s = seconds % 60
+        return m > 0 ? "\(m)m \(s)s" : "\(s)s"
     }
 
-    private func saveAndDismiss() {
+    private func saveResult() {
+        guard !resultSaved, !answeredOnce.isEmpty else { return }
+        resultSaved = true
         let duration = Int(Date().timeIntervalSince(startTime))
-        let result = QuizResult(mode: "smart", score: masteredIDs.count, total: allQuestions.count, durationSeconds: duration)
-        context.insert(result)
-        dismiss()
+        context.insert(QuizResult(mode: "smart", score: firstTryCorrect.count, total: answeredOnce.count, durationSeconds: duration))
     }
 }
 
-// MARK: - Exam Mode
+// MARK: - Probeprüfung
 
 struct ExamModeView: View {
+    static let questionCount = 30
+    static let passMark = 23
+
     @Environment(\.modelContext) private var context
     @Environment(\.dismiss) private var dismiss
+    @Environment(\.horizontalSizeClass) private var sizeClass
+    @State private var store = PlatzreifeProgressStore.shared
 
-    private let examQuestions: [QuizQuestion] = {
-        // 15 Golfregeln (regeln + regelanwendung) + 15 Allgemein (etikette, scoring, platz, handicap)
-        let rulesQ   = Array(PlatzreifeQuestions.all.filter {  $0.category.isRulesCategory }.shuffled().prefix(15))
-        let generalQ = Array(PlatzreifeQuestions.all.filter { !$0.category.isRulesCategory }.shuffled().prefix(15))
-        return (rulesQ + generalQ).shuffled()
-    }()
-
+    /// Als State, damit ein Neuaufbau der Elternansicht nicht mitten in der Prüfung
+    /// andere Fragen auslost.
+    @State private var examQuestions: [QuizQuestion] = ExamModeView.makeExam()
+    @State private var answers: [Int?] = Array(repeating: nil, count: ExamModeView.questionCount)
     @State private var currentIndex = 0
-    @State private var answers: [Int?]
-    @State private var timeRemaining = 30 * 60  // 30 minutes
-    @State private var timer: Timer? = nil
+    @State private var timeRemaining = 30 * 60
     @State private var isFinished = false
     @State private var showQuitConfirm = false
+    @State private var showSubmitConfirm = false
+    @State private var showNavigator = false
     @State private var reviewMode = false
     @State private var reviewIndex = 0
     @State private var startTime = Date()
+    @State private var practiceRequest: QuizSessionRequest?
 
-    init() {
-        _answers = State(initialValue: Array(repeating: nil, count: 30))
+    private let ticker = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
+
+    /// 15 Regelfragen (Regeln + Regelanwendung) und 15 allgemeine Fragen, gemischt.
+    static func makeExam() -> [QuizQuestion] {
+        let half = questionCount / 2
+        let rules   = PlatzreifeQuestions.all.filter {  $0.category.isRulesCategory }.shuffled().prefix(half)
+        let general = PlatzreifeQuestions.all.filter { !$0.category.isRulesCategory }.shuffled().prefix(half)
+        return Array(rules + general).shuffled()
     }
 
-    private var correctCount: Int { answers.enumerated().filter { $0.element == examQuestions[$0.offset].correctIndex }.count }
+    private var isRegular: Bool { sizeClass == .regular }
+    private var correctCount: Int { answers.indices.filter { answers[$0] == examQuestions[$0].correctIndex }.count }
     private var answeredCount: Int { answers.compactMap { $0 }.count }
-    private var passed: Bool { correctCount >= 23 }
+    private var wrongCount: Int { answers.indices.filter { answers[$0] != nil && answers[$0] != examQuestions[$0].correctIndex }.count }
+    private var passed: Bool { correctCount >= Self.passMark }
 
     var body: some View {
         NavigationStack {
@@ -736,78 +1052,173 @@ struct ExamModeView: View {
                     reviewView
                 } else if isFinished {
                     resultView
+                } else if isRegular {
+                    HStack(spacing: 0) {
+                        navigator(showsTitle: true)
+                            .frame(width: 300)
+                            .background(AppTheme.cardDark)
+                        questionView
+                    }
                 } else {
                     questionView
                 }
             }
+            .background(AppTheme.bg)
             .navigationTitle("Probeprüfung")
             .navigationBarTitleDisplayMode(.inline)
-            .toolbar {
-                ToolbarItem(placement: .topBarLeading) {
-                    if reviewMode {
-                        Button("Zurück") {
-                            Haptics.tap()
-                            withAnimation { reviewMode = false }
-                        }
-                    } else if !isFinished {
-                        Button("Abbrechen") {
-                            Haptics.tap()
-                            showQuitConfirm = true
-                        }
-                    }
-                }
-                ToolbarItem(placement: .topBarTrailing) {
-                    if reviewMode {
-                        Button("Schließen") {
-                            Haptics.tap()
-                            dismiss()
-                        }
-                            .fontWeight(.semibold)
-                    } else if !isFinished {
-                        timerBadge
-                    }
-                }
-            }
+            .toolbar { toolbarContent }
             .alert("Prüfung abbrechen?", isPresented: $showQuitConfirm) {
                 Button("Weitermachen", role: .cancel) { Haptics.tap() }
                 Button("Abbrechen", role: .destructive) {
                     Haptics.tap()
-                    stopTimer()
                     dismiss()
                 }
             } message: {
                 Text("Das Ergebnis wird nicht gespeichert.")
             }
+            .alert("Prüfung abgeben?", isPresented: $showSubmitConfirm) {
+                Button("Weiter beantworten", role: .cancel) { Haptics.tap() }
+                Button("Abgeben") { submitExam() }
+            } message: {
+                Text("\(Self.questionCount - answeredCount) Fragen sind noch offen und zählen als falsch.")
+            }
+            .sheet(isPresented: $showNavigator) {
+                NavigationStack {
+                    ScrollView { navigator(showsTitle: false) }
+                        .background(AppTheme.bg)
+                        .navigationTitle("Übersicht")
+                        .navigationBarTitleDisplayMode(.inline)
+                        .toolbar {
+                            ToolbarItem(placement: .confirmationAction) {
+                                Button("Fertig") { showNavigator = false }
+                            }
+                        }
+                }
+                .presentationDetents([.fraction(0.7), .large])
+            }
+            .fullScreenCover(item: $practiceRequest) { request in
+                PlatzreifeSessionView(request: request)
+            }
         }
-        .onAppear { startTimer() }
-        .onDisappear { stopTimer() }
+        .onReceive(ticker) { _ in
+            guard !isFinished else { return }
+            if timeRemaining > 0 {
+                timeRemaining -= 1
+            } else {
+                submitExam()
+            }
+        }
     }
 
-    // MARK: Timer badge
+    @ToolbarContentBuilder
+    private var toolbarContent: some ToolbarContent {
+        ToolbarItem(placement: .topBarLeading) {
+            if reviewMode {
+                Button("Zurück") {
+                    Haptics.tap()
+                    withAnimation { reviewMode = false }
+                }
+            } else if !isFinished {
+                Button("Abbrechen") {
+                    Haptics.tap()
+                    showQuitConfirm = true
+                }
+            }
+        }
+        ToolbarItemGroup(placement: .topBarTrailing) {
+            if reviewMode || isFinished {
+                Button("Schließen") {
+                    Haptics.tap()
+                    dismiss()
+                }
+                .fontWeight(.semibold)
+            } else {
+                // Allein in der Leiste – neben einem zweiten Knopf kürzt iOS die Zeit zu „…“.
+                timerBadge
+                    .fixedSize()
+            }
+        }
+    }
+
     private var timerBadge: some View {
-        let mins = timeRemaining / 60
-        let secs = timeRemaining % 60
         let isLow = timeRemaining < 5 * 60
         return HStack(spacing: 4) {
             Image(systemName: "clock")
-                .font(.caption.bold())
-            Text(String(format: "%02d:%02d", mins, secs))
-                .font(.caption.bold())
+            Text(verbatim: String(format: "%02d:%02d", timeRemaining / 60, timeRemaining % 60))
                 .monospacedDigit()
         }
+        .font(.caption.bold())
         .foregroundStyle(isLow ? .red : .primary)
         .padding(.horizontal, 10)
         .padding(.vertical, 5)
         .background(isLow ? Color.red.opacity(0.1) : Color.secondary.opacity(0.1), in: Capsule())
     }
 
-    // MARK: Question view
+    // MARK: Fragenübersicht
+
+    /// Im Blatt auf dem iPhone steht „Übersicht“ schon in der Titelleiste.
+    private func navigator(showsTitle: Bool) -> some View {
+        VStack(alignment: .leading, spacing: 16) {
+            VStack(alignment: .leading, spacing: 4) {
+                if showsTitle {
+                    Text("Übersicht")
+                        .font(.headline)
+                }
+                Text("\(answeredCount) von \(Self.questionCount) beantwortet")
+                    .font(.caption)
+                    .foregroundStyle(AppTheme.textSec)
+            }
+
+            LazyVGrid(columns: Array(repeating: GridItem(.flexible(), spacing: 8), count: 5), spacing: 8) {
+                ForEach(examQuestions.indices, id: \.self) { index in
+                    let answered = answers[index] != nil
+                    Button {
+                        Haptics.selection()
+                        withAnimation { currentIndex = index }
+                        showNavigator = false
+                    } label: {
+                        Text(verbatim: "\(index + 1)")
+                            .font(.subheadline.bold())
+                            .monospacedDigit()
+                            .frame(maxWidth: .infinity, minHeight: 40)
+                            .foregroundStyle(answered ? Color(red: 0.10, green: 0.22, blue: 0.13) : AppTheme.text)
+                            .background(answered ? AppTheme.gold : AppTheme.cardAlt, in: RoundedRectangle(cornerRadius: 10))
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 10)
+                                    .stroke(Color.white, lineWidth: index == currentIndex ? 2 : 0)
+                            )
+                    }
+                    .buttonStyle(.plain)
+                }
+            }
+
+            Button {
+                Haptics.tap()
+                showNavigator = false
+                requestSubmit()
+            } label: {
+                Text("Prüfung abgeben")
+                    .font(.headline)
+                    .frame(maxWidth: .infinity)
+                    .padding(.vertical, 12)
+                    .background(AppTheme.gold.opacity(0.15), in: RoundedRectangle(cornerRadius: 12))
+                    .foregroundStyle(AppTheme.gold)
+            }
+            .buttonStyle(.plain)
+
+            Spacer(minLength: 0)
+        }
+        .padding(20)
+    }
+
+    // MARK: Frage
+
     private var questionView: some View {
-        VStack(spacing: 0) {
-            // Top progress
+        let question = examQuestions[currentIndex]
+        return VStack(spacing: 0) {
             VStack(spacing: 6) {
                 HStack {
-                    Text("Frage \(currentIndex + 1) von \(examQuestions.count)")
+                    Text("Frage \(currentIndex + 1) von \(Self.questionCount)")
                         .font(.caption.bold())
                         .foregroundStyle(AppTheme.textSec)
                     Spacer()
@@ -815,113 +1226,86 @@ struct ExamModeView: View {
                         .font(.caption)
                         .foregroundStyle(AppTheme.textSec)
                 }
-                ProgressView(value: Double(currentIndex + 1), total: Double(examQuestions.count))
+                ProgressView(value: Double(answeredCount), total: Double(Self.questionCount))
                     .tint(AppTheme.gold)
             }
             .padding()
+            .readableWidth()
 
             ScrollView {
-                let q = examQuestions[currentIndex]
-                VStack(spacing: 16) {
-                    // Category
-                    Label(q.category.rawValue, systemImage: q.category.icon)
-                        .font(.caption.bold())
-                        .foregroundStyle(q.category.color)
-                        .padding(.horizontal, 10)
-                        .padding(.vertical, 5)
-                        .background(q.category.color.opacity(0.12), in: Capsule())
-                        .frame(maxWidth: .infinity, alignment: .leading)
+                VStack(spacing: 20) {
+                    QuizQuestionHeader(question: question)
 
-                    // Question
-                    Text(q.question)
-                        .font(.title3.bold())
-                        .fixedSize(horizontal: false, vertical: true)
-                        .frame(maxWidth: .infinity, alignment: .leading)
-
-                    // Options (no feedback!)
                     VStack(spacing: 10) {
-                        ForEach(Array(q.options.enumerated()), id: \.offset) { idx, option in
-                            examOptionButton(text: option, index: idx, qIndex: currentIndex)
+                        ForEach(Array(question.options.enumerated()), id: \.offset) { index, option in
+                            Button {
+                                Haptics.selection()
+                                answers[currentIndex] = index
+                            } label: {
+                                QuizOptionRow(
+                                    index: index,
+                                    text: option,
+                                    state: answers[currentIndex] == index ? .selected : .idle
+                                )
+                            }
+                            .buttonStyle(.plain)
+                            .keyboardShortcut(KeyEquivalent(Character(QuizOptionRow.letter(index).lowercased())), modifiers: [])
                         }
                     }
                 }
-                .padding()
+                .padding(isRegular ? 32 : 16)
+                .readableWidth()
             }
 
-            // Navigation buttons
             HStack(spacing: 14) {
-                if currentIndex > 0 {
-                    Button("Zurück") {
-                        Haptics.selection()
-                        withAnimation { currentIndex -= 1 }
-                    }
-                    .buttonStyle(.bordered)
+                Button("Zurück") {
+                    Haptics.selection()
+                    withAnimation { currentIndex -= 1 }
                 }
+                .buttonStyle(.bordered)
+                .disabled(currentIndex == 0)
+                .keyboardShortcut(.leftArrow, modifiers: [])
 
                 Spacer()
 
-                if currentIndex < examQuestions.count - 1 {
+                if !isRegular {
+                    Button {
+                        Haptics.tap()
+                        showNavigator = true
+                    } label: {
+                        Label("Übersicht", systemImage: "square.grid.3x3.fill")
+                    }
+                    .buttonStyle(.bordered)
+                    .tint(AppTheme.gold)
+
+                    Spacer()
+                }
+
+                if currentIndex < Self.questionCount - 1 {
                     Button("Weiter") {
                         Haptics.selection()
                         withAnimation { currentIndex += 1 }
                     }
                     .buttonStyle(.borderedProminent)
                     .tint(AppTheme.gold)
+                    .keyboardShortcut(.rightArrow, modifiers: [])
                 } else {
-                    Button("Prüfung abgeben") {
-                        submitExam()
-                    }
-                    .buttonStyle(.borderedProminent)
-                    .tint(answeredCount == examQuestions.count ? AppTheme.gold : .orange)
+                    Button("Prüfung abgeben") { requestSubmit() }
+                        .buttonStyle(.borderedProminent)
+                        .tint(answeredCount == Self.questionCount ? AppTheme.gold : .orange)
                 }
             }
             .padding()
+            .readableWidth()
             .background(AppTheme.card)
         }
-        .background(AppTheme.bg)
     }
 
-    private func examOptionButton(text: String, index: Int, qIndex: Int) -> some View {
-        let selected = answers[qIndex] == index
-        return Button {
-            Haptics.selection()
-            answers[qIndex] = index
-        } label: {
-            HStack(spacing: 12) {
-                Text(["A", "B", "C", "D"][index])
-                    .font(.caption.bold())
-                    .frame(width: 28, height: 28)
-                    .background(selected ? AppTheme.gold : Color.secondary.opacity(0.25), in: Circle())
-                    .foregroundStyle(.white)
+    // MARK: Ergebnis
 
-                Text(text)
-                    .font(.subheadline)
-                    .foregroundStyle(AppTheme.text)
-                    .multilineTextAlignment(.leading)
-                    .fixedSize(horizontal: false, vertical: true)
-
-                Spacer()
-
-                if selected {
-                    Image(systemName: "checkmark.circle.fill")
-                        .foregroundStyle(AppTheme.gold)
-                }
-            }
-            .padding()
-            .background(selected ? AppTheme.gold.opacity(0.08) : AppTheme.card, in: RoundedRectangle(cornerRadius: 12))
-            .overlay(
-                RoundedRectangle(cornerRadius: 12)
-                    .stroke(selected ? AppTheme.gold.opacity(0.5) : Color.secondary.opacity(0.2), lineWidth: 1.5)
-            )
-        }
-        .buttonStyle(.plain)
-    }
-
-    // MARK: Result view
     private var resultView: some View {
         ScrollView {
             VStack(spacing: 24) {
-                // Result badge
                 VStack(spacing: 12) {
                     Image(systemName: passed ? "checkmark.seal.fill" : "xmark.seal.fill")
                         .font(.system(size: 64))
@@ -941,23 +1325,21 @@ struct ExamModeView: View {
                 }
                 .padding()
 
-                // Score ring + stats
                 VStack(spacing: 16) {
-                    // Big score
                     HStack(spacing: 30) {
                         VStack {
-                            Text("\(correctCount)")
+                            Text(verbatim: "\(correctCount)")
                                 .font(.system(size: 48, weight: .bold))
                                 .foregroundStyle(passed ? AppTheme.gold : .red)
                             Text("Richtig")
                                 .font(.caption)
                                 .foregroundStyle(AppTheme.textSec)
                         }
-                        Text("/")
+                        Text(verbatim: "/")
                             .font(.system(size: 36, weight: .thin))
                             .foregroundStyle(AppTheme.textSec)
                         VStack {
-                            Text("\(examQuestions.count)")
+                            Text(verbatim: "\(Self.questionCount)")
                                 .font(.system(size: 48, weight: .bold))
                             Text("Gesamt")
                                 .font(.caption)
@@ -965,10 +1347,9 @@ struct ExamModeView: View {
                         }
                     }
 
-                    // Percentage bar
                     VStack(spacing: 6) {
                         HStack {
-                            Text("\(Int(Double(correctCount) / Double(examQuestions.count) * 100)) %")
+                            Text(verbatim: "\(Int(Double(correctCount) / Double(Self.questionCount) * 100)) %")
                                 .font(.headline)
                             Spacer()
                             Text("Mindestens 75 % (23/30)")
@@ -982,53 +1363,66 @@ struct ExamModeView: View {
                                     .frame(height: 12)
                                 RoundedRectangle(cornerRadius: 6)
                                     .fill(passed ? AppTheme.gold : Color.red)
-                                    .frame(width: geo.size.width * Double(correctCount) / Double(examQuestions.count), height: 12)
-                                // Pass threshold marker
+                                    .frame(width: geo.size.width * Double(correctCount) / Double(Self.questionCount), height: 12)
                                 Rectangle()
                                     .fill(Color.primary.opacity(0.4))
                                     .frame(width: 2, height: 20)
-                                    .offset(x: geo.size.width * 0.75 - 1, y: -4)
+                                    .offset(x: geo.size.width * Double(Self.passMark) / Double(Self.questionCount) - 1, y: -4)
                             }
                         }
                         .frame(height: 12)
                     }
 
-                    // Category breakdown
                     categoryBreakdown
                 }
                 .padding()
                 .background(AppTheme.card, in: RoundedRectangle(cornerRadius: 16))
-                .padding(.horizontal)
 
-                // Buttons
                 VStack(spacing: 12) {
-                    Button("Antworten durchsehen") {
+                    if wrongCount > 0 {
+                        Button {
+                            Haptics.medium()
+                            practiceRequest = QuizSessionRequest(category: nil, mistakesOnly: true)
+                        } label: {
+                            Label("Fehler jetzt üben", systemImage: "arrow.uturn.backward.circle.fill")
+                                .goldButton()
+                        }
+                        .buttonStyle(.plain)
+                    }
+
+                    Button {
                         Haptics.tap()
                         reviewIndex = 0
                         reviewMode = true
+                    } label: {
+                        Text("Antworten durchsehen")
+                            .font(.headline)
+                            .frame(maxWidth: .infinity)
+                            .padding(.vertical, 14)
+                            .background(AppTheme.gold.opacity(0.12), in: RoundedRectangle(cornerRadius: 14))
+                            .foregroundStyle(AppTheme.gold)
                     }
-                    .font(.headline)
-                    .frame(maxWidth: .infinity)
-                    .padding(.vertical, 14)
-                    .background(AppTheme.gold.opacity(0.12), in: RoundedRectangle(cornerRadius: 14))
-                    .foregroundStyle(AppTheme.gold)
+                    .buttonStyle(.plain)
 
-                    Button("Fertig") {
+                    Button {
                         Haptics.tap()
                         dismiss()
+                    } label: {
+                        Text("Fertig")
+                            .font(.headline)
+                            .frame(maxWidth: .infinity)
+                            .padding(.vertical, 14)
+                            .background(AppTheme.card, in: RoundedRectangle(cornerRadius: 14))
+                            .foregroundStyle(AppTheme.text)
                     }
-                        .font(.headline)
-                        .frame(maxWidth: .infinity)
-                        .padding(.vertical, 14)
-                        .background(AppTheme.gold, in: RoundedRectangle(cornerRadius: 14))
-                        .foregroundStyle(.white)
+                    .buttonStyle(.plain)
                 }
-                .padding(.horizontal)
 
                 Spacer(minLength: 20)
             }
+            .padding(isRegular ? 32 : 16)
+            .readableWidth(620)
         }
-        .background(AppTheme.bg)
     }
 
     private var categoryBreakdown: some View {
@@ -1037,193 +1431,129 @@ struct ExamModeView: View {
                 .font(.caption.bold())
                 .foregroundStyle(AppTheme.textSec)
 
-            ForEach(QuizCategory.allCases, id: \.self) { cat in
-                let catQ = examQuestions.indices.filter { examQuestions[$0].category == cat }
-                let catCorrect = catQ.filter { answers[$0] == examQuestions[$0].correctIndex }.count
-                let total = catQ.count
-                if total > 0 {
+            ForEach(QuizCategory.allCases, id: \.self) { category in
+                let indices = examQuestions.indices.filter { examQuestions[$0].category == category }
+                let correct = indices.filter { answers[$0] == examQuestions[$0].correctIndex }.count
+                if !indices.isEmpty {
                     HStack(spacing: 8) {
-                        Image(systemName: cat.icon)
+                        Image(systemName: category.icon)
                             .font(.caption)
-                            .foregroundStyle(cat.color)
+                            .foregroundStyle(category.color)
                             .frame(width: 18)
-                        Text(cat.rawValue)
+                        Text(verbatim: category.rawValue)
                             .font(.caption)
                             .foregroundStyle(AppTheme.textSec)
                         Spacer()
-                        Text("\(catCorrect)/\(total)")
+                        Text(verbatim: "\(correct)/\(indices.count)")
                             .font(.caption.bold())
-                            .foregroundStyle(catCorrect == total ? AppTheme.gold : catCorrect >= total / 2 ? .orange : .red)
+                            .foregroundStyle(correct == indices.count ? AppTheme.gold : correct * 2 >= indices.count ? .orange : .red)
                     }
                 }
             }
         }
     }
 
-    // MARK: Review view
+    // MARK: Durchsicht
+
     private var reviewView: some View {
-        VStack(spacing: 0) {
-            // Header
-            HStack {
-                Spacer()
-                Text("Frage \(reviewIndex + 1)/\(examQuestions.count)")
-                    .font(.caption)
-                    .foregroundStyle(AppTheme.textSec)
-                Spacer()
-            }
-            .padding(.horizontal)
-            .padding(.vertical, 8)
+        let question = examQuestions[reviewIndex]
+        let userAnswer = answers[reviewIndex]
+        let isCorrect = userAnswer == question.correctIndex
+        let statusColor: Color = isCorrect ? AppTheme.gold : (userAnswer == nil ? .secondary : .red)
 
+        return VStack(spacing: 0) {
             ScrollView {
-                let q = examQuestions[reviewIndex]
-                let userAnswer = answers[reviewIndex]
-                let isCorrect = userAnswer == q.correctIndex
-
-                VStack(spacing: 16) {
-                    // Status badge
+                VStack(spacing: 18) {
                     HStack {
-                        Label(
-                            isCorrect ? "Richtig" : (userAnswer == nil ? "Nicht beantwortet" : "Falsch"),
-                            systemImage: isCorrect ? "checkmark.circle.fill" : (userAnswer == nil ? "minus.circle" : "xmark.circle.fill")
-                        )
+                        Label {
+                            Text(isCorrect ? "Richtig" : (userAnswer == nil ? "Nicht beantwortet" : "Falsch"))
+                        } icon: {
+                            Image(systemName: isCorrect ? "checkmark.circle.fill" : (userAnswer == nil ? "minus.circle" : "xmark.circle.fill"))
+                        }
                         .font(.caption.bold())
-                        .foregroundStyle(isCorrect ? AppTheme.gold : (userAnswer == nil ? .secondary : .red))
+                        .foregroundStyle(statusColor)
                         .padding(.horizontal, 10)
                         .padding(.vertical, 5)
-                        .background((isCorrect ? AppTheme.gold : (userAnswer == nil ? Color.secondary : Color.red)).opacity(0.12), in: Capsule())
+                        .background(statusColor.opacity(0.12), in: Capsule())
 
                         Spacer()
 
-                        Label(q.category.rawValue, systemImage: q.category.icon)
-                            .font(.caption.bold())
-                            .foregroundStyle(q.category.color)
-                            .padding(.horizontal, 10)
-                            .padding(.vertical, 5)
-                            .background(q.category.color.opacity(0.12), in: Capsule())
+                        Text("Frage \(reviewIndex + 1) von \(Self.questionCount)")
+                            .font(.caption)
+                            .foregroundStyle(AppTheme.textSec)
                     }
 
-                    Text(q.question)
-                        .font(.title3.bold())
-                        .fixedSize(horizontal: false, vertical: true)
-                        .frame(maxWidth: .infinity, alignment: .leading)
+                    QuizQuestionHeader(question: question)
 
-                    // All options with color coding
                     VStack(spacing: 10) {
-                        ForEach(Array(q.options.enumerated()), id: \.offset) { idx, option in
-                            let isRight = idx == q.correctIndex
-                            let wasChosen = userAnswer == idx
-                            HStack(spacing: 12) {
-                                Text(["A", "B", "C", "D"][idx])
-                                    .font(.caption.bold())
-                                    .frame(width: 28, height: 28)
-                                    .background(
-                                        isRight ? AppTheme.gold : (wasChosen ? Color.red : Color.secondary.opacity(0.2)),
-                                        in: Circle()
-                                    )
-                                    .foregroundStyle(isRight || wasChosen ? .white : .primary)
-
-                                Text(option)
-                                    .font(.subheadline)
-                                    .foregroundStyle(AppTheme.text)
-                                    .fixedSize(horizontal: false, vertical: true)
-
-                                Spacer()
-
-                                if isRight {
-                                    Image(systemName: "checkmark.circle.fill").foregroundStyle(AppTheme.gold)
-                                } else if wasChosen {
-                                    Image(systemName: "xmark.circle.fill").foregroundStyle(.red)
-                                }
-                            }
-                            .padding()
-                            .background(
-                                isRight ? AppTheme.gold.opacity(0.08) : (wasChosen ? Color.red.opacity(0.08) : AppTheme.card),
-                                in: RoundedRectangle(cornerRadius: 12)
-                            )
-                            .overlay(
-                                RoundedRectangle(cornerRadius: 12)
-                                    .stroke(
-                                        isRight ? AppTheme.gold.opacity(0.5) : (wasChosen ? Color.red.opacity(0.3) : Color.secondary.opacity(0.15)),
-                                        lineWidth: 1.5
-                                    )
+                        ForEach(Array(question.options.enumerated()), id: \.offset) { index, option in
+                            QuizOptionRow(
+                                index: index,
+                                text: option,
+                                state: index == question.correctIndex ? .correct : (index == userAnswer ? .wrong : .dimmed)
                             )
                         }
                     }
 
-                    // Explanation
-                    HStack(alignment: .top, spacing: 12) {
-                        Image(systemName: "lightbulb.fill")
-                            .foregroundStyle(AppTheme.gold)
-                            .font(.title3)
-                            .padding(.top, 1)
-                        VStack(alignment: .leading, spacing: 4) {
-                            Text("Erklärung")
-                                .font(.caption.bold())
-                                .foregroundStyle(AppTheme.textSec)
-                            Text(q.explanation)
-                                .font(.subheadline)
-                                .fixedSize(horizontal: false, vertical: true)
-                        }
-                    }
-                    .padding()
-                    .background(AppTheme.gold.opacity(0.12), in: RoundedRectangle(cornerRadius: 14))
+                    QuizExplanationCard(question: question)
                 }
-                .padding()
+                .padding(isRegular ? 32 : 16)
+                .readableWidth()
             }
 
-            // Navigation
             HStack(spacing: 14) {
-                if reviewIndex > 0 {
-                    Button("Zurück") {
-                        Haptics.selection()
-                        withAnimation { reviewIndex -= 1 }
-                    }
-                        .buttonStyle(.bordered)
+                Button("Zurück") {
+                    Haptics.selection()
+                    withAnimation { reviewIndex -= 1 }
                 }
+                .buttonStyle(.bordered)
+                .disabled(reviewIndex == 0)
+                .keyboardShortcut(.leftArrow, modifiers: [])
+
                 Spacer()
-                if reviewIndex < examQuestions.count - 1 {
+
+                if reviewIndex < Self.questionCount - 1 {
                     Button("Nächste") {
                         Haptics.selection()
                         withAnimation { reviewIndex += 1 }
                     }
-                        .buttonStyle(.borderedProminent)
-                        .tint(AppTheme.gold)
+                    .buttonStyle(.borderedProminent)
+                    .tint(AppTheme.gold)
+                    .keyboardShortcut(.rightArrow, modifiers: [])
                 } else {
                     Button("Fertig") {
                         Haptics.tap()
                         reviewMode = false
                     }
-                        .buttonStyle(.borderedProminent)
-                        .tint(AppTheme.gold)
+                    .buttonStyle(.borderedProminent)
+                    .tint(AppTheme.gold)
                 }
             }
             .padding()
+            .readableWidth()
             .background(AppTheme.card)
         }
-        .background(AppTheme.bg)
     }
 
-    // MARK: Logic
-    private func startTimer() {
-        startTime = Date()
-        timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { _ in
-            if timeRemaining > 0 {
-                timeRemaining -= 1
-            } else {
-                submitExam()
-            }
+    // MARK: Ablauf
+
+    private func requestSubmit() {
+        if answeredCount < Self.questionCount {
+            Haptics.warning()
+            showSubmitConfirm = true
+        } else {
+            submitExam()
         }
-    }
-
-    private func stopTimer() {
-        timer?.invalidate()
-        timer = nil
     }
 
     private func submitExam() {
-        stopTimer()
+        guard !isFinished else { return }
+        for (index, question) in examQuestions.enumerated() {
+            guard let answer = answers[index] else { continue }
+            store.record(question, correct: answer == question.correctIndex)
+        }
         let duration = Int(Date().timeIntervalSince(startTime))
-        let result = QuizResult(mode: "exam", score: correctCount, total: examQuestions.count, durationSeconds: duration)
+        let result = QuizResult(mode: "exam", score: correctCount, total: Self.questionCount, durationSeconds: duration)
         result.passed ? Haptics.celebrate() : Haptics.warning()
         context.insert(result)
         withAnimation { isFinished = true }

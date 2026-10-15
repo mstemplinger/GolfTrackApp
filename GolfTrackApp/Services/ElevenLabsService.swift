@@ -77,8 +77,8 @@ import Combine
  TIPPS UND COACHING
  Tipps-Tab: Täglicher wechselnder Coaching-Tipp (Detailansicht per Antippen). Vier Kategorien: Anfänger, Technik, Mental Game, Strategie. Links zu Golf-Ratgeber, Statistiken und Minigolf.
 
- PLATZREIFE-QUIZ
- Home → Platzreife-Quiz oder Golf-Ratgeber. Multiple-Choice-Fragen zu Regeln und Etikette. Ergebnisse werden gespeichert und können verglichen werden.
+ PLATZREIFE LERNEN
+ Home → „Platzreife lernen" oder Golf-Ratgeber. 150 Multiple-Choice-Fragen in sechs Themengebieten (Regeln, Regelanwendung, Etikette, Wertung, Platz & Ausrüstung, Handicap). Die Übersicht zeigt die Prüfungsreife in Prozent und wie viele Fragen sicher sitzen. Lernrunden haben 20 Fragen, falsch beantwortete kommen zuerst und kurz darauf noch einmal dran; eine Frage gilt als sicher, wenn sie auf Anhieb richtig war oder nach einem Fehler zweimal in Folge. Der Fortschritt bleibt gespeichert. „Fehler üben" wiederholt nur die wackeligen Fragen, jedes Themengebiet lässt sich einzeln lernen. Probeprüfung: 30 Fragen, 30 Minuten, bestanden ab 23 richtigen (75 %), mit Fragenübersicht und Auswertung nach Kategorie.
 
  MINIGOLF
  Tipps-Tab → Golf-Ratgeber → Minigolf. Bis zu 4 Spieler, 9 oder 18 Löcher. Schläge werden loch- und spielerweise erfasst. Zweiter Tab: GPS-Distanzmessung und Kartenansicht des zurückgelegten Wegs.

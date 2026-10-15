@@ -234,9 +234,9 @@ struct GolfGuideView: View {
                                         .foregroundStyle(AppTheme.gold)
                                 }
                                 VStack(alignment: .leading, spacing: 3) {
-                                    Text("Platzreife Quiz")
+                                    Text("Platzreife lernen")
                                         .font(.headline)
-                                    Text("Smart-Modus, Probeprüfung & Ergebnisse")
+                                    Text("Lernrunden, Probeprüfung & Fortschritt")
                                         .font(.caption)
                                         .foregroundStyle(AppTheme.textSec)
                                         .lineLimit(1)

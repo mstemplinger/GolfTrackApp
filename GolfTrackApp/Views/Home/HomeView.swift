@@ -41,6 +41,8 @@ struct HomeView: View {
     @State private var minigolfSaved: SavedMinigolfGame?
     @State private var minigolfHistory: [MinigolfHistoryEntry] = []
     @State private var showMinigolf = false
+    /// Über `golftrack://platzreife` geöffnet.
+    @State private var showPlatzreife = false
     @State private var resumeMinigolfConfig: MinigolfConfig?
     @State private var selectedMinigolfEntry: MinigolfHistoryEntry?
 
@@ -149,6 +151,13 @@ struct HomeView: View {
                     selectedIncompleteRound = nil
                 })
             }
+            .navigationDestination(isPresented: $showPlatzreife) {
+                PlatzreifeQuizView()
+            }
+            .onReceive(NotificationCenter.default.publisher(for: .openPlatzreife)) { _ in
+                openPendingPlatzreife()
+            }
+            .onAppear(perform: openPendingPlatzreife)
             // Standort einmal abfragen – ohne Berechtigung passiert nichts.
             .task { await nearby.refreshSuggestion() }
             // iPad: vollständige Seite; iPhone: Sheet
@@ -182,6 +191,17 @@ struct HomeView: View {
                 // Wenn Plätze sich ändern, Watch sofort aktualisieren
                 wc.sendCoursesToWatch(courses)
             }
+        }
+    }
+
+    /// Erst im nächsten Durchlauf umschalten: im selben Frame, in dem der Stack
+    /// entsteht, verwirft SwiftUI das Navigationsziel sonst stillschweigend.
+    private func openPendingPlatzreife() {
+        guard PendingNavigation.platzreife else { return }
+        PendingNavigation.platzreife = false
+        Task { @MainActor in
+            await Task.yield()
+            showPlatzreife = true
         }
     }
 

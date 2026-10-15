@@ -68,17 +68,20 @@ MINIGOLF
 • Sechs Nebenwertungen: Serie, Ass-Jäger, Bahnenduell, Nervenstark, Aufholjagd, Schlussspurt
 • An teilnehmenden Anlagen genügt der QR-Code am Start
 
-LERNEN
-• 50 Golfregeln mit Diagrammen
-• 150 Fragen zur Platzreife mit Auswertung der falschen Antworten
-• Guide zu Strategie, Anspiel und Kurzspiel
+PLATZREIFE-THEORIE LERNEN
+• 150 Prüfungsfragen in sechs Themengebieten: Regeln, Regelanwendung, Etikette, Wertung, Platz und Handicap
+• Lernrunden mit 20 Fragen – was du falsch beantwortest, kommt zuerst und so lange wieder, bis es sitzt
+• Prüfungsreife in Prozent: Du siehst jederzeit, wie viel noch fehlt und welches Thema wackelt
+• Probeprüfung wie im Club: 30 Fragen, 30 Minuten, bestanden ab 75 %
+• Auf dem iPad in großer Ansicht, mit Tastatur bedienbar
+• 50 Golfregeln mit Diagrammen zum Nachschlagen, dazu ein Guide zu Strategie, Anspiel und Kurzspiel
 
 MIT ABO, WENN DU WILLST
 • Training: 17 Audio-Lektionen zu Grundlagen, Drive, Technik, Kurzspiel, Putten, Mental und Strategie – nach der Runde passend zu deinen Zahlen vorgeschlagen
 • Caddy: Sprachassistent für Regeln, Tipps und Strategie, auch während der Runde
 • Pro: Training und Caddy zusammen
 
-Ohne Abo bleiben: Scorekarte, Handicap, Statistik, Schlagerfassung, Laufspur, Apple Watch, Minigolf, Regeln und Quiz.
+Ohne Abo bleiben: Scorekarte, Handicap, Statistik, Schlagerfassung, Laufspur, Apple Watch, Minigolf, Regeln und Platzreife-Training.
 
 GolfTrack gibt es auf Deutsch, Englisch, Französisch, Italienisch und Spanisch.
 

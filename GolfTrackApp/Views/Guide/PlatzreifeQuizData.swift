@@ -41,12 +41,15 @@ enum QuizCategory: String, CaseIterable, Codable {
 // MARK: - Question
 
 struct QuizQuestion: Identifiable {
-    let id = UUID()
     let question: String
     let options: [String]
     let correctIndex: Int
     let explanation: String
     let category: QuizCategory
+
+    /// Stabil über App-Starts hinweg – daran hängt der gespeicherte Lernfortschritt.
+    /// Deshalb darf jeder Fragetext im Katalog nur einmal vorkommen.
+    var id: String { question }
 }
 
 // MARK: - Question Bank
@@ -1017,10 +1020,15 @@ enum PlatzreifeQuestions {
             category: .platz
         ),
         QuizQuestion(
-            question: "Wie viele Schläger darf ein Golfer maximal im Bag mitführen?",
-            options: ["12", "14", "16", "Unbegrenzt"],
+            question: "Darf man auf der Runde einen Entfernungsmesser (Laser oder GPS) benutzen?",
+            options: [
+                "Nein, elektronische Hilfsmittel sind generell verboten",
+                "Ja, Entfernungen dürfen gemessen werden – sofern keine Platzregel es verbietet",
+                "Nur auf Par-5-Löchern",
+                "Nur mit Erlaubnis der Mitspieler"
+            ],
             correctIndex: 1,
-            explanation: "Regel 4.1b: Maximal 14 Schläger. Für jeden zusätzlichen gibt es 2 Strafschläge pro Loch (max. 4 Schläge gesamt).",
+            explanation: "Regel 4.3a: Entfernung und Richtung dürfen mit Geräten gemessen werden. Verboten ist, Höhenunterschiede elektronisch zu messen (Slope-Funktion) – und Entfernungsmesser insgesamt, wenn eine Platzregel sie untersagt.",
             category: .platz
         ),
         QuizQuestion(

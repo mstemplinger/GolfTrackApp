@@ -52,6 +52,21 @@
           ]
         }
       }
+    },
+    {
+      "name": "Platzreife",
+      "locales": {
+        "de-DE": {
+          "promotionalText": "Platzreife-Theorie lernen: 150 Prüfungsfragen, Lernrunden, die deine Fehler wiederholen, und Probeprüfungen wie im Club. Ohne Abo.",
+          "screenshots": [
+            "de/22-platzreife-uebersicht.png",
+            "de/23-platzreife-lernrunde.png",
+            "de/10-regeln.png",
+            "de/11-regel-diagramm.png",
+            "de/01-home.png"
+          ]
+        }
+      }
     }
   ]
 }

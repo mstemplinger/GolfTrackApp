@@ -49,6 +49,8 @@ WeatherKit. Standort München.
 | `19-live-scorecard.png` | Live-Loch: Distanz zur Fahne, Schlägerempfehlung | „Herz der App" |
 | `20-scorecard-mini.png` | Live-Loch mit Mini-Scorecard unten | „Score-Verlauf" |
 | `21-statistik-schlaegerdistanzen.png` | Fairways/GIR/Ø + gemessene Distanzen | „Statistiken" |
+| `22-platzreife-uebersicht.png` | Platzreife: Prüfungsreife 78 %, Lernen/Fehler/Probeprüfung | „Platzreife lernen" (CPP *Platzreife*) |
+| `23-platzreife-lernrunde.png` | Lernrunde mit beantworteter Frage und Erklärung | „Platzreife lernen" |
 | `w1-setup.png` | Watch: Rundenstart, Golf/Minigolf, 9/18 Löcher | „Apple Watch" |
 | `w2-tracker.png` | Watch: Schlagzähler mit −/Weiter/+ und LIVE-Punkt | „Direkt am Handgelenk" |
 
@@ -65,3 +67,14 @@ xcrun simctl launch <udid> com.TobiasAufschlaeger.GolfTrackandwatch -seedDemoDat
 
 Der Seeder löscht vorher alle Plätze, Runden und Bags. Er existiert nur in DEBUG-Builds;
 in Release ist `seedDemoDataIfRequested()` ein No-op.
+
+## iPad (`ipad/de/`)
+
+Aufgenommen am 15.10.2026 im iPad Pro 13-inch (M5), 2064×2752 px – das ist die
+Größe, die App Store Connect für den 13-Zoll-iPad-Slot verlangt. Nur Platzreife:
+`p1-platzreife-uebersicht.png` (zweispaltige Übersicht), `p2-platzreife-pruefung.png`
+(Probeprüfung mit Fragenübersicht als Seitenleiste), `p3-platzreife-lernrunde.png`.
+
+Lernstand und Prüfungsergebnisse kommen aus `-seedDemoData` (DemoDataSeeder →
+`seedPlatzreife`). Direkt in den Lernbereich startet die App mit
+`SIMCTL_CHILD_GOLFTRACK_DEEPLINK="golftrack://platzreife"`.

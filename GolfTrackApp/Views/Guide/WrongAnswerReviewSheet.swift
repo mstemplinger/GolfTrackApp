@@ -22,6 +22,7 @@ struct WrongAnswerReviewSheet: View {
                         ScrollView {
                             questionCard(item: item)
                                 .padding()
+                                .readableWidth()
                         }
                         navigationBar
                     }
@@ -62,84 +63,20 @@ struct WrongAnswerReviewSheet: View {
 
     private func questionCard(item: (question: QuizQuestion, chosen: Int)) -> some View {
         let q = item.question
-        let chosen = item.chosen
+        return VStack(alignment: .leading, spacing: 18) {
+            QuizQuestionHeader(question: q)
 
-        return VStack(alignment: .leading, spacing: 16) {
-            // Category badge
-            Label(q.category.rawValue, systemImage: q.category.icon)
-                .font(.caption.bold())
-                .foregroundStyle(q.category.color)
-                .padding(.horizontal, 10)
-                .padding(.vertical, 5)
-                .background(q.category.color.opacity(0.12), in: Capsule())
-
-            // Question
-            Text(q.question)
-                .font(.title3.bold())
-                .fixedSize(horizontal: false, vertical: true)
-                .frame(maxWidth: .infinity, alignment: .leading)
-
-            // Answer options
             VStack(spacing: 10) {
                 ForEach(Array(q.options.enumerated()), id: \.offset) { idx, option in
-                    let isRight   = idx == q.correctIndex
-                    let wasChosen = idx == chosen
-
-                    HStack(spacing: 12) {
-                        Text(["A", "B", "C", "D"][idx])
-                            .font(.caption.bold())
-                            .frame(width: 28, height: 28)
-                            .background(
-                                isRight ? AppTheme.gold : wasChosen ? Color.red : Color.secondary.opacity(0.2),
-                                in: Circle()
-                            )
-                            .foregroundStyle(isRight || wasChosen ? .white : .primary)
-
-                        Text(option)
-                            .font(.subheadline)
-                            .foregroundStyle(AppTheme.text)
-                            .fixedSize(horizontal: false, vertical: true)
-
-                        Spacer()
-
-                        if isRight {
-                            Image(systemName: "checkmark.circle.fill").foregroundStyle(AppTheme.gold)
-                        } else if wasChosen {
-                            Image(systemName: "xmark.circle.fill").foregroundStyle(.red)
-                        }
-                    }
-                    .padding()
-                    .background(
-                        isRight ? AppTheme.gold.opacity(0.08) : wasChosen ? Color.red.opacity(0.08) : AppTheme.card,
-                        in: RoundedRectangle(cornerRadius: 12)
-                    )
-                    .overlay(
-                        RoundedRectangle(cornerRadius: 12)
-                            .stroke(
-                                isRight ? AppTheme.gold.opacity(0.5) : wasChosen ? Color.red.opacity(0.3) : Color.secondary.opacity(0.15),
-                                lineWidth: 1.5
-                            )
+                    QuizOptionRow(
+                        index: idx,
+                        text: option,
+                        state: idx == q.correctIndex ? .correct : (idx == item.chosen ? .wrong : .dimmed)
                     )
                 }
             }
 
-            // Explanation
-            HStack(alignment: .top, spacing: 12) {
-                Image(systemName: "lightbulb.fill")
-                    .foregroundStyle(AppTheme.gold)
-                    .font(.title3)
-                    .padding(.top, 1)
-                VStack(alignment: .leading, spacing: 4) {
-                    Text("Erklärung")
-                        .font(.caption.bold())
-                        .foregroundStyle(AppTheme.textSec)
-                    Text(q.explanation)
-                        .font(.subheadline)
-                        .fixedSize(horizontal: false, vertical: true)
-                }
-            }
-            .padding()
-            .background(AppTheme.gold.opacity(0.10), in: RoundedRectangle(cornerRadius: 14))
+            QuizExplanationCard(question: q)
         }
     }
 
@@ -153,6 +90,7 @@ struct WrongAnswerReviewSheet: View {
                     withAnimation { currentIndex -= 1 }
                 }
                     .buttonStyle(.bordered)
+                    .keyboardShortcut(.leftArrow, modifiers: [])
             }
             Spacer()
             if currentIndex < wrongAnswers.count - 1 {
@@ -162,6 +100,7 @@ struct WrongAnswerReviewSheet: View {
                 }
                     .buttonStyle(.borderedProminent)
                     .tint(AppTheme.gold)
+                    .keyboardShortcut(.rightArrow, modifiers: [])
             } else {
                 Button("Fertig") {
                     Haptics.tap()

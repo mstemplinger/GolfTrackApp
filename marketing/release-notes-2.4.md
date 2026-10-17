@@ -17,6 +17,11 @@ Plätze bleiben aktuell
 • Hinweise der Anlage in der Zählkarte: Platzregeln, Öffnungszeiten, Gastronomie – beim Golf jetzt genauso wie beim Minigolf, wechselnd von Loch zu Loch. Sie bleiben auch mit Abo sichtbar. An derselben Stelle kann eine Anzeige der Anlage stehen; die entfällt mit jedem Abo.
 • Minigolf: Die Liste zeigt die nächstgelegene Anlage zuerst. Nach unten ziehen holt das Verzeichnis sofort, statt bis zu sechs Stunden auf die nächste Aktualisierung zu warten.
 
+Platzreife lernen
+
+• Lernrunden mit 20 Fragen: Was du falsch beantwortest, kommt zuerst und so lange wieder, bis es sitzt. Die Prüfungsreife in Prozent zeigt, wie viel noch fehlt und welches Thema wackelt.
+• Probeprüfung wie im Club: 30 Fragen, 30 Minuten, bestanden ab 75 %. Auf dem iPad zweispaltig und mit Tastatur bedienbar.
+
 Außerdem: Impressum und Datenschutzerklärung überarbeitet. Die Links in der App führen jetzt auf golftrack.app statt auf die alte Projektseite.
 
 ---
@@ -28,6 +33,11 @@ Courses stay up to date
 • What the club maintains is what counts: par, stroke index, lengths and rating now come from the directory on golftrack.app first. When a venue enters a new scorecard there, it shows up in the app without waiting for an update. Whatever is missing online keeps the checked built-in value.
 • Venue notes on the scorecard: local rules, opening hours, food and drink – now in golf just as in minigolf, changing from hole to hole. They stay visible with a subscription. An ad from the venue can appear in the same place; that one disappears with any subscription.
 • Minigolf: the list shows the nearest venue first. Pull down to fetch the directory straight away instead of waiting up to six hours for the next refresh.
+
+Learn for the golf licence
+
+• Study rounds of 20 questions: whatever you get wrong comes first and keeps coming back until it sticks. Exam readiness in percent shows how much is left and which topic is shaky.
+• Mock exam like at the club: 30 questions, 30 minutes, pass at 75 %. Two columns on iPad, with keyboard control. The questions follow the German exam and are in German.
 
 Also: the legal notice and the privacy policy have been revised. The links in the app now lead to golftrack.app instead of the old project page.
 
@@ -41,6 +51,11 @@ Des parcours toujours à jour
 • Informations du site sur la carte de score : règles locales, horaires, restauration – au golf comme au minigolf désormais, changeant d'un trou à l'autre. Elles restent visibles avec un abonnement. Une annonce du site peut figurer au même endroit ; celle-ci disparaît avec n'importe quel abonnement.
 • Minigolf : la liste affiche d'abord le site le plus proche. Tirer vers le bas récupère le répertoire tout de suite, au lieu d'attendre jusqu'à six heures.
 
+Préparer la carte verte
+
+• Séries de 20 questions : ce que tu rates revient en premier, jusqu'à ce que ce soit acquis. Le niveau de préparation en pourcentage montre ce qui reste et quel thème est fragile.
+• Examen blanc comme au club : 30 questions, 30 minutes, réussi à partir de 75 %. Sur iPad en deux colonnes, utilisable au clavier. Les questions suivent l'examen allemand et sont en allemand.
+
 Par ailleurs : mentions légales et politique de confidentialité revues. Les liens dans l'app mènent maintenant à golftrack.app et non plus à l'ancienne page du projet.
 
 ---
@@ -53,6 +68,11 @@ Campi sempre aggiornati
 • Indicazioni della struttura nello score: regole locali, orari, ristorazione – nel golf come nel minigolf, che cambiano di buca in buca. Restano visibili anche con un abbonamento. Nello stesso punto può comparire un annuncio della struttura; quello scompare con qualsiasi abbonamento.
 • Minigolf: l'elenco mostra prima la struttura più vicina. Tirando verso il basso l'elenco si aggiorna subito, invece di aspettare fino a sei ore.
 
+Prepararsi all'abilitazione
+
+• Sessioni di 20 domande: quelle sbagliate tornano per prime, finché non le sai. La preparazione in percentuale mostra quanto manca e quale tema è ancora incerto.
+• Esame di prova come al circolo: 30 domande, 30 minuti, superato dal 75 %. Su iPad su due colonne, con tastiera. Le domande seguono l'esame tedesco e sono in tedesco.
+
 Inoltre: note legali e informativa sulla privacy riviste. I link nell'app portano ora a golftrack.app e non più alla vecchia pagina del progetto.
 
 ---
@@ -64,6 +84,11 @@ Campos siempre al día
 • Vale lo que mantiene el club: par, stroke index, longitudes y rating vienen ahora en primer lugar del directorio en golftrack.app. Si una instalación introduce allí una tarjeta nueva, aparece en la app sin esperar a una actualización. Lo que falte en línea conserva el valor integrado y ya comprobado.
 • Indicaciones de la instalación en la tarjeta: reglas locales, horarios, restauración – en golf igual que en minigolf, cambiando de hoyo en hoyo. Siguen visibles con una suscripción. En el mismo sitio puede aparecer un anuncio de la instalación; ese desaparece con cualquier suscripción.
 • Minigolf: la lista muestra primero la instalación más cercana. Tirar hacia abajo trae el directorio al momento, en vez de esperar hasta seis horas.
+
+Preparar la licencia
+
+• Rondas de 20 preguntas: lo que fallas vuelve primero, hasta que lo dominas. La preparación en porcentaje muestra cuánto falta y qué tema flojea.
+• Examen de prueba como en el club: 30 preguntas, 30 minutos, aprobado desde el 75 %. En iPad a dos columnas y con teclado. Las preguntas siguen el examen alemán y están en alemán.
 
 Además: aviso legal y política de privacidad revisados. Los enlaces de la app llevan ahora a golftrack.app en lugar de a la antigua página del proyecto.
 
@@ -91,5 +116,5 @@ braucht deshalb keine Anpassung.
 - Die Datenschutzadresse im Store steht bereits auf golftrack.app
   (`asc-legal-urls.py`, 14.09.2026).
 
-**Screenshots.** Unverändert gültig; für die drei Punkte oben gibt es nichts
-Neues zu zeigen.
+**Screenshots.** Neu für Platzreife: iPad-Bilder `screenshots/ipad/de/p1–p3` (13 Zoll)
+und iPhone-Bilder in 6,9 Zoll (siehe `screenshots/README.md`). Der Rest bleibt gültig.

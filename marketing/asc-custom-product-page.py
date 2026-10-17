@@ -13,6 +13,12 @@
 Quelle der Texte und Bildzuordnung ist marketing/cpp-pages.json, damit es keine
 zweite Stelle gibt, die auseinanderlaufen kann.
 
+Je Seite optional:
+  "deepLink": "golftrack://platzreife"   – „Öffnen" auf der Seite springt dorthin
+                                           (ab iOS 18; gilt erst nach Apples Freigabe)
+Je Sprache optional, für weitere Geräteklassen neben dem Haupt-displayType:
+  "extraScreenshots": {"APP_IPAD_PRO_3GEN_129": ["ipad/de/p1-….png", …]}
+
 Absichtlich NICHT enthalten: das Einreichen zur Prüfung. Wie beim Release-Skript
 bleibt „Zur Prüfung freigeben" ein bewusster Klick im Browser. Bis dahin sind die
 Seiten Entwürfe und nach außen unsichtbar.
@@ -47,17 +53,44 @@ ACCEPTED_SIZES = {
 
 # ── Prüfung ohne Netz ────────────────────────────────────────────────────────
 
+def validate_shots(label: str, display: str, shots: list[str]) -> list[str]:
+    """Prüft einen Bildersatz gegen die Pixelmaße seines Display-Typs."""
+    accepted = ACCEPTED_SIZES.get(display)
+    if not accepted:
+        return [f"{label}: unbekannter displayType „{display}\". "
+                f"Bekannt: {', '.join(sorted(ACCEPTED_SIZES))}"]
+    allowed = ", ".join(f"{w}×{h}" for w, h in accepted)
+    problems: list[str] = []
+    if not shots:
+        problems.append(f"{label}: keine Screenshots für {display}.")
+    if len(shots) > MAX_SCREENSHOTS_PER_SET:
+        problems.append(f"{label}: {len(shots)} Screenshots für {display}, "
+                        f"maximal {MAX_SCREENSHOTS_PER_SET}.")
+    for rel in shots:
+        path = SCREENSHOT_ROOT / rel
+        if not path.exists():
+            problems.append(f"{label}: {rel} fehlt.")
+            continue
+        try:
+            w, h = png_size(path)
+        except ValueError as e:
+            problems.append(f"{label}: {e}")
+            continue
+        if (w, h) not in accepted:
+            problems.append(f"{label}: {rel} ist {w}×{h} – {display} "
+                            f"akzeptiert nur {allowed}.")
+    return problems
+
+
 def validate(config: dict) -> list[str]:
     """Sammelt alle Probleme, statt beim ersten abzubrechen."""
     problems: list[str] = []
     display = config.get("displayType", "")
-    accepted = ACCEPTED_SIZES.get(display)
-    if not accepted:
+    if display not in ACCEPTED_SIZES:
         problems.append(f"Unbekannter displayType „{display}\". "
                         f"Bekannt: {', '.join(sorted(ACCEPTED_SIZES))}")
         return problems
 
-    allowed = ", ".join(f"{w}×{h}" for w, h in accepted)
     pages = config.get("pages", [])
     if not pages:
         problems.append("Keine Seiten in cpp-pages.json definiert.")
@@ -68,32 +101,23 @@ def validate(config: dict) -> list[str]:
         name = page.get("name") or "(ohne Namen)"
         if not page.get("locales"):
             problems.append(f"„{name}\": keine Sprachen definiert.")
+        link = page.get("deepLink", "")
+        if link and "://" not in link:
+            problems.append(f"„{name}\": deepLink „{link}\" ist keine URL.")
         for locale, spec in page.get("locales", {}).items():
+            label = f"„{name}\"/{locale}"
             text = spec.get("promotionalText", "")
             if len(text) > PROMO_TEXT_LIMIT:
-                problems.append(f"„{name}\"/{locale}: Werbetext {len(text)} Zeichen, "
+                problems.append(f"{label}: Werbetext {len(text)} Zeichen, "
                                 f"maximal {PROMO_TEXT_LIMIT}.")
-            shots = spec.get("screenshots", [])
-            if not shots:
-                problems.append(f"„{name}\"/{locale}: keine Screenshots.")
-            if len(shots) > MAX_SCREENSHOTS_PER_SET:
-                problems.append(f"„{name}\"/{locale}: {len(shots)} Screenshots, "
-                                f"maximal {MAX_SCREENSHOTS_PER_SET}.")
-            for rel in shots:
-                path = SCREENSHOT_ROOT / rel
-                if not path.exists():
-                    problems.append(f"„{name}\"/{locale}: {rel} fehlt.")
-                    continue
-                try:
-                    w, h = png_size(path)
-                except ValueError as e:
-                    problems.append(f"„{name}\"/{locale}: {e}")
-                    continue
-                if (w, h) not in accepted:
-                    problems.append(
-                        f"„{name}\"/{locale}: {rel} ist {w}×{h} – {display} "
-                        f"akzeptiert nur {allowed}.")
+            for set_display, shots in screenshot_sets(spec, display).items():
+                problems += validate_shots(label, set_display, shots)
     return problems
+
+
+def screenshot_sets(spec: dict, display: str) -> dict[str, list[str]]:
+    """Alle Bildersätze einer Sprache: Haupt-displayType plus extraScreenshots."""
+    return {display: spec.get("screenshots", []), **spec.get("extraScreenshots", {})}
 
 
 # ── Anlegen ──────────────────────────────────────────────────────────────────
@@ -146,16 +170,18 @@ def create_page(asc: ASC, name: str, spec: dict, display: str) -> str | None:
     page_id = page.get("data", {}).get("id", "<neu>")
     print(f"    Seite angelegt: {page_id}")
 
-    version = asc.post("/v1/appCustomProductPageVersions", {
-        "data": {
-            "type": "appCustomProductPageVersions",
-            "relationships": {
-                "appCustomProductPage": {
-                    "data": {"type": "appCustomProductPages", "id": page_id}
-                }
-            },
-        }
-    })
+    version_data: dict = {
+        "type": "appCustomProductPageVersions",
+        "relationships": {
+            "appCustomProductPage": {
+                "data": {"type": "appCustomProductPages", "id": page_id}
+            }
+        },
+    }
+    if spec.get("deepLink"):
+        version_data["attributes"] = {"deepLink": spec["deepLink"]}
+        print(f"    Deep Link: {spec['deepLink']}")
+    version = asc.post("/v1/appCustomProductPageVersions", {"data": version_data})
     version_id = version.get("data", {}).get("id", "<neu>")
     print(f"    Version angelegt: {version_id}")
 
@@ -177,25 +203,26 @@ def create_page(asc: ASC, name: str, spec: dict, display: str) -> str | None:
         })
         loc_id = loc.get("data", {}).get("id", "<neu>")
 
-        shot_set = asc.post("/v1/appScreenshotSets", {
-            "data": {
-                "type": "appScreenshotSets",
-                "attributes": {"screenshotDisplayType": display},
-                "relationships": {
-                    "appCustomProductPageLocalization": {
-                        "data": {
-                            "type": "appCustomProductPageLocalizations",
-                            "id": loc_id,
+        for set_display, shots in screenshot_sets(loc_spec, display).items():
+            shot_set = asc.post("/v1/appScreenshotSets", {
+                "data": {
+                    "type": "appScreenshotSets",
+                    "attributes": {"screenshotDisplayType": set_display},
+                    "relationships": {
+                        "appCustomProductPageLocalization": {
+                            "data": {
+                                "type": "appCustomProductPageLocalizations",
+                                "id": loc_id,
+                            }
                         }
-                    }
-                },
-            }
-        })
-        set_id = shot_set.get("data", {}).get("id", "<neu>")
-        print(f"      Screenshot-Set {display}: {set_id}")
+                    },
+                }
+            })
+            set_id = shot_set.get("data", {}).get("id", "<neu>")
+            print(f"      Screenshot-Set {set_display}: {set_id}")
 
-        for rel in loc_spec.get("screenshots", []):
-            upload_screenshot(asc, set_id, SCREENSHOT_ROOT / rel)
+            for rel in shots:
+                upload_screenshot(asc, set_id, SCREENSHOT_ROOT / rel)
 
     return page_id
 
@@ -212,6 +239,11 @@ def main() -> None:
     args = ap.parse_args()
 
     config = json.loads(Path(args.config).read_text(encoding="utf-8"))
+    if args.only:
+        # Nur die gewählte Seite prüfen – Bildprobleme anderer Seiten blockieren sie nicht.
+        config["pages"] = [p for p in config["pages"] if p.get("name") == args.only]
+        if not config["pages"]:
+            raise SystemExit(f"Keine Seite „{args.only}\" in {args.config}.")
 
     print("PRÜFUNG")
     problems = validate(config)

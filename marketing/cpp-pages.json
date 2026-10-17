@@ -4,7 +4,9 @@
     "Ein Eintrag pro Seite. 'name' ist nur intern in App Store Connect sichtbar.",
     "'screenshots' sind Pfade relativ zu marketing/screenshots/.",
     "Werbetext: max. 170 Zeichen, wie auf der normalen Produktseite.",
-    "Reihenfolge der Screenshots = Reihenfolge auf der Seite. Max. 10 pro Slot."
+    "Reihenfolge der Screenshots = Reihenfolge auf der Seite. Max. 10 pro Slot.",
+    "'deepLink' (optional, je Seite): Ziel des Öffnen-Knopfs, ab iOS 18.",
+    "'extraScreenshots' (optional, je Sprache): weitere Slots, z. B. APP_IPAD_PRO_3GEN_129 für 13-Zoll-iPad."
   ],
   "displayType": "APP_IPHONE_69",
   "pages": [
@@ -55,16 +57,24 @@
     },
     {
       "name": "Platzreife",
+      "deepLink": "golftrack://platzreife",
       "locales": {
         "de-DE": {
           "promotionalText": "Platzreife-Theorie lernen: 150 Prüfungsfragen, Lernrunden, die deine Fehler wiederholen, und Probeprüfungen wie im Club. Ohne Abo.",
           "screenshots": [
-            "de/22-platzreife-uebersicht.png",
-            "de/23-platzreife-lernrunde.png",
-            "de/10-regeln.png",
-            "de/11-regel-diagramm.png",
-            "de/01-home.png"
-          ]
+            "de-69/22-platzreife-uebersicht.png",
+            "de-69/23-platzreife-lernrunde.png",
+            "de-69/10-regeln.png",
+            "de-69/11-regel-diagramm.png",
+            "de-69/01-home.png"
+          ],
+          "extraScreenshots": {
+            "APP_IPAD_PRO_3GEN_129": [
+              "ipad/de/p1-platzreife-uebersicht.png",
+              "ipad/de/p2-platzreife-pruefung.png",
+              "ipad/de/p3-platzreife-lernrunde.png"
+            ]
+          }
         }
       }
     }

@@ -78,3 +78,14 @@ Größe, die App Store Connect für den 13-Zoll-iPad-Slot verlangt. Nur Platzrei
 Lernstand und Prüfungsergebnisse kommen aus `-seedDemoData` (DemoDataSeeder →
 `seedPlatzreife`). Direkt in den Lernbereich startet die App mit
 `SIMCTL_CHILD_GOLFTRACK_DEEPLINK="golftrack://platzreife"`.
+
+## iPhone 6,9 Zoll (`de-69/`)
+
+Aufgenommen am 15.10.2026 im iPhone 17 Pro Max (iOS 26.5), 1320×2868 px – die Größe für
+den 6,9-Zoll-Slot (`APP_IPHONE_69`) in App Store Connect. Die 1206×2622-Bilder in `de/`
+nimmt Apple dort nicht an. Bisher nur die fünf Bilder der Produktseite *Platzreife*:
+`22-platzreife-uebersicht`, `23-platzreife-lernrunde`, `10-regeln`, `11-regel-diagramm`,
+`01-home`. Start wie oben mit `-seedDemoData YES -unlockAll` und
+`SIMCTL_CHILD_GOLFTRACK_DEEPLINK="golftrack://platzreife"`, Standort per
+`xcrun simctl location <udid> set 48.137,11.575` (sonst lädt das Wetter auf der Startseite nicht),
+Abspeichern mit `marketing/shoot.sh` (prüft die Größe).

@@ -19,7 +19,11 @@ export async function generateMetadata({
 }: PageProps<"/minigolf/[slug]">): Promise<Metadata> {
   const { slug } = await params;
   const course = await getCourse(slug);
-  if (!course) return { title: "Anlage nicht gefunden · GolfTrack" };
+  // Dieselbe Bedingung wie in der Seite: Ungeprüfte Einreichungen dürfen
+  // ihren Namen und Begrüßungstext nicht über Titel und Linkvorschau zeigen.
+  if (!course || course.status !== "approved") {
+    return { title: "Anlage nicht gefunden · GolfTrack", robots: { index: false } };
+  }
 
   return {
     title: `${course.name} · Minigolf mit GolfTrack`,

@@ -1,7 +1,6 @@
-import { headers } from "next/headers";
 import { createAdRequest } from "@/lib/ads";
 import { quoteAd } from "@/lib/adPricing";
-import { hashIp } from "@/lib/auth";
+import { clientIp, hashIp } from "@/lib/auth";
 import { coursesWithin, recordAttempt, tooManyAttempts } from "@/lib/courses";
 import type { AdPlacement } from "@/lib/schema";
 import { adRequestSchema } from "@/lib/schema";
@@ -51,12 +50,7 @@ export async function POST(request: Request) {
   if (reach.minigolf > 0) placements.push("minigolf_scoring");
   if (reach.golf > 0) placements.push("golf_scoring");
 
-  const headerList = await headers();
-  const ip =
-    headerList.get("x-forwarded-for")?.split(",")[0]?.trim() ||
-    headerList.get("x-real-ip") ||
-    "unknown";
-  const ipHash = await hashIp(ip);
+  const ipHash = await hashIp(await clientIp());
 
   if (await tooManyAttempts(ipHash)) {
     return Response.json({ error: "rate_limited" }, { status: 429 });

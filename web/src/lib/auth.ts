@@ -1,4 +1,4 @@
-import { cookies } from "next/headers";
+import { cookies, headers } from "next/headers";
 
 /**
  * Adminzugang: ein Passwort aus der Umgebung, danach ein signiertes Cookie.
@@ -69,6 +69,47 @@ export async function validSession(raw: string | undefined): Promise<boolean> {
   if (!expires || !signature) return false;
   if (Number(expires) < Date.now()) return false;
   return timingSafeEqual(signature, await sign(expires));
+}
+
+/**
+ * Absender-IP fürs Rate-Limit. nginx setzt `X-Real-IP` hart auf
+ * `$remote_addr`; `X-Forwarded-For` beginnt dagegen mit dem, was der Client
+ * selbst mitschickt, und taugt deshalb nicht als Schlüssel.
+ */
+export async function clientIp(): Promise<string> {
+  return (await headers()).get("x-real-ip")?.trim() || "unknown";
+}
+
+/**
+ * Drosselung des Passwort-Logins: höchstens `LOGIN_MAX_FAILURES` Fehlversuche
+ * je IP in `LOGIN_WINDOW_MS`. Im Speicher genügt das, weil die Seite in genau
+ * einem Prozess läuft (siehe `deploy/ecosystem.config.js`).
+ */
+const LOGIN_MAX_FAILURES = 5;
+const LOGIN_WINDOW_MS = 15 * 60 * 1000;
+const loginFailures = new Map<string, number[]>();
+
+function recentFailures(ip: string): number[] {
+  const cutoff = Date.now() - LOGIN_WINDOW_MS;
+  const recent = (loginFailures.get(ip) ?? []).filter((time) => time > cutoff);
+  if (recent.length > 0) loginFailures.set(ip, recent);
+  else loginFailures.delete(ip);
+  return recent;
+}
+
+/**
+ * Prüft das Passwort mit Drosselung. `"locked"`, solange die IP gesperrt ist –
+ * dann wird das Passwort gar nicht erst verglichen.
+ */
+export async function attemptLogin(candidate: string): Promise<"ok" | "wrong" | "locked"> {
+  const ip = await clientIp();
+  if (recentFailures(ip).length >= LOGIN_MAX_FAILURES) return "locked";
+  if (passwordMatches(candidate)) {
+    loginFailures.delete(ip);
+    return "ok";
+  }
+  loginFailures.set(ip, [...recentFailures(ip), Date.now()]);
+  return "wrong";
 }
 
 /** Stabiler, nicht rückrechenbarer Schlüssel pro Absender fürs Rate-Limit. */

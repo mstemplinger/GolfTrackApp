@@ -2,7 +2,7 @@
 
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
-import { createSession, destroySession, isAuthenticated, passwordMatches } from "@/lib/auth";
+import { attemptLogin, createSession, destroySession, isAuthenticated } from "@/lib/auth";
 import { deleteCourse, setStatus, updateCourse } from "@/lib/courses";
 import { adminUpdateSchema, holeSchema } from "@/lib/schema";
 import { z } from "zod";
@@ -21,7 +21,9 @@ async function requireAdmin(): Promise<void> {
 
 export async function login(_state: string | null, formData: FormData): Promise<string | null> {
   const password = String(formData.get("password") ?? "");
-  if (!passwordMatches(password)) return "Passwort stimmt nicht.";
+  const result = await attemptLogin(password);
+  if (result === "locked") return "Zu viele Fehlversuche. Bitte in 15 Minuten erneut versuchen.";
+  if (result === "wrong") return "Passwort stimmt nicht.";
   await createSession();
   redirect("/admin");
 }

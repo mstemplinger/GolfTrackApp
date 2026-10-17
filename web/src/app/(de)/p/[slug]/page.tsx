@@ -31,7 +31,11 @@ const APP_CLIP_BUNDLE_ID = "com.TobiasAufschlaeger.GolfTrackandwatch.Clip";
 export async function generateMetadata({ params }: PageProps<"/p/[slug]">): Promise<Metadata> {
   const { slug } = await params;
   const course = await getCourse(slug);
-  if (!course) return { title: "Platz nicht gefunden · GolfTrack" };
+  // Dieselbe Bedingung wie in der Seite: Ungeprüfte Einreichungen dürfen
+  // ihren Namen und Begrüßungstext nicht über Titel und Linkvorschau zeigen.
+  if (!course || course.status !== "approved") {
+    return { title: "Platz nicht gefunden · GolfTrack", robots: { index: false } };
+  }
 
   return {
     title: `${course.name} · Runde mitzählen`,

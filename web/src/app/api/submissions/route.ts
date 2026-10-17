@@ -1,6 +1,5 @@
-import { headers } from "next/headers";
 import { createSubmission, recordAttempt, tooManyAttempts } from "@/lib/courses";
-import { hashIp } from "@/lib/auth";
+import { clientIp, hashIp } from "@/lib/auth";
 import { submissionSchema } from "@/lib/schema";
 
 /** Nimmt das öffentliche Formular entgegen. Alles landet als `pending`. */
@@ -31,12 +30,7 @@ export async function POST(request: Request) {
     return Response.json({ ok: true }, { status: 202 });
   }
 
-  const headerList = await headers();
-  const ip =
-    headerList.get("x-forwarded-for")?.split(",")[0]?.trim() ||
-    headerList.get("x-real-ip") ||
-    "unknown";
-  const ipHash = await hashIp(ip);
+  const ipHash = await hashIp(await clientIp());
 
   if (await tooManyAttempts(ipHash)) {
     return Response.json({ error: "rate_limited" }, { status: 429 });

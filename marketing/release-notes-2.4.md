@@ -1,4 +1,4 @@
-# Release Notes 2.4 – Plätze aus dem Verzeichnis
+# Release Notes 2.4 – Plätze aus dem Verzeichnis, Platzreife, Golf-Wetter
 
 Für App Store Connect → „Neue Funktionen dieser Version". Pro Sprache einfügen.
 Grenze: 4.000 Zeichen, alle Fassungen liegen weit darunter.
@@ -22,7 +22,16 @@ Platzreife lernen
 • Lernrunden mit 20 Fragen: Was du falsch beantwortest, kommt zuerst und so lange wieder, bis es sitzt. Die Prüfungsreife in Prozent zeigt, wie viel noch fehlt und welches Thema wackelt.
 • Probeprüfung wie im Club: 30 Fragen, 30 Minuten, bestanden ab 75 %. Auf dem iPad zweispaltig und mit Tastatur bedienbar.
 
-Außerdem: Impressum und Datenschutzerklärung überarbeitet. Die Links in der App führen jetzt auf golftrack.app statt auf die alte Projektseite.
+Golf-Wetter nach Stunden
+
+• Statt eines Urteils über den ganzen Tag zeigt die Vorhersage jetzt, von wann bis wann sich eine Runde lohnt – etwa „Golf-Wetter: 11–19 Uhr“. Eine Stundenleiste zeigt die nächsten 24 Stunden, jeder Tag lässt sich aufklappen.
+• Was als Golf-Wetter zählt, stellst du selbst ein: Regen pro Stunde, Wind, Mindesttemperatur und wie lang ein Fenster mindestens sein muss.
+
+Werbefrei ohne Abo
+
+• Die Anzeigen in der Zählkarte lassen sich jetzt auch mit einem Einmalkauf entfernen: Profil → „Werbung entfernen“. Mit jedem Abo bleiben sie wie bisher weg.
+
+Außerdem: neues App-Icon. Fehlt einem Loch noch der Abschlag, setzt du ihn mit einem Tipp selbst. Beim Rundenstart wählst du den Platz direkt aus der Liste. Auf iPad und breiten Bildschirmen bleiben die Inhalte lesbar breit statt randvoll. Impressum und Datenschutzerklärung überarbeitet. Die Links in der App führen jetzt auf golftrack.app statt auf die alte Projektseite.
 
 ---
 
@@ -39,7 +48,16 @@ Learn for the golf licence
 • Study rounds of 20 questions: whatever you get wrong comes first and keeps coming back until it sticks. Exam readiness in percent shows how much is left and which topic is shaky.
 • Mock exam like at the club: 30 questions, 30 minutes, pass at 75 %. Two columns on iPad, with keyboard control. The questions follow the German exam and are in German.
 
-Also: the legal notice and the privacy policy have been revised. The links in the app now lead to golftrack.app instead of the old project page.
+Golf weather by the hour
+
+• Instead of one verdict for the whole day, the forecast now shows from when to when a round is worth it – for example “Golf weather: 11 AM – 7 PM”. An hourly strip covers the next 24 hours, and every day can be expanded.
+• You decide what counts as golf weather: rain per hour, wind, minimum temperature and how long a window has to be.
+
+Ad-free without a subscription
+
+• The ads on the scorecard can now also be removed with a one-time purchase: Profile → “Remove ads”. As before, any subscription removes them too.
+
+Also: a new app icon. If a hole has no tee yet, set it yourself with one tap. When starting a round, pick the course straight from the list. On iPad and wide screens, content keeps a readable width instead of filling the edges. The legal notice and the privacy policy have been revised. The links in the app now lead to golftrack.app instead of the old project page.
 
 ---
 
@@ -56,7 +74,16 @@ Préparer la carte verte
 • Séries de 20 questions : ce que tu rates revient en premier, jusqu'à ce que ce soit acquis. Le niveau de préparation en pourcentage montre ce qui reste et quel thème est fragile.
 • Examen blanc comme au club : 30 questions, 30 minutes, réussi à partir de 75 %. Sur iPad en deux colonnes, utilisable au clavier. Les questions suivent l'examen allemand et sont en allemand.
 
-Par ailleurs : mentions légales et politique de confidentialité revues. Les liens dans l'app mènent maintenant à golftrack.app et non plus à l'ancienne page du projet.
+La météo golf heure par heure
+
+• Au lieu d'un verdict pour toute la journée, les prévisions indiquent maintenant de quelle heure à quelle heure une partie vaut le coup – par exemple « Temps de golf : 11 – 19 h ». Une bande horaire couvre les 24 prochaines heures, et chaque jour se déplie.
+• Tu décides ce qui compte comme temps de golf : pluie par heure, vent, température minimale et durée minimale d'un créneau.
+
+Sans publicité, sans abonnement
+
+• Les annonces de la carte de score peuvent maintenant aussi être supprimées par un achat unique : Profil → « Supprimer la publicité ». Comme avant, tout abonnement les supprime aussi.
+
+Par ailleurs : nouvelle icône. Si un trou n'a pas encore de départ, tu le définis d'un geste. Au début d'une partie, tu choisis le parcours directement dans la liste. Sur iPad et les grands écrans, le contenu garde une largeur lisible. Mentions légales et politique de confidentialité revues. Les liens dans l'app mènent maintenant à golftrack.app et non plus à l'ancienne page du projet.
 
 ---
 
@@ -73,7 +100,16 @@ Prepararsi all'abilitazione
 • Sessioni di 20 domande: quelle sbagliate tornano per prime, finché non le sai. La preparazione in percentuale mostra quanto manca e quale tema è ancora incerto.
 • Esame di prova come al circolo: 30 domande, 30 minuti, superato dal 75 %. Su iPad su due colonne, con tastiera. Le domande seguono l'esame tedesco e sono in tedesco.
 
-Inoltre: note legali e informativa sulla privacy riviste. I link nell'app portano ora a golftrack.app e non più alla vecchia pagina del progetto.
+Tempo da golf ora per ora
+
+• Invece di un giudizio su tutta la giornata, la previsione mostra ora da che ora a che ora conviene giocare – per esempio «Tempo da golf: 11–19». Una barra oraria copre le prossime 24 ore e ogni giorno si può espandere.
+• Decidi tu cosa conta come tempo da golf: pioggia all'ora, vento, temperatura minima e durata minima di una finestra.
+
+Senza pubblicità, senza abbonamento
+
+• Gli annunci nello score si possono ora togliere anche con un acquisto singolo: Profilo → «Rimuovi pubblicità». Come prima, anche qualsiasi abbonamento li toglie.
+
+Inoltre: nuova icona. Se una buca non ha ancora il tee, lo imposti tu con un tocco. All'inizio del giro scegli il campo direttamente dall'elenco. Su iPad e schermi larghi i contenuti restano di larghezza leggibile. Note legali e informativa sulla privacy riviste. I link nell'app portano ora a golftrack.app e non più alla vecchia pagina del progetto.
 
 ---
 
@@ -90,7 +126,16 @@ Preparar la licencia
 • Rondas de 20 preguntas: lo que fallas vuelve primero, hasta que lo dominas. La preparación en porcentaje muestra cuánto falta y qué tema flojea.
 • Examen de prueba como en el club: 30 preguntas, 30 minutos, aprobado desde el 75 %. En iPad a dos columnas y con teclado. Las preguntas siguen el examen alemán y están en alemán.
 
-Además: aviso legal y política de privacidad revisados. Los enlaces de la app llevan ahora a golftrack.app en lugar de a la antigua página del proyecto.
+Tiempo de golf hora a hora
+
+• En lugar de un veredicto para todo el día, la previsión muestra ahora de qué hora a qué hora merece la pena jugar – por ejemplo «Tiempo de golf: 11–19 h». Una franja horaria cubre las próximas 24 horas y cada día se puede desplegar.
+• Tú decides qué cuenta como tiempo de golf: lluvia por hora, viento, temperatura mínima y duración mínima de una ventana.
+
+Sin anuncios y sin suscripción
+
+• Los anuncios de la tarjeta se pueden quitar ahora también con una compra única: Perfil → «Quitar anuncios». Como antes, cualquier suscripción también los quita.
+
+Además: nuevo icono. Si a un hoyo le falta el tee, lo marcas tú con un toque. Al empezar una vuelta eliges el campo directamente de la lista. En iPad y pantallas anchas el contenido mantiene un ancho legible. Aviso legal y política de privacidad revisados. Los enlaces de la app llevan ahora a golftrack.app en lugar de a la antigua página del proyecto.
 
 ---
 
@@ -103,6 +148,8 @@ Beides steht hier zusammen, weil `asc-fill-metadata.py` den Blockquote in die
 
 > Während einer laufenden Golfrunde zeichnet die App auf Wunsch des Nutzers die Positionen auf, um daraus Abschlag- und Grünpositionen der Löcher abzuleiten und die Entfernung zur Fahne anzuzeigen. Eine Runde dauert vier bis fünf Stunden, das Display ist dabei meist gesperrt – deshalb wird der Background-Mode benötigt. Die Aufzeichnung ist standardmäßig deaktiviert, wird ausschließlich vom Nutzer in den Einstellungen aktiviert, läuft nur während einer Runde und endet mit deren Abschluss. Die Daten verlassen das Gerät nicht.
 > Die Anzeigen in der Zählkarte stammen nicht aus einem Werbenetzwerk: Die Betreiber der Anlagen buchen sie direkt beim Entwickler, und die App lädt sie als einfache Liste von golftrack.app. Es wird kein Werbe-SDK eingebunden, keine Gerätekennung und keine IDFA verwendet und kein Profil gebildet. Zurückgemeldet werden ausschließlich Kennung der Anzeige, Art des Ereignisses (Einblendung oder Antippen) und eine Anzahl, gebündelt und ohne Bezug zu einem Nutzer. Mit jedem Abo entfallen die Anzeigen vollständig.
+> Neu in dieser Version ist der Einmalkauf „Werbefrei“ (GolfTrack_werbefrei): Profil → „Werbung entfernen“. Er entfernt nur die Anzeigen; Funktionen schaltet er nicht frei.
+> Ebenfalls neu: Die Wettervorhersage (Startseite → Wetterkarte antippen) zeigt spielbare Zeitfenster je Stunde; die Grenzwerte stehen unter Einstellungen → Golf-Wetter. Daten von Open-Meteo, ohne Konto und ohne Nutzerdaten.
 
 **App-Datenschutz.** Unverändert gegenüber 2.3: Positionsdaten bleiben lokal, die
 Anzeigenmessung erhebt keine nutzerbezogenen Daten. `PrivacyInfo.xcprivacy`

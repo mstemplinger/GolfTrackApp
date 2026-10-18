@@ -67,6 +67,111 @@ final class CourseCatalogService {
         return minigolfCourse(id: id)
     }
 
+    // MARK: – Neue Plätze
+
+    /// Stand des Katalogs auf dem Server (`/api/v1/catalog`).
+    static let statusURL = URL(string: "https://golftrack.app/api/v1/catalog")!
+
+    private static let knownIDsKey = "catalog.knownCourseIDs"
+    private static let newIDsKey = "catalog.newCourses"
+    private static let statusKey = "catalog.serverStatus"
+
+    /// Seit dem letzten Abgleich hinzugekommene Plätze (Kennungen beider
+    /// Arten) mit dem Zeitpunkt, an dem die App sie zuerst gesehen hat. Ob
+    /// einer davon in der Nähe liegt, entscheidet `NearbyCourseService` – nur
+    /// der kennt den Standort.
+    private(set) var newCourses: [String: Date] = CourseCatalogService.loadNewCourses()
+
+    /// So lange gilt ein Platz als neu. Wer erst Monate später in die Gegend
+    /// kommt, braucht keinen „Neu"-Hinweis mehr.
+    nonisolated static let newCourseLifetime: TimeInterval = 30 * 24 * 3600
+
+    var newCourseIDs: Set<String> {
+        let grenze = Date().addingTimeInterval(-Self.newCourseLifetime)
+        return Set(newCourses.filter { $0.value > grenze }.keys)
+    }
+
+    /// Der Nutzer hat die Hinweise gesehen.
+    func markNewCoursesSeen(_ ids: some Sequence<String>) {
+        for id in ids { newCourses[id] = nil }
+        saveNewCourses()
+    }
+
+    /// Vergleicht die Kennungen des frisch geladenen Feeds mit den bisher
+    /// bekannten. Beim allerersten Laden ist alles „neu" – das wäre nur Lärm,
+    /// deshalb merkt sich die App dann bloß den Stand.
+    private func recordNewCourses(in feed: RemoteCourseFeed) {
+        let aktuell = Set(feed.courses.map(\.id))
+        let defaults = UserDefaults.standard
+        if let bekannt = defaults.stringArray(forKey: Self.knownIDsKey) {
+            newCourses = Self.mergeNewCourses(newCourses, known: Set(bekannt), current: aktuell)
+            saveNewCourses()
+        }
+        defaults.set(Array(aktuell), forKey: Self.knownIDsKey)
+    }
+
+    /// Kern von `recordNewCourses`, ohne UserDefaults – damit testbar.
+    /// Zurückgezogene und abgelaufene Plätze fliegen aus den offenen Hinweisen.
+    nonisolated static func mergeNewCourses(_ offen: [String: Date], known: Set<String>,
+                                            current: Set<String>, now: Date = Date()) -> [String: Date] {
+        let grenze = now.addingTimeInterval(-newCourseLifetime)
+        var ergebnis = offen.filter { current.contains($0.key) && $0.value > grenze }
+        for id in current.subtracting(known) { ergebnis[id] = now }
+        return ergebnis
+    }
+
+    private static func loadNewCourses() -> [String: Date] {
+        let roh = UserDefaults.standard.dictionary(forKey: newIDsKey) as? [String: Double] ?? [:]
+        return roh.mapValues { Date(timeIntervalSince1970: $0) }
+    }
+
+    private func saveNewCourses() {
+        UserDefaults.standard.set(newCourses.mapValues(\.timeIntervalSince1970), forKey: Self.newIDsKey)
+    }
+
+    // MARK: – Abgleich beim Start
+
+    private var updateTask: Task<Void, Never>?
+    private var lastStatusCheck: Date?
+
+    /// Bei jedem Start: Fragt den Server knapp, ob sich der Katalog geändert
+    /// hat, und lädt ihn nur dann neu. Mehrfache Aufrufe (Start, Startseite)
+    /// warten auf denselben Abgleich statt doppelt zu laden.
+    func checkForUpdates() async {
+        if let updateTask { return await updateTask.value }
+        if let lastStatusCheck, Date().timeIntervalSince(lastStatusCheck) < 5 * 60 { return }
+        let task = Task { await performUpdateCheck() }
+        updateTask = task
+        await task.value
+        updateTask = nil
+        lastStatusCheck = Date()
+    }
+
+    private func performUpdateCheck() async {
+        if !loadedFromDisk { loadCache() }
+
+        var request = URLRequest(url: Self.statusURL)
+        request.timeoutInterval = 8
+        request.cachePolicy = .reloadIgnoringLocalCacheData
+
+        guard let (data, response) = try? await URLSession.shared.data(for: request),
+              let http = response as? HTTPURLResponse, (200..<300).contains(http.statusCode),
+              let status = try? JSONDecoder().decode(CatalogStatus.self, from: data) else {
+            // Kein Netz oder ein Server ohne den Endpunkt: wie bisher nach Alter.
+            await refreshIfNeeded()
+            return
+        }
+
+        let merker = "\(status.count)|\(status.lastChangedAt ?? "")"
+        let unveraendert = UserDefaults.standard.string(forKey: Self.statusKey) == merker
+        guard !unveraendert || lastUpdated == nil else { return }
+
+        await refresh()
+        if lastError == nil {
+            UserDefaults.standard.set(merker, forKey: Self.statusKey)
+        }
+    }
+
     // MARK: – Laden
 
     /// Lädt den Cache und stößt bei Bedarf eine Aktualisierung an.
@@ -90,7 +195,9 @@ final class CourseCatalogService {
 
         var request = URLRequest(url: Self.feedURL)
         request.timeoutInterval = 15
-        request.cachePolicy = .reloadRevalidatingCacheData
+        // Wer hier landet, will den Stand vom Server – nicht eine Antwort, die
+        // noch im URL-Cache liegt (der Feed erlaubt fünf Minuten).
+        request.cachePolicy = .reloadIgnoringLocalCacheData
 
         do {
             let (data, response) = try await URLSession.shared.data(for: request)
@@ -110,6 +217,7 @@ final class CourseCatalogService {
 
     private func apply(_ feed: RemoteCourseFeed) {
         adopt(feed)
+        recordNewCourses(in: feed)
         lastUpdated = Date()
     }
 
@@ -154,6 +262,12 @@ final class CourseCatalogService {
 }
 
 // MARK: – Format der API
+
+/// Antwort von `/api/v1/catalog`.
+struct CatalogStatus: Decodable {
+    let count: Int
+    let lastChangedAt: String?
+}
 
 /// Antwort von `/api/v1/courses`. Die Feldnamen entsprechen dem, was die
 /// Website ausliefert; unbekannte Felder werden ignoriert.

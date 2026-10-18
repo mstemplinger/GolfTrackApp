@@ -6575,6 +6575,34 @@
         }
       }
     },
+    "Ausblenden" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hide"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ocultar"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Masquer"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nascondi"
+          }
+        }
+      }
+    },
     "B" : {
       "localizations" : {
         "en" : {
@@ -19061,6 +19089,34 @@
         }
       }
     },
+    "Neue Plätze in deiner Nähe" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "New courses near you"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nuevos campos cerca de ti"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nouveaux parcours près de chez vous"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nuovi campi vicino a te"
+          }
+        }
+      }
+    },
     "Neue Runde" : {
       "localizations" : {
         "de" : {
@@ -19187,6 +19243,34 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Nuovo campo"
+          }
+        }
+      }
+    },
+    "Neuer Platz in deiner Nähe" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "New course near you"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nuevo campo cerca de ti"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nouveau parcours près de chez vous"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nuovo campo vicino a te"
           }
         }
       }

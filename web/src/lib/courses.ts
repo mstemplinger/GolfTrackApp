@@ -360,3 +360,27 @@ export async function courseMarkers(): Promise<
     lon: Number(row.longitude),
   }));
 }
+
+/**
+ * Stand des öffentlichen Katalogs – so knapp, dass die App ihn bei jedem
+ * Start abfragen kann, ohne die ganze Liste zu laden. Ändert sich einer der
+ * beiden Werte, holt sie den Katalog neu.
+ *
+ * `lastChangedAt` schaut auch auf abgelehnte Einträge: Wird ein freigegebener
+ * Platz zurückgezogen, ändert sich dessen `updated_at`, der Katalog wird also
+ * kleiner, ohne dass ein freigegebener Eintrag neu wäre. Gelöschte Plätze
+ * fängt die Anzahl ab.
+ */
+export async function catalogStatus(): Promise<{ count: number; lastChangedAt: string | null }> {
+  await ensureSchema();
+  const row = await queryOne<Record<string, unknown>>(
+    `SELECT COUNT(*) FILTER (WHERE status = 'approved') AS total,
+            MAX(updated_at) FILTER (WHERE status <> 'pending') AS last_changed
+       FROM courses`,
+  );
+  const last = row?.last_changed;
+  return {
+    count: Number(row?.total ?? 0),
+    lastChangedAt: last instanceof Date ? last.toISOString() : last ? String(last) : null,
+  };
+}

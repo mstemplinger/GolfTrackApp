@@ -1,5 +1,6 @@
 import SwiftUI
 import SwiftData
+import CoreLocation
 
 struct HomeView: View {
     @Query(sort: \Round.date, order: .reverse) private var allRounds: [Round]
@@ -108,6 +109,77 @@ struct HomeView: View {
         .padding(.horizontal)
     }
 
+    /// Seit dem letzten Start ins Verzeichnis aufgenommene Plätze im Umkreis
+    /// von 30 km. Das Kreuz meldet sie als gesehen – sie kommen nicht wieder.
+    private func newNearbyCard(_ plaetze: [NearbyCourseService.NearbyCourse]) -> some View {
+        VStack(alignment: .leading, spacing: 12) {
+            HStack {
+                Label(plaetze.count == 1 ? "Neuer Platz in deiner Nähe" : "Neue Plätze in deiner Nähe",
+                      systemImage: "sparkles")
+                    .font(.caption.weight(.semibold))
+                    .foregroundStyle(AppTheme.gold)
+                Spacer()
+                Button {
+                    Haptics.tap()
+                    withAnimation { nearby.dismissNewNearby() }
+                } label: {
+                    Image(systemName: "xmark")
+                        .font(.caption.bold())
+                        .foregroundStyle(AppTheme.textTer)
+                        .padding(6)
+                }
+                .buttonStyle(.plain)
+                .accessibilityLabel("Ausblenden")
+            }
+
+            ForEach(plaetze.prefix(3)) { platz in
+                HStack(spacing: 12) {
+                    Image(systemName: platz.kind == .golf ? "flag.fill" : "figure.golf")
+                        .font(.title3)
+                        .foregroundStyle(AppTheme.gold)
+                        .frame(width: 28)
+
+                    VStack(alignment: .leading, spacing: 2) {
+                        Text(platz.name)
+                            .font(.subheadline.weight(.semibold))
+                            .foregroundStyle(AppTheme.text)
+                            .lineLimit(2)
+                        Text(platz.location.isEmpty
+                             ? Self.entfernung(platz.distance)
+                             : "\(platz.location) · \(Self.entfernung(platz.distance))")
+                            .font(.caption)
+                            .foregroundStyle(AppTheme.textSec)
+                            .lineLimit(1)
+                    }
+
+                    Spacer(minLength: 0)
+
+                    Button {
+                        Haptics.medium()
+                        UIApplication.shared.open(platz.startURL)
+                    } label: {
+                        Text("Starten")
+                            .font(.caption.bold())
+                            .padding(.horizontal, 12)
+                            .padding(.vertical, 7)
+                            .background(AppTheme.gold.opacity(0.18), in: Capsule())
+                            .foregroundStyle(AppTheme.gold)
+                    }
+                    .buttonStyle(.plain)
+                }
+            }
+        }
+        .padding(14)
+        .background(AppTheme.card, in: RoundedRectangle(cornerRadius: 16))
+        .padding(.horizontal)
+    }
+
+    private static func entfernung(_ meter: CLLocationDistance) -> String {
+        Measurement(value: meter / 1000, unit: UnitLength.kilometers)
+            .formatted(.measurement(width: .abbreviated, usage: .road,
+                                    numberFormatStyle: .number.precision(.fractionLength(0))))
+    }
+
     private var completedRounds: [Round] { allRounds.filter(\.isComplete) }
     private var incompleteRounds: [Round] { allRounds.filter { !$0.isComplete } }
     private var lastRound: Round? { completedRounds.first }
@@ -125,6 +197,10 @@ struct HomeView: View {
 
                         if let platz = nearby.suggestion {
                             nearbyCard(platz)
+                        }
+
+                        if !nearby.newNearby.isEmpty {
+                            newNearbyCard(nearby.newNearby)
                         }
 
                         if appFocus == .minigolf {

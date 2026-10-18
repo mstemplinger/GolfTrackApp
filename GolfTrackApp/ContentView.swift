@@ -88,7 +88,7 @@ struct ContentView: View {
         // erst dann ein Datenkontext bereitsteht; der Katalog wird abgewartet,
         // damit der Platz vollständig angelegt wird statt als Notnagel.
         .task {
-            await CourseCatalogService.shared.refreshIfNeeded()
+            await CourseCatalogService.shared.checkForUpdates()
             let count = ClipRoundImporter.importPendingRounds(into: modelContext)
             if count > 0 { importedClipRounds = count }
         }

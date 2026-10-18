@@ -43,6 +43,9 @@ final class NearbyCourseService: NSObject, ObservableObject {
     }
 
     @Published private(set) var suggestion: NearbyCourse?
+    /// Neu ins Verzeichnis aufgenommene Plätze im Umkreis von
+    /// `newCourseRadius`, nächster zuerst.
+    @Published private(set) var newNearby: [NearbyCourse] = []
     @Published private(set) var authorizationDenied = false
 
     // MARK: - Maße
@@ -54,6 +57,8 @@ final class NearbyCourseService: NSObject, ObservableObject {
     /// Für den Vorschlag in der App darf es etwas großzügiger sein – wer die
     /// App am Parkplatz öffnet, meint denselben Platz.
     private let suggestionRadius: CLLocationDistance = 500
+    /// Neue Plätze werden gemeldet, wenn sie höchstens so weit weg liegen.
+    private let newCourseRadius: CLLocationDistance = 30_000
     /// iOS überwacht höchstens 20 Zonen je App. Bei knapp hundert Plätzen wird
     /// deshalb immer nur die nächste Umgebung überwacht und beim Ortswechsel
     /// neu bestimmt.
@@ -87,16 +92,25 @@ final class NearbyCourseService: NSObject, ObservableObject {
         case .authorizedWhenInUse, .authorizedAlways:
             // Ohne geladenes Verzeichnis gäbe es nichts zu vergleichen – beim
             // ersten Start der App ist es noch leer.
-            await CourseCatalogService.shared.refreshIfNeeded()
+            // Fragt beim Server nach, ob Plätze dazugekommen sind – bei jedem
+            // Start, geladen wird aber nur, wenn sich etwas geändert hat.
+            await CourseCatalogService.shared.checkForUpdates()
             awaitingSuggestionFix = true
             manager.requestLocation()
         default:
             suggestion = nil
+            newNearby = []
         }
     }
 
     func dismissSuggestion() {
         suggestion = nil
+    }
+
+    /// Die neuen Plätze sind gesehen – sie melden sich nicht wieder.
+    func dismissNewNearby() {
+        CourseCatalogService.shared.markNewCoursesSeen(newNearby.map(\.slug))
+        newNearby = []
     }
 
     // MARK: - Mitteilung bei Annäherung
@@ -281,6 +295,15 @@ extension NearbyCourseService: CLLocationManagerDelegate {
             NearbyCourse(kind: $0.0.kind, slug: $0.0.slug, name: $0.0.name,
                          location: $0.0.location, distance: $0.1)
         }
+
+        let neu = CourseCatalogService.shared.newCourseIDs
+        newNearby = neu.isEmpty ? [] : candidates()
+            .filter { neu.contains($0.slug) }
+            .map { ($0, $0.coordinate.distance(to: location)) }
+            .filter { $0.1 <= newCourseRadius }
+            .sorted { $0.1 < $1.1 }
+            .map { NearbyCourse(kind: $0.0.kind, slug: $0.0.slug, name: $0.0.name,
+                                location: $0.0.location, distance: $0.1) }
     }
 }
 

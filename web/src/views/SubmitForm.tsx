@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { HintsEditor } from "@/components/HintsEditor";
+import { HoleCountInput } from "@/components/HoleCountInput";
 import { HolePositionsMap, distanceMetres, type HolePoint, type PointKind } from "@/components/HolePositionsMap";
 import { t } from "@/i18n/content";
 import type { Lang } from "@/i18n/routes";
@@ -38,7 +39,6 @@ export function SubmitForm({ lang }: { lang: Lang }) {
   useEffect(() => {
     isGolfRef.current = kind === "golf";
   }, [kind]);
-  const [holesDraft, setHolesDraft] = useState("18");
   const [rows, setRows] = useState<HoleRow[]>(() => Array.from({ length: 18 }, emptyRow));
   const [values, setValues] = useState({
     name: "",
@@ -74,7 +74,6 @@ export function SubmitForm({ lang }: { lang: Lang }) {
   const changeHoles = useCallback((count: number) => {
     const safe = Math.min(36, Math.max(1, Math.round(count) || 1));
     setHoles(safe);
-    setHolesDraft(String(safe));
     setRows((previous) => {
       const next = previous.slice(0, safe);
       while (next.length < safe) next.push(emptyRow());
@@ -343,52 +342,7 @@ export function SubmitForm({ lang }: { lang: Lang }) {
           </Field>
         </div>
         <Field label={isGolf ? copy.holes : copy.holesMinigolf} required>
-          <div className="flex items-center gap-3">
-            <button
-              type="button"
-              onClick={() => changeHoles(holes - 1)}
-              disabled={holes <= 1}
-              aria-label="−1"
-              className="tap grid h-11 w-11 shrink-0 place-items-center rounded-[3px] border border-ink/25 text-lg transition-colors hover:border-ink/50 hover:bg-ink/5 disabled:opacity-40"
-            >
-              −
-            </button>
-            <input
-              className="field w-20 text-center font-mono"
-              type="number"
-              inputMode="numeric"
-              min={1}
-              max={36}
-              value={holesDraft}
-              onChange={(e) => {
-                const raw = e.target.value;
-                setHolesDraft(raw);
-                const parsed = Number(raw);
-                if (raw.trim() && Number.isInteger(parsed) && parsed >= 1 && parsed <= 36) changeHoles(parsed);
-              }}
-              onBlur={() => changeHoles(Number(holesDraft))}
-              required
-            />
-            <button
-              type="button"
-              onClick={() => changeHoles(holes + 1)}
-              disabled={holes >= 36}
-              aria-label="+1"
-              className="tap grid h-11 w-11 shrink-0 place-items-center rounded-[3px] border border-ink/25 text-lg transition-colors hover:border-ink/50 hover:bg-ink/5 disabled:opacity-40"
-            >
-              +
-            </button>
-          </div>
-          <input
-            type="range"
-            min={1}
-            max={36}
-            step={1}
-            value={holes}
-            onChange={(e) => changeHoles(Number(e.target.value))}
-            aria-label={isGolf ? copy.holes : copy.holesMinigolf}
-            className="mt-3 w-full max-w-md accent-[#28824b]"
-          />
+          <HoleCountInput value={holes} onChange={changeHoles} label={isGolf ? copy.holes : copy.holesMinigolf} />
         </Field>
         <Field label={copy.coordinates} hint={copy.coordinatesHint}>
           <div className="grid gap-3 sm:grid-cols-[1fr_1fr_auto]">

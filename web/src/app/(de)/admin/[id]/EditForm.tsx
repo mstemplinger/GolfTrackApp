@@ -1,7 +1,9 @@
 "use client";
 
-import { useActionState, useState } from "react";
+import { useActionState, useCallback, useMemo, useState } from "react";
 import { HintsEditor } from "@/components/HintsEditor";
+import { HoleCountInput } from "@/components/HoleCountInput";
+import { HolePositionsMap, type HolePoint, type PointKind } from "@/components/HolePositionsMap";
 import type { CourseRecord } from "@/lib/courses";
 import { save } from "../actions";
 
@@ -13,6 +15,60 @@ export function EditForm({ course }: { course: CourseRecord }) {
 
   const holeAt = (index: number) => course.holeData.find((hole) => hole.number === index + 1);
 
+  // Koordinaten als Text, damit sie sich von Hand und über die Karte setzen lassen.
+  const text = (value: number | null | undefined) => (value ?? "").toString();
+  const [coords, setCoords] = useState<Coords[]>(() =>
+    Array.from({ length: 36 }, (_, index) => {
+      const hole = holeAt(index);
+      return {
+        teeLat: text(hole?.teeLat),
+        teeLon: text(hole?.teeLon),
+        flagLat: text(hole?.flagLat),
+        flagLon: text(hole?.flagLon),
+      };
+    }),
+  );
+  const [place, setPlace] = useState({
+    latitude: text(course.latitude),
+    longitude: text(course.longitude),
+    firstTeeLat: text(course.firstTeeLat),
+    firstTeeLon: text(course.firstTeeLon),
+  });
+
+  const setCoord = (index: number, key: keyof Coords, value: string) =>
+    setCoords((previous) => previous.map((row, i) => (i === index ? { ...row, [key]: value } : row)));
+
+  const setPosition = useCallback((index: number, kind: PointKind, point: HolePoint | null) => {
+    const lat = point ? point.lat.toFixed(6) : "";
+    const lon = point ? point.lon.toFixed(6) : "";
+    setCoords((previous) =>
+      previous.map((row, i) =>
+        i !== index
+          ? row
+          : kind === "tee"
+            ? { ...row, teeLat: lat, teeLon: lon }
+            : { ...row, flagLat: lat, flagLon: lon },
+      ),
+    );
+    if (point && index === 0 && kind === "tee") {
+      setPlace((previous) => ({
+        ...previous,
+        firstTeeLat: lat,
+        firstTeeLon: lon,
+      }));
+    }
+  }, []);
+
+  const positions = useMemo(
+    () =>
+      coords.slice(0, holes).map((row) => ({
+        tee: toPoint(row.teeLat, row.teeLon),
+        flag: toPoint(row.flagLat, row.flagLon),
+      })),
+    [coords, holes],
+  );
+  const centre = useMemo(() => toPoint(place.latitude, place.longitude), [place.latitude, place.longitude]);
+
   return (
     <form action={action} className="paper mt-10 rounded-[4px] p-6 sm:p-8">
       <input type="hidden" name="id" value={course.id} />
@@ -23,28 +79,39 @@ export function EditForm({ course }: { course: CourseRecord }) {
         <Field label="Ort" name="location" defaultValue={course.location} />
         <Field label="Kennung (slug)" name="slug" defaultValue={course.slug} mono />
         <Field label="Land" name="country" defaultValue={course.country} />
-        <Field
-          label={isGolf ? "Löcher" : "Bahnen"}
-          name="holes"
-          defaultValue={String(course.holes)}
-          type="number"
-          onChange={(value) => setHoles(Math.min(36, Math.max(1, Number(value) || 1)))}
-        />
+        <div>
+          <span className="label">{isGolf ? "Löcher" : "Bahnen"}</span>
+          <HoleCountInput value={holes} onChange={setHoles} label={isGolf ? "Löcher" : "Bahnen"} name="holes" />
+        </div>
         <div className="grid grid-cols-2 gap-3">
-          <Field label="Breite" name="latitude" defaultValue={course.latitude?.toString() ?? ""} mono />
-          <Field label="Länge" name="longitude" defaultValue={course.longitude?.toString() ?? ""} mono />
+          <Field
+            label="Breite"
+            name="latitude"
+            value={place.latitude}
+            onChange={(value) => setPlace((p) => ({ ...p, latitude: value }))}
+            mono
+          />
+          <Field
+            label="Länge"
+            name="longitude"
+            value={place.longitude}
+            onChange={(value) => setPlace((p) => ({ ...p, longitude: value }))}
+            mono
+          />
         </div>
         <div className="grid grid-cols-2 gap-3">
           <Field
             label="1. Abschlag – Breite"
             name="firstTeeLat"
-            defaultValue={course.firstTeeLat?.toString() ?? ""}
+            value={place.firstTeeLat}
+            onChange={(value) => setPlace((p) => ({ ...p, firstTeeLat: value }))}
             mono
           />
           <Field
             label="1. Abschlag – Länge"
             name="firstTeeLon"
-            defaultValue={course.firstTeeLon?.toString() ?? ""}
+            value={place.firstTeeLon}
+            onChange={(value) => setPlace((p) => ({ ...p, firstTeeLon: value }))}
             mono
           />
         </div>
@@ -103,7 +170,10 @@ export function EditForm({ course }: { course: CourseRecord }) {
       {/* Lochwerte */}
       <div className="mt-8 border-t border-ink/15 pt-6">
         <h3 className="label">{isGolf ? "Löcher" : "Bahnen"}</h3>
-        <div className="mt-2 overflow-x-auto">
+        <div className="mt-2">
+          <HolePositionsMap lang="de" isGolf={isGolf} positions={positions} centre={centre} onChange={setPosition} />
+        </div>
+        <div className="mt-5 overflow-x-auto">
           <table className="w-full min-w-[34rem] border-collapse">
             <thead>
               <tr className="font-mono text-[0.6rem] uppercase tracking-[0.16em] text-ink/65">
@@ -140,14 +210,30 @@ export function EditForm({ course }: { course: CourseRecord }) {
                     <Cell name={`length-${index}`} defaultValue={hole?.length} width="w-20" />
                     <td className="py-1 pr-2">
                       <div className="flex gap-1">
-                        <Input name={`teeLat-${index}`} defaultValue={hole?.teeLat} />
-                        <Input name={`teeLon-${index}`} defaultValue={hole?.teeLon} />
+                        <Input
+                          name={`teeLat-${index}`}
+                          value={coords[index].teeLat}
+                          onChange={(v) => setCoord(index, "teeLat", v)}
+                        />
+                        <Input
+                          name={`teeLon-${index}`}
+                          value={coords[index].teeLon}
+                          onChange={(v) => setCoord(index, "teeLon", v)}
+                        />
                       </div>
                     </td>
                     <td className="py-1">
                       <div className="flex gap-1">
-                        <Input name={`flagLat-${index}`} defaultValue={hole?.flagLat} />
-                        <Input name={`flagLon-${index}`} defaultValue={hole?.flagLon} />
+                        <Input
+                          name={`flagLat-${index}`}
+                          value={coords[index].flagLat}
+                          onChange={(v) => setCoord(index, "flagLat", v)}
+                        />
+                        <Input
+                          name={`flagLon-${index}`}
+                          value={coords[index].flagLon}
+                          onChange={(v) => setCoord(index, "flagLon", v)}
+                        />
                       </div>
                     </td>
                   </tr>
@@ -178,6 +264,7 @@ function Field({
   label,
   name,
   defaultValue,
+  value,
   type = "text",
   required,
   mono,
@@ -186,6 +273,7 @@ function Field({
   label: string;
   name: string;
   defaultValue?: string;
+  value?: string;
   type?: string;
   required?: boolean;
   mono?: boolean;
@@ -200,7 +288,8 @@ function Field({
         id={name}
         name={name}
         type={type}
-        defaultValue={defaultValue}
+        defaultValue={value === undefined ? defaultValue : undefined}
+        value={value}
         required={required}
         onChange={onChange ? (event) => onChange(event.target.value) : undefined}
         className={`field ${mono ? "font-mono" : ""}`}
@@ -251,11 +340,26 @@ function Cell({
   );
 }
 
-function Input({ name, defaultValue }: { name: string; defaultValue?: number | null }) {
+interface Coords {
+  teeLat: string;
+  teeLon: string;
+  flagLat: string;
+  flagLon: string;
+}
+
+function toPoint(lat: string, lon: string): HolePoint | null {
+  const a = Number(lat.trim().replace(",", "."));
+  const b = Number(lon.trim().replace(",", "."));
+  if (!lat.trim() || !lon.trim() || !Number.isFinite(a) || !Number.isFinite(b)) return null;
+  return { lat: a, lon: b };
+}
+
+function Input({ name, value, onChange }: { name: string; value: string; onChange: (value: string) => void }) {
   return (
     <input
       name={name}
-      defaultValue={defaultValue ?? ""}
+      value={value}
+      onChange={(event) => onChange(event.target.value)}
       aria-label={name}
       className="field !py-1 !text-xs w-24 font-mono"
     />

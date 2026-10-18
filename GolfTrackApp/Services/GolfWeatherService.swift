@@ -3,6 +3,77 @@ import Combine
 import CoreLocation
 import SwiftUI
 
+// MARK: - Hourly forecast model
+
+struct HourlyForecast: Identifiable {
+    let id = UUID()
+    let date: Date
+    let weatherCode: Int
+    let temperature: Double
+    let precipitationMm: Double
+    let precipitationProbability: Int
+    let windKmh: Double
+    let isDaylight: Bool
+
+    var symbolName: String { GolfWeatherService.weatherInfo(wmoCode: weatherCode).1 }
+
+    /// Bewertung je Stunde statt je Tag: 0,1 mm Niesel um 6 Uhr morgens
+    /// sollen nicht den ganzen Tag als „schlechtes Wetter“ markieren.
+    var isPlayable: Bool {
+        isDaylight
+            && precipitationMm < 0.3
+            && windKmh <= 30
+            && temperature >= 3
+            && !Self.unplayableCodes.contains(weatherCode)
+    }
+
+    /// Nebel, Eis, Schnee und Gewitter sind unabhängig von der Regenmenge kein Golfwetter.
+    private static let unplayableCodes: Set<Int> = [45, 48, 56, 57, 66, 67, 71, 73, 75, 77, 85, 86, 95, 96, 99]
+}
+
+/// Zusammenhängende Spielzeit an einem Tag, `end` ist exklusiv (Ende der letzten guten Stunde).
+struct GolfWindow: Equatable {
+    let start: Date
+    let end: Date
+
+    var duration: TimeInterval { end.timeIntervalSince(start) }
+    /// „10–15 Uhr“ bzw. „10 AM – 3 PM“, je nach Sprache.
+    var label: String { (start..<end).formatted(.interval.hour()) }
+}
+
+enum GolfWindowFinder {
+    /// Eine Neun-Loch-Runde dauert gut zwei Stunden; kürzere Lücken zählen nicht.
+    static let minimumDuration: TimeInterval = 2 * 3600
+
+    /// Fasst aufeinanderfolgende spielbare Stunden zu Fenstern zusammen.
+    /// Stunden, die vor `now` enden, werden ignoriert.
+    static func windows(in hours: [HourlyForecast], now: Date? = nil) -> [GolfWindow] {
+        var result: [GolfWindow] = []
+        var start: Date?
+        var end: Date?
+        func close() {
+            if let s = start, let e = end, e.timeIntervalSince(s) >= minimumDuration {
+                result.append(GolfWindow(start: s, end: e))
+            }
+            start = nil; end = nil
+        }
+        for hour in hours.sorted(by: { $0.date < $1.date }) {
+            let hourEnd = hour.date.addingTimeInterval(3600)
+            if let now, hourEnd <= now { continue }
+            if hour.isPlayable {
+                // Lücken in den Daten beenden ein Fenster ebenfalls.
+                if let e = end, e != hour.date { close() }
+                if start == nil { start = max(hour.date, now ?? hour.date) }
+                end = hourEnd
+            } else {
+                close()
+            }
+        }
+        close()
+        return result
+    }
+}
+
 // MARK: - Daily forecast model (public – used by WeatherForecastView)
 
 struct DailyForecast: Identifiable {
@@ -15,16 +86,27 @@ struct DailyForecast: Identifiable {
     let maxWindKmh: Double
     let conditionText: String
     let symbolName: String
+    var hours: [HourlyForecast] = []
 
-    var isGoodGolfWeather: Bool { weatherCode < 45 && maxWindKmh <= 30 }
-    var golfLabel: String { isGoodGolfWeather ? "Golf-Wetter" : "schlechtes Wetter" }
+    var isToday: Bool { Calendar.current.isDateInToday(date) }
+
+    /// Für heute nur die noch kommenden Stunden.
+    var golfWindows: [GolfWindow] {
+        GolfWindowFinder.windows(in: hours, now: isToday ? Date() : nil)
+    }
+
+    var isGoodGolfWeather: Bool {
+        guard !hours.isEmpty else { return weatherCode < 45 && maxWindKmh <= 30 }
+        return !golfWindows.isEmpty
+    }
+
+    /// Hellstunden des Tages für die Stundenleiste.
+    var daylightHours: [HourlyForecast] { hours.filter(\.isDaylight) }
 
     var dayLabel: String {
-        if Calendar.current.isDateInToday(date)    { return "Heute" }
-        if Calendar.current.isDateInTomorrow(date) { return "Morgen" }
-        let fmt = DateFormatter(); fmt.locale = Locale(identifier: "de_DE")
-        fmt.dateFormat = "EEE, d. MMM"
-        return fmt.string(from: date)
+        if Calendar.current.isDateInToday(date)    { return String(localized: "Heute") }
+        if Calendar.current.isDateInTomorrow(date) { return String(localized: "Morgen") }
+        return date.formatted(.dateTime.weekday(.abbreviated).day().month(.abbreviated))
     }
 }
 
@@ -33,6 +115,32 @@ struct DailyForecast: Identifiable {
 private struct OpenMeteoResponse: Decodable {
     let current: CurrentWeather
     let daily: DailyWeather
+    let hourly: HourlyWeather?
+    let utcOffsetSeconds: Int?
+
+    enum CodingKeys: String, CodingKey {
+        case current, daily, hourly
+        case utcOffsetSeconds = "utc_offset_seconds"
+    }
+
+    struct HourlyWeather: Decodable {
+        let time: [String]
+        let weatherCode: [Int?]
+        let temperature2m: [Double?]
+        let precipitation: [Double?]
+        let precipitationProbability: [Int?]?
+        let windSpeed10m: [Double?]
+        let isDay: [Int?]
+        enum CodingKeys: String, CodingKey {
+            case time
+            case weatherCode              = "weather_code"
+            case temperature2m            = "temperature_2m"
+            case precipitation
+            case precipitationProbability = "precipitation_probability"
+            case windSpeed10m             = "wind_speed_10m"
+            case isDay                    = "is_day"
+        }
+    }
 
     struct CurrentWeather: Decodable {
         let temperature2m: Double
@@ -93,17 +201,38 @@ final class GolfWeatherService: NSObject, ObservableObject {
     private(set) var rawWeatherCode: Int = -1
     private(set) var rawWindSpeed: Double = 0
 
-    /// true  → "Golf-Wetter"   false → "schlechtes Wetter"
+    /// Heute (ab jetzt) spielbare Zeitfenster – Grundlage für das Badge auf der Startseite.
+    var todayWindows: [GolfWindow] {
+        dailyForecast.first(where: \.isToday)?.golfWindows ?? []
+    }
+
+    private var hasHourlyData: Bool {
+        dailyForecast.contains { $0.isToday && !$0.hours.isEmpty }
+    }
+
+    /// true → heute gibt es noch ein Golf-Fenster.
     var isGoodGolfWeather: Bool {
         guard hasData else { return true }
-        return rawWeatherCode < 45 && rawWindSpeed <= 30
+        guard hasHourlyData else { return rawWeatherCode < 45 && rawWindSpeed <= 30 }
+        return !todayWindows.isEmpty
     }
+
     // String(localized:) statt eines nackten Literals: der Wert landet über
     // Text(String) im UI und würde sonst in jeder Sprache deutsch bleiben.
     var golfWeatherLabel: String {
-        isGoodGolfWeather
-            ? String(localized: "Golf-Wetter")
-            : String(localized: "schlechtes Wetter")
+        guard hasData, hasHourlyData else {
+            return isGoodGolfWeather
+                ? String(localized: "Golf-Wetter")
+                : String(localized: "schlechtes Wetter")
+        }
+        guard let next = todayWindows.first else {
+            return String(localized: "Heute kein Golf-Wetter")
+        }
+        let time = next.end.formatted(.dateTime.hour())
+        if next.start <= Date() {
+            return String(localized: "Golf-Wetter bis \(time)")
+        }
+        return String(localized: "Golf-Wetter ab \(next.start.formatted(.dateTime.hour()))")
     }
 
     // MARK: Private
@@ -158,6 +287,7 @@ final class GolfWeatherService: NSObject, ObservableObject {
             + "?latitude=\(lat)&longitude=\(lon)"
             + "&current=temperature_2m,apparent_temperature,weather_code,wind_speed_10m,relative_humidity_2m"
             + "&daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_sum,wind_speed_10m_max"
+            + "&hourly=weather_code,temperature_2m,precipitation,precipitation_probability,wind_speed_10m,is_day"
             + "&forecast_days=7&wind_speed_unit=kmh&timezone=auto"
 
         guard let url = URL(string: urlString) else {
@@ -182,8 +312,12 @@ final class GolfWeatherService: NSObject, ObservableObject {
             conditionText  = text
             symbolName     = symbol
 
+            let hoursByDay = Self.parseHourly(decoded.hourly,
+                                              utcOffset: decoded.utcOffsetSeconds ?? 0)
+
             // Parse daily forecast
             let iso = ISO8601DateFormatter(); iso.formatOptions = [.withFullDate]
+            iso.timeZone = TimeZone(secondsFromGMT: decoded.utcOffsetSeconds ?? 0)
             let d = decoded.daily
             dailyForecast = zip(d.time.indices, d.time).compactMap { i, timeStr -> DailyForecast? in
                 guard let date = iso.date(from: timeStr) else { return nil }
@@ -197,7 +331,8 @@ final class GolfWeatherService: NSObject, ObservableObject {
                     precipitationMm: d.precipitationSum[safe: i] ?? 0,
                     maxWindKmh: d.windSpeed10mMax[safe: i] ?? 0,
                     conditionText: ct,
-                    symbolName: sym
+                    symbolName: sym,
+                    hours: hoursByDay[timeStr] ?? []
                 )
             }
 
@@ -206,6 +341,35 @@ final class GolfWeatherService: NSObject, ObservableObject {
             errorMessage = "Wetter nicht verfügbar"
         }
         isLoading = false
+    }
+
+    /// Open-Meteo liefert Ortszeit ohne Zone („2026-10-18T14:00“); gruppiert wird
+    /// nach dem Datumsteil, damit die Stunden zum gleichnamigen Tag passen.
+    private static func parseHourly(_ h: OpenMeteoResponse.HourlyWeather?,
+                                    utcOffset: Int) -> [String: [HourlyForecast]] {
+        guard let h else { return [:] }
+        let fmt = DateFormatter()
+        fmt.locale = Locale(identifier: "en_US_POSIX")
+        fmt.timeZone = TimeZone(secondsFromGMT: utcOffset)
+        fmt.dateFormat = "yyyy-MM-dd'T'HH:mm"
+        var result: [String: [HourlyForecast]] = [:]
+        for (i, timeStr) in h.time.enumerated() {
+            guard let date = fmt.date(from: timeStr),
+                  let code = h.weatherCode[safe: i] ?? nil,
+                  let temp = h.temperature2m[safe: i] ?? nil,
+                  let wind = h.windSpeed10m[safe: i] ?? nil else { continue }
+            let hour = HourlyForecast(
+                date: date,
+                weatherCode: code,
+                temperature: temp,
+                precipitationMm: (h.precipitation[safe: i] ?? nil) ?? 0,
+                precipitationProbability: (h.precipitationProbability?[safe: i] ?? nil) ?? 0,
+                windKmh: wind,
+                isDaylight: ((h.isDay[safe: i] ?? nil) ?? 1) == 1
+            )
+            result[String(timeStr.prefix(10)), default: []].append(hour)
+        }
+        return result
     }
 
     // MARK: WMO-Wettercode → lokalisierter Text + SF Symbol

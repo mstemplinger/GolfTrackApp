@@ -1,7 +1,8 @@
 "use client";
 
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { HintsEditor } from "@/components/HintsEditor";
+import { HolePositionsMap, distanceMetres, type HolePoint, type PointKind } from "@/components/HolePositionsMap";
 import { t } from "@/i18n/content";
 import type { Lang } from "@/i18n/routes";
 import type { CourseHint } from "@/lib/schema";
@@ -12,9 +13,11 @@ interface HoleRow {
   par: string;
   hcp: string;
   length: string;
+  tee: HolePoint | null;
+  flag: HolePoint | null;
 }
 
-const emptyRow = (): HoleRow => ({ par: "", hcp: "", length: "" });
+const emptyRow = (): HoleRow => ({ par: "", hcp: "", length: "", tee: null, flag: null });
 
 /** Übliche Par-Folge einer 18-Loch-Anlage – nur als Startpunkt zum Überschreiben. */
 const PAR_72 = [4, 3, 5, 4, 4, 3, 4, 5, 4, 4, 4, 3, 5, 4, 3, 4, 5, 4];
@@ -31,6 +34,10 @@ export function SubmitForm({ lang }: { lang: Lang }) {
 
   const [kind, setKind] = useState<Kind>("golf");
   const [holes, setHoles] = useState(18);
+  const isGolfRef = useRef(true);
+  useEffect(() => {
+    isGolfRef.current = kind === "golf";
+  }, [kind]);
   const [holesDraft, setHolesDraft] = useState("18");
   const [rows, setRows] = useState<HoleRow[]>(() => Array.from({ length: 18 }, emptyRow));
   const [values, setValues] = useState({
@@ -75,7 +82,7 @@ export function SubmitForm({ lang }: { lang: Lang }) {
     });
   }, []);
 
-  const setCell = useCallback((index: number, key: keyof HoleRow, value: string) => {
+  const setCell = useCallback((index: number, key: "par" | "hcp" | "length", value: string) => {
     setRows((previous) => previous.map((row, i) => (i === index ? { ...row, [key]: value } : row)));
   }, []);
 
@@ -90,7 +97,38 @@ export function SubmitForm({ lang }: { lang: Lang }) {
   }, []);
 
   const clearRows = useCallback(() => {
-    setRows((previous) => previous.map(emptyRow));
+    setRows((previous) => previous.map((row) => ({ ...row, par: "", hcp: "", length: "" })));
+  }, []);
+
+  /**
+   * Punkt aus der Satellitenkarte übernehmen. Leere Felder füllen sich dabei
+   * mit: Mittelpunkt der Anlage, erster Abschlag und – bei Golf – die Länge
+   * als Luftlinie Abschlag–Grün.
+   */
+  const setPosition = useCallback((index: number, kind: PointKind, point: HolePoint | null) => {
+    setRows((previous) =>
+      previous.map((row, i) => {
+        if (i !== index) return row;
+        const next = { ...row, [kind]: point };
+        if (isGolfRef.current && !row.length.trim() && next.tee && next.flag) {
+          next.length = String(Math.round(distanceMetres(next.tee, next.flag)));
+        }
+        return next;
+      }),
+    );
+    if (!point) return;
+    setValues((previous) => {
+      const next = { ...previous };
+      if (!previous.latitude.trim() && !previous.longitude.trim()) {
+        next.latitude = point.lat.toFixed(6);
+        next.longitude = point.lon.toFixed(6);
+      }
+      if (index === 0 && kind === "tee") {
+        next.firstTeeLat = point.lat.toFixed(6);
+        next.firstTeeLon = point.lon.toFixed(6);
+      }
+      return next;
+    });
   }, []);
 
   /** Schreibt den aktuellen Standort in das angegebene Feldpaar. */
@@ -116,6 +154,14 @@ export function SubmitForm({ lang }: { lang: Lang }) {
     [set],
   );
 
+  const positions = useMemo(() => rows.map((row) => ({ tee: row.tee, flag: row.flag })), [rows]);
+  const centreLat = numberOrNull(values.latitude);
+  const centreLon = numberOrNull(values.longitude);
+  const centre = useMemo(
+    () => (centreLat !== null && centreLon !== null ? { lat: centreLat, lon: centreLon } : null),
+    [centreLat, centreLon],
+  );
+
   const parSum = useMemo(
     () => rows.reduce((sum, row) => sum + (Number(row.par) || 0), 0),
     [rows],
@@ -127,18 +173,24 @@ export function SubmitForm({ lang }: { lang: Lang }) {
     setError(null);
     setFieldErrors({});
 
-    const holeData = rows
-      .map((row, index) => ({
-        number: index + 1,
-        par: row.par ? Number(row.par) : null,
-        hcp: row.hcp ? Number(row.hcp) : null,
-        length: row.length ? Number(row.length) : null,
-        teeLat: null,
-        teeLon: null,
-        flagLat: null,
-        flagLon: null,
-      }))
-      .filter((hole) => hole.par !== null || hole.hcp !== null || hole.length !== null);
+    const round6 = (value: number) => Math.round(value * 1e6) / 1e6;
+    const allHoles = rows.map((row, index) => ({
+      number: index + 1,
+      par: row.par ? Number(row.par) : null,
+      hcp: kind === "golf" && row.hcp ? Number(row.hcp) : null,
+      length: kind === "golf" && row.length ? Number(row.length) : null,
+      teeLat: row.tee ? round6(row.tee.lat) : null,
+      teeLon: row.tee ? round6(row.tee.lon) : null,
+      flagLat: row.flag ? round6(row.flag.lat) : null,
+      flagLon: row.flag ? round6(row.flag.lon) : null,
+    }));
+    // Entweder alle Bahnen (auch mit Lücken) oder keine – der Server erwartet
+    // genau so viele Einträge wie Bahnen.
+    const holeData = allHoles.some((hole) =>
+      [hole.par, hole.hcp, hole.length, hole.teeLat, hole.flagLat].some((v) => v !== null),
+    )
+      ? allHoles
+      : [];
 
     const payload = {
       kind,
@@ -152,7 +204,7 @@ export function SubmitForm({ lang }: { lang: Lang }) {
       firstTeeLon: numberOrNull(values.firstTeeLon),
       courseRating: kind === "golf" ? numberOrNull(values.courseRating) : null,
       slopeRating: kind === "golf" ? numberOrNull(values.slopeRating) : null,
-      holeData: holeData.length === holes ? holeData : [],
+      holeData,
       facilityNotes: values.facilityNotes,
       facilityHints: hints.filter((hint) => hint.text.trim().length > 1),
       welcome: values.welcome,
@@ -434,7 +486,17 @@ export function SubmitForm({ lang }: { lang: Lang }) {
           <TableButton onClick={clearRows}>{copy.clearHoles}</TableButton>
         </div>
 
-        <div className="mt-4 overflow-x-auto">
+        <div className="mt-5">
+          <HolePositionsMap
+            lang={lang}
+            isGolf={isGolf}
+            positions={positions}
+            centre={centre}
+            onChange={setPosition}
+          />
+        </div>
+
+        <div className="mt-5 overflow-x-auto">
           <table className="w-full min-w-[26rem] border-collapse">
             <thead>
               <tr className="font-mono text-[0.6rem] uppercase tracking-[0.16em] text-ink/65">

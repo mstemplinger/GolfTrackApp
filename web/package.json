@@ -13,7 +13,9 @@
     "prebuild": "sh ../tools/icloud-ignore.sh 2>/dev/null || true"
   },
   "dependencies": {
+    "@types/leaflet": "^1.9.12",
     "@types/qrcode": "^1.5.6",
+    "leaflet": "^1.9.4",
     "next": "16.3.8",
     "postgres": "^3.4.9",
     "qrcode": "^1.5.4",

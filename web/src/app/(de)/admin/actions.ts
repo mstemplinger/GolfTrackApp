@@ -94,7 +94,9 @@ export async function save(_state: string | null, formData: FormData): Promise<s
     });
   }
 
-  const hasHoleValues = holeData.some((hole) => hole.par !== null || hole.hcp !== null || hole.length !== null);
+  const hasHoleValues = holeData.some((hole) =>
+    [hole.par, hole.hcp, hole.length, hole.teeLat, hole.flagLat].some((value) => value !== null),
+  );
 
   // Die Hinweise kommen als ein JSON-Feld aus `HintsEditor`. Unlesbares
   // verwerfen wir nicht stillschweigend – zod meldet es als Fehler zurück.

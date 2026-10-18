@@ -109,6 +109,11 @@ export function Privacy({ lang }: { lang: Lang }) {
           ? "Zum Schutz vor automatisierten Einsendungen wird ein aus deiner IP-Adresse abgeleiteter Prüfwert gespeichert. Die IP-Adresse selbst wird nicht gespeichert; der Prüfwert wird nach 24 Stunden gelöscht."
           : "To guard against automated submissions, a value derived from your IP address is stored. The IP address itself is not stored; the derived value is deleted after 24 hours."}
       </p>
+      <p>
+        {de
+          ? "Zum Setzen von Abschlägen und Grüns lässt sich im Formular eine Satellitenkarte einblenden. Die Luftbilder kommen von Esri (Environmental Systems Research Institute, Inc., 380 New York Street, Redlands, CA 92373, USA). Sie werden erst nach einem Klick auf „Satellitenkarte laden“ abgerufen; erst dann erhält Esri deine IP-Adresse und die üblichen Browserangaben, was eine Übermittlung in die USA bedeutet. Rechtsgrundlage ist deine Einwilligung durch den Klick (Art. 6 Abs. 1 lit. a DSGVO). Ohne Karte funktioniert das Formular genauso. Näheres: esri.com/de-de/privacy."
+          : "To set tees and greens you can show a satellite map in the form. The aerial images come from Esri (Environmental Systems Research Institute, Inc., 380 New York Street, Redlands, CA 92373, USA). They are only loaded after you click “Load satellite map”; only then does Esri receive your IP address and the usual browser information, which means a transfer to the USA. The legal basis is your consent given by that click (Art. 6(1)(a) GDPR). The form works just as well without the map. Details: esri.com/privacy."}
+      </p>
 
       <h2>{de ? "Werbeplatz anfragen und Karte" : "Ad requests and map"}</h2>
       <p>

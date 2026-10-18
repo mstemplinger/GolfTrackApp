@@ -26,7 +26,6 @@ export default async function NewAdPage() {
       <h1 className="mt-4 border-b rule pb-6 font-display text-3xl tracking-tight">Neue Anzeige</h1>
       <AdForm
         markers={markers}
-        mapsKey={process.env.GOOGLE_MAPS_API_KEY ?? ""}
         courses={courses.map((course) => ({
           slug: course.slug,
           name: course.name,

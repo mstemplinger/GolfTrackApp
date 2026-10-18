@@ -155,7 +155,7 @@ export default async function Page() {
         </section>
 
         <section id="anfragen" className="mt-16 scroll-mt-8 border-t rule pt-14">
-          <AdRequestForm markers={markers} mapsKey={process.env.GOOGLE_MAPS_API_KEY ?? ""} />
+          <AdRequestForm markers={markers} />
         </section>
       </main>
 

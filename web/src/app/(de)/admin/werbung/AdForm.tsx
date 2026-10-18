@@ -20,13 +20,11 @@ export function AdForm({
   ad,
   courses,
   markers = [],
-  mapsKey = "",
 }: {
   ad?: AdRecord;
   courses: CourseOption[];
   /** Alle Plätze mit Koordinaten – für die Karte beim Umkreis. */
   markers?: MapCourse[];
-  mapsKey?: string;
 }) {
   const [message, action, pending] = useActionState(ad ? saveAdAction : createAdAction, null);
 
@@ -150,7 +148,6 @@ export function AdForm({
           {courseSlug === "" ? (
             <div className="sm:col-span-2">
               <RadiusMap
-                apiKey={mapsKey}
                 courses={markers}
                 centre={centre}
                 radiusKm={radiusKm}

@@ -143,7 +143,6 @@ export default async function AdDetailPage({ params }: PageProps<"/admin/werbung
       <AdForm
         ad={ad}
         markers={markers}
-        mapsKey={process.env.GOOGLE_MAPS_API_KEY ?? ""}
         courses={courses.map((course) => ({
           slug: course.slug,
           name: course.name,

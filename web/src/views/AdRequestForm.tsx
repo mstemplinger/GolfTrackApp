@@ -38,7 +38,7 @@ function distanceKm(aLat: number, aLon: number, bLat: number, bLon: number): num
  * sind, steht sofort daneben – das ist die Zahl, die über die Buchung
  * entscheidet, und sie soll nicht erst in einer Mail auftauchen.
  */
-export function AdRequestForm({ markers, mapsKey = "" }: { markers: CourseMarker[]; mapsKey?: string }) {
+export function AdRequestForm({ markers }: { markers: CourseMarker[] }) {
   const [values, setValues] = useState({
     placeName: "",
     latitude: "",
@@ -210,7 +210,6 @@ export function AdRequestForm({ markers, mapsKey = "" }: { markers: CourseMarker
           </Field>
 
           <RadiusMap
-            apiKey={mapsKey}
             courses={markers}
             centre={centre}
             radiusKm={radiusKm}

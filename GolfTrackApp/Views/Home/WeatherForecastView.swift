@@ -53,6 +53,21 @@ struct WeatherForecastView: View {
                             }
                         }
 
+                        NavigationLink {
+                            GolfWeatherSettingsView()
+                        } label: {
+                            HStack(spacing: 6) {
+                                Image(systemName: "slider.horizontal.3")
+                                Text("Golf-Wetter-Grenzen anpassen")
+                            }
+                            .font(.subheadline.bold())
+                            .foregroundStyle(gold)
+                            .frame(maxWidth: .infinity)
+                            .padding(.vertical, 14)
+                            .background(AppTheme.card, in: RoundedRectangle(cornerRadius: 16))
+                            .padding(.horizontal)
+                        }
+
                         Spacer(minLength: 30)
                     }
                     .padding(.top, 16)

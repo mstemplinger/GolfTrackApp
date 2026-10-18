@@ -19,16 +19,55 @@ struct HourlyForecast: Identifiable {
 
     /// Bewertung je Stunde statt je Tag: 0,1 mm Niesel um 6 Uhr morgens
     /// sollen nicht den ganzen Tag als „schlechtes Wetter“ markieren.
-    var isPlayable: Bool {
+    var isPlayable: Bool { isPlayable(with: .current) }
+
+    func isPlayable(with rules: GolfWeatherRules) -> Bool {
         isDaylight
-            && precipitationMm < 0.3
-            && windKmh <= 30
-            && temperature >= 3
+            && precipitationMm <= rules.maxRainMm + 0.001
+            && windKmh <= rules.maxWindKmh
+            && temperature >= rules.minTemperature
             && !Self.unplayableCodes.contains(weatherCode)
     }
 
     /// Nebel, Eis, Schnee und Gewitter sind unabhängig von der Regenmenge kein Golfwetter.
     private static let unplayableCodes: Set<Int> = [45, 48, 56, 57, 66, 67, 71, 73, 75, 77, 85, 86, 95, 96, 99]
+}
+
+/// Vom Nutzer einstellbare Grenzen für „Golf-Wetter“ (Einstellungen → Golf-Wetter).
+struct GolfWeatherRules: Equatable {
+    var maxRainMm: Double
+    var maxWindKmh: Double
+    var minTemperature: Double
+    var minWindowHours: Int
+
+    static let `default` = GolfWeatherRules(maxRainMm: 0.2, maxWindKmh: 30,
+                                            minTemperature: 3, minWindowHours: 2)
+
+    static let maxRainKey        = "golfWeather.maxRainMm"
+    static let maxWindKey        = "golfWeather.maxWindKmh"
+    static let minTemperatureKey = "golfWeather.minTemperature"
+    static let minWindowKey      = "golfWeather.minWindowHours"
+
+    /// Liest die gespeicherten Werte; fehlende Schlüssel fallen auf `default` zurück.
+    static var current: GolfWeatherRules {
+        let d = UserDefaults.standard
+        func double(_ key: String, _ fallback: Double) -> Double {
+            d.object(forKey: key) == nil ? fallback : d.double(forKey: key)
+        }
+        return GolfWeatherRules(
+            maxRainMm: double(maxRainKey, `default`.maxRainMm),
+            maxWindKmh: double(maxWindKey, `default`.maxWindKmh),
+            minTemperature: double(minTemperatureKey, `default`.minTemperature),
+            minWindowHours: d.object(forKey: minWindowKey) == nil
+                ? `default`.minWindowHours : d.integer(forKey: minWindowKey)
+        )
+    }
+
+    static func reset() {
+        for key in [maxRainKey, maxWindKey, minTemperatureKey, minWindowKey] {
+            UserDefaults.standard.removeObject(forKey: key)
+        }
+    }
 }
 
 /// Zusammenhängende Spielzeit an einem Tag, `end` ist exklusiv (Ende der letzten guten Stunde).
@@ -42,12 +81,12 @@ struct GolfWindow: Equatable {
 }
 
 enum GolfWindowFinder {
-    /// Eine Neun-Loch-Runde dauert gut zwei Stunden; kürzere Lücken zählen nicht.
-    static let minimumDuration: TimeInterval = 2 * 3600
-
     /// Fasst aufeinanderfolgende spielbare Stunden zu Fenstern zusammen.
-    /// Stunden, die vor `now` enden, werden ignoriert.
-    static func windows(in hours: [HourlyForecast], now: Date? = nil) -> [GolfWindow] {
+    /// Stunden, die vor `now` enden, werden ignoriert; Fenster kürzer als
+    /// `rules.minWindowHours` (Standard 2 h ≈ neun Loch) zählen nicht.
+    static func windows(in hours: [HourlyForecast], now: Date? = nil,
+                        rules: GolfWeatherRules = .current) -> [GolfWindow] {
+        let minimumDuration = TimeInterval(rules.minWindowHours) * 3600
         var result: [GolfWindow] = []
         var start: Date?
         var end: Date?
@@ -60,7 +99,7 @@ enum GolfWindowFinder {
         for hour in hours.sorted(by: { $0.date < $1.date }) {
             let hourEnd = hour.date.addingTimeInterval(3600)
             if let now, hourEnd <= now { continue }
-            if hour.isPlayable {
+            if hour.isPlayable(with: rules) {
                 // Lücken in den Daten beenden ein Fenster ebenfalls.
                 if let e = end, e != hour.date { close() }
                 if start == nil { start = max(hour.date, now ?? hour.date) }
@@ -242,10 +281,20 @@ final class GolfWeatherService: NSObject, ObservableObject {
 
     // MARK: Init
 
+    private var defaultsObserver: AnyCancellable?
+
     override init() {
         super.init()
         locationManager.delegate = self
         locationManager.desiredAccuracy = kCLLocationAccuracyKilometer
+        // Geänderte Golf-Wetter-Grenzen sofort auf Startseite und Vorhersage anwenden.
+        defaultsObserver = NotificationCenter.default
+            .publisher(for: UserDefaults.didChangeNotification)
+            .map { _ in GolfWeatherRules.current }
+            .removeDuplicates()
+            .dropFirst()
+            .receive(on: RunLoop.main)
+            .sink { [weak self] _ in self?.objectWillChange.send() }
     }
 
     // MARK: Public API

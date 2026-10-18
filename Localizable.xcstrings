@@ -1473,6 +1473,34 @@
         }
       }
     },
+    "%lld h" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld h"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld h"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld h"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld h"
+          }
+        }
+      }
+    },
     "%lld Loch" : {
       "localizations" : {
         "en" : {
@@ -6177,6 +6205,34 @@
         }
       }
     },
+    "Auf Standard zurücksetzen" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Reset to default"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Restablecer valores predeterminados"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Rétablir les valeurs par défaut"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ripristina predefiniti"
+          }
+        }
+      }
+    },
     "Aufholjagd" : {
       "localizations" : {
         "de" : {
@@ -10457,6 +10513,34 @@
         }
       }
     },
+    "Eine Stunde zählt als Golf-Wetter, wenn höchstens so viel Regen fällt, der Wind nicht stärker ist und es mindestens so warm ist. Nebel, Schnee, Glätte, Gewitter und Dunkelheit zählen immer als schlecht." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "An hour counts as golf weather if there is no more rain than this, the wind is no stronger and it is at least this warm. Fog, snow, ice, thunderstorms and darkness always count as bad."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Una hora cuenta como tiempo de golf si no llueve más de esto, el viento no es más fuerte y hace al menos esta temperatura. La niebla, la nieve, el hielo, las tormentas y la oscuridad siempre cuentan como malos."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Une heure compte comme temps de golf s'il ne pleut pas plus que cela, si le vent n'est pas plus fort et s'il fait au moins aussi chaud. Le brouillard, la neige, le verglas, les orages et l'obscurité comptent toujours comme mauvais."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Un'ora conta come tempo da golf se non piove più di così, il vento non è più forte e fa almeno così caldo. Nebbia, neve, ghiaccio, temporali e buio contano sempre come sfavorevoli."
+          }
+        }
+      }
+    },
     "Einen Moment bitte …" : {
       "localizations" : {
         "en" : {
@@ -13080,6 +13164,34 @@
         }
       }
     },
+    "Golf-Fenster" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Golf window"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ventana para golf"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Créneau golf"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Finestra per il golf"
+          }
+        }
+      }
+    },
     "Golf-Funktionen bleiben jederzeit verfügbar" : {
       "localizations" : {
         "en" : {
@@ -13280,6 +13392,34 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Tempo da golf fino alle %@"
+          }
+        }
+      }
+    },
+    "Golf-Wetter-Grenzen anpassen" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Adjust golf weather limits"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ajustar límites del tiempo de golf"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ajuster les seuils du temps de golf"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Regola i limiti del tempo da golf"
           }
         }
       }
@@ -15550,6 +15690,34 @@
         }
       }
     },
+    "kein Regen" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "no rain"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "sin lluvia"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "pas de pluie"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "niente pioggia"
+          }
+        }
+      }
+    },
     "Kein Sieger – niemand hat es geschafft." : {
       "localizations" : {
         "de" : {
@@ -17780,6 +17948,34 @@
         }
       }
     },
+    "Mindestdauer" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Minimum duration"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Duración mínima"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Durée minimale"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Durata minima"
+          }
+        }
+      }
+    },
     "Mindestens 75 % (23/30)" : {
       "localizations" : {
         "en" : {
@@ -17804,6 +18000,34 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Almeno 75 % (23/30)"
+          }
+        }
+      }
+    },
+    "Mindesttemperatur" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Minimum temperature"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Temperatura mínima"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Température minimale"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Temperatura minima"
           }
         }
       }
@@ -22729,6 +22953,34 @@
         }
       }
     },
+    "Regen pro Stunde" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Rain per hour"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lluvia por hora"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pluie par heure"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pioggia all'ora"
+          }
+        }
+      }
+    },
     "Regenschauer" : {
       "localizations" : {
         "en" : {
@@ -25369,6 +25621,34 @@
         }
       }
     },
+    "So viele gute Stunden am Stück braucht es, damit ein Zeitraum als Golf-Fenster angezeigt wird. Neun Loch dauern etwa 2 Stunden, 18 Loch etwa 4." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "This many good hours in a row are needed for a period to show up as a golf window. Nine holes take about 2 hours, 18 holes about 4."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Se necesitan tantas horas buenas seguidas para que un periodo aparezca como ventana para golf. Nueve hoyos duran unas 2 horas, 18 hoyos unas 4."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Il faut autant d'heures favorables d'affilée pour qu'une période s'affiche comme créneau golf. Neuf trous durent environ 2 heures, 18 trous environ 4."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Servono tante ore buone di fila perché un periodo venga mostrato come finestra per il golf. Nove buche durano circa 2 ore, 18 buche circa 4."
+          }
+        }
+      }
+    },
     "Sobald du ein Minigolf-Spiel beendest, landet es hier." : {
       "localizations" : {
         "en" : {
@@ -25629,6 +25909,34 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Avvia partita"
+          }
+        }
+      }
+    },
+    "Spielbare Stunde" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Playable hour"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hora jugable"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Heure jouable"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ora giocabile"
           }
         }
       }

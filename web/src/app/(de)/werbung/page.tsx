@@ -11,6 +11,8 @@ import {
   MINIMUM_MONTHLY_CENTS,
 } from "@/lib/adPricing";
 import { AdRequestForm } from "@/views/AdRequestForm";
+import { AdPartners } from "@/views/AdPartners";
+import { listDeliverableAds } from "@/lib/ads";
 
 /**
  * Angebotsseite für Werbende. Zwei Wege führen her: der Menüpunkt „Werbung"
@@ -47,11 +49,12 @@ const STEPS = [
   },
 ];
 
-/** Neue Anlagen kommen laufend dazu – täglich neu bauen reicht. */
-export const revalidate = 86400;
+/** Stündlich neu bauen: neue Anlagen und frisch geschaltete Werbepartner. */
+export const revalidate = 3600;
 
 export default async function Page() {
-  const markers = await courseMarkers();
+  const [markers, partnerAds] = await Promise.all([courseMarkers(), listDeliverableAds()]);
+  const courseNames = new Map(markers.map((m) => [m.slug, m.name]));
 
   return (
     <>
@@ -153,6 +156,8 @@ export default async function Page() {
             </p>
           </aside>
         </section>
+
+        <AdPartners ads={partnerAds} courseNames={courseNames} />
 
         <section id="anfragen" className="mt-16 scroll-mt-8 border-t rule pt-14">
           <AdRequestForm markers={markers} />

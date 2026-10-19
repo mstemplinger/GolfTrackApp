@@ -913,8 +913,18 @@ struct HomeView: View {
                     }
                     .frame(maxWidth: .infinity)
                 }
+
+                // Die Karte öffnet beim Antippen die Vorhersage – ohne Hinweis sieht man das nicht.
+                HStack(spacing: 4) {
+                    Spacer()
+                    Text("Tippe für mehr Infos")
+                    Image(systemName: "chevron.right")
+                }
+                .font(.caption2)
+                .foregroundStyle(AppTheme.textSec)
             }
             .padding(20)
+            .contentShape(Rectangle())
             .cardStyle()
             .padding(.horizontal)
         }

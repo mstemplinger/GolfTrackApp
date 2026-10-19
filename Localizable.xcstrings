@@ -28041,6 +28041,34 @@
         }
       }
     },
+    "Tippe für mehr Infos" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tap for more info"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Toca para más información"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Touchez pour plus d'infos"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tocca per maggiori informazioni"
+          }
+        }
+      }
+    },
     "Tipps" : {
       "localizations" : {
         "en" : {

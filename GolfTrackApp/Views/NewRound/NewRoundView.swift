@@ -123,6 +123,8 @@ struct NewRoundView: View {
                                     }
                                 }
                                 .padding(.vertical, 4)
+                                .frame(maxWidth: .infinity, alignment: .leading)
+                                .contentShape(Rectangle())
                             }
                             .buttonStyle(.plain)
                             .listRowBackground(selectedBag?.persistentModelID == bag.persistentModelID

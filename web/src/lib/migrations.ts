@@ -144,6 +144,22 @@ const STATEMENTS = [
      clicks      bigint NOT NULL DEFAULT 0,
      PRIMARY KEY (ad_id, day)
    )`,
+  // Wer erfahren will, wann die Android-App im Play Store steht. Erst nach
+  // Eingabe des per Mail geschickten Codes gilt eine Adresse als bestätigt –
+  // nur an bestätigte geht später die Nachricht. Der Code liegt nur gehasht hier.
+  `CREATE TABLE IF NOT EXISTS android_waitlist (
+     id                uuid PRIMARY KEY DEFAULT gen_random_uuid(),
+     email             text NOT NULL UNIQUE,
+     lang              text NOT NULL DEFAULT 'de',
+     code_hash         text,
+     code_expires_at   timestamptz,
+     code_attempts     integer NOT NULL DEFAULT 0,
+     codes_sent        integer NOT NULL DEFAULT 0,
+     confirmed_at      timestamptz,
+     notified_at       timestamptz,
+     unsubscribe_token text NOT NULL,
+     created_at        timestamptz NOT NULL DEFAULT now()
+   )`,
 ];
 
 let ready: Promise<void> | null = null;

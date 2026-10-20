@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { Countdown } from "@/components/Countdown";
+import { AndroidCta } from "@/components/AndroidCta";
 import { PreviewForm } from "@/components/PreviewForm";
 import { PuttScene } from "@/components/PuttScene";
 import { APP_STORE_URL, type Lang } from "@/i18n/routes";
@@ -24,7 +25,7 @@ const COPY = {
   de: {
     tag: "Bald verfügbar",
     title: "Die neue Website kommt.",
-    text: "Scorekarte, Platzverzeichnis und QR-Codes für Minigolfanlagen – alles an einem Ort. Bis zur Freischaltung erreichst du uns per Telefon und E-Mail, und die App gibt es schon jetzt im App Store.",
+    text: "Scorekarte, Platzverzeichnis und QR-Codes für Minigolfanlagen – alles an einem Ort. Bis zur Freischaltung erreichst du uns per Telefon und E-Mail, und die App gibt es schon jetzt im App Store – und als APK für Android.",
     scene: "Ein Golfball mit Augen rollt übers Grün ins Loch.",
     when: "Freischaltung am Sonntag, 1. November 2026 um 00:00 Uhr",
     app: "Zur App im App Store",
@@ -38,7 +39,7 @@ const COPY = {
   en: {
     tag: "Coming soon",
     title: "The new website is on its way.",
-    text: "Scorecard, course directory and QR codes for mini golf venues – all in one place. Until launch you can reach us by phone and e-mail, and the app is already on the App Store.",
+    text: "Scorecard, course directory and QR codes for mini golf venues – all in one place. Until launch you can reach us by phone and e-mail, and the app is already on the App Store – and as an APK for Android.",
     scene: "A golf ball with eyes rolls across the green into the hole.",
     when: "Launching Sunday, 1 November 2026 at 00:00 (CET)",
     app: "Get the app on the App Store",
@@ -99,6 +100,7 @@ export function ComingSoon({ lang, now }: { lang: Lang; now: number }) {
             {c.mail}
           </a>
         </div>
+        <AndroidCta lang={lang} align="center" />
         <PreviewForm lang={lang} />
       </main>
 

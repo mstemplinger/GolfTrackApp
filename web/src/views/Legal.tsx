@@ -115,6 +115,13 @@ export function Privacy({ lang }: { lang: Lang }) {
           : "To set tees and greens you can show a satellite map in the form. The aerial images come from Esri (Environmental Systems Research Institute, Inc., 380 New York Street, Redlands, CA 92373, USA). They are only loaded after you click “Load satellite map”; only then does Esri receive your IP address and the usual browser information, which means a transfer to the USA. The legal basis is your consent given by that click (Art. 6(1)(a) GDPR). The form works just as well without the map. Details: esri.com/privacy."}
       </p>
 
+      <h2>{de ? "Erinnerung zur Android-App" : "Android app reminder"}</h2>
+      <p>
+        {de
+          ? "Wer sich erinnern lässt, wann GolfTrack im Google Play Store erscheint, gibt seine E-Mail-Adresse an. Wir schicken daraufhin einen Bestätigungscode; erst nach dessen Eingabe gilt die Adresse als eingetragen (Double-Opt-in). Unbestätigte Adressen werden nach 24 Stunden gelöscht. Bestätigte Adressen erhalten genau eine Nachricht, sobald die App im Play Store steht, und werden danach gelöscht. Jede Mail enthält einen Abmeldelink, der die Adresse sofort löscht. Versendet wird über unser Postfach bei der IONOS SE (Elgendorfer Str. 57, 56410 Montabaur). Rechtsgrundlage ist deine Einwilligung (Art. 6 Abs. 1 lit. a DSGVO)."
+          : "If you ask to be reminded when GolfTrack appears on Google Play, you enter your email address. We then send a confirmation code; the address only counts as registered once you enter it (double opt-in). Unconfirmed addresses are deleted after 24 hours. Confirmed addresses receive exactly one message once the app is on Google Play and are deleted afterwards. Every email contains an unsubscribe link that deletes the address immediately. Emails are sent via our mailbox at IONOS SE (Elgendorfer Str. 57, 56410 Montabaur, Germany). The legal basis is your consent (Art. 6(1)(a) GDPR)."}
+      </p>
+
       <h2>{de ? "Werbeplatz anfragen und Karte" : "Ad requests and map"}</h2>
       <p>
         {de

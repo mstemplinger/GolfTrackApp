@@ -5,6 +5,7 @@ import { HoleMap } from "@/components/HoleMap";
 import { Scorecard } from "@/components/Scorecard";
 import { t } from "@/i18n/content";
 import { APP_STORE_URL, path, type Lang } from "@/i18n/routes";
+import { AndroidCta } from "@/components/AndroidCta";
 
 /**
  * Startseite.
@@ -51,6 +52,9 @@ export function Home({ lang }: { lang: Lang }) {
                 <Link href={path("submit", lang)} className="btn-ghost">
                   {home.ctaSecondary}
                 </Link>
+              </div>
+              <div className="reveal mt-4" style={{ animationDelay: "280ms" }}>
+                <AndroidCta lang={lang} />
               </div>
             </div>
 
@@ -272,6 +276,9 @@ export function Home({ lang }: { lang: Lang }) {
                 {home.ctaPrimary}
               </a>
             </p>
+            <div className="mt-4">
+              <AndroidCta lang={lang} align="center" />
+            </div>
             <p className="mt-6 font-mono text-xs text-cream/60">{home.closingNote}</p>
           </div>
         </section>

@@ -6149,6 +6149,9 @@
         }
       }
     },
+    "Audiobooks für immer" : {
+
+    },
     "Auf der Minigolfanlage entscheidet die Distanzkontrolle fast alles – genau wie auf dem Grün." : {
       "localizations" : {
         "en" : {
@@ -10653,6 +10656,9 @@
         }
       }
     },
+    "Einmal kaufen – alle Audiobooks,\nheute und in Zukunft." : {
+
+    },
     "Einmal kaufen, Anzeigen weg" : {
       "localizations" : {
         "en" : {
@@ -10705,6 +10711,62 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "una tantum"
+          }
+        }
+      }
+    },
+    "Einmalig kaufen" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Buy once"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Comprar una vez"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Acheter une fois"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Acquista una volta"
+          }
+        }
+      }
+    },
+    "Einmalzahlung · Kein Abo" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "One-time payment · No subscription"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pago único · Sin suscripción"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Paiement unique · Sans abonnement"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pagamento unico · Nessun abbonamento"
           }
         }
       }
@@ -24151,30 +24213,30 @@
         }
       }
     },
-    "Schau im App Store nach Updates – mit jedem Update kommen neue Lektionen dazu, die im Abo inklusive sind." : {
+    "Schau im App Store nach Updates – mit jedem Update kommen neue Lektionen dazu, die im Abo und im Einmalkauf inklusive sind." : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Check the App Store for updates – each update adds new lessons that are included in the subscription."
+            "value" : "Check the App Store for updates – each update adds new lessons that are included in the subscription and the one-time purchase."
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Busca actualizaciones en la App Store: cada actualización añade nuevas lecciones incluidas en la suscripción."
+            "value" : "Busca actualizaciones en la App Store: cada actualización añade nuevas lecciones incluidas en la suscripción y en la compra única."
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Vérifie les mises à jour dans l'App Store – chaque mise à jour ajoute de nouvelles leçons incluses dans l'abonnement."
+            "value" : "Vérifie les mises à jour dans l'App Store – chaque mise à jour ajoute de nouvelles leçons incluses dans l'abonnement et l'achat unique."
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Controlla gli aggiornamenti nell'App Store – ogni aggiornamento aggiunge nuove lezioni incluse nell'abbonamento."
+            "value" : "Controlla gli aggiornamenti nell'App Store – ogni aggiornamento aggiunge nuove lezioni incluse nell'abbonamento e nell'acquisto unico."
           }
         }
       }
@@ -29405,6 +29467,34 @@
         }
       }
     },
+    "Während einer Bildschirmaufnahme oder Bildschirmspiegelung werden die Audiobooks nicht abgespielt. Beende die Aufnahme, um weiterzuhören." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Audiobooks don't play while the screen is being recorded or mirrored. Stop the recording to keep listening."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Los audiolibros no se reproducen mientras se graba o duplica la pantalla. Detén la grabación para seguir escuchando."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Les livres audio ne sont pas lus pendant un enregistrement ou une recopie de l'écran. Arrête l'enregistrement pour continuer l'écoute."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gli audiolibri non vengono riprodotti durante una registrazione o duplicazione dello schermo. Interrompi la registrazione per continuare l'ascolto."
+          }
+        }
+      }
+    },
     "Während einer Runde wird alle paar Meter deine Position gespeichert. Daraus leitet die App Abschlag- und Grünpositionen der Löcher ab – so bekommst du die Entfernung zur Fahne ohne den Pin selbst zu setzen.\n\nDie Daten bleiben auf deinem iPhone und werden nicht übertragen. Du kannst sie jederzeit hier löschen." : {
       "localizations" : {
         "en" : {
@@ -30861,6 +30951,34 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Come la gara a colpi, ma si scartano le buche peggiori. Su 18 buche se ne scartano 2, su 9 buche 1."
+          }
+        }
+      }
+    },
+    "Wiedergabe pausiert" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Playback paused"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Reproducción en pausa"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lecture en pause"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Riproduzione in pausa"
           }
         }
       }

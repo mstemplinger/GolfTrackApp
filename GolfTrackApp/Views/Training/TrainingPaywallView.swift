@@ -7,7 +7,7 @@ struct TrainingPaywallView: View {
 
     @State private var selectedPlan: Plan = .training
 
-    enum Plan { case training, pro }
+    enum Plan { case training, lifetime, pro }
 
     private var trainingFeatures: [(icon: String, color: Color, text: String)] {
         let count = allLessons.filter(\.isAvailable).count
@@ -30,9 +30,27 @@ struct TrainingPaywallView: View {
         ("nosign",               Color(red: 1.0, green: 0.4,  blue: 0.5),   "Keine Werbung in der App"),
     ]
 
-    private var activeProduct: Product? {
-        selectedPlan == .training ? subscriptionManager.trainingProduct : subscriptionManager.proProduct
+    private var lifetimeFeatures: [(icon: String, color: Color, text: String)] {
+        let count = allLessons.filter(\.isAvailable).count
+        return [
+        ("infinity",             AppTheme.gold,                              "Einmal zahlen, für immer behalten"),
+        ("headphones",           Color(red: 0.3, green: 0.85, blue: 0.5),   "Alle \(count) Audio-Trainingseinheiten"),
+        ("sparkles",             Color(red: 0.4, green: 0.7,  blue: 1.0),   "Alle künftigen Audiobooks inklusive"),
+        ("creditcard",           Color(red: 1.0, green: 0.6,  blue: 0.3),   "Kein Abo, keine Folgekosten"),
+        ("person.2.fill",        Color(red: 0.6, green: 0.5,  blue: 1.0),   "Mit der Familienfreigabe teilen"),
+        ("nosign",               Color(red: 1.0, green: 0.4,  blue: 0.5),   "Keine Werbung in der App"),
+        ]
     }
+
+    private var activeProduct: Product? {
+        switch selectedPlan {
+        case .training: subscriptionManager.trainingProduct
+        case .lifetime: subscriptionManager.audiobooksLifetimeProduct
+        case .pro:      subscriptionManager.proProduct
+        }
+    }
+
+    private var isLifetime: Bool { selectedPlan == .lifetime }
 
     private var trialLabel: String? {
         subscriptionManager.freeTrialLabel(for: activeProduct)
@@ -103,19 +121,21 @@ struct TrainingPaywallView: View {
                 Circle()
                     .fill(AppTheme.gold.opacity(0.18))
                     .frame(width: 70, height: 70)
-                Image(systemName: selectedPlan == .pro ? "crown.fill" : "headphones")
+                Image(systemName: selectedPlan == .pro ? "crown.fill" : isLifetime ? "infinity" : "headphones")
                     .font(.system(size: 32, weight: .semibold))
                     .foregroundStyle(AppTheme.gold)
                     .contentTransition(.symbolEffect(.replace))
             }
 
-            Text(selectedPlan == .pro ? "GolfTrack Pro" : "Training")
+            Text(selectedPlan == .pro ? "GolfTrack Pro" : isLifetime ? "Audiobooks für immer" : "Training")
                 .font(.title.bold())
                 .foregroundStyle(AppTheme.text)
                 .contentTransition(.numericText())
 
             Text(selectedPlan == .pro
                  ? "Alle Trainings und der KI-Caddy –\nalles in einem Abo."
+                 : isLifetime
+                 ? "Einmal kaufen – alle Audiobooks,\nheute und in Zukunft."
                  : "Werde zum besseren Golfspieler –\nmit geführten Audio-Trainings.")
                 .font(.subheadline)
                 .foregroundStyle(AppTheme.textSec)
@@ -130,6 +150,9 @@ struct TrainingPaywallView: View {
     private var planPicker: some View {
         HStack(spacing: 0) {
             planTab(label: "Training", plan: .training)
+            if subscriptionManager.audiobooksLifetimeProduct != nil {
+                planTab(label: "Für immer", plan: .lifetime)
+            }
             planTab(label: "Pro (Alles)", plan: .pro)
         }
         .background(AppTheme.card, in: RoundedRectangle(cornerRadius: 12))
@@ -212,7 +235,12 @@ struct TrainingPaywallView: View {
     // MARK: - Features
 
     private var featuresSection: some View {
-        let features = selectedPlan == .training ? trainingFeatures : proFeatures
+        let features: [(icon: String, color: Color, text: String)]
+        switch selectedPlan {
+        case .training: features = trainingFeatures
+        case .lifetime: features = lifetimeFeatures
+        case .pro:      features = proFeatures
+        }
         return VStack(spacing: 0) {
             ForEach(features.indices, id: \.self) { i in
                 let f = features[i]
@@ -256,7 +284,14 @@ struct TrainingPaywallView: View {
                     .font(.subheadline.weight(.semibold))
                     .foregroundStyle(AppTheme.textSec)
             }
-            if let label = trialLabel {
+            if isLifetime {
+                Text(activeProduct?.displayPrice ?? "–")
+                    .font(.system(size: 38, weight: .bold))
+                    .foregroundStyle(activeProduct == nil ? AppTheme.textTer : AppTheme.text)
+                Text("einmalig")
+                    .font(.subheadline)
+                    .foregroundStyle(AppTheme.textSec)
+            } else if let label = trialLabel {
                 Text("\(label) kostenlos")
                     .font(.system(size: 32, weight: .bold))
                     .foregroundStyle(AppTheme.gold)
@@ -273,7 +308,7 @@ struct TrainingPaywallView: View {
                         .foregroundStyle(AppTheme.textSec)
                 }
             }
-            Text("Jederzeit kündbar · Keine Bindung")
+            Text(isLifetime ? "Einmalzahlung · Kein Abo" as LocalizedStringKey : "Jederzeit kündbar · Keine Bindung")
                 .font(.caption)
                 .foregroundStyle(AppTheme.textTer)
         }
@@ -312,6 +347,10 @@ struct TrainingPaywallView: View {
                                 .font(.headline)
                                 .foregroundStyle(Color(red: 0.08, green: 0.18, blue: 0.11))
                         }
+                    } else if isLifetime {
+                        Label("Einmalig kaufen", systemImage: "infinity")
+                            .font(.headline)
+                            .foregroundStyle(Color(red: 0.08, green: 0.18, blue: 0.11))
                     } else if let label = trialLabel {
                         Label("\(label) gratis testen", systemImage: "gift.fill")
                             .font(.headline)

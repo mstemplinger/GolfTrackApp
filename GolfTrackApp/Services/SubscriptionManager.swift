@@ -22,15 +22,23 @@ final class SubscriptionManager: ObservableObject {
     /// nicht verbrauchbarer Artikel unter dieser Kennung angelegt sein –
     /// solange er fehlt, bleibt `adFreeProduct` einfach leer.
     static let adFreeProductID   = "GolfTrack_werbefrei"
+    /// Einmalkauf (nicht verbrauchbar), der alle Audiobooks dauerhaft
+    /// freischaltet – auch die, die mit späteren Updates dazukommen. Wirkt
+    /// wie ein Training-Abo, läuft aber nie ab.
+    static let audiobooksLifetimeProductID = "Audiobooks_lifetime"
 
     @Published var isTrainingSubscribed = false
     @Published var isCaddySubscribed    = false
     @Published var isAdFree             = false
+    /// Audiobooks per Einmalkauf freigeschaltet. Setzt `isTrainingSubscribed`
+    /// mit – die Views fragen weiter nur das ab.
+    @Published var ownsAudiobooksLifetime = false
 
     @Published var trainingProduct: Product?
     @Published var caddyProduct: Product?
     @Published var proProduct: Product?
     @Published var adFreeProduct: Product?
+    @Published var audiobooksLifetimeProduct: Product?
 
     /// Werbung sieht nur, wer nichts bezahlt hat. Ein Abo schaltet sie mit ab –
     /// wer für Inhalte zahlt, soll nicht zusätzlich beworben werden.
@@ -104,7 +112,8 @@ final class SubscriptionManager: ObservableObject {
     func loadProducts() async {
         do {
             let ids: [String] = [Self.trainingProductID, Self.caddyProductID,
-                                 Self.proProductID, Self.adFreeProductID]
+                                 Self.proProductID, Self.adFreeProductID,
+                                 Self.audiobooksLifetimeProductID]
             let products = try await Product.products(for: ids)
             for p in products {
                 switch p.id {
@@ -112,6 +121,7 @@ final class SubscriptionManager: ObservableObject {
                 case Self.caddyProductID:    caddyProduct    = p
                 case Self.proProductID:      proProduct      = p
                 case Self.adFreeProductID:   adFreeProduct   = p
+                case Self.audiobooksLifetimeProductID: audiobooksLifetimeProduct = p
                 default: break
                 }
             }
@@ -146,12 +156,15 @@ final class SubscriptionManager: ObservableObject {
                     isCaddySubscribed    = false
                 case Self.caddyProductID:
                     isCaddySubscribed    = true
-                    isTrainingSubscribed = false
+                    isTrainingSubscribed = ownsAudiobooksLifetime
                 case Self.proProductID:
                     isTrainingSubscribed = true
                     isCaddySubscribed    = true
                 case Self.adFreeProductID:
                     isAdFree = true
+                case Self.audiobooksLifetimeProductID:
+                    ownsAudiobooksLifetime = true
+                    isTrainingSubscribed   = true
                 default:
                     break
                 }
@@ -201,6 +214,7 @@ final class SubscriptionManager: ObservableObject {
             isTrainingSubscribed = true
             isCaddySubscribed    = true
             isAdFree             = true
+            ownsAudiobooksLifetime = true
             return
         }
         #endif
@@ -208,6 +222,7 @@ final class SubscriptionManager: ObservableObject {
         var hasTraining = false
         var hasCaddy    = false
         var hasAdFree   = false
+        var hasLifetime = false
         for await result in Transaction.currentEntitlements {
             guard case .verified(let tx) = result, tx.revocationDate == nil else { continue }
             switch tx.productID {
@@ -215,9 +230,11 @@ final class SubscriptionManager: ObservableObject {
             case Self.caddyProductID:    hasCaddy    = true
             case Self.proProductID:      hasTraining = true; hasCaddy = true
             case Self.adFreeProductID:   hasAdFree   = true
+            case Self.audiobooksLifetimeProductID: hasLifetime = true; hasTraining = true
             default: break
             }
         }
+        ownsAudiobooksLifetime = hasLifetime
         isTrainingSubscribed = hasTraining
         isCaddySubscribed    = hasCaddy
         isAdFree             = hasAdFree

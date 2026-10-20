@@ -53,7 +53,7 @@ struct CaddyPaywallView: View {
                     VStack(spacing: 24) {
                         heroSection
                         planPicker
-                        if subscriptionManager.isTrainingSubscribed && selectedPlan == .caddy {
+                        if subscriptionManager.isTrainingSubscribed && !subscriptionManager.ownsAudiobooksLifetime && selectedPlan == .caddy {
                             trainingWarningBanner
                         }
                         if trialLabel != nil { trialBanner }

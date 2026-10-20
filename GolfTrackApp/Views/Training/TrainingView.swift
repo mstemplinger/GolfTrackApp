@@ -112,6 +112,10 @@ final class TrainingPlayerModel: ObservableObject {
     @Published var currentTime: Double = 0
     @Published var duration: Double = 1
     @Published var currentLesson: TrainingLesson?
+    /// Bildschirm wird aufgenommen oder gespiegelt. Eine Bildschirmaufnahme
+    /// schneidet auch den App-Ton mit – solange das läuft, bleiben die
+    /// Audiobooks stumm, damit niemand sie als Datei mitnimmt.
+    @Published private(set) var isScreenCaptured = UIScreen.main.isCaptured
 
     @AppStorage("training_autoplay") var autoplay: Bool = true
     @AppStorage("training_speed")    var speedRaw: Double = 1.0
@@ -127,6 +131,7 @@ final class TrainingPlayerModel: ObservableObject {
     private var timer: Timer?
 
     private var remoteCommandsSetup = false
+    private var captureObserver: NSObjectProtocol?
 
     func onAppear() {
         // Ensure remote commands are only set up once and on main actor
@@ -149,7 +154,19 @@ final class TrainingPlayerModel: ObservableObject {
         lesson.id == "01" || isSubscribed
     }
 
-    init() {}
+    init() {
+        captureObserver = NotificationCenter.default.addObserver(
+            forName: UIScreen.capturedDidChangeNotification, object: nil, queue: .main
+        ) { [weak self] note in
+            let captured = (note.object as? UIScreen)?.isCaptured ?? UIScreen.main.isCaptured
+            MainActor.assumeIsolated { self?.screenCaptureChanged(captured) }
+        }
+    }
+
+    private func screenCaptureChanged(_ captured: Bool) {
+        isScreenCaptured = captured
+        if captured && isPlaying { pause() }
+    }
 
     // MARK: Playback
 
@@ -177,7 +194,7 @@ final class TrainingPlayerModel: ObservableObject {
     }
 
     func play() {
-        guard let player else { return }
+        guard let player, !isScreenCaptured else { return }
         player.rate = speed
         player.play()
         isPlaying = true
@@ -384,6 +401,7 @@ final class TrainingPlayerModel: ObservableObject {
 
     deinit {
         timer?.invalidate()
+        if let captureObserver { NotificationCenter.default.removeObserver(captureObserver) }
         try? AVAudioSession.sharedInstance().setActive(false, options: [])
     }
 }
@@ -418,8 +436,14 @@ struct TrainingView: View {
             }
 
             if playerModel.currentLesson != nil {
-                miniPlayer
-                    .transition(.move(edge: .bottom).combined(with: .opacity))
+                VStack(spacing: 8) {
+                    if playerModel.isScreenCaptured {
+                        ScreenCaptureNotice()
+                            .padding(.horizontal, 16)
+                    }
+                    miniPlayer
+                }
+                .transition(.move(edge: .bottom).combined(with: .opacity))
             }
         }
         .sheet(isPresented: $showPlayer) {
@@ -553,7 +577,7 @@ struct TrainingView: View {
                     Text("Regelmäßig neue Audiobooks")
                         .font(.caption.bold())
                         .foregroundStyle(AppTheme.textSec)
-                    Text("Schau im App Store nach Updates – mit jedem Update kommen neue Lektionen dazu, die im Abo inklusive sind.")
+                    Text("Schau im App Store nach Updates – mit jedem Update kommen neue Lektionen dazu, die im Abo und im Einmalkauf inklusive sind.")
                         .font(.caption2)
                         .foregroundStyle(AppTheme.textTer)
                         .fixedSize(horizontal: false, vertical: true)
@@ -798,6 +822,7 @@ struct TrainingPlayerSheet: View {
                         artwork
                         if let lesson { meta(lesson) }
                         progressSection
+                        if model.isScreenCaptured { ScreenCaptureNotice() }
                         controls
                         speedPicker
                         settingsRow
@@ -933,6 +958,8 @@ struct TrainingPlayerSheet: View {
                 }
             }
             .buttonStyle(.plain)
+            .disabled(model.isScreenCaptured)
+            .opacity(model.isScreenCaptured ? 0.4 : 1)
 
             Button {
                 Haptics.tap()
@@ -1047,6 +1074,34 @@ struct TrainingPlayerSheet: View {
         .frame(maxWidth: .infinity, alignment: .leading)
         .padding(16)
         .background(AppTheme.card, in: RoundedRectangle(cornerRadius: 14))
+    }
+}
+
+// MARK: - Bildschirmaufnahme
+
+/// Hinweis, solange der Bildschirm aufgenommen oder gespiegelt wird – dann
+/// spielt der Player nichts ab (siehe `TrainingPlayerModel.isScreenCaptured`).
+private struct ScreenCaptureNotice: View {
+    var body: some View {
+        HStack(alignment: .top, spacing: 10) {
+            Image(systemName: "record.circle")
+                .font(.system(size: 18, weight: .semibold))
+                .foregroundStyle(Color(red: 1.0, green: 0.4, blue: 0.4))
+            VStack(alignment: .leading, spacing: 2) {
+                Text("Wiedergabe pausiert")
+                    .font(.subheadline.bold())
+                    .foregroundStyle(AppTheme.text)
+                Text("Während einer Bildschirmaufnahme oder Bildschirmspiegelung werden die Audiobooks nicht abgespielt. Beende die Aufnahme, um weiterzuhören.")
+                    .font(.caption)
+                    .foregroundStyle(AppTheme.textSec)
+                    .fixedSize(horizontal: false, vertical: true)
+            }
+            Spacer(minLength: 0)
+        }
+        .padding(12)
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .background(AppTheme.card, in: RoundedRectangle(cornerRadius: 12))
+        .overlay(RoundedRectangle(cornerRadius: 12).stroke(Color(red: 1.0, green: 0.4, blue: 0.4).opacity(0.4), lineWidth: 1))
     }
 }
 

@@ -17,6 +17,7 @@ const PATHS = {
   privacy: { de: "/datenschutz", en: "/en/privacy" },
   imprint: { de: "/impressum", en: "/en/legal-notice" },
   api: { de: "/api-docs", en: "/en/api-docs" },
+  android: { de: "/android", en: "/en/android" },
 } as const;
 
 export type RouteKey = keyof typeof PATHS;

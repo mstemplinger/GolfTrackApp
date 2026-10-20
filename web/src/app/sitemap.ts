@@ -5,7 +5,7 @@ import { LANGS, SITE_URL, path, type RouteKey } from "@/i18n/routes";
 /** Enthaelt die freigegebenen Anlagen – taeglich neu. */
 export const revalidate = 86400;
 
-const ROUTES: RouteKey[] = ["home", "directory", "submit", "support", "api", "privacy", "imprint"];
+const ROUTES: RouteKey[] = ["home", "directory", "submit", "support", "android", "api", "privacy", "imprint"];
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const pages: MetadataRoute.Sitemap = ROUTES.flatMap((route) =>

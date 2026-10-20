@@ -39,6 +39,7 @@ const NAV: { key: RouteKey; label: (l: Lang) => string; langs?: Lang[] }[] = [
   { key: "submit", label: (l) => t(l).nav.submit },
   // Nur im deutschen Menü: die Seite dahinter gibt es nicht auf Englisch.
   { key: "advertise", label: (l) => t(l).nav.advertise, langs: ["de"] },
+  { key: "android", label: (l) => t(l).nav.android },
   { key: "support", label: (l) => t(l).nav.support },
 ];
 
@@ -150,6 +151,7 @@ export function Footer({ lang }: { lang: Lang }) {
           <FooterLink href={APP_STORE_URL} external>
             {copy.nav.appStore}
           </FooterLink>
+          <FooterLink href={path("android", lang)}>{copy.nav.android}</FooterLink>
           <FooterLink href={path("directory", lang)}>{copy.nav.directory}</FooterLink>
           <FooterLink href={path("support", lang)}>{copy.nav.support}</FooterLink>
         </FooterColumn>

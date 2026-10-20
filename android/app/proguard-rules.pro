@@ -1,0 +1,4 @@
+-keepattributes *Annotation*, InnerClasses
+-keepclassmembers class app.golftrack.** { *** Companion; }
+-keepclasseswithmembers class app.golftrack.** { kotlinx.serialization.KSerializer serializer(...); }
+-dontwarn org.osmdroid.**

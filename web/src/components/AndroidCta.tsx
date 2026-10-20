@@ -125,7 +125,7 @@ export function AndroidCta({
 
   const justify = align === "center" ? "justify-center" : "";
   const input =
-    "min-h-[44px] flex-1 rounded-full border border-cream/25 bg-white/5 px-5 text-cream placeholder:text-muted/70 focus:border-brass focus:outline-none";
+    "min-h-[44px] min-w-0 flex-1 rounded-full border border-cream/25 bg-white/5 px-5 text-cream placeholder:text-muted/70 focus:border-brass focus:outline-none";
   const pill =
     "tap justify-center gap-2 rounded-full border border-cream/25 px-5 font-semibold text-cream hover:border-brass hover:text-brass";
 
@@ -179,7 +179,7 @@ export function AndroidCta({
                 value={trap}
                 onChange={(e) => setTrap(e.target.value)}
               />
-              <div className="flex flex-col gap-2 sm:flex-row">
+              <div className="flex flex-col gap-2 min-[420px]:flex-row">
                 <label className="sr-only" htmlFor="android-email">{c.email}</label>
                 <input
                   id="android-email"
@@ -191,7 +191,7 @@ export function AndroidCta({
                   onChange={(e) => setEmail(e.target.value)}
                   className={input}
                 />
-                <button type="submit" disabled={busy} className="btn-brass min-h-11 !py-2">
+                <button type="submit" disabled={busy} className="btn-brass min-h-11 shrink-0 !px-5 !py-2">
                   {c.sendCode}
                 </button>
               </div>
@@ -207,7 +207,7 @@ export function AndroidCta({
               className="flex flex-col gap-3"
             >
               <p className="text-cream/70">{c.codeLead(email)}</p>
-              <div className="flex flex-col gap-2 sm:flex-row">
+              <div className="flex flex-col gap-2 min-[420px]:flex-row">
                 <label className="sr-only" htmlFor="android-code">{c.code}</label>
                 <input
                   id="android-code"
@@ -221,7 +221,7 @@ export function AndroidCta({
                   onChange={(e) => setCode(e.target.value.replace(/\D/g, ""))}
                   className={`${input} font-mono tracking-[0.4em]`}
                 />
-                <button type="submit" disabled={busy || code.length !== 6} className="btn-brass min-h-11 !py-2">
+                <button type="submit" disabled={busy || code.length !== 6} className="btn-brass min-h-11 shrink-0 !px-5 !py-2">
                   {c.confirm}
                 </button>
               </div>

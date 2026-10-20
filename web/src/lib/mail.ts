@@ -1,5 +1,7 @@
 import "server-only";
+import path from "node:path";
 import nodemailer, { type Transporter } from "nodemailer";
+import { LOGO_CID } from "@/lib/emailTemplate";
 
 /**
  * Versand über das Postfach bei IONOS (MX von golftrack.app). Zugangsdaten
@@ -27,12 +29,21 @@ function getTransport(): Transporter {
   return transport;
 }
 
-export async function sendMail(to: string, subject: string, text: string): Promise<void> {
+/** `html` optional: dann geht die Mail mit Text- und HTML-Fassung und eingebettetem Logo raus. */
+export async function sendMail(to: string, subject: string, text: string, html?: string): Promise<void> {
   if (!mailConfigured()) throw new Error("mail_unconfigured");
   await getTransport().sendMail({
     from: process.env.SMTP_FROM ?? `GolfTrack <${process.env.SMTP_USER}>`,
     to,
     subject,
     text,
+    ...(html
+      ? {
+          html,
+          attachments: [
+            { filename: "golftrack.png", path: path.join(process.cwd(), "public", "logo.png"), cid: LOGO_CID },
+          ],
+        }
+      : {}),
   });
 }

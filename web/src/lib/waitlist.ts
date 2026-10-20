@@ -3,6 +3,7 @@ import { createHash, randomBytes, randomInt, timingSafeEqual } from "node:crypto
 import { query, queryOne } from "@/lib/db";
 import { ensureSchema } from "@/lib/migrations";
 import { sendMail } from "@/lib/mail";
+import { renderEmail } from "@/lib/emailTemplate";
 import { SITE_URL, type Lang } from "@/i18n/routes";
 import { PLAY_STORE_URL } from "@/lib/android";
 
@@ -45,6 +46,29 @@ const COPY = {
     codeSubject: (code: string) => `${code} ist dein GolfTrack-Bestätigungscode`,
     codeText: (code: string, unsub: string) =>
       `Hallo,\n\ndein Bestätigungscode lautet:\n\n    ${code}\n\nGib ihn auf golftrack.app ein, dann schreiben wir dir einmalig, sobald GolfTrack im Google Play Store verfügbar ist. Der Code gilt ${CODE_TTL_MIN} Minuten.\n\nDu hast das nicht angefordert? Dann ignoriere diese Mail einfach – ohne Code passiert nichts.\nAbmelden: ${unsub}\n\nGolfTrack · golftrack.app`,
+    codeHtml: (code: string, unsub: string) => ({
+      lang: "de" as const,
+      preheader: `Dein Code: ${code} – gültig für ${CODE_TTL_MIN} Minuten.`,
+      title: "Bestätige deine E-Mail-Adresse",
+      paragraphs: [
+        "Schön, dass du GolfTrack auf Android nutzen willst! Gib diesen Code auf golftrack.app ein – dann sagen wir dir Bescheid, sobald die App im Google Play Store verfügbar ist.",
+      ],
+      code,
+      codeHint: `Gültig für ${CODE_TTL_MIN} Minuten`,
+      note: "Du hast das nicht angefordert? Dann ignoriere diese Mail einfach – ohne Code wird nichts gespeichert.",
+      unsubscribeUrl: unsub,
+    }),
+    liveHtml: (unsub: string) => ({
+      lang: "de" as const,
+      preheader: "GolfTrack für Android ist jetzt im Google Play Store.",
+      title: "GolfTrack ist jetzt bei Google Play",
+      paragraphs: [
+        "Wie versprochen: GolfTrack für Android gibt es ab sofort im Google Play Store – mit automatischen Updates.",
+      ],
+      button: { label: "Bei Google Play laden", url: PLAY_STORE_URL },
+      note: "Das war die einzige Mail. Deine Adresse haben wir jetzt gelöscht.",
+      unsubscribeUrl: unsub,
+    }),
     liveSubject: "GolfTrack ist jetzt im Google Play Store",
     liveText: (unsub: string) =>
       `Hallo,\n\nwie gewünscht: GolfTrack für Android gibt es jetzt im Google Play Store.\n\n${PLAY_STORE_URL}\n\nDas war die einzige Mail – deine Adresse haben wir jetzt gelöscht.\n\nGolfTrack · golftrack.app\n(Abmeldelink, falls nötig: ${unsub})`,
@@ -53,6 +77,27 @@ const COPY = {
     codeSubject: (code: string) => `${code} is your GolfTrack confirmation code`,
     codeText: (code: string, unsub: string) =>
       `Hi,\n\nyour confirmation code is:\n\n    ${code}\n\nEnter it on golftrack.app and we'll email you once when GolfTrack is available on Google Play. The code is valid for ${CODE_TTL_MIN} minutes.\n\nDidn't request this? Just ignore this email – nothing happens without the code.\nUnsubscribe: ${unsub}\n\nGolfTrack · golftrack.app`,
+    codeHtml: (code: string, unsub: string) => ({
+      lang: "en" as const,
+      preheader: `Your code: ${code} – valid for ${CODE_TTL_MIN} minutes.`,
+      title: "Confirm your email address",
+      paragraphs: [
+        "Great that you want GolfTrack on Android! Enter this code on golftrack.app and we'll let you know as soon as the app is available on Google Play.",
+      ],
+      code,
+      codeHint: `Valid for ${CODE_TTL_MIN} minutes`,
+      note: "Didn't request this? Just ignore this email – nothing is stored without the code.",
+      unsubscribeUrl: unsub,
+    }),
+    liveHtml: (unsub: string) => ({
+      lang: "en" as const,
+      preheader: "GolfTrack for Android is now on Google Play.",
+      title: "GolfTrack is now on Google Play",
+      paragraphs: ["As promised: GolfTrack for Android is now available on Google Play – with automatic updates."],
+      button: { label: "Get it on Google Play", url: PLAY_STORE_URL },
+      note: "This was the only email. We have now deleted your address.",
+      unsubscribeUrl: unsub,
+    }),
     liveSubject: "GolfTrack is now on Google Play",
     liveText: (unsub: string) =>
       `Hi,\n\nas requested: GolfTrack for Android is now available on Google Play.\n\n${PLAY_STORE_URL}\n\nThis was the only email – we have now deleted your address.\n\nGolfTrack · golftrack.app\n(Unsubscribe link, just in case: ${unsub})`,
@@ -89,7 +134,8 @@ export async function requestCode(rawEmail: string, lang: Lang): Promise<Request
     );
   }
   const c = COPY[lang];
-  await sendMail(email, c.codeSubject(code), c.codeText(code, unsubscribeUrl(row!.unsubscribe_token)));
+  const unsub = unsubscribeUrl(row!.unsubscribe_token);
+  await sendMail(email, c.codeSubject(code), c.codeText(code, unsub), renderEmail(c.codeHtml(code, unsub)));
   return "sent";
 }
 
@@ -156,7 +202,8 @@ export async function notifyAll(): Promise<{ sent: number; failed: number }> {
   for (const row of rows) {
     const c = COPY[row.lang === "en" ? "en" : "de"];
     try {
-      await sendMail(row.email, c.liveSubject, c.liveText(unsubscribeUrl(row.unsubscribe_token)));
+      const unsub = unsubscribeUrl(row.unsubscribe_token);
+      await sendMail(row.email, c.liveSubject, c.liveText(unsub), renderEmail(c.liveHtml(unsub)));
       await query("DELETE FROM android_waitlist WHERE id = $1", [row.id]);
       sent++;
     } catch {

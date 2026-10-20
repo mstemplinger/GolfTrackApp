@@ -162,6 +162,10 @@ const STATEMENTS = [
    )`,
   // Sperrfrist zwischen zwei Code-Mails an dieselbe Adresse.
   `ALTER TABLE android_waitlist ADD COLUMN IF NOT EXISTS last_code_sent_at timestamptz`,
+  // Freiwillige Einwilligung in Neuigkeiten und Angebote per Mail. Gilt erst
+  // mit der Bestätigung durch den Code (dann steht der Zeitpunkt hier).
+  `ALTER TABLE android_waitlist ADD COLUMN IF NOT EXISTS marketing_consent boolean NOT NULL DEFAULT false`,
+  `ALTER TABLE android_waitlist ADD COLUMN IF NOT EXISTS marketing_consent_at timestamptz`,
 ];
 
 let ready: Promise<void> | null = null;

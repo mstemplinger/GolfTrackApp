@@ -16,7 +16,9 @@ const COPY = {
     play: "Google Play",
     playSoon: "Bald bei Google Play",
     remind: "Erinnere mich",
-    remindLead: "Wir schicken dir einmalig eine Mail, sobald GolfTrack im Play Store steht.",
+    remindLead: "Wir schicken dir eine Mail, sobald GolfTrack im Play Store steht.",
+    marketing: "Ja, informiert mich auch über Neuigkeiten, neue Funktionen und Angebote von GolfTrack. Abmeldung jederzeit über den Link in jeder Mail.",
+    privacy: "Datenschutz",
     email: "E-Mail-Adresse",
     sendCode: "Code senden",
     codeLead: (email: string) => `Wir haben dir einen sechsstelligen Code an ${email} geschickt.`,
@@ -46,7 +48,9 @@ const COPY = {
     play: "Google Play",
     playSoon: "Coming to Google Play",
     remind: "Remind me",
-    remindLead: "We'll email you once when GolfTrack is on Google Play.",
+    remindLead: "We'll email you when GolfTrack is on Google Play.",
+    marketing: "Yes, also keep me posted about news, new features and offers from GolfTrack. Unsubscribe any time via the link in every email.",
+    privacy: "Privacy",
     email: "Email address",
     sendCode: "Send code",
     codeLead: (email: string) => `We've sent a six-digit code to ${email}.`,
@@ -90,6 +94,7 @@ export function AndroidCta({
   const [email, setEmail] = useState("");
   const [code, setCode] = useState("");
   const [trap, setTrap] = useState("");
+  const [marketing, setMarketing] = useState(false);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [note, setNote] = useState<string | null>(null);
@@ -117,7 +122,7 @@ export function AndroidCta({
   async function sendCode() {
     setBusy(true);
     setError(null);
-    const r = await post("/api/android/waitlist", { email, lang, website: trap });
+    const r = await post("/api/android/waitlist", { email, lang, marketing, website: trap });
     setBusy(false);
     if (r.retryAfter) setCooldown(r.retryAfter);
     if (r.error) return setError(c.errors[r.error] ?? c.errors.send_failed);
@@ -211,6 +216,20 @@ export function AndroidCta({
                   {cooldown > 0 ? `${cooldown} s` : c.sendCode}
                 </button>
               </div>
+              <label className="flex cursor-pointer items-start gap-2.5 text-xs leading-relaxed text-cream/65">
+                <input
+                  type="checkbox"
+                  checked={marketing}
+                  onChange={(e) => setMarketing(e.target.checked)}
+                  className="mt-0.5 h-4 w-4 shrink-0 accent-[#c9a035]"
+                />
+                <span>
+                  {c.marketing}{" "}
+                  <a href={lang === "de" ? "/datenschutz" : "/en/privacy"} className="underline underline-offset-2 hover:text-brass">
+                    {c.privacy}
+                  </a>
+                </span>
+              </label>
             </form>
           ) : null}
 

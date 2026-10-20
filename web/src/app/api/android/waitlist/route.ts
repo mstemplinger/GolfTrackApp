@@ -7,6 +7,7 @@ import { RESEND_COOLDOWN_S, purgeUnconfirmed, requestCode } from "@/lib/waitlist
 const schema = z.object({
   email: z.string().trim().email().max(200),
   lang: z.enum(["de", "en"]).default("de"),
+  marketing: z.boolean().default(false),
   /** Honigtopf – Menschen sehen das Feld nicht. */
   website: z.string().optional(),
 });
@@ -24,7 +25,7 @@ export async function POST(request: Request) {
   await purgeUnconfirmed();
 
   try {
-    const result = await requestCode(parsed.data.email, parsed.data.lang);
+    const result = await requestCode(parsed.data.email, parsed.data.lang, parsed.data.marketing);
     if (result.status === "too_many_codes") return Response.json({ error: "too_many_codes" }, { status: 429 });
     if (result.status === "cooldown") {
       return Response.json(

@@ -41,6 +41,8 @@ const OPEN = [
   "/en/privacy",
   "/support",
   "/en/support",
+  "/android", // APK-Download, verlinkt vom Zähler
+  "/en/android",
 ];
 
 function isOpen(pathname: string): boolean {

@@ -2,7 +2,6 @@ import Image from "next/image";
 import Link from "next/link";
 import { APP_STORE_URL, alternatePath, path, type Lang, type RouteKey } from "@/i18n/routes";
 import { t } from "@/i18n/content";
-import { APK_URL } from "@/lib/android";
 
 /**
  * Wortmarke: das echte Zeichen der App plus der Name als Text.
@@ -82,17 +81,10 @@ export function Header({ lang, current }: { lang: Lang; current?: RouteKey }) {
             {copy.nav.langSwitch}
           </Link>
 
-          {APK_URL ? (
-            <a
-              href={APK_URL}
-              download
-              aria-label={copy.nav.androidDownload}
-              className="btn-brass min-h-11 !px-4 !py-2 text-sm"
-            >
-              <span className="sm:hidden">APK</span>
-              <span className="hidden sm:inline">{copy.nav.androidDownload}</span>
-            </a>
-          ) : null}
+          <Link href={path("android", lang)} className="btn-brass min-h-11 !px-4 !py-2 text-sm">
+            <span className="sm:hidden">APK</span>
+            <span className="hidden sm:inline">{copy.nav.androidDownload}</span>
+          </Link>
 
           <a
             href={APP_STORE_URL}

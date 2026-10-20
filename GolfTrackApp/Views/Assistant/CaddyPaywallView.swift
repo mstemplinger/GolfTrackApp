@@ -9,7 +9,7 @@ struct CaddyPaywallView: View {
 
     enum Plan { case caddy, pro }
 
-    private let caddyFeatures: [(icon: String, color: Color, text: String)] = [
+    private let caddyFeatures: [(icon: String, color: Color, text: LocalizedStringKey)] = [
         ("waveform.circle.fill", AppTheme.gold,                              "KI-Sprachassistent Caddy"),
         ("book.fill",            Color(red: 0.3, green: 0.85, blue: 0.5),   "Regeln, Tipps & Strategien auf Abruf"),
         ("mic.fill",             Color(red: 0.4, green: 0.7,  blue: 1.0),   "Gesprächsbasierte Golf-Beratung"),
@@ -18,7 +18,7 @@ struct CaddyPaywallView: View {
         ("nosign",               Color(red: 1.0, green: 0.4,  blue: 0.5),   "Keine Werbung in der App"),
     ]
 
-    private let proFeatures: [(icon: String, color: Color, text: String)] = [
+    private let proFeatures: [(icon: String, color: Color, text: LocalizedStringKey)] = [
         ("waveform.circle.fill", AppTheme.gold,                              "KI-Assistent Caddy"),
         ("headphones",           Color(red: 0.3, green: 0.85, blue: 0.5),   "Alle Audio-Trainings"),
         ("figure.golf",          Color(red: 0.4, green: 0.7,  blue: 1.0),   "Drive, Technik, Mental & mehr"),
@@ -133,7 +133,7 @@ struct CaddyPaywallView: View {
         .padding(.horizontal, 4)
     }
 
-    private func planTab(label: String, plan: Plan) -> some View {
+    private func planTab(label: LocalizedStringKey, plan: Plan) -> some View {
         Button {
             Haptics.selection()
             withAnimation(.easeInOut(duration: 0.2)) { selectedPlan = plan }

@@ -9,7 +9,7 @@ struct TrainingPaywallView: View {
 
     enum Plan { case training, lifetime, pro }
 
-    private var trainingFeatures: [(icon: String, color: Color, text: String)] {
+    private var trainingFeatures: [(icon: String, color: Color, text: LocalizedStringKey)] {
         let count = allLessons.filter(\.isAvailable).count
         return [
         ("headphones",           AppTheme.gold,                              "\(count) Audio-Trainingseinheiten"),
@@ -21,7 +21,7 @@ struct TrainingPaywallView: View {
         ]
     }
 
-    private let proFeatures: [(icon: String, color: Color, text: String)] = [
+    private let proFeatures: [(icon: String, color: Color, text: LocalizedStringKey)] = [
         ("headphones",           AppTheme.gold,                              "Alle Audio-Trainings"),
         ("waveform.circle.fill", Color(red: 0.4, green: 0.7,  blue: 1.0),   "KI-Assistent Caddy"),
         ("figure.golf",          Color(red: 0.3, green: 0.85, blue: 0.5),   "Drive, Technik, Mental & mehr"),
@@ -30,7 +30,7 @@ struct TrainingPaywallView: View {
         ("nosign",               Color(red: 1.0, green: 0.4,  blue: 0.5),   "Keine Werbung in der App"),
     ]
 
-    private var lifetimeFeatures: [(icon: String, color: Color, text: String)] {
+    private var lifetimeFeatures: [(icon: String, color: Color, text: LocalizedStringKey)] {
         let count = allLessons.filter(\.isAvailable).count
         return [
         ("infinity",             AppTheme.gold,                              "Einmal zahlen, für immer behalten"),
@@ -159,7 +159,7 @@ struct TrainingPaywallView: View {
         .padding(.horizontal, 4)
     }
 
-    private func planTab(label: String, plan: Plan) -> some View {
+    private func planTab(label: LocalizedStringKey, plan: Plan) -> some View {
         Button {
             Haptics.selection()
             withAnimation(.easeInOut(duration: 0.2)) { selectedPlan = plan }
@@ -235,7 +235,7 @@ struct TrainingPaywallView: View {
     // MARK: - Features
 
     private var featuresSection: some View {
-        let features: [(icon: String, color: Color, text: String)]
+        let features: [(icon: String, color: Color, text: LocalizedStringKey)]
         switch selectedPlan {
         case .training: features = trainingFeatures
         case .lifetime: features = lifetimeFeatures

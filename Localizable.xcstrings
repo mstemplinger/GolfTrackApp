@@ -1191,6 +1191,34 @@
         }
       }
     },
+    "%lld Audio-Trainingseinheiten" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld audio training sessions"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld sesiones de entrenamiento de audio"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld séances d'entraînement audio"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld sessioni di allenamento audio"
+          }
+        }
+      }
+    },
     "%lld Audios zum Putten – zwischen zwei Bahnen anhören" : {
       "localizations" : {
         "en" : {
@@ -4921,6 +4949,34 @@
         }
       }
     },
+    "Alle %lld Audio-Trainingseinheiten" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "All %lld audio training sessions"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Las %lld sesiones de entrenamiento de audio"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Les %lld séances d'entraînement audio"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tutte le %lld sessioni di allenamento audio"
+          }
+        }
+      }
+    },
     "Alle %lld Ergebnisse anzeigen" : {
       "localizations" : {
         "en" : {
@@ -5029,6 +5085,34 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Mostra tutto"
+          }
+        }
+      }
+    },
+    "Alle Audio-Trainings" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "All audio trainings"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Todos los entrenamientos de audio"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tous les entraînements audio"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tutti gli allenamenti audio"
           }
         }
       }
@@ -5267,6 +5351,34 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Tutte le categorie (%lld domande)"
+          }
+        }
+      }
+    },
+    "Alle künftigen Audiobooks inklusive" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "All future audiobooks included"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Todos los futuros audiolibros incluidos"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tous les futurs livres audio inclus"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tutti i futuri audiolibri inclusi"
           }
         }
       }
@@ -6053,6 +6165,34 @@
         }
       }
     },
+    "Auch unterwegs auf dem Platz nutzbar" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Use it out on the course, too"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Úsalo también en el campo"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Utilisable aussi sur le parcours"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Utilizzabile anche sul campo"
+          }
+        }
+      }
+    },
     "Audio-Lektionen, die genau die Schwächen dieser Runde angehen" : {
       "localizations" : {
         "de" : {
@@ -6150,7 +6290,32 @@
       }
     },
     "Audiobooks für immer" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Audiobooks forever"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Audiolibros para siempre"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Livres audio à vie"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Audiolibri per sempre"
+          }
+        }
+      }
     },
     "Auf der Minigolfanlage entscheidet die Distanzkontrolle fast alles – genau wie auf dem Grün." : {
       "localizations" : {
@@ -9847,6 +10012,34 @@
         }
       }
     },
+    "Drive, Technik, Mental & mehr" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Drive, technique, mental game & more"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Drive, técnica, mente y más"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Drive, technique, mental & plus"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Drive, tecnica, mente & altro"
+          }
+        }
+      }
+    },
     "Du bist gut vorbereitet. Teste dich jetzt in einer Probeprüfung." : {
       "localizations" : {
         "en" : {
@@ -10657,7 +10850,32 @@
       }
     },
     "Einmal kaufen – alle Audiobooks,\nheute und in Zukunft." : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Buy once – every audiobook,\ntoday and in the future."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Compra una vez – todos los audiolibros,\nhoy y en el futuro."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Achète une fois – tous les livres audio,\naujourd'hui et à l'avenir."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Acquista una volta – tutti gli audiolibri,\noggi e in futuro."
+          }
+        }
+      }
     },
     "Einmal kaufen, Anzeigen weg" : {
       "localizations" : {
@@ -10683,6 +10901,34 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Acquista una volta, niente pubblicità"
+          }
+        }
+      }
+    },
+    "Einmal zahlen, für immer behalten" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pay once, keep forever"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Paga una vez, tenlo para siempre"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Paie une fois, garde-le à vie"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Paghi una volta, tieni per sempre"
           }
         }
       }
@@ -12414,6 +12660,34 @@
         }
       }
     },
+    "Für immer" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Forever"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Para siempre"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "À vie"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Per sempre"
+          }
+        }
+      }
+    },
     "Game Center" : {
       "localizations" : {
         "de" : {
@@ -13041,6 +13315,34 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Avvia conversazione"
+          }
+        }
+      }
+    },
+    "Gesprächsbasierte Golf-Beratung" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Conversational golf advice"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Asesoramiento de golf conversacional"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Conseils golf par la conversation"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Consigli di golf in conversazione"
           }
         }
       }
@@ -15273,6 +15575,34 @@
         }
       }
     },
+    "Jahr" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "year"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "año"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "an"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "anno"
+          }
+        }
+      }
+    },
     "Je mehr Runden auf diesem Platz aufgezeichnet sind, desto genauer wird die Schätzung. Prüfe Vorschläge mit niedriger Konfidenz auf der Karte, bevor du sie übernimmst." : {
       "localizations" : {
         "en" : {
@@ -15624,6 +15954,34 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Ripristina acquisto"
+          }
+        }
+      }
+    },
+    "Kein Abo, keine Folgekosten" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No subscription, no recurring costs"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sin suscripción, sin costes recurrentes"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sans abonnement, sans frais récurrents"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nessun abbonamento, nessun costo ricorrente"
           }
         }
       }
@@ -16131,6 +16489,62 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Nessuna pubblicità nell’app"
+          }
+        }
+      }
+    },
+    "KI-Assistent Caddy" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "AI assistant Caddy"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Asistente con IA Caddy"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Assistant IA Caddy"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Assistente IA Caddy"
+          }
+        }
+      }
+    },
+    "KI-Sprachassistent Caddy" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "AI voice assistant Caddy"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Asistente de voz con IA Caddy"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Assistant vocal IA Caddy"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Assistente vocale IA Caddy"
           }
         }
       }
@@ -18374,6 +18788,34 @@
         }
       }
     },
+    "Mit der Familienfreigabe teilen" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Share with Family Sharing"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Comparte con En familia"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Partage avec le Partage familial"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Condividi con In famiglia"
+          }
+        }
+      }
+    },
     "Mit der ganzen App" : {
       "localizations" : {
         "en" : {
@@ -18557,6 +18999,34 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Uscire dalla modalità?"
+          }
+        }
+      }
+    },
+    "Monat" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "month"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "mes"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "mois"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "mese"
           }
         }
       }
@@ -19231,6 +19701,62 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Nuove imparate"
+          }
+        }
+      }
+    },
+    "Neue Inhalte regelmäßig" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "New content regularly"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nuevo contenido con regularidad"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nouveaux contenus régulièrement"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nuovi contenuti regolarmente"
+          }
+        }
+      }
+    },
+    "Neue Lektionen regelmäßig" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "New lessons regularly"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nuevas lecciones con regularidad"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nouvelles leçons régulièrement"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nuove lezioni regolarmente"
           }
         }
       }
@@ -20705,6 +21231,34 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Catalogo ufficiale delle domande · %lld domande · 6 argomenti"
+          }
+        }
+      }
+    },
+    "Offline anhören, jederzeit" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Listen offline, anytime"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Escucha sin conexión, cuando quieras"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Écoute hors ligne, à tout moment"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ascolta offline, quando vuoi"
           }
         }
       }
@@ -22341,6 +22895,34 @@
         }
       }
     },
+    "Pro (Alles)" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pro (All)"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pro (Todo)"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pro (Tout)"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pro (Tutto)"
+          }
+        }
+      }
+    },
     "Pro freischalten" : {
       "localizations" : {
         "en" : {
@@ -23117,6 +23699,34 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Regole, consigli e strategie"
+          }
+        }
+      }
+    },
+    "Regeln, Tipps & Strategien auf Abruf" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Rules, tips & strategies on demand"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Reglas, consejos y estrategias a demanda"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Règles, conseils & stratégies à la demande"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Regole, consigli & strategie su richiesta"
           }
         }
       }
@@ -24787,6 +25397,62 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Sacche"
+          }
+        }
+      }
+    },
+    "Schlägerauswahl einblenden" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Show club selection"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mostrar selección de palos"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Afficher le choix du club"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mostra scelta della mazza"
+          }
+        }
+      }
+    },
+    "Schlägerauswahl für diese Runde ausblenden" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hide club selection for this round"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ocultar selección de palos en esta vuelta"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Masquer le choix du club pour cette partie"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nascondi scelta della mazza per questo giro"
           }
         }
       }
@@ -27702,6 +28368,34 @@
         }
       }
     },
+    "Tag" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "day"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "día"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "jour"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "giorno"
+          }
+        }
+      }
+    },
     "Tage" : {
       "localizations" : {
         "en" : {
@@ -28826,6 +29520,62 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Rinomina"
+          }
+        }
+      }
+    },
+    "Unbegrenzte Caddy-Gespräche" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Unlimited Caddy conversations"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Conversaciones ilimitadas con el Caddy"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Conversations illimitées avec le Caddy"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Conversazioni illimitate con il Caddy"
+          }
+        }
+      }
+    },
+    "Unbegrenzte Gespräche" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Unlimited conversations"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Conversaciones ilimitadas"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Conversations illimitées"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Conversazioni illimitate"
           }
         }
       }
@@ -31278,6 +32028,34 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Caricamento…"
+          }
+        }
+      }
+    },
+    "Woche" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "week"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "semana"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "semaine"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "settimana"
           }
         }
       }

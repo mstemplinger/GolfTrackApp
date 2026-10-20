@@ -77,30 +77,43 @@ final class SubscriptionManager: ObservableObject {
 
     // MARK: - Subscription Period
 
+    /// „Monat“ bzw. „3 Monate“ – in der Sprache der App, für „/ Monat“ hinter dem Preis.
     func subscriptionPeriodLabel(for product: Product?) -> String {
-        guard let period = product?.subscription?.subscriptionPeriod else { return "Monat" }
-        switch period.unit {
-        case .day:   return period.value == 1 ? "Tag"   : "\(period.value) Tage"
-        case .week:  return period.value == 1 ? "Woche" : "\(period.value) Wochen"
-        case .month: return period.value == 1 ? "Monat" : "\(period.value) Monate"
-        case .year:  return period.value == 1 ? "Jahr"  : "\(period.value) Jahre"
-        @unknown default: return "Periode"
+        guard let period = product?.subscription?.subscriptionPeriod else { return String(localized: "Monat") }
+        if period.value == 1 {
+            switch period.unit {
+            case .day:   return String(localized: "Tag")
+            case .week:  return String(localized: "Woche")
+            case .month: return String(localized: "Monat")
+            case .year:  return String(localized: "Jahr")
+            @unknown default: break
+            }
         }
+        return Self.spelledOut(period) ?? String(localized: "Monat")
     }
 
     // MARK: - Introductory Offer
 
+    /// Dauer der Gratis-Testphase, z. B. „3 Tage“ / „3 days“ / „3 jours“.
     func freeTrialLabel(for product: Product?) -> String? {
         guard let offer = product?.subscription?.introductoryOffer,
               offer.paymentMode == .freeTrial else { return nil }
-        let p = offer.period
-        switch p.unit {
-        case .day:   return p.value == 7 ? "7 Tage" : "\(p.value) Tag\(p.value == 1 ? "" : "e")"
-        case .week:  return p.value == 1 ? "1 Woche" : "\(p.value) Wochen"
-        case .month: return p.value == 1 ? "1 Monat" : "\(p.value) Monate"
-        case .year:  return p.value == 1 ? "1 Jahr" : "\(p.value) Jahre"
+        return Self.spelledOut(offer.period)
+    }
+
+    /// Zahl + Einheit ausgeschrieben, übersetzt und mit richtiger Mehrzahl vom System.
+    private static func spelledOut(_ period: Product.SubscriptionPeriod) -> String? {
+        let formatter = DateComponentsFormatter()
+        formatter.unitsStyle = .full
+        var parts = DateComponents()
+        switch period.unit {
+        case .day:   parts.day = period.value;        formatter.allowedUnits = [.day]
+        case .week:  parts.weekOfMonth = period.value; formatter.allowedUnits = [.weekOfMonth]
+        case .month: parts.month = period.value;      formatter.allowedUnits = [.month]
+        case .year:  parts.year = period.value;       formatter.allowedUnits = [.year]
         @unknown default: return nil
         }
+        return formatter.string(from: parts)
     }
 
     // Legacy helpers used by TrainingPaywallView

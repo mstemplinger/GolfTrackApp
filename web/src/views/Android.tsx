@@ -97,7 +97,7 @@ export function Android({ lang }: { lang: Lang }) {
             </div>
 
             <div className="mt-6">
-              <AndroidCta lang={lang} showApk={false} />
+              <AndroidCta lang={lang} showApk={false} focus="updates" />
             </div>
 
             <p className="mt-8 text-sm text-cream/60">

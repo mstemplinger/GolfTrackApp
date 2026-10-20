@@ -166,6 +166,10 @@ const STATEMENTS = [
   // mit der Bestätigung durch den Code (dann steht der Zeitpunkt hier).
   `ALTER TABLE android_waitlist ADD COLUMN IF NOT EXISTS marketing_consent boolean NOT NULL DEFAULT false`,
   `ALTER TABLE android_waitlist ADD COLUMN IF NOT EXISTS marketing_consent_at timestamptz`,
+  // Update-Hinweise: neue APK-Fassung per Mail. Teil des Zwecks, für den man
+  // sich einträgt; die zuletzt gemeldete Fassung verhindert doppelte Mails.
+  `ALTER TABLE android_waitlist ADD COLUMN IF NOT EXISTS apk_updates boolean NOT NULL DEFAULT true`,
+  `ALTER TABLE android_waitlist ADD COLUMN IF NOT EXISTS last_update_version integer NOT NULL DEFAULT 0`,
 ];
 
 let ready: Promise<void> | null = null;

@@ -31,6 +31,8 @@ export type EmailContent = {
   code?: string;
   codeHint?: string;
   button?: { label: string; url: string };
+  /** Zweite, leisere Aufforderung unter dem Knopf (z. B. Neuigkeiten abonnieren). */
+  secondary?: { text: string; label: string; url: string };
   /** Kleiner Hinweis unter dem Hauptteil. */
   note?: string;
   unsubscribeUrl: string;
@@ -57,6 +59,14 @@ export function renderEmail(c: EmailContent): string {
         `<tr><td style="padding:0 40px 14px;font-family:-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;font-size:16px;line-height:1.55;color:${CREAM}">${esc(p)}</td></tr>`,
     )
     .join("");
+  const secondary = c.secondary
+    ? `<tr><td style="padding:18px 40px 0">
+        <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="border-top:1px solid #ffffff1f">
+          <tr><td style="padding:18px 0 0;font-family:-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;font-size:14px;line-height:1.5;color:${CREAM}">${esc(c.secondary.text)}</td></tr>
+          <tr><td style="padding:12px 0 0"><a href="${esc(c.secondary.url)}" style="display:inline-block;border:1px solid ${BRASS};color:${BRASS};font-family:-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;font-size:14px;font-weight:700;text-decoration:none;padding:10px 20px;border-radius:999px">${esc(c.secondary.label)}</a></td></tr>
+        </table>
+      </td></tr>`
+    : "";
   const note = c.note
     ? `<tr><td style="padding:14px 40px 0;font-family:-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;font-size:13px;line-height:1.5;color:${MUTED}">${esc(c.note)}</td></tr>`
     : "";
@@ -87,6 +97,7 @@ export function renderEmail(c: EmailContent): string {
           ${paragraphs}
           ${codeBlock}
           ${button}
+          ${secondary}
           ${note}
           <tr><td style="padding:32px 0 0"></td></tr>
         </table>
@@ -103,4 +114,16 @@ export function renderEmail(c: EmailContent): string {
 </table>
 </body>
 </html>`;
+}
+
+/** Reine Textfassung derselben Mail – für Programme ohne HTML. */
+export function renderText(c: EmailContent): string {
+  const de = c.lang === "de";
+  const parts = [de ? "Hallo," : "Hi,", ...c.paragraphs];
+  if (c.code) parts.push(`    ${c.code}${c.codeHint ? `\n    (${c.codeHint})` : ""}`);
+  if (c.button) parts.push(`${c.button.label}: ${c.button.url}`);
+  if (c.secondary) parts.push(`${c.secondary.text} ${c.secondary.label}: ${c.secondary.url}`);
+  if (c.note) parts.push(c.note);
+  parts.push(`${de ? "Abmelden" : "Unsubscribe"}: ${c.unsubscribeUrl}`, "GolfTrack · golftrack.app");
+  return parts.join("\n\n");
 }

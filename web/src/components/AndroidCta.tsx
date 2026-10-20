@@ -16,8 +16,9 @@ const COPY = {
     play: "Google Play",
     playSoon: "Bald bei Google Play",
     remind: "Erinnere mich",
-    remindLead: "Wir schicken dir eine Mail, sobald GolfTrack im Play Store steht.",
-    marketing: "Ja, informiert mich auch über Neuigkeiten, neue Funktionen und Angebote von GolfTrack. Abmeldung jederzeit über den Link in jeder Mail.",
+    updates: "Bei neuen Versionen per Mail benachrichtigen",
+    remindLead: "Die APK aktualisiert sich nicht von selbst. Trag dich ein, dann bekommst du eine Mail bei jeder neuen Version und sobald GolfTrack im Play Store steht.",
+    marketing: "Ja, schickt mir neue Funktionen und Aktionen zuerst – höchstens einmal im Monat. Abmeldung jederzeit über den Link in jeder Mail.",
     privacy: "Datenschutz",
     email: "E-Mail-Adresse",
     sendCode: "Code senden",
@@ -27,7 +28,7 @@ const COPY = {
     otherEmail: "Andere Adresse",
     resend: "Code erneut senden",
     wait: (s: number) => `Neuer Code in ${s} s`,
-    done: "Bestätigt! Du bekommst eine Mail, sobald die App im Play Store ist.",
+    done: "Bestätigt! Wir schicken dir eine Mail bei jeder neuen Version.",
     already: "Diese Adresse ist schon eingetragen – du bekommst Bescheid.",
     errors: {
       invalid_email: "Bitte prüf die E-Mail-Adresse.",
@@ -48,8 +49,9 @@ const COPY = {
     play: "Google Play",
     playSoon: "Coming to Google Play",
     remind: "Remind me",
-    remindLead: "We'll email you when GolfTrack is on Google Play.",
-    marketing: "Yes, also keep me posted about news, new features and offers from GolfTrack. Unsubscribe any time via the link in every email.",
+    updates: "Email me about new versions",
+    remindLead: "The APK doesn't update itself. Sign up and we'll email you with every new version and once GolfTrack is on Google Play.",
+    marketing: "Yes, send me new features and offers first – at most once a month. Unsubscribe any time via the link in every email.",
     privacy: "Privacy",
     email: "Email address",
     sendCode: "Send code",
@@ -59,7 +61,7 @@ const COPY = {
     otherEmail: "Different address",
     resend: "Resend code",
     wait: (s: number) => `New code in ${s}s`,
-    done: "Confirmed! You'll get an email once the app is on Google Play.",
+    done: "Confirmed! We'll email you with every new version.",
     already: "This address is already registered – we'll let you know.",
     errors: {
       invalid_email: "Please check the email address.",
@@ -83,11 +85,14 @@ export function AndroidCta({
   lang,
   align = "start",
   showApk = true,
+  focus = "play",
 }: {
   lang: "de" | "en";
   align?: "start" | "center";
   /** Auf der Android-Seite steht der große Download-Knopf schon daneben. */
   showApk?: boolean;
+  /** "updates": Knopf wirbt mit Update-Mails statt mit dem Play Store. */
+  focus?: "play" | "updates";
 }) {
   const c = COPY[lang];
   const [step, setStep] = useState<Step>("closed");
@@ -172,9 +177,13 @@ export function AndroidCta({
             className={pill}
           >
             <PlayMark />
-            <span>
-              {c.playSoon} · <span className="text-brass">{c.remind}</span>
-            </span>
+            {focus === "updates" ? (
+              <span className="text-brass">{c.updates}</span>
+            ) : (
+              <span>
+                {c.playSoon} · <span className="text-brass">{c.remind}</span>
+              </span>
+            )}
           </button>
         )}
       </div>

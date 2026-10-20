@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { APK_URL, PLAY_STORE_LIVE, PLAY_STORE_URL } from "@/lib/android";
 
 /**
@@ -24,6 +24,7 @@ const COPY = {
     confirm: "Bestätigen",
     otherEmail: "Andere Adresse",
     resend: "Code erneut senden",
+    wait: (s: number) => `Neuer Code in ${s} s`,
     done: "Bestätigt! Du bekommst eine Mail, sobald die App im Play Store ist.",
     already: "Diese Adresse ist schon eingetragen – du bekommst Bescheid.",
     errors: {
@@ -36,6 +37,7 @@ const COPY = {
       expired: "Der Code ist abgelaufen. Lass dir einen neuen schicken.",
       locked: "Zu viele falsche Versuche. Lass dir einen neuen Code schicken.",
       unknown: "Bitte fordere zuerst einen Code an.",
+      cooldown: "Bitte warte kurz, bevor du einen neuen Code anforderst.",
       network: "Keine Verbindung. Bitte noch einmal versuchen.",
     } as Record<string, string>,
   },
@@ -52,6 +54,7 @@ const COPY = {
     confirm: "Confirm",
     otherEmail: "Different address",
     resend: "Resend code",
+    wait: (s: number) => `New code in ${s}s`,
     done: "Confirmed! You'll get an email once the app is on Google Play.",
     already: "This address is already registered – we'll let you know.",
     errors: {
@@ -64,6 +67,7 @@ const COPY = {
       expired: "The code has expired. Request a new one.",
       locked: "Too many wrong attempts. Request a new code.",
       unknown: "Please request a code first.",
+      cooldown: "Please wait a moment before requesting a new code.",
       network: "No connection. Please try again.",
     } as Record<string, string>,
   },
@@ -89,8 +93,19 @@ export function AndroidCta({
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [note, setNote] = useState<string | null>(null);
+  /** Sekunden bis zur nächsten erlaubten Code-Mail (Server erlaubt eine pro Minute). */
+  const [cooldown, setCooldown] = useState(0);
 
-  async function post(url: string, body: object): Promise<{ ok?: boolean; status?: string; error?: string }> {
+  useEffect(() => {
+    if (cooldown <= 0) return;
+    const t = setTimeout(() => setCooldown((s) => s - 1), 1000);
+    return () => clearTimeout(t);
+  }, [cooldown]);
+
+  async function post(
+    url: string,
+    body: object,
+  ): Promise<{ ok?: boolean; status?: string; error?: string; retryAfter?: number }> {
     try {
       const res = await fetch(url, { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify(body) });
       return await res.json();
@@ -104,6 +119,7 @@ export function AndroidCta({
     setError(null);
     const r = await post("/api/android/waitlist", { email, lang, website: trap });
     setBusy(false);
+    if (r.retryAfter) setCooldown(r.retryAfter);
     if (r.error) return setError(c.errors[r.error] ?? c.errors.send_failed);
     if (r.status === "already_confirmed") {
       setNote(c.already);
@@ -191,8 +207,8 @@ export function AndroidCta({
                   onChange={(e) => setEmail(e.target.value)}
                   className={input}
                 />
-                <button type="submit" disabled={busy} className="btn-brass min-h-11 shrink-0 !px-5 !py-2">
-                  {c.sendCode}
+                <button type="submit" disabled={busy || cooldown > 0} className="btn-brass min-h-11 shrink-0 !px-5 !py-2">
+                  {cooldown > 0 ? `${cooldown} s` : c.sendCode}
                 </button>
               </div>
             </form>
@@ -226,8 +242,8 @@ export function AndroidCta({
                 </button>
               </div>
               <div className="flex gap-4 text-xs text-cream/60">
-                <button type="button" className="underline underline-offset-4 hover:text-brass" onClick={() => void sendCode()} disabled={busy}>
-                  {c.resend}
+                <button type="button" className="underline underline-offset-4 hover:text-brass" onClick={() => void sendCode()} disabled={busy || cooldown > 0}>
+                  {cooldown > 0 ? c.wait(cooldown) : c.resend}
                 </button>
                 <button type="button" className="underline underline-offset-4 hover:text-brass" onClick={() => setStep("email")}>
                   {c.otherEmail}

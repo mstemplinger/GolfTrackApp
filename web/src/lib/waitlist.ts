@@ -19,6 +19,8 @@ import { PLAY_STORE_URL } from "@/lib/android";
 const CODE_TTL_MIN = 15;
 const MAX_CODE_ATTEMPTS = 5;
 const MAX_CODES_PER_ADDRESS = 5;
+/** Frühestens nach dieser Zeit geht an dieselbe Adresse die nächste Mail. */
+export const RESEND_COOLDOWN_S = 60;
 
 type Row = {
   id: string;
@@ -30,6 +32,7 @@ type Row = {
   codes_sent: number;
   confirmed_at: Date | null;
   unsubscribe_token: string;
+  last_code_sent_at: Date | null;
 };
 
 function hashCode(email: string, code: string): string {
@@ -138,35 +141,41 @@ function unsubscribeUrl(token: string): string {
   return `${SITE_URL}/api/android/waitlist/unsubscribe?token=${token}`;
 }
 
-export type RequestResult = "sent" | "already_confirmed" | "too_many_codes";
+export type RequestResult =
+  | { status: "sent" | "already_confirmed" | "too_many_codes" }
+  | { status: "cooldown"; retryAfter: number };
 
 /** Legt die Adresse an (oder findet sie) und schickt einen neuen Code. */
 export async function requestCode(rawEmail: string, lang: Lang): Promise<RequestResult> {
   await ensureSchema();
   const email = normalizeEmail(rawEmail);
   let row = await queryOne<Row>("SELECT * FROM android_waitlist WHERE email = $1", [email]);
-  if (row?.confirmed_at) return "already_confirmed";
-  if (row && row.codes_sent >= MAX_CODES_PER_ADDRESS) return "too_many_codes";
+  if (row?.confirmed_at) return { status: "already_confirmed" };
+  if (row?.last_code_sent_at) {
+    const waited = (Date.now() - new Date(row.last_code_sent_at).getTime()) / 1000;
+    if (waited < RESEND_COOLDOWN_S) return { status: "cooldown", retryAfter: Math.ceil(RESEND_COOLDOWN_S - waited) };
+  }
+  if (row && row.codes_sent >= MAX_CODES_PER_ADDRESS) return { status: "too_many_codes" };
 
   const code = String(randomInt(0, 1_000_000)).padStart(6, "0");
   const codeHash = hashCode(email, code);
   if (!row) {
     row = await queryOne<Row>(
-      `INSERT INTO android_waitlist (email, lang, code_hash, code_expires_at, codes_sent, unsubscribe_token)
-       VALUES ($1, $2, $3, now() + interval '${CODE_TTL_MIN} minutes', 1, $4) RETURNING *`,
+      `INSERT INTO android_waitlist (email, lang, code_hash, code_expires_at, codes_sent, unsubscribe_token, last_code_sent_at)
+       VALUES ($1, $2, $3, now() + interval '${CODE_TTL_MIN} minutes', 1, $4, now()) RETURNING *`,
       [email, lang, codeHash, randomBytes(24).toString("base64url")],
     );
   } else {
     row = await queryOne<Row>(
       `UPDATE android_waitlist SET code_hash = $2, code_expires_at = now() + interval '${CODE_TTL_MIN} minutes',
-         code_attempts = 0, codes_sent = codes_sent + 1, lang = $3 WHERE id = $1 RETURNING *`,
+         code_attempts = 0, codes_sent = codes_sent + 1, lang = $3, last_code_sent_at = now() WHERE id = $1 RETURNING *`,
       [row.id, codeHash, lang],
     );
   }
   const c = COPY[lang];
   const unsub = unsubscribeUrl(row!.unsubscribe_token);
   await sendMail(email, c.codeSubject(code), c.codeText(code, unsub), renderEmail(c.codeHtml(code, unsub)));
-  return "sent";
+  return { status: "sent" };
 }
 
 export type ConfirmResult = "confirmed" | "wrong" | "expired" | "locked" | "unknown";

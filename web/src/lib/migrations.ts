@@ -160,6 +160,8 @@ const STATEMENTS = [
      unsubscribe_token text NOT NULL,
      created_at        timestamptz NOT NULL DEFAULT now()
    )`,
+  // Sperrfrist zwischen zwei Code-Mails an dieselbe Adresse.
+  `ALTER TABLE android_waitlist ADD COLUMN IF NOT EXISTS last_code_sent_at timestamptz`,
 ];
 
 let ready: Promise<void> | null = null;

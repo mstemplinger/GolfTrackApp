@@ -2,7 +2,7 @@ import { z } from "zod";
 import { clientIp, hashIp } from "@/lib/auth";
 import { recordAttempt, tooManyAttempts } from "@/lib/courses";
 import { mailConfigured } from "@/lib/mail";
-import { purgeUnconfirmed, requestCode } from "@/lib/waitlist";
+import { RESEND_COOLDOWN_S, purgeUnconfirmed, requestCode } from "@/lib/waitlist";
 
 const schema = z.object({
   email: z.string().trim().email().max(200),
@@ -24,9 +24,15 @@ export async function POST(request: Request) {
   await purgeUnconfirmed();
 
   try {
-    const status = await requestCode(parsed.data.email, parsed.data.lang);
-    if (status === "too_many_codes") return Response.json({ error: "too_many_codes" }, { status: 429 });
-    return Response.json({ ok: true, status });
+    const result = await requestCode(parsed.data.email, parsed.data.lang);
+    if (result.status === "too_many_codes") return Response.json({ error: "too_many_codes" }, { status: 429 });
+    if (result.status === "cooldown") {
+      return Response.json(
+        { error: "cooldown", retryAfter: result.retryAfter },
+        { status: 429, headers: { "Retry-After": String(result.retryAfter) } },
+      );
+    }
+    return Response.json({ ok: true, status: result.status, retryAfter: RESEND_COOLDOWN_S });
   } catch {
     return Response.json({ error: "send_failed" }, { status: 502 });
   }

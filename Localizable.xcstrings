@@ -16045,6 +16045,34 @@
         }
       }
     },
+    "Klar" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Clear"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Despejado"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dégagé"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sereno"
+          }
+        }
+      }
+    },
     "Klassisches Zählspiel – jeder Schlag zählt" : {
       "localizations" : {
         "en" : {
@@ -17764,6 +17792,34 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Usa la mia posizione"
+          }
+        }
+      }
+    },
+    "Meist klar" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mostly clear"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mayormente despejado"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Plutôt dégagé"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Prevalentemente sereno"
           }
         }
       }

@@ -15,7 +15,7 @@ struct HourlyForecast: Identifiable {
     let windKmh: Double
     let isDaylight: Bool
 
-    var symbolName: String { GolfWeatherService.weatherInfo(wmoCode: weatherCode).1 }
+    var symbolName: String { GolfWeatherService.weatherInfo(wmoCode: weatherCode, isDay: isDaylight).1 }
 
     /// Bewertung je Stunde statt je Tag: 0,1 mm Niesel um 6 Uhr morgens
     /// sollen nicht den ganzen Tag als „schlechtes Wetter“ markieren.
@@ -187,12 +187,14 @@ private struct OpenMeteoResponse: Decodable {
         let weatherCode: Int
         let windSpeed10m: Double
         let relativeHumidity2m: Int
+        let isDay: Int?
         enum CodingKeys: String, CodingKey {
             case temperature2m         = "temperature_2m"
             case apparentTemperature   = "apparent_temperature"
             case weatherCode           = "weather_code"
             case windSpeed10m          = "wind_speed_10m"
             case relativeHumidity2m    = "relative_humidity_2m"
+            case isDay                 = "is_day"
         }
     }
 
@@ -334,7 +336,7 @@ final class GolfWeatherService: NSObject, ObservableObject {
         let lon = location.coordinate.longitude
         let urlString = "https://api.open-meteo.com/v1/forecast"
             + "?latitude=\(lat)&longitude=\(lon)"
-            + "&current=temperature_2m,apparent_temperature,weather_code,wind_speed_10m,relative_humidity_2m"
+            + "&current=temperature_2m,apparent_temperature,weather_code,wind_speed_10m,relative_humidity_2m,is_day"
             + "&daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_sum,wind_speed_10m_max"
             + "&hourly=weather_code,temperature_2m,precipitation,precipitation_probability,wind_speed_10m,is_day"
             + "&forecast_days=7&wind_speed_unit=kmh&timezone=auto"
@@ -357,7 +359,7 @@ final class GolfWeatherService: NSObject, ObservableObject {
             uvIndex        = "–"
             rawWeatherCode = cur.weatherCode
             rawWindSpeed   = cur.windSpeed10m
-            let (text, symbol) = Self.weatherInfo(wmoCode: cur.weatherCode)
+            let (text, symbol) = Self.weatherInfo(wmoCode: cur.weatherCode, isDay: (cur.isDay ?? 1) == 1)
             conditionText  = text
             symbolName     = symbol
 
@@ -425,7 +427,17 @@ final class GolfWeatherService: NSObject, ObservableObject {
     // Die Texte liegen als deutsche Schlüssel im String-Katalog; ohne
     // String(localized:) blieben sie in jeder Sprache deutsch.
 
-    static func weatherInfo(wmoCode code: Int) -> (String, String) {
+    static func weatherInfo(wmoCode code: Int, isDay: Bool = true) -> (String, String) {
+        // Nachts Mond statt Sonne – nur bei Codes, deren Symbol eine Sonne zeigt.
+        if !isDay {
+            switch code {
+            case 0:      return (String(localized: "Klar"),          "moon.stars.fill")
+            case 1:      return (String(localized: "Meist klar"),    "moon.stars.fill")
+            case 2:      return (String(localized: "Teils bewölkt"), "cloud.moon.fill")
+            case 80, 81: return (String(localized: "Regenschauer"),  "cloud.moon.rain.fill")
+            default:     break
+            }
+        }
         switch code {
         case 0:           return (String(localized: "Sonnig"),             "sun.max.fill")
         case 1:           return (String(localized: "Meist sonnig"),       "sun.max.fill")

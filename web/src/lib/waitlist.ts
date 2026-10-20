@@ -69,6 +69,21 @@ const COPY = {
       note: "Das war die einzige Mail. Deine Adresse haben wir jetzt gelöscht.",
       unsubscribeUrl: unsub,
     }),
+    welcomeSubject: "Du bist eingetragen – GolfTrack für Android",
+    welcomeText: (unsub: string) =>
+      `Hallo,\n\ndanke, deine E-Mail-Adresse ist bestätigt. Sobald GolfTrack im Google Play Store verfügbar ist, schreiben wir dir genau einmal – danach löschen wir deine Adresse.\n\nBis dahin kannst du die App schon jetzt als APK laden: ${SITE_URL}/android\n\nAbmelden: ${unsub}\n\nGolfTrack · golftrack.app`,
+    welcomeHtml: (unsub: string) => ({
+      lang: "de" as const,
+      preheader: "Deine Adresse ist bestätigt – wir melden uns, sobald GolfTrack bei Google Play ist.",
+      title: "Du bist eingetragen",
+      paragraphs: [
+        "Danke, deine E-Mail-Adresse ist bestätigt. Sobald GolfTrack im Google Play Store verfügbar ist, schreiben wir dir genau einmal – danach löschen wir deine Adresse.",
+        "Bis dahin kannst du die App schon jetzt als APK laden.",
+      ],
+      button: { label: "Zur Android-APK", url: `${SITE_URL}/android` },
+      note: "Du willst doch keine Nachricht? Über „Abmelden“ unten löschen wir deine Adresse sofort.",
+      unsubscribeUrl: unsub,
+    }),
     liveSubject: "GolfTrack ist jetzt im Google Play Store",
     liveText: (unsub: string) =>
       `Hallo,\n\nwie gewünscht: GolfTrack für Android gibt es jetzt im Google Play Store.\n\n${PLAY_STORE_URL}\n\nDas war die einzige Mail – deine Adresse haben wir jetzt gelöscht.\n\nGolfTrack · golftrack.app\n(Abmeldelink, falls nötig: ${unsub})`,
@@ -96,6 +111,21 @@ const COPY = {
       paragraphs: ["As promised: GolfTrack for Android is now available on Google Play – with automatic updates."],
       button: { label: "Get it on Google Play", url: PLAY_STORE_URL },
       note: "This was the only email. We have now deleted your address.",
+      unsubscribeUrl: unsub,
+    }),
+    welcomeSubject: "You're on the list – GolfTrack for Android",
+    welcomeText: (unsub: string) =>
+      `Hi,\n\nthanks, your email address is confirmed. As soon as GolfTrack is available on Google Play we'll email you exactly once – and then delete your address.\n\nUntil then you can already get the app as an APK: ${SITE_URL}/en/android\n\nUnsubscribe: ${unsub}\n\nGolfTrack · golftrack.app`,
+    welcomeHtml: (unsub: string) => ({
+      lang: "en" as const,
+      preheader: "Your address is confirmed – we'll be in touch once GolfTrack is on Google Play.",
+      title: "You're on the list",
+      paragraphs: [
+        "Thanks, your email address is confirmed. As soon as GolfTrack is available on Google Play we'll email you exactly once – and then delete your address.",
+        "Until then you can already get the app as an APK.",
+      ],
+      button: { label: "Get the Android APK", url: `${SITE_URL}/en/android` },
+      note: "Changed your mind? Use “Unsubscribe” below and we'll delete your address right away.",
       unsubscribeUrl: unsub,
     }),
     liveSubject: "GolfTrack is now on Google Play",
@@ -158,6 +188,10 @@ export async function confirmCode(rawEmail: string, code: string): Promise<Confi
       "UPDATE android_waitlist SET confirmed_at = now(), code_hash = NULL, code_expires_at = NULL WHERE id = $1",
       [row.id],
     );
+    // Bestätigung der Anmeldung. Scheitert der Versand, bleibt die Anmeldung trotzdem gültig.
+    const c = COPY[row.lang === "en" ? "en" : "de"];
+    const unsub = unsubscribeUrl(row.unsubscribe_token);
+    await sendMail(email, c.welcomeSubject, c.welcomeText(unsub), renderEmail(c.welcomeHtml(unsub))).catch(() => {});
     return "confirmed";
   }
   await query("UPDATE android_waitlist SET code_attempts = code_attempts + 1 WHERE id = $1", [row.id]);

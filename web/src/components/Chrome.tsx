@@ -40,7 +40,6 @@ const NAV: { key: RouteKey; label: (l: Lang) => string; langs?: Lang[] }[] = [
   { key: "submit", label: (l) => t(l).nav.submit },
   // Nur im deutschen Menü: die Seite dahinter gibt es nicht auf Englisch.
   { key: "advertise", label: (l) => t(l).nav.advertise, langs: ["de"] },
-  { key: "android", label: (l) => t(l).nav.android },
   { key: "support", label: (l) => t(l).nav.support },
 ];
 

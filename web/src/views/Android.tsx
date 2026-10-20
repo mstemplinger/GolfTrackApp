@@ -4,7 +4,6 @@ import { t } from "@/i18n/content";
 import { APP_STORE_URL, path, type Lang } from "@/i18n/routes";
 import { ANDROID_RELEASE } from "@/lib/android";
 import { AndroidCta } from "@/components/AndroidCta";
-import { AndroidCta as AndroidCtaPlayOnly } from "@/components/AndroidCta";
 
 /**
  * Download der Android-APK. Bewusst ohne Play Store: die erste Fassung geht
@@ -95,10 +94,6 @@ export function Android({ lang }: { lang: Lang }) {
               ) : (
                 <p className="leading-relaxed text-cream/70">{copy.notYet}</p>
               )}
-            </div>
-
-            <div className="mt-6">
-              <AndroidCtaPlayOnly lang={lang} />
             </div>
 
             <div className="mt-6">

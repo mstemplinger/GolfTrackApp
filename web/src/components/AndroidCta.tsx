@@ -133,7 +133,7 @@ export function AndroidCta({
     <div className={`flex w-full flex-col gap-3 ${align === "center" ? "items-center" : "items-start"}`}>
       <div className={`flex w-full flex-col items-stretch gap-3 sm:w-auto sm:flex-row ${justify}`}>
         {APK_URL && showApk ? (
-          <a href={APK_URL} download className={pill}>
+          <a href={APK_URL} download className={`${pill} whitespace-nowrap`}>
             <AndroidMark />
             {c.apk}
           </a>

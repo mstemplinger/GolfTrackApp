@@ -15071,6 +15071,34 @@
         }
       }
     },
+    "Intro beim Start" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Intro at launch"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Intro al iniciar"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Intro au démarrage"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Intro all'avvio"
+          }
+        }
+      }
+    },
     "iOS zeichnet auch bei gesperrtem Display weiter auf und zeigt dabei eine blaue Anzeige in der Statusleiste. Rechne mit etwas mehr Akkuverbrauch als ohne Tracking." : {
       "localizations" : {
         "en" : {

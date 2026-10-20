@@ -18,6 +18,7 @@ struct ProfileView: View {
     @AppStorage("hasSeenOnboarding") private var hasSeenOnboarding = false
     @AppStorage(DistanceUnit.storageKey) private var distanceUnit: DistanceUnit = .meters
     @AppStorage(AppFocus.storageKey) private var appFocus: AppFocus = .golf
+    @AppStorage(SplashContainerView.showIntroKey) private var showLaunchIntro = false
     @ObservedObject private var gc = GameCenterManager.shared
     @EnvironmentObject private var subscriptionManager: SubscriptionManager
     @State private var selectedAchievement: GCAchievement?
@@ -293,6 +294,26 @@ struct ProfileView: View {
                 .pickerStyle(.segmented)
                 .frame(width: 140)
                 .onChange(of: distanceUnit) { _, _ in Haptics.selection() }
+            }
+            .padding(.horizontal, 18)
+            .padding(.vertical, 14)
+            Divider().background(AppTheme.cardAlt).padding(.leading, 62)
+            HStack(spacing: 14) {
+                ZStack {
+                    RoundedRectangle(cornerRadius: 9)
+                        .fill(AppTheme.gold.opacity(0.18))
+                        .frame(width: 40, height: 40)
+                    Image(systemName: "sparkles")
+                        .font(.system(size: 16))
+                        .foregroundStyle(AppTheme.gold)
+                }
+                Toggle(isOn: $showLaunchIntro) {
+                    Text("Intro beim Start")
+                        .font(.subheadline)
+                        .foregroundStyle(AppTheme.text)
+                }
+                .tint(AppTheme.gold)
+                .onChange(of: showLaunchIntro) { _, _ in Haptics.selection() }
             }
             .padding(.horizontal, 18)
             .padding(.vertical, 14)

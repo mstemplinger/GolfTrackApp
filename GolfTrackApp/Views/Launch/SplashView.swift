@@ -3,7 +3,11 @@ import SwiftUI
 // MARK: - Container
 
 struct SplashContainerView: View {
-    @State private var showSplash = true
+    /// Intro-Animation beim Start – standardmäßig aus, im Profil einschaltbar.
+    static let showIntroKey = "showLaunchIntro"
+
+    // Nur beim Start gelesen: Umschalten im Profil soll das Intro nicht mitten in der Sitzung zeigen.
+    @State private var showSplash = UserDefaults.standard.bool(forKey: showIntroKey)
     @State private var showWhatsNew = false
 
     var body: some View {
@@ -21,6 +25,10 @@ struct SplashContainerView: View {
                 .transition(.opacity)
                 .zIndex(1)
             }
+        }
+        .onAppear {
+            // Ohne Intro gibt es kein onComplete – die Update-Einführung dann direkt prüfen.
+            if !showSplash { showWhatsNew = WhatsNew.evaluateOnLaunch() }
         }
         .sheet(isPresented: $showWhatsNew, onDismiss: { WhatsNew.markCurrentAsSeen() }) {
             WhatsNewView()

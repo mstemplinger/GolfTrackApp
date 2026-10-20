@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useSyncExternalStore } from "react";
 import { APK_URL, PLAY_STORE_LIVE, PLAY_STORE_URL } from "@/lib/android";
 
 /**
@@ -29,7 +29,11 @@ const COPY = {
     resend: "Code erneut senden",
     wait: (s: number) => `Neuer Code in ${s} s`,
     done: "Bestätigt! Wir schicken dir eine Mail bei jeder neuen Version.",
-    already: "Diese Adresse ist schon eingetragen – du bekommst Bescheid.",
+    already: "Mit dieser Adresse bist du schon angemeldet – du musst nichts weiter tun.",
+    pending: "Wir haben dir schon einen Code an diese Adresse geschickt. Schau in dein Postfach (auch Spam) und gib ihn hier ein.",
+    subscribed: "Du bist eingetragen",
+    subscribedAs: (email: string) => `Du bekommst die Android-Mails an ${email}.`,
+    another: "Andere Adresse eintragen",
     errors: {
       invalid_email: "Bitte prüf die E-Mail-Adresse.",
       rate_limited: "Zu viele Versuche. Bitte später noch einmal.",
@@ -62,7 +66,11 @@ const COPY = {
     resend: "Resend code",
     wait: (s: number) => `New code in ${s}s`,
     done: "Confirmed! We'll email you with every new version.",
-    already: "This address is already registered – we'll let you know.",
+    already: "This address is already registered – nothing else to do.",
+    pending: "We've already sent a code to this address. Check your inbox (and spam) and enter it here.",
+    subscribed: "You're signed up",
+    subscribedAs: (email: string) => `You'll get the Android emails at ${email}.`,
+    another: "Sign up another address",
     errors: {
       invalid_email: "Please check the email address.",
       rate_limited: "Too many attempts. Please try again later.",
@@ -80,6 +88,27 @@ const COPY = {
 } as const;
 
 type Step = "closed" | "email" | "code" | "done";
+
+const STORAGE_KEY = "golftrack.android.subscribed";
+const STORAGE_EVENT = "golftrack-android-subscribed";
+
+function readSubscribed(): string | null {
+  try {
+    return localStorage.getItem(STORAGE_KEY);
+  } catch {
+    return null;
+  }
+}
+
+/** Mehrere Knöpfe auf einer Seite (oben und unten) sollen gemeinsam umspringen. */
+function subscribeStorage(onChange: () => void): () => void {
+  window.addEventListener("storage", onChange);
+  window.addEventListener(STORAGE_EVENT, onChange);
+  return () => {
+    window.removeEventListener("storage", onChange);
+    window.removeEventListener(STORAGE_EVENT, onChange);
+  };
+}
 
 export function AndroidCta({
   lang,
@@ -105,6 +134,17 @@ export function AndroidCta({
   const [note, setNote] = useState<string | null>(null);
   /** Sekunden bis zur nächsten erlaubten Code-Mail (Server erlaubt eine pro Minute). */
   const [cooldown, setCooldown] = useState(0);
+  /** In diesem Browser schon angemeldete Adresse – dann kein zweites Formular. */
+  const subscribed = useSyncExternalStore(subscribeStorage, readSubscribed, () => null);
+
+  function remember(address: string) {
+    try {
+      localStorage.setItem(STORAGE_KEY, address);
+      window.dispatchEvent(new Event(STORAGE_EVENT));
+    } catch {
+      /* privater Modus o. Ä. – dann eben ohne Merken */
+    }
+  }
 
   useEffect(() => {
     if (cooldown <= 0) return;
@@ -124,17 +164,20 @@ export function AndroidCta({
     }
   }
 
-  async function sendCode() {
+  async function sendCode(resend = false) {
     setBusy(true);
     setError(null);
-    const r = await post("/api/android/waitlist", { email, lang, marketing, website: trap });
+    setNote(null);
+    const r = await post("/api/android/waitlist", { email, lang, marketing, resend, website: trap });
     setBusy(false);
     if (r.retryAfter) setCooldown(r.retryAfter);
     if (r.error) return setError(c.errors[r.error] ?? c.errors.send_failed);
     if (r.status === "already_confirmed") {
+      remember(email.trim().toLowerCase());
       setNote(c.already);
       return setStep("done");
     }
+    if (r.status === "pending") setNote(c.pending);
     setCode("");
     setStep("code");
   }
@@ -145,6 +188,7 @@ export function AndroidCta({
     const r = await post("/api/android/waitlist/confirm", { email, code });
     setBusy(false);
     if (r.error) return setError(c.errors[r.error] ?? c.errors.wrong);
+    remember(email.trim().toLowerCase());
     setNote(c.done);
     setStep("done");
   }
@@ -172,12 +216,21 @@ export function AndroidCta({
         ) : (
           <button
             type="button"
-            onClick={() => setStep(step === "closed" ? "email" : "closed")}
+            onClick={() => {
+              if (step !== "closed") return setStep("closed");
+              if (subscribed) {
+                setNote(c.subscribedAs(subscribed));
+                return setStep("done");
+              }
+              setStep("email");
+            }}
             aria-expanded={step !== "closed"}
             className={pill}
           >
             <PlayMark />
-            {focus === "updates" ? (
+            {subscribed ? (
+              <span className="text-brass">✓ {c.subscribed}</span>
+            ) : focus === "updates" ? (
               <span className="text-brass">{c.updates}</span>
             ) : (
               <span>
@@ -250,7 +303,7 @@ export function AndroidCta({
               }}
               className="flex flex-col gap-3"
             >
-              <p className="text-cream/70">{c.codeLead(email)}</p>
+              <p className="text-cream/70">{note ?? c.codeLead(email)}</p>
               <div className="flex flex-col gap-2 min-[420px]:flex-row">
                 <label className="sr-only" htmlFor="android-code">{c.code}</label>
                 <input
@@ -270,7 +323,7 @@ export function AndroidCta({
                 </button>
               </div>
               <div className="flex gap-4 text-xs text-cream/60">
-                <button type="button" className="underline underline-offset-4 hover:text-brass" onClick={() => void sendCode()} disabled={busy || cooldown > 0}>
+                <button type="button" className="underline underline-offset-4 hover:text-brass" onClick={() => void sendCode(true)} disabled={busy || cooldown > 0}>
                   {cooldown > 0 ? c.wait(cooldown) : c.resend}
                 </button>
                 <button type="button" className="underline underline-offset-4 hover:text-brass" onClick={() => setStep("email")}>
@@ -280,7 +333,22 @@ export function AndroidCta({
             </form>
           ) : null}
 
-          {step === "done" ? <p className="text-brass">{note}</p> : null}
+          {step === "done" ? (
+            <div className="flex flex-col gap-3">
+              <p className="text-brass">{note}</p>
+              <button
+                type="button"
+                className="w-fit text-xs text-cream/60 underline underline-offset-4 hover:text-brass"
+                onClick={() => {
+                  setEmail("");
+                  setNote(null);
+                  setStep("email");
+                }}
+              >
+                {c.another}
+              </button>
+            </div>
+          ) : null}
           {error ? <p className="mt-3 text-[#ff8a7a]" role="alert">{error}</p> : null}
         </div>
       ) : null}

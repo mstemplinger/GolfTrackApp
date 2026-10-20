@@ -198,18 +198,29 @@ async function send(to: string, [subject, content]: [string, EmailContent]): Pro
 const langOf = (row: Row): Lang => (row.lang === "en" ? "en" : "de");
 
 export type RequestResult =
-  | { status: "sent" | "already_confirmed" | "too_many_codes" }
+  | { status: "sent" | "already_confirmed" | "pending" | "too_many_codes" }
   | { status: "cooldown"; retryAfter: number };
 
 /**
  * Legt die Adresse an (oder findet sie) und schickt einen neuen Code.
  * `marketing`: freiwilliges Häkchen für Neuigkeiten und Angebote.
  */
-export async function requestCode(rawEmail: string, lang: Lang, marketing = false): Promise<RequestResult> {
+export async function requestCode(
+  rawEmail: string,
+  lang: Lang,
+  marketing = false,
+  resend = false,
+): Promise<RequestResult> {
   await ensureSchema();
   const email = normalizeEmail(rawEmail);
   let row = await queryOne<Row>("SELECT * FROM android_waitlist WHERE email = $1", [email]);
+  // Schon angemeldet: keine Mail, nur Bescheid.
   if (row?.confirmed_at) return { status: "already_confirmed" };
+  // Angefangen, Code noch gültig: denselben Code eingeben lassen statt einen
+  // zweiten zu schicken. Neuer Code nur auf ausdrücklichen Wunsch („erneut senden“).
+  if (!resend && row?.code_hash && row.code_expires_at && new Date(row.code_expires_at).getTime() > Date.now()) {
+    return { status: "pending" };
+  }
   if (row?.last_code_sent_at) {
     const waited = (Date.now() - new Date(row.last_code_sent_at).getTime()) / 1000;
     if (waited < RESEND_COOLDOWN_S) return { status: "cooldown", retryAfter: Math.ceil(RESEND_COOLDOWN_S - waited) };

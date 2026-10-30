@@ -13,6 +13,9 @@ final class Round {
 
     var playerNamesRaw: String = ""
 
+    /// Schlägerauswahl nach Plus für den Rest der Runde ausgeblendet.
+    var hidesClubPicker: Bool = false
+
     @Relationship(deleteRule: .cascade, inverse: \HoleScore.round)
     var holeScores: [HoleScore] = []
 

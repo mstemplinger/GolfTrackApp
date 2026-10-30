@@ -144,7 +144,10 @@ struct HoleScoringView: View {
                 strokeNumber: pendingShotNumber,
                 gpsLocation: pendingGPSLocation,
                 holeScore: score,
-                onPutterSelected: { score.putts += 1 }
+                onPutterSelected: { score.putts += 1 },
+                onHideForRound: {
+                    withAnimation(.snappy) { round.hidesClubPicker = true }
+                }
             )
             .presentationDetents([.medium, .large])
             .presentationDragIndicator(.visible)
@@ -558,7 +561,7 @@ struct HoleScoringView: View {
                     }
                     pendingGPSLocation = userLocation
                     pendingShotNumber = shotNum
-                    if !clubs.isEmpty { showClubPicker = true }
+                    if !clubs.isEmpty && !round.hidesClubPicker { showClubPicker = true }
                 } label: {
                     Image(systemName: "plus.circle.fill")
                         .font(.system(size: 48))
@@ -569,6 +572,23 @@ struct HoleScoringView: View {
         .frame(maxWidth: .infinity)
         .padding(.vertical, 20)
         .background(AppTheme.card, in: RoundedRectangle(cornerRadius: 20))
+        .overlay(alignment: .topTrailing) {
+            if round.hidesClubPicker && !clubs.isEmpty {
+                Button {
+                    Haptics.selection()
+                    withAnimation(.snappy) { round.hidesClubPicker = false }
+                } label: {
+                    Image(systemName: "figure.golf")
+                        .font(.system(size: 14, weight: .semibold))
+                        .foregroundStyle(AppTheme.gold)
+                        .frame(width: 32, height: 32)
+                        .background(AppTheme.gold.opacity(0.15), in: Circle())
+                }
+                .padding(10)
+                .accessibilityLabel("Schlägerauswahl einblenden")
+                .transition(.scale.combined(with: .opacity))
+            }
+        }
     }
 
     // MARK: - Secondary Stats Card
@@ -732,7 +752,7 @@ struct HoleScoringView: View {
         insertShot(number: 1, at: c)
         pendingGPSLocation = loc
         pendingShotNumber = 1
-        if !clubs.isEmpty { showClubPicker = true }
+        if !clubs.isEmpty && !round.hidesClubPicker { showClubPicker = true }
     }
 
     private func insertShot(number: Int, at coordinate: CLLocationCoordinate2D) {
@@ -1042,6 +1062,7 @@ private struct ClubPickerSheet: View {
     let gpsLocation: CLLocation?
     @Bindable var holeScore: HoleScore
     let onPutterSelected: () -> Void
+    let onHideForRound: () -> Void
 
     @Environment(\.dismiss) private var dismiss
     @Environment(\.modelContext) private var context
@@ -1094,6 +1115,17 @@ private struct ClubPickerSheet: View {
                         dismiss()
                     }
                         .foregroundStyle(AppTheme.textSec)
+                }
+                ToolbarItem(placement: .primaryAction) {
+                    Button {
+                        Haptics.tap()
+                        onHideForRound()
+                        dismiss()
+                    } label: {
+                        Image(systemName: "eye.slash")
+                    }
+                    .foregroundStyle(AppTheme.textSec)
+                    .accessibilityLabel("Schlägerauswahl für diese Runde ausblenden")
                 }
             }
         }

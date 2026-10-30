@@ -1,0 +1,126 @@
+{
+  "title": "GolfTrack Promo",
+  "format": "portrait",
+  "style": "keynote",
+  "font": "Inter",
+  "brand": {
+    "name": "GOLFTRACK",
+    "accent": "#d9b13b",
+    "tagline": "DEINE RUNDE, LOCH FÜR LOCH",
+    "logo": "material/logo.png",
+    "cta": "Kostenlos im App Store",
+    "url": "golftrack.app"
+  },
+  "voice": {
+    "voice": "weiblich-standard",
+    "stability": 0.38,
+    "style": 0.45,
+    "speed": 1.05,
+    "say_voice": "Anna"
+  },
+  "pause": 0.12,
+  "min_scene": 0.9,
+  "lead_in": 0.35,
+  "bpm": 96,
+  "scenes": [
+    {
+      "type": "flash",
+      "say": "Bleistift weg.",
+      "text": "Bleistift / *weg*"
+    },
+    {
+      "type": "words",
+      "say": "Du zählst deine Schläge noch auf Papier?",
+      "text": "Schläge noch / auf *Papier*?",
+      "min": 1.6
+    },
+    {
+      "type": "words",
+      "say": "Und am Ende weiß keiner mehr, wie viele es waren.",
+      "text": "Wie viele / es *waren*?",
+      "min": 1.8
+    },
+    {
+      "type": "big",
+      "say": "Sieben? Acht?",
+      "text": "7? 8?"
+    },
+    {
+      "type": "grid",
+      "say": "Alle schreiben mit. Auf zerknitterten Karten.",
+      "text": "zerknitterte *Karten*",
+      "icon": "doc",
+      "floor": true,
+      "highlight": false
+    },
+    {
+      "type": "grid",
+      "say": "Alle, außer einer.",
+      "text": "Alle, außer *einer*",
+      "icon": "doc",
+      "floor": true,
+      "continue": true,
+      "sfx": "impact"
+    },
+    {
+      "type": "sphere",
+      "say": "Deshalb gibt's GolfTrack.",
+      "text": "Deshalb gibt's *GolfTrack*",
+      "label": "GOLFTRACK",
+      "drop": true
+    },
+    {
+      "type": "phone",
+      "say": "Du tippst einfach deine Schläge ein. Loch für Loch.",
+      "text": "Loch für *Loch*",
+      "image": "material/19-live-scorecard.png"
+    },
+    {
+      "type": "phone",
+      "say": "Jeder Schlag landet auf der Karte.",
+      "text": "Jeder Schlag / auf der *Karte*",
+      "image": "material/09-schlagkarte.png"
+    },
+    {
+      "type": "big",
+      "say": "Mit Schlagweite.",
+      "text": "Schlagweite",
+      "bg": "flash"
+    },
+    {
+      "type": "counter",
+      "say": "Siebenundneunzig Golfplätze sind schon drin.",
+      "value": 97,
+      "label": "Golfplätze schon drin"
+    },
+    {
+      "type": "phone",
+      "say": "Und dein Handicap rechnet die App selbst aus.",
+      "text": "Dein Handicap / rechnet die *App*",
+      "image": "material/02-profil-handicap.png",
+      "scroll": 0
+    },
+    {
+      "type": "big",
+      "say": "Gratis.",
+      "text": "GRATIS"
+    },
+    {
+      "type": "words",
+      "say": "Ohne Konto. Ohne Anmeldung.",
+      "text": "Ohne Konto. / Ohne *Anmeldung*."
+    },
+    {
+      "type": "chat",
+      "say": "Was soll GolfTrack noch können? Schreib's in die Kommentare.",
+      "text": "Schreib's in die *Kommentare*",
+      "typed": "GolfTrack soll noch …",
+      "min": 2.4
+    },
+    {
+      "type": "logo",
+      "say": "",
+      "hold": 3
+    }
+  ]
+}

@@ -159,7 +159,6 @@ struct ProfileView: View {
                         .padding(24)
                         .cardStyle()
                         .padding(.horizontal)
-                        .tutorialAnchor(.profileHeader)
 
                         // Stats summary
                         HStack(spacing: 12) {
@@ -172,7 +171,6 @@ struct ProfileView: View {
                         // WHS Handicap Card
                         handicapCard
                             .padding(.horizontal)
-                            .tutorialAnchor(.handicapCard)
 
                         // Dokumente (Mitgliedskarte, Belege)
                         DocumentsCard()

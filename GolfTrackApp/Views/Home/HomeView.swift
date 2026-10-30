@@ -10,7 +10,6 @@ struct HomeView: View {
     @AppStorage(AppFocus.storageKey) private var appFocus: AppFocus = .golf
 
     @State private var showNewRound      = false
-    @State private var showTutorial      = false
     @State private var showAssistant     = false
     @State private var showCaddyPaywall  = false
     @EnvironmentObject private var subscriptionManager: SubscriptionManager
@@ -193,7 +192,6 @@ struct HomeView: View {
                     VStack(spacing: 20) {
                         topBar
                         greetingCard
-                            .tutorialAnchor(.dashboardCards)
 
                         if let platz = nearby.suggestion {
                             nearbyCard(platz)
@@ -239,7 +237,6 @@ struct HomeView: View {
             .task { await nearby.refreshSuggestion() }
             // iPad: vollständige Seite; iPhone: Sheet
             .fullScreenCover(isPresented: $showNewRound) { NewRoundView().preferredColorScheme(.dark) }
-            .sheet(isPresented: $showTutorial) { TutorialView().preferredColorScheme(.dark) }
             .sheet(isPresented: $showWeatherForecast) {
                 WeatherForecastView(weather: weather).preferredColorScheme(.dark)
             }
@@ -345,7 +342,6 @@ struct HomeView: View {
                 .goldButton()
         }
         .padding(.horizontal)
-        .tutorialAnchor(.newRoundButton)
 
         HStack(spacing: 12) {
             NavigationLink {
@@ -385,7 +381,6 @@ struct HomeView: View {
                 .goldButton()
         }
         .padding(.horizontal)
-        .tutorialAnchor(.newRoundButton)
 
         if !minigolfHistory.isEmpty { minigolfHistoryCard }
 
@@ -669,16 +664,6 @@ struct HomeView: View {
                     .foregroundStyle(AppTheme.text)
             }
             Spacer()
-            Button {
-                Haptics.tap()
-                showTutorial = true
-            } label: {
-                Image(systemName: "lightbulb.fill")
-                    .font(.title3)
-                    .foregroundStyle(AppTheme.gold)
-                    .padding(10)
-                    .background(AppTheme.card, in: Circle())
-            }
         }
         .padding(.horizontal)
     }

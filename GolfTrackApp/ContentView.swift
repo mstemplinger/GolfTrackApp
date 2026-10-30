@@ -19,7 +19,6 @@ struct ContentView: View {
     @AppStorage(AppFocus.chosenKey)  private var hasChosenAppFocus = false
     @AppStorage(AppFocus.storageKey) private var appFocus: AppFocus = .golf
     @State private var selectedTab = 0
-    @State private var tutorialFrames: [String: CGRect] = [:]
     /// Über QR-Code / Universal Link gestartete Anlage – zeigt sofort den
     /// Begrüßungs- und Startbildschirm der Minigolfrunde.
     @State private var scannedMinigolfCourse: MinigolfCourseEntry?
@@ -65,13 +64,10 @@ struct ContentView: View {
             }
             .tint(AppTheme.gold)
             .onChange(of: selectedTab) { _, _ in Haptics.selection() }
-            .onPreferenceChange(TutorialFrameKey.self) { frames in
-                tutorialFrames = frames
-            }
 
             // Tutorial erst nach getroffener Schwerpunkt-Auswahl
             if hasChosenAppFocus && !hasSeenOnboarding {
-                OnboardingOverlayView(selectedTab: $selectedTab, frames: tutorialFrames)
+                GolfOnboardingView()
                     .transition(.opacity)
             }
 
@@ -81,8 +77,6 @@ struct ContentView: View {
                     .transition(.opacity)
             }
         }
-        // ZStack bekommt den coordinateSpace – gleich für Overlay und Tab-Inhalte
-        .coordinateSpace(name: "screen")
         .onAppear(perform: migrateExistingInstall)
         // Runden aus dem App Clip einsammeln. Muss nach dem Start laufen, weil
         // erst dann ein Datenkontext bereitsteht; der Katalog wird abgewartet,

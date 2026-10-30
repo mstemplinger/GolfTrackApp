@@ -3741,6 +3741,34 @@
         }
       }
     },
+    "14 Schläger" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "14 clubs"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "14 palos"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "14 clubs"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "14 mazze"
+          }
+        }
+      }
+    },
     "14 Tagen" : {
       "localizations" : {
         "en" : {
@@ -3821,6 +3849,62 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "18 buche"
+          }
+        }
+      }
+    },
+    "18 Löcher · Par 72" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "18 holes · Par 72"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "18 hoyos · Par 72"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "18 trous · Par 72"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "18 buche · Par 72"
+          }
+        }
+      }
+    },
+    "18 Spielformen" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "18 game formats"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "18 modalidades"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "18 formules de jeu"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "18 formule di gioco"
           }
         }
       }
@@ -4577,6 +4661,34 @@
         }
       }
     },
+    "Abschlag & Grün erkannt" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tee & green detected"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Salida y green detectados"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Départ et green détectés"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tee e green riconosciuti"
+          }
+        }
+      }
+    },
     "Abschlag setzen" : {
       "localizations" : {
         "de" : {
@@ -4945,6 +5057,34 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Albatros"
+          }
+        }
+      }
+    },
+    "Alle" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "All"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Todas"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Toutes"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tutte"
           }
         }
       }
@@ -5326,6 +5466,34 @@
         }
       }
     },
+    "Alle Golfregeln mit Skizzen" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "All golf rules with diagrams"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Todas las reglas con esquemas"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Toutes les règles avec schémas"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tutte le regole con schemi"
+          }
+        }
+      }
+    },
     "Alle Kategorien (%lld Fragen)" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -5591,6 +5759,34 @@
         }
       }
     },
+    "Alles Wichtige auf einen Blick" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Everything important at a glance"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lo importante de un vistazo"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "L'essentiel en un coup d'œil"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tutto l'essenziale a colpo d'occhio"
+          }
+        }
+      }
+    },
     "Am Abschlag und am Grün stehst du still, dazwischen bewegst du dich. Aus dem ersten und letzten längeren Stillstand pro Loch werden Abschlag und Grün geschätzt. Getrackte Schläge und selbst gesetzte Pins zählen stärker als die Laufspur." : {
       "localizations" : {
         "en" : {
@@ -5615,6 +5811,34 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Al tee e sul green stai fermo, nel mezzo ti muovi. Il primo e l'ultimo arresto prolungato di ogni buca servono a stimare tee e green. I colpi registrati e le bandiere impostate da te contano più del tracciato."
+          }
+        }
+      }
+    },
+    "Ambitionierter Golfer" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ambitious golfer"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Golfista ambicioso"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Golfeur ambitieux"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Golfista ambizioso"
           }
         }
       }
@@ -6097,6 +6321,34 @@
         }
       }
     },
+    "Apple Watch" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Apple Watch"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Apple Watch"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Apple Watch"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Apple Watch"
+          }
+        }
+      }
+    },
     "Ass-Jäger" : {
       "localizations" : {
         "de" : {
@@ -6165,6 +6417,34 @@
         }
       }
     },
+    "Auch auf der Watch" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Works on Apple Watch"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "También en el Watch"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aussi sur la Watch"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Anche su Watch"
+          }
+        }
+      }
+    },
     "Auch unterwegs auf dem Platz nutzbar" : {
       "localizations" : {
         "en" : {
@@ -6189,6 +6469,34 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Utilizzabile anche sul campo"
+          }
+        }
+      }
+    },
+    "Audio-Lektionen für dein Spiel" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Audio lessons for your game"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lecciones de audio para tu juego"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Leçons audio pour ton jeu"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lezioni audio per il tuo gioco"
           }
         }
       }
@@ -6251,6 +6559,62 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Lezioni audio adatte alle tue statistiche attuali"
+          }
+        }
+      }
+    },
+    "Audio-Training" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Audio training"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Entrenamiento en audio"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Entraînement audio"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Allenamento audio"
+          }
+        }
+      }
+    },
+    "Audio-Trainings für Schwung, kurzes Spiel und Kopf, alle Golfregeln mit Skizzen und ein Quiz, mit dem du dich auf die Platzreife vorbereitest." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Audio training for your swing, short game and mindset, every golf rule with diagrams and a quiz to prepare for your golf license."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Entrenamientos en audio para el swing, el juego corto y la mente, todas las reglas con esquemas y un cuestionario para preparar tu licencia."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Des entraînements audio pour le swing, le petit jeu et le mental, toutes les règles avec schémas et un quiz pour préparer ta carte verte."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Allenamenti audio per swing, gioco corto e mente, tutte le regole con schemi e un quiz per prepararti all'abilitazione."
           }
         }
       }
@@ -6795,6 +7159,34 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "B"
+          }
+        }
+      }
+    },
+    "Bag" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bag"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bolsa"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sac"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sacca"
           }
         }
       }
@@ -7439,6 +7831,34 @@
         }
       }
     },
+    "Bereit für die erste Runde" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ready for your first round"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Listo para tu primera vuelta"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Prêt pour ta première partie"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pronto per il primo giro"
+          }
+        }
+      }
+    },
     "Bereits gespeichert: %lld von %lld Löchern." : {
       "localizations" : {
         "de" : {
@@ -7503,6 +7923,34 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Impara a puttare meglio"
+          }
+        }
+      }
+    },
+    "Besser werden – auch zuhause" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Get better – even at home"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mejora – también en casa"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Progresser – même à la maison"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Migliorare – anche a casa"
           }
         }
       }
@@ -8143,6 +8591,34 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Attiva nelle Impostazioni di iPhone."
+          }
+        }
+      }
+    },
+    "Blau" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Blue"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Azul"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bleu"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Blu"
           }
         }
       }
@@ -8972,6 +9448,62 @@
         }
       }
     },
+    "Dein Golf-Zuhause" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Your golf home"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tu casa del golf"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ton repaire golfique"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "La tua casa del golf"
+          }
+        }
+      }
+    },
+    "Dein Golf. Alles in einer App." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Your golf. All in one app."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tu golf. Todo en una app."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ton golf. Tout dans une app."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Il tuo golf. Tutto in un'app."
+          }
+        }
+      }
+    },
     "Dein Name" : {
       "localizations" : {
         "en" : {
@@ -9292,6 +9824,62 @@
         }
       }
     },
+    "Der lange Schwung" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The full swing"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "El swing largo"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Le grand swing"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lo swing lungo"
+          }
+        }
+      }
+    },
+    "Der Weg aufs Grün" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Finding the green"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "El camino al green"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Le chemin vers le green"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "La strada verso il green"
+          }
+        }
+      }
+    },
     "Die 28 genormten Bahnen" : {
       "localizations" : {
         "en" : {
@@ -9372,6 +9960,34 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Le regole del golf attuali sono in vigore dal 1° gennaio 2023. Le regole locali del campo possono differire su singoli punti."
+          }
+        }
+      }
+    },
+    "Die App lernt deinen Platz" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The app learns your course"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "La app aprende tu campo"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "L'app apprend ton parcours"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "L'app impara il tuo campo"
           }
         }
       }
@@ -10271,6 +10887,34 @@
         }
       }
     },
+    "Du hast drei Möglichkeiten, jeweils mit einem Strafschlag: Schlag wiederholen, auf der Linie zur Fahne zurückgehen oder seitlich innerhalb von zwei Schlägerlängen droppen (Regel 17)." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "You have three options, each with a one-stroke penalty: replay the shot, go back on the line to the flag, or drop within two club-lengths to the side (Rule 17)."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tienes tres opciones, cada una con un golpe de penalidad: repetir el golpe, retroceder en línea con la bandera o dropar lateralmente a dos palos (Regla 17)."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tu as trois options, chacune avec un coup de pénalité : rejouer le coup, reculer sur la ligne du drapeau ou dropper latéralement à deux longueurs de club (Règle 17)."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hai tre opzioni, ognuna con un colpo di penalità: ripetere il colpo, arretrare sulla linea della bandiera o droppare lateralmente entro due lunghezze di mazza (Regola 17)."
+          }
+        }
+      }
+    },
     "Du kannst das später jederzeit im Profil ändern." : {
       "localizations" : {
         "en" : {
@@ -10793,6 +11437,34 @@
         }
       }
     },
+    "Einfach fragen" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Just ask"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Solo pregunta"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Demande simplement"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Chiedi e basta"
+          }
+        }
+      }
+    },
     "Einheit" : {
       "localizations" : {
         "en" : {
@@ -11051,6 +11723,62 @@
         }
       }
     },
+    "Einstellungen im Profil" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Settings in Profile"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ajustes en el perfil"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Réglages dans le profil"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Impostazioni nel profilo"
+          }
+        }
+      }
+    },
+    "Einzel" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Singles"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Individual"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Simple"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Singolo"
+          }
+        }
+      }
+    },
     "Einzelne Löcher kosten dir zu viele Schläge. Gleichmäßiges Tempo hilft bei Drucksituationen." : {
       "localizations" : {
         "de" : {
@@ -11249,6 +11977,34 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Rimuovi"
+          }
+        }
+      }
+    },
+    "Entfernung zur Fahne" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Distance to the flag"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Distancia a la bandera"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Distance au drapeau"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Distanza dalla bandiera"
           }
         }
       }
@@ -11939,6 +12695,62 @@
         }
       }
     },
+    "Fahne per Tipp" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Flag with one tap"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bandera con un toque"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Drapeau en un geste"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bandiera con un tocco"
+          }
+        }
+      }
+    },
+    "Fahne setzen, Schläge aufzeichnen: Jede Weite landet bei deinem Schläger. So werden die Empfehlungen mit jeder Runde genauer." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Set the flag, record your shots: every distance is credited to the club you used, so the recommendations get more precise with every round."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Coloca la bandera y registra tus golpes: cada distancia se asigna a tu palo, así las recomendaciones mejoran con cada vuelta."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Place le drapeau, enregistre tes coups : chaque distance est attribuée à ton club, et les recommandations s'affinent à chaque partie."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Posiziona la bandiera, registra i colpi: ogni distanza va alla tua mazza, così i consigli diventano più precisi a ogni giro."
+          }
+        }
+      }
+    },
     "Fairway" : {
       "localizations" : {
         "de" : {
@@ -12237,6 +13049,34 @@
         }
       }
     },
+    "Fit für die Platzreife" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ready for your golf license"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Listo para la licencia"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Prêt pour la carte verte"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pronto per l'abilitazione"
+          }
+        }
+      }
+    },
     "Fortsetzen" : {
       "localizations" : {
         "en" : {
@@ -12261,6 +13101,34 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Riprendi"
+          }
+        }
+      }
+    },
+    "Frag einfach deinen Caddy" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Just ask your Caddy"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pregunta a tu Caddy"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Demande à ton Caddy"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Chiedi al tuo Caddy"
           }
         }
       }
@@ -12902,6 +13770,34 @@
         }
       }
     },
+    "Gelassen bis zum letzten Loch" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Calm to the last hole"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tranquilo hasta el último hoyo"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Serein jusqu'au dernier trou"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Calmo fino all'ultima buca"
+          }
+        }
+      }
+    },
     "gelaufen" : {
       "localizations" : {
         "en" : {
@@ -12926,6 +13822,34 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "percorso"
+          }
+        }
+      }
+    },
+    "Gelb" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Yellow"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Amarillo"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Jaune"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Giallo"
           }
         }
       }
@@ -13788,6 +14712,34 @@
         }
       }
     },
+    "Golf-Wetter stündlich" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hourly golf weather"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tiempo de golf por horas"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Météo golf heure par heure"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Meteo golf ora per ora"
+          }
+        }
+      }
+    },
     "Golf-Wetter-Grenzen anpassen" : {
       "localizations" : {
         "en" : {
@@ -14276,6 +15228,34 @@
         }
       }
     },
+    "GPS-Distanzen" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "GPS distances"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Distancias GPS"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Distances GPS"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Distanze GPS"
+          }
+        }
+      }
+    },
     "GPS-Punkte" : {
       "localizations" : {
         "en" : {
@@ -14596,6 +15576,34 @@
         }
       }
     },
+    "Handicap sofort aktuell" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Handicap updated instantly"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hándicap al instante"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Handicap à jour aussitôt"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Handicap subito aggiornato"
+          }
+        }
+      }
+    },
     "Handicap-Daten" : {
       "localizations" : {
         "de" : {
@@ -14626,6 +15634,90 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Dati handicap"
+          }
+        }
+      }
+    },
+    "Handicap-Verlauf" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Handicap history"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Evolución del hándicap"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Évolution du handicap"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Andamento handicap"
+          }
+        }
+      }
+    },
+    "Handicap-Verlauf, Bestleistungen und dein Bag mit den echten Weiten jedes Schlägers. Die Mitgliedskarte hast du ebenfalls immer dabei." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Handicap history, personal bests and your bag with the real distance of every club. Your membership card is always with you, too."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Evolución del hándicap, mejores marcas y tu bolsa con la distancia real de cada palo. Tu tarjeta de socio también va siempre contigo."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Évolution du handicap, records et ton sac avec la distance réelle de chaque club. Ta carte de membre est toujours avec toi."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Andamento handicap, record personali e la tua sacca con la distanza reale di ogni mazza. Anche la tessera del circolo è sempre con te."
+          }
+        }
+      }
+    },
+    "Handicap, Bag, Statistik, Einstellungen" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Handicap, bag, stats, settings"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hándicap, bolsa, estadísticas, ajustes"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Handicap, sac, statistiques, réglages"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Handicap, sacca, statistiche, impostazioni"
           }
         }
       }
@@ -15108,6 +16200,34 @@
         }
       }
     },
+    "Hören statt lesen" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Listen, don't read"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Escucha en vez de leer"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Écouter plutôt que lire"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ascolta invece di leggere"
+          }
+        }
+      }
+    },
     "Ich habe gespielt – behalten" : {
       "localizations" : {
         "en" : {
@@ -15160,6 +16280,34 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Incluso"
+          }
+        }
+      }
+    },
+    "Im Profil neu starten" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Restart in Profile"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Reinicia en el perfil"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Relancer dans le profil"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Riavvia dal profilo"
           }
         }
       }
@@ -15375,6 +16523,34 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "di fila"
+          }
+        }
+      }
+    },
+    "In Sekunden auf der Runde" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "On the course in seconds"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "En la vuelta en segundos"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "En partie en quelques secondes"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "In campo in pochi secondi"
           }
         }
       }
@@ -15659,6 +16835,34 @@
         }
       }
     },
+    "Jeder Schlag auf der Karte" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Every shot on the map"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cada golpe en el mapa"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Chaque coup sur la carte"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ogni colpo sulla mappa"
+          }
+        }
+      }
+    },
     "Jeder Spieler hat eine eigene Zeile. Nach jedem Schlag auf + tippen – verzählt? Das Minus korrigiert." : {
       "localizations" : {
         "en" : {
@@ -15711,6 +16915,34 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Disdici quando vuoi · Nessun vincolo"
+          }
+        }
+      }
+    },
+    "Jederzeit überspringbar" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Skip anytime"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Puedes saltarlo"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Passable à tout moment"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Salta quando vuoi"
           }
         }
       }
@@ -18238,6 +19470,62 @@
         }
       }
     },
+    "Mein Bag" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "My bag"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mi bolsa"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mon sac"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "La mia sacca"
+          }
+        }
+      }
+    },
+    "Mein Ball liegt im Wasserhindernis. Was darf ich jetzt tun?" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "My ball is in the water hazard. What can I do now?"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mi bola está en el obstáculo de agua. ¿Qué puedo hacer?"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ma balle est dans l'obstacle d'eau. Que puis-je faire ?"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "La mia palla è nell'ostacolo d'acqua. Cosa posso fare?"
+          }
+        }
+      }
+    },
     "Mein Standort" : {
       "localizations" : {
         "en" : {
@@ -18262,6 +19550,34 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "La mia posizione"
+          }
+        }
+      }
+    },
+    "Meine Schläger" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "My clubs"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mis palos"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mes clubs"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Le mie mazze"
           }
         }
       }
@@ -18414,6 +19730,34 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Ti avvisa quando arrivi a un campo dell'elenco"
+          }
+        }
+      }
+    },
+    "Mental" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mental"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mental"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mental"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mentale"
           }
         }
       }
@@ -18788,6 +20132,34 @@
         }
       }
     },
+    "Mit deiner Erlaubnis merkt sich GolfTrack deinen Weg über den Platz und erkennt daraus Abschlag, Grün und Fairway-Verlauf jedes Lochs." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "With your permission, GolfTrack remembers your path across the course and works out the tee, green and fairway of every hole."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Con tu permiso, GolfTrack recuerda tu recorrido por el campo y detecta la salida, el green y la calle de cada hoyo."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Avec ton accord, GolfTrack mémorise ton chemin sur le parcours et en déduit le départ, le green et le tracé du fairway de chaque trou."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Con il tuo permesso, GolfTrack memorizza il tuo percorso sul campo e ne ricava tee, green e andamento del fairway di ogni buca."
+          }
+        }
+      }
+    },
     "Mit der Familienfreigabe teilen" : {
       "localizations" : {
         "en" : {
@@ -18874,6 +20246,90 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Connetti a Game Center"
+          }
+        }
+      }
+    },
+    "Mit Regelbezug" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Backed by the rules"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Con base en las reglas"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Avec la règle à l'appui"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Con riferimento alle regole"
+          }
+        }
+      }
+    },
+    "Mitgliedskarte" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Membership card"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tarjeta de socio"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Carte de membre"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tessera del circolo"
+          }
+        }
+      }
+    },
+    "Mitgliedskarte dabei" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Membership card on hand"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tarjeta de socio a mano"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Carte de membre sur toi"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tessera sempre con te"
           }
         }
       }
@@ -19055,6 +20511,34 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Domani"
+          }
+        }
+      }
+    },
+    "Nach der Runde steht dein WHS-Handicap fest. Dazu Statistiken, eine Scorekarte zum Teilen und Audio-Lektionen passend zu dieser Runde." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "After the round your WHS handicap is ready. Plus stats, a scorecard to share and audio lessons tailored to that round."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Al terminar la vuelta tu hándicap WHS está listo. Además, estadísticas, una tarjeta para compartir y lecciones de audio para esa vuelta."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Après la partie, ton handicap WHS est calculé. En plus : statistiques, une carte de score à partager et des leçons audio adaptées à cette partie."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dopo il giro il tuo handicap WHS è pronto. In più statistiche, uno score da condividere e lezioni audio adatte a quel giro."
           }
         }
       }
@@ -20284,6 +21768,34 @@
         }
       }
     },
+    "Nimm dein 7er-Eisen – damit schlägst du laut deinem Bag im Schnitt 140 m." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Take your 7 iron – according to your bag you hit it 140 m on average."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Coge tu hierro 7: según tu bolsa, con él golpeas 140 m de media."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Prends ton fer 7 – d'après ton sac, tu le tapes en moyenne à 140 m."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Prendi il ferro 7: secondo la tua sacca lo tiri in media a 140 m."
+          }
+        }
+      }
+    },
     "Noch %lld m zum Loch" : {
       "localizations" : {
         "en" : {
@@ -20308,6 +21820,34 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Ancora %lld m alla buca"
+          }
+        }
+      }
+    },
+    "Noch 142 m zum Loch" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "142 m to the hole"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Quedan 142 m al hoyo"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Encore 142 m jusqu'au trou"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ancora 142 m alla buca"
           }
         }
       }
@@ -20864,6 +22404,34 @@
         }
       }
     },
+    "Nur mit Erlaubnis" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Only with permission"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Solo con permiso"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Seulement avec accord"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Solo con permesso"
+          }
+        }
+      }
+    },
     "Nur während einer laufenden Runde" : {
       "localizations" : {
         "en" : {
@@ -21090,6 +22658,34 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Ø su 1 misurazione"
+          }
+        }
+      }
+    },
+    "Ø Putts" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Avg. putts"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Putts Ø"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Putts moy."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Putt medi"
           }
         }
       }
@@ -21767,6 +23363,34 @@
         }
       }
     },
+    "Partner" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Partner"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pareja"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Partenaire"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Coppia"
+          }
+        }
+      }
+    },
     "Passend zu dieser Runde" : {
       "localizations" : {
         "de" : {
@@ -22213,6 +23837,34 @@
         }
       }
     },
+    "Platz in der Nähe erkannt" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nearby course detected"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Campo cercano detectado"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Parcours à proximité détecté"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Campo vicino riconosciuto"
+          }
+        }
+      }
+    },
     "Platz nicht dabei?" : {
       "localizations" : {
         "en" : {
@@ -22383,6 +24035,34 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Scegli campo …"
+          }
+        }
+      }
+    },
+    "Platz wählen oder den QR-Code am Platz scannen, eine von 18 Spielformen aussuchen, Bag und Mitspieler dazu – fertig." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pick a course or scan the QR code at the club, choose one of 18 game formats, add your bag and playing partners – done."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Elige un campo o escanea el código QR del club, selecciona una de 18 modalidades, añade tu bolsa y compañeros: listo."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Choisis un parcours ou scanne le QR code sur place, sélectionne une des 18 formules, ajoute ton sac et tes partenaires – c'est parti."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Scegli un campo o scansiona il QR code al circolo, una delle 18 formule di gioco, aggiungi sacca e compagni – fatto."
           }
         }
       }
@@ -22663,6 +24343,34 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Cerca nome del campo o club"
+          }
+        }
+      }
+    },
+    "Platzreife" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Golf license"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Licencia"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Carte verte"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Abilitazione"
           }
         }
       }
@@ -23361,6 +25069,62 @@
         }
       }
     },
+    "Putten" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Putting"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Putt"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Putting"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Putt"
+          }
+        }
+      }
+    },
+    "Putten auf Distanz" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lag putting"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Putts largos"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Putting à distance"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Putt dalla distanza"
+          }
+        }
+      }
+    },
     "PUTTER" : {
       "localizations" : {
         "en" : {
@@ -23507,6 +25271,62 @@
         }
       }
     },
+    "Putts, Fairway, GIR" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Putts, fairways, GIR"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Putts, calles, GIR"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Putts, fairways, GIR"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Putt, fairway, GIR"
+          }
+        }
+      }
+    },
+    "QR-Code am Platz" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "QR code at the club"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Código QR en el campo"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "QR code sur place"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "QR code al circolo"
+          }
+        }
+      }
+    },
     "Quelle: R&A Rules of Golf 2023 (r-a.org) · USGA (usga.org)" : {
       "localizations" : {
         "en" : {
@@ -23619,6 +25439,34 @@
         }
       }
     },
+    "Regelfrage am Wasserhindernis? Taktik für ein schwieriges Loch? Der Caddy antwortet per Sprache – mitten auf der Runde." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "A rules question at the water hazard? Strategy for a tricky hole? The Caddy answers by voice – right in the middle of your round."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "¿Duda de reglas en el agua? ¿Táctica para un hoyo difícil? El Caddy te responde por voz, en plena vuelta."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Une question de règle près de l'eau ? Une tactique pour un trou difficile ? Le Caddy répond à voix haute, en pleine partie."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dubbio sulle regole vicino all'acqua? Tattica per una buca difficile? Il Caddy risponde a voce, nel pieno del giro."
+          }
+        }
+      }
+    },
     "Regelmäßig neue Audiobooks" : {
       "localizations" : {
         "en" : {
@@ -23671,6 +25519,34 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Regole"
+          }
+        }
+      }
+    },
+    "Regeln, Etikette und Quiz" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Rules, etiquette and quiz"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Reglas, etiqueta y cuestionario"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Règles, étiquette et quiz"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Regole, etichetta e quiz"
           }
         }
       }
@@ -23963,6 +25839,118 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Imposta linea di direzione"
+          }
+        }
+      }
+    },
+    "Rot" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Red"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Rojo"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Rouge"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Rosso"
+          }
+        }
+      }
+    },
+    "Routine vor dem Schlag" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pre-shot routine"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Rutina antes del golpe"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Routine avant le coup"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Routine prima del colpo"
+          }
+        }
+      }
+    },
+    "Ruhig bleiben unter Druck" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Staying calm under pressure"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Calma bajo presión"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Rester calme sous pression"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Calma sotto pressione"
+          }
+        }
+      }
+    },
+    "Rund 2 Minuten" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "About 2 minutes"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Unos 2 minutos"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Environ 2 minutes"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Circa 2 minuti"
           }
         }
       }
@@ -24431,6 +26419,34 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Inizia partita · %lld piste"
+          }
+        }
+      }
+    },
+    "Runde starten, Wetter, Verlauf" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Start a round, weather, history"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Iniciar vuelta, tiempo, historial"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lancer une partie, météo, historique"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Avvia giro, meteo, cronologia"
           }
         }
       }
@@ -25289,6 +27305,62 @@
         }
       }
     },
+    "Schläge, Putts, Fairway und Grün in Regulation pro Loch. Die Entfernung zur Fahne und der passende Schläger stehen direkt darüber." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Strokes, putts, fairway and green in regulation for every hole. The distance to the flag and the right club are shown right above."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Golpes, putts, calle y green en regulación por hoyo. La distancia a la bandera y el palo adecuado aparecen justo encima."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Coups, putts, fairway et green en régulation pour chaque trou. La distance au drapeau et le bon club s'affichent juste au-dessus."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Colpi, putt, fairway e green in regulation per ogni buca. La distanza dalla bandiera e la mazza giusta sono subito sopra."
+          }
+        }
+      }
+    },
+    "Schläger & Bag" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Clubs & bag"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Palos y bolsa"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Clubs et sac"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mazze e sacca"
+          }
+        }
+      }
+    },
     "Schläger hinzufügen" : {
       "localizations" : {
         "en" : {
@@ -25783,6 +27855,34 @@
         }
       }
     },
+    "Schwung" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Swing"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Swing"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Swing"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Swing"
+          }
+        }
+      }
+    },
     "Score" : {
       "localizations" : {
         "de" : {
@@ -26065,6 +28165,34 @@
         }
       }
     },
+    "Scorekarte teilen" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Share scorecard"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Compartir tarjeta"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Partager la carte"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Condividi lo score"
+          }
+        }
+      }
+    },
     "Scramble" : {
       "localizations" : {
         "en" : {
@@ -26173,6 +28301,34 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "molto scarso"
+          }
+        }
+      }
+    },
+    "Seite %lld von %lld" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Page %lld of %lld"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Página %lld de %lld"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Page %lld sur %lld"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pagina %lld di %lld"
           }
         }
       }
@@ -27053,6 +29209,34 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Aggiungi giocatore"
+          }
+        }
+      }
+    },
+    "Spielform" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Game format"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Modalidad"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Formule de jeu"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Formula di gioco"
           }
         }
       }
@@ -27980,6 +30164,34 @@
         }
       }
     },
+    "Stehst du am Platz, schlägt GolfTrack ihn dir direkt vor. Dazu dein Handicap, die letzte Runde und das Golf-Wetter mit den besten Stunden zum Spielen." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "When you're at a course, GolfTrack suggests it right away. Plus your handicap, your last round and the golf weather with the best hours to play."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Si estás en un campo, GolfTrack te lo propone al instante. Además, tu hándicap, tu última vuelta y el tiempo con las mejores horas para jugar."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Quand tu es sur un parcours, GolfTrack te le propose aussitôt. Avec ton handicap, ta dernière partie et la météo golf avec les meilleures heures pour jouer."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Quando sei in un campo, GolfTrack te lo propone subito. In più il tuo handicap, l'ultimo giro e il meteo golf con le ore migliori per giocare."
+          }
+        }
+      }
+    },
     "Stell dich auf den Abschlag und tippe auf „Abschlag setzen“. Deine Position wird als Abschlag dieses Lochs gespeichert.\n\nDanach zählst du wie gewohnt mit Plus: Jeder Tipp nimmt deinen aktuellen Standort als Lage des nächsten Schlags. Beim nächsten Mal kennt die App den Abschlag schon." : {
       "localizations" : {
         "en" : {
@@ -28604,6 +30816,34 @@
         }
       }
     },
+    "Teilen" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Share"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Compartir"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Partager"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Condividi"
+          }
+        }
+      }
+    },
     "Teils bewölkt" : {
       "localizations" : {
         "en" : {
@@ -28971,6 +31211,34 @@
         }
       }
     },
+    "Tipps passend zu deinen Runden" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tips based on your rounds"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Consejos según tus vueltas"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Conseils selon tes parties"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Consigli in base ai tuoi giri"
+          }
+        }
+      }
+    },
     "Titel" : {
       "localizations" : {
         "de" : {
@@ -29063,6 +31331,34 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "TOT"
+          }
+        }
+      }
+    },
+    "Tour starten" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Start the tour"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Empezar el recorrido"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Commencer la visite"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Inizia il tour"
           }
         }
       }
@@ -29580,6 +31876,34 @@
         }
       }
     },
+    "Und welchen Schläger für 140 m?" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "And which club for 140 m?"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "¿Y qué palo para 140 m?"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Et quel club pour 140 m ?"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "E quale mazza per 140 m?"
+          }
+        }
+      }
+    },
     "Unten auf „Weiter“ geht es zur nächsten Bahn. Der Stand wird automatisch gesichert, auch wenn du das Handy weglegst." : {
       "localizations" : {
         "en" : {
@@ -29604,6 +31928,34 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "In basso «Avanti» porta alla pista successiva. Il punteggio viene salvato automaticamente, anche se posi il telefono."
+          }
+        }
+      }
+    },
+    "Unten in der Leiste erreichst du alle Bereiche. Das Tutorial findest du jederzeit wieder unter Profil → Tutorial neu starten." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The bar at the bottom takes you to every section. You can find the tutorial again anytime under Profile → Restart Tutorial."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "La barra inferior te lleva a todas las secciones. Puedes volver a ver el tutorial en Perfil → Reiniciar el tutorial."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "La barre du bas mène à toutes les sections. Tu retrouves le tutoriel à tout moment sous Profil → Redémarrer le tutoriel."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "La barra in basso porta a tutte le sezioni. Il tutorial lo ritrovi in qualsiasi momento in Profilo → Riavvia tutorial."
           }
         }
       }
@@ -30471,6 +32823,62 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Variabile"
+          }
+        }
+      }
+    },
+    "Weiß" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "White"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Blanco"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Blanc"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bianco"
+          }
+        }
+      }
+    },
+    "Weiten pro Schläger" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Distances per club"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Distancias por palo"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Distances par club"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Distanze per mazza"
           }
         }
       }
@@ -31559,6 +33967,34 @@
         }
       }
     },
+    "WHS-Handicap" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "WHS handicap"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hándicap WHS"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Handicap WHS"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Handicap WHS"
+          }
+        }
+      }
+    },
     "WHS-Handicap wird automatisch berechnet" : {
       "localizations" : {
         "en" : {
@@ -32240,6 +34676,90 @@
         }
       }
     },
+    "Zählen mit einem Tipp" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Score with one tap"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Apunta con un toque"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Compter en un geste"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Segna con un tocco"
+          }
+        }
+      }
+    },
+    "Zählen, messen, besser werden: In zwei Minuten zeigen wir dir, was GolfTrack auf und neben dem Platz für dich erledigt." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Score, measure, improve: in two minutes we'll show you what GolfTrack does for you on and off the course."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Apuntar, medir, mejorar: en dos minutos te mostramos lo que GolfTrack hace por ti dentro y fuera del campo."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Compter, mesurer, progresser : en deux minutes, on te montre ce que GolfTrack fait pour toi sur le parcours et en dehors."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Segnare, misurare, migliorare: in due minuti ti mostriamo cosa fa GolfTrack per te dentro e fuori dal campo."
+          }
+        }
+      }
+    },
+    "Zählkarte" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Scorecard"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tarjeta"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Carte de score"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Scorecard"
+          }
+        }
+      }
+    },
     "Zählspiel" : {
       "localizations" : {
         "de" : {
@@ -32478,6 +34998,34 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "In ascolto..."
+          }
+        }
+      }
+    },
+    "Zur Fahne" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "To the flag"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "A la bandera"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Au drapeau"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Alla bandiera"
           }
         }
       }

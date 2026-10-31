@@ -1,6 +1,32 @@
 import { z } from "zod";
+import { TEE_COLORS, type TeeColor } from "./tees";
 
-/** Ein Loch bzw. eine Bahn. Bei Minigolf sind par/hcp/length meist leer. */
+/** Abschlagfarben – Liste und Anzeige in `tees.ts`. */
+export const teeColor = z.enum(TEE_COLORS);
+export type { TeeColor };
+
+/** Ein Abschlag des Platzes mit eigener Wertung (nur Golf). */
+export const courseTeeSchema = z.object({
+  color: teeColor,
+  courseRating: z.number().min(50).max(90).nullable().default(null),
+  slopeRating: z.number().int().min(55).max(155).nullable().default(null),
+});
+export type CourseTee = z.infer<typeof courseTeeSchema>;
+
+/** Länge und Position eines Abschlags an einem Loch. */
+export const holeTeeSchema = z.object({
+  color: teeColor,
+  length: z.number().int().min(1).max(1200).nullable().default(null),
+  lat: z.number().min(-90).max(90).nullable().default(null),
+  lon: z.number().min(-180).max(180).nullable().default(null),
+});
+export type HoleTee = z.infer<typeof holeTeeSchema>;
+
+/**
+ * Ein Loch bzw. eine Bahn. Bei Minigolf sind par/hcp/length meist leer.
+ * `length`/`teeLat`/`teeLon` beschreiben den Standardabschlag – ältere
+ * App-Versionen kennen nur diesen; `tees` ergänzt die einzelnen Farben.
+ */
 export const holeSchema = z.object({
   number: z.number().int().min(1).max(36),
   par: z.number().int().min(1).max(8).nullable().default(null),
@@ -10,6 +36,7 @@ export const holeSchema = z.object({
   teeLon: z.number().min(-180).max(180).nullable().default(null),
   flagLat: z.number().min(-90).max(90).nullable().default(null),
   flagLon: z.number().min(-180).max(180).nullable().default(null),
+  tees: z.array(holeTeeSchema).max(8).default([]),
 });
 
 export type Hole = z.infer<typeof holeSchema>;
@@ -59,6 +86,33 @@ export const hintSchema = z.object({
 
 export type CourseHint = z.infer<typeof hintSchema>;
 
+/**
+ * Abschläge prüfen: jede Farbe nur einmal, und ein Loch darf nur Farben
+ * nennen, die der Platz auch führt. Gemeinsam für Formular und Adminpanel.
+ */
+function checkTees(
+  tees: CourseTee[] | undefined,
+  holeData: Hole[] | undefined,
+  ctx: z.RefinementCtx,
+) {
+  const colors = new Set((tees ?? []).map((tee) => tee.color));
+  if (tees && colors.size !== tees.length) {
+    ctx.addIssue({ code: "custom", path: ["tees"], message: "tee_not_unique" });
+  }
+  for (const hole of holeData ?? []) {
+    const holeColors = hole.tees.map((tee) => tee.color);
+    if (new Set(holeColors).size !== holeColors.length) {
+      ctx.addIssue({ code: "custom", path: ["holeData"], message: "hole_tee_not_unique" });
+      return;
+    }
+    // Ohne `tees` im selben Aufruf (Adminpanel, Teilupdate) lässt sich das nicht prüfen.
+    if (tees && holeColors.some((color) => !colors.has(color))) {
+      ctx.addIssue({ code: "custom", path: ["holeData"], message: "hole_tee_unknown" });
+      return;
+    }
+  }
+}
+
 /** Was das öffentliche Formular schickt. */
 export const submissionSchema = z
   .object({
@@ -79,6 +133,8 @@ export const submissionSchema = z
     courseRating: z.number().min(50).max(90).nullable().default(null),
     slopeRating: z.number().int().min(55).max(155).nullable().default(null),
     holeData: z.array(holeSchema).max(36).default([]),
+    /** Abschläge nach Farbe – nur Golf, Minigolf schickt `[]`. */
+    tees: z.array(courseTeeSchema).max(8).default([]),
     facilityNotes: trimmed(2000).default(""),
     facilityHints: z.array(hintSchema).max(12).default([]),
     welcome: trimmed(400).default(""),
@@ -103,37 +159,41 @@ export const submissionSchema = z
     if (value.kind === "golf" && value.holeData.some((h) => h.par === null)) {
       ctx.addIssue({ code: "custom", path: ["holeData"], message: "par_required" });
     }
+    checkTees(value.tees, value.holeData, ctx);
   });
 
 export type SubmissionInput = z.infer<typeof submissionSchema>;
 
 /** Änderungen aus dem Adminpanel. */
-export const adminUpdateSchema = z.object({
-  name: trimmed(120).min(2).optional(),
-  location: trimmed(160).optional(),
-  country: trimmed(2).optional(),
-  holes: z.number().int().min(1).max(36).optional(),
-  latitude: z.number().min(-90).max(90).nullable().optional(),
-  longitude: z.number().min(-180).max(180).nullable().optional(),
-  firstTeeLat: z.number().min(-90).max(90).nullable().optional(),
-  firstTeeLon: z.number().min(-180).max(180).nullable().optional(),
-  courseRating: z.number().min(50).max(90).nullable().optional(),
-  slopeRating: z.number().int().min(55).max(155).nullable().optional(),
-  holeData: z.array(holeSchema).max(36).optional(),
-  facilityNotes: trimmed(2000).optional(),
-  facilityHints: z.array(hintSchema).max(12).optional(),
-  welcome: trimmed(400).optional(),
-  website: optionalUrl.optional(),
-  phone: trimmed(60).optional(),
-  publicEmail: z.union([z.literal(""), z.string().trim().email()]).optional(),
-  adminNotes: trimmed(2000).optional(),
-  slug: z
-    .string()
-    .trim()
-    .regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/, "invalid_slug")
-    .max(80)
-    .optional(),
-});
+export const adminUpdateSchema = z
+  .object({
+    name: trimmed(120).min(2).optional(),
+    location: trimmed(160).optional(),
+    country: trimmed(2).optional(),
+    holes: z.number().int().min(1).max(36).optional(),
+    latitude: z.number().min(-90).max(90).nullable().optional(),
+    longitude: z.number().min(-180).max(180).nullable().optional(),
+    firstTeeLat: z.number().min(-90).max(90).nullable().optional(),
+    firstTeeLon: z.number().min(-180).max(180).nullable().optional(),
+    courseRating: z.number().min(50).max(90).nullable().optional(),
+    slopeRating: z.number().int().min(55).max(155).nullable().optional(),
+    holeData: z.array(holeSchema).max(36).optional(),
+    tees: z.array(courseTeeSchema).max(8).optional(),
+    facilityNotes: trimmed(2000).optional(),
+    facilityHints: z.array(hintSchema).max(12).optional(),
+    welcome: trimmed(400).optional(),
+    website: optionalUrl.optional(),
+    phone: trimmed(60).optional(),
+    publicEmail: z.union([z.literal(""), z.string().trim().email()]).optional(),
+    adminNotes: trimmed(2000).optional(),
+    slug: z
+      .string()
+      .trim()
+      .regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/, "invalid_slug")
+      .max(80)
+      .optional(),
+  })
+  .superRefine((value, ctx) => checkTees(value.tees, value.holeData, ctx));
 
 export type AdminUpdate = z.infer<typeof adminUpdateSchema>;
 

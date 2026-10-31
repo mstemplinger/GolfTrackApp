@@ -35,7 +35,21 @@ export interface FeedCourse {
   teeLongitudes: number[];
   flagLatitudes: number[];
   flagLongitudes: number[];
+  /**
+   * Abschläge nach Farbe. Die drei Arrays haben je Loch einen Eintrag in
+   * Lochreihenfolge, `null` = unbekannt. Immer vorhanden, ohne Angaben leer.
+   */
+  tees: FeedTee[];
   updatedAt: string;
+}
+
+export interface FeedTee {
+  color: string;
+  courseRating: number | null;
+  slopeRating: number | null;
+  holeLengths: (number | null)[];
+  teeLatitudes: (number | null)[];
+  teeLongitudes: (number | null)[];
 }
 
 export interface Feed {
@@ -51,6 +65,27 @@ function column<T>(record: CourseRecord, pick: (hole: CourseRecord["holeData"][n
   if (holes.length !== record.holes) return [];
   const values = holes.map(pick);
   return values.every((value) => value !== null && value !== undefined) ? (values as T[]) : [];
+}
+
+/**
+ * Anders als `column` mit Lücken: ein Abschlag ist auch dann nützlich, wenn
+ * nur ein Teil der Längen bekannt ist. Ein Eintrag je Loch 1…holes.
+ */
+function feedTees(record: CourseRecord): FeedTee[] {
+  if (record.kind !== "golf") return [];
+  const byNumber = new Map(record.holeData.map((hole) => [hole.number, hole]));
+  const numbers = Array.from({ length: record.holes }, (_, index) => index + 1);
+  return record.tees.map((tee) => {
+    const entries = numbers.map((n) => byNumber.get(n)?.tees?.find((t) => t.color === tee.color));
+    return {
+      color: tee.color,
+      courseRating: tee.courseRating ?? null,
+      slopeRating: tee.slopeRating ?? null,
+      holeLengths: entries.map((e) => e?.length ?? null),
+      teeLatitudes: entries.map((e) => e?.lat ?? null),
+      teeLongitudes: entries.map((e) => e?.lon ?? null),
+    };
+  });
 }
 
 export function toFeedCourse(record: CourseRecord): FeedCourse {
@@ -80,6 +115,7 @@ export function toFeedCourse(record: CourseRecord): FeedCourse {
     teeLongitudes: column(record, (h) => h.teeLon),
     flagLatitudes: column(record, (h) => h.flagLat),
     flagLongitudes: column(record, (h) => h.flagLon),
+    tees: feedTees(record),
     updatedAt: record.updatedAt,
   };
 }

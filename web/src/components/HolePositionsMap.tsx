@@ -38,6 +38,11 @@ interface Props {
   /** Mittelpunkt der Anlage aus dem Formular, falls schon eingetragen. */
   centre: HolePoint | null;
   onChange: (index: number, kind: PointKind, point: HolePoint | null) => void;
+  /**
+   * Farbe der Abschlag-Pins, wenn gerade ein farbiger Abschlag bearbeitet
+   * wird (Adminpanel). Ohne Angabe weiß wie bisher.
+   */
+  teeSwatch?: string;
 }
 
 const GERMANY: L.LatLngTuple = [50.6, 10.4];
@@ -122,7 +127,7 @@ export function HolePositionsMap(props: Props) {
   return <LiveMap {...props} onFail={() => setFailed(true)} />;
 }
 
-function LiveMap({ lang, isGolf, positions, centre, onChange, onFail }: Props & { onFail: () => void }) {
+function LiveMap({ lang, isGolf, positions, centre, onChange, teeSwatch, onFail }: Props & { onFail: () => void }) {
   const text = TEXT[lang];
   const element = useRef<HTMLDivElement>(null);
   const leaflet = useRef<typeof L | null>(null);
@@ -248,7 +253,7 @@ function LiveMap({ lang, isGolf, positions, centre, onChange, onFail }: Props & 
         if (!point) continue;
         const marker = lib.marker([point.lat, point.lon], {
           draggable: true,
-          icon: pin(lib, pointKind, index + 1, active),
+          icon: pin(lib, pointKind, index + 1, active, teeSwatch),
           zIndexOffset: active ? 1000 : 0,
           title: `${unit} ${index + 1} · ${pointKind === "tee" ? teeLabel : flagLabel}`,
         });
@@ -263,7 +268,7 @@ function LiveMap({ lang, isGolf, positions, centre, onChange, onFail }: Props & 
         marker.addTo(group);
       }
     });
-  }, [ready, positions, selected, unit, teeLabel, flagLabel]);
+  }, [ready, positions, selected, unit, teeLabel, flagLabel, teeSwatch]);
 
   const current = positions[selected] ?? { tee: null, flag: null };
   const metres = current.tee && current.flag ? Math.round(distanceMetres(current.tee, current.flag)) : null;
@@ -369,11 +374,13 @@ function LiveMap({ lang, isGolf, positions, centre, onChange, onFail }: Props & 
   );
 }
 
-function pin(lib: typeof L, kind: PointKind, number: number, active: boolean): L.DivIcon {
+function pin(lib: typeof L, kind: PointKind, number: number, active: boolean, teeSwatch?: string): L.DivIcon {
   const ring = active ? COLOURS.active : "rgba(0,0,0,0.55)";
+  // Dunkle Abschlagfarben brauchen helle Ziffern.
+  const dark = teeSwatch ? ["#1c1c1c", "#2f6fde", "#d93a3a", "#2e9e4f"].includes(teeSwatch) : false;
   const html =
     kind === "tee"
-      ? `<span style="display:grid;place-items:center;width:24px;height:24px;border-radius:999px;background:${COLOURS.tee};border:2px solid ${ring};font:600 11px/1 ui-monospace,monospace;color:#1a1f1c;box-shadow:0 1px 3px rgba(0,0,0,.4)">${number}</span>`
+      ? `<span style="display:grid;place-items:center;width:24px;height:24px;border-radius:999px;background:${teeSwatch ?? COLOURS.tee};border:2px solid ${ring};font:600 11px/1 ui-monospace,monospace;color:${dark ? "#ffffff" : "#1a1f1c"};box-shadow:0 1px 3px rgba(0,0,0,.4)">${number}</span>`
       : `<span style="display:grid;place-items:center;width:24px;height:24px;border-radius:999px;background:${COLOURS.flag};border:2px solid ${ring};box-shadow:0 1px 3px rgba(0,0,0,.4)"><svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="#1a1f1c" stroke-width="2.4" stroke-linecap="round"><path d="M7 21V4"/><path d="M7 4h10l-3 4 3 4H7" fill="#1a1f1c"/></svg></span>`;
   return lib.divIcon({ html, className: "", iconSize: [24, 24], iconAnchor: [12, 12] });
 }

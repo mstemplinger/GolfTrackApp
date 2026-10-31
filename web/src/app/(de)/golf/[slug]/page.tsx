@@ -3,6 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Footer, Header } from "@/components/Chrome";
 import { CourseHintList } from "@/components/CourseHintList";
+import { CourseTees } from "@/components/CourseTees";
 import { getCourse } from "@/lib/courses";
 import { APP_STORE_URL, PLAY_URL, SITE_URL } from "@/i18n/routes";
 
@@ -69,6 +70,8 @@ export default async function GolfLandingPage({ params }: PageProps<"/golf/[slug
             <dd className="mt-1.5 font-mono text-3xl text-cream/80">{totalPar ?? "–"}</dd>
           </div>
         </dl>
+
+        <CourseTees course={course} />
 
         {/*
           Führt auf die Spielseite, nicht direkt in die App. Diese Seite hier

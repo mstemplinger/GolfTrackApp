@@ -22,6 +22,12 @@ const FIELDS: { name: string; type: string; de: string; en: string }[] = [
     de: "Abschlag- und Fahnenkoordinaten je Loch",
     en: "Tee and pin coordinates per hole",
   },
+  {
+    name: "tees",
+    type: "{ color, courseRating, slopeRating, holeLengths, teeLatitudes, teeLongitudes }[]",
+    de: "Abschläge nach Farbe (black, white, gold, blue, yellow, red, orange, green) mit eigener Wertung; Länge und Koordinaten je Loch, null = unbekannt. Immer vorhanden, bei Minigolf leer",
+    en: "Tee boxes by colour (black, white, gold, blue, yellow, red, orange, green) with their own rating; length and coordinates per hole, null = unknown. Always present, empty for minigolf",
+  },
   { name: "updatedAt", type: "string", de: "Letzte Änderung (ISO 8601)", en: "Last change (ISO 8601)" },
 ];
 
@@ -43,6 +49,16 @@ const EXAMPLE = `{
       "holeLengths": [320, 150, 480, "…"],
       "courseRating": 71.4,
       "slopeRating": 130,
+      "tees": [
+        {
+          "color": "yellow",
+          "courseRating": 71.4,
+          "slopeRating": 130,
+          "holeLengths": [320, 150, null, "…"],
+          "teeLatitudes": [48.9911, null, null, "…"],
+          "teeLongitudes": [12.8102, null, null, "…"]
+        }
+      ],
       "updatedAt": "2026-08-30T09:10:00.000Z"
     }
   ]

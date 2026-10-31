@@ -4,9 +4,11 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { HintsEditor } from "@/components/HintsEditor";
 import { HoleCountInput } from "@/components/HoleCountInput";
 import { HolePositionsMap, distanceMetres, type HolePoint, type PointKind } from "@/components/HolePositionsMap";
+import { TeeDot, TeeEditor, teeNumber, type TeeRow } from "@/components/TeeEditor";
 import { t } from "@/i18n/content";
 import type { Lang } from "@/i18n/routes";
 import type { CourseHint } from "@/lib/schema";
+import type { TeeColor } from "@/lib/tees";
 
 type Kind = "golf" | "minigolf";
 
@@ -14,11 +16,13 @@ interface HoleRow {
   par: string;
   hcp: string;
   length: string;
+  /** Länge je Abschlagfarbe – nur, wenn oben Abschläge gewählt sind. */
+  teeLengths: Partial<Record<TeeColor, string>>;
   tee: HolePoint | null;
   flag: HolePoint | null;
 }
 
-const emptyRow = (): HoleRow => ({ par: "", hcp: "", length: "", tee: null, flag: null });
+const emptyRow = (): HoleRow => ({ par: "", hcp: "", length: "", teeLengths: {}, tee: null, flag: null });
 
 /** Übliche Par-Folge einer 18-Loch-Anlage – nur als Startpunkt zum Überschreiben. */
 const PAR_72 = [4, 3, 5, 4, 4, 3, 4, 5, 4, 4, 4, 3, 5, 4, 3, 4, 5, 4];
@@ -61,6 +65,12 @@ export function SubmitForm({ lang }: { lang: Lang }) {
     company: "",
   });
   const [hints, setHints] = useState<CourseHint[]>([]);
+  const [tees, setTees] = useState<TeeRow[]>([]);
+  // Erster gewählter Abschlag – in ihn rechnet die Karte die Länge ein.
+  const firstTeeRef = useRef<TeeColor | null>(null);
+  useEffect(() => {
+    firstTeeRef.current = tees[0]?.color ?? null;
+  }, [tees]);
   const [consent, setConsent] = useState(false);
   const [state, setState] = useState<"idle" | "sending" | "done">("idle");
   const [error, setError] = useState<string | null>(null);
@@ -85,6 +95,33 @@ export function SubmitForm({ lang }: { lang: Lang }) {
     setRows((previous) => previous.map((row, i) => (i === index ? { ...row, [key]: value } : row)));
   }, []);
 
+  /**
+   * Die erste Abschlagfarbe übernimmt bereits getippte Längen – die
+   * Standardspalte verschwindet ja, sobald Farben gewählt sind.
+   */
+  const changeTees = useCallback(
+    (next: TeeRow[]) => {
+      const first = next[0]?.color;
+      if (!tees.length && first) {
+        setRows((rows) =>
+          rows.map((row) =>
+            row.length.trim() && !row.teeLengths[first]
+              ? { ...row, teeLengths: { ...row.teeLengths, [first]: row.length } }
+              : row,
+          ),
+        );
+      }
+      setTees(next);
+    },
+    [tees.length],
+  );
+
+  const setTeeLength = useCallback((index: number, color: TeeColor, value: string) => {
+    setRows((previous) =>
+      previous.map((row, i) => (i === index ? { ...row, teeLengths: { ...row.teeLengths, [color]: value } } : row)),
+    );
+  }, []);
+
   const fillPar = useCallback(() => {
     setRows((previous) =>
       previous.map((row, index) => ({ ...row, par: String(PAR_72[index % PAR_72.length]) })),
@@ -96,7 +133,7 @@ export function SubmitForm({ lang }: { lang: Lang }) {
   }, []);
 
   const clearRows = useCallback(() => {
-    setRows((previous) => previous.map((row) => ({ ...row, par: "", hcp: "", length: "" })));
+    setRows((previous) => previous.map((row) => ({ ...row, par: "", hcp: "", length: "", teeLengths: {} })));
   }, []);
 
   /**
@@ -109,8 +146,15 @@ export function SubmitForm({ lang }: { lang: Lang }) {
       previous.map((row, i) => {
         if (i !== index) return row;
         const next = { ...row, [kind]: point };
-        if (isGolfRef.current && !row.length.trim() && next.tee && next.flag) {
-          next.length = String(Math.round(distanceMetres(next.tee, next.flag)));
+        if (isGolfRef.current && next.tee && next.flag) {
+          const metres = String(Math.round(distanceMetres(next.tee, next.flag)));
+          // Mit Abschlagfarben landet die Luftlinie beim ersten gewählten Abschlag.
+          const first = firstTeeRef.current;
+          if (first) {
+            if (!row.teeLengths[first]?.trim()) next.teeLengths = { ...row.teeLengths, [first]: metres };
+          } else if (!row.length.trim()) {
+            next.length = metres;
+          }
         }
         return next;
       }),
@@ -173,20 +217,39 @@ export function SubmitForm({ lang }: { lang: Lang }) {
     setFieldErrors({});
 
     const round6 = (value: number) => Math.round(value * 1e6) / 1e6;
-    const allHoles = rows.map((row, index) => ({
-      number: index + 1,
-      par: row.par ? Number(row.par) : null,
-      hcp: kind === "golf" && row.hcp ? Number(row.hcp) : null,
-      length: kind === "golf" && row.length ? Number(row.length) : null,
-      teeLat: row.tee ? round6(row.tee.lat) : null,
-      teeLon: row.tee ? round6(row.tee.lon) : null,
-      flagLat: row.flag ? round6(row.flag.lat) : null,
-      flagLon: row.flag ? round6(row.flag.lon) : null,
-    }));
+    // Abschlagfarben nur beim Golf. Die Standardlänge (für ältere App-Versionen)
+    // kommt dann vom ersten gewählten Abschlag – die eigene Spalte ist ausgeblendet.
+    const activeTees = kind === "golf" ? tees : [];
+    const allHoles = rows.map((row, index) => {
+      const holeTees = activeTees.map((tee) => ({
+        color: tee.color,
+        length: teeNumber(row.teeLengths[tee.color] ?? ""),
+        lat: null,
+        lon: null,
+      }));
+      const standardLength = activeTees.length
+        ? holeTees[0].length
+        : kind === "golf" && row.length
+          ? Number(row.length)
+          : null;
+      return {
+        number: index + 1,
+        par: row.par ? Number(row.par) : null,
+        hcp: kind === "golf" && row.hcp ? Number(row.hcp) : null,
+        length: standardLength,
+        teeLat: row.tee ? round6(row.tee.lat) : null,
+        teeLon: row.tee ? round6(row.tee.lon) : null,
+        flagLat: row.flag ? round6(row.flag.lat) : null,
+        flagLon: row.flag ? round6(row.flag.lon) : null,
+        tees: holeTees.filter((tee) => tee.length !== null),
+      };
+    });
     // Entweder alle Bahnen (auch mit Lücken) oder keine – der Server erwartet
     // genau so viele Einträge wie Bahnen.
-    const holeData = allHoles.some((hole) =>
-      [hole.par, hole.hcp, hole.length, hole.teeLat, hole.flagLat].some((v) => v !== null),
+    const holeData = allHoles.some(
+      (hole) =>
+        [hole.par, hole.hcp, hole.length, hole.teeLat, hole.flagLat].some((v) => v !== null) ||
+        hole.tees.length > 0,
     )
       ? allHoles
       : [];
@@ -204,6 +267,11 @@ export function SubmitForm({ lang }: { lang: Lang }) {
       courseRating: kind === "golf" ? numberOrNull(values.courseRating) : null,
       slopeRating: kind === "golf" ? numberOrNull(values.slopeRating) : null,
       holeData,
+      tees: activeTees.map((tee) => ({
+        color: tee.color,
+        courseRating: teeNumber(tee.courseRating),
+        slopeRating: teeNumber(tee.slopeRating),
+      })),
       facilityNotes: values.facilityNotes,
       facilityHints: hints.filter((hint) => hint.text.trim().length > 1),
       welcome: values.welcome,
@@ -429,6 +497,18 @@ export function SubmitForm({ lang }: { lang: Lang }) {
         </Section>
       ) : null}
 
+      {isGolf ? (
+        <Section title={copy.tees}>
+          <p className="-mt-1 text-sm leading-relaxed text-ink/70">{copy.teesHint}</p>
+          <TeeEditor
+            value={tees}
+            onChange={changeTees}
+            labels={{ colors: copy.teeColors, courseRating: copy.courseRating, slopeRating: copy.slopeRating }}
+          />
+          {fieldErrors.tees ? <p className="text-sm text-[#a6321f]">{copy.errorValidation}</p> : null}
+        </Section>
+      ) : null}
+
       {/* Lochtabelle */}
       <Section title={isGolf ? copy.sectionHoles : copy.sectionHolesMinigolf}>
         <p className="-mt-1 text-sm leading-relaxed text-ink/70">
@@ -465,9 +545,20 @@ export function SubmitForm({ lang }: { lang: Lang }) {
                     <th scope="col" className="pb-2 text-left font-normal">
                       {copy.colHcp}
                     </th>
-                    <th scope="col" className="pb-2 text-left font-normal">
-                      {copy.colLength}
-                    </th>
+                    {tees.length ? (
+                      tees.map((tee) => (
+                        <th key={tee.color} scope="col" className="pb-2 pr-2 text-left font-normal">
+                          <span className="flex items-center gap-1.5">
+                            <TeeDot color={tee.color} className="h-2.5 w-2.5" />
+                            {copy.teeColors[tee.color]}
+                          </span>
+                        </th>
+                      ))
+                    ) : (
+                      <th scope="col" className="pb-2 text-left font-normal">
+                        {copy.colLength}
+                      </th>
+                    )}
                   </>
                 ) : null}
               </tr>
@@ -501,15 +592,29 @@ export function SubmitForm({ lang }: { lang: Lang }) {
                           aria-label={`${copy.colHcp} ${index + 1}`}
                         />
                       </td>
-                      <td className="py-1.5">
-                        <input
-                          className="field field--tight !py-1.5 font-mono"
-                          value={row.length}
-                          onChange={(e) => setCell(index, "length", e.target.value)}
-                          inputMode="numeric"
-                          aria-label={`${copy.colLength} ${index + 1}`}
-                        />
-                      </td>
+                      {tees.length ? (
+                        tees.map((tee) => (
+                          <td key={tee.color} className="py-1.5 pr-2">
+                            <input
+                              className="field field--tight !py-1.5 font-mono"
+                              value={row.teeLengths[tee.color] ?? ""}
+                              onChange={(e) => setTeeLength(index, tee.color, e.target.value)}
+                              inputMode="numeric"
+                              aria-label={`${copy.colLength} ${copy.teeColors[tee.color]} ${index + 1}`}
+                            />
+                          </td>
+                        ))
+                      ) : (
+                        <td className="py-1.5">
+                          <input
+                            className="field field--tight !py-1.5 font-mono"
+                            value={row.length}
+                            onChange={(e) => setCell(index, "length", e.target.value)}
+                            inputMode="numeric"
+                            aria-label={`${copy.colLength} ${index + 1}`}
+                          />
+                        </td>
+                      )}
                     </>
                   ) : null}
                 </tr>

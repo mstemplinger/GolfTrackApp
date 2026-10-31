@@ -42,6 +42,9 @@ const STATEMENTS = [
   // Nachgereicht – siehe die Anmerkung bei `ads`: eine bestehende Tabelle
   // bekommt neue Spalten nur über ein eigenes ALTER.
   `ALTER TABLE courses ADD COLUMN IF NOT EXISTS facility_hints jsonb NOT NULL DEFAULT '[]'::jsonb`,
+  // Abschläge nach Farbe (nur Golf). Längen und Positionen je Loch stehen
+  // in `hole_data`, hier nur Farbe und Wertung.
+  `ALTER TABLE courses ADD COLUMN IF NOT EXISTS tees jsonb NOT NULL DEFAULT '[]'::jsonb`,
   `ALTER TABLE courses ADD COLUMN IF NOT EXISTS first_tee_lat  double precision`,
   `ALTER TABLE courses ADD COLUMN IF NOT EXISTS first_tee_lon  double precision`,
   // Wo die Lochdaten den Abschlag von Loch 1 schon kennen, ihn übernehmen –

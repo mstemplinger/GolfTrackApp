@@ -6,6 +6,7 @@ import type {
   CourseHint,
   CourseKind,
   CourseStatus,
+  CourseTee,
   Hole,
   SubmissionInput,
 } from "./schema";
@@ -27,6 +28,8 @@ export interface CourseRecord {
   courseRating: number | null;
   slopeRating: number | null;
   holeData: Hole[];
+  /** Abschläge nach Farbe mit eigener Wertung – nur Golf. */
+  tees: CourseTee[];
   facilityNotes: string;
   facilityHints: CourseHint[];
   welcome: string;
@@ -64,6 +67,7 @@ function mapRow(row: DbRow): CourseRecord {
   const holeData = typeof row.hole_data === "string" ? JSON.parse(row.hole_data) : row.hole_data;
   const hints =
     typeof row.facility_hints === "string" ? JSON.parse(row.facility_hints) : row.facility_hints;
+  const tees = typeof row.tees === "string" ? JSON.parse(row.tees) : row.tees;
   return {
     id: asString(row.id),
     slug: asString(row.slug),
@@ -79,7 +83,9 @@ function mapRow(row: DbRow): CourseRecord {
     firstTeeLon: asNumber(row.first_tee_lon),
     courseRating: asNumber(row.course_rating),
     slopeRating: asNumber(row.slope_rating),
-    holeData: (holeData as Hole[]) ?? [],
+    // Ältere Einträge kennen `tees` je Loch noch nicht – leer ergänzen.
+    holeData: ((holeData as Hole[]) ?? []).map((hole) => ({ ...hole, tees: hole.tees ?? [] })),
+    tees: (tees as CourseTee[]) ?? [],
     facilityNotes: asString(row.facility_notes),
     facilityHints: (hints as CourseHint[]) ?? [],
     welcome: asString(row.welcome),
@@ -138,14 +144,17 @@ async function uniqueSlug(name: string, location: string): Promise<string> {
 
 export async function createSubmission(input: SubmissionInput): Promise<CourseRecord> {
   await ensureSchema();
+  // Abschlagfarben gibt es nur beim Golf – Minigolf bekommt sie gar nicht erst.
+  const golf = input.kind === "golf";
+  const holeData = (input.holeData ?? []).map((hole) => (golf ? hole : { ...hole, tees: [] }));
   const slug = await uniqueSlug(input.name, input.location);
   const rows = await query<DbRow>(
     `INSERT INTO courses (
        slug, kind, status, name, location, country, holes, latitude, longitude,
        first_tee_lat, first_tee_lon,
        course_rating, slope_rating, hole_data, facility_notes, facility_hints, welcome,
-       website, phone, public_email, submitter_name, submitter_email, submitter_role, source
-     ) VALUES ($1,$2,'pending',$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13::jsonb,$14,$15::jsonb,$16,$17,$18,$19,$20,$21,$22,'form')
+       website, phone, public_email, submitter_name, submitter_email, submitter_role, tees, source
+     ) VALUES ($1,$2,'pending',$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13::jsonb,$14,$15::jsonb,$16,$17,$18,$19,$20,$21,$22,$23::jsonb,'form')
      RETURNING *`,
     [
       slug,
@@ -160,7 +169,7 @@ export async function createSubmission(input: SubmissionInput): Promise<CourseRe
       input.firstTeeLon,
       input.courseRating,
       input.slopeRating,
-      input.holeData ?? [],
+      holeData,
       input.facilityNotes,
       input.facilityHints ?? [],
       input.welcome,
@@ -170,6 +179,7 @@ export async function createSubmission(input: SubmissionInput): Promise<CourseRe
       input.submitterName,
       input.submitterEmail,
       input.submitterRole,
+      golf ? (input.tees ?? []) : [],
     ],
   );
   return mapRow(rows[0]);
@@ -231,6 +241,7 @@ const COLUMN_FOR: Record<keyof AdminUpdate, string> = {
   courseRating: "course_rating",
   slopeRating: "slope_rating",
   holeData: "hole_data",
+  tees: "tees",
   facilityNotes: "facility_notes",
   facilityHints: "facility_hints",
   welcome: "welcome",
@@ -250,7 +261,7 @@ export async function updateCourse(id: string, patch: AdminUpdate): Promise<Cour
     const column = COLUMN_FOR[key];
     if (!column) continue;
     params.push(value);
-    if (key === "holeData" || key === "facilityHints") {
+    if (key === "holeData" || key === "facilityHints" || key === "tees") {
       assignments.push(`${column} = $${params.length}::jsonb`);
     } else {
       assignments.push(`${column} = $${params.length}`);

@@ -80,22 +80,49 @@ export async function save(_state: string | null, formData: FormData): Promise<s
   const id = String(formData.get("id"));
   const holes = Number(formData.get("holes") ?? 0);
 
+  // Abschläge kommen wie die Hinweise als JSON-Felder aus dem Tee-Editor.
+  let tees: unknown = [];
+  let holeTees: unknown = [];
+  try {
+    tees = JSON.parse(String(formData.get("tees") ?? "[]"));
+    holeTees = JSON.parse(String(formData.get("holeTees") ?? "[]"));
+  } catch {
+    return "tees: konnte nicht gelesen werden";
+  }
+  type HoleTeeInput = { length?: number | null; lat?: number | null; lon?: number | null };
+  const teesAt = (index: number): HoleTeeInput[] =>
+    Array.isArray(holeTees) && Array.isArray(holeTees[index]) ? holeTees[index] : [];
+
   const holeData: z.input<typeof holeSchema>[] = [];
   for (let index = 0; index < holes; index += 1) {
+    const perTee = teesAt(index);
+    // Leere Standardwerte übernimmt der erste Abschlag – ältere App-Versionen
+    // kennen nur diese.
+    const first = perTee[0];
+    const length = numberOrNull(formData.get(`length-${index}`)) ?? first?.length ?? null;
+    let teeLat = numberOrNull(formData.get(`teeLat-${index}`));
+    let teeLon = numberOrNull(formData.get(`teeLon-${index}`));
+    if ((teeLat === null || teeLon === null) && first?.lat != null && first?.lon != null) {
+      teeLat = first.lat;
+      teeLon = first.lon;
+    }
     holeData.push({
       number: index + 1,
       par: numberOrNull(formData.get(`par-${index}`)),
       hcp: numberOrNull(formData.get(`hcp-${index}`)),
-      length: numberOrNull(formData.get(`length-${index}`)),
-      teeLat: numberOrNull(formData.get(`teeLat-${index}`)),
-      teeLon: numberOrNull(formData.get(`teeLon-${index}`)),
+      length,
+      teeLat,
+      teeLon,
       flagLat: numberOrNull(formData.get(`flagLat-${index}`)),
       flagLon: numberOrNull(formData.get(`flagLon-${index}`)),
+      tees: perTee as z.input<typeof holeSchema>["tees"],
     });
   }
 
-  const hasHoleValues = holeData.some((hole) =>
-    [hole.par, hole.hcp, hole.length, hole.teeLat, hole.flagLat].some((value) => value !== null),
+  const hasHoleValues = holeData.some(
+    (hole) =>
+      [hole.par, hole.hcp, hole.length, hole.teeLat, hole.flagLat].some((value) => value !== null) ||
+      Boolean(hole.tees?.length),
   );
 
   // Die Hinweise kommen als ein JSON-Feld aus `HintsEditor`. Unlesbares
@@ -120,6 +147,7 @@ export async function save(_state: string | null, formData: FormData): Promise<s
     courseRating: numberOrNull(formData.get("courseRating")),
     slopeRating: numberOrNull(formData.get("slopeRating")),
     holeData: hasHoleValues ? holeData : [],
+    tees,
     facilityNotes: String(formData.get("facilityNotes") ?? ""),
     facilityHints,
     welcome: String(formData.get("welcome") ?? ""),

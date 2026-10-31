@@ -4,7 +4,9 @@ import { useActionState, useCallback, useMemo, useState } from "react";
 import { HintsEditor } from "@/components/HintsEditor";
 import { HoleCountInput } from "@/components/HoleCountInput";
 import { HolePositionsMap, type HolePoint, type PointKind } from "@/components/HolePositionsMap";
+import { TeeDot, TeeEditor, teeNumber, type TeeRow } from "@/components/TeeEditor";
 import type { CourseRecord } from "@/lib/courses";
+import { TEE_META, type TeeColor } from "@/lib/tees";
 import { save } from "../actions";
 
 /** Bearbeiten der eingereichten Werte – dieselbe Struktur wie im Formular. */
@@ -35,12 +37,50 @@ export function EditForm({ course }: { course: CourseRecord }) {
     firstTeeLon: text(course.firstTeeLon),
   });
 
+  // Abschläge nach Farbe: Wertung je Farbe, Länge und Position je Loch.
+  const [tees, setTees] = useState<TeeRow[]>(() =>
+    course.tees.map((tee) => ({
+      color: tee.color,
+      courseRating: text(tee.courseRating),
+      slopeRating: text(tee.slopeRating),
+    })),
+  );
+  const [teeData, setTeeData] = useState<TeeCells[]>(() =>
+    Array.from({ length: 36 }, (_, index) => {
+      const cells: TeeCells = {};
+      for (const tee of holeAt(index)?.tees ?? []) {
+        cells[tee.color] = { length: text(tee.length), lat: text(tee.lat), lon: text(tee.lon) };
+      }
+      return cells;
+    }),
+  );
+  /** Welcher Abschlag auf der Karte gesetzt wird – „standard" = teeLat/teeLon. */
+  const [mapTee, setMapTee] = useState<TeeColor | "standard">("standard");
+  const activeMapTee = mapTee !== "standard" && tees.some((tee) => tee.color === mapTee) ? mapTee : "standard";
+
+  const setTeeCell = useCallback(
+    (index: number, color: TeeColor, patch: Partial<TeeCell>) =>
+      setTeeData((previous) =>
+        previous.map((cells, i) =>
+          i !== index
+            ? cells
+            : { ...cells, [color]: { length: "", lat: "", lon: "", ...cells[color], ...patch } },
+        ),
+      ),
+    [],
+  );
+
   const setCoord = (index: number, key: keyof Coords, value: string) =>
     setCoords((previous) => previous.map((row, i) => (i === index ? { ...row, [key]: value } : row)));
 
   const setPosition = useCallback((index: number, kind: PointKind, point: HolePoint | null) => {
     const lat = point ? point.lat.toFixed(6) : "";
     const lon = point ? point.lon.toFixed(6) : "";
+    // Farbiger Abschlag gewählt: nur dessen Position ändern, Standard bleibt.
+    if (kind === "tee" && activeMapTee !== "standard") {
+      setTeeCell(index, activeMapTee, { lat, lon });
+      return;
+    }
     setCoords((previous) =>
       previous.map((row, i) =>
         i !== index
@@ -57,15 +97,46 @@ export function EditForm({ course }: { course: CourseRecord }) {
         firstTeeLon: lon,
       }));
     }
-  }, []);
+  }, [activeMapTee, setTeeCell]);
 
   const positions = useMemo(
     () =>
-      coords.slice(0, holes).map((row) => ({
-        tee: toPoint(row.teeLat, row.teeLon),
-        flag: toPoint(row.flagLat, row.flagLon),
-      })),
-    [coords, holes],
+      coords.slice(0, holes).map((row, index) => {
+        const cell = activeMapTee === "standard" ? null : teeData[index][activeMapTee];
+        return {
+          tee: activeMapTee === "standard" ? toPoint(row.teeLat, row.teeLon) : toPoint(cell?.lat ?? "", cell?.lon ?? ""),
+          flag: toPoint(row.flagLat, row.flagLon),
+        };
+      }),
+    [coords, holes, activeMapTee, teeData],
+  );
+
+  // Für die Server-Action: Abschläge des Platzes und je Loch als JSON.
+  const teesJson = JSON.stringify(
+    isGolf
+      ? tees.map((tee) => ({
+          color: tee.color,
+          courseRating: teeNumber(tee.courseRating),
+          slopeRating: teeNumber(tee.slopeRating),
+        }))
+      : [],
+  );
+  const holeTeesJson = JSON.stringify(
+    Array.from({ length: holes }, (_, index) =>
+      isGolf
+        ? tees
+            .map((tee) => {
+              const cell = teeData[index][tee.color];
+              return {
+                color: tee.color,
+                length: teeNumber(cell?.length ?? ""),
+                lat: teeNumber(cell?.lat ?? ""),
+                lon: teeNumber(cell?.lon ?? ""),
+              };
+            })
+            .filter((tee) => tee.length !== null || (tee.lat !== null && tee.lon !== null))
+        : [],
+    ),
   );
   const centre = useMemo(() => toPoint(place.latitude, place.longitude), [place.latitude, place.longitude]);
 
@@ -133,6 +204,23 @@ export function EditForm({ course }: { course: CourseRecord }) {
         ) : null}
       </div>
 
+      {isGolf ? (
+        <div className="mt-6">
+          <span className="label">Abschläge</span>
+          <TeeEditor
+            value={tees}
+            onChange={setTees}
+            labels={{ colors: TEE_LABELS, courseRating: "Course Rating", slopeRating: "Slope Rating" }}
+          />
+          <p className="mt-2 text-xs leading-relaxed text-ink/65">
+            Die Standardlänge und -position bleibt für ältere App-Versionen bestehen. Ist sie leer, übernimmt sie
+            beim Speichern den ersten Abschlag.
+          </p>
+        </div>
+      ) : null}
+      <input type="hidden" name="tees" value={teesJson} />
+      <input type="hidden" name="holeTees" value={holeTeesJson} />
+
       <div className="mt-6 grid gap-4">
         <TextArea label="Platzinfos" name="facilityNotes" defaultValue={course.facilityNotes} />
         <div>
@@ -170,8 +258,38 @@ export function EditForm({ course }: { course: CourseRecord }) {
       {/* Lochwerte */}
       <div className="mt-8 border-t border-ink/15 pt-6">
         <h3 className="label">{isGolf ? "Löcher" : "Bahnen"}</h3>
+        {isGolf && tees.length ? (
+          <div className="mt-2 flex flex-wrap items-center gap-2 text-sm" role="group" aria-label="Abschlag auf der Karte">
+            <span className="text-ink/65">Abschlag auf der Karte:</span>
+            {(["standard", ...tees.map((tee) => tee.color)] as const).map((option) => (
+              <button
+                key={option}
+                type="button"
+                onClick={() => setMapTee(option)}
+                aria-pressed={activeMapTee === option}
+                className={`tap flex items-center gap-1.5 rounded-full border px-3 py-1 transition-colors ${
+                  activeMapTee === option ? "border-fairway bg-fairway/10 font-medium" : "border-ink/20 hover:border-ink/40"
+                }`}
+              >
+                {option === "standard" ? "Standard" : (
+                  <>
+                    <TeeDot color={option} />
+                    {TEE_LABELS[option]}
+                  </>
+                )}
+              </button>
+            ))}
+          </div>
+        ) : null}
         <div className="mt-2">
-          <HolePositionsMap lang="de" isGolf={isGolf} positions={positions} centre={centre} onChange={setPosition} />
+          <HolePositionsMap
+            lang="de"
+            isGolf={isGolf}
+            positions={positions}
+            centre={centre}
+            onChange={setPosition}
+            teeSwatch={activeMapTee === "standard" ? undefined : TEE_META[activeMapTee].swatch}
+          />
         </div>
         <div className="mt-5 overflow-x-auto">
           <table className="w-full min-w-[34rem] border-collapse">
@@ -187,8 +305,18 @@ export function EditForm({ course }: { course: CourseRecord }) {
                   HCP
                 </th>
                 <th scope="col" className="pb-2 text-left font-normal">
-                  Länge
+                  {isGolf && tees.length ? "Länge Std." : "Länge"}
                 </th>
+                {isGolf
+                  ? tees.map((tee) => (
+                      <th key={tee.color} scope="col" className="pb-2 pr-2 text-left font-normal">
+                        <span className="flex items-center gap-1">
+                          <TeeDot color={tee.color} className="h-2.5 w-2.5" />
+                          {TEE_LABELS[tee.color]}
+                        </span>
+                      </th>
+                    ))
+                  : null}
                 <th scope="col" className="pb-2 text-left font-normal">
                   Abschlag lat / lon
                 </th>
@@ -208,6 +336,23 @@ export function EditForm({ course }: { course: CourseRecord }) {
                     <Cell name={`par-${index}`} defaultValue={hole?.par} width="w-14" />
                     <Cell name={`hcp-${index}`} defaultValue={hole?.hcp} width="w-14" />
                     <Cell name={`length-${index}`} defaultValue={hole?.length} width="w-20" />
+                    {isGolf
+                      ? tees.map((tee) => {
+                          const cell = teeData[index][tee.color];
+                          const placed = Boolean(cell?.lat && cell?.lon);
+                          return (
+                            <td key={tee.color} className="py-1 pr-2">
+                              <input
+                                value={cell?.length ?? ""}
+                                onChange={(event) => setTeeCell(index, tee.color, { length: event.target.value })}
+                                aria-label={`Länge ${TEE_LABELS[tee.color]} ${index + 1}`}
+                                title={placed ? `Position: ${cell?.lat}, ${cell?.lon}` : undefined}
+                                className={`field !py-1 font-mono !text-sm w-16 ${placed ? "!border-fairway/60" : ""}`}
+                              />
+                            </td>
+                          );
+                        })
+                      : null}
                     <td className="py-1 pr-2">
                       <div className="flex gap-1">
                         <Input
@@ -339,6 +484,19 @@ function Cell({
     </td>
   );
 }
+
+/** Deutsche Farbnamen für den Tee-Editor. */
+const TEE_LABELS = Object.fromEntries(
+  Object.entries(TEE_META).map(([color, meta]) => [color, meta.label]),
+) as Record<TeeColor, string>;
+
+interface TeeCell {
+  length: string;
+  lat: string;
+  lon: string;
+}
+
+type TeeCells = Partial<Record<TeeColor, TeeCell>>;
 
 interface Coords {
   teeLat: string;

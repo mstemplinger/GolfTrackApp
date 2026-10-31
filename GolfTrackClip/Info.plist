@@ -55,6 +55,15 @@
 	</array>
 
 	<!--
+	  Startseite ohne Link (ClipHomeView): Kamera zum Scannen des Codes am
+	  Platz, Standort für die Plätze in der Nähe.
+	-->
+	<key>NSCameraUsageDescription</key>
+	<string>Zum Scannen des QR-Codes am Platz.</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>Damit wir dir die Plätze in deiner Nähe zeigen können.</string>
+
+	<!--
 	  Macht dieses Ziel zum App Clip. Daran erkennt auch AppClipEnvironment zur
 	  Laufzeit, dass es im Clip läuft, und blendet die Werbung aus – Apple
 	  untersagt sie hier (Richtlinie 2.5.16(a)).

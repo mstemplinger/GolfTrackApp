@@ -306,10 +306,12 @@ struct WatchMinigolfResultsView: View {
     let scores: [[Int]]
     @Environment(\.dismiss) private var dismiss
 
-    private var ranked: [(name: String, total: Int)] {
-        players.indices
-            .map { (players[$0], scores[$0].reduce(0, +)) }
-            .sorted { $0.1 < $1.1 }
+    /// Gleichstand teilt den Platz – zweimal Gold, dann Bronze.
+    private var ranked: [(name: String, total: Int, place: Int)] {
+        let totals = scores.map { $0.reduce(0, +) }
+        return players.indices
+            .map { i in (players[i], totals[i], totals.filter { $0 < totals[i] }.count) }
+            .sorted { $0.total < $1.total }
     }
 
     var body: some View {
@@ -320,7 +322,8 @@ struct WatchMinigolfResultsView: View {
                     .foregroundStyle(mgGold)
                     .padding(.top, 2)
 
-                ForEach(Array(ranked.enumerated()), id: \.offset) { place, entry in
+                ForEach(Array(ranked.enumerated()), id: \.offset) { _, entry in
+                    let place = entry.place
                     HStack(spacing: 8) {
                         Text(medal(place))
                             .font(.system(size: 13))

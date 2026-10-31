@@ -36,8 +36,14 @@ struct GolfTrackClipApp: App {
                     MinigolfCourseStartView(course: minigolfCourse)
                 } else if let golfCourse {
                     GolfLiteStartView(course: golfCourse)
+                } else if status == .loading {
+                    ClipLoadingView()
                 } else {
-                    ClipPlaceholderView(status: status)
+                    ClipHomeView(
+                        failure: { if case .failed(let message) = status { return message } else { return nil } }(),
+                        onScan: { url in open(url) },
+                        onPick: pick
+                    )
                 }
             }
             .preferredColorScheme(.dark)
@@ -80,6 +86,16 @@ struct GolfTrackClipApp: App {
             .first(where: { $0.activationState == .foregroundActive }) else { return }
         let config = SKOverlay.AppClipConfiguration(position: .bottom)
         SKOverlay(configuration: config).present(in: scene)
+    }
+
+    /// Ein Platz von der Startseite – aus der Umgebung oder die letzte
+    /// Golfrunde.
+    private func pick(_ course: ClipCourse) {
+        switch course {
+        case .minigolf(let entry): minigolfCourse = entry
+        case .golf(let entry):     golfCourse = entry
+        }
+        status = .ready
     }
 
     private func open(_ url: URL) {
@@ -145,41 +161,19 @@ struct GolfTrackClipApp: App {
     }
 }
 
-/// Was zu sehen ist, solange keine Anlage feststeht.
-private struct ClipPlaceholderView: View {
-
-    let status: GolfTrackClipApp.Status
-
+/// Was zu sehen ist, während eine Anlage nachgeschlagen wird. Ohne Link
+/// oder wenn er nicht aufging, zeigt der Clip `ClipHomeView`.
+private struct ClipLoadingView: View {
     var body: some View {
         VStack(spacing: 18) {
             Image(systemName: "flag.2.crossed.fill")
                 .font(.system(size: 46))
                 .foregroundStyle(AppTheme.gold)
-
-            switch status {
-            case .waiting, .ready:
-                Text("Runde starten mit GolfTrack")
-                    .font(.title2.bold())
-                Text("Scanne den QR-Code am Platz, dann zählen wir für dich mit.")
-                    .font(.subheadline)
-                    .foregroundStyle(.secondary)
-                    .multilineTextAlignment(.center)
-
-            case .loading:
-                ProgressView()
-                    .tint(AppTheme.gold)
-                Text("Anlage wird gesucht …")
-                    .font(.subheadline)
-                    .foregroundStyle(.secondary)
-
-            case .failed(let message):
-                Text("Das hat nicht geklappt")
-                    .font(.title3.bold())
-                Text(message)
-                    .font(.subheadline)
-                    .foregroundStyle(.secondary)
-                    .multilineTextAlignment(.center)
-            }
+            ProgressView()
+                .tint(AppTheme.gold)
+            Text("Anlage wird gesucht …")
+                .font(.subheadline)
+                .foregroundStyle(.secondary)
         }
         .padding(28)
         .frame(maxWidth: .infinity, maxHeight: .infinity)

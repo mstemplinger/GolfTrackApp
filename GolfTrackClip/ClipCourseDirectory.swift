@@ -1,3 +1,4 @@
+import CoreLocation
 import Foundation
 
 /// Plätze nachschlagen, die nicht im Programm stecken.
@@ -61,6 +62,39 @@ enum ClipCourseDirectory {
         }
     }
 
+    /// Plätze in der Umgebung für die Startseite – Minigolf und Golf, die
+    /// eingebauten Anlagen eingeschlossen, die nächsten zuerst.
+    ///
+    /// Hier lädt der Clip ausnahmsweise die ganzen Listen: Eine Umkreissuche
+    /// bietet die API nicht, und die Startseite erscheint nur, wenn jemand
+    /// ohne Link gekommen ist – nicht bei jedem Scan.
+    static func nearby(to location: CLLocation,
+                       within meters: CLLocationDistance = 50_000,
+                       limit: Int = 6) async -> [ClipNearbyCourse] {
+        async let minigolf = fetch(kind: .minigolf)
+        async let golf = fetch(kind: .golf)
+
+        var found: [ClipNearbyCourse] = []
+        var seen = Set<String>()
+        func add(_ course: ClipCourse, id: String, name: String, location place: String, lat: Double?, lon: Double?) {
+            guard let lat, let lon, lat != 0 || lon != 0, seen.insert(id).inserted else { return }
+            let distance = CLLocation(latitude: lat, longitude: lon).distance(from: location)
+            guard distance <= meters else { return }
+            found.append(ClipNearbyCourse(id: id, name: name, location: place, distance: distance, course: course))
+        }
+
+        for course in await minigolf {
+            add(.minigolf(course.minigolfEntry), id: course.id, name: course.name, location: course.location, lat: course.lat, lon: course.lon)
+        }
+        for entry in MinigolfCourses.all {
+            add(.minigolf(entry), id: entry.id, name: entry.name, location: entry.location, lat: entry.lat, lon: entry.lon)
+        }
+        for course in await golf {
+            add(.golf(course.golfEntry), id: course.id, name: course.name, location: course.location, lat: course.lat, lon: course.lon)
+        }
+        return Array(found.sorted { $0.distance < $1.distance }.prefix(limit))
+    }
+
     // MARK: – Format der API
 
     /// Nur die Felder, die der Clip braucht. Alles andere ignoriert der Decoder.
@@ -119,4 +153,18 @@ enum ClipCourseDirectory {
 enum ClipCourse {
     case minigolf(MinigolfCourseEntry)
     case golf(GolfLiteCourse)
+}
+
+/// Ein Platz in der Umgebung, wie ihn die Startseite des Clips zeigt.
+struct ClipNearbyCourse: Identifiable {
+    let id: String
+    let name: String
+    let location: String
+    let distance: CLLocationDistance
+    let course: ClipCourse
+
+    var isGolf: Bool {
+        if case .golf = course { return true }
+        return false
+    }
 }

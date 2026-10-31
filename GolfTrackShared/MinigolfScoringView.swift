@@ -44,8 +44,11 @@ struct MinigolfScoringView: View {
         scores[player].reduce(0, +)
     }
 
-    private var sortedPlayerIndices: [Int] {
-        (0..<playerCount).sorted { total(for: $0) < total(for: $1) }
+    /// Platz eines Spielers, 0 = vorn. Gleich viele Schläge, gleicher Platz:
+    /// Zwei mit je 1 Schlag sind beide Erste, der Nächste ist Dritter.
+    private func place(of player: Int) -> Int {
+        let own = total(for: player)
+        return (0..<playerCount).filter { total(for: $0) < own }.count
     }
 
     var body: some View {
@@ -221,7 +224,7 @@ struct MinigolfScoringView: View {
     }
 
     private func playerCard(for i: Int) -> some View {
-        let rank = sortedPlayerIndices.firstIndex(of: i) ?? i
+        let rank = place(of: i)
         return HStack(spacing: 12) {
             Text("\(rank + 1)")
                 .font(.caption.bold())
@@ -377,9 +380,12 @@ struct MinigolfResultsView: View {
         scores[player].reduce(0, +)
     }
 
-    private var ranked: [(index: Int, name: String, total: Int)] {
-        (0..<playerNames.count)
-            .map { i in (i, playerNames[i], total(for: i)) }
+    /// `place` zählt wie im Sport: Bei Gleichstand teilen sich alle den
+    /// Platz – zweimal Gold, dann Bronze, kein Silber.
+    private var ranked: [(index: Int, name: String, total: Int, place: Int)] {
+        let totals = (0..<playerNames.count).map { total(for: $0) }
+        return (0..<playerNames.count)
+            .map { i in (i, playerNames[i], totals[i], totals.filter { $0 < totals[i] }.count) }
             .sorted { $0.total < $1.total }
     }
 
@@ -430,7 +436,8 @@ struct MinigolfResultsView: View {
 
     private var rankingList: some View {
         VStack(spacing: 0) {
-            ForEach(Array(ranked.enumerated()), id: \.offset) { place, entry in
+            ForEach(Array(ranked.enumerated()), id: \.offset) { row, entry in
+                let place = entry.place
                 HStack(spacing: 12) {
                     Text(medal(for: place))
                         .font(place < 3 ? .title2 : .body)
@@ -445,7 +452,7 @@ struct MinigolfResultsView: View {
                 }
                 .padding(.vertical, 10)
                 .padding(.horizontal, 12)
-                if place < ranked.count - 1 {
+                if row < ranked.count - 1 {
                     Divider().padding(.leading, 60)
                 }
             }

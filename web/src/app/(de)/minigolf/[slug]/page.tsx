@@ -4,7 +4,7 @@ import { notFound } from "next/navigation";
 import { Footer, Header } from "@/components/Chrome";
 import { CourseHintList } from "@/components/CourseHintList";
 import { getCourse } from "@/lib/courses";
-import { APP_STORE_URL, PLAY_URL, SITE_URL } from "@/i18n/routes";
+import { PLAY_URL, SITE_URL } from "@/i18n/routes";
 
 /**
  * Der Katalogeintrag einer Minigolfanlage.
@@ -44,45 +44,38 @@ export default async function MinigolfLandingPage({ params }: PageProps<"/minigo
   return (
     <>
       <Header lang="de" />
-      <main className="mx-auto max-w-3xl px-5 py-20 text-center sm:px-8">
-        <p className="marginal">Minigolf</p>
+      <main className="mx-auto max-w-3xl px-5 pt-12 pb-20 text-center sm:px-8 sm:pt-16">
+        <p className="marginal">Minigolf · {course.holes} Bahnen</p>
         <h1 className="mt-4 font-display text-[clamp(2.2rem,6vw,3.6rem)] leading-[1.03] tracking-[-0.02em]">
           {course.name}
         </h1>
         {course.location ? <p className="mt-3 text-cream/55">{course.location}</p> : null}
 
-        <p className="mx-auto mt-8 max-w-lg text-lg leading-relaxed text-cream/75">
-          {course.welcome || "Schön, dass du da bist! Ab jetzt zählen wir für dich mit – Bahn für Bahn."}
-        </p>
-
-        <dl className="mx-auto mt-10 grid max-w-md gap-px overflow-hidden rounded-sm border rule bg-brass/15 sm:grid-cols-2">
-          <div className="bg-night/85 p-5">
-            <dt className="marginal">Bahnen</dt>
-            <dd className="mt-1.5 font-mono text-3xl text-brass">{course.holes}</dd>
-          </div>
-          <div className="bg-night/85 p-5">
-            <dt className="marginal">Kennung</dt>
-            <dd className="mt-1.5 break-all font-mono text-sm text-cream/70">{course.slug}</dd>
-          </div>
-        </dl>
-
         {/*
-          Führt auf die Spielseite, nicht direkt in die App. Diese Seite hier
-          ist der Katalogeintrag – wer sie durchblättert, sucht einen Platz und
-          will nicht mitten im Stöbern eine App-Clip-Karte vorgesetzt bekommen.
-          Erst auf play.golftrack.app entscheidet sich App, App Clip oder
-          Browser, und zwar dann, wenn jemand wirklich spielen will.
+          Wer hier landet, will spielen – der Knopf steht deshalb ganz oben
+          und groß, vor allem anderen. Er führt auf die Spielseite, nicht
+          direkt in die App: Erst auf play.golftrack.app entscheidet sich
+          App, App Clip oder Browser, und zwar dann, wenn jemand wirklich
+          spielen will. Wer nur im Verzeichnis stöbert, bekommt so keine
+          App-Clip-Karte vorgesetzt.
         */}
-        <div className="mt-10 flex flex-wrap justify-center gap-3">
-          <a href={`${PLAY_URL}/p/${course.slug}`} className="btn-brass">
-            Runde starten
+        <div className="mx-auto mt-9 max-w-sm">
+          <a
+            href={`${PLAY_URL}/p/${course.slug}`}
+            className="btn-brass w-full !min-h-16 !rounded-2xl !text-xl shadow-[0_10px_40px_-8px_rgba(201,160,53,0.55)]"
+          >
+            Runde starten ›
           </a>
-          <a href={APP_STORE_URL} target="_blank" rel="noreferrer" className="btn-ghost">
+          <p className="mt-3 text-sm text-cream/50">
+            Kostenlos · ohne Anmeldung · auch ohne Installation
+          </p>
+          <Link href="/laden" className="btn-ghost mt-5 w-full">
             GolfTrack laden
-          </a>
+          </Link>
         </div>
-        <p className="mt-4 text-sm text-cream/45">
-          Mit App, ohne Installation oder direkt im Browser – das entscheidet sich beim Start.
+
+        <p className="mx-auto mt-12 max-w-lg text-lg leading-relaxed text-cream/75">
+          {course.welcome || "Schön, dass du da bist! Ab jetzt zählen wir für dich mit – Bahn für Bahn."}
         </p>
 
         <CourseHintList hints={course.facilityHints} />

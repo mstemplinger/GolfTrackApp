@@ -3,8 +3,8 @@
 //
 // Zielgruppe ist der GAST an der Anlage: links in drei Sprachen (IT/EN/DE),
 // wie GolfTrack geht, rechts der QR-Code. Codiert wird – wie bei
-// `web/src/app/qr/[slug]` – der Universal Link `/minigolf/<slug>`, der auf
-// dem iPhone den App Clip öffnet und sonst die Anlagenseite im Browser.
+// `web/src/app/qr/[slug]` – die Spielseite `play.golftrack.app/p/<slug>`:
+// App, App Clip oder Zählkarte im Browser, ohne Umweg über den Katalog.
 //
 // Die Anlage muss in der Datenbank freigegeben sein (kind = minigolf),
 // sonst führt der Link ins Leere.
@@ -43,8 +43,8 @@ const fileBase = NAME.replace(/[^\p{L}\p{N}]+/gu, "-").replace(/^-|-$/g, "");
 const outPath = positional[0] || path.join(__dirname, "out", `GolfTrack-QR-${fileBase}-A4-quer.pdf`);
 fs.mkdirSync(path.dirname(outPath), { recursive: true });
 
-const LINK = `https://golftrack.app/minigolf/${SLUG}`;
-const LINK_SHORT = `golftrack.app/minigolf/${SLUG}`;
+const LINK = `https://play.golftrack.app/p/${SLUG}`;
+const LINK_SHORT = `play.golftrack.app/p/${SLUG}`;
 
 // AppTheme-Farben (aus Shared/AppTheme.swift)
 const C = {

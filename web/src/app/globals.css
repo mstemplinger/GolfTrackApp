@@ -44,6 +44,24 @@
   }
 
   /*
+    Laufende Runde im Browser (WebScorecard): Außer der Zählkarte gibt es
+    nichts mehr auf der Seite – nichts zum Scrollen, nichts, was hinter
+    Statusleiste oder Safaris schwebender Adressleiste durchscheint. Die
+    Farbe ist die der Zählkarte, damit Safari seine Leisten passend tönt.
+  */
+  html.scorecard-open,
+  html.scorecard-open body {
+    height: 100%;
+    overflow: hidden;
+    overscroll-behavior: none;
+    background-color: #0e2718;
+  }
+
+  html.scorecard-open body > :not(.scorecard-layer) {
+    display: none !important;
+  }
+
+  /*
     Überschriften laufen grundsätzlich im Display-Schnitt, fett und eng.
     Manrope regular wirkt bei 3 rem dünn und beliebig – erst ab 700 mit
     negativer Laufweite bekommt eine Zeile Gewicht.

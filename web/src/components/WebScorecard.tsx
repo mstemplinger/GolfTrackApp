@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState, useSyncExternalStore } from "react";
+import { createPortal } from "react-dom";
 import type { CourseKind } from "@/lib/schema";
 import { CHALLENGES, results as challengeResults, type ChallengeResult } from "@/lib/minigolfChallenges";
 
@@ -129,14 +130,18 @@ export function WebScorecard({
     }
   }, [storageKey, names, scores, hole, finished, challenges]);
 
-  // Solange der Zähler den Bildschirm füllt, soll die Seite darunter nicht
-  // mitscrollen.
+  // Solange der Zähler den Bildschirm füllt, gibt es die Seite darunter
+  // nicht: `scorecard-open` blendet alles außer der Zählkarte aus (siehe
+  // globals.css). `overflow: hidden` allein reicht in Safari nicht – dort
+  // ließ sich die Seite trotzdem verschieben, und hinter der schwebenden
+  // Adressleiste und der Statusleiste schien ihr Text durch.
   useEffect(() => {
     if (!running) return;
-    const vorher = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
+    const root = document.documentElement;
+    root.classList.add("scorecard-open");
+    window.scrollTo(0, 0);
     return () => {
-      document.body.style.overflow = vorher;
+      root.classList.remove("scorecard-open");
     };
   }, [running]);
 
@@ -240,15 +245,21 @@ export function WebScorecard({
   );
 }
 
-/** Nimmt den ganzen Bildschirm ein – wie die Zählkarte in der App. */
+/**
+ * Nimmt den ganzen Bildschirm ein – wie die Zählkarte in der App. Hängt
+ * direkt an `body`, damit sie stehen bleibt, wenn der Rest der Seite
+ * ausgeblendet wird. Gerendert wird sie erst nach der Hydrierung, `document`
+ * gibt es dann also.
+ */
 function FullScreen({ children }: { children: React.ReactNode }) {
-  return (
+  return createPortal(
     <div
-      className="fixed inset-0 z-50 flex flex-col text-left"
+      className="scorecard-layer fixed inset-0 z-50 flex flex-col text-left"
       style={{ backgroundColor: APP.bg, color: "#fff" }}
     >
       {children}
-    </div>
+    </div>,
+    document.body,
   );
 }
 
@@ -431,7 +442,9 @@ function Scoring({
   const letzte = hole === holes - 1;
   // Rang wie in der App: wenige Schläge zuerst.
   const gesamt = names.map((_, i) => scores[i].reduce((sum, value) => sum + value, 0));
-  const reihenfolge = names.map((_, i) => i).sort((a, b) => gesamt[a] - gesamt[b]);
+  // Gleichstand teilt den Platz: zwei mit gleich vielen Schlägen sind beide
+  // Erste, der Nächste ist Dritter.
+  const platzVon = (player: number) => gesamt.filter((t) => t < gesamt[player]).length;
 
   return (
     <>
@@ -469,9 +482,9 @@ function Scoring({
             >
               <span
                 className="grid h-6 w-6 shrink-0 place-items-center rounded-full text-xs font-semibold text-white"
-                style={{ backgroundColor: rangFarbe(reihenfolge.indexOf(player)) }}
+                style={{ backgroundColor: rangFarbe(platzVon(player)) }}
               >
-                {reihenfolge.indexOf(player) + 1}
+                {platzVon(player) + 1}
               </span>
               <div className="min-w-0 flex-1">
                 <p className="truncate font-semibold">{name}</p>
@@ -622,8 +635,9 @@ function Result({
 }) {
   const parGesamt = pars.reduce((sum, par) => sum + par, 0);
   const gesamt = scores.map((row) => row.reduce((sum, value) => sum + value, 0));
+  // Gleichstand teilt den Platz – zweimal Gold, dann Bronze.
   const reihenfolge = gesamt
-    .map((total, player) => ({ player, total }))
+    .map((total, player) => ({ player, total, platz: gesamt.filter((t) => t < total).length }))
     .sort((a, b) => a.total - b.total);
 
   return (
@@ -632,7 +646,7 @@ function Result({
 
       <div className="flex-1 overflow-y-auto px-4 py-6">
         <ol className="mx-auto flex max-w-lg flex-col gap-2.5">
-          {reihenfolge.map((row, platz) => (
+          {reihenfolge.map(({ platz, ...row }) => (
             <li
               key={row.player}
               className="flex items-center gap-3 rounded-2xl p-4"

@@ -43,6 +43,7 @@ const OPEN = [
   "/en/support",
   "/android", // APK-Download, verlinkt vom Zähler
   "/en/android",
+  "/laden", // Weiche App Store / APK, verlinkt von den Anlagenseiten
 ];
 
 function isOpen(pathname: string): boolean {

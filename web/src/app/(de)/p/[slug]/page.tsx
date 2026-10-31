@@ -5,7 +5,7 @@ import { Footer, Header } from "@/components/Chrome";
 import { CourseHintList } from "@/components/CourseHintList";
 import { WebScorecard } from "@/components/WebScorecard";
 import { getCourse } from "@/lib/courses";
-import { APP_STORE_URL, PLAY_URL } from "@/i18n/routes";
+import { PLAY_URL, SITE_URL } from "@/i18n/routes";
 
 /**
  * Das Ziel des QR-Codes am Abschlag: `play.golftrack.app/p/<kennung>`.
@@ -93,7 +93,7 @@ export default async function PlayPage({ params }: PageProps<"/p/[slug]">) {
           <a href={deepLink} className="btn-brass">
             In der App öffnen
           </a>
-          <a href={APP_STORE_URL} target="_blank" rel="noreferrer" className="btn-ghost">
+          <a href={`${SITE_URL}/laden`} className="btn-ghost">
             GolfTrack laden
           </a>
         </div>

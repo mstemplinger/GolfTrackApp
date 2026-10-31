@@ -260,6 +260,9 @@ struct HomeView: View {
                 weather.fetch()
                 setupWatchSync()
                 loadMinigolfData()
+                #if DEBUG
+                openDebugScreen()
+                #endif
             }
             .onChange(of: allCourses) { _, courses in
                 // Wenn Plätze sich ändern, Watch sofort aktualisieren
@@ -267,6 +270,38 @@ struct HomeView: View {
             }
         }
     }
+
+    #if DEBUG
+    /// Screenshots ohne Tippen: `GOLFTRACK_OPEN=newRound` öffnet „Neue Runde“,
+    /// `GOLFTRACK_OPEN=round` die erste offene Runde.
+    private func openDebugScreen() {
+        guard let target = ProcessInfo.processInfo.environment["GOLFTRACK_OPEN"] else { return }
+        Task { @MainActor in
+            try? await Task.sleep(for: .milliseconds(600))
+            switch target {
+            case "newRound": showNewRound = true
+            case "round": selectedIncompleteRound = allRounds.first { !$0.isComplete } ?? makeDebugRound()
+            default: break
+            }
+        }
+    }
+
+    /// Offene Runde auf dem ersten Platz mit Gelb, sechs Löcher gespielt.
+    private func makeDebugRound() -> Round? {
+        guard let course = allCourses.first else { return nil }
+        let round = Round(course: course)
+        round.teeColor = .yellow
+        context.insert(round)
+        for i in 1...course.numberOfHoles {
+            let par = course.parValues[safe: i - 1] ?? 4
+            let strokes = i <= 6 ? par + [0, 1, -1, 1, 0, 2][i - 1] : 0
+            let hole = HoleScore(holeNumber: i, strokes: strokes, putts: i <= 6 ? 2 : 0)
+            context.insert(hole)
+            round.holeScores.append(hole)
+        }
+        return round
+    }
+    #endif
 
     /// Erst im nächsten Durchlauf umschalten: im selben Frame, in dem der Stack
     /// entsteht, verwirft SwiftUI das Navigationsziel sonst stillschweigend.
@@ -868,35 +903,36 @@ struct HomeView: View {
                     )
                 }
 
-                HStack(spacing: 0) {
-                    // Haupttemperatur
-                    VStack(spacing: 4) {
-                        Image(systemName: weather.symbolName)
-                            .font(.system(size: 36))
-                            .symbolRenderingMode(.multicolor)
-                            .foregroundStyle(AppTheme.gold)
+                HStack(alignment: .center, spacing: 12) {
+                    Image(systemName: weather.symbolName)
+                        .font(.system(size: 34))
+                        .symbolRenderingMode(.multicolor)
+                        .foregroundStyle(AppTheme.gold)
+                        .frame(width: 44)
+                    VStack(alignment: .leading, spacing: 1) {
                         Text(weather.temperature)
-                            .font(.system(size: 28, weight: .bold, design: .rounded))
+                            .font(.system(size: 30, weight: .bold, design: .rounded))
                             .foregroundStyle(AppTheme.text)
                         Text(weather.conditionText)
                             .font(.caption)
                             .foregroundStyle(AppTheme.textSec)
-                            .multilineTextAlignment(.center)
+                            .lineLimit(1)
                     }
-                    .frame(maxWidth: .infinity)
-
-                    Divider()
-                        .frame(height: 70)
-                        .background(AppTheme.cardAlt)
-
-                    // Detail-Grid
-                    VStack(spacing: 8) {
-                        weatherDetail(icon: "thermometer.medium", label: "Gefühlt", value: weather.feelsLike)
+                    Spacer(minLength: 0)
+                    VStack(alignment: .leading, spacing: 5) {
                         weatherDetail(icon: "wind", label: "Wind", value: weather.windSpeed)
+                        weatherDetail(icon: "thermometer.medium", label: "Gefühlt", value: weather.feelsLike)
+                    }
+                    .frame(maxWidth: 150)
+                }
+
+                if todayHours.count >= 3 {
+                    hourlyGolfBars
+                } else {
+                    HStack(spacing: 14) {
                         weatherDetail(icon: "humidity", label: "Feuchte", value: weather.humidity)
                         weatherDetail(icon: "sun.max", label: "UV", value: weather.uvIndex)
                     }
-                    .frame(maxWidth: .infinity)
                 }
 
                 // Die Karte öffnet beim Antippen die Vorhersage – ohne Hinweis sieht man das nicht.
@@ -913,6 +949,68 @@ struct HomeView: View {
             .cardStyle()
             .padding(.horizontal)
         }
+    }
+
+    // MARK: Stundenverlauf
+
+    /// Hellstunden von heute für den Verlauf auf der Startseite.
+    private var todayHours: [HourlyForecast] {
+        weather.dailyForecast.first(where: \.isToday)?.daylightHours ?? []
+    }
+
+    /// Ein Balken je Hellstunde: Höhe = Temperatur, Gold = spielbar.
+    /// Vergangene Stunden verblassen, die aktuelle ist umrandet.
+    private var hourlyGolfBars: some View {
+        let hours = todayHours
+        let temps = hours.map(\.temperature)
+        let low = (temps.min() ?? 0) - 2
+        let span = max(1, (temps.max() ?? 1) - low)
+        let now = Date()
+        let rules = GolfWeatherRules.current
+        let labelStep = hours.count > 12 ? 3 : 2
+
+        return VStack(alignment: .leading, spacing: 6) {
+            HStack(alignment: .bottom, spacing: 4) {
+                ForEach(Array(hours.enumerated()), id: \.element.id) { index, hour in
+                    let past = hour.date.addingTimeInterval(3600) <= now
+                    let current = hour.date <= now && !past
+                    let playable = hour.isPlayable(with: rules)
+                    VStack(spacing: 4) {
+                        RoundedRectangle(cornerRadius: 3)
+                            .fill(playable ? AppTheme.gold : AppTheme.cardAlt)
+                            .frame(height: max(6, 38 * (hour.temperature - low) / span))
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 3)
+                                    .strokeBorder(.white.opacity(current ? 0.9 : 0), lineWidth: 1.5)
+                            )
+                            .opacity(past ? 0.3 : 1)
+                        Text(index % labelStep == 0 ? hour.date.formatted(.dateTime.hour(.defaultDigits(amPM: .omitted))) : " ")
+                            .font(.system(size: 9, weight: .semibold))
+                            .foregroundStyle(current ? AppTheme.text : AppTheme.textTer)
+                            .lineLimit(1)
+                            .fixedSize()
+                    }
+                    .frame(maxWidth: .infinity)
+                }
+            }
+            .frame(height: 54, alignment: .bottom)
+            .accessibilityElement(children: .ignore)
+            .accessibilityLabel(Text(weather.golfWeatherLabel))
+
+            HStack(spacing: 12) {
+                legendDot(AppTheme.gold, "Golf-Wetter")
+                legendDot(AppTheme.cardAlt, "Regen, Wind oder kalt")
+            }
+        }
+    }
+
+    private func legendDot(_ color: Color, _ label: LocalizedStringKey) -> some View {
+        HStack(spacing: 5) {
+            RoundedRectangle(cornerRadius: 2).fill(color).frame(width: 10, height: 10)
+            Text(label)
+        }
+        .font(.caption2)
+        .foregroundStyle(AppTheme.textSec)
     }
 
     // label als LocalizedStringKey, nicht als String: bei String wird das Literal

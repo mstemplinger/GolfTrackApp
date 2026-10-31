@@ -52,6 +52,20 @@ struct APICourse: Codable, Identifiable {
         let female = tees?.female ?? []
         return male + female
     }
+
+    /// Abschläge mit erkennbarer Farbe als `CourseTee` – je Farbe der erste
+    /// (Herren vor Damen). Yards werden in Meter umgerechnet.
+    var courseTees: [CourseTee] {
+        var seen = Set<TeeColor>()
+        return allTeeBoxes.compactMap { box in
+            guard let color = box.teeColor, seen.insert(color).inserted else { return nil }
+            let lengths = (box.holes ?? []).map { hole in
+                hole.yardage.map { Int((Double($0) * 0.9144).rounded()) } ?? 0
+            }
+            return CourseTee(color: color, courseRating: box.courseRating,
+                             slopeRating: box.slopeRating, holeLengths: lengths)
+        }
+    }
 }
 
 // MARK: - Location
@@ -76,6 +90,17 @@ struct APITees: Codable {
 
 struct APITeeBox: Codable, Identifiable {
     var id: String { teeName ?? "unknown" }
+
+    /// Farbe aus dem Namen („Yellow“, „Gelb Herren“ …), nil wenn keine passt.
+    var teeColor: TeeColor? {
+        let name = (teeName ?? "").lowercased()
+        let keywords: [(TeeColor, [String])] = [
+            (.black, ["black", "schwarz"]), (.white, ["white", "weiß", "weiss"]),
+            (.gold, ["gold"]), (.blue, ["blue", "blau"]), (.yellow, ["yellow", "gelb"]),
+            (.red, ["red", "rot"]), (.orange, ["orange"]), (.green, ["green", "grün", "gruen"]),
+        ]
+        return keywords.first { _, words in words.contains { name.contains($0) } }?.0
+    }
     let teeName: String?
     let numberOfHoles: Int?
     let parTotal: Int?

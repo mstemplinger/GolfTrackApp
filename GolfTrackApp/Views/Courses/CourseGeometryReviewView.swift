@@ -14,6 +14,14 @@ struct CourseGeometryReviewView: View {
     @State private var suggestions: [HoleGeometrySuggestion] = []
     @State private var appliedHoles: Set<Int> = []
     @State private var isCalculating = true
+    /// Ausgewerteter Abschlag – nil = alle Runden (Standardabschlag).
+    @State private var teeFilter: TeeColor?
+
+    /// Abschläge, von denen Runden auf diesem Platz vorliegen.
+    private var playedTees: [TeeColor] {
+        let played = Set(course.rounds.compactMap(\.teeColor))
+        return TeeColor.allCases.filter(played.contains)
+    }
 
     private var usable: [HoleGeometrySuggestion] {
         suggestions.filter(\.hasUsableSuggestion)
@@ -50,10 +58,12 @@ struct CourseGeometryReviewView: View {
             }
         }
         .preferredColorScheme(.dark)
-        .task {
+        .task(id: teeFilter) {
+            isCalculating = true
             // Frame abgeben, damit der Ladehinweis sichtbar wird.
             await Task.yield()
-            suggestions = CourseGeometryInference.suggestions(for: course)
+            suggestions = CourseGeometryInference.suggestions(for: course, tee: teeFilter)
+            appliedHoles = []
             isCalculating = false
         }
     }
@@ -65,6 +75,18 @@ struct CourseGeometryReviewView: View {
             Section {
                 explanation
                     .listRowBackground(AppTheme.cardDark)
+            }
+
+            if !playedTees.isEmpty {
+                Section {
+                    teePicker
+                        .listRowBackground(AppTheme.card)
+                } header: {
+                    Text("Abschlag")
+                } footer: {
+                    Text("Jede Farbe hat eigene Abschläge. Ausgewertet werden nur Runden vom gewählten Abschlag.")
+                        .font(.caption)
+                }
             }
 
             Section {
@@ -102,6 +124,35 @@ struct CourseGeometryReviewView: View {
         .listStyle(.insetGrouped)
         .scrollContentBackground(.hidden)
         .safeAreaInset(edge: .bottom) { actionBar }
+    }
+
+    private var teePicker: some View {
+        ScrollView(.horizontal, showsIndicators: false) {
+            HStack(spacing: 8) {
+                teeChip(nil)
+                ForEach(playedTees) { teeChip($0) }
+            }
+            .padding(.vertical, 2)
+        }
+    }
+
+    private func teeChip(_ tee: TeeColor?) -> some View {
+        let selected = teeFilter == tee
+        return Button {
+            Haptics.selection()
+            teeFilter = tee
+        } label: {
+            HStack(spacing: 6) {
+                if let tee { TeeDot(tee: tee) }
+                Text(tee?.displayName ?? String(localized: "Alle"))
+                    .font(.subheadline.weight(.semibold))
+            }
+            .foregroundStyle(selected ? AppTheme.gold : AppTheme.text)
+            .padding(.horizontal, 12).padding(.vertical, 7)
+            .background(selected ? AppTheme.gold.opacity(0.16) : AppTheme.cardAlt, in: Capsule())
+            .overlay(Capsule().strokeBorder(selected ? AppTheme.gold.opacity(0.6) : .clear, lineWidth: 1))
+        }
+        .buttonStyle(.plain)
     }
 
     private var explanation: some View {
@@ -244,7 +295,8 @@ struct CourseGeometryReviewView: View {
     // MARK: - Übernehmen
 
     private func apply(_ items: [HoleGeometrySuggestion], minConfidence: Double) {
-        let applied = CourseGeometryInference.apply(items, to: course, minConfidence: minConfidence)
+        let applied = CourseGeometryInference.apply(items, to: course, tee: teeFilter,
+                                                    minConfidence: minConfidence)
         guard applied > 0 else { return }
         for item in items where item.isPlausible {
             if (item.tee != nil && item.teeConfidence >= minConfidence) ||

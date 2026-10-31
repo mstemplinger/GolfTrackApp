@@ -298,6 +298,8 @@ struct RemoteCourse: Decodable {
     /// Fehlt bei Plätzen, die vor der Einführung freigegeben wurden.
     let facilityHints: [CourseHint]?
     let welcome: String
+    /// Abschläge je Farbe – fehlt bei älteren Ständen der Website.
+    let tees: [CourseTee]?
     let teeLatitudes: [Double]
     let teeLongitudes: [Double]
     let flagLatitudes: [Double]
@@ -310,7 +312,7 @@ struct RemoteCourse: Decodable {
     /// schickt lieber gar keine Scorecard als eine halbe), bleibt der geprüfte
     /// eingebaute Wert stehen.
     func bundledEntry(fallback: BundledCourseEntry? = nil) -> BundledCourseEntry {
-        BundledCourseEntry(
+        var entry = BundledCourseEntry(
             name: name,
             location: location.isEmpty ? (fallback?.location ?? "") : location,
             holes: holes > 0 ? holes : (fallback?.holes ?? holes),
@@ -331,6 +333,8 @@ struct RemoteCourse: Decodable {
             firstTeeLat: firstTeeLat ?? fallback?.firstTeeLat,
             firstTeeLon: firstTeeLon ?? fallback?.firstTeeLon
         )
+        entry.tees = tees ?? fallback?.tees ?? []
+        return entry
     }
 
     /// Als Minigolfanlage für QR-Start und Anlagenliste – wie oben mit dem

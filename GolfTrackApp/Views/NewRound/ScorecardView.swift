@@ -51,7 +51,8 @@ struct ScorecardView: View {
                         holeCount: sortedScores.count,
                         gameMode: round.gameMode,
                         onPrevious: { goToPreviousHole() },
-                        onNext: { goToNextHole() }
+                        onNext: { goToNextHole() },
+                        onSelectHole: { goToHole($0) }
                     )
                 }
 
@@ -293,6 +294,12 @@ struct ScorecardView: View {
             Haptics.selection()
         }
         currentIndex += 1
+    }
+
+    private func goToHole(_ number: Int) {
+        guard let index = sortedScores.firstIndex(where: { $0.holeNumber == number }) else { return }
+        Haptics.selection()
+        currentIndex = index
     }
 
     // MARK: - Nachgetragene Runde

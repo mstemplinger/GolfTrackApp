@@ -16,6 +16,9 @@ final class Round {
     /// Schlägerauswahl nach Plus für den Rest der Runde ausgeblendet.
     var hidesClubPicker: Bool = false
 
+    /// Gespielter Abschlag (`TeeColor.rawValue`), leer bei älteren Runden.
+    var teeColorRaw: String = ""
+
     @Relationship(deleteRule: .cascade, inverse: \HoleScore.round)
     var holeScores: [HoleScore] = []
 
@@ -38,6 +41,11 @@ final class Round {
     var gameMode: GameMode {
         get { GameMode(rawValue: gameModeRaw) ?? .strokePlay }
         set { gameModeRaw = newValue.rawValue }
+    }
+
+    var teeColor: TeeColor? {
+        get { TeeColor(rawValue: teeColorRaw) }
+        set { teeColorRaw = newValue?.rawValue ?? "" }
     }
 
     var otherPlayerNames: [String] {

@@ -41,10 +41,11 @@ enum HandicapCalculator {
                   round.totalStrokes > 0,
                   course.courseRating > 0,
                   course.slopeRating > 0 else { return nil }
+            // Wertung des gespielten Abschlags, sonst die des Platzes.
             return scoreDifferential(
                 grossScore: round.totalStrokes,
-                courseRating: course.courseRating,
-                slopeRating: course.slopeRating
+                courseRating: course.courseRating(for: round.teeColor),
+                slopeRating: course.slopeRating(for: round.teeColor)
             )
         }
 
@@ -86,10 +87,11 @@ enum HandicapCalculator {
                   round.totalStrokes > 0,
                   course.courseRating > 0,
                   course.slopeRating > 0 else { return nil }
+            // Wertung des gespielten Abschlags, sonst die des Platzes.
             return scoreDifferential(
                 grossScore: round.totalStrokes,
-                courseRating: course.courseRating,
-                slopeRating: course.slopeRating
+                courseRating: course.courseRating(for: round.teeColor),
+                slopeRating: course.slopeRating(for: round.teeColor)
             )
         }
         guard differentials.count >= 3 else { return nil }

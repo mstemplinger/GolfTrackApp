@@ -102,7 +102,7 @@ struct RoundTrackingOverviewSheet: View {
             // Loch-Nummern an den Abschlägen
             if let course {
                 ForEach(1...max(1, course.numberOfHoles), id: \.self) { hole in
-                    if let tee = course.teeCoordinate(forHole: hole) {
+                    if let tee = course.teeCoordinate(forHole: hole, tee: round.teeColor) {
                         Annotation("", coordinate: tee) {
                             let isCurrent = hole == currentHole
                             ZStack {

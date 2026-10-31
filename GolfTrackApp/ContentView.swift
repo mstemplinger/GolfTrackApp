@@ -293,6 +293,7 @@ struct ContentView: View {
             flagLatitudes: entry.flagLatitudes,
             flagLongitudes: entry.flagLongitudes
         )
+        course.tees = entry.tees
         modelContext.insert(course)
         return course
     }

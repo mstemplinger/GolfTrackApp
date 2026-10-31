@@ -38,6 +38,11 @@ final class Course {
     /// Wann der Verlauf zuletzt berechnet wurde.
     var fairwayComputedAt: Date?
 
+    // MARK: – Abschläge
+    /// JSON-kodierte `[CourseTee]`. Die Standardfelder oben (`holeLengths`,
+    /// `teeLatitudes` …) bleiben der Rückfall für Plätze ohne Farbangaben.
+    var teeData: Data = Data()
+
     @Relationship(deleteRule: .nullify, inverse: \Round.course)
     var rounds: [Round] = []
 
@@ -135,6 +140,74 @@ final class Course {
     func distanceToTee(hole: Int, from location: CLLocation) -> CLLocationDistance? {
         guard let coord = teeCoordinate(forHole: hole) else { return nil }
         return CLLocation(latitude: coord.latitude, longitude: coord.longitude).distance(from: location)
+    }
+
+    // MARK: – Abschläge je Farbe
+
+    /// Vom Verzeichnis oder Nutzer hinterlegte Abschläge, leer wenn unbekannt.
+    var tees: [CourseTee] {
+        get {
+            guard !teeData.isEmpty else { return [] }
+            return (try? JSONDecoder().decode([CourseTee].self, from: teeData)) ?? []
+        }
+        set { teeData = (try? JSONEncoder().encode(newValue)) ?? Data() }
+    }
+
+    /// Farben zur Auswahl beim Rundenstart: die vom Platz angegebenen, sonst
+    /// die üblichen. Nur gelernte Positionen (ohne Wertung und Längen) machen
+    /// aus einem Platz noch keinen mit festen Farben – sonst schrumpfte die
+    /// Auswahl nach der ersten Runde auf die gespielte Farbe.
+    var availableTeeColors: [TeeColor] {
+        let all = tees
+        let official = all.filter { $0.courseRating != nil || $0.slopeRating != nil || $0.holeLengths.contains { $0 > 0 } }
+        if !official.isEmpty { return official.map(\.color) }
+        let colors = Set(TeeColor.commonSet + all.map(\.color))
+        return TeeColor.allCases.filter(colors.contains)
+    }
+
+    func tee(_ color: TeeColor?) -> CourseTee? {
+        guard let color else { return nil }
+        return tees.first { $0.color == color }
+    }
+
+    /// Abschlag eines Lochs für eine Farbe – fällt auf den Standardabschlag
+    /// zurück, solange für die Farbe nichts bekannt ist.
+    func teeCoordinate(forHole hole: Int, tee color: TeeColor?) -> CLLocationCoordinate2D? {
+        tee(color)?.coordinate(forHole: hole) ?? teeCoordinate(forHole: hole)
+    }
+
+    /// Ob für diese Farbe selbst schon ein Abschlag bekannt ist (ohne Rückfall).
+    func hasOwnTeeCoordinate(forHole hole: Int, tee color: TeeColor?) -> Bool {
+        guard let color else { return teeCoordinate(forHole: hole) != nil }
+        return tee(color)?.coordinate(forHole: hole) != nil
+    }
+
+    func holeLength(forHole hole: Int, tee color: TeeColor?) -> Int? {
+        if let length = tee(color)?.length(forHole: hole) { return length }
+        let i = hole - 1
+        guard i >= 0, i < holeLengths.count, holeLengths[i] > 0 else { return nil }
+        return holeLengths[i]
+    }
+
+    func courseRating(for color: TeeColor?) -> Double { tee(color)?.courseRating ?? courseRating }
+    func slopeRating(for color: TeeColor?) -> Int { tee(color)?.slopeRating ?? slopeRating }
+
+    /// Speichert einen Abschlag für eine Farbe. Der Standardabschlag wird
+    /// mitgesetzt, solange er fehlt – ältere Ansichten lesen nur ihn.
+    func setTeeCoordinate(_ coordinate: CLLocationCoordinate2D, forHole hole: Int, tee color: TeeColor?) {
+        if teeCoordinate(forHole: hole) == nil || color == nil {
+            setTeeCoordinate(coordinate, forHole: hole)
+        }
+        guard let color else { return }
+        var all = tees
+        if let i = all.firstIndex(where: { $0.color == color }) {
+            all[i].setCoordinate(coordinate, forHole: hole, holeCount: numberOfHoles)
+        } else {
+            var new = CourseTee(color: color)
+            new.setCoordinate(coordinate, forHole: hole, holeCount: numberOfHoles)
+            all.append(new)
+        }
+        tees = all
     }
 
     // MARK: – Fairway-Verlauf

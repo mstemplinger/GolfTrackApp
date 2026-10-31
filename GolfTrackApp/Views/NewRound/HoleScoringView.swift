@@ -10,6 +10,8 @@ struct HoleScoringView: View {
     let gameMode: GameMode
     let onPrevious: () -> Void
     let onNext: () -> Void
+    /// Sprung auf ein bestimmtes Loch (1-basiert) über die Lochleiste.
+    var onSelectHole: (Int) -> Void = { _ in }
 
     @Query(sort: \GolfClub.order) private var allClubs: [GolfClub]
 
@@ -80,10 +82,10 @@ struct HoleScoringView: View {
     }
 
     var body: some View {
-        VStack(spacing: 14) {
-            courseHeader
-            holeCard
+        VStack(spacing: 12) {
+            holeHeader
             pinDistanceCard
+            clubRecommendationCard
             strokeCounterCard
             secondaryStatsCard
 
@@ -107,6 +109,7 @@ struct HoleScoringView: View {
                 }
             }
 
+            holeStrip
             scoreGesamtBar
             shotTrackerButton
 
@@ -246,6 +249,10 @@ struct HoleScoringView: View {
         return CLLocation(latitude: lat, longitude: lon).distance(from: loc)
     }
 
+    /// Mehr als 2 km zur Fahne: niemand steht auf diesem Loch – dann weder
+    /// Distanz noch Schlägerempfehlung, sondern ein Hinweis.
+    private var isAwayFromCourse: Bool { (distanceToPin ?? 0) > 2000 }
+
     /// Empfehlung für den Schlag, der gerade gezählt wurde – aus der Position beim Tippen.
     private var pendingRecommendedClub: GolfClub? {
         guard let lat = score.pinLatitude, let lon = score.pinLongitude,
@@ -262,91 +269,67 @@ struct HoleScoringView: View {
 
     // MARK: - Pin Distance Card
 
+    private let darkText = Color(red: 0.06, green: 0.14, blue: 0.08)
+
     @ViewBuilder
     private var pinDistanceCard: some View {
         if score.hasPinLocation {
-            // Pin is set — show distance + club recommendation
-            VStack(alignment: .leading, spacing: 10) {
+            HStack(spacing: 10) {
                 // Tippen öffnet die Loch-Übersicht mit allem, was das Tracking weiß.
                 Button {
                     Haptics.tap()
                     showHoleOverview = true
                 } label: {
-                HStack(spacing: 14) {
-                    // Flag icon
-                    ZStack {
-                        Circle()
-                            .fill(AppTheme.gold.opacity(0.18))
-                            .frame(width: 44, height: 44)
-                        Image(systemName: "flag.fill")
-                            .font(.system(size: 18))
+                    HStack(spacing: 10) {
+                        Image(systemName: "location.fill")
+                            .font(.system(size: 15, weight: .semibold))
                             .foregroundStyle(AppTheme.gold)
-                    }
-
-                    // Distance + club recommendation stacked
-                    VStack(alignment: .leading, spacing: 5) {
-                        if let dist = distanceToPin {
-                            Text(distanceUnit.format(dist))
-                                .font(.title3.bold())
+                        if isAwayFromCourse {
+                            Text("Du bist nicht am Platz")
+                                .font(.subheadline)
+                                .foregroundStyle(AppTheme.textSec)
+                        } else if let dist = distanceToPin {
+                            Text("Noch \(distanceUnit.format(dist)) zum Loch")
+                                .font(.headline)
                                 .foregroundStyle(AppTheme.text)
                                 .contentTransition(.numericText())
                                 .animation(.snappy, value: distanceUnit.value(dist))
-
-                            if let club = recommendedClub(for: dist) {
-                                HStack(spacing: 5) {
-                                    Image(systemName: "figure.golf")
-                                        .font(.system(size: 10, weight: .semibold))
-                                        .foregroundStyle(AppTheme.gold)
-                                    Text("Empfehlung:")
-                                        .font(.caption)
-                                        .foregroundStyle(AppTheme.textSec)
-                                    Text(club.name)
-                                        .font(.caption.bold())
-                                        .foregroundStyle(AppTheme.gold)
-                                    Text("(Ø \(distanceUnit.format(Double(club.averageDistance))))")
-                                        .font(.caption)
-                                        .foregroundStyle(AppTheme.textTer)
-                                }
-                            } else {
-                                Text("Noch \(Int(dist)) m zum Loch")
-                                    .font(.caption)
-                                    .foregroundStyle(AppTheme.textSec)
-                            }
                         } else {
-                            Text("Pin gesetzt")
-                                .font(.subheadline.bold())
-                                .foregroundStyle(AppTheme.text)
                             Text("Standort wird ermittelt …")
-                                .font(.caption)
+                                .font(.subheadline)
                                 .foregroundStyle(AppTheme.textSec)
                         }
+                        Spacer(minLength: 0)
+                        if distanceToPin != nil && !isAwayFromCourse {
+                            Text("LIVE")
+                                .font(.system(size: 10, weight: .heavy))
+                                .foregroundStyle(darkText)
+                                .padding(.horizontal, 6).padding(.vertical, 3)
+                                .background(AppTheme.gold, in: Capsule())
+                        }
                     }
-                    Spacer(minLength: 0)
-                    Image(systemName: "chevron.right")
-                        .font(.caption)
-                        .foregroundStyle(AppTheme.textTer)
-                }
+                    .contentShape(Rectangle())
                 }
                 .buttonStyle(.plain)
 
-                // Subtle "update pin" text button at bottom
+                // Pin neu setzen – klein, weil er meist automatisch stimmt.
                 Button {
                     Haptics.tap()
                     showPinSetter = true
                 } label: {
-                    HStack(spacing: 4) {
-                        Image(systemName: "mappin.slash")
-                            .font(.system(size: 10))
-                        Text("Pin aktualisieren")
-                            .font(.caption)
-                    }
-                    .foregroundStyle(AppTheme.textTer)
+                    Image(systemName: "mappin.and.ellipse")
+                        .font(.system(size: 14, weight: .semibold))
+                        .foregroundStyle(AppTheme.textSec)
+                        .frame(width: 34, height: 34)
+                        .background(AppTheme.cardAlt, in: Circle())
                 }
+                .buttonStyle(.plain)
+                .accessibilityLabel("Pin aktualisieren")
             }
-            .frame(maxWidth: .infinity, alignment: .leading)
-            .padding(.horizontal, 16)
-            .padding(.vertical, 14)
-            .background(AppTheme.card, in: RoundedRectangle(cornerRadius: 20))
+            .padding(.leading, 16)
+            .padding(.trailing, 10)
+            .padding(.vertical, 10)
+            .background(AppTheme.card, in: RoundedRectangle(cornerRadius: 18))
         } else {
             // Pin not set — compact tappable row
             Button {
@@ -356,109 +339,133 @@ struct HoleScoringView: View {
                 HStack(spacing: 10) {
                     Image(systemName: "mappin.and.ellipse")
                         .font(.system(size: 16))
-                        .foregroundStyle(AppTheme.textSec)
+                        .foregroundStyle(AppTheme.gold)
                     Text("Lochposition festlegen")
-                        .font(.subheadline)
-                        .foregroundStyle(AppTheme.textSec)
+                        .font(.subheadline.weight(.semibold))
+                        .foregroundStyle(AppTheme.text)
                     Spacer()
                     Image(systemName: "chevron.right")
                         .font(.caption)
                         .foregroundStyle(AppTheme.textTer)
                 }
                 .padding(.horizontal, 16)
-                .padding(.vertical, 12)
-                .background(AppTheme.card, in: RoundedRectangle(cornerRadius: 14))
+                .padding(.vertical, 14)
+                .background(AppTheme.card, in: RoundedRectangle(cornerRadius: 18))
             }
+            .buttonStyle(.plain)
         }
     }
 
-    // MARK: - Course Header
+    // MARK: - Schläger-Empfehlung
 
-    private var courseHeader: some View {
-        HStack(alignment: .top) {
-            VStack(alignment: .leading, spacing: 3) {
-                Text(round.course?.name ?? "Runde")
-                    .font(.title3.bold())
-                    .foregroundStyle(AppTheme.text)
-                if let course = round.course {
-                    Text("\(course.numberOfHoles) Löcher · Par \(course.totalPar)")
-                        .font(.subheadline)
-                        .foregroundStyle(AppTheme.textSec)
+    /// Empfehlung plus die beiden Nachbarn in der Distanz – kürzer und länger.
+    private var clubSuggestion: (club: GolfClub, neighbours: [GolfClub])? {
+        guard !isAwayFromCourse, let dist = distanceToPin,
+              let club = recommendedClub(for: dist) else { return nil }
+        let candidates = clubs.filter { !$0.isPutter }.sorted { $0.averageDistance < $1.averageDistance }
+        guard let i = candidates.firstIndex(where: { $0.persistentModelID == club.persistentModelID }) else {
+            return (club, [])
+        }
+        let neighbours = [i - 1, i + 1].compactMap { candidates[safe: $0] }
+        return (club, neighbours)
+    }
+
+    @ViewBuilder
+    private var clubRecommendationCard: some View {
+        if let suggestion = clubSuggestion {
+            HStack(spacing: 12) {
+                VStack(alignment: .leading, spacing: 1) {
+                    Text("EMPFOHLEN")
+                        .font(.system(size: 9, weight: .heavy))
+                        .tracking(1.2)
+                        .foregroundStyle(AppTheme.gold)
+                    Text(suggestion.club.name)
+                        .font(.title3.weight(.heavy))
+                        .foregroundStyle(AppTheme.text)
+                        .lineLimit(1)
+                        .minimumScaleFactor(0.7)
+                }
+                Text("Ø \(distanceUnit.format(Double(suggestion.club.averageDistance)))")
+                    .font(.caption)
+                    .foregroundStyle(AppTheme.textSec)
+                Spacer(minLength: 0)
+                ForEach(suggestion.neighbours) { club in
+                    Text(club.name)
+                        .font(.caption.weight(.bold))
+                        .foregroundStyle(AppTheme.text.opacity(0.8))
+                        .lineLimit(1)
+                        .padding(.horizontal, 9)
+                        .frame(height: 30)
+                        .background(AppTheme.cardAlt, in: RoundedRectangle(cornerRadius: 9))
                 }
             }
-            Spacer()
-            HStack(spacing: 5) {
-                Circle()
-                    .fill(Color(red: 0.2, green: 0.85, blue: 0.4))
-                    .frame(width: 7, height: 7)
-                Text("LIVE")
-                    .font(.system(size: 11, weight: .bold))
-                    .tracking(1.2)
-                    .foregroundStyle(Color(red: 0.2, green: 0.85, blue: 0.4))
-            }
-            .padding(.top, 4)
+            .padding(.horizontal, 16)
+            .padding(.vertical, 11)
+            .background(AppTheme.card, in: RoundedRectangle(cornerRadius: 18))
+            .transition(.opacity)
         }
-        .padding(.horizontal, 4)
-        .padding(.bottom, 2)
     }
 
-    // MARK: - Hole Card
+    // MARK: - Hole Header
 
-    private var holeCard: some View {
-        HStack(alignment: .center, spacing: 0) {
-            // Prev button
-            Button(action: onPrevious) {
-                Image(systemName: "chevron.left")
-                    .font(.system(size: 14, weight: .bold))
-                    .foregroundStyle(score.holeNumber > 1 ? AppTheme.gold : AppTheme.textTer)
-                    .frame(width: 36, height: 56)
-            }
-            .disabled(score.holeNumber <= 1)
-
-            // Left: hole label + big italic number + HCP/distance badges
+    private var holeHeader: some View {
+        HStack(alignment: .top, spacing: 8) {
             VStack(alignment: .leading, spacing: 0) {
+                Text(round.course?.name ?? String(localized: "Runde"))
+                    .font(.caption.weight(.semibold))
+                    .foregroundStyle(AppTheme.textSec)
+                    .lineLimit(1)
                 Text("AKTUELLES LOCH")
                     .font(.system(size: 9, weight: .semibold))
                     .tracking(2.0)
                     .foregroundStyle(AppTheme.textTer)
-                    .padding(.bottom, 2)
+                    .padding(.top, 6)
                 Text(String(format: "%02d", score.holeNumber))
-                    .font(.system(size: 64, weight: .heavy))
+                    .font(.system(size: 72, weight: .heavy))
                     .italic()
                     .foregroundStyle(AppTheme.gold)
                     .contentTransition(.numericText())
                     .animation(.snappy, value: score.holeNumber)
-                // HCP & distance row
-                HStack(spacing: 8) {
+                    .padding(.top, -6)
+                HStack(spacing: 6) {
                     if let hcp = holeHCP {
-                        Label("HCP \(hcp)", systemImage: "arrow.up.arrow.down")
-                            .font(.system(size: 10, weight: .semibold))
-                            .foregroundStyle(AppTheme.textSec)
-                            .padding(.horizontal, 7)
-                            .padding(.vertical, 3)
-                            .background(AppTheme.cardAlt, in: Capsule())
+                        headerPill { Label("HCP \(hcp)", systemImage: "arrow.up.arrow.down") }
                     }
                     if let len = holeLength {
-                        Label("\(len) m", systemImage: "ruler")
-                            .font(.system(size: 10, weight: .semibold))
-                            .foregroundStyle(AppTheme.textSec)
-                            .padding(.horizontal, 7)
-                            .padding(.vertical, 3)
-                            .background(AppTheme.cardAlt, in: Capsule())
+                        headerPill {
+                            HStack(spacing: 5) {
+                                if let tee = round.teeColor { TeeDot(tee: tee, size: 8) }
+                                else { Image(systemName: "ruler") }
+                                Text(distanceUnit.format(Double(len)))
+                            }
+                        }
+                    } else if let tee = round.teeColor {
+                        headerPill {
+                            HStack(spacing: 5) {
+                                TeeDot(tee: tee, size: 8)
+                                Text(tee.displayName)
+                            }
+                        }
                     }
                 }
-                .padding(.top, 4)
             }
-            .padding(.leading, 2)
 
-            Spacer()
+            Spacer(minLength: 0)
 
-            // Right: par + score badge
             VStack(alignment: .trailing, spacing: 10) {
+                HStack(spacing: 6) {
+                    navButton("chevron.left", enabled: score.holeNumber > 1, action: onPrevious)
+                        .accessibilityLabel("Vorheriges Loch")
+                    navButton("chevron.right", enabled: score.holeNumber < holeCount, action: onNext)
+                        .accessibilityLabel("Nächstes Loch")
+                }
+                .padding(.top, 2)
+
                 Text("PAR \(par)")
-                    .font(.system(size: 13, weight: .semibold))
+                    .font(.system(size: 15, weight: .semibold))
                     .tracking(1.0)
                     .foregroundStyle(AppTheme.textSec)
+                    .padding(.top, 8)
 
                 // Badge und Punkte erst, wenn ein Schlag eingetragen ist —
                 // sonst stünde dort eine Bewertung für ein ungespieltes Loch.
@@ -479,20 +486,29 @@ struct HoleScoringView: View {
                     }
                 }
             }
-            .padding(.trailing, 2)
-
-            // Next button
-            Button(action: onNext) {
-                Image(systemName: "chevron.right")
-                    .font(.system(size: 14, weight: .bold))
-                    .foregroundStyle(score.holeNumber < holeCount ? AppTheme.gold : AppTheme.textTer)
-                    .frame(width: 36, height: 56)
-            }
-            .disabled(score.holeNumber >= holeCount)
         }
-        .padding(.horizontal, 10)
-        .padding(.vertical, 14)
-        .background(AppTheme.card, in: RoundedRectangle(cornerRadius: 20))
+        .padding(.horizontal, 4)
+    }
+
+    private func headerPill<Content: View>(@ViewBuilder _ content: () -> Content) -> some View {
+        content()
+            .font(.system(size: 11, weight: .semibold))
+            .foregroundStyle(AppTheme.textSec)
+            .padding(.horizontal, 8)
+            .padding(.vertical, 4)
+            .background(AppTheme.cardAlt, in: Capsule())
+    }
+
+    private func navButton(_ icon: String, enabled: Bool, action: @escaping () -> Void) -> some View {
+        Button(action: action) {
+            Image(systemName: icon)
+                .font(.system(size: 13, weight: .bold))
+                .foregroundStyle(enabled ? AppTheme.gold : AppTheme.textTer)
+                .frame(width: 34, height: 34)
+                .background(AppTheme.card, in: Circle())
+        }
+        .buttonStyle(.plain)
+        .disabled(!enabled)
     }
 
     private var holeHCP: Int? {
@@ -501,10 +517,9 @@ struct HoleScoringView: View {
         return vals[i]
     }
 
+    /// Länge vom gespielten Abschlag, sonst vom Standardabschlag.
     private var holeLength: Int? {
-        let i = score.holeNumber - 1
-        guard let vals = round.course?.holeLengths, i < vals.count else { return nil }
-        return vals[i]
+        round.course?.holeLength(forHole: score.holeNumber, tee: round.teeColor)
     }
 
     // MARK: - Stroke Counter Card
@@ -512,11 +527,11 @@ struct HoleScoringView: View {
     private var strokeCounterCard: some View {
         VStack(spacing: 6) {
             Text("SCHLÄGE")
-                .font(.system(size: 9, weight: .semibold))
+                .font(.system(size: 10, weight: .semibold))
                 .tracking(2.5)
                 .foregroundStyle(AppTheme.textTer)
 
-            HStack(spacing: 28) {
+            HStack {
                 Button {
                     guard score.strokes > 1 else { return }
                     Haptics.decrement()
@@ -529,18 +544,27 @@ struct HoleScoringView: View {
                         context.delete(shot)
                     }
                 } label: {
-                    Image(systemName: "minus.circle.fill")
-                        .font(.system(size: 48))
-                        .foregroundStyle(score.strokes > 1 ? AppTheme.gold : AppTheme.textTer)
+                    Image(systemName: "minus")
+                        .font(.system(size: 26, weight: .bold))
+                        .foregroundStyle(score.strokes > 1 ? AppTheme.text : AppTheme.textTer)
+                        .frame(width: 68, height: 68)
+                        .background(AppTheme.cardAlt, in: Circle())
                 }
+                .buttonStyle(.plain)
                 .disabled(score.strokes <= 1)
+                .accessibilityLabel("Schlag abziehen")
+
+                Spacer(minLength: 0)
 
                 Text("\(score.strokes)")
-                    .font(.system(size: 72, weight: .bold, design: .rounded))
-                    .frame(minWidth: 80, alignment: .center)
-                    .foregroundStyle(AppTheme.text)
+                    .font(.system(size: 96, weight: .heavy, design: .rounded))
+                    .minimumScaleFactor(0.6)
+                    .lineLimit(1)
+                    .foregroundStyle(hasScore ? AppTheme.text : AppTheme.textTer)
                     .contentTransition(.numericText())
                     .animation(.snappy, value: score.strokes)
+
+                Spacer(minLength: 0)
 
                 Button {
                     Haptics.stroke()
@@ -563,15 +587,20 @@ struct HoleScoringView: View {
                     pendingShotNumber = shotNum
                     if !clubs.isEmpty && !round.hidesClubPicker { showClubPicker = true }
                 } label: {
-                    Image(systemName: "plus.circle.fill")
-                        .font(.system(size: 48))
-                        .foregroundStyle(AppTheme.gold)
+                    Image(systemName: "plus")
+                        .font(.system(size: 26, weight: .bold))
+                        .foregroundStyle(darkText)
+                        .frame(width: 68, height: 68)
+                        .background(AppTheme.gold, in: Circle())
                 }
+                .buttonStyle(.plain)
+                .accessibilityLabel("Schlag hinzufügen")
             }
         }
         .frame(maxWidth: .infinity)
-        .padding(.vertical, 20)
-        .background(AppTheme.card, in: RoundedRectangle(cornerRadius: 20))
+        .padding(.horizontal, 18)
+        .padding(.vertical, 18)
+        .background(AppTheme.card, in: RoundedRectangle(cornerRadius: 22))
         .overlay(alignment: .topTrailing) {
             if round.hidesClubPicker && !clubs.isEmpty {
                 Button {
@@ -591,71 +620,117 @@ struct HoleScoringView: View {
         }
     }
 
-    // MARK: - Secondary Stats Card
+    // MARK: - Secondary Stats
 
     private var secondaryStatsCard: some View {
-        VStack(spacing: 0) {
-            HStack(spacing: 0) {
-                puttCounter
-                Divider().frame(height: 50).padding(.horizontal, 8)
-                if par > 3 {
-                    fairwayToggle
-                    Divider().frame(height: 50).padding(.horizontal, 8)
-                }
-                girToggle
+        HStack(spacing: 10) {
+            puttBox
+            if par > 3 {
+                toggleBox("Fairway", isOn: $score.fairwayHit)
             }
+            toggleBox("GIR", isOn: $score.greenInRegulation)
         }
-        .padding(.horizontal, 16)
-        .padding(.vertical, 14)
-        .background(AppTheme.card, in: RoundedRectangle(cornerRadius: 20))
     }
 
-    private var puttCounter: some View {
-        VStack(spacing: 8) {
+    private var puttBox: some View {
+        VStack(spacing: 4) {
             Text("Putts").font(.caption).foregroundStyle(AppTheme.textSec)
-            HStack(spacing: 10) {
+            HStack(spacing: 4) {
                 Button {
                     guard score.putts > 0 else { return }
                     Haptics.decrement()
                     score.putts -= 1
                 } label: {
-                    Image(systemName: "minus.circle").font(.title2)
-                        .foregroundStyle(score.putts > 0 ? AppTheme.gold : .secondary)
+                    Image(systemName: "minus")
+                        .font(.system(size: 12, weight: .bold))
+                        .foregroundStyle(score.putts > 0 ? AppTheme.text : AppTheme.textTer)
+                        .frame(width: 28, height: 28)
+                        .background(AppTheme.cardAlt, in: Circle())
                 }
+                .buttonStyle(.plain)
                 .disabled(score.putts <= 0)
-                Text("\(score.putts)").font(.title.bold()).frame(minWidth: 28)
-                    .contentTransition(.numericText()).animation(.snappy, value: score.putts)
+                .accessibilityLabel("Putt abziehen")
+
+                Text("\(score.putts)")
+                    .font(.system(size: 24, weight: .bold, design: .rounded))
+                    .foregroundStyle(AppTheme.text)
+                    .frame(minWidth: 26)
+                    .contentTransition(.numericText())
+                    .animation(.snappy, value: score.putts)
+
                 Button {
                     Haptics.stroke()
                     score.putts += 1
                 } label: {
-                    Image(systemName: "plus.circle").font(.title2).foregroundStyle(AppTheme.gold)
+                    Image(systemName: "plus")
+                        .font(.system(size: 12, weight: .bold))
+                        .foregroundStyle(AppTheme.gold)
+                        .frame(width: 28, height: 28)
+                        .background(AppTheme.gold.opacity(0.15), in: Circle())
                 }
+                .buttonStyle(.plain)
+                .accessibilityLabel("Putt hinzufügen")
             }
         }
         .frame(maxWidth: .infinity)
+        .padding(.vertical, 10)
+        .background(AppTheme.card, in: RoundedRectangle(cornerRadius: 16))
     }
 
-    private var fairwayToggle: some View {
-        VStack(spacing: 8) {
-            Text("Fairway").font(.caption).foregroundStyle(AppTheme.textSec)
-            Toggle("", isOn: $score.fairwayHit).labelsHidden().tint(AppTheme.gold)
-                .onChange(of: score.fairwayHit) { _, hit in
-                    hit ? Haptics.success() : Haptics.selection()
-                }
+    private func toggleBox(_ title: LocalizedStringKey, isOn: Binding<Bool>) -> some View {
+        Button {
+            let hit = !isOn.wrappedValue
+            hit ? Haptics.success() : Haptics.selection()
+            withAnimation(.snappy) { isOn.wrappedValue = hit }
+        } label: {
+            VStack(spacing: 6) {
+                Text(title).font(.caption).foregroundStyle(AppTheme.textSec)
+                Image(systemName: isOn.wrappedValue ? "checkmark.circle.fill" : "circle")
+                    .font(.system(size: 26))
+                    .foregroundStyle(isOn.wrappedValue ? AppTheme.gold : AppTheme.textTer)
+                    .contentTransition(.symbolEffect(.replace))
+            }
+            .frame(maxWidth: .infinity)
+            .padding(.vertical, 10)
+            .background(isOn.wrappedValue ? AppTheme.gold.opacity(0.1) : AppTheme.card,
+                        in: RoundedRectangle(cornerRadius: 16))
         }
-        .frame(maxWidth: .infinity)
+        .buttonStyle(.plain)
+        .accessibilityValue(isOn.wrappedValue ? Text("Ja") : Text("Nein"))
     }
 
-    private var girToggle: some View {
-        VStack(spacing: 8) {
-            Text("GIR").font(.caption).foregroundStyle(AppTheme.textSec)
-            Toggle("", isOn: $score.greenInRegulation).labelsHidden().tint(AppTheme.gold)
-                .onChange(of: score.greenInRegulation) { _, hit in
-                    hit ? Haptics.success() : Haptics.selection()
+    // MARK: - Lochleiste
+
+    private var holeStrip: some View {
+        ScrollViewReader { proxy in
+            ScrollView(.horizontal, showsIndicators: false) {
+                HStack(spacing: 6) {
+                    ForEach(round.sortedScores, id: \.holeNumber) { hole in
+                        let current = hole.holeNumber == score.holeNumber
+                        let played = hole.strokes > 0
+                        Button {
+                            guard !current else { return }
+                            onSelectHole(hole.holeNumber)
+                        } label: {
+                            Text("\(hole.holeNumber)")
+                                .font(.system(size: 12, weight: .bold))
+                                .foregroundStyle(current ? darkText : played ? AppTheme.text : AppTheme.textTer)
+                                .frame(width: 30, height: 30)
+                                .background(current ? AppTheme.gold : played ? AppTheme.cardAlt : AppTheme.cardDark,
+                                            in: Circle())
+                        }
+                        .buttonStyle(.plain)
+                        .id(hole.holeNumber)
+                        .accessibilityLabel("Loch \(hole.holeNumber)")
+                    }
                 }
+                .padding(.horizontal, 2)
+            }
+            .onAppear { proxy.scrollTo(score.holeNumber, anchor: .center) }
+            .onChange(of: score.holeNumber) { _, n in
+                withAnimation(.snappy) { proxy.scrollTo(n, anchor: .center) }
+            }
         }
-        .frame(maxWidth: .infinity)
     }
 
     // MARK: - Score Gesamt Bar
@@ -671,7 +746,7 @@ struct HoleScoringView: View {
     }
 
     private var scoreGesamtBarContent: some View {
-        HStack {
+        HStack(alignment: .firstTextBaseline, spacing: 8) {
             Text("SCORE GESAMT")
                 .font(.system(size: 10, weight: .semibold))
                 .tracking(1.5)
@@ -679,18 +754,18 @@ struct HoleScoringView: View {
 
             Spacer()
 
-            HStack(alignment: .lastTextBaseline, spacing: 4) {
-                Text(round.scoreLabel)
-                    .font(.title2.bold())
-                    .foregroundStyle(scoreToParColor)
-                    .animation(.easeInOut(duration: 0.2), value: round.scoreLabel)
-                Text("/ Loch \(score.holeNumber)")
-                    .font(.subheadline)
-                    .foregroundStyle(AppTheme.textSec)
-                Image(systemName: "chevron.right")
-                    .font(.caption)
-                    .foregroundStyle(AppTheme.textTer)
-            }
+            Text("\(round.totalStrokes)")
+                .font(.system(size: 22, weight: .bold, design: .rounded))
+                .foregroundStyle(AppTheme.text)
+                .contentTransition(.numericText())
+                .animation(.snappy, value: round.totalStrokes)
+            Text(round.scoreLabel)
+                .font(.subheadline.bold())
+                .foregroundStyle(scoreToParColor)
+                .animation(.easeInOut(duration: 0.2), value: round.scoreLabel)
+            Image(systemName: "chevron.right")
+                .font(.caption)
+                .foregroundStyle(AppTheme.textTer)
         }
         .padding(.horizontal, 18)
         .padding(.vertical, 14)
@@ -703,7 +778,8 @@ struct HoleScoringView: View {
     /// noch aus dem Positions-Tracking – und in dieser Runde noch nichts erfasst.
     private var needsTee: Bool {
         guard let course = round.course else { return false }
-        return course.teeCoordinate(forHole: score.holeNumber) == nil && score.shots.isEmpty
+        return !course.hasOwnTeeCoordinate(forHole: score.holeNumber, tee: round.teeColor)
+            && score.shots.isEmpty
     }
 
     @ViewBuilder
@@ -747,7 +823,7 @@ struct HoleScoringView: View {
         }
         Haptics.stroke()
         let c = loc.coordinate
-        round.course?.setTeeCoordinate(c, forHole: score.holeNumber)
+        round.course?.setTeeCoordinate(c, forHole: score.holeNumber, tee: round.teeColor)
         if score.strokes == 0 { score.strokes = 1 }
         insertShot(number: 1, at: c)
         pendingGPSLocation = loc

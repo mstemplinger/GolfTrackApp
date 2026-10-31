@@ -305,6 +305,7 @@ struct TeeBoxPickerView: View {
             latitude: course.location?.latitude,
             longitude: course.location?.longitude
         )
+        saved.tees = course.courseTees
         onSave(saved)
         dismiss()
     }

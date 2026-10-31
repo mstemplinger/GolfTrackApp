@@ -101,6 +101,7 @@ struct CourseListView: View {
                         flagLatitudes:  entry.flagLatitudes,
                         flagLongitudes: entry.flagLongitudes
                     )
+                    course.tees = entry.tees
                     context.insert(course)
                 }
             }

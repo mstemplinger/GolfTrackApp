@@ -27,6 +27,8 @@ struct BundledCourseEntry: Identifiable {
     /// Hinweise der Anlage – Toiletten, Ausschank, Unterstand. Kommen über die
     /// API; eingebaute Plätze haben keine.
     var hints: [CourseHint] = []
+    /// Abschläge je Farbe – kommen über die API, eingebaute Plätze haben keine.
+    var tees: [CourseTee] = []
     /// Abschlag-Koordinaten, 1 Eintrag pro Loch (gleiche Reihenfolge)
     let teeLatitudes:  [Double]
     let teeLongitudes: [Double]

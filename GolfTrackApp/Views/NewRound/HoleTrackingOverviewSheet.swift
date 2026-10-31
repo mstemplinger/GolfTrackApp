@@ -21,7 +21,7 @@ struct HoleTrackingOverviewSheet: View {
     private var course: Course? { round.course }
     private var hole: Int { score.holeNumber }
 
-    private var tee: CLLocationCoordinate2D? { course?.teeCoordinate(forHole: hole) }
+    private var tee: CLLocationCoordinate2D? { course?.teeCoordinate(forHole: hole, tee: round.teeColor) }
     private var green: CLLocationCoordinate2D? { course?.flagCoordinate(forHole: hole) }
 
     private var pin: CLLocationCoordinate2D? {

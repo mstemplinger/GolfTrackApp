@@ -2694,6 +2694,7 @@
       }
     },
     "+" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -2750,6 +2751,7 @@
       }
     },
     "+20" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -2778,6 +2780,7 @@
       }
     },
     "−" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -2806,6 +2809,7 @@
       }
     },
     "● LIVE" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -3008,6 +3012,7 @@
       }
     },
     "01" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -3064,6 +3069,7 @@
       }
     },
     "2" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -3484,6 +3490,7 @@
       }
     },
     "4" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -3512,6 +3519,7 @@
       }
     },
     "04" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -3540,6 +3548,7 @@
       }
     },
     "5" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -3714,6 +3723,7 @@
       }
     },
     "9:41" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -3966,6 +3976,7 @@
       }
     },
     "24.0" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -4162,6 +4173,7 @@
       }
     },
     "92" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -4190,6 +4202,7 @@
       }
     },
     "128 m" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -4218,6 +4231,7 @@
       }
     },
     "186 m zum Loch" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -4246,6 +4260,7 @@
       }
     },
     "195 m" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -4274,6 +4289,7 @@
       }
     },
     "354 m zum Loch" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -5319,6 +5335,34 @@
         }
       }
     },
+    "Alle erklärt" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "All explained"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Todas explicadas"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Toutes expliquées"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tutte spiegate"
+          }
+        }
+      }
+    },
     "Alle Fehler sind ausgebügelt. Starte eine normale Lernrunde oder eine Probeprüfung." : {
       "localizations" : {
         "en" : {
@@ -6287,6 +6331,34 @@
         }
       }
     },
+    "Apple Watch" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Apple Watch"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Apple Watch"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Apple Watch"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Apple Watch"
+          }
+        }
+      }
+    },
     "APPLE WATCH" : {
       "localizations" : {
         "de" : {
@@ -6317,34 +6389,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "APPLE WATCH"
-          }
-        }
-      }
-    },
-    "Apple Watch" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Apple Watch"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Apple Watch"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Apple Watch"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Apple Watch"
           }
         }
       }
@@ -9256,6 +9300,7 @@
       }
     },
     "DATUM" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -10712,6 +10757,34 @@
         }
       }
     },
+    "Du bist nicht am Platz" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "You’re not on the course"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No estás en el campo"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tu n’es pas sur le parcours"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Non sei sul campo"
+          }
+        }
+      }
+    },
     "Du brauchst noch viele Putts. Diese Lektion trainiert deine Distanzkontrolle auf dem Grün." : {
       "localizations" : {
         "de" : {
@@ -11870,6 +11943,7 @@
       }
     },
     "Empfehlung: 5 Wood" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -13889,6 +13963,7 @@
       }
     },
     "GESAMT" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -14424,6 +14499,34 @@
         }
       }
     },
+    "Gold" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gold"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Oro"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Or"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Oro"
+          }
+        }
+      }
+    },
     "Golf" : {
       "localizations" : {
         "en" : {
@@ -14797,6 +14900,7 @@
       }
     },
     "Golfclub Beispiel" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -14881,6 +14985,7 @@
       }
     },
     "Golfer!" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -14909,6 +15014,7 @@
       }
     },
     "GOLFPLATZ" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -15780,6 +15886,34 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "HCP"
+          }
+        }
+      }
+    },
+    "HCP %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "HCP %@"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "HCP %@"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "HCP %@"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "HCP %@"
           }
         }
       }
@@ -16723,6 +16857,34 @@
         }
       }
     },
+    "Ja" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Yes"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sí"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Oui"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sì"
+          }
+        }
+      }
+    },
     "Ja, kurz zeigen" : {
       "localizations" : {
         "en" : {
@@ -16803,6 +16965,34 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Più giri vengono registrati su questo campo, più precisa diventa la stima. Controlla sulla mappa i suggerimenti con affidabilità bassa prima di applicarli."
+          }
+        }
+      }
+    },
+    "Jede Farbe hat eigene Abschläge. Ausgewertet werden nur Runden vom gewählten Abschlag." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Each colour has its own tees. Only rounds from the selected tee are analysed."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cada color tiene sus propias salidas. Solo se analizan las vueltas desde la salida elegida."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Chaque couleur a ses propres départs. Seules les parties jouées depuis le départ choisi sont analysées."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ogni colore ha i propri tee. Vengono analizzati solo i giri giocati dal tee scelto."
           }
         }
       }
@@ -17697,7 +17887,6 @@
       }
     },
     "Keine Werbung in der App" : {
-      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -18781,6 +18970,7 @@
       }
     },
     "Loch 1 – Position" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -18809,6 +18999,7 @@
       }
     },
     "LOCH 1 · 18" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -18837,6 +19028,7 @@
       }
     },
     "LOCH 4 · 18" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -18865,6 +19057,7 @@
       }
     },
     "LOCH 18 · 18" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -19247,6 +19440,7 @@
       }
     },
     "Los geht's!" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -20368,6 +20562,34 @@
         }
       }
     },
+    "Mitspieler trägst du bei Partner- und Team-Spielformen ein." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "You add other players in partner and team formats."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Los compañeros se añaden en las modalidades de pareja y equipo."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tu ajoutes les partenaires dans les formules en double et en équipe."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gli altri giocatori si aggiungono nelle formule a coppie e a squadre."
+          }
+        }
+      }
+    },
     "mittel" : {
       "localizations" : {
         "en" : {
@@ -20773,6 +20995,34 @@
         }
       }
     },
+    "Nächstes Loch" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Next hole"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hoyo siguiente"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Trou suivant"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Buca successiva"
+          }
+        }
+      }
+    },
     "Name" : {
       "localizations" : {
         "de" : {
@@ -20927,6 +21177,34 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Nebbioso"
+          }
+        }
+      }
+    },
+    "Nein" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Non"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No"
           }
         }
       }
@@ -21796,6 +22074,34 @@
         }
       }
     },
+    "Noch %@ zum Loch" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ to the hole"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Faltan %@ al hoyo"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Encore %@ jusqu’au trou"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ancora %@ alla buca"
+          }
+        }
+      }
+    },
     "Noch %lld m zum Loch" : {
       "localizations" : {
         "en" : {
@@ -22579,6 +22885,7 @@
       }
     },
     "Ø 180 m · aus 12 Messungen" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -22887,6 +23194,34 @@
         }
       }
     },
+    "Ohne Bag" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No bag"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sin bolsa"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sans sac"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Senza sacca"
+          }
+        }
+      }
+    },
     "Ohne Namen starten – erneut drücken" : {
       "localizations" : {
         "en" : {
@@ -23083,6 +23418,34 @@
         }
       }
     },
+    "Orange" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Orange"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Naranja"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Orange"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Arancione"
+          }
+        }
+      }
+    },
     "Ort (optional)" : {
       "localizations" : {
         "en" : {
@@ -23196,6 +23559,7 @@
       }
     },
     "PAR 4" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -23618,6 +23982,7 @@
       }
     },
     "Pin gesetzt · Loch 4" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -23742,6 +24107,7 @@
       }
     },
     "Platz auswählen…" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -25041,6 +25407,62 @@
         }
       }
     },
+    "Putt abziehen" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Remove putt"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Quitar putt"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Retirer un putt"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Togli putt"
+          }
+        }
+      }
+    },
+    "Putt hinzufügen" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Add putt"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Añadir putt"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ajouter un putt"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aggiungi putt"
+          }
+        }
+      }
+    },
     "Putt-Training" : {
       "localizations" : {
         "en" : {
@@ -25693,6 +26115,34 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Pioggia all'ora"
+          }
+        }
+      }
+    },
+    "Regen, Wind oder kalt" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Rain, wind or cold"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lluvia, viento o frío"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pluie, vent ou froid"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pioggia, vento o freddo"
           }
         }
       }
@@ -26980,6 +27430,7 @@
       }
     },
     "Schlag 1 · Driver" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -27003,6 +27454,34 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Colpo 1 · Driver"
+          }
+        }
+      }
+    },
+    "Schlag abziehen" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Remove stroke"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Quitar golpe"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Retirer un coup"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Togli colpo"
           }
         }
       }
@@ -27031,6 +27510,34 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Registra colpo"
+          }
+        }
+      }
+    },
+    "Schlag hinzufügen" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Add stroke"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Añadir golpe"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ajouter un coup"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aggiungi colpo"
           }
         }
       }
@@ -27794,6 +28301,7 @@
       }
     },
     "Schritt %lld von %lld" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -27823,6 +28331,34 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Passo %1$lld di %2$lld"
+          }
+        }
+      }
+    },
+    "Schwarz" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Black"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Negro"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Noir"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nero"
           }
         }
       }
@@ -27980,6 +28516,7 @@
       }
     },
     "SCORE-VERLAUF" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -29332,6 +29869,7 @@
       }
     },
     "SPIELMODUS" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -30998,6 +31536,7 @@
       }
     },
     "Tippe auf die Karte, um den Pin zu setzen" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -31495,6 +32034,7 @@
       }
     },
     "Tutorial beenden" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -32513,6 +33053,34 @@
         }
       }
     },
+    "Vorheriges Loch" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Previous hole"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hoyo anterior"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Trou précédent"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Buca precedente"
+          }
+        }
+      }
+    },
     "VS" : {
       "localizations" : {
         "en" : {
@@ -32918,6 +33486,7 @@
       }
     },
     "WEITER →" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -33934,6 +34503,7 @@
       }
     },
     "WHS Handicap" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {

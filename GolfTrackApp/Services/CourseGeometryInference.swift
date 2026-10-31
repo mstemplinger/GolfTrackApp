@@ -99,14 +99,21 @@ enum CourseGeometryInference {
 
     /// Berechnet Vorschläge für alle Löcher eines Platzes aus den Runden, die
     /// eine Laufspur besitzen.
-    static func suggestions(for course: Course) -> [HoleGeometrySuggestion] {
-        let rounds = course.rounds.filter { $0.track != nil || !$0.holeScores.flatMap(\.shots).isEmpty }
+    ///
+    /// `tee` beschränkt die Auswertung auf Runden von diesem Abschlag –
+    /// Weiß und Rot liegen oft 50 m auseinander, gemittelt käme keiner heraus.
+    /// `nil` nimmt alle Runden.
+    static func suggestions(for course: Course, tee: TeeColor? = nil) -> [HoleGeometrySuggestion] {
+        let rounds = course.rounds.filter {
+            ($0.track != nil || !$0.holeScores.flatMap(\.shots).isEmpty)
+                && (tee == nil || $0.teeColor == tee)
+        }
         guard !rounds.isEmpty else { return [] }
 
         // Laufspuren einmal dekodieren, nicht pro Loch erneut.
         let prepared = rounds.map(PreparedRound.init)
         return (1...max(1, course.numberOfHoles)).map { hole in
-            suggestion(forHole: hole, rounds: prepared, course: course)
+            suggestion(forHole: hole, rounds: prepared, course: course, tee: tee)
         }
     }
 
@@ -115,14 +122,15 @@ enum CourseGeometryInference {
     @discardableResult
     static func apply(_ suggestions: [HoleGeometrySuggestion],
                       to course: Course,
+                      tee: TeeColor? = nil,
                       minConfidence: Double = 0.4,
                       requirePlausible: Bool = true) -> Int {
         var applied = 0
         for suggestion in suggestions {
             guard !requirePlausible || suggestion.isPlausible else { continue }
             var changed = false
-            if let tee = suggestion.tee, suggestion.teeConfidence >= minConfidence {
-                course.setTeeCoordinate(tee, forHole: suggestion.holeNumber)
+            if let teePoint = suggestion.tee, suggestion.teeConfidence >= minConfidence {
+                course.setTeeCoordinate(teePoint, forHole: suggestion.holeNumber, tee: tee)
                 changed = true
             }
             if let green = suggestion.green, suggestion.greenConfidence >= minConfidence {
@@ -138,12 +146,10 @@ enum CourseGeometryInference {
 
     private static func suggestion(forHole hole: Int,
                                    rounds: [PreparedRound],
-                                   course: Course) -> HoleGeometrySuggestion {
+                                   course: Course,
+                                   tee: TeeColor?) -> HoleGeometrySuggestion {
         var result = HoleGeometrySuggestion(holeNumber: hole)
-        let index = hole - 1
-        if index >= 0, index < course.holeLengths.count, course.holeLengths[index] > 0 {
-            result.expectedLengthMeters = course.holeLengths[index]
-        }
+        result.expectedLengthMeters = course.holeLength(forHole: hole, tee: tee)
 
         var teeCandidates: [Candidate] = []
         var greenCandidates: [Candidate] = []

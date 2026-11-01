@@ -103,7 +103,7 @@ struct CourseSearchView: View {
             if let tees = course.tees {
                 let count = (tees.male?.count ?? 0) + (tees.female?.count ?? 0)
                 if count > 0 {
-                    Label("\(count) Abschlag\(count == 1 ? "" : "-Optionen")", systemImage: "flag")
+                    Label("Abschläge: \(count)", systemImage: "flag")
                         .font(.caption)
                         .foregroundStyle(AppTheme.gold)
                 }

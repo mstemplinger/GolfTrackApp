@@ -57,7 +57,7 @@ struct RoundDetailView: View {
         }
         .sheet(isPresented: $showShareSheet) {
             if let img = shareImage {
-                ShareSheet(items: [img])
+                ShareSheet(items: [RoundShareText.message(for: RoundShareSummary(round: round)), img])
             }
         }
         .navigationDestination(isPresented: $continuePlaying) {

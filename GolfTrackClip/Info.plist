@@ -62,6 +62,9 @@
 	<string>Zum Scannen des QR-Codes am Platz.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>Damit wir dir die Plätze in deiner Nähe zeigen können.</string>
+	<!-- „Bild sichern“ im Share-Sheet am Ende der Runde (RoundShareButton). -->
+	<key>NSPhotoLibraryAddUsageDescription</key>
+	<string>Damit du die Ergebniskarte deiner Runde in Fotos sichern kannst.</string>
 
 	<!--
 	  Macht dieses Ziel zum App Clip. Daran erkennt auch AppClipEnvironment zur

@@ -30,6 +30,11 @@ struct RoundCompleteSheet: View {
                         header
                         scoreCard
 
+                        // Gleich unter dem Ergebnis, solange die Freude frisch ist.
+                        RoundShareButton(summary: RoundShareSummary(round: round),
+                                         image: { renderScorecardImage(for: round) })
+                            .padding(.horizontal)
+
                         if !audioRecommendations.isEmpty {
                             audioTrainingSection
                         }

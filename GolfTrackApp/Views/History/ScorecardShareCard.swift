@@ -251,14 +251,24 @@ struct ScorecardShareCard: View {
     }
 }
 
-// MARK: - UIActivityViewController wrapper
+// MARK: - Teilen
 
-struct ShareSheet: UIViewControllerRepresentable {
-    let items: [Any]
-    func makeUIViewController(context: Context) -> UIActivityViewController {
-        UIActivityViewController(activityItems: items, applicationActivities: nil)
+extension RoundShareSummary {
+    /// Golf aus der vollen App. `ShareSheet` und der Teil-Text liegen in
+    /// `GolfTrackShared/RoundShare.swift`, damit der Clip dieselben nutzt.
+    init(round: Round) {
+        let sorted = round.sortedScores
+        self.init(
+            kind: .golf,
+            courseName: round.course?.name,
+            date: round.date,
+            holesPlayed: round.playedScores.count,
+            holesTotal: max(round.course?.numberOfHoles ?? 0, sorted.count),
+            totalStrokes: round.totalStrokes,
+            scoreToPar: round.scoreToPar,
+            holeStrokes: sorted.map(\.strokes)
+        )
     }
-    func updateUIViewController(_ vc: UIActivityViewController, context: Context) {}
 }
 
 // MARK: - Color helper (RGB 0–255)

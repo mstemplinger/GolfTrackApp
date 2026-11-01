@@ -116,7 +116,9 @@ struct MinigolfScoringView: View {
                 numberOfHoles: holeCount,
                 scores: scores,
                 challenges: challenges,
-                onFinish: finishGame
+                onFinish: finishGame,
+                courseName: config.courseName,
+                date: Date()
             )
         }
         .sheet(isPresented: $showChallenges) {
@@ -374,6 +376,9 @@ struct MinigolfResultsView: View {
     let scores: [[Int]]
     var challenges: [MinigolfChallenge] = []
     var onFinish: (() -> Void)? = nil
+    /// Für den Teil-Text; fehlt beides, bleibt es dort einfach weg.
+    var courseName: String? = nil
+    var date: Date? = nil
     @Environment(\.dismiss) private var dismiss
 
     private func total(for player: Int) -> Int {
@@ -394,6 +399,12 @@ struct MinigolfResultsView: View {
             ScrollView {
                 VStack(spacing: 20) {
                     rankingList
+
+                    RoundShareButton(summary: .minigolf(playerNames: playerNames,
+                                                        scores: scores,
+                                                        numberOfHoles: numberOfHoles,
+                                                        courseName: courseName,
+                                                        date: date))
 
                     if !challenges.isEmpty {
                         MinigolfAwardsCard(playerNames: playerNames,

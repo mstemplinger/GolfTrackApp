@@ -154,7 +154,9 @@ struct MinigolfView: View {
                     playerNames: entry.playerNames,
                     numberOfHoles: entry.numberOfHoles,
                     scores: entry.scores,
-                    challenges: entry.challenges ?? []
+                    challenges: entry.challenges ?? [],
+                    courseName: entry.courseName,
+                    date: entry.date
                 )
             }
         }

@@ -292,6 +292,10 @@ struct GolfLiteResultView: View {
                     .background(AppTheme.card, in: RoundedRectangle(cornerRadius: 18))
 
                     holeGrid
+                    RoundShareButton(summary: .golf(courseName: course.name,
+                                                    date: Date(),
+                                                    strokes: strokes,
+                                                    pars: course.hasPar ? course.parValues : []))
                     FullAppFeaturesCard()
 
                     Button {

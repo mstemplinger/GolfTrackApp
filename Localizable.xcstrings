@@ -2810,6 +2810,34 @@
         }
       }
     },
+    "≈ %@ / Monat" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "≈ %@ / month"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "≈ %@ / mes"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "≈ %@ / mois"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "≈ %@ / mese"
+          }
+        }
+      }
+    },
     "● LIVE" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -15471,6 +15499,34 @@
         }
       }
     },
+    "Golfregeln per Sprache klären – mit Regelnummer" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Settle rules questions by voice – with rule number"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Resuelve dudas de reglas por voz – con número de regla"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Clarifiez les règles à la voix – avec numéro de règle"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Chiarisci le regole a voce – con numero di regola"
+          }
+        }
+      }
+    },
     "GolfTrack" : {
       "localizations" : {
         "de" : {
@@ -16051,6 +16107,34 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Handicap, sacca, statistiche, impostazioni"
+          }
+        }
+      }
+    },
+    "Handicap, Stableford & WHS erklärt" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Handicap, Stableford & WHS explained"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hándicap, Stableford y WHS explicados"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Handicap, Stableford et WHS expliqués"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Handicap, Stableford e WHS spiegati"
           }
         }
       }
@@ -17192,6 +17276,34 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "anno"
+          }
+        }
+      }
+    },
+    "Jährlich" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Yearly"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Anual"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Annuel"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Annuale"
           }
         }
       }
@@ -20964,6 +21076,34 @@
         }
       }
     },
+    "Monatlich" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Monthly"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mensual"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mensuel"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mensile"
+          }
+        }
+      }
+    },
     "Morgen" : {
       "localizations" : {
         "en" : {
@@ -24045,6 +24185,34 @@
         }
       }
     },
+    "Passende Lektionen nach jeder Runde" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Matching lessons after every round"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lecciones a medida tras cada vuelta"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Leçons adaptées après chaque partie"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lezioni su misura dopo ogni giro"
+          }
+        }
+      }
+    },
     "Patzer" : {
       "localizations" : {
         "de" : {
@@ -25101,6 +25269,34 @@
         }
       }
     },
+    "Platzstrategie & Schlägerwahl vom Caddy" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Course strategy & club selection from the Caddy"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Estrategia de campo y elección de palo con el Caddy"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Stratégie de parcours et choix du club avec le Caddy"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Strategia di campo e scelta della mazza con il Caddy"
+          }
+        }
+      }
+    },
     "Pokale" : {
       "localizations" : {
         "de" : {
@@ -25715,6 +25911,34 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Aggiungi putt"
+          }
+        }
+      }
+    },
+    "Putt-Lektionen direkt beim Minigolf" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Putting lessons right in mini golf"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lecciones de putt directamente en el minigolf"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Leçons de putting directement au minigolf"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lezioni di putt direttamente nel minigolf"
           }
         }
       }
@@ -29551,6 +29775,34 @@
         }
       }
     },
+    "Spare %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Save %@"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ahorra %@"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Économisez %@"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Risparmia %@"
+          }
+        }
+      }
+    },
     "Später entscheiden" : {
       "localizations" : {
         "en" : {
@@ -30254,6 +30506,34 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Mostrare le regole di gioco?"
+          }
+        }
+      }
+    },
+    "Springt zum Button für die Gratis-Testphase" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Jumps to the free trial button"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Salta al botón de la prueba gratuita"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Accède au bouton de l'essai gratuit"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Passa al pulsante della prova gratuita"
           }
         }
       }

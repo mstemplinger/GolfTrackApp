@@ -16,6 +16,11 @@ final class SubscriptionManager: ObservableObject {
 
     // Product IDs
     static let trainingProductID = "Trainingsvideos_abo"
+    /// Jahresabo für die Training-Audios. Liegt in App Store Connect in
+    /// derselben Abo-Gruppe wie `trainingProductID`, damit Apple Wechsel
+    /// zwischen Monat und Jahr als Up-/Downgrade behandelt. Schaltet genau
+    /// dasselbe frei wie das Monatsabo.
+    static let trainingYearlyProductID = "Trainingsvideos_abo_jahr"
     static let caddyProductID    = "Caddy_abo"
     static let proProductID      = "GolfTrackPro_abo"
     /// Einmalkauf, der die Werbung abschaltet. Muss in App Store Connect als
@@ -35,6 +40,7 @@ final class SubscriptionManager: ObservableObject {
     @Published var ownsAudiobooksLifetime = false
 
     @Published var trainingProduct: Product?
+    @Published var trainingYearlyProduct: Product?
     @Published var caddyProduct: Product?
     @Published var proProduct: Product?
     @Published var adFreeProduct: Product?
@@ -116,6 +122,34 @@ final class SubscriptionManager: ObservableObject {
         return formatter.string(from: parts)
     }
 
+    // MARK: - Jahresabo-Ersparnis
+
+    /// Ersparnis des Jahresabos gegenüber 12 × Monatsabo, z. B. „17 %“.
+    /// Rein aus den StoreKit-Preisen gerechnet – kein Betrag ist fest verdrahtet.
+    /// `nil`, wenn ein Produkt fehlt, die Währungen abweichen, die Laufzeiten
+    /// nicht Monat/Jahr sind oder sich nichts spart.
+    var trainingYearlySavingsLabel: String? {
+        guard let monthly = trainingProduct, let yearly = trainingYearlyProduct,
+              Self.isSinglePeriod(monthly, .month), Self.isSinglePeriod(yearly, .year),
+              monthly.priceFormatStyle.currencyCode == yearly.priceFormatStyle.currencyCode,
+              monthly.price > 0 else { return nil }
+        let fullYear = monthly.price * 12
+        let saving = NSDecimalNumber(decimal: (fullYear - yearly.price) / fullYear).doubleValue
+        guard saving >= 0.01 else { return nil }
+        return saving.formatted(.percent.precision(.fractionLength(0)))
+    }
+
+    /// Jahrespreis auf einen Monat umgelegt, in Währung und Format des Stores.
+    var trainingYearlyPricePerMonth: String? {
+        guard let yearly = trainingYearlyProduct, Self.isSinglePeriod(yearly, .year) else { return nil }
+        return (yearly.price / 12).formatted(yearly.priceFormatStyle)
+    }
+
+    private static func isSinglePeriod(_ product: Product, _ unit: Product.SubscriptionPeriod.Unit) -> Bool {
+        guard let period = product.subscription?.subscriptionPeriod else { return false }
+        return period.value == 1 && period.unit == unit
+    }
+
     // Legacy helpers used by TrainingPaywallView
     var freeTrialLabel: String? { freeTrialLabel(for: trainingProduct) }
     var hasFreeTrial: Bool { freeTrialLabel != nil }
@@ -124,13 +158,15 @@ final class SubscriptionManager: ObservableObject {
 
     func loadProducts() async {
         do {
-            let ids: [String] = [Self.trainingProductID, Self.caddyProductID,
+            let ids: [String] = [Self.trainingProductID, Self.trainingYearlyProductID,
+                                 Self.caddyProductID,
                                  Self.proProductID, Self.adFreeProductID,
                                  Self.audiobooksLifetimeProductID]
             let products = try await Product.products(for: ids)
             for p in products {
                 switch p.id {
                 case Self.trainingProductID: trainingProduct = p
+                case Self.trainingYearlyProductID: trainingYearlyProduct = p
                 case Self.caddyProductID:    caddyProduct    = p
                 case Self.proProductID:      proProduct      = p
                 case Self.adFreeProductID:   adFreeProduct   = p
@@ -164,7 +200,7 @@ final class SubscriptionManager: ObservableObject {
                 // und sonst den gerade gesetzten State wieder überschreiben würde.
                 // Der Transaction-Listener übernimmt die spätere Synchronisierung.
                 switch product.id {
-                case Self.trainingProductID:
+                case Self.trainingProductID, Self.trainingYearlyProductID:
                     isTrainingSubscribed = true
                     isCaddySubscribed    = false
                 case Self.caddyProductID:
@@ -239,7 +275,7 @@ final class SubscriptionManager: ObservableObject {
         for await result in Transaction.currentEntitlements {
             guard case .verified(let tx) = result, tx.revocationDate == nil else { continue }
             switch tx.productID {
-            case Self.trainingProductID: hasTraining = true
+            case Self.trainingProductID, Self.trainingYearlyProductID: hasTraining = true
             case Self.caddyProductID:    hasCaddy    = true
             case Self.proProductID:      hasTraining = true; hasCaddy = true
             case Self.adFreeProductID:   hasAdFree   = true

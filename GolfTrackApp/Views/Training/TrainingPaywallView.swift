@@ -4,10 +4,20 @@ import StoreKit
 struct TrainingPaywallView: View {
     @EnvironmentObject private var subscriptionManager: SubscriptionManager
     @Environment(\.dismiss) private var dismiss
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
     @State private var selectedPlan: Plan = .training
+    /// Laufzeit innerhalb des Training-Tabs: Monats- oder Jahresabo.
+    @State private var billing: Billing = .monthly
+    /// Kurzes Aufleuchten des Kauf-Buttons, nachdem der Testphasen-Hinweis
+    /// angetippt wurde und die Ansicht dorthin gescrollt hat.
+    @State private var highlightPurchase = false
 
     enum Plan { case training, lifetime, pro }
+    enum Billing { case monthly, yearly }
+
+    /// Scroll-Ziel für den Testphasen-Hinweis.
+    private static let purchaseAnchor = "purchase"
 
     private var trainingFeatures: [(icon: String, color: Color, text: LocalizedStringKey)] {
         let count = allLessons.filter(\.isAvailable).count
@@ -21,14 +31,7 @@ struct TrainingPaywallView: View {
         ]
     }
 
-    private let proFeatures: [(icon: String, color: Color, text: LocalizedStringKey)] = [
-        ("headphones",           AppTheme.gold,                              "Alle Audio-Trainings"),
-        ("waveform.circle.fill", Color(red: 0.4, green: 0.7,  blue: 1.0),   "KI-Assistent Caddy"),
-        ("figure.golf",          Color(red: 0.3, green: 0.85, blue: 0.5),   "Drive, Technik, Mental & mehr"),
-        ("arrow.clockwise",      Color(red: 1.0, green: 0.6,  blue: 0.3),   "Neue Inhalte regelmäßig"),
-        ("infinity",             Color(red: 0.6, green: 0.5,  blue: 1.0),   "Unbegrenzte Caddy-Gespräche"),
-        ("nosign",               Color(red: 1.0, green: 0.4,  blue: 0.5),   "Keine Werbung in der App"),
-    ]
+    private var proFeatures: [PaywallFeature] { ProFeatureList.features() }
 
     private var lifetimeFeatures: [(icon: String, color: Color, text: LocalizedStringKey)] {
         let count = allLessons.filter(\.isAvailable).count
@@ -44,7 +47,11 @@ struct TrainingPaywallView: View {
 
     private var activeProduct: Product? {
         switch selectedPlan {
-        case .training: subscriptionManager.trainingProduct
+        case .training:
+            // Jahresabo nur, wenn StoreKit es liefert – sonst bleibt es beim Monat.
+            billing == .yearly
+                ? subscriptionManager.trainingYearlyProduct ?? subscriptionManager.trainingProduct
+                : subscriptionManager.trainingProduct
         case .lifetime: subscriptionManager.audiobooksLifetimeProduct
         case .pro:      subscriptionManager.proProduct
         }
@@ -70,22 +77,30 @@ struct TrainingPaywallView: View {
                     .frame(width: 36, height: 4)
                     .padding(.top, 12)
 
-                ScrollView(showsIndicators: false) {
-                    VStack(spacing: 24) {
-                        heroSection
-                        planPicker
-                        if subscriptionManager.isCaddySubscribed && selectedPlan == .training {
-                            caddyWarningBanner
+                ScrollViewReader { proxy in
+                    ScrollView(showsIndicators: false) {
+                        VStack(spacing: 24) {
+                            heroSection
+                            planPicker
+                            if selectedPlan == .training && subscriptionManager.trainingYearlyProduct != nil {
+                                billingPicker
+                            }
+                            // Monats- und Jahresabo liegen in derselben Gruppe wie
+                            // Caddy – beide ersetzen ein laufendes Caddy-Abo.
+                            if subscriptionManager.isCaddySubscribed && selectedPlan == .training {
+                                caddyWarningBanner
+                            }
+                            if trialLabel != nil { trialBanner(proxy: proxy) }
+                            featuresSection
+                            priceSection
+                            actionSection
+                                .id(Self.purchaseAnchor)
+                            footerLinks
                         }
-                        if trialLabel != nil { trialBanner }
-                        featuresSection
-                        priceSection
-                        actionSection
-                        footerLinks
+                        .padding(.horizontal, 24)
+                        .padding(.top, 20)
+                        .padding(.bottom, 40)
                     }
-                    .padding(.horizontal, 24)
-                    .padding(.top, 20)
-                    .padding(.bottom, 40)
                 }
             }
         }
@@ -183,20 +198,112 @@ struct TrainingPaywallView: View {
 
     // MARK: - Trial Banner
 
-    private var trialBanner: some View {
-        HStack(spacing: 10) {
-            Image(systemName: "gift.fill")
-                .font(.subheadline)
-                .foregroundStyle(Color(red: 0.08, green: 0.18, blue: 0.11))
-            Text("\(trialLabel ?? "1 Woche") kostenlos testen – danach jederzeit kündbar")
-                .font(.subheadline.weight(.semibold))
-                .foregroundStyle(Color(red: 0.08, green: 0.18, blue: 0.11))
-                .fixedSize(horizontal: false, vertical: true)
+    /// Antippen scrollt zum Kauf-Button und lässt ihn kurz aufleuchten – kauft
+    /// aber nicht selbst. Der Hinweis nennt weder Laufzeit (Monat/Jahr) noch den
+    /// Preis nach der Testphase; beides steht direkt über dem Button und soll
+    /// vor dem Abschluss eines sich verlängernden Abos sichtbar sein.
+    private func trialBanner(proxy: ScrollViewProxy) -> some View {
+        Button {
+            Haptics.tap()
+            withAnimation(.easeInOut(duration: 0.4)) {
+                proxy.scrollTo(Self.purchaseAnchor, anchor: .bottom)
+            }
+            flashPurchaseButton()
+        } label: {
+            HStack(spacing: 10) {
+                Image(systemName: "gift.fill")
+                    .font(.subheadline)
+                Text("\(trialLabel ?? "1 Woche") kostenlos testen – danach jederzeit kündbar")
+                    .font(.subheadline.weight(.semibold))
+                    .fixedSize(horizontal: false, vertical: true)
+                    .multilineTextAlignment(.leading)
+                Spacer(minLength: 0)
+                Image(systemName: "chevron.down.circle.fill")
+                    .font(.title3)
+                    .opacity(0.7)
+            }
+            .foregroundStyle(Color(red: 0.08, green: 0.18, blue: 0.11))
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .padding(.horizontal, 16)
+            .padding(.vertical, 14)
+            .background(AppTheme.gold, in: RoundedRectangle(cornerRadius: 14))
+            .contentShape(RoundedRectangle(cornerRadius: 14))
         }
-        .frame(maxWidth: .infinity, alignment: .leading)
-        .padding(.horizontal, 16)
-        .padding(.vertical, 14)
-        .background(AppTheme.gold, in: RoundedRectangle(cornerRadius: 14))
+        .buttonStyle(.plain)
+        .accessibilityHint("Springt zum Button für die Gratis-Testphase")
+    }
+
+    private func flashPurchaseButton() {
+        Task { @MainActor in
+            // Erst den Scroll abwarten, dann aufleuchten und wieder abklingen lassen.
+            try? await Task.sleep(for: .milliseconds(400))
+            withAnimation(.spring(response: 0.3, dampingFraction: 0.55)) { highlightPurchase = true }
+            try? await Task.sleep(for: .milliseconds(700))
+            withAnimation(.easeOut(duration: 0.35)) { highlightPurchase = false }
+        }
+    }
+
+    // MARK: - Laufzeit (Monat / Jahr)
+
+    private var billingPicker: some View {
+        HStack(spacing: 12) {
+            billingCard(.monthly,
+                        title: "Monatlich",
+                        product: subscriptionManager.trainingProduct,
+                        perMonth: nil,
+                        savings: nil)
+            billingCard(.yearly,
+                        title: "Jährlich",
+                        product: subscriptionManager.trainingYearlyProduct,
+                        perMonth: subscriptionManager.trainingYearlyPricePerMonth,
+                        savings: subscriptionManager.trainingYearlySavingsLabel)
+        }
+    }
+
+    private func billingCard(_ option: Billing, title: LocalizedStringKey, product: Product?,
+                             perMonth: String?, savings: String?) -> some View {
+        let isSelected = billing == option
+        return Button {
+            Haptics.selection()
+            withAnimation(.easeInOut(duration: 0.2)) { billing = option }
+        } label: {
+            VStack(alignment: .leading, spacing: 4) {
+                Text(title)
+                    .font(.subheadline.weight(.semibold))
+                    .foregroundStyle(isSelected ? AppTheme.gold : AppTheme.textSec)
+                Text(product?.displayPrice ?? "–")
+                    .font(.title3.bold())
+                    .foregroundStyle(AppTheme.text)
+                Text("/ \(subscriptionManager.subscriptionPeriodLabel(for: product))")
+                    .font(.caption)
+                    .foregroundStyle(AppTheme.textSec)
+                if let perMonth {
+                    Text("≈ \(perMonth) / Monat")
+                        .font(.caption2)
+                        .foregroundStyle(AppTheme.textTer)
+                }
+            }
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .padding(14)
+            .background(AppTheme.card, in: RoundedRectangle(cornerRadius: 14))
+            .overlay(
+                RoundedRectangle(cornerRadius: 14)
+                    .stroke(isSelected ? AppTheme.gold : AppTheme.cardAlt, lineWidth: isSelected ? 2 : 1)
+            )
+            .overlay(alignment: .topTrailing) {
+                if let savings {
+                    Text("Spare \(savings)")
+                        .font(.caption2.bold())
+                        .foregroundStyle(Color(red: 0.08, green: 0.18, blue: 0.11))
+                        .padding(.horizontal, 8)
+                        .padding(.vertical, 3)
+                        .background(AppTheme.gold, in: Capsule())
+                        .offset(x: -8, y: -9)
+                }
+            }
+        }
+        .buttonStyle(.plain)
+        .accessibilityAddTraits(isSelected ? .isSelected : [])
     }
 
     // MARK: - Caddy-Konflikt-Hinweis
@@ -364,6 +471,13 @@ struct TrainingPaywallView: View {
             }
             .buttonStyle(.plain)
             .disabled(activeProduct == nil || subscriptionManager.isPurchasing || subscriptionManager.isRestoring)
+            // Aufleuchten nach Tipp auf den Testphasen-Hinweis
+            .overlay(
+                RoundedRectangle(cornerRadius: 14)
+                    .stroke(Color.white.opacity(highlightPurchase ? 0.9 : 0), lineWidth: 2)
+            )
+            .shadow(color: AppTheme.gold.opacity(highlightPurchase ? 0.7 : 0), radius: 16)
+            .scaleEffect(highlightPurchase && !reduceMotion ? 1.04 : 1)
 
             Button {
                 Haptics.tap()

@@ -296,6 +296,8 @@ struct ProfileView: View {
             .padding(.horizontal, 18)
             .padding(.vertical, 14)
             Divider().background(AppTheme.cardAlt).padding(.leading, 62)
+            languageRow
+            Divider().background(AppTheme.cardAlt).padding(.leading, 62)
             HStack(spacing: 14) {
                 ZStack {
                     RoundedRectangle(cornerRadius: 9)
@@ -432,6 +434,55 @@ struct ProfileView: View {
         }
         .background(AppTheme.card, in: RoundedRectangle(cornerRadius: 16))
         .padding(.horizontal)
+    }
+
+    /// App-Sprache: bewusst über die iOS-eigene Einstellung pro App
+    /// (Einstellungen → GolfTrack → Sprache). Die zeigt iOS an, sobald die App
+    /// mehrere Lokalisierungen hat. iOS startet die App danach selbst neu –
+    /// kein eigener `AppleLanguages`-Override mit „gilt nach Neustart“ nötig.
+    private var languageRow: some View {
+        Button {
+            Haptics.tap()
+            if let url = URL(string: UIApplication.openSettingsURLString) {
+                UIApplication.shared.open(url)
+            }
+        } label: {
+            HStack(spacing: 14) {
+                ZStack {
+                    RoundedRectangle(cornerRadius: 9)
+                        .fill(Color(red: 0.4, green: 0.8, blue: 0.9).opacity(0.18))
+                        .frame(width: 40, height: 40)
+                    Image(systemName: "globe")
+                        .font(.system(size: 16))
+                        .foregroundStyle(Color(red: 0.4, green: 0.8, blue: 0.9))
+                }
+                VStack(alignment: .leading, spacing: 2) {
+                    Text("Sprache")
+                        .font(.subheadline)
+                        .foregroundStyle(AppTheme.text)
+                    Text("Wird in den iOS-Einstellungen der App geändert")
+                        .font(.caption2)
+                        .foregroundStyle(AppTheme.textTer)
+                }
+                Spacer()
+                Text(verbatim: Self.currentLanguageName)
+                    .font(.subheadline)
+                    .foregroundStyle(AppTheme.textSec)
+                Image(systemName: "arrow.up.forward.app")
+                    .font(.caption)
+                    .foregroundStyle(AppTheme.textTer)
+            }
+            .padding(.horizontal, 18)
+            .padding(.vertical, 14)
+        }
+        .accessibilityHint(Text("Öffnet die iOS-Einstellungen von GolfTrack"))
+    }
+
+    /// Name der aktuell aktiven App-Sprache in dieser Sprache selbst („Polski“, „Čeština“ …).
+    private static var currentLanguageName: String {
+        let code = Bundle.main.preferredLocalizations.first ?? "de"
+        let locale = Locale(identifier: code)
+        return locale.localizedString(forLanguageCode: code)?.capitalized(with: locale) ?? code
     }
 
     private func settingsRow(icon: String, color: Color, title: LocalizedStringKey, destination: @escaping () -> AnyView) -> some View {

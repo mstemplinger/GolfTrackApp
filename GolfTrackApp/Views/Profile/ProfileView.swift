@@ -463,6 +463,7 @@ struct ProfileView: View {
                     Text("Wird in den iOS-Einstellungen der App geändert")
                         .font(.caption2)
                         .foregroundStyle(AppTheme.textTer)
+                        .multilineTextAlignment(.leading)
                 }
                 Spacer()
                 Text(verbatim: Self.currentLanguageName)

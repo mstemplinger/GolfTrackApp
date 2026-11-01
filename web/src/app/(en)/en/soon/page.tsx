@@ -6,7 +6,7 @@ import { ComingSoon } from "@/views/ComingSoon";
 
 export const metadata: Metadata = {
   title: "GolfTrack · Coming soon",
-  description: "The new GolfTrack website launches on 1 November 2026. The app is already on the App Store.",
+  description: "The new GolfTrack website launches on 1 December 2027. The app is already on the App Store.",
 };
 
 export default async function Page() {

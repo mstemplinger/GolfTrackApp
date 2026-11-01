@@ -3,6 +3,8 @@ import type { NextConfig } from "next";
 const nextConfig: NextConfig = {
   // Hinter nginx: die echte Besucheradresse kommt aus X-Real-IP (siehe lib/auth.ts).
   poweredByHeader: false,
+  // Headless-Chrome für den Aushang (app/qr/[slug]/aushang) nicht bündeln.
+  serverExternalPackages: ["puppeteer"],
   async headers() {
     return [
       {

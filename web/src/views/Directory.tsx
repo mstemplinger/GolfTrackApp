@@ -3,6 +3,7 @@ import { Footer, Header, PageHeader } from "@/components/Chrome";
 import { listCourses, type CourseRecord } from "@/lib/courses";
 import { t } from "@/i18n/content";
 import { path, type Lang } from "@/i18n/routes";
+import { AushangPicker } from "@/components/AushangPicker";
 
 export async function Directory({ lang }: { lang: Lang }) {
   const copy = t(lang).directory;
@@ -100,15 +101,10 @@ function CourseGroup({
               <Link href={`/${course.kind}/${course.slug}`} className="block">
                 {body}
               </Link>
-              {/* Aushang für die Anlage. Der Code zeigt auf die Seite oben:
-                  mit App startet die Runde, ohne App führt sie zum Store. */}
-              <a
-                href={`/qr/${course.slug}`}
-                title={copy.qrTitle}
-                className="tap mt-4 inline-block font-mono text-xs text-brass underline underline-offset-4"
-              >
-                ↓ {copy.qrDownload}
-              </a>
+              {/* Aushang für die Anlage: Sprachen wählen, PDF laden. */}
+              <div className="mt-4">
+                <AushangPicker slug={course.slug} country={course.country} copy={copy} />
+              </div>
             </li>
           );
         })}

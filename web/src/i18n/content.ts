@@ -214,6 +214,10 @@ const de = {
     apiHint: "Dieselben Daten als JSON:",
     qrDownload: "QR-Code",
     qrTitle: "QR-Code für den Aushang",
+    sheet: "Aushang herunterladen",
+    sheetHint: "Eine Sprache: Hochformat. Zwei oder drei: Querformat nebeneinander. Mehr: auf mehrere Blätter verteilt.",
+    sheetButton: "PDF laden",
+    sheetCodeOnly: "Nur QR-Code (SVG)",
   },
   submit: {
     title: "Anlage eintragen",
@@ -619,6 +623,10 @@ const en: Content = {
     apiHint: "The same data as JSON:",
     qrDownload: "QR code",
     qrTitle: "QR code for the venue sign",
+    sheet: "Download sign",
+    sheetHint: "One language: portrait. Two or three: landscape, side by side. More: spread over several sheets.",
+    sheetButton: "Download PDF",
+    sheetCodeOnly: "QR code only (SVG)",
   },
   submit: {
     title: "List a venue",

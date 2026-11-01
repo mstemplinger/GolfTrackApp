@@ -4,6 +4,8 @@ import { notFound, redirect } from "next/navigation";
 import { isAuthenticated } from "@/lib/auth";
 import { getCourse } from "@/lib/courses";
 import { toFeedCourse } from "@/lib/feed";
+import { AushangPicker } from "@/components/AushangPicker";
+import { t } from "@/i18n/content";
 import { StatusPill } from "../StatusPill";
 import { EditForm } from "./EditForm";
 import { approve, moveBackToPending, reject, remove } from "../actions";
@@ -117,6 +119,11 @@ export default async function AdminDetailPage({ params }: PageProps<"/admin/[id]
             </>
           ) : null}
         </p>
+      ) : null}
+      {course.status === "approved" ? (
+        <div className="mt-4 rounded-sm border rule bg-moss/30 p-5">
+          <AushangPicker slug={course.slug} country={course.country} copy={t("de").directory} open />
+        </div>
       ) : null}
 
       <EditForm course={course} />

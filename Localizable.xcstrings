@@ -22641,6 +22641,46 @@
         }
       }
     },
+    "GolfTrack zeigt die neue Sprache ab dem nächsten Start. Schließe die App dazu einmal ganz und öffne sie wieder." : {
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "GolfTrack zobrazí nový jazyk po příštím spuštění. Aplikaci jednou úplně zavřete a znovu otevřete."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "GolfTrack shows the new language from the next launch. Close the app completely once and open it again."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "GolfTrack mostrará el nuevo idioma en el próximo inicio. Cierra la app por completo y vuelve a abrirla."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "GolfTrack affichera la nouvelle langue au prochain démarrage. Fermez complètement l’app puis rouvrez-la."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "GolfTrack mostrerà la nuova lingua dal prossimo avvio. Chiudi completamente l’app e riaprila."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "GolfTrack pokaże nowy język po następnym uruchomieniu. Zamknij aplikację całkowicie i otwórz ją ponownie."
+          }
+        }
+      }
+    },
     "GPS-Distanzen" : {
       "localizations" : {
         "cs" : {
@@ -33902,46 +33942,6 @@
         }
       }
     },
-    "Öffnet die iOS-Einstellungen von GolfTrack" : {
-      "localizations" : {
-        "cs" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Otevře nastavení GolfTracku v iOS"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Opens GolfTrack’s iOS Settings"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Abre los Ajustes de iOS de GolfTrack"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Ouvre les Réglages iOS de GolfTrack"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Apre le Impostazioni iOS di GolfTrack"
-          }
-        },
-        "pl" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Otwiera ustawienia GolfTrack w iOS"
-          }
-        }
-      }
-    },
     "Ohne Bag" : {
       "localizations" : {
         "cs" : {
@@ -43710,6 +43710,46 @@
         }
       }
     },
+    "Sprache geändert" : {
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Jazyk změněn"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Language changed"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Idioma cambiado"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Langue modifiée"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lingua cambiata"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zmieniono język"
+          }
+        }
+      }
+    },
     "Springt zum Button für die Gratis-Testphase" : {
       "localizations" : {
         "cs" : {
@@ -45320,6 +45360,46 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "SwiftUI & SwiftData"
+          }
+        }
+      }
+    },
+    "Systemsprache" : {
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Jazyk systému"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "System language"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Idioma del sistema"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Langue du système"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lingua di sistema"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Język systemu"
           }
         }
       }
@@ -50800,46 +50880,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Ładowanie…"
-          }
-        }
-      }
-    },
-    "Wird in den iOS-Einstellungen der App geändert" : {
-      "localizations" : {
-        "cs" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Mění se v nastavení aplikace v iOS"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Changed in the app’s iOS Settings"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Se cambia en los Ajustes de iOS de la app"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Se modifie dans les Réglages iOS de l’app"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Si cambia nelle Impostazioni iOS dell’app"
-          }
-        },
-        "pl" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Zmieniasz go w ustawieniach aplikacji w iOS"
           }
         }
       }

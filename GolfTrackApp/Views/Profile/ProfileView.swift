@@ -17,6 +17,8 @@ struct ProfileView: View {
 
     @AppStorage("hasSeenOnboarding") private var hasSeenOnboarding = false
     @AppStorage(DistanceUnit.storageKey) private var distanceUnit: DistanceUnit = .meters
+    @AppStorage(AppLanguage.storageKey) private var appLanguage: AppLanguage = .system
+    @State private var showLanguageRestartHint = false
     @AppStorage(AppFocus.storageKey) private var appFocus: AppFocus = .golf
     @AppStorage(SplashContainerView.showIntroKey) private var showLaunchIntro = false
     @ObservedObject private var gc = GameCenterManager.shared
@@ -436,54 +438,44 @@ struct ProfileView: View {
         .padding(.horizontal)
     }
 
-    /// App-Sprache: bewusst über die iOS-eigene Einstellung pro App
-    /// (Einstellungen → GolfTrack → Sprache). Die zeigt iOS an, sobald die App
-    /// mehrere Lokalisierungen hat. iOS startet die App danach selbst neu –
-    /// kein eigener `AppleLanguages`-Override mit „gilt nach Neustart“ nötig.
+    /// App-Sprache, direkt hier wählbar (siehe `AppLanguage`). Greift ab dem
+    /// nächsten Start, deshalb nach dem Wechsel ein Hinweis.
     private var languageRow: some View {
-        Button {
-            Haptics.tap()
-            if let url = URL(string: UIApplication.openSettingsURLString) {
-                UIApplication.shared.open(url)
+        HStack(spacing: 14) {
+            ZStack {
+                RoundedRectangle(cornerRadius: 9)
+                    .fill(Color(red: 0.4, green: 0.8, blue: 0.9).opacity(0.18))
+                    .frame(width: 40, height: 40)
+                Image(systemName: "globe")
+                    .font(.system(size: 16))
+                    .foregroundStyle(Color(red: 0.4, green: 0.8, blue: 0.9))
             }
-        } label: {
-            HStack(spacing: 14) {
-                ZStack {
-                    RoundedRectangle(cornerRadius: 9)
-                        .fill(Color(red: 0.4, green: 0.8, blue: 0.9).opacity(0.18))
-                        .frame(width: 40, height: 40)
-                    Image(systemName: "globe")
-                        .font(.system(size: 16))
-                        .foregroundStyle(Color(red: 0.4, green: 0.8, blue: 0.9))
+            Text("Sprache")
+                .font(.subheadline)
+                .foregroundStyle(AppTheme.text)
+            Spacer()
+            Picker("Sprache", selection: $appLanguage) {
+                Text("Systemsprache").tag(AppLanguage.system)
+                ForEach(AppLanguage.allCases.filter { $0 != .system }) { language in
+                    Text(verbatim: language.nativeName ?? language.rawValue).tag(language)
                 }
-                VStack(alignment: .leading, spacing: 2) {
-                    Text("Sprache")
-                        .font(.subheadline)
-                        .foregroundStyle(AppTheme.text)
-                    Text("Wird in den iOS-Einstellungen der App geändert")
-                        .font(.caption2)
-                        .foregroundStyle(AppTheme.textTer)
-                        .multilineTextAlignment(.leading)
-                }
-                Spacer()
-                Text(verbatim: Self.currentLanguageName)
-                    .font(.subheadline)
-                    .foregroundStyle(AppTheme.textSec)
-                Image(systemName: "arrow.up.forward.app")
-                    .font(.caption)
-                    .foregroundStyle(AppTheme.textTer)
             }
-            .padding(.horizontal, 18)
-            .padding(.vertical, 14)
+            .pickerStyle(.menu)
+            .tint(AppTheme.textSec)
+            .fixedSize()
+            .onChange(of: appLanguage) { _, language in
+                Haptics.selection()
+                language.apply()
+                showLanguageRestartHint = true
+            }
         }
-        .accessibilityHint(Text("Öffnet die iOS-Einstellungen von GolfTrack"))
-    }
-
-    /// Name der aktuell aktiven App-Sprache in dieser Sprache selbst („Polski“, „Čeština“ …).
-    private static var currentLanguageName: String {
-        let code = Bundle.main.preferredLocalizations.first ?? "de"
-        let locale = Locale(identifier: code)
-        return locale.localizedString(forLanguageCode: code)?.capitalized(with: locale) ?? code
+        .padding(.horizontal, 18)
+        .padding(.vertical, 10)
+        .alert("Sprache geändert", isPresented: $showLanguageRestartHint) {
+            Button("OK", role: .cancel) {}
+        } message: {
+            Text("GolfTrack zeigt die neue Sprache ab dem nächsten Start. Schließe die App dazu einmal ganz und öffne sie wieder.")
+        }
     }
 
     private func settingsRow(icon: String, color: Color, title: LocalizedStringKey, destination: @escaping () -> AnyView) -> some View {

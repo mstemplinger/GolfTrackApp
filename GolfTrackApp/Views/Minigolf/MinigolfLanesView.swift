@@ -249,6 +249,10 @@ struct MinigolfLanesTabContent: View {
 struct MinigolfLaneDetailView: View {
     let lane: MinigolfStandardLane
 
+    @AppStorage("minigolf.lane3D") private var show3D = true
+    @AppStorage("minigolf.idealLine") private var showsIdealLine = true
+    @State private var showsFullscreen = false
+
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 14) {
@@ -264,9 +268,44 @@ struct MinigolfLaneDetailView: View {
                             .fixedSize(horizontal: false, vertical: true)
                     }
 
-                    MinigolfLaneSketch(shape: lane.shape, glyph: lane.glyph, lineWidth: 2)
-                        .frame(height: 110)
-                        .padding(.vertical, 6)
+                    Picker("Ansicht", selection: $show3D) {
+                        Text("3D-Modell").tag(true)
+                        Text("Draufsicht").tag(false)
+                    }
+                    .pickerStyle(.segmented)
+
+                    if show3D {
+                        MinigolfLane3DView(lane: lane, showsIdealLine: showsIdealLine)
+                            .frame(height: 260)
+                            .clipShape(RoundedRectangle(cornerRadius: 12))
+                            .overlay(alignment: .bottomLeading) {
+                                MinigolfIdealLineToggle(isOn: $showsIdealLine)
+                                    .padding(8)
+                            }
+                            .overlay(alignment: .bottomTrailing) {
+                                Button {
+                                    Haptics.tap()
+                                    showsFullscreen = true
+                                } label: {
+                                    Image(systemName: "arrow.up.left.and.arrow.down.right")
+                                        .font(.caption.bold())
+                                        .foregroundStyle(.white)
+                                        .frame(width: 30, height: 30)
+                                        .background(.black.opacity(0.35), in: Circle())
+                                }
+                                .buttonStyle(.plain)
+                                .padding(8)
+                                .accessibilityLabel("Vollbild")
+                            }
+
+                        Text("Zum Drehen wischen, mit zwei Fingern zoomen.")
+                            .font(.caption2)
+                            .foregroundStyle(.secondary)
+                    } else {
+                        MinigolfLaneSketch(shape: lane.shape, glyph: lane.glyph, lineWidth: 2)
+                            .frame(height: 110)
+                            .padding(.vertical, 6)
+                    }
 
                     HStack(spacing: 14) {
                         legend(color: .white.opacity(0.8), text: "Abschlag")
@@ -277,6 +316,9 @@ struct MinigolfLaneDetailView: View {
                             legend(color: Color(red: 0.35, green: 0.80, blue: 0.50), text: "Ziel")
                         } else {
                             legend(color: AppTheme.gold, text: "Netz")
+                        }
+                        if show3D && showsIdealLine {
+                            legend(color: Color(MinigolfLaneModel.idealColor), text: "Idealspur")
                         }
                     }
                 }
@@ -289,7 +331,7 @@ struct MinigolfLaneDetailView: View {
                 section(icon: "ruler", title: "Maße & Besonderheiten", text: lane.mass)
                 section(icon: "lightbulb.fill", title: "Tipp", text: lane.tipp, accent: true)
 
-                Text("Nummer der Normbahn nach den Normungsbestimmungen für Miniaturgolf (DMV/WMF). Auf der Anlage kann sie an jeder Position stehen. Verbindlich sind die Zeichnungen des Weltverbands – die Skizze hier ist schematisch.")
+                Text("Nummer der Normbahn nach den Normungsbestimmungen für Miniaturgolf (DMV/WMF). Auf der Anlage kann sie an jeder Position stehen. Verbindlich sind die Zeichnungen des Weltverbands – Skizze und 3D-Modell hier sind schematisch, die Idealspur ist eine Empfehlung der App.")
                     .font(.caption2)
                     .foregroundStyle(.secondary)
                     .fixedSize(horizontal: false, vertical: true)
@@ -300,6 +342,9 @@ struct MinigolfLaneDetailView: View {
         .appBackground()
         .navigationTitle("Bahn \(lane.normNumber)")
         .navigationBarTitleDisplayMode(.inline)
+        .fullScreenCover(isPresented: $showsFullscreen) {
+            MinigolfLane3DFullscreen(lane: lane, showsIdealLine: $showsIdealLine)
+        }
     }
 
     private func legend(color: Color, text: LocalizedStringKey) -> some View {

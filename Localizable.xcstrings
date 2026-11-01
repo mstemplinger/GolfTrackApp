@@ -338,6 +338,7 @@
       }
     },
     "(Ø %@)" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -423,6 +424,7 @@
       }
     },
     "/ Loch %lld" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -3489,6 +3491,62 @@
         }
       }
     },
+    "3D-Modell" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "3D model"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Modelo 3D"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Modèle 3D"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Modello 3D"
+          }
+        }
+      }
+    },
+    "3D-Modell der Bahn %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "3D model of the hole %@"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Modelo 3D de la pista %@"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Modèle 3D de la piste %@"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Modello 3D della pista %@"
+          }
+        }
+      }
+    },
     "4" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -5887,6 +5945,34 @@
         }
       }
     },
+    "an" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "on"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "activada"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "activée"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "attiva"
+          }
+        }
+      }
+    },
     "Ändern" : {
       "localizations" : {
         "de" : {
@@ -6057,6 +6143,62 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Ricerca della struttura …"
+          }
+        }
+      }
+    },
+    "Ansicht" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "View"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vista"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vue"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vista"
+          }
+        }
+      }
+    },
+    "Ansicht zurücksetzen" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Reset view"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Restablecer vista"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Réinitialiser la vue"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ripristina vista"
           }
         }
       }
@@ -6951,6 +7093,34 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Registrazioni"
+          }
+        }
+      }
+    },
+    "aus" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "off"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "desactivada"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "désactivée"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "disattiva"
           }
         }
       }
@@ -10645,6 +10815,34 @@
         }
       }
     },
+    "Draufsicht" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Top view"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vista superior"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vue de dessus"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vista dall’alto"
+          }
+        }
+      }
+    },
     "Drei Sätze, wie das Zählen in der App funktioniert – oder direkt loslegen." : {
       "localizations" : {
         "en" : {
@@ -11454,6 +11652,34 @@
         }
       }
     },
+    "Ein Finger dreht, zwei Finger zoomen und verschieben." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "One finger rotates, two fingers zoom and pan."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Un dedo gira, dos dedos amplían y desplazan."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Un doigt fait pivoter, deux doigts zooment et déplacent."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Un dito ruota, due dita ingrandiscono e spostano."
+          }
+        }
+      }
+    },
     "Eine Stunde zählt als Golf-Wetter, wenn höchstens so viel Regen fällt, der Wind nicht stärker ist und es mindestens so warm ist. Nebel, Schnee, Glätte, Gewitter und Dunkelheit zählen immer als schlecht." : {
       "localizations" : {
         "en" : {
@@ -11915,6 +12141,7 @@
       }
     },
     "Empfehlung:" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -16386,6 +16613,34 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Ho giocato: conserva"
+          }
+        }
+      }
+    },
+    "Idealspur" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ideal line"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Línea ideal"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ligne idéale"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Linea ideale"
           }
         }
       }
@@ -22103,6 +22358,7 @@
       }
     },
     "Noch %lld m zum Loch" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -22682,30 +22938,30 @@
         }
       }
     },
-    "Nummer der Normbahn nach den Normungsbestimmungen für Miniaturgolf (DMV/WMF). Auf der Anlage kann sie an jeder Position stehen. Verbindlich sind die Zeichnungen des Weltverbands – die Skizze hier ist schematisch." : {
+    "Nummer der Normbahn nach den Normungsbestimmungen für Miniaturgolf (DMV/WMF). Auf der Anlage kann sie an jeder Position stehen. Verbindlich sind die Zeichnungen des Weltverbands – Skizze und 3D-Modell hier sind schematisch, die Idealspur ist eine Empfehlung der App." : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Number of the standardised hole according to the standardisation rules for miniature golf (DMV/WMF). On the course it can be in any position. The world federation’s drawings are authoritative – the sketch here is schematic."
+            "value" : "Number of the standardised hole according to the standardisation rules for miniature golf (DMV/WMF). On the course it can be in any position. The world federation’s drawings are authoritative – the sketch and 3D model here are schematic, and the ideal line is the app’s recommendation."
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Número de la pista normalizada según las normas de normalización del minigolf (DMV/WMF). En el campo puede ocupar cualquier posición. Los planos de la federación mundial son los vinculantes; el esquema aquí es orientativo."
+            "value" : "Número de la pista normalizada según las normas de normalización del minigolf (DMV/WMF). En el campo puede ocupar cualquier posición. Los planos de la federación mundial son los vinculantes; el esquema y el modelo 3D son orientativos y la línea ideal es una recomendación de la app."
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Numéro de la piste normalisée selon les normes de normalisation du minigolf (DMV/WMF). Sur le parcours, elle peut occuper n’importe quelle position. Les plans de la fédération mondiale font foi – le schéma ci-dessus est indicatif."
+            "value" : "Numéro de la piste normalisée selon les normes de normalisation du minigolf (DMV/WMF). Sur le parcours, elle peut occuper n’importe quelle position. Les plans de la fédération mondiale font foi – le schéma et le modèle 3D sont indicatifs, la ligne idéale est une recommandation de l’app."
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Numero della pista normalizzata secondo le norme di normalizzazione del minigolf (DMV/WMF). Sul campo può trovarsi in qualsiasi posizione. Fanno fede i disegni della federazione mondiale: lo schema qui è indicativo."
+            "value" : "Numero della pista normalizzata secondo le norme di normalizzazione del minigolf (DMV/WMF). Sul campo può trovarsi in qualsiasi posizione. Fanno fede i disegni della federazione mondiale: lo schema e il modello 3D sono indicativi, la linea ideale è un consiglio dell’app."
           }
         }
       }
@@ -27925,6 +28181,7 @@
       }
     },
     "Schläger-Bag" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -29835,6 +30092,7 @@
       }
     },
     "Spielmodus" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -35568,6 +35826,34 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "In ascolto..."
+          }
+        }
+      }
+    },
+    "Zum Drehen wischen, mit zwei Fingern zoomen." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Swipe to rotate, pinch to zoom."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Desliza para girar, pellizca para ampliar."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Balayez pour faire pivoter, pincez pour zoomer."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Scorri per ruotare, pizzica per ingrandire."
           }
         }
       }

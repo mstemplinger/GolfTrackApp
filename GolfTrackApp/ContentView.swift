@@ -37,33 +37,9 @@ struct ContentView: View {
 
     var body: some View {
         ZStack {
-            TabView(selection: $selectedTab) {
-                HomeView()
-                    .tabItem { Label("Home", systemImage: "house.fill") }
-                    .tag(0)
-                TrainingView()
-                    .tabItem { Label("Training", systemImage: "figure.golf") }
-                    .tag(1)
-                // Bei Minigolf-Schwerpunkt belegt Minigolf diesen Tab. Die
-                // Golfregeln bleiben über die Scorekarte einer laufenden Runde
-                // erreichbar; das Training bleibt auf Tab 1 (Tipps verlinken
-                // dorthin).
-                thirdTab
-                    .tabItem {
-                        isMinigolfFocus
-                            ? Label("Minigolf", systemImage: "flag.2.crossed.fill")
-                            : Label("Regeln", systemImage: "book.fill")
-                    }
-                    .tag(2)
-                TipsView()
-                    .tabItem { Label("Tipps", systemImage: "lightbulb.fill") }
-                    .tag(3)
-                ProfileView()
-                    .tabItem { Label("Profil", systemImage: "person.fill") }
-                    .tag(4)
-            }
-            .tint(AppTheme.gold)
-            .onChange(of: selectedTab) { _, _ in Haptics.selection() }
+            tabs
+                .tint(AppTheme.gold)
+                .onChange(of: selectedTab) { _, _ in Haptics.selection() }
 
             // Tutorial erst nach getroffener Schwerpunkt-Auswahl
             if hasChosenAppFocus && !hasSeenOnboarding {
@@ -159,6 +135,51 @@ struct ContentView: View {
         // Empfehlung aus den Tipps → zum Training-Tab wechseln
         .onReceive(NotificationCenter.default.publisher(for: .openTraining)) { _ in
             selectedTab = 1
+        }
+    }
+
+    /// Ab iOS 18 mit der `Tab`-API – nur damit greift unter iOS 26 das
+    /// Einklappen der Leiste beim Scrollen. Darunter die bisherige Form.
+    @ViewBuilder
+    private var tabs: some View {
+        if #available(iOS 18.0, *) {
+            TabView(selection: $selectedTab) {
+                Tab("Home", systemImage: "house.fill", value: 0) { HomeView() }
+                Tab("Training", systemImage: "figure.golf", value: 1) { TrainingView() }
+                // Bei Minigolf-Schwerpunkt belegt Minigolf diesen Tab (siehe unten).
+                Tab(isMinigolfFocus ? LocalizedStringKey("Minigolf") : "Regeln",
+                    systemImage: isMinigolfFocus ? "flag.2.crossed.fill" : "book.fill",
+                    value: 2) { thirdTab }
+                Tab("Tipps", systemImage: "lightbulb.fill", value: 3) { TipsView() }
+                Tab("Profil", systemImage: "person.fill", value: 4) { ProfileView() }
+            }
+            .minimizesTabBarOnScroll()
+        } else {
+            TabView(selection: $selectedTab) {
+                HomeView()
+                    .tabItem { Label("Home", systemImage: "house.fill") }
+                    .tag(0)
+                TrainingView()
+                    .tabItem { Label("Training", systemImage: "figure.golf") }
+                    .tag(1)
+                // Bei Minigolf-Schwerpunkt belegt Minigolf diesen Tab. Die
+                // Golfregeln bleiben über die Scorekarte einer laufenden Runde
+                // erreichbar; das Training bleibt auf Tab 1 (Tipps verlinken
+                // dorthin).
+                thirdTab
+                    .tabItem {
+                        isMinigolfFocus
+                            ? Label("Minigolf", systemImage: "flag.2.crossed.fill")
+                            : Label("Regeln", systemImage: "book.fill")
+                    }
+                    .tag(2)
+                TipsView()
+                    .tabItem { Label("Tipps", systemImage: "lightbulb.fill") }
+                    .tag(3)
+                ProfileView()
+                    .tabItem { Label("Profil", systemImage: "person.fill") }
+                    .tag(4)
+            }
         }
     }
 
@@ -310,4 +331,18 @@ struct ContentView: View {
 #Preview {
     ContentView()
         .modelContainer(for: [Course.self, Round.self, HoleScore.self, Shot.self, PlayerHoleScore.self, QuizResult.self, RoundTrack.self], inMemory: true)
+}
+
+private extension View {
+    /// Ab iOS 26 schrumpft die Tab-Leiste beim Runterscrollen auf das aktive
+    /// Symbol unten links und kommt beim Hochscrollen zurück. Davor gibt es
+    /// das Verhalten nicht; die Leiste bleibt wie bisher stehen.
+    @ViewBuilder
+    func minimizesTabBarOnScroll() -> some View {
+        if #available(iOS 26.0, *) {
+            self.tabBarMinimizeBehavior(.onScrollDown)
+        } else {
+            self
+        }
+    }
 }

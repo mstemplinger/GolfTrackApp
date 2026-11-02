@@ -258,6 +258,9 @@ struct TrainingPaywallView: View {
                         perMonth: subscriptionManager.trainingYearlyPricePerMonth,
                         savings: subscriptionManager.trainingYearlySavingsLabel)
         }
+        // Beide Karten so hoch wie die höhere – der Monatskarte fehlt die
+        // „≈ … / Monat“-Zeile, sonst ragt die Jahreskarte unten heraus.
+        .fixedSize(horizontal: false, vertical: true)
     }
 
     private func billingCard(_ option: Billing, title: LocalizedStringKey, product: Product?,
@@ -283,7 +286,7 @@ struct TrainingPaywallView: View {
                         .foregroundStyle(AppTheme.textTer)
                 }
             }
-            .frame(maxWidth: .infinity, alignment: .leading)
+            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
             .padding(14)
             .background(AppTheme.card, in: RoundedRectangle(cornerRadius: 14))
             .overlay(

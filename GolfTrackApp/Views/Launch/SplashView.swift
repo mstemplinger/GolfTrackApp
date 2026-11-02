@@ -9,6 +9,9 @@ struct SplashContainerView: View {
     // Nur beim Start gelesen: Umschalten im Profil soll das Intro nicht mitten in der Sitzung zeigen.
     @State private var showSplash = UserDefaults.standard.bool(forKey: showIntroKey)
     @State private var showWhatsNew = false
+    @State private var showAudioTrial = false
+    @State private var showTrainingPaywall = false
+    @EnvironmentObject private var subscriptionManager: SubscriptionManager
 
     var body: some View {
         ZStack {
@@ -20,19 +23,50 @@ struct SplashContainerView: View {
                     }
                     // Update-Einführung erst nach dem Splash, und nur für
                     // Bestandsnutzer – Neuinstallationen sehen das Onboarding.
-                    showWhatsNew = WhatsNew.evaluateOnLaunch()
+                    evaluateLaunchHints()
                 }
                 .transition(.opacity)
                 .zIndex(1)
             }
+            if showAudioTrial {
+                AudioTrialPromoView(
+                    onTry: {
+                        closeAudioTrial()
+                        showTrainingPaywall = true
+                    },
+                    onDismiss: closeAudioTrial
+                )
+                .transition(.opacity.combined(with: .scale(scale: 0.96)))
+                .zIndex(2)
+            }
         }
         .onAppear {
             // Ohne Intro gibt es kein onComplete – die Update-Einführung dann direkt prüfen.
-            if !showSplash { showWhatsNew = WhatsNew.evaluateOnLaunch() }
+            if !showSplash { evaluateLaunchHints() }
         }
         .sheet(isPresented: $showWhatsNew, onDismiss: { WhatsNew.markCurrentAsSeen() }) {
             WhatsNewView()
         }
+        .sheet(isPresented: $showTrainingPaywall) {
+            TrainingPaywallView()
+                .environmentObject(subscriptionManager)
+        }
+    }
+
+    /// Höchstens ein Hinweis pro Start: erst die Update-Einführung, der
+    /// Testphasen-Hinweis zum Audio-Training sonst – oder beim nächsten Start.
+    private func evaluateLaunchHints() {
+        showWhatsNew = WhatsNew.evaluateOnLaunch()
+        guard !showWhatsNew else { return }
+        Task {
+            guard await AudioTrialPromo.shouldShow(subscriptionManager) else { return }
+            withAnimation(.spring(response: 0.4, dampingFraction: 0.85)) { showAudioTrial = true }
+        }
+    }
+
+    private func closeAudioTrial() {
+        AudioTrialPromo.markAsSeen()
+        withAnimation(.easeOut(duration: 0.2)) { showAudioTrial = false }
     }
 }
 

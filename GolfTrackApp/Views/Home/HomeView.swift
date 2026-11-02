@@ -378,7 +378,7 @@ struct HomeView: View {
         }
         .padding(.horizontal)
 
-        HStack(spacing: 12) {
+        HStack(spacing: 20) {
             NavigationLink {
                 PlatzreifeQuizView()
             } label: {
@@ -437,7 +437,7 @@ struct HomeView: View {
     // MARK: Minigolf – Statistik
 
     private var minigolfStatsRow: some View {
-        HStack(spacing: 12) {
+        HStack(spacing: 20) {
             // Bester Schnitt pro Loch (Sieger-Score der jeweiligen Partie)
             VStack(alignment: .leading, spacing: 6) {
                 Text("Bester Schnitt")
@@ -798,7 +798,7 @@ struct HomeView: View {
 
     // MARK: Stats Row
     private var statsRow: some View {
-        HStack(spacing: 12) {
+        HStack(spacing: 20) {
             // Handicap
             VStack(alignment: .leading, spacing: 6) {
                 Text("Handicap")

@@ -10,7 +10,7 @@ struct ScorecardView: View {
     /// Closure called when the round is fully finished – dismisses the enclosing fullScreenCover.
     var onRoundFinished: (() -> Void)? = nil
 
-    @State private var currentIndex: Int = 0
+    @State private var currentIndex: Int
     @State private var showFinishAlert = false
     @State private var showCancelAlert = false
     @State private var showRoundCompleteSheet = false
@@ -23,6 +23,12 @@ struct ScorecardView: View {
     private let wc = WatchConnectivityManager.shared
     @ObservedObject private var gc = GameCenterManager.shared
     @ObservedObject private var tracking = RoundTrackingService.shared
+
+    init(round: Round, onRoundFinished: (() -> Void)? = nil) {
+        _round = Bindable(round)
+        self.onRoundFinished = onRoundFinished
+        _currentIndex = State(initialValue: GolfLiveActivityManager.resumeIndex(for: round))
+    }
 
     private var sortedScores: [HoleScore] {
         round.holeScores.sorted { $0.holeNumber < $1.holeNumber }
@@ -170,6 +176,11 @@ struct ScorecardView: View {
                 onRoundFinished?()
             }
             .presentationDetents([.large])
+        }
+        // ── „Nächstes Loch“ aus der Live Activity ───────────────────
+        .onReceive(NotificationCenter.default.publisher(for: .liveActivityHoleChanged)) { note in
+            guard let hole = note.object as? Int else { return }
+            goToHole(hole)
         }
         // ── Shake → Spielregeln ─────────────────────────────────────
         .onReceive(NotificationCenter.default.publisher(for: .deviceDidShake)) { _ in

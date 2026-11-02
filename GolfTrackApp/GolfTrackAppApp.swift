@@ -14,8 +14,20 @@ struct GolfTrackAppApp: App {
 
     @StateObject private var subscriptionManager = SubscriptionManager()
 
+    /// Ein Container für Oberfläche und Live-Activity-Knopf: Der Schlag, den
+    /// `AddStrokeIntent` im Hintergrund zählt, landet im selben Kontext, den
+    /// die offene Lochansicht beobachtet, und erscheint dort sofort.
+    static let sharedContainer: ModelContainer = {
+        do {
+            return try ModelContainer(for: Course.self, Round.self, HoleScore.self, Shot.self, PlayerHoleScore.self, QuizResult.self, GolfClub.self, GolfBag.self, RoundTrack.self)
+        } catch {
+            fatalError("ModelContainer konnte nicht angelegt werden: \(error)")
+        }
+    }()
+
     init() {
         configureNavigationBarAppearance()
+        GolfLiveActivityManager.registerStrokeHandler(container: Self.sharedContainer)
         // Ab iOS 26 rendert die schwebende Liquid-Glass-Tab-Bar mit einer
         // opaken UITabBarAppearance beim Kaltstart fehlerhaft (riesige,
         // abgeschnittene Labels) — dort die System-Tab-Bar verwenden.
@@ -43,6 +55,6 @@ struct GolfTrackAppApp: App {
                 .seedDemoDataIfRequested()
                 .simulateTrackedRoundIfRequested()
         }
-        .modelContainer(for: [Course.self, Round.self, HoleScore.self, Shot.self, PlayerHoleScore.self, QuizResult.self, GolfClub.self, GolfBag.self, RoundTrack.self])
+        .modelContainer(Self.sharedContainer)
     }
 }

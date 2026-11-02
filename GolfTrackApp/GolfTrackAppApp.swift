@@ -40,7 +40,11 @@ struct GolfTrackAppApp: App {
             Haptics.warmUp()
             GameCenterManager.shared.authenticate()
             NotificationManager.shared.becomeDelegate()
-            await NotificationManager.shared.requestAuthorization()
+            // Neuinstallationen fragt das Onboarding nach dem Namen – erst
+            // dort, damit die Rückfrage nicht vor der Begrüßung aufpoppt.
+            if UserDefaults.standard.bool(forKey: "hasSeenOnboarding") {
+                await NotificationManager.shared.requestAuthorization()
+            }
             // Zonen wieder aufnehmen, falls der Nutzer die Mitteilung bei
             // Annäherung eingeschaltet hat.
             NearbyCourseService.shared.resumeMonitoringIfEnabled()

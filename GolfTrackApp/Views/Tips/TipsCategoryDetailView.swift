@@ -7,6 +7,7 @@ struct GolfTip: Identifiable {
     let title: String
     let body: String
     let icon: String
+    var visual: TipVisual? = nil
 }
 
 // MARK: - Tip Content
@@ -16,27 +17,32 @@ enum TipsCategoryContent {
         GolfTip(
             title: "Griff entspannen",
             body: "Halte den Schläger wie ein Vogel – fest genug, damit er nicht wegfliegt, aber nicht so fest, dass du ihn erdrückst. Ein zu fester Griff blockiert die Handgelenke und kostet Distanz.",
-            icon: "hand.raised.fill"
+            icon: "hand.raised.fill",
+            visual: .grip
         ),
         GolfTip(
             title: "Standfläche prüfen",
             body: "Schulterbreiter Stand für normale Schläge. Die Füße zeigen leicht nach außen. Bei kurzen Eisen etwas enger stehen, bei Holz und Driver etwas breiter.",
-            icon: "figure.stand"
+            icon: "figure.stand",
+            visual: .stance
         ),
         GolfTip(
             title: "Auge auf dem Ball",
             body: "Bewege den Kopf beim Schwung nicht. Fixiere einen konkreten Punkt auf dem Ball und behalte den Blick dort, bis der Schläger den Ball getroffen hat.",
-            icon: "eye.fill"
+            icon: "eye.fill",
+            visual: .eyeOnBall
         ),
         GolfTip(
             title: "Tempo ist alles",
             body: "Ein langsamer, gleichmäßiger Rückschwung erzeugt mehr Kraft als ein schneller. Verhältnis Rückschwung zu Durchschwung: 3:1. Eil dich nie beim Abschlag.",
-            icon: "speedometer"
+            icon: "speedometer",
+            visual: .tempo
         ),
         GolfTip(
             title: "Chip-Technik",
             body: "Beim Chippen: Gewicht auf den vorderen Fuß, Ball in der Mitte des Stands, Handgelenke fest. Denke an eine Pendelbewegung vom Schultergelenk – kein Handgelenk-Flip.",
-            icon: "arrow.down.right"
+            icon: "arrow.down.right",
+            visual: .chip
         ),
     ]
 
@@ -44,27 +50,32 @@ enum TipsCategoryContent {
         GolfTip(
             title: "Schwungachse halten",
             body: "Die Wirbelsäule ist die Achse deines Schwungs. Bleib beim Rückschwung in der Vorbeuge und vermeide seitliches Wackeln. Eine stabile Achse = konsistente Trefferfläche.",
-            icon: "arrow.up.arrow.down"
+            icon: "arrow.up.arrow.down",
+            visual: .spineAxis
         ),
         GolfTip(
             title: "Hüftrotation",
             body: "Die Hüfte führt den Durchschwung an, nicht die Arme. Beginne den Durchschwung mit dem Drehen der Hüfte zur Zielseite. Die Arme folgen automatisch.",
-            icon: "rotate.right"
+            icon: "rotate.right",
+            visual: .hipRotation
         ),
         GolfTip(
             title: "Gewichtsverlagerung",
             body: "Im Rückschwung: 70% Gewicht aufs hintere Bein. Im Durchschwung: vollständige Verlagerung aufs vordere Bein. Am Ende: 90% Gewicht vorne, Zehen des hinteren Fußes am Boden.",
-            icon: "scalemass.fill"
+            icon: "scalemass.fill",
+            visual: .weightShift
         ),
         GolfTip(
             title: "Flaches Anspiel",
             body: "Der Schläger sollte von innen auf den Ball treffen (Inside-Out-Bahn). Das erzeugt Draw-Spin und mehr Distanz. Verhindere ein Over-the-Top-Anspiel durch langsamen Beginn des Durchschwungs.",
-            icon: "arrow.right.to.line"
+            icon: "arrow.right.to.line",
+            visual: .swingPath
         ),
         GolfTip(
             title: "Trefferfläche kontrollieren",
             body: "Triff die Mitte der Schlägerface. Off-Center-Hits kosten 10-15% Distanz. Übe mit Klebeband auf der Face, um dein Treffermuster zu sehen.",
-            icon: "target"
+            icon: "target",
+            visual: .impact
         ),
     ]
 
@@ -72,27 +83,32 @@ enum TipsCategoryContent {
         GolfTip(
             title: "Pre-Shot Routine",
             body: "Entwickle eine feste Routine vor jedem Schlag: Stand hinter dem Ball, Ziellinie visualisieren, zwei Probeschwünge, einsteigen, Alignment checken, schlagen. Immer gleich – das beruhigt das Nervensystem.",
-            icon: "repeat"
+            icon: "repeat",
+            visual: .preShotRoutine
         ),
         GolfTip(
             title: "Einen Schlag nach dem anderen",
             body: "Golf besteht aus einzelnen, unabhängigen Schlägen. Ein Fehler beeinflusst den nächsten Schlag nicht – außer du lässt es zu. Atme tief durch und fokussiere dich nur auf den nächsten Schlag.",
-            icon: "1.circle.fill"
+            icon: "1.circle.fill",
+            visual: .oneShot
         ),
         GolfTip(
             title: "Bogey akzeptieren",
             body: "Ein Bogey ist kein Fehler. Durchschnittliche Amateurspieler spielen konstant Bogey Golf. Wer Bogeys akzeptiert und Double Bogeys vermeidet, hat eine sehr gute Runde.",
-            icon: "checkmark.circle.fill"
+            icon: "checkmark.circle.fill",
+            visual: .acceptBogey
         ),
         GolfTip(
             title: "Visualisierung",
             body: "Stelle dir den idealen Flug des Balls vor, bevor du schlägst. Sieh das Ziel, sieh die Flugbahn, sieh den Ball landen. Dein Körper schlägt, was dein Geist sieht.",
-            icon: "eye.fill"
+            icon: "eye.fill",
+            visual: .visualization
         ),
         GolfTip(
             title: "Umgang mit Druck",
             body: "Wenn du nervös wirst: verlangsamter Schwung-Gedanke, tiefer Atemzug vor dem Schlag. Nervosität bedeutet, dass du dich kümmerst – nutze diese Energie positiv.",
-            icon: "heart.fill"
+            icon: "heart.fill",
+            visual: .pressure
         ),
     ]
 
@@ -100,27 +116,32 @@ enum TipsCategoryContent {
         GolfTip(
             title: "Course Management",
             body: "Spiele immer auf die große Fläche, nicht auf die Fahne. Ein Bogey von der Fairwaymitte ist besser als ein Triple vom Rough. Vermeide Hindernisse durch kluge Schlägerwahl.",
-            icon: "map.fill"
+            icon: "map.fill",
+            visual: .courseManagement
         ),
         GolfTip(
             title: "Handicap klug nutzen",
             body: "Kenne deine Vorgabelöcher. Nutze deine Vorgabeschläge auf den schwierigsten Löchern strategisch. Ein Net Par auf Loch 1 (SI 1) ist sehr wertvoll.",
-            icon: "trophy.fill"
+            icon: "trophy.fill",
+            visual: .handicapStrokes
         ),
         GolfTip(
             title: "Wind berücksichtigen",
             body: "Gegen den Wind: einen Schläger mehr, ruhiger schwingen, Ball tiefer halten. Mit dem Wind: Flugkurve wird länger, Kurzspiel wird schneller. Seitenwind: Ball auf die Windseite der Fahne zielen.",
-            icon: "wind"
+            icon: "wind",
+            visual: .wind
         ),
         GolfTip(
             title: "Putt-Strategie",
             body: "Beim ersten Putt: Ziel ist die Zone 50cm um den Ball – kein Dreiputtter. Beim zweiten Putt unter 1.5m: festes Tempo, schaue den Einloch-Punkt an, nicht den Ball. Vertraue deiner Linie.",
-            icon: "circle.fill"
+            icon: "circle.fill",
+            visual: .puttStrategy
         ),
         GolfTip(
             title: "Risiko vs. Belohnung",
             body: "Frage dich vor jedem riskanten Schlag: Was ist das Worst-Case-Scenario? Wenn der Fehler einen Doppelbogey kostet, ist das Risiko meist nicht wert. Spiele sicher auf Score-Karte-Ziele.",
-            icon: "exclamationmark.triangle.fill"
+            icon: "exclamationmark.triangle.fill",
+            visual: .riskReward
         ),
     ]
 
@@ -252,6 +273,11 @@ struct TipDetailView: View {
                         .foregroundStyle(AppTheme.text)
                         .multilineTextAlignment(.center)
                         .padding(.horizontal)
+
+                    if let visual = tip.visual {
+                        visual.view(color: categoryColor)
+                            .padding(.horizontal)
+                    }
 
                     // Body card
                     VStack(alignment: .leading, spacing: 0) {

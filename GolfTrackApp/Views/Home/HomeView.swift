@@ -7,9 +7,15 @@ struct HomeView: View {
     @Query(sort: \Course.name) private var allCourses: [Course]
     @Environment(\.modelContext) private var context
     @AppStorage("playerName") private var playerName = "Golfer"
+    /// Die Startseite liegt schon hinter dem Onboarding – Standort erst
+    /// danach abfragen, das Onboarding erfragt ihn nach dem Namen.
+    @AppStorage("hasSeenOnboarding") private var hasSeenOnboarding = false
     @AppStorage(AppFocus.storageKey) private var appFocus: AppFocus = .golf
 
     @State private var showNewRound      = false
+    #if DEBUG
+    @State private var debugTip: GolfTip?
+    #endif
     @State private var showAssistant     = false
     @State private var showCaddyPaywall  = false
     @EnvironmentObject private var subscriptionManager: SubscriptionManager
@@ -236,9 +242,18 @@ struct HomeView: View {
             }
             .onAppear(perform: openPendingPlatzreife)
             // Standort einmal abfragen – ohne Berechtigung passiert nichts.
-            .task { await nearby.refreshSuggestion() }
+            .task(id: hasSeenOnboarding) {
+                guard hasSeenOnboarding else { return }
+                await nearby.refreshSuggestion()
+            }
             // iPad: vollständige Seite; iPhone: Sheet
             .fullScreenCover(isPresented: $showNewRound) { NewRoundView().preferredColorScheme(.dark) }
+            #if DEBUG
+            .sheet(item: $debugTip) { tip in
+                NavigationStack { TipDetailView(tip: tip, categoryColor: AppTheme.gold) }
+                    .preferredColorScheme(.dark)
+            }
+            #endif
             .sheet(isPresented: $showWeatherForecast) {
                 WeatherForecastView(weather: weather).preferredColorScheme(.dark)
             }
@@ -259,12 +274,15 @@ struct HomeView: View {
                 .preferredColorScheme(.dark)
             }
             .onAppear {
-                weather.fetch()
+                if hasSeenOnboarding { weather.fetch() }
                 setupWatchSync()
                 loadMinigolfData()
                 #if DEBUG
                 openDebugScreen()
                 #endif
+            }
+            .onChange(of: hasSeenOnboarding) { _, seen in
+                if seen { weather.fetch() }
             }
             .onChange(of: allCourses) { _, courses in
                 // Wenn Plätze sich ändern, Watch sofort aktualisieren
@@ -275,13 +293,18 @@ struct HomeView: View {
 
     #if DEBUG
     /// Screenshots ohne Tippen: `GOLFTRACK_OPEN=newRound` öffnet „Neue Runde“,
-    /// `GOLFTRACK_OPEN=round` die erste offene Runde.
+    /// `GOLFTRACK_OPEN=round` die erste offene Runde, `GOLFTRACK_OPEN=tipVisual`
+    /// den ersten Tipp mit Grafik.
     private func openDebugScreen() {
         guard let target = ProcessInfo.processInfo.environment["GOLFTRACK_OPEN"] else { return }
         Task { @MainActor in
             try? await Task.sleep(for: .milliseconds(600))
             switch target {
             case "newRound": showNewRound = true
+            case "tipVisual":
+                debugTip = (TipsCategoryContent.anfaenger + TipsCategoryContent.technik
+                            + TipsCategoryContent.mentalGame + TipsCategoryContent.strategie)
+                    .first { $0.visual != nil }
             case "round": selectedIncompleteRound = allRounds.first { !$0.isComplete } ?? makeDebugRound()
             default: break
             }

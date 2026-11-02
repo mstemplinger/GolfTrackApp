@@ -122,12 +122,73 @@ final class NotificationManager: NSObject {
             .removePendingNotificationRequests(withIdentifiers: [NotificationID.roundInactivity])
     }
 
+    // MARK: - Trinkerinnerung (während der Runde)
+
+    /// Länger als jede Runde – so hört die Serie auch dann auf, wenn eine
+    /// Runde nie abgeschlossen wird.
+    private static let drinkSeriesDuration: TimeInterval = 6 * 60 * 60
+
+    /// Plant ab jetzt alle X Minuten eine Trinkerinnerung. Läuft schon eine
+    /// Serie, bleibt sie stehen – wer die Scorekarte kurz verlässt und
+    /// zurückkehrt, setzt den Takt nicht zurück.
+    func startDrinkReminders() async {
+        guard UserDefaults.standard.object(forKey: "notif.drink.enabled") as? Bool != false else { return }
+        guard await pendingDrinkIDs().isEmpty else { return }
+        scheduleDrinkSeries()
+    }
+
+    /// Nach einer Änderung des Abstands: eine laufende Serie mit dem neuen
+    /// Takt neu aufsetzen, ohne eine zu starten, wenn gerade keine Runde läuft.
+    func rescheduleDrinkRemindersIfRunning() async {
+        let pending = await pendingDrinkIDs()
+        guard !pending.isEmpty else { return }
+        UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: pending)
+        guard UserDefaults.standard.object(forKey: "notif.drink.enabled") as? Bool != false else { return }
+        scheduleDrinkSeries()
+    }
+
+    func cancelDrinkReminders() {
+        Task {
+            let pending = await pendingDrinkIDs()
+            UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: pending)
+        }
+    }
+
+    private func scheduleDrinkSeries() {
+        let storedMinutes = UserDefaults.standard.integer(forKey: "notif.drink.minutes")
+        let minutes = storedMinutes > 0 ? storedMinutes : 30
+        let interval = TimeInterval(minutes * 60)
+        let count = Int(Self.drinkSeriesDuration / interval)
+
+        let content = UNMutableNotificationContent()
+        content.title = String(localized: "Zeit für einen Schluck 💧")
+        content.body = String(localized: "Trink etwas Wasser – so bleibst du bis zum letzten Loch konzentriert.")
+        content.sound = UNNotificationSound(named: UNNotificationSoundName("notification.caf"))
+
+        let center = UNUserNotificationCenter.current()
+        for i in 1...max(count, 1) {
+            let trigger = UNTimeIntervalNotificationTrigger(timeInterval: interval * Double(i), repeats: false)
+            center.add(UNNotificationRequest(
+                identifier: "\(NotificationID.drinkPrefix)\(i)",
+                content: content,
+                trigger: trigger
+            ))
+        }
+    }
+
+    private func pendingDrinkIDs() async -> [String] {
+        await UNUserNotificationCenter.current().pendingNotificationRequests()
+            .map(\.identifier)
+            .filter { $0.hasPrefix(NotificationID.drinkPrefix) }
+    }
+
     // MARK: - IDs
 
     fileprivate enum NotificationID {
         static let inactivity        = "de.golftrack.inactivity"
         static let openRound         = "de.golftrack.openRound"
         static let roundInactivity   = "de.golftrack.roundInactivity"
+        static let drinkPrefix       = "de.golftrack.drink."
     }
 }
 

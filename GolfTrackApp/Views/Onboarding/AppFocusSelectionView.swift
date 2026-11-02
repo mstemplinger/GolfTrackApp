@@ -2,13 +2,12 @@ import SwiftUI
 
 /// Allererster Screen beim App-Start: Golf oder Minigolf?
 ///
-/// Läuft **vor** dem Tutorial. Bei Minigolf wird das Tutorial übersprungen,
-/// weil es ausschließlich Golf-Funktionen erklärt.
+/// Läuft **vor** dem Tutorial. Bei Minigolf folgen nur Name und
+/// Berechtigungen – die Tour erklärt ausschließlich Golf-Funktionen.
 struct AppFocusSelectionView: View {
 
     @AppStorage(AppFocus.storageKey) private var appFocus: AppFocus = .golf
     @AppStorage(AppFocus.chosenKey)  private var hasChosenAppFocus = false
-    @AppStorage("hasSeenOnboarding") private var hasSeenOnboarding = false
 
     @State private var selection: AppFocus? = nil
     @State private var appear = false
@@ -203,8 +202,6 @@ struct AppFocusSelectionView: View {
 
     private func apply(_ choice: AppFocus) {
         appFocus = choice
-        // Minigolf-Spieler bekommen kein Tutorial – es erklärt nur Golf-Features.
-        if choice == .minigolf { hasSeenOnboarding = true }
         withAnimation(.easeInOut(duration: 0.3)) {
             hasChosenAppFocus = true
         }

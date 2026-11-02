@@ -758,7 +758,7 @@
 				CODE_SIGN_ENTITLEMENTS = GolfTrackClip/GolfTrackClip.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 9;
+				CURRENT_PROJECT_VERSION = 10;
 				DEVELOPMENT_TEAM = NY363CML59;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -797,7 +797,7 @@
 				CODE_SIGN_ENTITLEMENTS = GolfTrackClip/GolfTrackClip.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 9;
+				CURRENT_PROJECT_VERSION = 10;
 				DEVELOPMENT_TEAM = NY363CML59;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -958,7 +958,7 @@
 				CODE_SIGN_ENTITLEMENTS = GolfTrackApp/GolfTrackApp.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 9;
+				CURRENT_PROJECT_VERSION = 10;
 				DEVELOPMENT_TEAM = NY363CML59;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -967,7 +967,7 @@
 				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.sports";
 				INFOPLIST_KEY_NSCameraUsageDescription = "GolfTrack verwendet die Kamera, um Mitgliedskarten und Belege zu scannen.";
-				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "Nur wenn du „Platz in der Nähe\" einschaltest: GolfTrack prüft im Hintergrund, ob du an einem Golfplatz oder einer Minigolfanlage aus dem Verzeichnis ankommst, und meldet sich dann einmal. Dein Standort verlässt dabei das iPhone nicht und wird nicht gespeichert.";
+				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "Nur wenn du das Positions-Tracking oder „Platz in der Nähe\" einschaltest: GolfTrack zeichnet deine Laufspur während einer Runde auch bei gesperrtem Display zuverlässig auf und meldet sich einmal, wenn du an einem Golfplatz oder einer Minigolfanlage aus dem Verzeichnis ankommst. Dein Standort verlässt dabei das iPhone nicht.";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "GolfTrack nutzt deinen Standort für das Platzwetter, für Entfernungen zur Fahne und – wenn du das Positions-Tracking aktivierst – um während einer Runde deine Laufspur aufzuzeichnen und daraus Abschlag und Grün der Löcher zu erkennen. Die Laufspur bleibt auf deinem iPhone.";
 				INFOPLIST_KEY_NSMicrophoneUsageDescription = "Caddy, dein Golf-Assistent, benötigt das Mikrofon für Sprachgespräche.";
 				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "GolfTrack sichert die Ergebniskarte deiner Runde in deinen Fotos.";
@@ -1004,7 +1004,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = GolfTrackApp/GolfTrackAppRelease.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 9;
+				CURRENT_PROJECT_VERSION = 10;
 				DEVELOPMENT_TEAM = NY363CML59;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -1013,7 +1013,7 @@
 				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.sports";
 				INFOPLIST_KEY_NSCameraUsageDescription = "GolfTrack verwendet die Kamera, um Mitgliedskarten und Belege zu scannen.";
-				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "Nur wenn du „Platz in der Nähe\" einschaltest: GolfTrack prüft im Hintergrund, ob du an einem Golfplatz oder einer Minigolfanlage aus dem Verzeichnis ankommst, und meldet sich dann einmal. Dein Standort verlässt dabei das iPhone nicht und wird nicht gespeichert.";
+				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "Nur wenn du das Positions-Tracking oder „Platz in der Nähe\" einschaltest: GolfTrack zeichnet deine Laufspur während einer Runde auch bei gesperrtem Display zuverlässig auf und meldet sich einmal, wenn du an einem Golfplatz oder einer Minigolfanlage aus dem Verzeichnis ankommst. Dein Standort verlässt dabei das iPhone nicht.";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "GolfTrack nutzt deinen Standort für das Platzwetter, für Entfernungen zur Fahne und – wenn du das Positions-Tracking aktivierst – um während einer Runde deine Laufspur aufzuzeichnen und daraus Abschlag und Grün der Löcher zu erkennen. Die Laufspur bleibt auf deinem iPhone.";
 				INFOPLIST_KEY_NSMicrophoneUsageDescription = "Caddy, dein Golf-Assistent, benötigt das Mikrofon für Sprachgespräche.";
 				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "GolfTrack sichert die Ergebniskarte deiner Runde in deinen Fotos.";
@@ -1135,7 +1135,7 @@
 				CODE_SIGN_ENTITLEMENTS = "GolfTrackWatch Watch App/GolfTrackWatch.entitlements";
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 9;
+				CURRENT_PROJECT_VERSION = 10;
 				DEVELOPMENT_TEAM = NY363CML59;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -1170,7 +1170,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = "GolfTrackWatch Watch App/GolfTrackWatch.entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 9;
+				CURRENT_PROJECT_VERSION = 10;
 				DEVELOPMENT_TEAM = NY363CML59;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -1296,7 +1296,7 @@
 				CODE_SIGN_ENTITLEMENTS = GolfWidget/GolfWidget.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 9;
+				CURRENT_PROJECT_VERSION = 10;
 				DEVELOPMENT_TEAM = NY363CML59;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = GolfWidget/Info.plist;
@@ -1329,7 +1329,7 @@
 				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
 				CODE_SIGN_ENTITLEMENTS = GolfWidget/GolfWidget.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 9;
+				CURRENT_PROJECT_VERSION = 10;
 				DEVELOPMENT_TEAM = NY363CML59;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = GolfWidget/Info.plist;

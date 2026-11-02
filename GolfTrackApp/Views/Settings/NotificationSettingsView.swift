@@ -10,6 +10,8 @@ struct NotificationSettingsView: View {
     @AppStorage("notif.openRound.enabled")         private var openRoundEnabled: Bool   = true
     @AppStorage("notif.roundInactivity.enabled")   private var roundInactivityEnabled: Bool = true
     @AppStorage("notif.roundInactivity.minutes")   private var roundInactivityMinutes: Int  = 45
+    @AppStorage("notif.drink.enabled")             private var drinkEnabled: Bool       = true
+    @AppStorage("notif.drink.minutes")             private var drinkMinutes: Int        = 30
     @AppStorage(NearbyCourseService.enabledKey)    private var nearbyEnabled: Bool      = false
 
     // MARK: - Runtime state
@@ -33,6 +35,10 @@ struct NotificationSettingsView: View {
                         enabled: $roundInactivityEnabled,
                         minutes: $roundInactivityMinutes
                     )
+                    DrinkReminderCard(
+                        enabled: $drinkEnabled,
+                        minutes: $drinkMinutes
+                    )
                     footerNote
                 }
                 .padding(.horizontal, 16)
@@ -47,6 +53,12 @@ struct NotificationSettingsView: View {
         .onChange(of: inactivityDays)    { _, _ in rescheduleInactivity() }
         .onChange(of: openRoundEnabled)  { _, new in
             if !new { NotificationManager.shared.cancelOpenRoundReminder() }
+        }
+        .onChange(of: drinkEnabled) { _, new in
+            if !new { NotificationManager.shared.cancelDrinkReminders() }
+        }
+        .onChange(of: drinkMinutes) { _, _ in
+            Task { await NotificationManager.shared.rescheduleDrinkRemindersIfRunning() }
         }
     }
 
@@ -301,6 +313,68 @@ private struct RoundInactivityCard: View {
                 }
                 .padding(.horizontal, 18)
                 .padding(.vertical, 12)
+            }
+        }
+        .background(AppTheme.card, in: RoundedRectangle(cornerRadius: 16))
+    }
+
+    private func iconBadge(systemName: String, color: Color) -> some View {
+        ZStack {
+            RoundedRectangle(cornerRadius: 9)
+                .fill(color.opacity(0.18))
+                .frame(width: 40, height: 40)
+            Image(systemName: systemName)
+                .font(.system(size: 16))
+                .foregroundStyle(color)
+        }
+    }
+}
+
+private struct DrinkReminderCard: View {
+    @Binding var enabled: Bool
+    @Binding var minutes: Int
+
+    var body: some View {
+        VStack(spacing: 0) {
+            HStack(spacing: 14) {
+                iconBadge(systemName: "drop.fill", color: Color(red: 0.35, green: 0.7, blue: 1.0))
+                VStack(alignment: .leading, spacing: 2) {
+                    Text("Trinkerinnerung")
+                        .font(.subheadline.bold())
+                        .foregroundStyle(AppTheme.text)
+                    Text("Erinnert dich während einer Runde regelmäßig ans Trinken")
+                        .font(.caption)
+                        .foregroundStyle(AppTheme.textSec)
+                }
+                Spacer()
+                Toggle("", isOn: $enabled)
+                    .labelsHidden()
+                    .tint(AppTheme.gold)
+                    .onChange(of: enabled) { _, _ in Haptics.selection() }
+            }
+            .padding(.horizontal, 18)
+            .padding(.vertical, 16)
+
+            if enabled {
+                Divider().padding(.leading, 62).background(AppTheme.cardAlt)
+
+                HStack {
+                    Text("Erinnern alle")
+                        .font(.subheadline)
+                        .foregroundStyle(AppTheme.text)
+                    Spacer()
+                    Picker("Minuten", selection: $minutes) {
+                        Text("20 Min.").tag(20)
+                        Text("30 Min.").tag(30)
+                        Text("45 Min.").tag(45)
+                        Text("60 Min.").tag(60)
+                    }
+                    .pickerStyle(.menu)
+                    .onChange(of: minutes) { _, _ in Haptics.selection() }
+                    .tint(AppTheme.gold)
+                }
+                .padding(.horizontal, 18)
+                .padding(.vertical, 14)
             }
         }
         .background(AppTheme.card, in: RoundedRectangle(cornerRadius: 16))

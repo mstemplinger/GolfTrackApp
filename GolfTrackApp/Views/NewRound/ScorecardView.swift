@@ -134,6 +134,7 @@ struct ScorecardView: View {
                 Task { await NotificationManager.shared.scheduleInactivityReminder(afterDays: 5) }
                 NotificationManager.shared.cancelOpenRoundReminder()
                 NotificationManager.shared.cancelRoundInactivityReminder()
+                NotificationManager.shared.cancelDrinkReminders()
 
                 // Zu kurze Aufzeichnung: erst klären, ob die Runde nachgetragen
                 // wurde, bevor die Spur in die Platzableitung einfließt.
@@ -231,6 +232,7 @@ struct ScorecardView: View {
             // Laufspur aufzeichnen – tut nur etwas, wenn in den Einstellungen erlaubt
             if !round.isComplete {
                 tracking.start(round: round, context: context, currentHole: currentIndex + 1)
+                Task { await NotificationManager.shared.startDrinkReminders() }
             }
 
             // Runde an Watch senden beim Start

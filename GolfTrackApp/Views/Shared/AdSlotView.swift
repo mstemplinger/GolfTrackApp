@@ -87,50 +87,62 @@ struct AdSlotView: View {
                 subtitle: Text(verbatim: ad.subtitle.isEmpty ? ad.advertiser : ad.subtitle),
                 imageURL: ad.image,
                 symbol: "megaphone.fill",
-                tappable: true
+                tappable: true,
+                footnote: "Tippe für Infos zu dieser Anzeige"
             )
-            // Immer antippbar, auch ohne Website des Werbenden: die
-            // Zwischenseite erklärt, warum die Anzeige hier steht.
-            Button {
-                Haptics.tap()
-                catalog.countClick(ad)
-                openURL(ad.landingURL)
-            } label: {
-                banner
-            }
-            .buttonStyle(.plain)
-            .contextMenu {
+            VStack(spacing: 6) {
+                // Immer antippbar, auch ohne Website des Werbenden: die
+                // Zwischenseite erklärt, warum die Anzeige hier steht.
                 Button {
-                    showsAdFree = true
-                } label: {
-                    Label("Werbung entfernen", systemImage: "rectangle.slash")
-                }
-                Button {
+                    Haptics.tap()
+                    catalog.countClick(ad)
                     openURL(ad.landingURL)
                 } label: {
-                    Label("Warum sehe ich das?", systemImage: "questionmark.circle")
+                    banner
                 }
+                .buttonStyle(.plain)
+                .contextMenu {
+                    Button {
+                        showsAdFree = true
+                    } label: {
+                        Label("Werbung entfernen", systemImage: "rectangle.slash")
+                    }
+                    Button {
+                        openURL(ad.landingURL)
+                    } label: {
+                        Label("Warum sehe ich das?", systemImage: "questionmark.circle")
+                    }
+                }
+
+                removeAdsLink
             }
             .sheet(isPresented: $showsAdFree) { AdFreePaywallView() }
             .task(id: "\(ad.id)-\(rotation)") { catalog.countImpression(ad) }
         } else if let promo = housePromo {
-            Button {
-                Haptics.tap()
-                switch promo.destination {
-                case .sheet:               promoSheet = promo
-                case .link(let url):       openURL(url)
+            VStack(spacing: 6) {
+                Button {
+                    Haptics.tap()
+                    switch promo.destination {
+                    case .sheet:               promoSheet = promo
+                    case .link(let url):       openURL(url)
+                    }
+                } label: {
+                    slot(
+                        badge: "GolfTrack",
+                        title: Text(promo.title),
+                        subtitle: Text(promo.subtitle),
+                        imageURL: nil,
+                        symbol: promo.symbol,
+                        tappable: true
+                    )
                 }
-            } label: {
-                slot(
-                    badge: "GolfTrack",
-                    title: Text(promo.title),
-                    subtitle: Text(promo.subtitle),
-                    imageURL: nil,
-                    symbol: promo.symbol,
-                    tappable: true
-                )
+                .buttonStyle(.plain)
+
+                // Die Eigenwerbung für Werbefrei ist selbst schon der Weg dorthin.
+                if promo != .adFree {
+                    removeAdsLink
+                }
             }
-            .buttonStyle(.plain)
             .sheet(item: $promoSheet) { promo in
                 switch promo {
                 case .training:  TrainingPaywallView()
@@ -139,7 +151,24 @@ struct AdSlotView: View {
                 case .advertise: EmptyView()
                 }
             }
+            .sheet(isPresented: $showsAdFree) { AdFreePaywallView() }
         }
+    }
+
+    /// Schlichter Textlink unter der Fläche – bewusst keine zweite Karte.
+    private var removeAdsLink: some View {
+        Button {
+            Haptics.tap()
+            showsAdFree = true
+        } label: {
+            Text("Werbung entfernen")
+                .font(.caption)
+                .underline()
+                .foregroundStyle(AppTheme.textSec)
+                .padding(.vertical, 4)
+                .contentShape(Rectangle())
+        }
+        .buttonStyle(.plain)
     }
 
     // MARK: – Aufbau
@@ -149,30 +178,42 @@ struct AdSlotView: View {
                       subtitle: Text,
                       imageURL: URL?,
                       symbol: String,
-                      tappable: Bool) -> some View {
-        HStack(spacing: 12) {
-            thumbnail(imageURL: imageURL, symbol: symbol)
+                      tappable: Bool,
+                      footnote: LocalizedStringKey? = nil) -> some View {
+        VStack(alignment: .leading, spacing: 10) {
+            HStack(spacing: 12) {
+                thumbnail(imageURL: imageURL, symbol: symbol)
 
-            VStack(alignment: .leading, spacing: 2) {
-                title
-                    .font(.subheadline.weight(.semibold))
-                    .foregroundStyle(AppTheme.text)
-                    .lineLimit(1)
-                subtitle
-                    .font(.caption)
-                    .foregroundStyle(AppTheme.textSec)
-                    .lineLimit(1)
+                VStack(alignment: .leading, spacing: 2) {
+                    title
+                        .font(.subheadline.weight(.semibold))
+                        .foregroundStyle(AppTheme.text)
+                        .lineLimit(1)
+                    subtitle
+                        .font(.caption)
+                        .foregroundStyle(AppTheme.textSec)
+                        .lineLimit(1)
+                }
+
+                Spacer(minLength: 0)
+
+                if tappable {
+                    Image(systemName: "chevron.right")
+                        .font(.caption.weight(.semibold))
+                        .foregroundStyle(AppTheme.textTer)
+                }
             }
 
-            Spacer(minLength: 0)
-
-            if tappable {
-                Image(systemName: "chevron.right")
-                    .font(.caption.weight(.semibold))
+            if let footnote {
+                Text(footnote)
+                    .font(.system(size: 10))
                     .foregroundStyle(AppTheme.textTer)
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.8)
             }
         }
-        .padding(12)
+        .padding(.horizontal, 12)
+        .padding(.vertical, footnote == nil ? 12 : 14)
         .frame(maxWidth: .infinity, alignment: .leading)
         .background(AppTheme.card, in: RoundedRectangle(cornerRadius: 14))
         .overlay(alignment: .topTrailing) {

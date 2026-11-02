@@ -40,6 +40,10 @@ struct ContentView: View {
             tabs
                 .tint(AppTheme.gold)
                 .onChange(of: selectedTab) { _, _ in Haptics.selection() }
+                // „Tutorial neu starten“ im Profil: danach auf der Startseite landen.
+                .onChange(of: hasSeenOnboarding) { _, seen in
+                    if !seen { selectedTab = 0 }
+                }
 
             // Tutorial erst nach getroffener Schwerpunkt-Auswahl
             if hasChosenAppFocus && !hasSeenOnboarding {

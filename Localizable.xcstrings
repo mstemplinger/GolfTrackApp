@@ -1655,6 +1655,9 @@
         }
       }
     },
+    "%lld %% Distanz" : {
+
+    },
     "%lld Abschlag%@" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -1957,6 +1960,9 @@
           }
         }
       }
+    },
+    "%lld bpm" : {
+
     },
     "%lld falsche Antworten ansehen" : {
       "extractionState" : "stale",
@@ -3140,6 +3146,9 @@
         }
       }
     },
+    "%lld s" : {
+
+    },
     "%lld Schlag%@ erfasst" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -3751,6 +3760,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Pozostało: %lld"
+          }
+        }
+      }
+    },
+    "%lld von %lld auf dem Grün" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$lld von %2$lld auf dem Grün"
           }
         }
       }
@@ -4601,6 +4620,9 @@
         }
       }
     },
+    "+1 Strafschlag" : {
+
+    },
     "+20" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -5091,6 +5113,9 @@
         }
       }
     },
+    "1. Putt: Zone" : {
+
+    },
     "2" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -5332,6 +5357,9 @@
         }
       }
     },
+    "2. Putt: einlochen" : {
+
+    },
     "3" : {
       "localizations" : {
         "cs" : {
@@ -5371,6 +5399,9 @@
           }
         }
       }
+    },
+    "3 : 1" : {
+
     },
     "3 oder 4 Spieler im Team – der beste Score pro Loch zählt für das Team (Zählspiel)." : {
       "localizations" : {
@@ -6182,6 +6213,9 @@
         }
       }
     },
+    "10 m" : {
+
+    },
     "14 Schläger" : {
       "localizations" : {
         "cs" : {
@@ -6702,6 +6736,12 @@
           }
         }
       }
+    },
+    "50 cm" : {
+
+    },
+    "60 % vorne" : {
+
     },
     "60 Min." : {
       "localizations" : {
@@ -7619,6 +7659,7 @@
       }
     },
     "Abschlag wählen" : {
+      "extractionState" : "stale",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
@@ -7785,6 +7826,7 @@
       }
     },
     "Abschläge: %lld" : {
+      "extractionState" : "stale",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
@@ -7869,6 +7911,9 @@
           }
         }
       }
+    },
+    "Achse" : {
+
     },
     "Aktiv" : {
       "localizations" : {
@@ -9115,6 +9160,9 @@
         }
       }
     },
+    "Alles aufs vordere Bein" : {
+
+    },
     "Alles Wichtige auf einen Blick" : {
       "localizations" : {
         "cs" : {
@@ -9521,6 +9569,46 @@
         }
       }
     },
+    "Anlagen in deiner Nähe und das Wetter für deine Partie." : {
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Areály ve tvém okolí a počasí pro tvou hru."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Courses near you and the weather for your game."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pistas cerca de ti y el tiempo para tu partida."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Parcours près de chez toi et la météo pour ta partie."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Impianti vicino a te e il meteo per la tua partita."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Obiekty w pobliżu i pogoda na Twoją grę."
+          }
+        }
+      }
+    },
     "Ansicht" : {
       "localizations" : {
         "cs" : {
@@ -9600,6 +9688,9 @@
           }
         }
       }
+    },
+    "Ansprechen" : {
+
     },
     "Antworten durchsehen" : {
       "localizations" : {
@@ -9774,6 +9865,7 @@
       }
     },
     "API-Einstellungen" : {
+      "extractionState" : "stale",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
@@ -9814,6 +9906,7 @@
       }
     },
     "API-Key" : {
+      "extractionState" : "stale",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
@@ -9854,6 +9947,7 @@
       }
     },
     "API-Key eintragen" : {
+      "extractionState" : "stale",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
@@ -9894,6 +9988,7 @@
       }
     },
     "API-Key entfernen" : {
+      "extractionState" : "stale",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
@@ -10064,6 +10159,9 @@
           }
         }
       }
+    },
+    "Arme und Schultern folgen von selbst" : {
+
     },
     "Ass-Jäger" : {
       "localizations" : {
@@ -10609,6 +10707,12 @@
         }
       }
     },
+    "Auf die Fahne" : {
+
+    },
+    "Auf die Fahne: Fehlschläge landen im Wasser" : {
+
+    },
     "Auf iPhone spiegeln" : {
       "localizations" : {
         "cs" : {
@@ -10648,6 +10752,9 @@
           }
         }
       }
+    },
+    "Auf Risiko" : {
+
     },
     "Auf Standard zurücksetzen" : {
       "localizations" : {
@@ -10734,6 +10841,12 @@
           }
         }
       }
+    },
+    "Aufs Grün" : {
+
+    },
+    "Aufs hintere Bein laden" : {
+
     },
     "Aufzeichnung aktiv" : {
       "localizations" : {
@@ -11215,6 +11328,9 @@
         }
       }
     },
+    "Ausatmen" : {
+
+    },
     "Ausblenden" : {
       "localizations" : {
         "cs" : {
@@ -11254,6 +11370,21 @@
           }
         }
       }
+    },
+    "Ausholen" : {
+
+    },
+    "Ausholen: Schultern drehen weiter als die Hüfte" : {
+
+    },
+    "Ausrichtung prüfen" : {
+
+    },
+    "außen" : {
+
+    },
+    "Außerhalb der Mitte gehen 10–15 % Länge verloren" : {
+
     },
     "B" : {
       "localizations" : {
@@ -13395,6 +13526,12 @@
         }
       }
     },
+    "Bogey-Golf" : {
+
+    },
+    "Breiter, Ball an der vorderen Ferse" : {
+
+    },
     "BUNKER" : {
       "localizations" : {
         "cs" : {
@@ -13729,6 +13866,7 @@
       }
     },
     "CR %@" : {
+      "extractionState" : "stale",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
@@ -13931,6 +14069,46 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "W tym celu iOS prosi o dostęp do lokalizacji „Zawsze”. GolfTrack niczego przy tym nie zapamiętuje – sprawdza tylko, czy jesteś na jednym z pól."
+          }
+        }
+      }
+    },
+    "Damit die Aufzeichnung auch bei gesperrtem Display zuverlässig weiterläuft, fragt iOS anschließend, ob GolfTrack deinen Standort immer verwenden darf." : {
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aby záznam spolehlivě běžel i při zamčeném displeji, iOS se pak zeptá, zda smí GolfTrack vždy používat tvou polohu."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "So that recording keeps running reliably while the screen is locked, iOS will then ask whether GolfTrack may always use your location."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Para que la grabación siga funcionando con la pantalla bloqueada, iOS te preguntará después si GolfTrack puede usar siempre tu ubicación."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pour que l’enregistrement continue de façon fiable écran verrouillé, iOS te demandera ensuite si GolfTrack peut toujours utiliser ta position."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Affinché la registrazione continui in modo affidabile anche a schermo bloccato, iOS ti chiederà poi se GolfTrack può usare sempre la tua posizione."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aby nagrywanie działało niezawodnie także przy zablokowanym ekranie, iOS zapyta następnie, czy GolfTrack może zawsze korzystać z Twojej lokalizacji."
           }
         }
       }
@@ -14997,6 +15175,9 @@
         }
       }
     },
+    "Den Ball landen sehen" : {
+
+    },
     "Der Assistent für Schlagwahl und Taktik" : {
       "localizations" : {
         "cs" : {
@@ -15082,6 +15263,9 @@
           }
         }
       }
+    },
+    "Der Körper schlägt, was der Kopf gesehen hat" : {
+
     },
     "Der lange Schwung" : {
       "localizations" : {
@@ -15402,6 +15586,9 @@
           }
         }
       }
+    },
+    "Die Hüfte dreht zuerst zum Ziel" : {
+
     },
     "Die klassische Spielform: Jeder Schlag zählt. Wer am Ende der Runde die wenigsten Schläge hat, gewinnt." : {
       "localizations" : {
@@ -16131,6 +16318,9 @@
         }
       }
     },
+    "Doppel" : {
+
+    },
     "Doppelbogey" : {
       "localizations" : {
         "cs" : {
@@ -16211,6 +16401,12 @@
         }
       }
     },
+    "Draw" : {
+
+    },
+    "drei" : {
+
+    },
     "Drei Sätze, wie das Zählen in der App funktioniert – oder direkt loslegen." : {
       "localizations" : {
         "cs" : {
@@ -16290,6 +16486,9 @@
           }
         }
       }
+    },
+    "Du" : {
+
     },
     "Du bist gut vorbereitet. Teste dich jetzt in einer Probeprüfung." : {
       "localizations" : {
@@ -17396,6 +17595,12 @@
         }
       }
     },
+    "Ein Netto-Par auf den schwersten Löchern ist Gold wert" : {
+
+    },
+    "Einatmen" : {
+
+    },
     "Eine Stunde zählt als Golf-Wetter, wenn höchstens so viel Regen fällt, der Wind nicht stärker ist und es mindestens so warm ist. Nebel, Schnee, Glätte, Gewitter und Dunkelheit zählen immer als schlecht." : {
       "localizations" : {
         "cs" : {
@@ -17475,6 +17680,9 @@
           }
         }
       }
+    },
+    "Einen Punkt am Ball fixieren" : {
+
     },
     "Einfach fragen" : {
       "localizations" : {
@@ -17835,6 +18043,12 @@
           }
         }
       }
+    },
+    "eins" : {
+
+    },
+    "Einsteigen" : {
+
     },
     "Einstellungen" : {
       "localizations" : {
@@ -18594,6 +18808,46 @@
         }
       }
     },
+    "Erinnern alle" : {
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Připomínat každých"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Remind every"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Recordar cada"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Rappeler toutes les"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ricorda ogni"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Przypominaj co"
+          }
+        }
+      }
+    },
     "Erinnert dich am nächsten Morgen an eine unfertige Runde" : {
       "localizations" : {
         "cs" : {
@@ -18630,6 +18884,46 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Przypomina ci następnego ranka o niedokończonej rundzie"
+          }
+        }
+      }
+    },
+    "Erinnert dich während einer Runde regelmäßig ans Trinken" : {
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Během kola ti pravidelně připomene, abys pil"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Regularly reminds you to drink during a round"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Te recuerda beber con regularidad durante la vuelta"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Te rappelle régulièrement de boire pendant la partie"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ti ricorda regolarmente di bere durante il giro"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Regularnie przypomina o piciu podczas rundy"
           }
         }
       }
@@ -18750,6 +19044,46 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Przypomnienie po"
+          }
+        }
+      }
+    },
+    "Erinnerungen an offene Runden und ans Spielen." : {
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Připomínky rozehraných kol a toho, že je čas si zahrát."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Reminders about unfinished rounds and getting out to play."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Recordatorios de vueltas abiertas y para salir a jugar."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Rappels pour les parties en cours et pour aller jouer."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Promemoria per i giri aperti e per tornare a giocare."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Przypomnienia o niedokończonych rundach i o grze."
           }
         }
       }
@@ -19246,6 +19580,9 @@
         }
       }
     },
+    "Etwas enger, Ball in der Mitte" : {
+
+    },
     "Etwas zu viele Putts. Besseres Grünlesen kann direkt Schläge sparen." : {
       "localizations" : {
         "cs" : {
@@ -19538,6 +19875,9 @@
         }
       }
     },
+    "Falsch: Schläger kommt von außen quer über den Ball" : {
+
+    },
     "Falsche Antworten" : {
       "localizations" : {
         "cs" : {
@@ -19577,6 +19917,9 @@
           }
         }
       }
+    },
+    "fast Mitte" : {
+
     },
     "Fehler" : {
       "localizations" : {
@@ -19658,6 +20001,9 @@
         }
       }
     },
+    "Fehler passiert – durchatmen und abhaken" : {
+
+    },
     "Fehler üben" : {
       "localizations" : {
         "cs" : {
@@ -19697,6 +20043,9 @@
           }
         }
       }
+    },
+    "Ferse" : {
+
     },
     "Fertig" : {
       "localizations" : {
@@ -19744,6 +20093,9 @@
         }
       }
     },
+    "fest" : {
+
+    },
     "Feuchte" : {
       "localizations" : {
         "cs" : {
@@ -19790,6 +20142,9 @@
         }
       }
     },
+    "Finish" : {
+
+    },
     "Fit für die Platzreife" : {
       "localizations" : {
         "cs" : {
@@ -19829,6 +20184,9 @@
           }
         }
       }
+    },
+    "Flugbahn sehen" : {
+
     },
     "Fortsetzen" : {
       "localizations" : {
@@ -20216,6 +20574,7 @@
       }
     },
     "Für die Online-Suche wird ein API-Key benötigt." : {
+      "extractionState" : "stale",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
@@ -20798,6 +21157,12 @@
           }
         }
       }
+    },
+    "Gegenwind" : {
+
+    },
+    "Gegenwind: einen Schläger mehr, ruhiger schwingen" : {
+
     },
     "Gelassen bis zum letzten Loch" : {
       "localizations" : {
@@ -21551,6 +21916,9 @@
           }
         }
       }
+    },
+    "Gewicht gleich verteilt" : {
+
     },
     "Gewitter" : {
       "localizations" : {
@@ -22368,6 +22736,7 @@
       }
     },
     "GolfCourseAPI Key" : {
+      "extractionState" : "stale",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
@@ -22408,6 +22777,7 @@
       }
     },
     "golfcourseapi.com/sign-in" : {
+      "extractionState" : "stale",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
@@ -23181,6 +23551,9 @@
         }
       }
     },
+    "Griffdruck %lld / 10" : {
+
+    },
     "Großer Player" : {
       "localizations" : {
         "cs" : {
@@ -23260,6 +23633,12 @@
           }
         }
       }
+    },
+    "Grünmitte" : {
+
+    },
+    "Grünmitte: auch Fehlschläge bleiben auf dem Grün" : {
+
     },
     "Gut" : {
       "localizations" : {
@@ -23381,6 +23760,9 @@
         }
       }
     },
+    "Halten" : {
+
+    },
     "Handicap" : {
       "localizations" : {
         "cs" : {
@@ -23463,6 +23845,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Handicap (WHS)"
+          }
+        }
+      }
+    },
+    "Handicap %lld: je ein Vorgabeschlag auf SI 1–%lld" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Handicap %1$lld: je ein Vorgabeschlag auf SI 1–%2$lld"
           }
         }
       }
@@ -24263,6 +24655,15 @@
         }
       }
     },
+    "hinten" : {
+
+    },
+    "Hinter den Ball stellen" : {
+
+    },
+    "Hinteres Bein" : {
+
+    },
     "Hinweise der Anlage wie Toiletten oder Unterstand bleiben sichtbar" : {
       "localizations" : {
         "cs" : {
@@ -24389,6 +24790,9 @@
         }
       }
     },
+    "Höhe = Schwierigkeit, unten: SI" : {
+
+    },
     "Hohe Konfidenz übernehmen (%lld)" : {
       "localizations" : {
         "cs" : {
@@ -24428,6 +24832,9 @@
           }
         }
       }
+    },
+    "Holz / Driver" : {
+
     },
     "Home" : {
       "localizations" : {
@@ -24548,6 +24955,15 @@
           }
         }
       }
+    },
+    "Hüfte %lld°" : {
+
+    },
+    "Hüfte startet" : {
+
+    },
+    "Hüfte und Brust zeigen zum Ziel" : {
+
     },
     "Ich habe gespielt – behalten" : {
       "localizations" : {
@@ -24756,6 +25172,7 @@
       }
     },
     "Importieren" : {
+      "extractionState" : "stale",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
@@ -24914,6 +25331,9 @@
           }
         }
       }
+    },
+    "In der Vorbeuge bleiben – die Schultern drehen um die Achse" : {
+
     },
     "In einer zukünftigen Version verfügbar" : {
       "extractionState" : "stale",
@@ -25128,6 +25548,12 @@
         }
       }
     },
+    "innen" : {
+
+    },
+    "Ins Rough" : {
+
+    },
     "Intro beim Start" : {
       "localizations" : {
         "cs" : {
@@ -25164,6 +25590,46 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Intro przy starcie"
+          }
+        }
+      }
+    },
+    "iOS fragt gleich nach deiner Erlaubnis. Du kannst beides später in den Einstellungen ändern." : {
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "iOS se tě za chvíli zeptá na svolení. Obojí můžeš později změnit v Nastavení."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "iOS will ask for your permission in a moment. You can change both later in Settings."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "iOS te pedirá permiso en un momento. Puedes cambiar ambas cosas más tarde en Ajustes."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "iOS va te demander ton autorisation. Tu pourras modifier les deux plus tard dans les Réglages."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "iOS ti chiederà a breve il permesso. Puoi modificare entrambe le cose in seguito nelle Impostazioni."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Za chwilę iOS poprosi o Twoją zgodę. Obie zgody możesz później zmienić w Ustawieniach."
           }
         }
       }
@@ -25768,6 +26234,9 @@
         }
       }
     },
+    "Jedes Mal gleich – das beruhigt das Nervensystem" : {
+
+    },
     "Jetzt abonnieren" : {
       "localizations" : {
         "cs" : {
@@ -26148,6 +26617,7 @@
       }
     },
     "Kein API-Key – bitte in den Einstellungen eintragen." : {
+      "extractionState" : "stale",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
@@ -26194,6 +26664,7 @@
       }
     },
     "Kein API-Key eingetragen" : {
+      "extractionState" : "stale",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
@@ -26606,6 +27077,7 @@
       }
     },
     "Keine Lochwerte verfügbar" : {
+      "extractionState" : "stale",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
@@ -27137,6 +27609,9 @@
         }
       }
     },
+    "Kopf unten lassen, bis der Ball weg ist" : {
+
+    },
     "Korridor" : {
       "localizations" : {
         "cs" : {
@@ -27178,6 +27653,7 @@
       }
     },
     "Kostenlos registrieren unter:" : {
+      "extractionState" : "stale",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
@@ -27296,6 +27772,12 @@
           }
         }
       }
+    },
+    "Kurzer Putt: festes Tempo, aufs Loch schauen" : {
+
+    },
+    "Kurzes Eisen" : {
+
     },
     "L %lld" : {
       "localizations" : {
@@ -27418,6 +27900,9 @@
         }
       }
     },
+    "Landung sehen" : {
+
+    },
     "Länge" : {
       "localizations" : {
         "cs" : {
@@ -27497,6 +27982,12 @@
           }
         }
       }
+    },
+    "Langer Putt: nur in die Zone, kein Dreiputt" : {
+
+    },
+    "Langsam ausatmen senkt den Puls – Nervosität ist Energie" : {
+
     },
     "Laufspur" : {
       "localizations" : {
@@ -29017,6 +29508,9 @@
           }
         }
       }
+    },
+    "locker" : {
+
     },
     "Los geht's" : {
       "localizations" : {
@@ -30689,6 +31183,49 @@
         }
       }
     },
+    "Mitte" : {
+
+    },
+    "Mitteilungen" : {
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Oznámení"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Notifications"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Notificaciones"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Notifications"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Notifiche"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Powiadomienia"
+          }
+        }
+      }
+    },
     "mittel" : {
       "localizations" : {
         "cs" : {
@@ -30728,6 +31265,9 @@
           }
         }
       }
+    },
+    "Mittleres Eisen" : {
+
     },
     "Möchtest du die wichtigsten Golfregeln nachschlagen?" : {
       "localizations" : {
@@ -33754,6 +34294,9 @@
         }
       }
     },
+    "Nur der nächste Schlag zählt" : {
+
+    },
     "Nur mit Erlaubnis" : {
       "localizations" : {
         "cs" : {
@@ -34723,6 +35266,7 @@
       }
     },
     "Online suchen: \"%@\"" : {
+      "extractionState" : "stale",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
@@ -34763,6 +35307,7 @@
       }
     },
     "Online-Ergebnisse" : {
+      "extractionState" : "stale",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
@@ -34881,6 +35426,9 @@
           }
         }
       }
+    },
+    "P" : {
+
     },
     "Par" : {
       "localizations" : {
@@ -35210,6 +35758,7 @@
       }
     },
     "Par pro Loch (%lld Löcher)" : {
+      "extractionState" : "stale",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
@@ -35586,6 +36135,9 @@
           }
         }
       }
+    },
+    "Pendel aus den Schultern – das Dreieck bleibt fest" : {
+
     },
     "Pin" : {
       "localizations" : {
@@ -36065,6 +36617,46 @@
         }
       }
     },
+    "Platz in der Nähe, Golf-Wetter und Entfernung zur Fahne." : {
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hřiště v okolí, golfové počasí a vzdálenost k vlajce."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nearby course, golf weather and distance to the flag."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Campo cercano, tiempo para jugar y distancia a la bandera."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Parcours à proximité, météo golf et distance au drapeau."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Campo nelle vicinanze, meteo golf e distanza dalla bandiera."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pole w pobliżu, pogoda golfowa i odległość do flagi."
+          }
+        }
+      }
+    },
     "Platz nicht dabei?" : {
       "localizations" : {
         "cs" : {
@@ -36146,6 +36738,7 @@
       }
     },
     "Platz suchen" : {
+      "extractionState" : "stale",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
@@ -36392,6 +36985,7 @@
       }
     },
     "Platzdaten laden …" : {
+      "extractionState" : "stale",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
@@ -36712,6 +37306,7 @@
       }
     },
     "Platzname oder Club" : {
+      "extractionState" : "stale",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
@@ -37093,6 +37688,46 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Śledzenie pozycji"
+          }
+        }
+      }
+    },
+    "Positions-Tracking einschalten?" : {
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zapnout sledování polohy?"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Turn on position tracking?"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "¿Activar el seguimiento de posición?"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Activer le suivi de position ?"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Attivare il tracciamento della posizione?"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Włączyć śledzenie pozycji?"
           }
         }
       }
@@ -37801,6 +38436,9 @@
         }
       }
     },
+    "Putt" : {
+
+    },
     "Putt abziehen" : {
       "localizations" : {
         "cs" : {
@@ -38407,6 +39045,9 @@
         }
       }
     },
+    "Raus aufs Fairway" : {
+
+    },
     "Rechtliches" : {
       "localizations" : {
         "cs" : {
@@ -38979,6 +39620,9 @@
         }
       }
     },
+    "Richtig: Schläger kommt von innen und schwingt nach außen durch" : {
+
+    },
     "Richtig!" : {
       "localizations" : {
         "cs" : {
@@ -39178,6 +39822,15 @@
           }
         }
       }
+    },
+    "Rückenwind" : {
+
+    },
+    "Rückenwind: der Ball fliegt und rollt weiter" : {
+
+    },
+    "Rückschwung" : {
+
     },
     "Ruhig bleiben unter Druck" : {
       "localizations" : {
@@ -41516,6 +42169,9 @@
         }
       }
     },
+    "Schlagen" : {
+
+    },
     "Schläger & Bag" : {
       "localizations" : {
         "cs" : {
@@ -42215,6 +42871,12 @@
           }
         }
       }
+    },
+    "Schulterbreit, Ball leicht vorne" : {
+
+    },
+    "Schultern %lld°" : {
+
     },
     "Schwarz" : {
       "localizations" : {
@@ -43231,7 +43893,11 @@
         }
       }
     },
+    "Slice" : {
+
+    },
     "Slope %lld" : {
+      "extractionState" : "stale",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
@@ -44662,6 +45328,9 @@
         }
       }
     },
+    "Spitze" : {
+
+    },
     "Sprache" : {
       "localizations" : {
         "cs" : {
@@ -45070,6 +45739,46 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Lokalizacja zablokowana"
+          }
+        }
+      }
+    },
+    "Standort immer erlauben" : {
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vždy povolit polohu"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Allow location always"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Permitir siempre la ubicación"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Toujours autoriser la position"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Consenti sempre la posizione"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zawsze zezwalaj na lokalizację"
           }
         }
       }
@@ -46191,6 +46900,7 @@
       }
     },
     "Suche läuft …" : {
+      "extractionState" : "stale",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
@@ -46277,6 +46987,7 @@
       }
     },
     "Suchergebnisse (%lld)" : {
+      "extractionState" : "stale",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
@@ -46317,6 +47028,7 @@
       }
     },
     "Sucht weltweit nach Golfplätzen via API." : {
+      "extractionState" : "stale",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
@@ -47194,6 +47906,46 @@
         }
       }
     },
+    "Tippe für Infos zu dieser Anzeige" : {
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Klepni pro informace o této reklamě"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tap for info about this ad"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Toca para saber más sobre este anuncio"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Touche pour en savoir plus sur cette annonce"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tocca per info su questo annuncio"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dotknij, aby dowiedzieć się więcej o tej reklamie"
+          }
+        }
+      }
+    },
     "Tippe für mehr Infos" : {
       "localizations" : {
         "cs" : {
@@ -47671,6 +48423,9 @@
         }
       }
     },
+    "Treffen" : {
+
+    },
     "Trenne Verbindung..." : {
       "localizations" : {
         "cs" : {
@@ -47710,6 +48465,89 @@
           }
         }
       }
+    },
+    "Trink etwas Wasser – so bleibst du bis zum letzten Loch konzentriert." : {
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Napij se vody – zůstaneš soustředěný až do poslední jamky."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Drink some water – it keeps you focused until the last hole."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bebe un poco de agua: así mantendrás la concentración hasta el último hoyo."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bois un peu d'eau – tu resteras concentré jusqu'au dernier trou."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bevi un po' d'acqua: così resti concentrato fino all'ultima buca."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Napij się wody – zachowasz koncentrację do ostatniego dołka."
+          }
+        }
+      }
+    },
+    "Trinkerinnerung" : {
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Připomínka pití"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Drink reminder"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Recordatorio para beber"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Rappel d'hydratation"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Promemoria per bere"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Przypomnienie o piciu"
+          }
+        }
+      }
+    },
+    "Triple" : {
+
     },
     "Tutorial beenden" : {
       "extractionState" : "stale",
@@ -47839,6 +48677,7 @@
       }
     },
     "Über 30.000 Golfplätze weltweit mit Loch-für-Loch Par-Werten." : {
+      "extractionState" : "stale",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
@@ -47883,6 +48722,12 @@
           }
         }
       }
+    },
+    "Über das Wasser" : {
+
+    },
+    "Über das Wasser: geht es schief, droht ein Doppelbogey" : {
+
     },
     "Über diese Einheit" : {
       "localizations" : {
@@ -48451,6 +49296,7 @@
       }
     },
     "Verbindung testen" : {
+      "extractionState" : "stale",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
@@ -48886,6 +49732,12 @@
         }
       }
     },
+    "Von außen (Over the Top)" : {
+
+    },
+    "Von innen (Inside-Out)" : {
+
+    },
     "Vor Ort einfach den QR-Code scannen – Begrüßung, kurze Einführung, los." : {
       "localizations" : {
         "cs" : {
@@ -48925,6 +49777,9 @@
           }
         }
       }
+    },
+    "Vorderes Bein" : {
+
     },
     "Voreingestellte Weite" : {
       "extractionState" : "stale",
@@ -49178,6 +50033,15 @@
           }
         }
       }
+    },
+    "Vorlegen" : {
+
+    },
+    "Vorlegen: zwei sichere Schläge, Bogey im Sack" : {
+
+    },
+    "vorne" : {
+
     },
     "VS" : {
       "localizations" : {
@@ -50330,6 +51194,9 @@
         }
       }
     },
+    "Wer Doppelbogeys vermeidet, spielt die bessere Runde" : {
+
+    },
     "Wer ein Training- oder Caddy-Abo hat, sieht ohnehin keine Werbung." : {
       "localizations" : {
         "cs" : {
@@ -51411,6 +52278,9 @@
         }
       }
     },
+    "Wie einen Vogel halten – fest genug, aber locker" : {
+
+    },
     "Wie möchtest du das Dokument hinzufügen?" : {
       "localizations" : {
         "cs" : {
@@ -51835,6 +52705,9 @@
           }
         }
       }
+    },
+    "windstill" : {
+
     },
     "Wird automatisch deaktiviert, wenn du eine Apple Watch zum Tracken verwendest." : {
       "localizations" : {
@@ -52580,6 +53453,46 @@
         }
       }
     },
+    "Zeit für einen Schluck 💧" : {
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Čas na doušek 💧"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Time for a sip 💧"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hora de un trago 💧"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "L'heure d'une gorgée 💧"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "È ora di un sorso 💧"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Czas na łyk 💧"
+          }
+        }
+      }
+    },
     "Ziehen & Zoomen zum Anpassen" : {
       "localizations" : {
         "cs" : {
@@ -52665,6 +53578,21 @@
           }
         }
       }
+    },
+    "Ziel →" : {
+
+    },
+    "Ziel und Flugbahn vor dem inneren Auge zeichnen" : {
+
+    },
+    "Ziellinie" : {
+
+    },
+    "Ziellinie sehen" : {
+
+    },
+    "Zu fest: Handgelenke blockieren, Distanz geht verloren" : {
+
     },
     "Zu Pro wechseln – alles in einem" : {
       "localizations" : {
@@ -52945,6 +53873,52 @@
           }
         }
       }
+    },
+    "zwei" : {
+
+    },
+    "Zwei kurze Fragen" : {
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dvě krátké otázky"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Two quick questions"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dos preguntas rápidas"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Deux petites questions"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Due domande veloci"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dwa krótkie pytania"
+          }
+        }
+      }
+    },
+    "Zwei Probeschwünge" : {
+
     },
     "Zwei Spieler spielen abwechselnd mit einem Ball (Wechselschlag). Ein Team, ein Ball, ein Score." : {
       "localizations" : {

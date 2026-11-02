@@ -1,7 +1,10 @@
 import SwiftUI
+import CoreLocation
+import UIKit
 
-/// Einführung für Golfer – läuft direkt nach der Schwerpunkt-Auswahl „Golf“
-/// und lässt sich im Profil neu starten.
+/// Einführung – läuft direkt nach der Schwerpunkt-Auswahl und lässt sich im
+/// Profil neu starten. Minigolf-Spieler sehen nur Name und Berechtigungen,
+/// die Tour erklärt ausschließlich Golf-Funktionen.
 ///
 /// Jede Seite hat denselben Aufbau: oben die Bühne mit einer nachgebauten
 /// App-Ansicht, darunter Kategorie, Titel und Text in fester Höhe. Dadurch
@@ -11,11 +14,14 @@ struct GolfOnboardingView: View {
 
     @AppStorage("hasSeenOnboarding") private var hasSeenOnboarding = false
     @AppStorage("playerName") private var playerName = "Golfer"
+    @AppStorage(AppFocus.storageKey) private var appFocus: AppFocus = .golf
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
-    /// Der Name ist Pflicht und kommt vor der Tour – erst danach erscheinen
-    /// die Seiten samt „Überspringen“.
-    @State private var hasEnteredName = false
+    /// Der Name ist Pflicht und kommt vor der Tour, danach die Berechtigungen –
+    /// erst dann erscheinen die Seiten samt „Überspringen“.
+    @State private var step: Step = .name
+
+    private enum Step { case name, permissions, tour }
 
     @State private var current: GolfOnboardingPage.ID = GolfOnboardingPage.all[0].id
     @State private var appear = false
@@ -33,17 +39,24 @@ struct GolfOnboardingView: View {
             )
             .ignoresSafeArea()
 
-            if hasEnteredName {
-                tour
-                    .transition(.opacity.combined(with: .move(edge: .trailing)))
-            } else {
+            switch step {
+            case .name:
                 OnbNameStep { name in
                     playerName = name
                     Haptics.success()
-                    withAnimation(reduceMotion ? nil : .easeInOut(duration: 0.35)) { hasEnteredName = true }
+                    advance(to: .permissions)
                 }
                 .readableContentWidth()
                 .transition(.opacity.combined(with: .move(edge: .leading)))
+            case .permissions:
+                OnbPermissionStep(isMinigolf: appFocus == .minigolf) {
+                    if appFocus == .minigolf { finish() } else { advance(to: .tour) }
+                }
+                    .readableContentWidth()
+                    .transition(.opacity.combined(with: .move(edge: .trailing)))
+            case .tour:
+                tour
+                    .transition(.opacity.combined(with: .move(edge: .trailing)))
             }
         }
         .opacity(appear ? 1 : 0)
@@ -53,7 +66,7 @@ struct GolfOnboardingView: View {
             if let raw = ProcessInfo.processInfo.environment["GOLFTRACK_ONBOARDING_PAGE"],
                let i = Int(raw), pages.indices.contains(i) {
                 current = pages[i].id
-                hasEnteredName = true
+                step = .tour
             }
             #endif
             withAnimation(.easeOut(duration: 0.35)) { appear = true }
@@ -217,6 +230,10 @@ struct GolfOnboardingView: View {
 
     // MARK: - Aktionen
 
+    private func advance(to next: Step) {
+        withAnimation(reduceMotion ? nil : .easeInOut(duration: 0.35)) { step = next }
+    }
+
     private func go(to i: Int) {
         guard pages.indices.contains(i) else { return }
         withAnimation(reduceMotion ? nil : .easeInOut(duration: 0.3)) {
@@ -378,6 +395,230 @@ private struct OnbNameStep: View {
         guard !trimmed.isEmpty else { return }
         focused = false
         onContinue(String(trimmed.prefix(30)))
+    }
+}
+
+// MARK: - Berechtigungen
+
+/// Zweiter Schritt: Mitteilungen und Standort nacheinander erfragen, dann das
+/// Positions-Tracking anbieten und – wenn eingeschaltet – den Standort „Immer“.
+private struct OnbPermissionStep: View {
+    /// Minigolf hat kein Positions-Tracking – dort endet der Schritt nach
+    /// den beiden Rückfragen.
+    let isMinigolf: Bool
+    let onDone: () -> Void
+
+    @AppStorage(RoundTrackingService.enabledKey) private var trackingEnabled = false
+    @State private var phase: Phase = .intro
+    @State private var busy = false
+    @State private var location = OnbLocationAsker()
+
+    private enum Phase { case intro, tracking }
+
+    var body: some View {
+        VStack(spacing: 0) {
+            Spacer(minLength: 24)
+
+            switch phase {
+            case .intro: intro.transition(.opacity)
+            case .tracking: trackingQuestion.transition(.opacity)
+            }
+
+            Spacer(minLength: 24)
+
+            buttons
+        }
+        .padding(.horizontal, 26)
+        .padding(.bottom, 12)
+        .animation(.easeInOut(duration: 0.3), value: phase)
+    }
+
+    private var intro: some View {
+        VStack(spacing: 22) {
+            header(icon: "checkmark.shield.fill",
+                   title: "Zwei kurze Fragen",
+                   text: "iOS fragt gleich nach deiner Erlaubnis. Du kannst beides später in den Einstellungen ändern.")
+
+            VStack(spacing: 12) {
+                row(icon: "bell.badge.fill",
+                    title: "Mitteilungen",
+                    text: "Erinnerungen an offene Runden und ans Spielen.")
+                row(icon: "location.fill",
+                    title: "Standort",
+                    text: isMinigolf
+                        ? "Anlagen in deiner Nähe und das Wetter für deine Partie."
+                        : "Platz in der Nähe, Golf-Wetter und Entfernung zur Fahne.")
+            }
+        }
+    }
+
+    private var trackingQuestion: some View {
+        VStack(spacing: 22) {
+            header(icon: "mappin.and.ellipse",
+                   title: "Positions-Tracking einschalten?",
+                   text: "Mit deiner Erlaubnis merkt sich GolfTrack deinen Weg über den Platz und erkennt daraus Abschlag, Grün und Fairway-Verlauf jedes Lochs.")
+
+            VStack(alignment: .leading, spacing: 8) {
+                Label("Standort immer erlauben", systemImage: "location.circle.fill")
+                    .font(.subheadline.weight(.semibold))
+                    .foregroundStyle(AppTheme.gold)
+                Text("Damit die Aufzeichnung auch bei gesperrtem Display zuverlässig weiterläuft, fragt iOS anschließend, ob GolfTrack deinen Standort immer verwenden darf.")
+                    .font(.caption)
+                    .foregroundStyle(AppTheme.textSec)
+                    .fixedSize(horizontal: false, vertical: true)
+                Text("Die Aufzeichnung ist standardmäßig aus und läuft nur während einer Runde. Die Daten bleiben auf deinem iPhone und werden nicht übertragen. Du kannst das Tracking jederzeit in den Einstellungen abschalten und die Aufzeichnungen dort löschen.")
+                    .font(.caption)
+                    .foregroundStyle(AppTheme.textSec)
+                    .fixedSize(horizontal: false, vertical: true)
+            }
+            .padding(14)
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .background(AppTheme.card, in: RoundedRectangle(cornerRadius: 14, style: .continuous))
+        }
+    }
+
+    @ViewBuilder
+    private var buttons: some View {
+        switch phase {
+        case .intro:
+            Button(action: askSystemPermissions) {
+                HStack(spacing: 8) {
+                    Text("Weiter")
+                    Image(systemName: "arrow.right")
+                        .font(.subheadline.weight(.bold))
+                }
+                .goldButton()
+            }
+            .buttonStyle(.plain)
+            .disabled(busy)
+        case .tracking:
+            VStack(spacing: 10) {
+                Button(action: enableTracking) {
+                    Text("Aufzeichnung einschalten")
+                        .goldButton()
+                }
+                .buttonStyle(.plain)
+                .disabled(busy)
+
+                Button {
+                    Haptics.tap()
+                    onDone()
+                } label: {
+                    Text("Später entscheiden")
+                        .font(.subheadline.bold())
+                        .foregroundStyle(AppTheme.textSec)
+                        .frame(maxWidth: .infinity)
+                        .padding(.vertical, 12)
+                }
+                .buttonStyle(.plain)
+                .disabled(busy)
+            }
+        }
+    }
+
+    private func header(icon: String, title: LocalizedStringKey, text: LocalizedStringKey) -> some View {
+        VStack(spacing: 14) {
+            Image(systemName: icon)
+                .font(.system(size: 34, weight: .semibold))
+                .foregroundStyle(AppTheme.gold)
+                .frame(width: 84, height: 84)
+                .background(AppTheme.gold.opacity(0.13), in: Circle())
+
+            Text(title)
+                .font(.title2.bold())
+                .foregroundStyle(AppTheme.text)
+                .multilineTextAlignment(.center)
+            Text(text)
+                .font(.subheadline)
+                .foregroundStyle(AppTheme.textSec)
+                .multilineTextAlignment(.center)
+                .lineSpacing(2)
+                .fixedSize(horizontal: false, vertical: true)
+        }
+    }
+
+    private func row(icon: String, title: LocalizedStringKey, text: LocalizedStringKey) -> some View {
+        HStack(spacing: 14) {
+            Image(systemName: icon)
+                .font(.system(size: 18, weight: .semibold))
+                .foregroundStyle(AppTheme.gold)
+                .frame(width: 40, height: 40)
+                .background(AppTheme.gold.opacity(0.13), in: RoundedRectangle(cornerRadius: 10, style: .continuous))
+            VStack(alignment: .leading, spacing: 2) {
+                Text(title)
+                    .font(.subheadline.weight(.semibold))
+                    .foregroundStyle(AppTheme.text)
+                Text(text)
+                    .font(.caption)
+                    .foregroundStyle(AppTheme.textSec)
+                    .fixedSize(horizontal: false, vertical: true)
+            }
+            Spacer(minLength: 0)
+        }
+        .padding(12)
+        .background(AppTheme.card, in: RoundedRectangle(cornerRadius: 14, style: .continuous))
+    }
+
+    // MARK: Aktionen
+
+    /// Erst Mitteilungen, dann Standort – die zweite Rückfrage erscheint erst,
+    /// wenn die erste beantwortet ist.
+    private func askSystemPermissions() {
+        Haptics.tap()
+        busy = true
+        Task { @MainActor in
+            await NotificationManager.shared.requestAuthorization()
+            await location.requestWhenInUse()
+            busy = false
+            if isMinigolf { onDone() } else { phase = .tracking }
+        }
+    }
+
+    private func enableTracking() {
+        Haptics.success()
+        trackingEnabled = true
+        busy = true
+        Task { @MainActor in
+            await location.requestAlways()
+            busy = false
+            onDone()
+        }
+    }
+}
+
+/// Fragt die Standort-Berechtigung an und wartet, bis die Rückfrage
+/// beantwortet ist.
+@MainActor
+private final class OnbLocationAsker {
+    private let manager = CLLocationManager()
+
+    func requestWhenInUse() async {
+        guard manager.authorizationStatus == .notDetermined else { return }
+        manager.requestWhenInUseAuthorization()
+        await waitForAnswer(changingFrom: .notDetermined)
+    }
+
+    /// Nur nach „Beim Verwenden“ – abgelehnt bleibt abgelehnt.
+    func requestAlways() async {
+        guard manager.authorizationStatus == .authorizedWhenInUse else { return }
+        manager.requestAlwaysAuthorization()
+        await waitForAnswer(changingFrom: .authorizedWhenInUse)
+    }
+
+    /// Behält der Nutzer bei „Immer“ die bisherige Stufe, meldet iOS keine
+    /// Änderung. Deshalb gilt die Frage auch als beantwortet, sobald die App
+    /// nach der Rückfrage wieder aktiv ist – oder wenn gar keine erschien.
+    private func waitForAnswer(changingFrom old: CLAuthorizationStatus) async {
+        var sawPrompt = false
+        for tick in 0..<1500 {
+            try? await Task.sleep(for: .milliseconds(200))
+            if manager.authorizationStatus != old { return }
+            if UIApplication.shared.applicationState != .active {
+                sawPrompt = true
+            } else if sawPrompt || tick >= 7 {
+                return
+            }
+        }
     }
 }
 

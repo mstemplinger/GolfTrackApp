@@ -26,7 +26,7 @@ struct HelpView: View {
             HelpRow(
                 icon: "1.circle.fill", color: AppTheme.gold,
                 title: "Golfplatz hinzufügen",
-                content: "Gehe zu Einstellungen > Golfplätze und tippe auf '+'. Du kannst Plätze manuell anlegen oder über die Suche (API-Key erforderlich) aus über 30.000 Plätzen weltweit importieren."
+                content: "Gehe zu Einstellungen > Golfplätze und tippe auf '+'. Du kannst Plätze aus dem GolfTrack-Platzverzeichnis übernehmen, eine Scorecard scannen oder einen Platz manuell anlegen."
             ).listRowBackground(AppTheme.card)
             HelpRow(
                 icon: "2.circle.fill", color: AppTheme.gold,
@@ -231,10 +231,6 @@ struct PrivacyView: View {
                     legalBlock(
                         title: "Caddy-Sprachassistent (ElevenLabs)",
                         body: "Wenn du den Caddy-Sprachassistenten nutzt, wird deine Spracheingabe zur Verarbeitung an ElevenLabs Inc. (USA) übertragen. Die Übertragung erfolgt nur, während ein Gespräch aktiv ist. Für die Verarbeitung gilt die Datenschutzerklärung von ElevenLabs (elevenlabs.io/privacy). Ohne Nutzung des Caddys werden keine Sprachdaten übertragen."
-                    )
-                    legalBlock(
-                        title: "GolfCourse API",
-                        body: "Wenn du einen API-Key für golfcourseapi.com hinterlegst, werden Suchanfragen für Golfplätze an die API übertragen. Dabei wird ausschließlich dein Suchbegriff übermittelt. Der API-Key wird lokal in den UserDefaults deines Geräts gespeichert."
                     )
                     legalBlock(
                         title: "Wetterdaten (Open-Meteo)",

@@ -4,12 +4,10 @@ import SwiftData
 struct CourseListView: View {
     @Query(sort: \Course.name) private var courses: [Course]
     @Environment(\.modelContext) private var context
-    private var api: GolfCourseAPIService = .shared
 
     @Environment(\.dismiss) private var dismiss
 
     @State private var showAddSheet = false
-    @State private var showAPISettings = false
 
     /// Aus dem Rundenstart geöffnet: Ein Tipp auf einen Platz wählt ihn für
     /// die Runde und schließt die Liste. Ein neu hinzugefügter Platz wird
@@ -47,19 +45,6 @@ struct CourseListView: View {
             }
             .navigationTitle("Golfplätze")
             .toolbar {
-                ToolbarItem(placement: .topBarLeading) {
-                    Button("Einstellungen", systemImage: "gear") {
-                        Haptics.tap()
-                        showAPISettings = true
-                    }
-                    .foregroundStyle(api.hasAPIKey ? Color.secondary : Color.orange)
-                    .overlay(alignment: .topTrailing) {
-                        if !api.hasAPIKey {
-                            Circle().fill(.orange).frame(width: 8, height: 8)
-                                .offset(x: 2, y: -2)
-                        }
-                    }
-                }
                 ToolbarItem(placement: .topBarTrailing) {
                     Button("Hinzufügen", systemImage: "plus") {
                         Haptics.tap()
@@ -78,7 +63,7 @@ struct CourseListView: View {
             }
             .onChange(of: courses.map(\.persistentModelID)) { old, new in
                 // Neu hinzugefügten Platz gleich für die Runde vorwählen –
-                // egal ob aus der Liste, der Online-Suche, dem Scan oder manuell.
+                // egal ob aus der Liste, dem Scan oder manuell.
                 guard let selection, let added = new.first(where: { !old.contains($0) }) else { return }
                 selection.wrappedValue = courses.first { $0.persistentModelID == added }
             }
@@ -105,7 +90,6 @@ struct CourseListView: View {
                     context.insert(course)
                 }
             }
-            .sheet(isPresented: $showAPISettings) { APIKeySettingsView() }
         }
     }
 

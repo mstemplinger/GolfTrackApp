@@ -27,12 +27,6 @@ struct SettingsView: View {
                             Label("Golf-Wetter", systemImage: "cloud.sun.fill")
                         }
                         .listRowBackground(AppTheme.card)
-                        NavigationLink {
-                            APIKeySettingsView()
-                        } label: {
-                            Label("API-Einstellungen", systemImage: "key.fill")
-                        }
-                        .listRowBackground(AppTheme.card)
                     } header: {
                         Text("Daten")
                     }

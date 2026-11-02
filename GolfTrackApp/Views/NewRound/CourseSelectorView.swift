@@ -10,7 +10,6 @@ struct CourseSelectorView: View {
     @Environment(\.modelContext) private var context
     @Query(sort: \Course.name) private var allCourses: [Course]
 
-    private let api: GolfCourseAPIService = .shared
     private let nearbyRadius: CLLocationDistance = 30_000 // 30 km
 
     @State private var locationManager = CLLocationManager()
@@ -18,11 +17,6 @@ struct CourseSelectorView: View {
     @State private var locationDetermined = false
 
     @State private var searchText = ""
-    @State private var apiResults: [APICourse] = []
-    @State private var isSearching = false
-    @State private var errorMessage: String?
-    @State private var selectedAPICourse: APICourse?
-    @State private var isFetchingDetail = false
 
     // Courses within 30 km (or all if no location)
     private var nearbyCourses: [Course] {
@@ -38,7 +32,7 @@ struct CourseSelectorView: View {
         }
     }
 
-    // Local courses filtered by search text (for name-matching when no API key)
+    // Local courses filtered by search text
     private var localSearchResults: [Course] {
         let q = searchText.trimmingCharacters(in: .whitespaces).lowercased()
         guard !q.isEmpty else { return [] }
@@ -69,12 +63,6 @@ struct CourseSelectorView: View {
                 placement: .navigationBarDrawer(displayMode: .always),
                 prompt: "Platz suchen…"
             )
-            .onSubmit(of: .search) {
-                if api.hasAPIKey { Task { await runAPISearch() } }
-            }
-            .onChange(of: searchText) { _, new in
-                if new.isEmpty { apiResults = [] }
-            }
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
                     Button("Abbrechen") {
@@ -83,23 +71,6 @@ struct CourseSelectorView: View {
                     }
                 }
             }
-            .alert("Fehler", isPresented: Binding(
-                get: { errorMessage != nil },
-                set: { if !$0 { errorMessage = nil } }
-            )) {
-                Button("OK") {
-                    Haptics.tap()
-                    errorMessage = nil
-                }
-            } message: { Text(errorMessage ?? "") }
-            .sheet(item: $selectedAPICourse) { course in
-                TeeBoxPickerView(course: course) { saved in
-                    context.insert(saved)
-                    selectedCourse = saved
-                    dismiss()
-                }
-            }
-            .overlay { loadingOverlays }
             .task {
                 locationManager.requestWhenInUseAuthorization()
                 // give CLLocationManager a moment
@@ -163,36 +134,7 @@ struct CourseSelectorView: View {
             }
         }
 
-        // API results
-        if api.hasAPIKey {
-            if apiResults.isEmpty && !isSearching {
-                Section {
-                    Button {
-                        Haptics.tap()
-                        Task { await runAPISearch() }
-                    } label: {
-                        Label("Online suchen: \"\(searchText)\"", systemImage: "magnifyingglass")
-                            .foregroundStyle(AppTheme.gold)
-                    }
-                    .listRowBackground(AppTheme.card)
-                } footer: {
-                    Text("Sucht weltweit nach Golfplätzen via API.")
-                        .font(.caption)
-                }
-            } else if !apiResults.isEmpty {
-                Section("Online-Ergebnisse") {
-                    ForEach(apiResults) { course in
-                        Button {
-                            Haptics.tap()
-                            selectAPICourse(course)
-                        } label: {
-                            apiCourseRow(course)
-                        }
-                        .listRowBackground(AppTheme.card)
-                    }
-                }
-            }
-        } else if localSearchResults.isEmpty {
+        if localSearchResults.isEmpty {
             Section {
                 ContentUnavailableView.search(text: searchText)
             }
@@ -250,71 +192,6 @@ struct CourseSelectorView: View {
                 ? AppTheme.gold.opacity(0.08)
                 : AppTheme.card
         )
-    }
-
-    private func apiCourseRow(_ course: APICourse) -> some View {
-        VStack(alignment: .leading, spacing: 4) {
-            Text(course.displayName)
-                .font(.subheadline.bold())
-                .foregroundStyle(AppTheme.text)
-            if !course.locationString.isEmpty {
-                Label(course.locationString, systemImage: "location")
-                    .font(.caption)
-                    .foregroundStyle(AppTheme.textSec)
-            }
-        }
-        .padding(.vertical, 4)
-    }
-
-    // MARK: - Loading overlays
-
-    @ViewBuilder
-    private var loadingOverlays: some View {
-        if isSearching {
-            ProgressView("Suche läuft …")
-                .frame(maxWidth: .infinity, maxHeight: .infinity)
-                .background(.background.opacity(0.8))
-        }
-        if isFetchingDetail {
-            ZStack {
-                Color.black.opacity(0.3).ignoresSafeArea()
-                ProgressView("Platzdaten laden …")
-                    .padding(24)
-                    .background(.background, in: RoundedRectangle(cornerRadius: 12))
-            }
-        }
-    }
-
-    // MARK: - Actions
-
-    private func runAPISearch() async {
-        let q = searchText.trimmingCharacters(in: .whitespaces)
-        guard !q.isEmpty else { return }
-        isSearching = true
-        errorMessage = nil
-        defer { isSearching = false }
-        do {
-            apiResults = try await api.search(query: q)
-        } catch {
-            errorMessage = error.localizedDescription
-        }
-    }
-
-    private func selectAPICourse(_ course: APICourse) {
-        if course.preferredTeeBox()?.holes?.isEmpty == false {
-            selectedAPICourse = course
-            return
-        }
-        Task {
-            isFetchingDetail = true
-            defer { isFetchingDetail = false }
-            do {
-                let full = try await api.getCourse(id: course.id)
-                selectedAPICourse = full
-            } catch {
-                errorMessage = error.localizedDescription
-            }
-        }
     }
 
     // MARK: - Helpers

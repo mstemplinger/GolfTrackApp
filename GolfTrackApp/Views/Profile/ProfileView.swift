@@ -345,10 +345,6 @@ struct ProfileView: View {
                 AnyView(NotificationSettingsView())
             }
             Divider().background(AppTheme.cardAlt).padding(.leading, 62)
-            settingsRow(icon: "key.fill", color: Color(red: 0.6, green: 0.5, blue: 1.0), title: "API-Einstellungen") {
-                AnyView(APIKeySettingsView())
-            }
-            Divider().background(AppTheme.cardAlt).padding(.leading, 62)
             settingsRow(icon: "questionmark.circle.fill", color: Color(red: 1.0, green: 0.6, blue: 0.3), title: "Hilfe & Anleitung") {
                 AnyView(HelpView())
             }

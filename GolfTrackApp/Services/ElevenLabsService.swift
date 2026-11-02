@@ -90,7 +90,7 @@ import Combine
  Game Center Errungenschaften mit Fortschrittsanzeige. Tutorial jederzeit neu starten. Onboarding zurücksetzen.
 
  EINSTELLUNGEN
- Profil → Zahnrad. Distanzeinheit wechseln (Meter/Yards). API-Key für Caddy eingeben. Hilfe und Support.
+ Profil → Zahnrad. Distanzeinheit wechseln (Meter/Yards). Hilfe und Support.
 
  CADDY (du selbst)
  Home → Caddy-Button. Gespräch starten → Mikrofon antippen → sprechen → Caddy antwortet per Sprache. Stummschalten mit dem Mic-Button links. Gespräch beenden mit dem roten Button.

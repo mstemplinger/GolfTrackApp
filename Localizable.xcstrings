@@ -33794,6 +33794,46 @@
         }
       }
     },
+    "Nur so stimmt die Position jedes Schlags auf dem Platz." : {
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Jen tak bude poloha každé rány na hřišti přesná."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "That’s the only way the position of every stroke on the course is accurate."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Solo así la posición de cada golpe en el campo será correcta."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "C’est la seule façon d’avoir la bonne position de chaque coup sur le parcours."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Solo così la posizione di ogni colpo sul campo è corretta."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tylko wtedy pozycja każdego uderzenia na polu będzie prawidłowa."
+          }
+        }
+      }
+    },
     "Nur während einer laufenden Runde" : {
       "localizations" : {
         "cs" : {
@@ -36387,6 +36427,46 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Ładowanie danych pola …"
+          }
+        }
+      }
+    },
+    "Platzdaten werden geladen …" : {
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Načítání dat hřiště …"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Loading course data …"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cargando datos del campo …"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Chargement des données du parcours …"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Caricamento dati del campo …"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wczytywanie danych pola …"
           }
         }
       }
@@ -40978,6 +41058,46 @@
         }
       }
     },
+    "Schlag sofort eintragen, direkt nachdem du geschlagen hast." : {
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ránu zapiš hned, jakmile odpálíš."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Log each stroke right away, straight after you hit it."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Registra cada golpe al momento, justo después de golpear."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Enregistre chaque coup tout de suite, juste après l’avoir joué."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Registra ogni colpo subito, appena dopo averlo giocato."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wpisz uderzenie od razu, zaraz po tym, jak uderzysz."
+          }
+        }
+      }
+    },
     "Schlag-Tracking" : {
       "localizations" : {
         "cs" : {
@@ -43280,6 +43400,46 @@
       }
     },
     "So funktioniert's" : {
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Jak to funguje"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "How it works"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Así funciona"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Comment ça marche"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Come funziona"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Jak to działa"
+          }
+        }
+      }
+    },
+    "So funktioniert’s" : {
       "localizations" : {
         "cs" : {
           "stringUnit" : {

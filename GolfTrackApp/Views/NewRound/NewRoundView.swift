@@ -11,6 +11,9 @@ struct NewRoundView: View {
     @AppStorage("playerName") private var playerName = "Golfer"
     /// Zuletzt gespielte Abschlagfarbe – Vorauswahl für die nächste Runde.
     @AppStorage("lastTeeColor") private var lastTeeColorRaw = TeeColor.yellow.rawValue
+    /// Wie oft hier schon eine Runde gestartet wurde – steuert, ob vorher die
+    /// Ladeseite mit dem Eintrage-Hinweis kommt (siehe `RoundLoadingView.shouldShow`).
+    @AppStorage("roundStartCount") private var roundStartCount = 0
 
     @State private var selectedCourse: Course?
     @State private var selectedBag: GolfBag?
@@ -23,6 +26,7 @@ struct NewRoundView: View {
     @State private var showCourseSelector = false
     @State private var otherPlayers: [String]
     @State private var warnMissingNames = false
+    @State private var showLoading = false
 
     private let availableModes = GameMode.allCases.filter(\.isAvailable)
     private let darkText = Color(red: 0.06, green: 0.14, blue: 0.08)
@@ -100,6 +104,15 @@ struct NewRoundView: View {
             }
             .navigationDestination(item: $activeRound) { round in
                 ScorecardView(round: round, onRoundFinished: { dismiss() })
+            }
+        }
+        .overlay {
+            if showLoading {
+                RoundLoadingView(courseName: selectedCourse?.name ?? "") {
+                    startRound()
+                    withAnimation(.easeOut(duration: 0.35)) { showLoading = false }
+                }
+                .transition(.opacity)
             }
         }
     }
@@ -642,7 +655,13 @@ struct NewRoundView: View {
         }
         warnMissingNames = false
         Haptics.medium()
-        startRound()
+        let showHint = RoundLoadingView.shouldShow(startCount: roundStartCount)
+        roundStartCount += 1
+        if showHint {
+            withAnimation(.easeIn(duration: 0.25)) { showLoading = true }
+        } else {
+            startRound()
+        }
     }
 
     private func startRound() {

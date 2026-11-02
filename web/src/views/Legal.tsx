@@ -65,6 +65,23 @@ export function Imprint({ lang }: { lang: Lang }) {
           : ". I am neither obliged nor willing to take part in dispute resolution proceedings before a consumer arbitration board."}
       </p>
 
+      <h2>{de ? "Datenquellen" : "Data sources"}</h2>
+      <p>
+        {de
+          ? "Platzwertungen (Course Rating, Slope, Par) deutscher Golfplätze stammen mit freundlicher Genehmigung von "
+          : "Course ratings (course rating, slope, par) of German golf courses are used with kind permission of "}
+        <a href="https://handicap.report" target="_blank" rel="noreferrer">
+          handicap.report
+        </a>
+        {de ? ". Platzkoordinaten: © " : ". Course coordinates: © "}
+        <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noreferrer">
+          {de ? "OpenStreetMap-Mitwirkende" : "OpenStreetMap contributors"}
+        </a>
+        {de
+          ? ", verfügbar unter der Open Database License (ODbL)."
+          : ", available under the Open Database License (ODbL)."}
+      </p>
+
       <h2>{de ? "App Store" : "App Store"}</h2>
       <p>
         {de

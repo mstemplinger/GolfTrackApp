@@ -317,7 +317,8 @@ struct ImprintView: View {
                     title: "Urheberrecht",
                     lines: [
                         "Das Design und der Quellcode der App sind urheberrechtlich geschützt.",
-                        "Golfplatz-Daten werden über die GolfCourse API bezogen.",
+                        "Platzwertungen (Course Rating, Slope, Par) deutscher Golfplätze stammen mit freundlicher Genehmigung von handicap.report.",
+                        "Platzkoordinaten: © OpenStreetMap-Mitwirkende, verfügbar unter der Open Database License (openstreetmap.org/copyright).",
                         "Der Caddy-Sprachassistent nutzt die Sprachtechnologie von ElevenLabs.",
                         "Wetterdaten werden von Open-Meteo bereitgestellt."
                     ]

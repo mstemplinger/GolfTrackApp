@@ -2,9 +2,11 @@
 // GolfTrack – Clubhaus-Plakat für EINEN Golfplatz (A4 + A3 Hochformat) im App-Stil.
 // Indirekte Werbung: „Die Scorekarte dieses Platzes gibt's aufs Handy" + QR, der direkt
 // in die Runde auf diesem Platz führt (play.golftrack.app/p/<slug> – nicht der App Store).
-// Platzdaten (Par je Loch, CR/Slope) kommen live aus /api/v1/courses/<slug>.
+// Platzdaten (Par je Loch, CR/Slope) kommen live aus /api/v1/courses/<slug>; Texte und
+// Par-Leiste richten sich danach, was hinterlegt ist (kein Versprechen ohne Daten).
 //
-// Aufruf:  node clubhaus-poster.mjs [--slug <kennung>] [--short <Name in der Headline>] [--file <Dateiname-Teil>] [--png]
+// Aufruf:  node clubhaus-poster.mjs [--slug <kennung>] [--of "vom Raßbach"] [--file <Dateiname-Teil>] [--png]
+//          node clubhaus-poster.mjs --near 48.6745,13.4706 [--km 30] [--png]   (alle Golfplätze im Umkreis)
 // Ausgabe: out/GolfTrack-Clubhaus-<file>-A4.pdf und -A3.pdf
 // A3 ist dasselbe A4-Layout, per page.pdf({format:'A3', scale:√2}) verlustfrei hochskaliert.
 import fs from "node:fs";
@@ -18,15 +20,42 @@ const arg = (name, def) => {
   const i = process.argv.indexOf(`--${name}`);
   return i > -1 ? process.argv[i + 1] : def;
 };
-const slug = arg("slug", "donau-golf-club-passau-rassbach-e-v");
-const shortName = arg("short", "Raßbach");
-const fileLabel = arg("file", "Passau-Rassbach");
 const wantPng = process.argv.includes("--png");
+const API = "https://golftrack.app/api/v1/courses";
+const RASSBACH = "donau-golf-club-passau-rassbach-e-v";
 
-const res = await fetch(`https://golftrack.app/api/v1/courses/${slug}`);
-if (!res.ok) throw new Error(`Platz ${slug} nicht gefunden (${res.status})`);
-const course = await res.json();
-const PLAY_URL = `https://play.golftrack.app/p/${slug}`;
+// Headline-Zeile 2 („Die Scorekarte <of>.") und Dateiname je Platz; unbekannte Plätze
+// bekommen „vom <Name>" und den Slug als Dateinamen.
+const PRESETS = {
+  [RASSBACH]: { of: "vom Raßbach", file: "Passau-Rassbach" },
+  "golfclub-tittling": { of: "vom GC Tittling", file: "Tittling" },
+  "golf-und-landclub-bayerwald-e-v": { of: "vom GLC Bayerwald", file: "Bayerwald" },
+  "3-loch-uebungsrunde-gc-bayerwald": { of: "der 3-Loch-Runde", file: "Bayerwald-3-Loch" },
+  "golfclub-am-nationalpark-bayerischer-wald": { of: "vom GC am Nationalpark", file: "Nationalpark-Bayerischer-Wald" },
+  "panorama-golf-passau": { of: "vom Panorama Golf", file: "Panorama-Golf-Passau" },
+  "golfclub-vilshofen": { of: "vom GC Vilshofen", file: "Vilshofen" },
+  "quellness-golf-brunnwies": { of: "von Brunnwies", file: "Quellness-Brunnwies" },
+};
+
+const km = (a, b, c, d) => {
+  const r = (x) => (x * Math.PI) / 180;
+  const h = Math.sin(r(c - a) / 2) ** 2 + Math.cos(r(a)) * Math.cos(r(c)) * Math.sin(r(d - b) / 2) ** 2;
+  return 12742 * Math.asin(Math.sqrt(h));
+};
+
+let jobs;
+if (arg("near")) {
+  const [lat, lon] = arg("near").split(",").map(Number);
+  const radius = Number(arg("km", "30"));
+  const { courses } = await (await fetch(API)).json();
+  jobs = courses
+    .filter((c) => c.kind === "golf" && c.lat != null && km(lat, lon, c.lat, c.lon) <= radius)
+    .sort((a, b) => km(lat, lon, a.lat, a.lon) - km(lat, lon, b.lat, b.lon))
+    .map((c) => ({ slug: c.id, ...PRESETS[c.id] }));
+} else {
+  const slug = arg("slug", RASSBACH);
+  jobs = [{ slug, ...PRESETS[slug], ...(arg("of") && { of: arg("of") }), ...(arg("file") && { file: arg("file") }) }];
+}
 
 const C = {
   bg: "#0E2718",
@@ -40,16 +69,11 @@ const accent = C.gold;
 const b64 = (p) => fs.readFileSync(p).toString("base64");
 const logoB64 = b64(path.join(__dirname, "logo.png"));
 const shots = path.join(__dirname, "..", "screenshots", "de");
-// Vorne: echte Runde in Passau-Raßbach (Scorecard + Schlagkarte); hinten: Statistik
-const shotFront = b64(path.join(shots, "13-rundendetail-gps.png"));
-const shotBack = b64(path.join(shots, "06-statistiken-chart.png"));
-
-const qrDataUrl = await QRCode.toDataURL(PLAY_URL, {
-  errorCorrectionLevel: "M",
-  margin: 1,
-  width: 900,
-  color: { dark: "#10220D", light: "#FFFFFF" },
-});
+const shot = (name) => b64(path.join(shots, `${name}.png`));
+// Screenshot 13 zeigt eine echte Runde in Passau-Raßbach – nur dort verwenden. Für alle
+// anderen Plätze zwei Ansichten ohne Platznamen.
+const SHOTS_RASSBACH = { front: shot("13-rundendetail-gps"), back: shot("06-statistiken-chart") };
+const SHOTS_NEUTRAL = { front: shot("06-statistiken-chart"), back: shot("04-schlaegerdistanzen") };
 
 const svg = (paths) =>
   `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">${paths}</svg>`;
@@ -61,22 +85,51 @@ const ICON = {
   watch: svg(`<rect x="7" y="7" width="10" height="10" rx="3"/><path d="M9 7l.5-3.2h5L15 7"/><path d="M9 17l.5 3.2h5l.5-3.2"/><path d="M12 10.3v2.4h1.8"/>`),
 };
 
+const fmt = (n) => String(n).replace(".", ",");
+
+function buildHtml(course, of, qrDataUrl) {
+const n = course.holes;
+const full = (arr) => arr.length === n;
+const pars = full(course.parValues) ? course.parValues : [];
+const parTotal = pars.reduce((a, b) => a + b, 0);
+
+// Punkt 1 und 2 nur so stark, wie die Daten es hergeben
+let dataText = "Par, Handicap und Länge – nichts abtippen.";
+if (!full(course.hcpValues)) dataText = full(course.holeLengths) ? "Par und Länge – nichts abtippen." : "Par je Bahn – nichts abtippen.";
+const first = pars.length
+  ? { icon: ICON.card, title: `Alle ${n} Bahnen schon drin`, text: dataText }
+  : { icon: ICON.card, title: "Platz schon angelegt", text: "Auswählen und sofort losspielen." };
+const gps = full(course.flagLatitudes)
+  ? { icon: ICON.pin, title: "GPS-Distanz zur Fahne", text: "Auf den Meter, bei jedem Schlag." }
+  : { icon: ICON.pin, title: "GPS-Distanz zur Fahne", text: "Fahne einmal setzen, dann live gemessen." };
 const points = [
-  { icon: ICON.card, title: "Alle 18 Bahnen schon drin", text: "Par, Handicap und Länge – nichts abtippen." },
-  { icon: ICON.pin, title: "GPS-Distanz zur Fahne", text: "Auf den Meter, bei jedem Schlag." },
+  first,
+  gps,
   { icon: ICON.tap, title: "Zählen mit einem Tipp", text: "Schläge, Putts, Fairway, Grün." },
   { icon: ICON.chart, title: "Auswertung danach", text: "Scorekarte, Schlagkarte, Statistik." },
   { icon: ICON.watch, title: "Auch an der Apple Watch", text: "iPhone bleibt in der Tasche." },
 ];
 
-const pars = course.parValues;
-const parTotal = pars.reduce((a, b) => a + b, 0);
-const fmt = (n) => String(n).replace(".", ",");
+const { front: shotFront, back: shotBack } = course.id === RASSBACH ? SHOTS_RASSBACH : SHOTS_NEUTRAL;
 const holeCells = pars
-  .map((p, i) => `<div class="hc${i === 8 ? " turn" : ""}"><div class="hn">${i + 1}</div><div class="hp">${p}</div></div>`)
+  .map((p, i) => `<div class="hc${i === 8 && n === 18 ? " turn" : ""}"><div class="hn">${i + 1}</div><div class="hp">${p}</div></div>`)
   .join("");
+const meta = [
+  `Par <b>${parTotal}</b>`,
+  course.courseRating != null && `CR <b>${fmt(course.courseRating)}</b>`,
+  course.slopeRating != null && `Slope <b>${course.slopeRating}</b>`,
+].filter(Boolean).join(" · ");
+const scorecard = pars.length
+  ? `<div class="scorecard">
+      <div class="sc-head">
+        <div class="sc-title">Schon hinterlegt: alle ${n} Bahnen</div>
+        <div class="sc-meta">${meta}</div>
+      </div>
+      <div class="holes" style="grid-template-columns:${n >= 9 ? `repeat(${n}, 1fr)` : `repeat(${n}, 16mm)`}">${holeCells}</div>
+    </div>`
+  : "";
 
-const html = `<!doctype html><html><head><meta charset="utf-8"><style>
+return `<!doctype html><html><head><meta charset="utf-8"><style>
   * { margin:0; padding:0; box-sizing:border-box; }
   html, body { width: 210mm; height: 297mm; }
   body {
@@ -133,7 +186,7 @@ const html = `<!doctype html><html><head><meta charset="utf-8"><style>
   .sc-title { font-size:4mm; font-weight:800; }
   .sc-meta { font-size:3.5mm; font-weight:600; color:rgba(255,255,255,.6); }
   .sc-meta b { color:${accent}; font-weight:800; }
-  .holes { margin-top:2.6mm; display:grid; grid-template-columns:repeat(18, 1fr); gap:0.9mm; }
+  .holes { margin-top:2.6mm; display:grid; gap:0.9mm; }
   .hc { background:${C.cardAlt}; border-radius:1.4mm; text-align:center; padding:1.2mm 0 1.4mm; }
   .hc.turn { box-shadow:inset -0.5mm 0 0 ${accent}88; }
   .hn { font-size:2.6mm; font-weight:600; color:rgba(255,255,255,.5); }
@@ -167,9 +220,9 @@ const html = `<!doctype html><html><head><meta charset="utf-8"><style>
     </div>
 
     <div class="eyebrow">Für deine Runde heute</div>
-    <div class="headline">Die Scorekarte<br>vom ${shortName}.<br><span class="accent">Jetzt am Handy.</span></div>
+    <div class="headline">Die Scorekarte<br>${of}.<br><span class="accent">Jetzt am Handy.</span></div>
 
-    <div class="middle">
+    <div class="middle"${pars.length ? "" : ' style="flex:1"'}>
       <div class="points">${points
         .map(
           (p) => `<div class="pt"><div class="pt-icon">${p.icon}</div><div>
@@ -182,13 +235,7 @@ const html = `<!doctype html><html><head><meta charset="utf-8"><style>
       </div>
     </div>
 
-    <div class="scorecard">
-      <div class="sc-head">
-        <div class="sc-title">Schon hinterlegt: alle ${pars.length} Bahnen</div>
-        <div class="sc-meta">Par <b>${parTotal}</b> · CR <b>${fmt(course.courseRating)}</b> · Slope <b>${course.slopeRating}</b></div>
-      </div>
-      <div class="holes">${holeCells}</div>
-    </div>
+    ${scorecard}
 
     <div class="qr-band">
       <div class="qr"><img src="${qrDataUrl}"></div>
@@ -207,22 +254,38 @@ const html = `<!doctype html><html><head><meta charset="utf-8"><style>
     <div class="foot"><span>golftrack.app</span><span>Mehr Plätze, Training &amp; KI-Caddy in der App</span></div>
   </div>
 </div></body></html>`;
+}
 
 const outDir = path.join(__dirname, "out");
 fs.mkdirSync(outDir, { recursive: true });
-const base = path.join(outDir, `GolfTrack-Clubhaus-${fileLabel}`);
-
 const browser = await puppeteer.launch({ headless: "new", args: ["--no-sandbox", "--force-color-profile=srgb"] });
-const page = await browser.newPage();
-await page.setContent(html, { waitUntil: "networkidle0" });
-// @page muss die Zielgröße tragen (wie bei board.mjs), das Layout bleibt in A4-mm.
-await page.addStyleTag({ content: "@page { size: A4 portrait; margin: 0; }" });
-await page.pdf({ path: `${base}-A4.pdf`, format: "A4", printBackground: true, pageRanges: "1" });
-await page.addStyleTag({ content: "@page { size: A3 portrait; margin: 0; }" });
-await page.pdf({ path: `${base}-A3.pdf`, format: "A3", printBackground: true, scale: Math.SQRT2, pageRanges: "1" });
-if (wantPng) {
-  await page.setViewport({ width: 794, height: 1123, deviceScaleFactor: 2 });
-  await (await page.$(".page")).screenshot({ path: `${base}-Vorschau.png` });
+
+for (const job of jobs) {
+  const res = await fetch(`${API}/${job.slug}`);
+  if (!res.ok) throw new Error(`Platz ${job.slug} nicht gefunden (${res.status})`);
+  const course = await res.json();
+  const playUrl = `https://play.golftrack.app/p/${job.slug}`;
+  const qrDataUrl = await QRCode.toDataURL(playUrl, {
+    errorCorrectionLevel: "M",
+    margin: 1,
+    width: 900,
+    color: { dark: "#10220D", light: "#FFFFFF" },
+  });
+  const of = job.of || `vom ${course.name.replace(/ e\.V\.$/, "")}`;
+  const base = path.join(outDir, `GolfTrack-Clubhaus-${job.file || job.slug}`);
+
+  const page = await browser.newPage();
+  await page.setContent(buildHtml(course, of, qrDataUrl), { waitUntil: "networkidle0" });
+  // @page muss die Zielgröße tragen (wie bei board.mjs), das Layout bleibt in A4-mm.
+  await page.addStyleTag({ content: "@page { size: A4 portrait; margin: 0; }" });
+  await page.pdf({ path: `${base}-A4.pdf`, format: "A4", printBackground: true, pageRanges: "1" });
+  await page.addStyleTag({ content: "@page { size: A3 portrait; margin: 0; }" });
+  await page.pdf({ path: `${base}-A3.pdf`, format: "A3", printBackground: true, scale: Math.SQRT2, pageRanges: "1" });
+  if (wantPng) {
+    await page.setViewport({ width: 794, height: 1123, deviceScaleFactor: 2 });
+    await (await page.$(".page")).screenshot({ path: `${base}-Vorschau.png` });
+  }
+  await page.close();
+  console.log("OK ->", path.basename(base), "QR:", playUrl);
 }
 await browser.close();
-console.log("OK ->", `${base}-A4.pdf`, `${base}-A3.pdf`, "QR:", PLAY_URL);

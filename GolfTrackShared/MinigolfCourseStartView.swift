@@ -57,9 +57,7 @@ struct MinigolfCourseStartView: View {
             }
         }
         .onAppear {
-            if let names = MinigolfGameStore.loadNames(), !names.isEmpty {
-                rawNames = names
-            }
+            rawNames = MinigolfGameStore.initialNames(fallback: rawNames)
             if challenges.isEmpty {
                 challenges = MinigolfGameStore.loadChallenges()
             }

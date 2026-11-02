@@ -117,6 +117,21 @@ enum MinigolfGameStore {
         defaults.set(names, forKey: namesKey)
     }
 
+    /// Vorbelegung der Namensfelder: zuletzt gespielte Namen, Spieler 1
+    /// aber immer mit dem Profilnamen – sofern der vom Standard „Golfer“
+    /// abweicht. Der Profilname liegt per `@AppStorage("playerName")` in
+    /// den Standard-Defaults der App; im App Clip fehlt er, dort bleibt es
+    /// bei den gespeicherten Namen.
+    static func initialNames(fallback: [String]) -> [String] {
+        var names = loadNames().flatMap { $0.isEmpty ? nil : $0 } ?? fallback
+        let profile = (UserDefaults.standard.string(forKey: "playerName") ?? "")
+            .trimmingCharacters(in: .whitespaces)
+        if !profile.isEmpty, profile != "Golfer" {
+            if names.isEmpty { names = [profile] } else { names[0] = profile }
+        }
+        return names
+    }
+
     /// Zuletzt gewählte Wettkämpfe – Vorschlag für die nächste Runde.
     static func loadChallenges() -> [MinigolfChallenge] {
         (defaults.stringArray(forKey: challengesKey) ?? [])

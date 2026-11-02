@@ -51371,6 +51371,46 @@
         }
       }
     },
+    "Wie dürfen wir dich nennen? Dein Name steht auf deinen Scorekarten und begrüßt dich auf der Startseite." : {
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Jak ti máme říkat? Tvoje jméno bude na tvých skórkartách a přivítá tě na úvodní obrazovce."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "What should we call you? Your name appears on your scorecards and greets you on the home screen."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "¿Cómo te llamamos? Tu nombre aparece en tus tarjetas y te saluda en la pantalla de inicio."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Comment devons-nous t’appeler ? Ton nom figure sur tes cartes de score et t’accueille sur l’écran d’accueil."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Come ti chiamiamo? Il tuo nome compare sulle tue scorecard e ti saluta nella schermata iniziale."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Jak mamy się do ciebie zwracać? Twoje imię pojawi się na kartach wyników i powita cię na ekranie głównym."
+          }
+        }
+      }
+    },
     "Wie möchtest du das Dokument hinzufügen?" : {
       "localizations" : {
         "cs" : {

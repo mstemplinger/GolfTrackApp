@@ -109,8 +109,8 @@ struct MinigolfView: View {
                 MinigolfScoringView(config: config)
             }
             .onAppear {
-                if let names = MinigolfGameStore.loadNames(), !names.isEmpty, rawNames == ["", ""] {
-                    rawNames = names
+                if rawNames == ["", ""] {
+                    rawNames = MinigolfGameStore.initialNames(fallback: rawNames)
                 }
                 savedGame = MinigolfGameStore.load()
                 history = MinigolfGameStore.loadHistory()

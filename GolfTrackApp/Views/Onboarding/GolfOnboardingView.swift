@@ -10,7 +10,12 @@ import SwiftUI
 struct GolfOnboardingView: View {
 
     @AppStorage("hasSeenOnboarding") private var hasSeenOnboarding = false
+    @AppStorage("playerName") private var playerName = "Golfer"
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
+
+    /// Der Name ist Pflicht und kommt vor der Tour – erst danach erscheinen
+    /// die Seiten samt „Überspringen“.
+    @State private var hasEnteredName = false
 
     @State private var current: GolfOnboardingPage.ID = GolfOnboardingPage.all[0].id
     @State private var appear = false
@@ -28,24 +33,18 @@ struct GolfOnboardingView: View {
             )
             .ignoresSafeArea()
 
-            VStack(spacing: 0) {
-                topBar
-                    .padding(.horizontal, 22)
-                    .padding(.top, 8)
-
-                TabView(selection: $current) {
-                    ForEach(pages) { page in
-                        pageView(page)
-                            .tag(page.id)
-                    }
+            if hasEnteredName {
+                tour
+                    .transition(.opacity.combined(with: .move(edge: .trailing)))
+            } else {
+                OnbNameStep { name in
+                    playerName = name
+                    Haptics.success()
+                    withAnimation(reduceMotion ? nil : .easeInOut(duration: 0.35)) { hasEnteredName = true }
                 }
-                .tabViewStyle(.page(indexDisplayMode: .never))
-
-                bottomBar
-                    .padding(.horizontal, 22)
-                    .padding(.bottom, 12)
+                .readableContentWidth()
+                .transition(.opacity.combined(with: .move(edge: .leading)))
             }
-            .readableContentWidth()
         }
         .opacity(appear ? 1 : 0)
         .onAppear {
@@ -54,11 +53,33 @@ struct GolfOnboardingView: View {
             if let raw = ProcessInfo.processInfo.environment["GOLFTRACK_ONBOARDING_PAGE"],
                let i = Int(raw), pages.indices.contains(i) {
                 current = pages[i].id
+                hasEnteredName = true
             }
             #endif
             withAnimation(.easeOut(duration: 0.35)) { appear = true }
         }
         .onChange(of: current) { _, _ in Haptics.selection() }
+    }
+
+    private var tour: some View {
+        VStack(spacing: 0) {
+            topBar
+                .padding(.horizontal, 22)
+                .padding(.top, 8)
+
+            TabView(selection: $current) {
+                ForEach(pages) { page in
+                    pageView(page)
+                        .tag(page.id)
+                }
+            }
+            .tabViewStyle(.page(indexDisplayMode: .never))
+
+            bottomBar
+                .padding(.horizontal, 22)
+                .padding(.bottom, 12)
+        }
+        .readableContentWidth()
     }
 
     // MARK: - Kopfzeile
@@ -266,6 +287,98 @@ struct GolfOnboardingPage: Identifiable {
               title: "Bereit für die erste Runde",
               text: "Unten in der Leiste erreichst du alle Bereiche. Das Tutorial findest du jederzeit wieder unter Profil → Tutorial neu starten."),
     ]
+}
+
+// MARK: - Name
+
+/// Erster Schritt: der Name, mit dem die App begrüßt und der in Runden und
+/// Scorekarten steht. Ohne Namen geht es nicht weiter.
+private struct OnbNameStep: View {
+    let onContinue: (String) -> Void
+
+    @State private var name: String = {
+        // Nur einen selbst gewählten Namen vorschlagen, nicht den Platzhalter.
+        let stored = UserDefaults.standard.string(forKey: "playerName") ?? ""
+        return stored == "Golfer" ? "" : stored
+    }()
+    @FocusState private var focused: Bool
+
+    private var trimmed: String { name.trimmingCharacters(in: .whitespacesAndNewlines) }
+
+    var body: some View {
+        VStack(spacing: 0) {
+            Spacer(minLength: 24)
+
+            Image("AppLogo")
+                .resizable()
+                .scaledToFill()
+                .frame(width: 84, height: 84)
+                .clipShape(RoundedRectangle(cornerRadius: 20, style: .continuous))
+                .shadow(color: AppTheme.gold.opacity(0.35), radius: 22)
+                .shadow(color: .black.opacity(0.5), radius: 12, y: 6)
+
+            VStack(spacing: 10) {
+                Text("Willkommen bei GolfTrack")
+                    .font(.title2.bold())
+                    .foregroundStyle(AppTheme.text)
+                    .multilineTextAlignment(.center)
+                Text("Wie dürfen wir dich nennen? Dein Name steht auf deinen Scorekarten und begrüßt dich auf der Startseite.")
+                    .font(.subheadline)
+                    .foregroundStyle(AppTheme.textSec)
+                    .multilineTextAlignment(.center)
+                    .lineSpacing(2)
+                    .fixedSize(horizontal: false, vertical: true)
+            }
+            .padding(.top, 26)
+
+            TextField(text: $name, prompt: Text("Dein Name").foregroundStyle(AppTheme.textTer)) {
+                Text("Dein Name")
+            }
+            .font(.title3.weight(.semibold))
+            .foregroundStyle(AppTheme.text)
+            .multilineTextAlignment(.center)
+            .textContentType(.givenName)
+            .textInputAutocapitalization(.words)
+            .autocorrectionDisabled()
+            .submitLabel(.continue)
+            .focused($focused)
+            .onSubmit(submit)
+            .padding(.vertical, 16)
+            .padding(.horizontal, 18)
+            .background(AppTheme.card, in: RoundedRectangle(cornerRadius: 14, style: .continuous))
+            .overlay(
+                RoundedRectangle(cornerRadius: 14, style: .continuous)
+                    .strokeBorder(focused ? AppTheme.gold : Color.white.opacity(0.08), lineWidth: 1.5)
+            )
+            .padding(.top, 28)
+
+            Spacer(minLength: 24)
+
+            Button(action: submit) {
+                HStack(spacing: 8) {
+                    Text("Weiter")
+                    Image(systemName: "arrow.right")
+                        .font(.subheadline.weight(.bold))
+                }
+                .goldButton()
+            }
+            .buttonStyle(.plain)
+            .disabled(trimmed.isEmpty)
+            .opacity(trimmed.isEmpty ? 0.45 : 1)
+            .animation(.easeInOut(duration: 0.2), value: trimmed.isEmpty)
+        }
+        .padding(.horizontal, 26)
+        .padding(.bottom, 12)
+        .onAppear {
+            focused = true
+        }
+    }
+
+    private func submit() {
+        guard !trimmed.isEmpty else { return }
+        focused = false
+        onContinue(String(trimmed.prefix(30)))
+    }
 }
 
 // MARK: - Bühne

@@ -197,8 +197,10 @@ struct HomeView: View {
                             nearbyCard(platz)
                         }
 
-                        if !nearby.newNearby.isEmpty {
-                            newNearbyCard(nearby.newNearby)
+                        // Den Platz aus „Du bist hier" nicht noch einmal als neu zeigen.
+                        let neuePlaetze = nearby.newNearby.filter { $0.id != nearby.suggestion?.id }
+                        if !neuePlaetze.isEmpty {
+                            newNearbyCard(neuePlaetze)
                         }
 
                         if appFocus == .minigolf {

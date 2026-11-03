@@ -57,7 +57,10 @@ export async function proxy(request: NextRequest) {
   const host = request.headers.get("host")?.split(":")[0]?.toLowerCase() ?? "";
 
   if (pathname === "/" && PLAY_HOSTS.has(host)) {
-    return NextResponse.rewrite(new URL("/start", request.url));
+    // Die Suche mitnehmen, sonst geht ein `?lang=` vom Aushang verloren.
+    const target = request.nextUrl.clone();
+    target.pathname = "/start";
+    return NextResponse.rewrite(target);
   }
 
   if (launched() || isOpen(pathname) || (await validSession(request.cookies.get(COOKIE)?.value))) {

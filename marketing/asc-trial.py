@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
-"""Legt die kostenlose Testphase (Einführungsangebot) für das Training-Abo an.
+"""Legt die kostenlose Testphase (Einführungsangebot) für GolfTrack Pro an.
 
     python3 marketing/asc-trial.py --issuer <UUID>                # Probelauf
     python3 marketing/asc-trial.py --issuer <UUID> --apply        # schreiben
     python3 marketing/asc-trial.py --issuer <UUID> --apply --ersetzen
 
-3 Tage gratis, danach der normale Monatspreis. Apple gewährt ein
+3 Tage gratis, danach der normale Preis (Monat bzw. Jahr). Apple gewährt ein
 Einführungsangebot je Abo-Gruppe nur einmal pro Apple-ID – wer schon einmal
 getestet oder abonniert hat, bekommt es nicht erneut. Die App zeigt die
 Testphase von selbst an (`SubscriptionManager.freeTrialLabel`), sobald StoreKit
@@ -16,8 +16,7 @@ Abo einen Preis hat. Wiederholbar: Länder, in denen die 3-Tage-Testphase schon
 steht, werden übersprungen. Steht dort ein anderes Angebot (z. B. 1 Woche), wird
 es nur mit `--ersetzen` gelöscht und neu angelegt.
 
-Nur das Training-Abo: Pro enthält den KI-Caddy, dessen Gespräche bei
-ElevenLabs Geld kosten – eine Gratisphase dort wäre ein offenes Scheunentor.
+Seit 2026-11-03 gibt es nur noch Pro (ohne KI-Caddy), darum Monats- und Jahresabo.
 """
 
 from __future__ import annotations
@@ -27,7 +26,7 @@ import sys
 
 from asc_api import APP_ID, ASC, APIError
 
-PRODUKTE = ["Trainingsvideos_abo"]
+PRODUKTE = ["GolfTrackPro_abo", "GolfTrackPro_abo_jahr"]
 DAUER = "THREE_DAYS"
 MODUS = "FREE_TRIAL"
 

@@ -42,6 +42,12 @@ final class SubscriptionManager: ObservableObject {
     @Published var proYearlyProduct: Product?
     @Published var proLifetimeProduct: Product?
 
+    /// Apple gewährt die Testphase je Abo-Gruppe nur einmal pro Apple-ID.
+    @Published var isEligibleForTrial = true
+    /// Rückkehr-Angebote (Win-back), die StoreKit diesem Kunden freigibt –
+    /// Produkt-ID → Angebot. Leer für Neukunden und unter iOS 18.
+    @Published var winBackOffers: [String: Product.SubscriptionOffer] = [:]
+
     /// Werbung sieht nur, wer nichts bezahlt hat.
     var showsAds: Bool { !(isPro || isAdFree) }
 
@@ -95,7 +101,8 @@ final class SubscriptionManager: ObservableObject {
 
     /// Dauer der Gratis-Testphase, z. B. „3 Tage“ / „3 days“ / „3 jours“.
     func freeTrialLabel(for product: Product?) -> String? {
-        guard let offer = product?.subscription?.introductoryOffer,
+        guard isEligibleForTrial, let product, winBackOffers[product.id] == nil,
+              let offer = product.subscription?.introductoryOffer,
               offer.paymentMode == .freeTrial else { return nil }
         return Self.spelledOut(offer.period)
     }
@@ -113,6 +120,34 @@ final class SubscriptionManager: ObservableObject {
         @unknown default: return nil
         }
         return formatter.string(from: parts)
+    }
+
+    // MARK: - Win-back
+
+    /// Rückkehrpreis für Gekündigte, z. B. 4,00 € statt 5,00 €.
+    func winBackOffer(for product: Product?) -> Product.SubscriptionOffer? {
+        product.flatMap { winBackOffers[$0.id] }
+    }
+
+    /// Testphase und Rückkehr-Angebote neu bestimmen – nach dem Laden der
+    /// Produkte und nach jeder Änderung des Abo-Status.
+    func refreshOffers() async {
+        guard let subscription = proProduct?.subscription else { return }
+        isEligibleForTrial = await subscription.isEligibleForIntroOffer
+        guard #available(iOS 18.0, *) else { return }
+        var eligibleIDs: Set<String> = []
+        for status in (try? await subscription.status) ?? [] {
+            if case .verified(let info) = status.renewalInfo {
+                eligibleIDs.formUnion(info.eligibleWinBackOfferIDs)
+            }
+        }
+        var offers: [String: Product.SubscriptionOffer] = [:]
+        for product in [proProduct, proYearlyProduct].compactMap({ $0 }) {
+            if let offer = product.subscription?.winBackOffers.first(where: { $0.id.map(eligibleIDs.contains) ?? false }) {
+                offers[product.id] = offer
+            }
+        }
+        winBackOffers = offers
     }
 
     // MARK: - Jahresabo-Ersparnis
@@ -174,7 +209,11 @@ final class SubscriptionManager: ObservableObject {
         defer { isPurchasing = false }
 
         do {
-            let result = try await product.purchase()
+            var options: Set<Product.PurchaseOption> = []
+            if #available(iOS 18.0, *), let offer = winBackOffers[product.id] {
+                options.insert(.winBackOffer(offer))
+            }
+            let result = try await product.purchase(options: options)
             switch result {
             case .success(let verification):
                 let transaction = try checkVerified(verification)
@@ -246,6 +285,7 @@ final class SubscriptionManager: ObservableObject {
         isPro           = hasPro
         ownsProLifetime = hasLifetime
         isAdFree        = hasAdFree
+        await refreshOffers()
     }
 
     // MARK: - Helpers

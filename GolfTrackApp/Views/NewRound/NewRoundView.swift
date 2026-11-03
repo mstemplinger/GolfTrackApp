@@ -14,6 +14,12 @@ struct NewRoundView: View {
     /// Wie oft hier schon eine Runde gestartet wurde – steuert, ob vorher die
     /// Ladeseite mit dem Eintrage-Hinweis kommt (siehe `RoundLoadingView.shouldShow`).
     @AppStorage("roundStartCount") private var roundStartCount = 0
+    @AppStorage(RoundTrackingService.enabledKey) private var trackingEnabled = false
+    /// Gilt nur für diese Runde – beim nächsten Mal fragt die Karte wieder.
+    @State private var trackingPromptDismissed = false
+    @State private var trackingJustEnabled = false
+    @State private var enablingTracking = false
+    @State private var locationAsker = OnbLocationAsker()
 
     @State private var selectedCourse: Course?
     @State private var selectedBag: GolfBag?
@@ -50,6 +56,13 @@ struct NewRoundView: View {
         NavigationStack {
             ScrollView {
                 VStack(alignment: .leading, spacing: 18) {
+                    if trackingJustEnabled {
+                        trackingEnabledNote
+                            .transition(.opacity)
+                    } else if !trackingEnabled && !trackingPromptDismissed {
+                        trackingPrompt
+                            .transition(.move(edge: .top).combined(with: .opacity))
+                    }
                     courseSection
                     modeSection
                     if !bags.isEmpty { bagSection }
@@ -410,6 +423,92 @@ struct NewRoundView: View {
         let total = tee.holeLengths.reduce(0) { $0 + max(0, $1) }
         if total > 0 { parts.append("\(total.formatted()) m") }
         return parts.isEmpty ? nil : parts.joined(separator: " · ")
+    }
+
+    // MARK: Positions-Tracking
+
+    /// Steht oben, solange die Aufzeichnung aus ist – bei jeder neuen Runde,
+    /// nicht nur einmal. „Ohne Tracking spielen“ blendet sie nur für diese aus.
+    private var trackingPrompt: some View {
+        VStack(alignment: .leading, spacing: 12) {
+            HStack(alignment: .top, spacing: 12) {
+                Image(systemName: "mappin.and.ellipse")
+                    .font(.system(size: 17, weight: .semibold))
+                    .foregroundStyle(AppTheme.gold)
+                    .frame(width: 40, height: 40)
+                    .background(AppTheme.gold.opacity(0.15), in: RoundedRectangle(cornerRadius: 11))
+                VStack(alignment: .leading, spacing: 3) {
+                    Text("Positions-Tracking ist aus")
+                        .font(.headline)
+                        .foregroundStyle(AppTheme.text)
+                    Text("Möchtest du es wirklich nicht einschalten? Mit Tracking erkennt GolfTrack Abschlag, Grün und Fairway-Verlauf jedes Lochs und zeigt dir die Entfernung zur Fahne.")
+                        .font(.caption)
+                        .foregroundStyle(AppTheme.textSec)
+                        .fixedSize(horizontal: false, vertical: true)
+                }
+            }
+
+            HStack(spacing: 10) {
+                Button {
+                    Haptics.tap()
+                    withAnimation(.easeInOut(duration: 0.25)) { trackingPromptDismissed = true }
+                } label: {
+                    Text("Ohne Tracking")
+                        .font(.subheadline.bold())
+                        .foregroundStyle(AppTheme.textSec)
+                        .frame(maxWidth: .infinity)
+                        .padding(.vertical, 11)
+                        .background(AppTheme.textSec.opacity(0.12), in: RoundedRectangle(cornerRadius: 12))
+                }
+                .buttonStyle(.plain)
+
+                Button(action: enableTracking) {
+                    Text("Einschalten")
+                        .font(.subheadline.bold())
+                        .foregroundStyle(darkText)
+                        .frame(maxWidth: .infinity)
+                        .padding(.vertical, 11)
+                        .background(AppTheme.gold, in: RoundedRectangle(cornerRadius: 12))
+                }
+                .buttonStyle(.plain)
+            }
+            .disabled(enablingTracking)
+        }
+        .padding(14)
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .background(AppTheme.card, in: RoundedRectangle(cornerRadius: 16))
+        .overlay(RoundedRectangle(cornerRadius: 16).stroke(AppTheme.gold.opacity(0.45), lineWidth: 1))
+    }
+
+    private var trackingEnabledNote: some View {
+        HStack(spacing: 10) {
+            Image(systemName: "checkmark.circle.fill")
+                .foregroundStyle(AppTheme.green)
+            Text("Positions-Tracking ist an – es startet mit dieser Runde.")
+                .font(.caption)
+                .foregroundStyle(AppTheme.textSec)
+                .fixedSize(horizontal: false, vertical: true)
+            Spacer(minLength: 0)
+        }
+        .padding(12)
+        .background(AppTheme.card, in: RoundedRectangle(cornerRadius: 16))
+    }
+
+    /// Wie im Einstieg: einschalten, dann – falls bisher nur „Beim Verwenden“
+    /// erlaubt ist – iOS nach „Immer“ fragen lassen, damit die Aufzeichnung
+    /// auch bei gesperrtem Display weiterläuft.
+    private func enableTracking() {
+        Haptics.success()
+        enablingTracking = true
+        withAnimation(.easeInOut(duration: 0.25)) {
+            trackingEnabled = true
+            trackingJustEnabled = true
+        }
+        Task { @MainActor in
+            await locationAsker.requestWhenInUse()
+            await locationAsker.requestAlways()
+            enablingTracking = false
+        }
     }
 
     // MARK: Datum

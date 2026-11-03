@@ -121,6 +121,52 @@
         }
       }
     },
+    "%lld von %lld Freunden" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld von %lld Freunden"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$lld of %2$lld friends"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$lld amis sur %2$lld"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$lld di %2$lld amici"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$lld de %2$lld amigos"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$lld z %2$lld znajomych"
+          }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$lld z %2$lld přátel"
+          }
+        }
+      }
+    },
     "-" : {
       "localizations" : {
         "cs" : {
@@ -157,6 +203,972 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "-"
+          }
+        }
+      }
+    },
+    "2 Wochen Pro einlösen" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "2 Wochen Pro einlösen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Redeem 2 weeks of Pro"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Activer 2 semaines de Pro"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Riscatta 2 settimane di Pro"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Canjear 2 semanas de Pro"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Odbierz 2 tygodnie Pro"
+          }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Uplatnit 2 týdny Pro"
+          }
+        }
+      }
+    },
+    "Alle Audio-Trainings und Tipps, keine Werbung –\nmonatlich, jährlich oder einmalig." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Alle Audio-Trainings und Tipps, keine Werbung –\nmonatlich, jährlich oder einmalig."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "All audio trainings and tips, no ads –\nmonthly, yearly or one-time."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tous les entraînements audio et conseils, sans pub –\nmensuel, annuel ou unique."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tutti gli allenamenti audio e i consigli, senza pubblicità –\nmensile, annuale o una tantum."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Todos los entrenamientos de audio y consejos, sin anuncios –\nmensual, anual o pago único."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wszystkie treningi audio i porady, bez reklam –\nmiesięcznie, rocznie lub jednorazowo."
+          }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Všechny audio tréninky a tipy, bez reklam –\nměsíčně, ročně nebo jednorázově."
+          }
+        }
+      }
+    },
+    "Alle Golf-Tipps mit Grafiken" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Alle Golf-Tipps mit Grafiken"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "All golf tips with illustrations"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tous les conseils de golf illustrés"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tutti i consigli di golf con grafiche"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Todos los consejos de golf con gráficos"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wszystkie porady golfowe z grafikami"
+          }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Všechny golfové tipy s grafikou"
+          }
+        }
+      }
+    },
+    "Bei 5 Freunden gibt's 2 Wochen Pro geschenkt" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bei 5 Freunden gibt's 2 Wochen Pro geschenkt"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Invite 5 friends and get 2 weeks of Pro free"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "5 amis invités = 2 semaines de Pro offertes"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Con 5 amici ricevi 2 settimane di Pro in regalo"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Con 5 amigos recibes 2 semanas de Pro gratis"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Za 5 znajomych dostajesz 2 tygodnie Pro gratis"
+          }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Za 5 přátel dostaneš 2 týdny Pro zdarma"
+          }
+        }
+      }
+    },
+    "Code %@" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Code %@"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Code %@"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Code %@"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Codice %@"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Código %@"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kod %@"
+          }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kód %@"
+          }
+        }
+      }
+    },
+    "Danke! Dein Freund ist einen Schritt näher an seinem Geschenk." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Danke! Dein Freund ist einen Schritt näher an seinem Geschenk."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Thanks! Your friend is one step closer to their gift."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Merci ! Ton ami se rapproche de son cadeau."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Grazie! Il tuo amico è un passo più vicino al suo regalo."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "¡Gracias! Tu amigo está un paso más cerca de su regalo."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dzięki! Twój znajomy jest o krok bliżej prezentu."
+          }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Díky! Tvůj kamarád je o krok blíž ke svému dárku."
+          }
+        }
+      }
+    },
+    "Das ist dein eigener Code." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Das ist dein eigener Code."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "That’s your own code."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "C’est ton propre code."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Questo è il tuo codice."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ese es tu propio código."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "To twój własny kod."
+          }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "To je tvůj vlastní kód."
+          }
+        }
+      }
+    },
+    "Diesen Code gibt es nicht." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Diesen Code gibt es nicht."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "This code doesn’t exist."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ce code n’existe pas."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Questo codice non esiste."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Este código no existe."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Taki kod nie istnieje."
+          }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tento kód neexistuje."
+          }
+        }
+      }
+    },
+    "Dieses iPhone hat schon eine Einladung eingelöst." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dieses iPhone hat schon eine Einladung eingelöst."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "This iPhone has already redeemed an invite."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cet iPhone a déjà utilisé une invitation."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Questo iPhone ha già riscattato un invito."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Este iPhone ya ha canjeado una invitación."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ten iPhone wykorzystał już zaproszenie."
+          }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tento iPhone už pozvánku uplatnil."
+          }
+        }
+      }
+    },
+    "Einladung" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Einladung"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Invite"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Invitation"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Invito"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Invitación"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zaproszenie"
+          }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pozvánka"
+          }
+        }
+      }
+    },
+    "Einladung teilen" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Einladung teilen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Share invite"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Partager l’invitation"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Condividi invito"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Compartir invitación"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Udostępnij zaproszenie"
+          }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sdílet pozvánku"
+          }
+        }
+      }
+    },
+    "Einlösen" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Einlösen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Redeem"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Valider"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Riscatta"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Canjear"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zrealizuj"
+          }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Uplatnit"
+          }
+        }
+      }
+    },
+    "Freunde einladen" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Freunde einladen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Invite friends"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Inviter des amis"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Invita amici"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Invitar amigos"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zaproś znajomych"
+          }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pozvat přátele"
+          }
+        }
+      }
+    },
+    "Geschafft! Dein Geschenk ist gleich da – schau später noch einmal vorbei." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Geschafft! Dein Geschenk ist gleich da – schau später noch einmal vorbei."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Done! Your gift is on its way – check back a little later."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "C’est fait ! Ton cadeau arrive – reviens un peu plus tard."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fatto! Il tuo regalo sta arrivando – ricontrolla più tardi."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "¡Listo! Tu regalo está en camino – vuelve un poco más tarde."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Udało się! Prezent jest w drodze – zajrzyj tu trochę później."
+          }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hotovo! Dárek je na cestě – podívej se sem o něco později."
+          }
+        }
+      }
+    },
+    "Ich zähle meine Golfrunden mit GolfTrack – probier's aus! Mein Einladungscode: %@" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ich zähle meine Golfrunden mit GolfTrack – probier's aus! Mein Einladungscode: %@"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "I track my golf rounds with GolfTrack – give it a try! My invite code: %@"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Je compte mes parties de golf avec GolfTrack – essaie ! Mon code d’invitation : %@"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Conto i miei giri di golf con GolfTrack – provalo! Il mio codice invito: %@"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cuento mis rondas de golf con GolfTrack – ¡pruébalo! Mi código de invitación: %@"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Liczę swoje rundy golfa w GolfTrack – wypróbuj! Mój kod zaproszenia: %@"
+          }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Počítám svá golfová kola v GolfTracku – vyzkoušej to! Můj kód pozvánky: %@"
+          }
+        }
+      }
+    },
+    "Keine Verbindung – versuch es später noch einmal." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Keine Verbindung – versuch es später noch einmal."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No connection – please try again later."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pas de connexion – réessaie plus tard."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nessuna connessione – riprova più tardi."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sin conexión – inténtalo más tarde."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Brak połączenia – spróbuj później."
+          }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bez připojení – zkus to později."
+          }
+        }
+      }
+    },
+    "Lade deinen Einladungscode …" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lade deinen Einladungscode …"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Loading your invite code …"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Chargement de ton code d’invitation …"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Caricamento del tuo codice invito …"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cargando tu código de invitación …"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ładowanie kodu zaproszenia …"
+          }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Načítám tvůj kód pozvánky …"
+          }
+        }
+      }
+    },
+    "statt %@" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "statt %@"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "instead of %@"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "au lieu de %@"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "invece di %@"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "en lugar de %@"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "zamiast %@"
+          }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "místo %@"
+          }
+        }
+      }
+    },
+    "Von einem Freund eingeladen?" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Von einem Freund eingeladen?"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Invited by a friend?"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Invité par un ami ?"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Invitato da un amico?"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "¿Te ha invitado un amigo?"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zaproszenie od znajomego?"
+          }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pozval tě kamarád?"
+          }
+        }
+      }
+    },
+    "Willkommen zurück" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Willkommen zurück"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Welcome back"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bon retour"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bentornato"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bienvenido de nuevo"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Witaj ponownie"
+          }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vítej zpět"
+          }
+        }
+      }
+    },
+    "Zu viele Versuche – probier es morgen noch einmal." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zu viele Versuche – probier es morgen noch einmal."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Too many attempts – try again tomorrow."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Trop de tentatives – réessaie demain."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Troppi tentativi – riprova domani."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Demasiados intentos – inténtalo mañana."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zbyt wiele prób – spróbuj jutro."
+          }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Příliš mnoho pokusů – zkus to zítra."
           }
         }
       }
@@ -1053,6 +2065,12 @@
         }
       }
     },
+    "%@ auf der Karte zeigen" : {
+
+    },
+    "%@ entfernen" : {
+
+    },
     "%@ Fairways" : {
       "localizations" : {
         "cs" : {
@@ -1184,6 +2202,9 @@
           }
         }
       }
+    },
+    "%@ hat noch kein Loch gespielt." : {
+
     },
     "%@ kostenlos" : {
       "localizations" : {
@@ -1706,6 +2727,7 @@
       }
     },
     "%lld Audio-Trainingseinheiten" : {
+      "extractionState" : "stale",
       "localizations" : {
         "cs" : {
           "variations" : {
@@ -2293,6 +3315,9 @@
           }
         }
       }
+    },
+    "%lld gespielt" : {
+
     },
     "%lld h" : {
       "localizations" : {
@@ -4280,6 +5305,9 @@
         }
       }
     },
+    "%lld." : {
+
+    },
     "%lld. %@" : {
       "localizations" : {
         "cs" : {
@@ -4706,6 +5734,7 @@
       }
     },
     "≈ %@ / Monat" : {
+      "extractionState" : "stale",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
@@ -6008,6 +7037,9 @@
           }
         }
       }
+    },
+    "5-stelliger Code" : {
+
     },
     "7 Tagen" : {
       "localizations" : {
@@ -7490,6 +8522,7 @@
       }
     },
     "Abonnement wird geladen…" : {
+      "extractionState" : "stale",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
@@ -8541,7 +9574,8 @@
             "value" : "Wszystkie treningi audio, bez reklam –\nmiesięcznie, rocznie lub jednorazowo."
           }
         }
-      }
+      },
+      "extractionState" : "stale"
     },
     "Alle Ergebnisse löschen?" : {
       "localizations" : {
@@ -8912,6 +9946,7 @@
       }
     },
     "Alle künftigen Audiobooks inklusive" : {
+      "extractionState" : "stale",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
@@ -9204,6 +10239,7 @@
       }
     },
     "Alle Trainings und der KI-Caddy –\nalles in einem Abo." : {
+      "extractionState" : "stale",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
@@ -10419,6 +11455,7 @@
       }
     },
     "Auch unterwegs auf dem Platz nutzbar" : {
+      "extractionState" : "stale",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
@@ -10711,6 +11748,7 @@
       }
     },
     "Audiobooks für immer" : {
+      "extractionState" : "stale",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
@@ -12551,6 +13589,9 @@
         }
       }
     },
+    "Beitreten" : {
+
+    },
     "belastbar" : {
       "localizations" : {
         "cs" : {
@@ -14081,6 +15122,7 @@
       }
     },
     "Caddy" : {
+      "extractionState" : "stale",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
@@ -14121,6 +15163,7 @@
       }
     },
     "Caddy – Golf-Assistent" : {
+      "extractionState" : "stale",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
@@ -14161,6 +15204,7 @@
       }
     },
     "Caddy fragen" : {
+      "extractionState" : "stale",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
@@ -14207,6 +15251,7 @@
       }
     },
     "Caddy spricht..." : {
+      "extractionState" : "stale",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
@@ -14247,6 +15292,7 @@
       }
     },
     "Caddy und alle Trainings –\nalles in einem Abo." : {
+      "extractionState" : "stale",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
@@ -14282,6 +15328,52 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Caddy i wszystkie treningi –\nwszystko w jednej subskrypcji."
+          }
+        }
+      }
+    },
+    "Code" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Code"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Code"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Code"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Codice"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Código"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kod"
+          }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kód"
           }
         }
       }
@@ -15403,6 +16495,7 @@
       }
     },
     "Dein persönlicher KI-Caddy –\nRegeln, Tipps und Strategien per Sprache." : {
+      "extractionState" : "stale",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
@@ -15726,6 +16819,7 @@
 
     },
     "Der Assistent für Schlagwahl und Taktik" : {
+      "extractionState" : "stale",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
@@ -15811,6 +16905,9 @@
         }
       }
     },
+    "Der Gastgeber hat das gegenseitige Orten nicht eingeschaltet." : {
+
+    },
     "Der Körper schlägt, was der Kopf gesehen hat" : {
 
     },
@@ -15854,6 +16951,9 @@
         }
       }
     },
+    "Der Lobby-Code hat fünf Ziffern." : {
+
+    },
     "Der Platz ließ sich nicht laden. Prüf die Verbindung und scanne noch einmal." : {
       "localizations" : {
         "cs" : {
@@ -15893,6 +16993,9 @@
           }
         }
       }
+    },
+    "Der Server hat nicht geantwortet. Versuch es gleich noch einmal." : {
+
     },
     "Der Weg aufs Grün" : {
       "localizations" : {
@@ -16216,6 +17319,15 @@
           }
         }
       }
+    },
+    "Die Lobby ist abgelaufen." : {
+
+    },
+    "Die Lobby ist voll – mehr als acht Spieler gehen nicht." : {
+
+    },
+    "Die Lobby wurde beendet oder du wurdest entfernt." : {
+
     },
     "Die offiziellen Bahnengolf-Regeln, kurz gefasst." : {
       "localizations" : {
@@ -17481,6 +18593,7 @@
       }
     },
     "Du hast aktuell Caddy aktiv. Wenn du das Training-Abo kaufst, verlierst du deinen Caddy-Zugang. Mit Pro bekommst du beides – Training und Caddy – in einem Abo." : {
+      "extractionState" : "stale",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
@@ -17521,6 +18634,7 @@
       }
     },
     "Du hast aktuell Training aktiv. Wenn du das Caddy-Abo kaufst, verlierst du deinen Training-Zugang. Mit Pro bekommst du beides – Caddy und Training – in einem Abo." : {
+      "extractionState" : "stale",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
@@ -17602,6 +18716,7 @@
       }
     },
     "Du hast bereits Caddy" : {
+      "extractionState" : "stale",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
@@ -17642,6 +18757,7 @@
       }
     },
     "Du hast bereits Training" : {
+      "extractionState" : "stale",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
@@ -17682,6 +18798,7 @@
       }
     },
     "Du hast drei Möglichkeiten, jeweils mit einem Strafschlag: Schlag wiederholen, auf der Linie zur Fahne zurückgehen oder seitlich innerhalb von zwei Schlägerlängen droppen (Regel 17)." : {
+      "extractionState" : "stale",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
@@ -17932,6 +19049,9 @@
           }
         }
       }
+    },
+    "Du teilst deinen Standort gerade nicht." : {
+
     },
     "dünn" : {
       "localizations" : {
@@ -18549,6 +19669,7 @@
 
     },
     "Einfach fragen" : {
+      "extractionState" : "stale",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
@@ -18828,7 +19949,11 @@
         }
       }
     },
+    "Einladen" : {
+
+    },
     "Einmal bezahlen – kein Abo, keine Verlängerung" : {
+      "extractionState" : "stale",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
@@ -18869,6 +19994,7 @@
       }
     },
     "Einmal kaufen – alle Audiobooks,\nheute und in Zukunft." : {
+      "extractionState" : "stale",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
@@ -18909,6 +20035,7 @@
       }
     },
     "Einmal kaufen, Anzeigen weg" : {
+      "extractionState" : "stale",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
@@ -18949,6 +20076,7 @@
       }
     },
     "Einmal zahlen, für immer behalten" : {
+      "extractionState" : "stale",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
@@ -19109,6 +20237,7 @@
       }
     },
     "Einmalzahlung · Kein Abo" : {
+      "extractionState" : "stale",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
@@ -19190,6 +20319,46 @@
     },
     "eins" : {
 
+    },
+    "Einschalten" : {
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zapnout"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Turn on"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Activar"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Activer"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Attiva"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Włącz"
+          }
+        }
+      }
     },
     "Einsteigen" : {
 
@@ -19860,6 +21029,52 @@
         }
       }
     },
+    "Erfolge" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Erfolge"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Achievements"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Succès"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Obiettivi"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Logros"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Osiągnięcia"
+          }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Úspěchy"
+          }
+        }
+      }
+    },
     "Ergebnis" : {
       "localizations" : {
         "cs" : {
@@ -20311,6 +21526,9 @@
           }
         }
       }
+    },
+    "Erlaube GolfTrack den Zugriff auf die Kamera in den Einstellungen – oder gib den fünfstelligen Code ein." : {
+
     },
     "Erlaube GolfTrack die Kamera in den Einstellungen – oder scanne den Code mit der Kamera-App." : {
       "localizations" : {
@@ -21493,6 +22711,7 @@
       }
     },
     "Frag einfach deinen Caddy" : {
+      "extractionState" : "stale",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
@@ -21670,6 +22889,9 @@
           }
         }
       }
+    },
+    "Freunde öffnen GolfTrack → Neue Runde → Mit Freunden spielen und scannen den Code – oder geben die fünf Ziffern ein." : {
+
     },
     "Füge deine Schläger zu diesem Bag hinzu." : {
       "localizations" : {
@@ -22084,46 +23306,6 @@
         }
       }
     },
-    "Für immer" : {
-      "localizations" : {
-        "cs" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Navždy"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Forever"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Para siempre"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "À vie"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Per sempre"
-          }
-        },
-        "pl" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Na zawsze"
-          }
-        }
-      }
-    },
     "für immer" : {
       "localizations" : {
         "cs" : {
@@ -22160,6 +23342,47 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "na zawsze"
+          }
+        }
+      }
+    },
+    "Für immer" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Navždy"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Forever"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Para siempre"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "À vie"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Per sempre"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Na zawsze"
           }
         }
       }
@@ -22295,6 +23518,9 @@
           }
         }
       }
+    },
+    "Gastgeber" : {
+
     },
     "Gebaut mit" : {
       "localizations" : {
@@ -22461,6 +23687,15 @@
           }
         }
       }
+    },
+    "Gegenseitig orten" : {
+
+    },
+    "Gegenseitiges Orten ist an" : {
+
+    },
+    "Gegenseitiges Orten ist aus" : {
+
     },
     "Gegenwind" : {
 
@@ -23055,6 +24290,7 @@
       }
     },
     "Gespräch beenden" : {
+      "extractionState" : "stale",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
@@ -23095,6 +24331,7 @@
       }
     },
     "Gespräch starten" : {
+      "extractionState" : "stale",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
@@ -23135,6 +24372,7 @@
       }
     },
     "Gesprächsbasierte Golf-Beratung" : {
+      "extractionState" : "stale",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
@@ -23345,6 +24583,7 @@
       }
     },
     "Gilt auf allen Geräten mit derselben Apple-ID" : {
+      "extractionState" : "stale",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
@@ -23511,6 +24750,7 @@
       }
     },
     "Golf-Assistent" : {
+      "extractionState" : "stale",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
@@ -24490,6 +25730,7 @@
       }
     },
     "Golfregeln per Sprache klären – mit Regelnummer" : {
+      "extractionState" : "stale",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
@@ -25144,6 +26385,9 @@
         }
       }
     },
+    "Halte die Kamera auf den QR-Code deines Freundes." : {
+
+    },
     "Halten" : {
 
     },
@@ -25496,6 +26740,7 @@
       }
     },
     "Handicap, Stableford & WHS erklärt" : {
+      "extractionState" : "stale",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
@@ -26049,6 +27294,7 @@
 
     },
     "Hinweise der Anlage wie Toiletten oder Unterstand bleiben sichtbar" : {
+      "extractionState" : "stale",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
@@ -27578,6 +28824,12 @@
         }
       }
     },
+    "Jeder zählt auf seinem eigenen iPhone. Aktualisiert sich alle paar Sekunden." : {
+
+    },
+    "Jeder zählt auf seinem iPhone – ihr seht live die Schläge der anderen." : {
+
+    },
     "Jederzeit kündbar · Keine Bindung" : {
       "localizations" : {
         "cs" : {
@@ -27780,6 +29032,9 @@
           }
         }
       }
+    },
+    "Kamera nicht verfügbar" : {
+
     },
     "Kapitel %lld" : {
       "localizations" : {
@@ -28041,6 +29296,7 @@
       }
     },
     "Kein Abo, keine Folgekosten" : {
+      "extractionState" : "stale",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
@@ -28461,6 +29717,7 @@
       }
     },
     "Keine Anzeigen mehr in den Zählkarten" : {
+      "extractionState" : "stale",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
@@ -28793,6 +30050,52 @@
         }
       }
     },
+    "Keine Verbindung zum Server. Prüf die Internetverbindung." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Keine Verbindung zum Server. Prüf die Internetverbindung."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Can’t reach the server. Check your internet connection."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Impossible de joindre le serveur. Vérifie ta connexion internet."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Impossibile raggiungere il server. Controlla la connessione internet."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No se puede conectar con el servidor. Comprueba tu conexión a internet."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Brak połączenia z serwerem. Sprawdź połączenie z internetem."
+          }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nelze se spojit se serverem. Zkontroluj připojení k internetu."
+          }
+        }
+      }
+    },
     "Keine Werbung in der App" : {
       "localizations" : {
         "cs" : {
@@ -28834,6 +30137,7 @@
       }
     },
     "KI-Assistent Caddy" : {
+      "extractionState" : "stale",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
@@ -28874,6 +30178,7 @@
       }
     },
     "KI-Sprachassistent Caddy" : {
+      "extractionState" : "stale",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
@@ -30219,6 +31524,36 @@
         }
       }
     },
+    "Lobby" : {
+
+    },
+    "Lobby %@" : {
+
+    },
+    "Lobby auflösen" : {
+
+    },
+    "Lobby beendet" : {
+
+    },
+    "Lobby erstellen" : {
+
+    },
+    "Lobby öffnen" : {
+
+    },
+    "Lobby verlassen" : {
+
+    },
+    "Lobby wird geladen …" : {
+
+    },
+    "Lobby-Code" : {
+
+    },
+    "Lobby-Code scannen" : {
+
+    },
     "Loch" : {
       "localizations" : {
         "cs" : {
@@ -31544,6 +32879,7 @@
       }
     },
     "Mein Ball liegt im Wasserhindernis. Was darf ich jetzt tun?" : {
+      "extractionState" : "stale",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
@@ -31662,6 +32998,9 @@
           }
         }
       }
+    },
+    "Meinen Standort teilen" : {
+
     },
     "Meinen Standort verwenden" : {
       "localizations" : {
@@ -32482,6 +33821,7 @@
       }
     },
     "Mit der Familienfreigabe teilen" : {
+      "extractionState" : "stale",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
@@ -32560,6 +33900,9 @@
           }
         }
       }
+    },
+    "Mit Freunden spielen" : {
+
     },
     "Mit Game Center verbinden" : {
       "localizations" : {
@@ -32648,6 +33991,7 @@
       }
     },
     "Mit Regelbezug" : {
+      "extractionState" : "stale",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
@@ -32985,6 +34329,46 @@
         }
       }
     },
+    "Möchtest du es wirklich nicht einschalten? Mit Tracking erkennt GolfTrack Abschlag, Grün und Fairway-Verlauf jedes Lochs und zeigt dir die Entfernung zur Fahne." : {
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Opravdu ho nechceš zapnout? Se sledováním GolfTrack rozpozná odpaliště, green a průběh fairwaye každé jamky a ukáže ti vzdálenost k vlajce."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Are you sure you don't want to turn it on? With tracking, GolfTrack detects the tee, green and fairway shape of every hole and shows you the distance to the flag."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "¿Seguro que no quieres activarlo? Con el seguimiento, GolfTrack reconoce el tee, el green y el trazado del fairway de cada hoyo y te muestra la distancia a la bandera."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tu ne veux vraiment pas l’activer ? Avec le suivi, GolfTrack reconnaît le départ, le green et le tracé du fairway de chaque trou et t’indique la distance au drapeau."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vuoi davvero non attivarlo? Con il tracciamento GolfTrack riconosce tee, green e andamento del fairway di ogni buca e ti mostra la distanza dalla bandiera."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Na pewno nie chcesz go włączyć? Dzięki śledzeniu GolfTrack rozpoznaje tee, green i przebieg fairwaya każdego dołka oraz pokazuje odległość do flagi."
+          }
+        }
+      }
+    },
     "Modus beenden?" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -33145,6 +34529,9 @@
           }
         }
       }
+    },
+    "N" : {
+
     },
     "Nach der Runde steht dein WHS-Handicap fest. Dazu Statistiken, eine Scorekarte zum Teilen und Audio-Lektionen passend zu dieser Runde." : {
       "localizations" : {
@@ -34297,6 +35684,7 @@
       }
     },
     "Neue Lektionen regelmäßig" : {
+      "extractionState" : "stale",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
@@ -34875,7 +36263,11 @@
         }
       }
     },
+    "Nicht mehr in der Lobby" : {
+
+    },
     "Nicht verbunden" : {
+      "extractionState" : "stale",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
@@ -35076,6 +36468,7 @@
       }
     },
     "Nimm dein 7er-Eisen – damit schlägst du laut deinem Bag im Schnitt 140 m." : {
+      "extractionState" : "stale",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
@@ -35114,6 +36507,9 @@
           }
         }
       }
+    },
+    "NO" : {
+
     },
     "Noch %@ zum Loch" : {
       "localizations" : {
@@ -35355,6 +36751,9 @@
           }
         }
       }
+    },
+    "Noch kein Standort von deinen Freunden – sie müssen ihn in der Lobby teilen und die Runde gestartet haben." : {
+
     },
     "Noch keine Bags" : {
       "localizations" : {
@@ -36127,6 +37526,9 @@
         }
       }
     },
+    "Nur während der Runde, nur für diese Lobby." : {
+
+    },
     "Nur während einer laufenden Runde" : {
       "localizations" : {
         "cs" : {
@@ -36206,6 +37608,12 @@
           }
         }
       }
+    },
+    "NW" : {
+
+    },
+    "O" : {
+
     },
     "Ø" : {
       "localizations" : {
@@ -37095,6 +38503,46 @@
         }
       }
     },
+    "Ohne Tracking" : {
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bez sledování"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Without tracking"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sin seguimiento"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sans suivi"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Senza tracciamento"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bez śledzenia"
+          }
+        }
+      }
+    },
     "Ohne Werbung spielen" : {
       "localizations" : {
         "cs" : {
@@ -37336,6 +38784,9 @@
           }
         }
       }
+    },
+    "Orten ist aus" : {
+
     },
     "P" : {
 
@@ -39517,6 +40968,7 @@
       }
     },
     "Platzstrategie & Schlägerwahl vom Caddy" : {
+      "extractionState" : "stale",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
@@ -39682,6 +41134,86 @@
         }
       }
     },
+    "Positions-Tracking ist an – es startet mit dieser Runde." : {
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sledování polohy je zapnuté – spustí se s tímto kolem."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Position tracking is on – it starts with this round."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "El seguimiento de posición está activado: empieza con esta vuelta."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Le suivi de position est activé – il démarre avec cette partie."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Il tracciamento della posizione è attivo – parte con questo giro."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Śledzenie pozycji jest włączone – zacznie się w tej rundzie."
+          }
+        }
+      }
+    },
+    "Positions-Tracking ist aus" : {
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sledování polohy je vypnuté"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Position tracking is off"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "El seguimiento de posición está desactivado"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Le suivi de position est désactivé"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Il tracciamento della posizione è disattivato"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Śledzenie pozycji jest wyłączone"
+          }
+        }
+      }
+    },
     "Praxis-Tipp" : {
       "localizations" : {
         "cs" : {
@@ -39769,6 +41301,7 @@
       }
     },
     "Pro (Alles)" : {
+      "extractionState" : "stale",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
@@ -40915,6 +42448,9 @@
         }
       }
     },
+    "QR-Code groß anzeigen" : {
+
+    },
     "QR-Code scannen" : {
       "localizations" : {
         "cs" : {
@@ -41159,6 +42695,7 @@
       }
     },
     "Regelfrage am Wasserhindernis? Taktik für ein schwieriges Loch? Der Caddy antwortet per Sprache – mitten auf der Runde." : {
+      "extractionState" : "stale",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
@@ -41319,6 +42856,7 @@
       }
     },
     "Regeln, Tipps & Strategien" : {
+      "extractionState" : "stale",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
@@ -41359,6 +42897,7 @@
       }
     },
     "Regeln, Tipps & Strategien auf Abruf" : {
+      "extractionState" : "stale",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
@@ -43008,6 +44547,9 @@
         }
       }
     },
+    "S" : {
+
+    },
     "S.%lld" : {
       "localizations" : {
         "cs" : {
@@ -43253,6 +44795,9 @@
           }
         }
       }
+    },
+    "Schalte „Gegenseitig orten“ beim Rundenstart in der Lobby ein." : {
+
     },
     "Schätzt aus den Messpunkten zwischen Abschlag und Grün, wo das Fairway ungefähr verläuft. Braucht gespeicherte Loch-Positionen." : {
       "localizations" : {
@@ -46295,6 +47840,9 @@
         }
       }
     },
+    "SO" : {
+
+    },
     "So funktioniert's" : {
       "localizations" : {
         "cs" : {
@@ -46496,6 +48044,7 @@
       }
     },
     "Spare %@" : {
+      "extractionState" : "stale",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
@@ -46782,6 +48331,7 @@
       }
     },
     "Spiel deine Runden ohne Anzeigen." : {
+      "extractionState" : "stale",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
@@ -46820,6 +48370,9 @@
           }
         }
       }
+    },
+    "Spiel mit mir bei GolfTrack – Lobby-Code %@" : {
+
     },
     "Spiel starten" : {
       "localizations" : {
@@ -48832,6 +50385,7 @@
       }
     },
     "Stelle mir eine Frage über Golf…" : {
+      "extractionState" : "stale",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
@@ -49297,6 +50851,9 @@
           }
         }
       }
+    },
+    "SW" : {
+
     },
     "SwiftUI & SwiftData" : {
       "localizations" : {
@@ -50697,6 +52254,7 @@
 
     },
     "Trenne Verbindung..." : {
+      "extractionState" : "stale",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
@@ -51286,6 +52844,7 @@
       }
     },
     "Unbegrenzte Caddy-Gespräche" : {
+      "extractionState" : "stale",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
@@ -51326,6 +52885,7 @@
       }
     },
     "Unbegrenzte Gespräche" : {
+      "extractionState" : "stale",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
@@ -51366,6 +52926,7 @@
       }
     },
     "Und welchen Schläger für 140 m?" : {
+      "extractionState" : "stale",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
@@ -51526,6 +53087,7 @@
       }
     },
     "Verbinden..." : {
+      "extractionState" : "stale",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
@@ -51613,6 +53175,7 @@
       }
     },
     "Verbunden" : {
+      "extractionState" : "stale",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
@@ -52393,6 +53956,12 @@
         }
       }
     },
+    "W" : {
+
+    },
+    "Während der Runde seht ihr, wo die anderen gerade sind." : {
+
+    },
     "Während einer Bildschirmaufnahme oder Bildschirmspiegelung werden die Audiobooks nicht abgespielt. Beende die Aufnahme, um weiterzuhören." : {
       "localizations" : {
         "cs" : {
@@ -52472,6 +54041,9 @@
           }
         }
       }
+    },
+    "Warte auf Freunde – sie scannen den QR-Code oder geben den Code ein." : {
+
     },
     "Warte auf GPS…" : {
       "localizations" : {
@@ -53508,6 +55080,7 @@
 
     },
     "Wer ein Training- oder Caddy-Abo hat, sieht ohnehin keine Werbung." : {
+      "extractionState" : "stale",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
@@ -53818,6 +55391,7 @@
       }
     },
     "Werbefrei" : {
+      "extractionState" : "stale",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
@@ -53858,6 +55432,7 @@
       }
     },
     "Werbefrei gekauft" : {
+      "extractionState" : "stale",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
@@ -53984,6 +55559,7 @@
       }
     },
     "Werde zum besseren Golfspieler –\nmit geführten Audio-Trainings." : {
+      "extractionState" : "stale",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
@@ -55220,6 +56796,7 @@
       }
     },
     "Wird geladen…" : {
+      "extractionState" : "stale",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
@@ -56021,10 +57598,17 @@
     "Ziellinie sehen" : {
 
     },
+    "Zu %@ gehen" : {
+
+    },
+    "Zu diesem Code gibt es keine Lobby. Prüf die fünf Ziffern." : {
+
+    },
     "Zu fest: Handgelenke blockieren, Distanz geht verloren" : {
 
     },
     "Zu Pro wechseln – alles in einem" : {
+      "extractionState" : "stale",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
@@ -56064,7 +57648,11 @@
         }
       }
     },
+    "Zu viele Versuche. Warte ein paar Minuten." : {
+
+    },
     "Zuhören..." : {
+      "extractionState" : "stale",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
@@ -56103,6 +57691,12 @@
           }
         }
       }
+    },
+    "zuletzt %@" : {
+
+    },
+    "Zum Beitreten scannen" : {
+
     },
     "Zum Drehen wischen, mit zwei Fingern zoomen." : {
       "localizations" : {

@@ -204,6 +204,27 @@ const STATEMENTS = [
      seen_at        timestamptz NOT NULL DEFAULT now()
    )`,
   `CREATE INDEX IF NOT EXISTS lobby_members_code_idx ON lobby_members (code)`,
+  // Weiterempfehlung (`lib/referral.ts`): je Gerät ein Einladungscode; jedes
+  // eingeladene Gerät zählt genau einmal. Gerätekennungen nur gehasht.
+  `CREATE TABLE IF NOT EXISTS referrers (
+     code         text PRIMARY KEY,
+     device_hash  text NOT NULL UNIQUE,
+     reward_code  text,
+     reward_at    timestamptz,
+     created_at   timestamptz NOT NULL DEFAULT now()
+   )`,
+  `CREATE TABLE IF NOT EXISTS referral_claims (
+     device_hash   text PRIMARY KEY,
+     referrer_code text NOT NULL REFERENCES referrers(code) ON DELETE CASCADE,
+     created_at    timestamptz NOT NULL DEFAULT now()
+   )`,
+  `CREATE INDEX IF NOT EXISTS referral_claims_referrer_idx ON referral_claims (referrer_code)`,
+  // Vorrat an Apple-Einmalcodes „2 Wochen Pro“, geladen per deploy/referral-codes.sh.
+  `CREATE TABLE IF NOT EXISTS referral_reward_codes (
+     code         text PRIMARY KEY,
+     assigned_to  text REFERENCES referrers(code) ON DELETE SET NULL,
+     assigned_at  timestamptz
+   )`,
 ];
 
 let ready: Promise<void> | null = null;

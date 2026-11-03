@@ -28,6 +28,7 @@ struct ContentView: View {
     @State private var scannedGolfCourse: Course?
     /// Lobby-QR-Code mit der Kamera gescannt – öffnet den Rundenstart und tritt bei.
     @State private var scannedLobby: LobbyJoinLink?
+    @State private var referralMessage: LocalizedStringKey?
     /// Läuft, während der Platzkatalog wegen eines unbekannten Codes nachgeladen wird.
     @State private var deepLinkLoading = false
     /// Text der Meldung, wenn ein gescannter Code zu keiner Anlage führt.
@@ -103,6 +104,14 @@ struct ContentView: View {
         .fullScreenCover(item: $scannedMinigolfCourse) { course in
             MinigolfCourseStartView(course: course)
                 .preferredColorScheme(.dark)
+        }
+        .alert(
+            "Einladung",
+            isPresented: Binding(get: { referralMessage != nil }, set: { if !$0 { referralMessage = nil } })
+        ) {
+            Button("OK", role: .cancel) {}
+        } message: {
+            Text(referralMessage ?? "")
         }
         .fullScreenCover(item: $scannedLobby) { link in
             NewRoundView(lobbyJoinCode: link.code)
@@ -218,6 +227,14 @@ struct ContentView: View {
         // Golf und Minigolf über dieselbe Auswertung wie im App Clip. Vorher
         // kannte diese Stelle nur Minigolf – ein Golfplatz-Code öffnete die
         // App und tat dann nichts.
+        // golftrack.app/einladen/<code> – Einladung eines Freundes einlösen
+        if let code = ReferralLink.code(from: url) {
+            let result = await ReferralService.shared.claim(code)
+            if result == .counted { Haptics.success() }
+            referralMessage = ReferralCard.message(for: result)
+            return
+        }
+
         // golftrack.app/lobby/<code> bzw. golftrack://lobby/<code>
         if let code = LobbyJoinLink.code(from: url) {
             Haptics.success()

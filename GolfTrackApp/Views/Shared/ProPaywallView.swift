@@ -43,6 +43,10 @@ struct ProPaywallView: View {
         isLifetime ? nil : subscriptionManager.freeTrialLabel(for: activeProduct)
     }
 
+    private var winBackOffer: Product.SubscriptionOffer? {
+        isLifetime ? nil : subscriptionManager.winBackOffer(for: activeProduct)
+    }
+
     private var periodLabel: String {
         subscriptionManager.subscriptionPeriodLabel(for: activeProduct)
     }
@@ -117,7 +121,7 @@ struct ProPaywallView: View {
                 .font(.title.bold())
                 .foregroundStyle(AppTheme.text)
 
-            Text("Alle Audio-Trainings, keine Werbung –\nmonatlich, jährlich oder einmalig.")
+            Text("Alle Audio-Trainings und Tipps, keine Werbung –\nmonatlich, jährlich oder einmalig.")
                 .font(.subheadline)
                 .foregroundStyle(AppTheme.textSec)
                 .multilineTextAlignment(.center)
@@ -167,7 +171,8 @@ struct ProPaywallView: View {
                 Text(title)
                     .font(.subheadline.weight(.semibold))
                     .foregroundStyle(isSelected ? AppTheme.gold : AppTheme.textSec)
-                Text(product(for: option)?.displayPrice ?? "–")
+                Text(subscriptionManager.winBackOffer(for: product(for: option))?.displayPrice
+                     ?? product(for: option)?.displayPrice ?? "–")
                     .font(.headline.bold())
                     .foregroundStyle(AppTheme.text)
                     .lineLimit(1)
@@ -304,6 +309,22 @@ struct ProPaywallView: View {
                     .foregroundStyle(activeProduct == nil ? AppTheme.textTer : AppTheme.text)
                 Text("einmalig")
                     .font(.subheadline)
+                    .foregroundStyle(AppTheme.textSec)
+            } else if let offer = winBackOffer {
+                Text("Willkommen zurück")
+                    .font(.subheadline.weight(.semibold))
+                    .foregroundStyle(AppTheme.gold)
+                HStack(alignment: .firstTextBaseline, spacing: 4) {
+                    Text(offer.displayPrice)
+                        .font(.system(size: 38, weight: .bold))
+                        .foregroundStyle(AppTheme.text)
+                    Text("/ \(periodLabel)")
+                        .font(.title3)
+                        .foregroundStyle(AppTheme.textSec)
+                }
+                Text("statt \(activeProduct?.displayPrice ?? "–")")
+                    .font(.subheadline)
+                    .strikethrough()
                     .foregroundStyle(AppTheme.textSec)
             } else if let label = trialLabel {
                 Text("\(label) kostenlos")

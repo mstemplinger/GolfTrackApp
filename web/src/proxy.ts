@@ -45,6 +45,7 @@ const OPEN = [
   "/en/android",
   "/laden", // Weiche App Store / APK, verlinkt von den Anlagenseiten
   "/lobby/", // QR-Code der gemeinsamen Runde (Universal Link in die App)
+  "/einladen/", // Einladungslink der Weiterempfehlung (Universal Link in die App)
 ];
 
 function isOpen(pathname: string): boolean {

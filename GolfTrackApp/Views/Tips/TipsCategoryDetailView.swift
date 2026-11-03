@@ -160,6 +160,8 @@ enum TipsCategoryContent {
 
 struct TipsCategoryDetailView: View {
     let category: TipsCategory
+    @EnvironmentObject private var subscriptionManager: SubscriptionManager
+    @State private var showPaywall = false
 
     var body: some View {
         ZStack {
@@ -194,13 +196,24 @@ struct TipsCategoryDetailView: View {
 
                     // Tips list
                     VStack(spacing: 10) {
+                        // Ohne Pro: eine Zeile als Vorgeschmack, der ganze Tipp gehört zu Pro.
                         ForEach(TipsCategoryContent.tips(for: category)) { tip in
-                            NavigationLink {
-                                TipDetailView(tip: tip, categoryColor: category.color)
-                            } label: {
-                                tipCard(tip)
+                            if subscriptionManager.isPro {
+                                NavigationLink {
+                                    TipDetailView(tip: tip, categoryColor: category.color)
+                                } label: {
+                                    tipCard(tip)
+                                }
+                                .buttonStyle(.plain)
+                            } else {
+                                Button {
+                                    Haptics.tap()
+                                    showPaywall = true
+                                } label: {
+                                    tipCard(tip)
+                                }
+                                .buttonStyle(.plain)
                             }
-                            .buttonStyle(.plain)
                         }
                     }
                     .padding(.horizontal)
@@ -212,6 +225,10 @@ struct TipsCategoryDetailView: View {
         }
         .navigationTitle(category.name)
         .navigationBarTitleDisplayMode(.inline)
+        .sheet(isPresented: $showPaywall) {
+            ProPaywallView()
+                .environmentObject(subscriptionManager)
+        }
     }
 
     private func tipCard(_ tip: GolfTip) -> some View {
@@ -231,16 +248,17 @@ struct TipsCategoryDetailView: View {
                 Text(tip.body)
                     .font(.caption)
                     .foregroundStyle(AppTheme.textSec)
-                    .lineLimit(2)
+                    .lineLimit(subscriptionManager.isPro ? 2 : 1)
                     .multilineTextAlignment(.leading)
             }
             Spacer()
-            Image(systemName: "chevron.right")
+            Image(systemName: subscriptionManager.isPro ? "chevron.right" : "lock.fill")
                 .font(.caption)
                 .foregroundStyle(AppTheme.textTer)
         }
         .padding(16)
         .background(AppTheme.card, in: RoundedRectangle(cornerRadius: 14))
+        .contentShape(Rectangle())
     }
 }
 

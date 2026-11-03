@@ -197,24 +197,32 @@ final class NotificationManager: NSObject {
 
 extension NotificationManager: UNUserNotificationCenterDelegate {
 
-    /// Auch im Vordergrund anzeigen – wer gerade in der App ist und den Platz
-    /// betritt, soll den Hinweis sehen statt gar nichts.
+    /// Auch im Vordergrund anzeigen – wer gerade in der App ist (Trinkerinnerung
+    /// während der Runde, Ankunft am Platz), soll den Hinweis sehen statt gar nichts.
+    ///
+    /// Bewusst die Varianten mit Completion-Handler: Die `async`-Varianten melden
+    /// ihr Ergebnis von einem Hintergrund-Thread zurück, und UIKit bricht beim
+    /// Antippen mit einer Assertion in `_performBlockAfterCATransactionCommit…` ab.
     nonisolated func userNotificationCenter(
         _ center: UNUserNotificationCenter,
-        willPresent notification: UNNotification
-    ) async -> UNNotificationPresentationOptions {
-        [.banner, .sound]
+        willPresent notification: UNNotification,
+        withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void
+    ) {
+        completionHandler([.banner, .list, .sound])
     }
 
     nonisolated func userNotificationCenter(
         _ center: UNUserNotificationCenter,
-        didReceive response: UNNotificationResponse
-    ) async {
+        didReceive response: UNNotificationResponse,
+        withCompletionHandler completionHandler: @escaping () -> Void
+    ) {
         let info = response.notification.request.content.userInfo
-        guard let raw = info[NotificationPayload.deepLinkKey] as? String,
-              let url = URL(string: raw) else { return }
-        await MainActor.run {
-            NotificationCenter.default.post(name: .openCourseFromNotification, object: url)
+        let url = (info[NotificationPayload.deepLinkKey] as? String).flatMap(URL.init(string:))
+        DispatchQueue.main.async {
+            if let url {
+                NotificationCenter.default.post(name: .openCourseFromNotification, object: url)
+            }
+            completionHandler()
         }
     }
 }

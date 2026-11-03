@@ -570,23 +570,35 @@ struct HoleScoringView: View {
                 } label: {
                     Image(systemName: "minus")
                         .font(.system(size: 26, weight: .bold))
-                        .foregroundStyle(score.strokes > 1 ? AppTheme.text : AppTheme.textTer)
+                        .foregroundStyle(score.strokes > 0 ? AppTheme.text : AppTheme.textTer)
                         .frame(width: 68, height: 68)
                         .background(AppTheme.cardAlt, in: Circle())
                 }
                 .buttonStyle(.plain)
-                .disabled(score.strokes <= 1)
+                .disabled(score.strokes <= 0)
                 .accessibilityLabel("Schlag abziehen")
 
                 Spacer(minLength: 0)
 
-                Text("\(score.strokes)")
-                    .font(.system(size: 96, weight: .heavy, design: .rounded))
-                    .minimumScaleFactor(0.6)
-                    .lineLimit(1)
-                    .foregroundStyle(hasScore ? AppTheme.text : AppTheme.textTer)
-                    .contentTransition(.numericText())
-                    .animation(.snappy, value: score.strokes)
+                VStack(spacing: 0) {
+                    Text("\(score.strokes)")
+                        .font(.system(size: 96, weight: .heavy, design: .rounded))
+                        .minimumScaleFactor(0.6)
+                        .lineLimit(1)
+                        .foregroundStyle(hasScore ? AppTheme.text : AppTheme.textTer)
+                        .contentTransition(.numericText())
+                        .animation(.snappy, value: score.strokes)
+
+                    // Zuletzt verwendeter Schläger – Platz bleibt reserviert,
+                    // damit die Zahl beim ersten Schläger nicht springt.
+                    Text(lastClubName(of: score) ?? " ")
+                        .font(.subheadline.weight(.semibold))
+                        .foregroundStyle(AppTheme.gold)
+                        .lineLimit(1)
+                        .minimumScaleFactor(0.7)
+                        .contentTransition(.opacity)
+                        .animation(.snappy, value: lastClubName(of: score))
+                }
 
                 Spacer(minLength: 0)
 
@@ -677,12 +689,12 @@ struct HoleScoringView: View {
                 } label: {
                     Image(systemName: "minus")
                         .font(.system(size: 18, weight: .bold))
-                        .foregroundStyle(opp.strokes > 1 ? AppTheme.text : AppTheme.textTer)
+                        .foregroundStyle(opp.strokes > 0 ? AppTheme.text : AppTheme.textTer)
                         .frame(width: 46, height: 46)
                         .background(AppTheme.cardAlt, in: Circle())
                 }
                 .buttonStyle(.plain)
-                .disabled(opp.strokes <= 1)
+                .disabled(opp.strokes <= 0)
                 .accessibilityLabel(Text("Schlag abziehen") + Text(verbatim: " – \(displayName(opp))"))
 
                 Text("\(opp.strokes)")
@@ -749,9 +761,7 @@ struct HoleScoringView: View {
             Text("Putts").font(.caption).foregroundStyle(AppTheme.textSec)
             HStack(spacing: 4) {
                 Button {
-                    guard score.putts > 0 else { return }
-                    Haptics.decrement()
-                    score.putts -= 1
+                    removePutt(from: score)
                 } label: {
                     Image(systemName: "minus")
                         .font(.system(size: 12, weight: .bold))
@@ -771,8 +781,7 @@ struct HoleScoringView: View {
                     .animation(.snappy, value: score.putts)
 
                 Button {
-                    Haptics.stroke()
-                    score.putts += 1
+                    addPutt(to: score)
                 } label: {
                     Image(systemName: "plus")
                         .font(.system(size: 12, weight: .bold))
@@ -976,7 +985,7 @@ struct HoleScoringView: View {
     }
 
     private func removeStroke(from entry: any ScoreEntry) {
-        guard entry.strokes > 1 else { return }
+        guard entry.strokes > 0 else { return }
         Haptics.decrement()
         let removingNum = entry.strokes
         entry.strokes -= 1
@@ -987,6 +996,44 @@ struct HoleScoringView: View {
             entry.shots.removeAll { $0.shotNumber == removingNum }
             context.delete(shot)
         }
+    }
+
+    /// Ein Putt ist auch ein Schlag: zählt ihn mit und trägt den Putter ein,
+    /// ohne die Schlägerauswahl zu öffnen.
+    private func addPutt(to entry: any ScoreEntry) {
+        let shotNum = addStroke(to: entry)
+        entry.putts += 1
+        let putter = clubs.first(where: \.isPutter)?.name ?? "Putter"
+        if let shot = entry.shots.first(where: { $0.shotNumber == shotNum }) {
+            shot.club = putter
+        } else {
+            // Ohne GPS legt addStroke keinen Schlag an – wie in der Schlägerauswahl
+            // trotzdem einen ohne Lage, damit der Schläger festgehalten ist.
+            let origin = CLLocationCoordinate2D(latitude: 0, longitude: 0)
+            let shot = Shot(shotNumber: shotNum, from: origin, to: origin, club: putter)
+            context.insert(shot)
+            entry.shots.append(shot)
+        }
+    }
+
+    /// War der letzte Schlag ein Putt, nimmt Minus ihn ganz zurück (Schlag und
+    /// Putt); sonst – etwa bei nachgetragenen Putts – nur den Putt.
+    private func removePutt(from entry: any ScoreEntry) {
+        guard entry.putts > 0 else { return }
+        let lastIsPutt = entry.shots.first(where: { $0.shotNumber == entry.strokes })
+            .map { shot in clubs.first(where: { $0.name == shot.club })?.isPutter ?? (shot.club == "Putter") }
+            ?? false
+        if lastIsPutt && entry.strokes > 0 {
+            removeStroke(from: entry)
+        } else {
+            Haptics.decrement()
+            entry.putts -= 1
+        }
+    }
+
+    /// Schläger des zuletzt gespielten Schlags mit eingetragenem Schläger.
+    private func lastClubName(of entry: any ScoreEntry) -> String? {
+        entry.sortedShots.last(where: { !$0.club.isEmpty })?.club
     }
 
     private var shotRecorderButton: some View {
@@ -1182,15 +1229,15 @@ struct HoleScoringView: View {
             Spacer()
             HStack(spacing: 16) {
                 Button {
-                    guard opp.strokes > 1 else { return }
+                    guard opp.strokes > 0 else { return }
                     Haptics.decrement()
                     opp.strokes -= 1
                 } label: {
                     Image(systemName: "minus.circle.fill")
                         .font(.title2)
-                        .foregroundStyle(opp.strokes > 1 ? .primary : .secondary)
+                        .foregroundStyle(opp.strokes > 0 ? .primary : .secondary)
                 }
-                .disabled(opp.strokes <= 1)
+                .disabled(opp.strokes <= 0)
                 Text("\(opp.strokes)")
                     .font(.title2.bold())
                     .frame(minWidth: 28, alignment: .center)

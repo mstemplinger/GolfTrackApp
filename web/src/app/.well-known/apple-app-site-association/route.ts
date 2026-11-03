@@ -36,6 +36,7 @@ export async function GET() {
             { "/": "/golf/*", comment: "Startet eine Runde auf diesem Golfplatz" },
             { "/": "/p/*", comment: "Kurzform vom Schild: play.golftrack.app/p/<kennung>" },
             { "/": "/lobby/*", comment: "Tritt der Lobby einer gemeinsamen Runde bei" },
+            { "/": "/einladen/*", comment: "Löst die Einladung eines Freundes ein" },
           ],
         },
       ],

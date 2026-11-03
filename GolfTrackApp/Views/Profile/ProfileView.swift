@@ -24,6 +24,7 @@ struct ProfileView: View {
     @ObservedObject private var gc = GameCenterManager.shared
     @EnvironmentObject private var subscriptionManager: SubscriptionManager
     @State private var selectedAchievement: GCAchievement?
+    @State private var showAchievements = false
     @State private var showWhatsNew = false
     @State private var showProPaywall = false
 
@@ -176,6 +177,10 @@ struct ProfileView: View {
 
                         // Dokumente (Mitgliedskarte, Belege)
                         DocumentsCard()
+                            .padding(.horizontal)
+
+                        // Weiterempfehlung
+                        ReferralCard()
                             .padding(.horizontal)
 
                         // Game Center
@@ -607,98 +612,75 @@ struct ProfileView: View {
     // MARK: - Game Center Card
 
     private var gameCenterCard: some View {
-        VStack(alignment: .leading, spacing: 14) {
-            // Header
-            HStack {
-                VStack(alignment: .leading, spacing: 2) {
-                    Text("Errungenschaften")
+        HStack(spacing: 10) {
+            Button {
+                Haptics.tap()
+                if gc.isAuthenticated { gc.showLeaderboard() } else { gc.authenticate() }
+            } label: {
+                HStack(spacing: 6) {
+                    Image(systemName: "list.number")
+                    Text("Bestenliste")
                         .font(.subheadline.bold())
-                        .foregroundStyle(AppTheme.text)
-                    Text("Game Center")
-                        .font(.caption)
-                        .foregroundStyle(AppTheme.textSec)
                 }
-                Spacer()
-                Image(systemName: "gamecontroller.fill")
-                    .foregroundStyle(AppTheme.gold)
+                .frame(maxWidth: .infinity)
+                .padding(.vertical, 12)
+                .background(AppTheme.cardAlt, in: RoundedRectangle(cornerRadius: 12))
+                .foregroundStyle(AppTheme.text)
             }
-
-            Divider().background(AppTheme.cardAlt)
-
-            // Achievement grid – immer sichtbar (lokal gespeichert)
-            let achievements = GCAchievement.allCases
-            let columns = [GridItem(.flexible(), spacing: 10), GridItem(.flexible(), spacing: 10)]
-            LazyVGrid(columns: columns, spacing: 10) {
-                ForEach(achievements, id: \.rawValue) { a in
-                    achievementBadge(a)
-                        .onTapGesture {
-                            Haptics.tap()
-                            selectedAchievement = a
-                        }
+            Button {
+                Haptics.tap()
+                showAchievements = true
+            } label: {
+                HStack(spacing: 6) {
+                    Image(systemName: "trophy.fill")
+                    Text("Erfolge")
+                        .font(.subheadline.bold())
                 }
-            }
-
-            // Game Center Buttons
-            if gc.isAuthenticated {
-                HStack(spacing: 10) {
-                    // Bestenliste
-                    Button {
-                        Haptics.tap()
-                        gc.showLeaderboard()
-                    } label: {
-                        HStack(spacing: 6) {
-                            Image(systemName: "list.number")
-                            Text("Bestenliste")
-                                .font(.subheadline.bold())
-                        }
-                        .frame(maxWidth: .infinity)
-                        .padding(.vertical, 12)
-                        .background(AppTheme.gold, in: RoundedRectangle(cornerRadius: 12))
-                        .foregroundStyle(Color(red: 0.10, green: 0.22, blue: 0.13))
-                    }
-                    // Errungenschaften / Dashboard
-                    Button {
-                        Haptics.tap()
-                        gc.showGameCenter()
-                    } label: {
-                        HStack(spacing: 6) {
-                            Image(systemName: "person.2.fill")
-                            Text("Freunde")
-                                .font(.subheadline.bold())
-                        }
-                        .frame(maxWidth: .infinity)
-                        .padding(.vertical, 12)
-                        .background(AppTheme.cardAlt, in: RoundedRectangle(cornerRadius: 12))
-                        .foregroundStyle(AppTheme.text)
-                    }
-                }
-            } else {
-                Button {
-                    Haptics.tap()
-                    gc.authenticate()
-                } label: {
-                    HStack(spacing: 6) {
-                        Image(systemName: "gamecontroller.fill")
-                        Text("Mit Game Center verbinden")
-                            .font(.subheadline.bold())
-                    }
-                    .frame(maxWidth: .infinity)
-                    .padding(.vertical, 12)
-                    .background(AppTheme.cardAlt, in: RoundedRectangle(cornerRadius: 12))
-                    .foregroundStyle(AppTheme.textSec)
-                }
+                .frame(maxWidth: .infinity)
+                .padding(.vertical, 12)
+                .background(AppTheme.cardAlt, in: RoundedRectangle(cornerRadius: 12))
+                .foregroundStyle(AppTheme.text)
             }
         }
-        .padding(20)
-        .cardStyle()
+        .buttonStyle(.plain)
         .onAppear {
             gc.evaluateAchievements(rounds: allRounds)
         }
         .onChange(of: completedRounds.count) { _, _ in
             gc.evaluateAchievements(rounds: allRounds)
         }
-        .sheet(item: $selectedAchievement) { a in
-            AchievementDetailSheet(achievement: a, isUnlocked: gc.isUnlocked(a), progress: gc.progress(for: a))
+        .sheet(isPresented: $showAchievements) {
+            achievementsSheet
+        }
+    }
+
+    /// Alle Erfolge – lokal gespeichert, darum auch ohne Game Center sichtbar.
+    private var achievementsSheet: some View {
+        NavigationStack {
+            ScrollView {
+                let columns = [GridItem(.flexible(), spacing: 10), GridItem(.flexible(), spacing: 10)]
+                LazyVGrid(columns: columns, spacing: 10) {
+                    ForEach(GCAchievement.allCases, id: \.rawValue) { a in
+                        achievementBadge(a)
+                            .onTapGesture {
+                                Haptics.tap()
+                                selectedAchievement = a
+                            }
+                    }
+                }
+                .padding(20)
+            }
+            .background(AppTheme.bg.ignoresSafeArea())
+            .navigationTitle("Erfolge")
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .confirmationAction) {
+                    Button("Fertig") { showAchievements = false }
+                }
+            }
+            .sheet(item: $selectedAchievement) { a in
+                AchievementDetailSheet(achievement: a, isUnlocked: gc.isUnlocked(a), progress: gc.progress(for: a))
+            }
         }
     }
 

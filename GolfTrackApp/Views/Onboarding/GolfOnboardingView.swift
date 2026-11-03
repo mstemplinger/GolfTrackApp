@@ -584,7 +584,7 @@ private struct OnbPermissionStep: View {
 /// Fragt die Standort-Berechtigung an und wartet, bis die Rückfrage
 /// beantwortet ist.
 @MainActor
-private final class OnbLocationAsker {
+final class OnbLocationAsker {
     private let manager = CLLocationManager()
 
     func requestWhenInUse() async {

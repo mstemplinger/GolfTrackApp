@@ -16,6 +16,7 @@ struct HomeView: View {
     @State private var showDrivingRange  = false
     #if DEBUG
     @State private var debugTip: GolfTip?
+    @State private var debugProPaywall = false
     #endif
     @EnvironmentObject private var subscriptionManager: SubscriptionManager
     @StateObject private var weather = GolfWeatherService()
@@ -251,6 +252,7 @@ struct HomeView: View {
                 NavigationStack { TipDetailView(tip: tip, categoryColor: AppTheme.gold) }
                     .preferredColorScheme(.dark)
             }
+            .sheet(isPresented: $debugProPaywall) { ProPaywallView().preferredColorScheme(.dark) }
             #endif
             .sheet(isPresented: $showWeatherForecast) {
                 WeatherForecastView(weather: weather).preferredColorScheme(.dark)
@@ -290,7 +292,7 @@ struct HomeView: View {
     }
 
     #if DEBUG
-    /// Screenshots ohne Tippen: `GOLFTRACK_OPEN=newRound` öffnet „Neue Runde“, `range` die Driving Range,
+    /// Screenshots ohne Tippen: `GOLFTRACK_OPEN=newRound` öffnet „Neue Runde“, `range` die Driving Range, `pro` die Kaufseite,
     /// `GOLFTRACK_OPEN=round` die erste offene Runde, `GOLFTRACK_OPEN=tipVisual`
     /// den ersten Tipp mit Grafik.
     private func openDebugScreen() {
@@ -300,6 +302,7 @@ struct HomeView: View {
             switch target {
             case "newRound": showNewRound = true
             case "range": showDrivingRange = true
+            case "pro": debugProPaywall = true
             case "tipVisual":
                 debugTip = (TipsCategoryContent.anfaenger + TipsCategoryContent.technik
                             + TipsCategoryContent.mentalGame + TipsCategoryContent.strategie)

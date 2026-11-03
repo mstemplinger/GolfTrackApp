@@ -26,6 +26,8 @@ struct ContentView: View {
     /// mit vorgewähltem Platz, damit Bag, Spielform und Mitspieler noch
     /// gewählt werden können.
     @State private var scannedGolfCourse: Course?
+    /// Lobby-QR-Code mit der Kamera gescannt – öffnet den Rundenstart und tritt bei.
+    @State private var scannedLobby: LobbyJoinLink?
     /// Läuft, während der Platzkatalog wegen eines unbekannten Codes nachgeladen wird.
     @State private var deepLinkLoading = false
     /// Text der Meldung, wenn ein gescannter Code zu keiner Anlage führt.
@@ -100,6 +102,10 @@ struct ContentView: View {
         }
         .fullScreenCover(item: $scannedMinigolfCourse) { course in
             MinigolfCourseStartView(course: course)
+                .preferredColorScheme(.dark)
+        }
+        .fullScreenCover(item: $scannedLobby) { link in
+            NewRoundView(lobbyJoinCode: link.code)
                 .preferredColorScheme(.dark)
         }
         .fullScreenCover(item: $scannedGolfCourse) { course in
@@ -212,6 +218,18 @@ struct ContentView: View {
         // Golf und Minigolf über dieselbe Auswertung wie im App Clip. Vorher
         // kannte diese Stelle nur Minigolf – ein Golfplatz-Code öffnete die
         // App und tat dann nichts.
+        // golftrack.app/lobby/<code> bzw. golftrack://lobby/<code>
+        if let code = LobbyJoinLink.code(from: url) {
+            Haptics.success()
+            if !hasChosenAppFocus {
+                appFocus = .golf
+                hasChosenAppFocus = true
+                hasSeenOnboarding = true
+            }
+            scannedLobby = LobbyJoinLink(code: code)
+            return
+        }
+
         guard let link = CourseDeepLink.link(from: url) else {
             // golftrack://home  → Home-Tab öffnen
             // golftrack://shottracker → Home-Tab + Runde fortsetzen
@@ -295,32 +313,7 @@ struct ContentView: View {
     /// zweiter Eintrag, und die Runden desselben Platzes lägen verstreut.
     @MainActor
     private func storedCourse(for entry: BundledCourseEntry) -> Course {
-        let name = entry.name.lowercased()
-        if let vorhanden = (try? modelContext.fetch(FetchDescriptor<Course>()))?
-            .first(where: { $0.name.lowercased() == name }) {
-            return vorhanden
-        }
-
-        let course = Course(
-            name: entry.name,
-            location: entry.location,
-            numberOfHoles: entry.holes,
-            parValues: entry.parValues.isEmpty ? nil : entry.parValues,
-            courseRating: entry.courseRating,
-            slopeRating: entry.slopeRating,
-            hcpValues: entry.hcpValues,
-            holeLengths: entry.holeLengths,
-            facilityNotes: entry.facilityNotes,
-            latitude: entry.lat,
-            longitude: entry.lon,
-            teeLatitudes: entry.teeLatitudes,
-            teeLongitudes: entry.teeLongitudes,
-            flagLatitudes: entry.flagLatitudes,
-            flagLongitudes: entry.flagLongitudes
-        )
-        course.tees = entry.tees
-        modelContext.insert(course)
-        return course
+        Course.stored(for: entry, in: modelContext)
     }
 
     /// Bestandsinstallationen haben das Tutorial bereits gesehen – die
@@ -348,5 +341,25 @@ private extension View {
         } else {
             self
         }
+    }
+}
+
+/// Beitritt zu einer Lobby über QR-Code oder Link.
+struct LobbyJoinLink: Identifiable {
+    let code: String
+    var id: String { code }
+
+    static func code(from url: URL) -> String? {
+        let parts = url.pathComponents.filter { $0 != "/" }
+        let candidate: String?
+        if url.scheme == CourseDeepLink.scheme, url.host == "lobby" {
+            candidate = parts.first
+        } else if parts.count == 2, parts[0] == "lobby" {
+            candidate = parts[1]
+        } else {
+            candidate = nil
+        }
+        guard let candidate, candidate.count == 5, candidate.allSatisfy(\.isNumber) else { return nil }
+        return candidate
     }
 }

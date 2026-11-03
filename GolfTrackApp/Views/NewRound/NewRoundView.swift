@@ -27,6 +27,9 @@ struct NewRoundView: View {
     @State private var otherPlayers: [String]
     @State private var warnMissingNames = false
     @State private var showLoading = false
+    /// Code aus einem gescannten Lobby-QR-Code (Universal Link).
+    private let lobbyJoinCode: String?
+    private let lobby = LobbyService.shared
 
     private let availableModes = GameMode.allCases.filter(\.isAvailable)
     private let darkText = Color(red: 0.06, green: 0.14, blue: 0.08)
@@ -34,7 +37,8 @@ struct NewRoundView: View {
     /// `preselectedCourse` kommt vom QR-Code am Abschlag: Platz steht fest,
     /// alles andere – Bag, Spielform, Mitspieler – wählt der Spieler hier wie
     /// sonst auch.
-    init(preselectedMode: GameMode = .strokePlay, preselectedCourse: Course? = nil) {
+    init(preselectedMode: GameMode = .strokePlay, preselectedCourse: Course? = nil, lobbyJoinCode: String? = nil) {
+        self.lobbyJoinCode = lobbyJoinCode
         _selectedMode = State(initialValue: preselectedMode)
         _category = State(initialValue: preselectedMode.category)
         _selectedCourse = State(initialValue: preselectedCourse)
@@ -52,6 +56,7 @@ struct NewRoundView: View {
                     if selectedCourse != nil { teeSection }
                     dateSection
                     playerSection
+                    lobbySection
                 }
                 .padding(.horizontal, 16)
                 .padding(.top, 8)
@@ -485,6 +490,24 @@ struct NewRoundView: View {
         }
     }
 
+    // MARK: Lobby
+
+    private var lobbySection: some View {
+        section("Freunde") {
+            LobbyCard(selectedCourse: $selectedCourse,
+                      courses: courses,
+                      playerName: playerName,
+                      pendingJoinCode: lobbyJoinCode)
+        }
+    }
+
+    /// Freunde aus der Lobby, die bei Spielformen mit Mitspielern als
+    /// Mitspieler in die Runde gehen.
+    private var lobbyFriends: [LobbyMember] {
+        guard lobby.isActive, selectedMode.isMultiplayer else { return [] }
+        return Array((lobby.state?.others ?? []).prefix(selectedMode.maxOtherPlayers))
+    }
+
     private func playerRow<Name: View, Trailing: View>(
         initial: String,
         highlight: Bool = false,
@@ -645,7 +668,7 @@ struct NewRoundView: View {
     }
 
     private func handleStartButton() {
-        let hasEmptyNames = selectedMode.isMultiplayer &&
+        let hasEmptyNames = selectedMode.isMultiplayer && lobbyFriends.isEmpty &&
             otherPlayers.contains { $0.trimmingCharacters(in: .whitespaces).isEmpty }
 
         if hasEmptyNames && !warnMissingNames {
@@ -670,7 +693,14 @@ struct NewRoundView: View {
         round.bag = selectedBag
         round.teeColor = selectedTee
         if let tee = selectedTee { lastTeeColorRaw = tee.rawValue }
-        let validNames = selectedMode.isMultiplayer ? otherPlayers.filter { !$0.trimmingCharacters(in: .whitespaces).isEmpty } : []
+        var validNames = selectedMode.isMultiplayer ? otherPlayers.filter { !$0.trimmingCharacters(in: .whitespaces).isEmpty } : []
+        // Freunde aus der Lobby zuerst – ihre Schläge kommen von ihrem iPhone.
+        let friends = lobbyFriends
+        if !friends.isEmpty {
+            validNames = Array((friends.map(\.name) + validNames).prefix(selectedMode.maxOtherPlayers))
+            round.lobbyMemberIDs = friends.map(\.id)
+        }
+        if lobby.isActive, let code = lobby.code { round.lobbyCode = code }
         round.otherPlayerNames = validNames
         context.insert(round)
 

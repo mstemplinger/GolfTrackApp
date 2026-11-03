@@ -19,6 +19,13 @@ final class Round {
     /// Gespielter Abschlag (`TeeColor.rawValue`), leer bei älteren Runden.
     var teeColorRaw: String = ""
 
+    /// Code der Lobby, über die diese Runde mit Freunden verbunden ist (leer: keine).
+    var lobbyCode: String = ""
+
+    /// Lobby-Kennungen der Mitspieler, in der Reihenfolge von `otherPlayerNames` –
+    /// deren Schläge kommen von ihrem eigenen iPhone (siehe `LobbyService`).
+    var lobbyMemberIDsRaw: String = ""
+
     @Relationship(deleteRule: .cascade, inverse: \HoleScore.round)
     var holeScores: [HoleScore] = []
 
@@ -51,6 +58,11 @@ final class Round {
     var otherPlayerNames: [String] {
         get { playerNamesRaw.isEmpty ? [] : playerNamesRaw.components(separatedBy: "|") }
         set { playerNamesRaw = newValue.joined(separator: "|") }
+    }
+
+    var lobbyMemberIDs: [String] {
+        get { lobbyMemberIDsRaw.isEmpty ? [] : lobbyMemberIDsRaw.components(separatedBy: "|") }
+        set { lobbyMemberIDsRaw = newValue.joined(separator: "|") }
     }
 
     func opponentScore(playerIndex: Int, holeNumber: Int) -> PlayerHoleScore? {

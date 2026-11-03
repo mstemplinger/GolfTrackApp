@@ -35,6 +35,7 @@ export async function GET() {
             { "/": "/minigolf/*", comment: "Startet eine Minigolfrunde an dieser Anlage" },
             { "/": "/golf/*", comment: "Startet eine Runde auf diesem Golfplatz" },
             { "/": "/p/*", comment: "Kurzform vom Schild: play.golftrack.app/p/<kennung>" },
+            { "/": "/lobby/*", comment: "Tritt der Lobby einer gemeinsamen Runde bei" },
           ],
         },
       ],

@@ -154,8 +154,8 @@ export function Privacy({ lang }: { lang: Lang }) {
       <h2>{de ? "Die App" : "The app"}</h2>
       <p>
         {de
-          ? "Runden, Scores und – falls eingeschaltet – Positionsdaten bleiben auf deinem Gerät und in deiner privaten iCloud, sofern du iCloud nutzt. Sie werden nicht an mich übertragen. Das Positions-Tracking ist standardmäßig ausgeschaltet, läuft nur während einer Runde und lässt sich jederzeit im Profil löschen."
-          : "Rounds, scores and – if enabled – position data stay on your device and in your private iCloud if you use iCloud. They are not transmitted to me. Position tracking is off by default, runs only during a round and can be deleted at any time in the profile."}
+          ? "Runden, Scores und – falls eingeschaltet – Positionsdaten bleiben auf deinem Gerät und in deiner privaten iCloud, sofern du iCloud nutzt. Sie werden nicht an mich übertragen – außer du spielst in einer Lobby mit Freunden (siehe unten). Das Positions-Tracking ist standardmäßig ausgeschaltet, läuft nur während einer Runde und lässt sich jederzeit im Profil löschen."
+          : "Rounds, scores and – if enabled – position data stay on your device and in your private iCloud if you use iCloud. They are not transmitted to me – unless you play in a lobby with friends (see below). Position tracking is off by default, runs only during a round and can be deleted at any time in the profile."}
       </p>
       <p>
         {de
@@ -167,6 +167,13 @@ export function Privacy({ lang }: { lang: Lang }) {
         {de
           ? "Das Verzeichnis der Anlagen und die Anzeigen der Anlagen lädt die App von dieser Website; dabei wird nichts über deine Runden übertragen. Damit eine Anlage weiß, wie oft ihre Anzeige gesehen und angetippt wurde, meldet die App gebündelt die Kennung der Anzeige, die Art des Ereignisses und die Anzahl zurück – ohne Gerätekennung und ohne Profilbildung."
           : "The app loads the venue directory and the venues' ads from this website; nothing about your rounds is transmitted. So that a venue knows how often its ad was seen and tapped, the app reports back the ad's identifier, the type of event and a count, in batches – with no device identifier and no profiling."}
+      </p>
+
+      <h2>{de ? "Mit Freunden spielen (Lobby)" : "Playing with friends (lobby)"}</h2>
+      <p>
+        {de
+          ? "Nur wenn du eine Lobby anlegst oder mit einem Code beitrittst, überträgt die App an diesen Server: den Namen, den du in der App eingetragen hast, deine Schläge, Putts und Schläger je Loch, das aktuelle Loch und – nur wenn in der Lobby „Gegenseitig orten“ an ist und du „Meinen Standort teilen“ nicht ausgeschaltet hast – während der Runde etwa alle zehn Sekunden deinen Standort. Sehen können das ausschließlich die Mitspieler derselben Lobby. Gespeichert wird jeweils nur der letzte Stand; ein Standort, der älter als 15 Minuten ist, wird nicht mehr angezeigt. Verlässt du die Lobby, werden deine Angaben gelöscht; löst der Gastgeber sie auf oder gibt es einen Tag lang kein Lebenszeichen, wird die ganze Lobby mit allen Angaben gelöscht. Rechtsgrundlage ist die Durchführung der von dir gewünschten Funktion (Art. 6 Abs. 1 lit. b DSGVO)."
+          : "Only if you create a lobby or join one with a code does the app send this server: the name you entered in the app, your strokes, putts and clubs per hole, the current hole and – only if “Locate each other” is on in the lobby and you have not switched off “Share my location” – your location roughly every ten seconds during the round. Only the players in the same lobby can see this. Only the latest state is stored; a location older than 15 minutes is no longer shown. If you leave the lobby, your data is deleted; if the host closes it or there is no sign of activity for a day, the whole lobby is deleted with all data. The legal basis is providing the feature you asked for (Art. 6(1)(b) GDPR)."}
       </p>
 
       <h2>{de ? "Deine Rechte" : "Your rights"}</h2>

@@ -19,6 +19,9 @@ struct ScorecardView: View {
     @State private var showCourseInfo = false
     @State private var showIncompleteScoreAlert = false
     @State private var showBackfillAlert = false
+    @State private var showLobby = false
+
+    private let lobby = LobbyService.shared
 
     private let wc = WatchConnectivityManager.shared
     @ObservedObject private var gc = GameCenterManager.shared
@@ -66,6 +69,12 @@ struct ScorecardView: View {
                     gameStatusBanner
                 }
 
+                if isLobbyRound {
+                    LobbyStrip(pars: round.course?.parValues ?? []) { showLobby = true }
+                        .padding(.horizontal, 16)
+                        .padding(.top, 6)
+                }
+
                 if tracking.isTracking {
                     trackingIndicator
                         .padding(.horizontal, 16)
@@ -89,17 +98,37 @@ struct ScorecardView: View {
                 .foregroundStyle(AppTheme.textSec)
             }
             ToolbarItem(placement: .principal) {
-                HStack(spacing: 6) {
+                // Passt der Name nicht ganz hinein, nur das Symbol – ein
+                // abgeschnittenes „Zä…“ hilft niemandem.
+                ViewThatFits(in: .horizontal) {
+                    HStack(spacing: 6) {
+                        Image(systemName: round.gameMode.sfSymbol)
+                            .font(.caption)
+                            .foregroundStyle(AppTheme.gold)
+                        Text(round.gameMode.displayName)
+                            .font(.caption)
+                            .foregroundStyle(AppTheme.textSec)
+                            .lineLimit(1)
+                            .fixedSize()
+                    }
                     Image(systemName: round.gameMode.sfSymbol)
                         .font(.caption)
                         .foregroundStyle(AppTheme.gold)
-                    Text(round.gameMode.displayName)
-                        .font(.caption)
-                        .foregroundStyle(AppTheme.textSec)
+                        .accessibilityLabel(round.gameMode.displayName)
                 }
             }
             ToolbarItem(placement: .topBarTrailing) {
                 HStack(spacing: 12) {
+                    if isLobbyRound {
+                        Button {
+                            Haptics.tap()
+                            showLobby = true
+                        } label: {
+                            Image(systemName: "person.2.fill")
+                                .foregroundStyle(AppTheme.gold)
+                        }
+                        .accessibilityLabel("Lobby")
+                    }
                     if let course = round.course, !course.hcpValues.isEmpty || !course.facilityNotes.isEmpty {
                         Button {
                             Haptics.tap()
@@ -121,6 +150,7 @@ struct ScorecardView: View {
             Button("Abschließen") {
                 Haptics.celebrate()
                 round.isComplete = true
+                lobby.roundFinished(round)
                 wc.finishRound()
                 tracking.stop()
                 // Nur zur Bestenliste zählen wenn alle Löcher mit mindestens 1 Schlag belegt sind
@@ -210,6 +240,10 @@ struct ScorecardView: View {
                     }
             }
         }
+        .sheet(isPresented: $showLobby) {
+            LobbyLiveSheet(pars: round.course?.parValues ?? [])
+                .presentationDetents([.large])
+        }
         .sheet(isPresented: $showCourseInfo) {
             if let course = round.course {
                 CourseInfoSheet(course: course)
@@ -233,6 +267,12 @@ struct ScorecardView: View {
             if !round.isComplete {
                 tracking.start(round: round, context: context, currentHole: currentIndex + 1)
                 Task { await NotificationManager.shared.startDrinkReminders() }
+            }
+
+            // Lobby: eigenen Stand melden, Freunde abholen
+            if !round.isComplete {
+                lobby.attach(round: round)
+                lobby.publish(round: round, currentHole: currentIndex + 1)
             }
 
             // Runde an Watch senden beim Start
@@ -274,6 +314,12 @@ struct ScorecardView: View {
             // Runde verlassen/pausiert → Aufzeichnung beenden. Beim Wiedereinstieg
             // wird derselbe Track fortgesetzt.
             tracking.stop()
+            lobby.detach(round: round)
+            lobby.pauseIfIdle()
+        }
+        .onChange(of: lobbySignature) { _, _ in
+            guard !round.isComplete else { return }
+            lobby.publish(round: round, currentHole: currentIndex + 1)
         }
         .onChange(of: currentIndex) { _, newIndex in
             let strokes = sortedScores.map(\.strokes)
@@ -286,6 +332,23 @@ struct ScorecardView: View {
             wc.updateStrokes(strokes: strokes, currentHoleIndex: currentIndex)
             scheduleRoundInactivityReminder()
         }
+    }
+
+    // MARK: - Lobby
+
+    private var isLobbyRound: Bool {
+        !round.lobbyCode.isEmpty && lobby.code == round.lobbyCode
+    }
+
+    /// Ändert sich bei jedem Schlag, Putt, Schläger und Lochwechsel – Auslöser,
+    /// den eigenen Stand an die Lobby zu melden.
+    private var lobbySignature: String {
+        guard isLobbyRound else { return "" }
+        let holes = sortedScores.map { score in
+            "\(score.strokes).\(score.putts).\(score.fairwayHit ? 1 : 0)\(score.greenInRegulation ? 1 : 0)."
+                + score.sortedShots.map(\.club).joined(separator: ",")
+        }
+        return "\(currentIndex)|" + holes.joined(separator: "|")
     }
 
     // MARK: - Lochwechsel

@@ -242,3 +242,39 @@ final class Course {
         return (0..<holes).map { pattern[$0 % 9] }
     }
 }
+
+extension Course {
+    /// Der Platz aus dem Verzeichnis als Eintrag in der eigenen Datenbank.
+    ///
+    /// Wiedererkannt wird über den Namen – sonst entstünde bei jedem Scan ein
+    /// zweiter Eintrag, und die Runden desselben Platzes lägen verstreut.
+    @MainActor
+    static func stored(for entry: BundledCourseEntry, in context: ModelContext) -> Course {
+        let name = entry.name.lowercased()
+        if let vorhanden = (try? context.fetch(FetchDescriptor<Course>()))?
+            .first(where: { $0.name.lowercased() == name }) {
+            return vorhanden
+        }
+
+        let course = Course(
+            name: entry.name,
+            location: entry.location,
+            numberOfHoles: entry.holes,
+            parValues: entry.parValues.isEmpty ? nil : entry.parValues,
+            courseRating: entry.courseRating,
+            slopeRating: entry.slopeRating,
+            hcpValues: entry.hcpValues,
+            holeLengths: entry.holeLengths,
+            facilityNotes: entry.facilityNotes,
+            latitude: entry.lat,
+            longitude: entry.lon,
+            teeLatitudes: entry.teeLatitudes,
+            teeLongitudes: entry.teeLongitudes,
+            flagLatitudes: entry.flagLatitudes,
+            flagLongitudes: entry.flagLongitudes
+        )
+        course.tees = entry.tees
+        context.insert(course)
+        return course
+    }
+}

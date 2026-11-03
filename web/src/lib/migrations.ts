@@ -173,6 +173,37 @@ const STATEMENTS = [
   // sich einträgt; die zuletzt gemeldete Fassung verhindert doppelte Mails.
   `ALTER TABLE android_waitlist ADD COLUMN IF NOT EXISTS apk_updates boolean NOT NULL DEFAULT true`,
   `ALTER TABLE android_waitlist ADD COLUMN IF NOT EXISTS last_update_version integer NOT NULL DEFAULT 0`,
+  // Lobby: Freunde spielen jeder auf dem eigenen iPhone und sehen sich
+  // gegenseitig Schläge und – wenn eingeschaltet – den Standort. Kurzlebig:
+  // `lib/lobby.ts` räumt Lobbys nach einem Tag ohne Lebenszeichen weg.
+  `CREATE TABLE IF NOT EXISTS lobbies (
+     code         text PRIMARY KEY,
+     course_name  text NOT NULL DEFAULT '',
+     course_slug  text NOT NULL DEFAULT '',
+     holes        integer NOT NULL DEFAULT 18,
+     tracking     boolean NOT NULL DEFAULT true,
+     created_at   timestamptz NOT NULL DEFAULT now(),
+     updated_at   timestamptz NOT NULL DEFAULT now()
+   )`,
+  // Das Zugangs-Token liegt nur gehasht hier. Standort nur, solange die
+  // Lobby besteht – mit ihr wird er gelöscht.
+  `CREATE TABLE IF NOT EXISTS lobby_members (
+     id             uuid PRIMARY KEY DEFAULT gen_random_uuid(),
+     code           text NOT NULL REFERENCES lobbies(code) ON DELETE CASCADE,
+     token_hash     text NOT NULL UNIQUE,
+     name           text NOT NULL,
+     is_host        boolean NOT NULL DEFAULT false,
+     current_hole   integer NOT NULL DEFAULT 0,
+     scores         jsonb NOT NULL DEFAULT '[]'::jsonb,
+     share_location boolean NOT NULL DEFAULT true,
+     latitude       double precision,
+     longitude      double precision,
+     accuracy       double precision,
+     location_at    timestamptz,
+     joined_at      timestamptz NOT NULL DEFAULT now(),
+     seen_at        timestamptz NOT NULL DEFAULT now()
+   )`,
+  `CREATE INDEX IF NOT EXISTS lobby_members_code_idx ON lobby_members (code)`,
 ];
 
 let ready: Promise<void> | null = null;

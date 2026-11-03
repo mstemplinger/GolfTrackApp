@@ -176,11 +176,11 @@ const de = {
     priceFree:
       "Runden aufzeichnen, Scorekarte, Handicap und Statistiken sind kostenlos und brauchen kein Konto bei mir.",
     pricePlans: [
-      { title: "Training", body: "17 Audio-Trainings, vom Griff bis zum Grün lesen." },
-      { title: "Caddy", body: "Sprach-Assistent während der Runde: Schlägerwahl, Entfernungen, Fragen zu den Regeln." },
-      { title: "Pro", body: "Training und Caddy in einem Abo, mit unbegrenzten Caddy-Gesprächen." },
+      { title: "Pro monatlich", body: "5 € im Monat. Alle 17 Audio-Trainings, vom Griff bis zum Grün lesen, und keine Werbung." },
+      { title: "Pro jährlich", body: "50 € im Jahr – dasselbe wie monatlich, gut zwei Monate günstiger." },
+      { title: "Pro einmalig", body: "80 € einmal zahlen und für immer behalten, auch alle Lektionen, die noch dazukommen. Kein Abo." },
     ],
-    priceNote: "Alle drei laufen monatlich und lassen sich jederzeit im App Store kündigen; dort steht auch der Preis.",
+    priceNote: "Die Abos lassen sich jederzeit im App Store kündigen. Den genauen Preis in deiner Währung zeigt die App vor dem Kauf an.",
     priceShotAlt: "Audio-Trainings nach Kategorien, mit Fortschritt je Einheit",
 
     coursesEyebrow: "09 — Anlagen",
@@ -584,11 +584,11 @@ const en: Content = {
     priceFree:
       "Recording rounds, the scorecard, handicap and statistics are free and need no account with me.",
     pricePlans: [
-      { title: "Training", body: "17 audio lessons, from the grip to reading a green." },
-      { title: "Caddy", body: "A voice assistant during the round: club choice, distances, questions about the rules." },
-      { title: "Pro", body: "Training and Caddy in one subscription, with unlimited Caddy conversations." },
+      { title: "Pro monthly", body: "€5 a month. All 17 audio lessons, from the grip to reading a green, and no ads." },
+      { title: "Pro yearly", body: "€50 a year – the same as monthly, a good two months cheaper." },
+      { title: "Pro one-time", body: "Pay €80 once and keep it forever, including every lesson still to come. No subscription." },
     ],
-    priceNote: "All three run monthly and can be cancelled in the App Store, where the price is shown as well.",
+    priceNote: "Subscriptions can be cancelled any time in the App Store. The app shows the exact price in your currency before you buy.",
     priceShotAlt: "Audio lessons by category, with progress per lesson",
 
     coursesEyebrow: "09 — Venues",

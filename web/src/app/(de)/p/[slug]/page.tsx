@@ -3,9 +3,12 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Footer, Header } from "@/components/Chrome";
 import { CourseHintList } from "@/components/CourseHintList";
+import { PlayLangPicker } from "@/components/PlayLangPicker";
 import { WebScorecard } from "@/components/WebScorecard";
 import { getCourse } from "@/lib/courses";
 import { PLAY_URL, SITE_URL } from "@/i18n/routes";
+import { playCopy, siteLang } from "@/i18n/play";
+import { playLang } from "@/lib/playLang";
 
 /**
  * Das Ziel des QR-Codes am Abschlag: `play.golftrack.app/p/<kennung>`.
@@ -23,25 +26,31 @@ import { PLAY_URL, SITE_URL } from "@/i18n/routes";
  * Die Platzart steht bewusst nicht in der Adresse; sie kommt aus dem
  * Verzeichnis. Ein Schild am Abschlag soll nicht davon abhängen, ob jemand
  * „golf" oder „minigolf" richtig abschreibt.
+ *
+ * Die Seite spricht sieben Sprachen (`i18n/play.ts`) – oben steht die
+ * Sprachleiste. Begrüßung und Hinweise schreibt der Betreiber selbst; die
+ * bleiben in seiner Sprache.
  */
 
 const APP_STORE_ID = "6767996957";
 const APP_CLIP_BUNDLE_ID = "com.TobiasAufschlaeger.GolfTrackandwatch.Clip";
 
-export async function generateMetadata({ params }: PageProps<"/p/[slug]">): Promise<Metadata> {
+export async function generateMetadata({
+  params,
+  searchParams,
+}: PageProps<"/p/[slug]">): Promise<Metadata> {
   const { slug } = await params;
+  const copy = playCopy(await playLang((await searchParams).lang));
   const course = await getCourse(slug);
   // Dieselbe Bedingung wie in der Seite: Ungeprüfte Einreichungen dürfen
   // ihren Namen und Begrüßungstext nicht über Titel und Linkvorschau zeigen.
   if (!course || course.status !== "approved") {
-    return { title: "Platz nicht gefunden · GolfTrack", robots: { index: false } };
+    return { title: copy.notFound, robots: { index: false } };
   }
 
   return {
-    title: `${course.name} · Runde mitzählen`,
-    description:
-      course.welcome ||
-      `Zähle deine Runde auf ${course.name} mit – mit der App, ohne Installation oder direkt im Browser.`,
+    title: copy.playMetaTitle(course.name),
+    description: course.welcome || copy.playMetaDescription(course.name),
     alternates: { canonical: `${PLAY_URL}/p/${course.slug}` },
     // Die Seite ist das Ziel eines Codes vor Ort, kein Suchergebnis. Der
     // ausführliche Eintrag steht unter /golf/<slug> bzw. /minigolf/<slug>.
@@ -55,8 +64,11 @@ export async function generateMetadata({ params }: PageProps<"/p/[slug]">): Prom
   };
 }
 
-export default async function PlayPage({ params }: PageProps<"/p/[slug]">) {
+export default async function PlayPage({ params, searchParams }: PageProps<"/p/[slug]">) {
   const { slug } = await params;
+  const lang = await playLang((await searchParams).lang);
+  const copy = playCopy(lang);
+  const site = siteLang(lang);
   const course = await getCourse(slug);
   if (!course || course.status !== "approved") notFound();
 
@@ -69,19 +81,17 @@ export default async function PlayPage({ params }: PageProps<"/p/[slug]">) {
 
   return (
     <>
-      <Header lang="de" />
-      <main className="mx-auto max-w-3xl px-5 py-16 text-center sm:px-8 sm:py-20">
-        <p className="marginal">{isGolf ? "Golfplatz" : "Minigolf"}</p>
+      <Header lang={site} langSwitch={false} />
+      <main lang={lang} className="mx-auto max-w-3xl px-5 py-16 text-center sm:px-8 sm:py-20">
+        <PlayLangPicker lang={lang} label={copy.langLabel} />
+        <p className="marginal mt-8">{isGolf ? copy.kindGolf : copy.kindMinigolf}</p>
         <h1 className="mt-4 font-display text-[clamp(2rem,5.5vw,3.2rem)] leading-[1.05] tracking-[-0.02em]">
           {course.name}
         </h1>
         {course.location ? <p className="mt-3 text-cream/55">{course.location}</p> : null}
 
         <p className="mx-auto mt-7 max-w-lg text-lg leading-relaxed text-cream/75">
-          {course.welcome ||
-            (isGolf
-              ? "Schön, dass du da bist! Ab jetzt zählen wir für dich mit – Loch für Loch."
-              : "Schön, dass du da bist! Ab jetzt zählen wir für dich mit – Bahn für Bahn.")}
+          {course.welcome || (isGolf ? copy.welcomeGolf : copy.welcomeMinigolf)}
         </p>
 
         {/*
@@ -89,36 +99,51 @@ export default async function PlayPage({ params }: PageProps<"/p/[slug]">) {
           diese Adresse dann ohnehin selbst ab – dieser Weg bleibt für den
           Fall, dass jemand den Link weitergeschickt hat.
         */}
-        <div className="mt-9 flex flex-wrap justify-center gap-3">
-          <a href={deepLink} className="btn-brass">
-            In der App öffnen
+        {/*
+          Der große Knopf ist der Weg, den die meisten hier brauchen: Wer die
+          App hätte, wäre gar nicht auf dieser Seite gelandet. Er springt nur
+          zur Zählkarte weiter unten – deshalb ein Anker, kein neuer Schritt.
+        */}
+        <a
+          href="#zaehlkarte"
+          className="btn-brass mx-auto mt-9 flex w-full max-w-lg flex-col gap-0.5 rounded-2xl py-4 text-lg shadow-[0_10px_30px_-10px_var(--color-brass)]"
+        >
+          <span>{copy.playNoApp} ↓</span>
+          <span className="text-xs font-medium opacity-70">{copy.playNoAppHint}</span>
+        </a>
+
+        <div className="mt-4 flex flex-wrap justify-center gap-3">
+          <a href={deepLink} className="btn-ghost">
+            {copy.openInApp}
           </a>
           <a href={`${SITE_URL}/laden`} className="btn-ghost">
-            GolfTrack laden
+            {copy.getApp}
           </a>
         </div>
 
         <CourseHintList hints={course.facilityHints} />
 
-        <WebScorecard
-          slug={course.slug}
-          kind={course.kind}
-          holes={course.holes}
-          pars={pars}
-        />
+        <div id="zaehlkarte" className="scroll-mt-6">
+          <WebScorecard
+            slug={course.slug}
+            kind={course.kind}
+            holes={course.holes}
+            pars={pars}
+            lang={lang}
+          />
+        </div>
 
         <p className="mx-auto mt-8 max-w-lg text-sm leading-relaxed text-cream/45">
-          Die Zählkarte hier reicht für die Runde. Laufspur, Schlagweiten,
-          Handicap und die Auswertung über alle Runden gibt es in der App.
+          {copy.playFootnote}
         </p>
 
         <p className="mt-10 text-sm">
           <Link href={detailPath} className="text-brass underline underline-offset-4">
-            Mehr zu {course.name}
+            {copy.moreAbout(course.name)}
           </Link>
         </p>
       </main>
-      <Footer lang="de" />
+      <Footer lang={site} />
     </>
   );
 }

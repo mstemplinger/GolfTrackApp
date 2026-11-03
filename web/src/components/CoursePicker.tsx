@@ -2,6 +2,8 @@
 
 import { useMemo, useState } from "react";
 import Link from "next/link";
+import { playCopy, siteLang, type PlayLang } from "@/i18n/play";
+import { path } from "@/i18n/routes";
 
 /** Farben wie in der App, damit der Spielbereich zusammengehört. */
 const APP = {
@@ -25,7 +27,9 @@ export interface PickerCourse {
  * kein Nachladen, und so funktioniert das Suchen auch bei wackligem Empfang
  * auf dem Platz.
  */
-export function CoursePicker({ courses }: { courses: PickerCourse[] }) {
+export function CoursePicker({ courses, lang }: { courses: PickerCourse[]; lang: PlayLang }) {
+  const copy = playCopy(lang);
+  const submitPath = path("submit", siteLang(lang));
   const [suche, setSuche] = useState("");
 
   const treffer = useMemo(() => {
@@ -41,7 +45,7 @@ export function CoursePicker({ courses }: { courses: PickerCourse[] }) {
   return (
     <div className="mx-auto mt-8 max-w-lg text-left">
       <label className="sr-only" htmlFor="platzsuche">
-        Platz suchen
+        {copy.searchLabel}
       </label>
       <input
         id="platzsuche"
@@ -49,25 +53,24 @@ export function CoursePicker({ courses }: { courses: PickerCourse[] }) {
         autoComplete="off"
         value={suche}
         onChange={(event) => setSuche(event.target.value)}
-        placeholder="Platz oder Ort suchen"
+        placeholder={copy.searchPlaceholder}
         className="min-h-12 w-full rounded-xl px-4 text-[0.95rem] text-cream outline-none placeholder:text-cream/35"
         style={{ backgroundColor: APP.cardAlt }}
       />
 
       <p className="mt-3 font-mono text-xs text-cream/40">
         {treffer.length === courses.length
-          ? `${courses.length} Plätze`
-          : `${treffer.length} von ${courses.length}`}
+          ? copy.courseCount(courses.length)
+          : copy.courseCountFiltered(treffer.length, courses.length)}
       </p>
 
       {treffer.length === 0 ? (
         <p className="mt-6 rounded-xl p-5 text-sm text-cream/60" style={{ backgroundColor: APP.card }}>
-          Kein Platz gefunden. Steht deiner noch nicht im Verzeichnis, kann ihn der
-          Betreiber unter{" "}
-          <Link href="/platz-melden" className="underline underline-offset-4" style={{ color: APP.gold }}>
-            golftrack.app/platz-melden
-          </Link>{" "}
-          eintragen.
+          {copy.searchNone}{" "}
+          <Link href={submitPath} className="underline underline-offset-4" style={{ color: APP.gold }}>
+            golftrack.app{submitPath}
+          </Link>
+          {copy.searchNoneAfter === "." ? "." : ` ${copy.searchNoneAfter}`}
         </p>
       ) : (
         <ul className="mt-3 flex flex-col gap-2">
@@ -81,8 +84,7 @@ export function CoursePicker({ courses }: { courses: PickerCourse[] }) {
                 <span className="min-w-0 flex-1">
                   <span className="block truncate font-semibold text-cream">{course.name}</span>
                   <span className="block truncate text-xs text-cream/50">
-                    {course.location} · {course.holes}{" "}
-                    {course.kind === "golf" ? "Löcher" : "Bahnen"}
+                    {course.location} · {course.holes} {copy.holesUnit(course.kind)}
                   </span>
                 </span>
                 <span aria-hidden className="text-lg" style={{ color: APP.gold }}>

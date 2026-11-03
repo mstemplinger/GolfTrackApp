@@ -3,7 +3,10 @@ import Link from "next/link";
 import { Footer, Header } from "@/components/Chrome";
 import { CoursePicker, type PickerCourse } from "@/components/CoursePicker";
 import { listCourses } from "@/lib/courses";
-import { PLAY_URL } from "@/i18n/routes";
+import { PlayLangPicker } from "@/components/PlayLangPicker";
+import { PLAY_URL, path } from "@/i18n/routes";
+import { playCopy, siteLang } from "@/i18n/play";
+import { playLang } from "@/lib/playLang";
 
 /**
  * Die Startseite von `play.golftrack.app` – der Spielbereich.
@@ -13,20 +16,26 @@ import { PLAY_URL } from "@/i18n/routes";
  * direkt auf `/p/<kennung>` zeigt; diese Seite fängt alle auf, bei denen das
  * nicht klappt: verkratzter Code, Adresse vom Schild abgetippt, oder jemand
  * will die Runde von zu Hause vorbereiten.
+ *
+ * In sieben Sprachen (`i18n/play.ts`). Weil die Sprache vom Cookie und vom
+ * Browser abhängt, wird die Seite je Anfrage gebaut und nicht mehr zwischen-
+ * gespeichert.
  */
 
-export const metadata: Metadata = {
-  title: "Runde starten · GolfTrack",
-  description:
-    "Platz auswählen und mitzählen – mit der App, ohne Installation oder direkt im Browser.",
-  alternates: { canonical: `${PLAY_URL}/` },
-  robots: { index: false, follow: true },
-};
+export async function generateMetadata({ searchParams }: PageProps<"/start">): Promise<Metadata> {
+  const copy = playCopy(await playLang((await searchParams).lang));
+  return {
+    title: copy.startMetaTitle,
+    description: copy.startMetaDescription,
+    alternates: { canonical: `${PLAY_URL}/` },
+    robots: { index: false, follow: true },
+  };
+}
 
-/** Die Liste ändert sich selten; eine Minute alt darf sie sein. */
-export const revalidate = 60;
-
-export default async function StartPage() {
+export default async function StartPage({ searchParams }: PageProps<"/start">) {
+  const lang = await playLang((await searchParams).lang);
+  const copy = playCopy(lang);
+  const site = siteLang(lang);
   const records = await listCourses({ status: "approved", limit: 1000 });
   const courses: PickerCourse[] = records.map((course) => ({
     slug: course.slug,
@@ -38,41 +47,35 @@ export default async function StartPage() {
 
   return (
     <>
-      <Header lang="de" />
-      <main className="mx-auto max-w-3xl px-5 py-16 text-center sm:px-8 sm:py-20">
-        <p className="marginal">Spielen</p>
+      <Header lang={site} langSwitch={false} />
+      <main lang={lang} className="mx-auto max-w-3xl px-5 py-16 text-center sm:px-8 sm:py-20">
+        <PlayLangPicker lang={lang} label={copy.langLabel} />
+        <p className="marginal mt-8">{copy.startMarginal}</p>
         <h1 className="mt-4 font-display text-[clamp(2rem,5.5vw,3.2rem)] leading-[1.05] tracking-[-0.02em]">
-          Runde starten
+          {copy.startTitle}
         </h1>
-        <p className="mx-auto mt-5 max-w-lg text-lg leading-relaxed text-cream/75">
-          Normalerweise scannst du den Code am Abschlag. Geht das nicht, such
-          deinen Platz hier heraus – der Rest ist derselbe.
-        </p>
+        <p className="mx-auto mt-5 max-w-lg text-lg leading-relaxed text-cream/75">{copy.startIntro}</p>
 
         {courses.length === 0 ? (
           <p className="mt-10 text-cream/60">
-            Noch kein Platz freigegeben.{" "}
-            <Link href="/platz-melden" className="text-brass underline underline-offset-4">
-              Trag deinen ein.
+            {copy.startEmpty}{" "}
+            <Link href={path("submit", site)} className="text-brass underline underline-offset-4">
+              {copy.startEmptyLink}
             </Link>
           </p>
         ) : (
-          <CoursePicker courses={courses} />
+          <CoursePicker courses={courses} lang={lang} />
         )}
 
-        <p className="mx-auto mt-10 max-w-lg text-sm leading-relaxed text-cream/45">
-          Mit installierter App öffnet sich die Runde dort. Auf dem iPhone ohne
-          App genügt der App Clip, ganz ohne Installation. Sonst zählst du im
-          Browser mit.
-        </p>
+        <p className="mx-auto mt-10 max-w-lg text-sm leading-relaxed text-cream/45">{copy.startFootnote}</p>
 
         <p className="mt-10 text-sm">
-          <Link href="/plaetze" className="text-brass underline underline-offset-4">
-            Alle Plätze im Verzeichnis
+          <Link href={path("directory", site)} className="text-brass underline underline-offset-4">
+            {copy.startDirectory}
           </Link>
         </p>
       </main>
-      <Footer lang="de" />
+      <Footer lang={site} />
     </>
   );
 }

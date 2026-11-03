@@ -4,6 +4,7 @@ import { useEffect, useState, useSyncExternalStore } from "react";
 import { createPortal } from "react-dom";
 import type { CourseKind } from "@/lib/schema";
 import { CHALLENGES, results as challengeResults, type ChallengeResult } from "@/lib/minigolfChallenges";
+import { playCopy, type PlayCopy, type PlayLang } from "@/i18n/play";
 
 /**
  * Mitzählen im Browser – für alle, die weder App noch App Clip bekommen:
@@ -18,6 +19,8 @@ import { CHALLENGES, results as challengeResults, type ChallengeResult } from "@
  * Der Stand liegt im `localStorage` des Geräts, damit eine unterbrochene
  * Runde nicht verloren ist. Was hier fehlt – Laufspur, Statistik über alle
  * Runden, Uhr – ist genau das, wofür es die App gibt.
+ *
+ * Alle Texte kommen aus `i18n/play.ts`, in den sieben Sprachen der App.
  */
 
 const MAX_PLAYERS = 8;
@@ -90,13 +93,16 @@ export function WebScorecard({
   kind,
   holes,
   pars,
+  lang,
 }: {
   slug: string;
   kind: CourseKind;
   holes: number;
   /** Leer, wenn das Verzeichnis für diesen Platz keine vollständigen Par-Werte hat. */
   pars: number[];
+  lang: PlayLang;
 }) {
+  const copy = playCopy(lang);
   const storageKey = `golftrack.play.${slug}`;
   const hasPar = kind === "golf" && pars.length === holes;
   const hydrated = useHydrated();
@@ -146,7 +152,7 @@ export function WebScorecard({
   }, [running]);
 
   function start() {
-    const gefuellt = names.map((name, index) => name.trim() || `Spieler ${index + 1}`);
+    const gefuellt = names.map((name, index) => name.trim() || copy.player(index + 1));
     setNames(gefuellt);
     setScores(gefuellt.map(() => Array.from({ length: holes }, () => 0)));
     setHole(0);
@@ -176,6 +182,7 @@ export function WebScorecard({
   if (!hydrated) {
     return (
       <Setup
+        copy={copy}
         kind={kind}
         names={emptyNames(kind)}
         setNames={() => {}}
@@ -190,6 +197,7 @@ export function WebScorecard({
   if (!scores) {
     return (
       <Setup
+        copy={copy}
         kind={kind}
         names={names}
         setNames={setNames}
@@ -204,6 +212,7 @@ export function WebScorecard({
   if (minimized) {
     return (
       <Resume
+        copy={copy}
         kind={kind}
         hole={hole}
         holes={holes}
@@ -217,6 +226,7 @@ export function WebScorecard({
     <FullScreen>
       {finished ? (
         <Result
+          copy={copy}
           names={names}
           scores={scores}
           pars={hasPar ? pars : []}
@@ -227,6 +237,7 @@ export function WebScorecard({
         />
       ) : (
         <Scoring
+          copy={copy}
           names={names}
           scores={scores}
           hole={hole}
@@ -266,6 +277,7 @@ function FullScreen({ children }: { children: React.ReactNode }) {
 // MARK: – Aufstellung
 
 function Setup({
+  copy,
   kind,
   names,
   setNames,
@@ -281,19 +293,16 @@ function Setup({
   holes: number;
   challenges: string[];
   setChallenges: (next: string[]) => void;
+  copy: PlayCopy;
 }) {
-  const einheit = kind === "golf" ? "Löcher" : "Bahnen";
 
   return (
     <section
       className="mx-auto mt-12 max-w-lg rounded-2xl p-6 text-left sm:p-7"
       style={{ backgroundColor: APP.card }}
     >
-      <h2 className="font-display text-xl">Ohne App mitzählen</h2>
-      <p className="mt-2 text-sm leading-relaxed text-cream/55">
-        Direkt im Browser, ohne Anmeldung. Der Stand bleibt auf diesem Gerät –
-        auch wenn du das Fenster schließt.
-      </p>
+      <h2 className="font-display text-xl">{copy.setupTitle}</h2>
+      <p className="mt-2 text-sm leading-relaxed text-cream/55">{copy.setupText}</p>
 
       <div className="mt-6 space-y-2">
         {names.map((name, index) => (
@@ -312,8 +321,8 @@ function Setup({
               className="min-h-11 w-full bg-transparent text-[0.95rem] text-cream outline-none placeholder:text-cream/35"
               value={name}
               maxLength={24}
-              placeholder={`Spieler ${index + 1}`}
-              aria-label={`Name von Spieler ${index + 1}`}
+              placeholder={copy.player(index + 1)}
+              aria-label={copy.playerName(index + 1)}
               onChange={(event) => {
                 const next = [...names];
                 next[index] = event.target.value;
@@ -332,7 +341,7 @@ function Setup({
             style={{ backgroundColor: `${APP.gold}1f`, color: APP.gold }}
             onClick={() => setNames([...names, ""])}
           >
-            + Hinzufügen
+            {copy.addPlayer}
           </button>
         ) : null}
         {names.length > 1 ? (
@@ -341,14 +350,14 @@ function Setup({
             className="tap flex-1 justify-center rounded-xl bg-red-500/10 py-2.5 text-sm font-semibold text-red-400"
             onClick={() => setNames(names.slice(0, -1))}
           >
-            − Entfernen
+            {copy.removePlayer}
           </button>
         ) : null}
       </div>
 
       {/* Wettkämpfe gibt es nur beim Minigolf – wie in der App. */}
       {kind === "minigolf" ? (
-        <ChallengePicker challenges={challenges} setChallenges={setChallenges} />
+        <ChallengePicker copy={copy} challenges={challenges} setChallenges={setChallenges} />
       ) : null}
 
       <button
@@ -357,7 +366,7 @@ function Setup({
         style={{ backgroundColor: APP.gold, color: APP.ink }}
         onClick={onStart}
       >
-        Runde starten · {holes} {einheit}
+        {copy.startRound(holes, copy.holesUnit(kind))}
       </button>
     </section>
   );
@@ -365,6 +374,7 @@ function Setup({
 
 /** Zugeklappte Runde: der Weg zurück in den Zähler. */
 function Resume({
+  copy,
   kind,
   hole,
   holes,
@@ -376,17 +386,15 @@ function Resume({
   holes: number;
   onResume: () => void;
   onDiscard: () => void;
+  copy: PlayCopy;
 }) {
-  const einheit = kind === "golf" ? "Loch" : "Bahn";
   return (
     <section
       className="mx-auto mt-12 max-w-lg rounded-2xl p-6 text-left"
       style={{ backgroundColor: APP.card }}
     >
-      <h2 className="font-display text-xl">Angefangene Runde</h2>
-      <p className="mt-1.5 text-sm text-cream/55">
-        {einheit} {hole + 1} von {holes}
-      </p>
+      <h2 className="font-display text-xl">{copy.resumeTitle}</h2>
+      <p className="mt-1.5 text-sm text-cream/55">{copy.holeOf(copy.holeUnit(kind), hole + 1, holes)}</p>
       <div className="mt-5 flex gap-3">
         <button
           type="button"
@@ -394,14 +402,14 @@ function Resume({
           style={{ backgroundColor: APP.gold, color: APP.ink }}
           onClick={onResume}
         >
-          Weiterzählen
+          {copy.keepCounting}
         </button>
         <button
           type="button"
           className="flex-1 rounded-xl bg-red-500/10 py-3 text-center font-semibold text-red-400"
           onClick={onDiscard}
         >
-          Verwerfen
+          {copy.discard}
         </button>
       </div>
     </section>
@@ -411,6 +419,7 @@ function Resume({
 // MARK: – Zählen
 
 function Scoring({
+  copy,
   names,
   scores,
   hole,
@@ -436,9 +445,10 @@ function Scoring({
   onHole: (hole: number) => void;
   onFinish: () => void;
   onClose: () => void;
+  copy: PlayCopy;
 }) {
   const [zeigeAuswahl, setZeigeAuswahl] = useState(false);
-  const einheit = kind === "golf" ? "Loch" : "Bahn";
+  const einheit = copy.holeUnit(kind);
   const letzte = hole === holes - 1;
   // Rang wie in der App: wenige Schläge zuerst.
   const gesamt = names.map((_, i) => scores[i].reduce((sum, value) => sum + value, 0));
@@ -452,6 +462,7 @@ function Scoring({
         title={`${einheit} ${hole + 1} / ${holes}`}
         subtitle={par ? `Par ${par}` : null}
         onClose={onClose}
+        closeLabel={copy.closeCounter}
         right={
           <button
             type="button"
@@ -459,7 +470,7 @@ function Scoring({
             style={{ color: APP.gold }}
             onClick={onFinish}
           >
-            Ergebnis
+            {copy.result}
           </button>
         }
       />
@@ -488,11 +499,12 @@ function Scoring({
               </span>
               <div className="min-w-0 flex-1">
                 <p className="truncate font-semibold">{name}</p>
-                <p className="text-xs text-cream/50">Gesamt: {gesamt[player]}</p>
+                <p className="text-xs text-cream/50">{copy.total(gesamt[player])}</p>
               </div>
               <Stepper
                 value={scores[player][hole]}
                 name={name}
+                copy={copy}
                 onLess={() => onChange(player, -1)}
                 onMore={() => onChange(player, +1)}
               />
@@ -506,6 +518,7 @@ function Scoring({
             {zeigeAuswahl ? (
               <div className="rounded-2xl p-4" style={{ backgroundColor: APP.card }}>
                 <ChallengePicker
+                  copy={copy}
                   challenges={challenges}
                   setChallenges={setChallenges}
                   offen
@@ -516,11 +529,12 @@ function Scoring({
                   style={{ backgroundColor: APP.cardAlt }}
                   onClick={() => setZeigeAuswahl(false)}
                 >
-                  Fertig
+                  {copy.done}
                 </button>
               </div>
             ) : (
               <ChallengeLiveCard
+                copy={copy}
                 results={challengeResults(challenges, scores, names)}
                 onEdit={() => setZeigeAuswahl(true)}
               />
@@ -537,7 +551,7 @@ function Scoring({
           disabled={hole === 0}
           onClick={() => onHole(hole - 1)}
         >
-          ‹ Zurück
+          {copy.back}
         </button>
         <button
           type="button"
@@ -545,7 +559,7 @@ function Scoring({
           style={{ backgroundColor: APP.gold, color: APP.ink }}
           onClick={() => (letzte ? onFinish() : onHole(hole + 1))}
         >
-          {letzte ? "Ergebnis" : "Weiter ›"}
+          {letzte ? copy.result : copy.next}
         </button>
       </nav>
     </>
@@ -563,21 +577,23 @@ function rangFarbe(rang: number): string {
 function Stepper({
   value,
   name,
+  copy,
   onLess,
   onMore,
 }: {
   value: number;
   name: string;
+  copy: PlayCopy;
   onLess: () => void;
   onMore: () => void;
 }) {
   return (
     <div className="flex shrink-0 items-center gap-1">
-      <RoundButton label={`Ein Schlag weniger für ${name}`} disabled={value === 0} onClick={onLess}>
+      <RoundButton label={copy.strokeLess(name)} disabled={value === 0} onClick={onLess}>
         −
       </RoundButton>
       <output className="w-10 text-center font-mono text-2xl font-bold tabular-nums">{value}</output>
-      <RoundButton label={`Ein Schlag mehr für ${name}`} disabled={value >= MAX_STROKES} onClick={onMore}>
+      <RoundButton label={copy.strokeMore(name)} disabled={value >= MAX_STROKES} onClick={onMore}>
         +
       </RoundButton>
     </div>
@@ -615,6 +631,7 @@ function RoundButton({
 // MARK: – Ergebnis
 
 function Result({
+  copy,
   names,
   scores,
   pars,
@@ -632,6 +649,7 @@ function Result({
   onBack: () => void;
   onReset: () => void;
   onClose: () => void;
+  copy: PlayCopy;
 }) {
   const parGesamt = pars.reduce((sum, par) => sum + par, 0);
   const gesamt = scores.map((row) => row.reduce((sum, value) => sum + value, 0));
@@ -642,7 +660,12 @@ function Result({
 
   return (
     <>
-      <TitleBar title="Ergebnis" subtitle={parGesamt ? `Par ${parGesamt}` : null} onClose={onClose} />
+      <TitleBar
+        title={copy.result}
+        subtitle={parGesamt ? `Par ${parGesamt}` : null}
+        onClose={onClose}
+        closeLabel={copy.closeCounter}
+      />
 
       <div className="flex-1 overflow-y-auto px-4 py-6">
         <ol className="mx-auto flex max-w-lg flex-col gap-2.5">
@@ -671,7 +694,7 @@ function Result({
 
         {awards.length ? (
           <section className="mx-auto mt-8 max-w-lg">
-            <h2 className="mb-2.5 font-display text-lg">Pokale</h2>
+            <h2 className="mb-2.5 font-display text-lg">{copy.trophies}</h2>
             <ul className="flex flex-col gap-2">
               {awards.map((result) => (
                 <li
@@ -683,14 +706,16 @@ function Result({
                     {result.challenge.trophy}
                   </span>
                   <span className="min-w-0 flex-1">
-                    <span className="block text-xs text-cream/50">{result.challenge.name}</span>
+                    <span className="block text-xs text-cream/50">
+                      {copy.challenges[result.challenge.id].name}
+                    </span>
                     <span className="block truncate font-semibold">
-                      {result.leaders.length ? result.leaderNames : "niemand"}
+                      {result.leaders.length ? result.leaderNames : copy.nobody}
                     </span>
                   </span>
-                  {result.leaderValueText ? (
+                  {result.leaders.length ? (
                     <span className="font-mono text-xs" style={{ color: APP.gold }}>
-                      {result.leaderValueText}
+                      {leaderValue(result, copy)}
                     </span>
                   ) : null}
                 </li>
@@ -707,7 +732,7 @@ function Result({
           style={{ backgroundColor: APP.card }}
           onClick={onBack}
         >
-          Weiterzählen
+          {copy.keepCounting}
         </button>
         <button
           type="button"
@@ -715,7 +740,7 @@ function Result({
           style={{ backgroundColor: APP.gold, color: APP.ink }}
           onClick={onReset}
         >
-          Neue Runde
+          {copy.newRound}
         </button>
       </nav>
     </>
@@ -727,18 +752,20 @@ function TitleBar({
   title,
   subtitle,
   onClose,
+  closeLabel,
   right,
 }: {
   title: string;
   subtitle?: string | null;
   onClose: () => void;
+  closeLabel: string;
   right?: React.ReactNode;
 }) {
   return (
     <header className="flex items-center gap-3 px-3 pb-2 pt-[max(0.75rem,env(safe-area-inset-top))]">
       <button
         type="button"
-        aria-label="Zähler schließen"
+        aria-label={closeLabel}
         className="grid h-11 w-11 shrink-0 place-items-center rounded-full text-2xl leading-none"
         style={{ color: APP.gold }}
         onClick={onClose}
@@ -762,12 +789,19 @@ function zuPar(delta: number): string {
 
 // MARK: – Wettkämpfe
 
+/** Wert der Führenden mit Einheit in der gewählten Sprache, z. B. „4 in Folge". */
+function leaderValue(result: ChallengeResult, copy: PlayCopy): string {
+  return `${result.leaders[0]?.value ?? 0} ${copy.challenges[result.challenge.id].unit}`;
+}
+
 /** Auswahl der Wettkämpfe – vor dem Start und jederzeit während der Runde. */
 function ChallengePicker({
+  copy,
   challenges,
   setChallenges,
   offen = false,
 }: {
+  copy: PlayCopy;
   challenges: string[];
   setChallenges: (next: string[]) => void;
   /** In der laufenden Runde ist die Liste schon ausgeklappt. */
@@ -783,9 +817,9 @@ function ChallengePicker({
 
   const kopf = (
     <>
-      <span className="font-semibold">Wettkämpfe</span>
+      <span className="font-semibold">{copy.contests}</span>
       <span className="font-mono text-xs text-cream/50">
-        {challenges.length ? `${challenges.length} aktiv` : "keine"}
+        {challenges.length ? copy.contestsActive(challenges.length) : copy.contestsNone}
       </span>
     </>
   );
@@ -812,10 +846,7 @@ function ChallengePicker({
 
       {ausgeklappt ? (
         <>
-          <p className="mt-1.5 text-xs leading-relaxed text-cream/50">
-            Laufen neben der Schlagwertung mit. Gewertet wird immer die ganze Karte,
-            egal wann du einen dazunimmst.
-          </p>
+          <p className="mt-1.5 text-xs leading-relaxed text-cream/50">{copy.contestsExplain}</p>
           <ul className="mt-3 flex flex-col gap-2">
             {CHALLENGES.map((challenge) => {
               const an = challenges.includes(challenge.id);
@@ -835,9 +866,11 @@ function ChallengePicker({
                       {challenge.trophy}
                     </span>
                     <span className="min-w-0 flex-1">
-                      <span className="block text-sm font-semibold">{challenge.name}</span>
+                      <span className="block text-sm font-semibold">
+                        {copy.challenges[challenge.id].name}
+                      </span>
                       <span className="block text-xs leading-snug text-cream/50">
-                        {challenge.rule}
+                        {copy.challenges[challenge.id].rule}
                       </span>
                     </span>
                     <span
@@ -860,23 +893,25 @@ function ChallengePicker({
 
 /** Der Zwischenstand der Wettkämpfe während der Runde. */
 function ChallengeLiveCard({
+  copy,
   results,
   onEdit,
 }: {
+  copy: PlayCopy;
   results: ChallengeResult[];
   onEdit: () => void;
 }) {
   return (
     <div className="rounded-2xl p-4" style={{ backgroundColor: APP.card }}>
       <div className="flex items-baseline gap-2">
-        <span className="text-sm font-semibold">Wettkämpfe</span>
+        <span className="text-sm font-semibold">{copy.contests}</span>
         <button
           type="button"
           className="ml-auto text-xs font-semibold"
           style={{ color: APP.gold }}
           onClick={onEdit}
         >
-          {results.length ? "Ändern" : "Hinzufügen"}
+          {results.length ? copy.change : copy.add}
         </button>
       </div>
 
@@ -885,23 +920,23 @@ function ChallengeLiveCard({
           {results.map((result) => (
             <li key={result.challenge.id} className="flex items-center gap-2 text-xs">
               <span aria-hidden>{result.challenge.trophy}</span>
-              <span className="text-cream/50">{result.challenge.name}</span>
-              {result.leaderValueText ? (
+              <span className="text-cream/50">{copy.challenges[result.challenge.id].name}</span>
+              {result.leaders.length ? (
                 <>
                   <span className="ml-auto truncate font-semibold">{result.leaderNames}</span>
                   <span className="font-mono tabular-nums" style={{ color: APP.gold }}>
-                    {result.leaderValueText}
+                    {leaderValue(result, copy)}
                   </span>
                 </>
               ) : (
-                <span className="ml-auto text-cream/40">noch offen</span>
+                <span className="ml-auto text-cream/40">{copy.stillOpen}</span>
               )}
             </li>
           ))}
         </ul>
       ) : (
         <p className="mt-1.5 text-xs text-cream/40">
-          Serie, Asse, Bahnenduell und mehr – laufen nebenher mit.
+          {copy.contestsTeaser}
         </p>
       )}
     </div>

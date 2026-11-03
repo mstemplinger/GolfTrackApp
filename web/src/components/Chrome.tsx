@@ -47,7 +47,16 @@ const NAV: { key: RouteKey; label: (l: Lang) => string; langs?: Lang[] }[] = [
  * Verweise nebeneinander, darunter liegen sie hinter einem Menüknopf. Das
  * Menü ist ein `details`-Element und braucht deshalb kein Skript.
  */
-export function Header({ lang, current }: { lang: Lang; current?: RouteKey }) {
+export function Header({
+  lang,
+  current,
+  langSwitch = true,
+}: {
+  lang: Lang;
+  current?: RouteKey;
+  /** Aus im Spielbereich: der hat eine eigene Sprachleiste mit allen sieben Sprachen. */
+  langSwitch?: boolean;
+}) {
   const copy = t(lang);
   const langHref = current ? alternatePath(current, lang) : alternatePath("home", lang);
 
@@ -73,13 +82,15 @@ export function Header({ lang, current }: { lang: Lang; current?: RouteKey }) {
         </nav>
 
         <div className="flex items-center gap-1 sm:gap-3">
-          <Link
-            href={langHref}
-            hrefLang={lang === "de" ? "en" : "de"}
-            className="tap hidden px-2 text-xs uppercase tracking-[0.16em] text-cream/60 transition-colors hover:text-brass md:inline-flex"
-          >
-            {copy.nav.langSwitch}
-          </Link>
+          {langSwitch ? (
+            <Link
+              href={langHref}
+              hrefLang={lang === "de" ? "en" : "de"}
+              className="tap hidden px-2 text-xs uppercase tracking-[0.16em] text-cream/60 transition-colors hover:text-brass md:inline-flex"
+            >
+              {copy.nav.langSwitch}
+            </Link>
+          ) : null}
 
           <Link href={path("android", lang)} className="btn-brass min-h-11 !px-4 !py-2 text-sm">
             <span className="sm:hidden">APK</span>
@@ -122,15 +133,17 @@ export function Header({ lang, current }: { lang: Lang; current?: RouteKey }) {
                     {copy.nav.api}
                   </Link>
                 </li>
-                <li>
-                  <Link
-                    href={langHref}
-                    hrefLang={lang === "de" ? "en" : "de"}
-                    className="tap w-full px-3 text-xs uppercase tracking-[0.16em] text-cream/60"
-                  >
-                    {copy.nav.langSwitch}
-                  </Link>
-                </li>
+                {langSwitch ? (
+                  <li>
+                    <Link
+                      href={langHref}
+                      hrefLang={lang === "de" ? "en" : "de"}
+                      className="tap w-full px-3 text-xs uppercase tracking-[0.16em] text-cream/60"
+                    >
+                      {copy.nav.langSwitch}
+                    </Link>
+                  </li>
+                ) : null}
               </ul>
             </div>
           </details>

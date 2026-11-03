@@ -159,3 +159,75 @@ struct ReferralCard: View {
         .foregroundStyle(filled ? Color(red: 0.10, green: 0.22, blue: 0.13) : AppTheme.text)
     }
 }
+
+/// Auffälliger Hinweis auf der Kaufseite: Pro gibt es auch geschenkt, wenn
+/// man fünf Freunde einlädt. Steht überall, wo die App die Kaufseite zeigt –
+/// also an jedem gesperrten Pro-Inhalt.
+struct ReferralPaywallBanner: View {
+    @ObservedObject private var referral = ReferralService.shared
+    @Environment(\.openURL) private var openURL
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 12) {
+            HStack(spacing: 12) {
+                Image(systemName: "gift.fill")
+                    .font(.system(size: 20, weight: .semibold))
+                    .foregroundStyle(AppTheme.gold)
+                    .frame(width: 44, height: 44)
+                    .background(AppTheme.gold.opacity(0.15), in: RoundedRectangle(cornerRadius: 12))
+                VStack(alignment: .leading, spacing: 2) {
+                    Text("Oder gratis: 2 Wochen Pro")
+                        .font(.headline)
+                        .foregroundStyle(AppTheme.text)
+                    Text("Lade 5 Freunde zu GolfTrack ein – dein Geschenk kommt von selbst.")
+                        .font(.caption)
+                        .foregroundStyle(AppTheme.textSec)
+                        .fixedSize(horizontal: false, vertical: true)
+                }
+            }
+
+            if let status = referral.status {
+                HStack(spacing: 6) {
+                    ForEach(0..<status.needed, id: \.self) { i in
+                        Capsule()
+                            .fill(i < status.friends ? AppTheme.gold : AppTheme.cardAlt)
+                            .frame(height: 6)
+                    }
+                }
+                if let url = status.rewardUrl.flatMap(URL.init(string:)) {
+                    Button {
+                        Haptics.celebrate()
+                        openURL(url)
+                    } label: {
+                        bannerButton("2 Wochen Pro einlösen", icon: "gift.fill")
+                    }
+                    .buttonStyle(.plain)
+                } else {
+                    ShareLink(
+                        item: ReferralService.inviteURL(code: status.code),
+                        message: Text("Ich zähle meine Golfrunden mit GolfTrack – probier's aus! Mein Einladungscode: \(status.code)")
+                    ) {
+                        bannerButton("Freunde einladen", icon: "square.and.arrow.up")
+                    }
+                    .buttonStyle(.plain)
+                    .simultaneousGesture(TapGesture().onEnded { Haptics.tap() })
+                }
+            }
+        }
+        .padding(16)
+        .background(AppTheme.card, in: RoundedRectangle(cornerRadius: 16))
+        .overlay(RoundedRectangle(cornerRadius: 16).stroke(AppTheme.gold.opacity(0.6), lineWidth: 1.5))
+        .task { await referral.refresh() }
+    }
+
+    private func bannerButton(_ title: LocalizedStringKey, icon: String) -> some View {
+        HStack(spacing: 6) {
+            Image(systemName: icon)
+            Text(title).font(.subheadline.bold())
+        }
+        .frame(maxWidth: .infinity)
+        .padding(.vertical, 11)
+        .background(AppTheme.cardAlt, in: RoundedRectangle(cornerRadius: 12))
+        .foregroundStyle(AppTheme.text)
+    }
+}

@@ -108,7 +108,11 @@ final class ReferralService: ObservableObject {
            let data = item as? Data, let id = String(data: data, encoding: .utf8) {
             return id
         }
-        let id = UUID().uuidString
+        // Ohne Schlüsselbund (z. B. unsignierter Simulator-Build) wenigstens
+        // über Neustarts hinweg dieselbe Kennung behalten.
+        let fallbackKey = "referral.deviceID"
+        let id = UserDefaults.standard.string(forKey: fallbackKey) ?? UUID().uuidString
+        UserDefaults.standard.set(id, forKey: fallbackKey)
         let add: [String: Any] = [
             kSecClass as String: kSecClassGenericPassword,
             kSecAttrService as String: keychainService,

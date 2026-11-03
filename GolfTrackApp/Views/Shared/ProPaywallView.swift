@@ -67,6 +67,7 @@ struct ProPaywallView: View {
                             heroSection
                             planPicker
                             if trialLabel != nil { trialBanner(proxy: proxy) }
+                            ReferralPaywallBanner()
                             featuresSection
                             priceSection
                             actionSection

@@ -52,6 +52,7 @@ struct GolfTrackClipApp: App {
 
     init() {
         configureNavigationBarAppearance()
+        KeyboardDismiss.install()
     }
 
     var body: some Scene {

@@ -27,6 +27,7 @@ struct GolfTrackAppApp: App {
 
     init() {
         configureNavigationBarAppearance()
+        KeyboardDismiss.install()
         GolfLiveActivityManager.registerStrokeHandler(container: Self.sharedContainer)
         // Sofort, nicht in einem Task: Startet ein Antippen die App, muss der
         // Delegate stehen, bevor das Starten abgeschlossen ist.

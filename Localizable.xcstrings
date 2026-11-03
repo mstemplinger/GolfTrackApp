@@ -943,6 +943,52 @@
         }
       }
     },
+    "Lade 5 Freunde zu GolfTrack ein – dein Geschenk kommt von selbst." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lade 5 Freunde zu GolfTrack ein – dein Geschenk kommt von selbst."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Invite 5 friends to GolfTrack – your gift arrives on its own."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Invite 5 amis sur GolfTrack – ton cadeau arrive tout seul."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Invita 5 amici su GolfTrack – il regalo arriva da solo."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Invita a 5 amigos a GolfTrack – tu regalo llega solo."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zaproś 5 znajomych do GolfTrack – prezent przyjdzie sam."
+          }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pozvi 5 přátel do GolfTracku – dárek přijde sám."
+          }
+        }
+      }
+    },
     "Lade deinen Einladungscode …" : {
       "localizations" : {
         "de" : {
@@ -985,6 +1031,52 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Načítám tvůj kód pozvánky …"
+          }
+        }
+      }
+    },
+    "Oder gratis: 2 Wochen Pro" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Oder gratis: 2 Wochen Pro"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Or free: 2 weeks of Pro"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ou gratuit : 2 semaines de Pro"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Oppure gratis: 2 settimane di Pro"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "O gratis: 2 semanas de Pro"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Albo za darmo: 2 tygodnie Pro"
+          }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nebo zdarma: 2 týdny Pro"
           }
         }
       }

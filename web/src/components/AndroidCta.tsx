@@ -256,7 +256,7 @@ export function AndroidCta({
               }}
               className="flex flex-col gap-3"
             >
-              <p className="text-cream/70">{c.remindLead}</p>
+              {embedded ? null : <p className="text-cream/70">{c.remindLead}</p>}
               {/* Honigtopf für Bots */}
               <input
                 tabIndex={-1}

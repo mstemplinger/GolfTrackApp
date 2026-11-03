@@ -22,7 +22,7 @@ const esc = (s: string) => s.replace(/[^A-Za-z0-9_-]/g, "");
 
 export async function GET(request: Request) {
   const token = esc(new URL(request.url).searchParams.get("token") ?? "");
-  return page(`<p style="line-height:1.55">Neue Funktionen und Aktionen von GolfTrack per Mail – höchstens einmal im Monat, jederzeit abbestellbar.<br><span style="color:#9fb3a6">News, new features and offers from GolfTrack by email – at most once a month, unsubscribe any time.</span></p>
+  return page(`<p style="line-height:1.55">Neue Funktionen und Aktionen von GolfTrack per Mail – jederzeit abbestellbar.<br><span style="color:#9fb3a6">News, new features and offers from GolfTrack by email – unsubscribe any time.</span></p>
 <form method="post" action="/api/android/waitlist/news?token=${token}">
 <button style="margin-top:12px;background:#c9a035;color:#0e2718;border:0;border-radius:999px;padding:14px 26px;font-weight:700;font-size:16px;cursor:pointer">Ja, Neuigkeiten erhalten · Yes, send me news</button></form>`);
 }

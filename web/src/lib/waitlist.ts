@@ -103,7 +103,7 @@ const MAILS = {
             button: { label: "Zur Android-APK", url: androidPage(lang) },
             secondary: newsUrl
               ? {
-                  text: "Willst du neue Funktionen und Aktionen als Erste erfahren? Höchstens einmal im Monat, jederzeit abbestellbar.",
+                  text: "Willst du neue Funktionen und Aktionen als Erste erfahren? Jederzeit abbestellbar.",
                   label: "Ja, Neuigkeiten erhalten",
                   url: newsUrl,
                 }
@@ -124,7 +124,7 @@ const MAILS = {
             button: { label: "Get the Android APK", url: androidPage(lang) },
             secondary: newsUrl
               ? {
-                  text: "Want to hear about new features and offers first? At most once a month, unsubscribe any time.",
+                  text: "Want to hear about new features and offers first? Unsubscribe any time.",
                   label: "Yes, send me news",
                   url: newsUrl,
                 }

@@ -4,6 +4,7 @@ import { t } from "@/i18n/content";
 import { APP_STORE_URL, path, type Lang } from "@/i18n/routes";
 import { ANDROID_RELEASE } from "@/lib/android";
 import { AndroidCta } from "@/components/AndroidCta";
+import { ApkDownloadButton } from "@/components/ApkDownloadButton";
 
 /**
  * Download der Android-APK. Bewusst ohne Play Store: die erste Fassung geht
@@ -78,9 +79,7 @@ export function Android({ lang }: { lang: Lang }) {
             <div className="rounded-sm border rule bg-black/20 p-6">
               {rel.file ? (
                 <>
-                  <a href={`/downloads/${rel.file}`} download className="btn-brass w-full">
-                    {copy.download}
-                  </a>
+                  <ApkDownloadButton href={`/downloads/${rel.file}`} label={copy.download} lang={lang} />
                   <dl className="mt-6 space-y-2 text-sm">
                     <Row label={copy.versionLabel} value={rel.versionName} />
                     <Row label={copy.sizeLabel} value={`${mb} MB`} />

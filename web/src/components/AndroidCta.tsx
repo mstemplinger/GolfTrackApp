@@ -115,6 +115,7 @@ export function AndroidCta({
   align = "start",
   showApk = true,
   focus = "play",
+  embedded = false,
 }: {
   lang: "de" | "en";
   align?: "start" | "center";
@@ -122,9 +123,11 @@ export function AndroidCta({
   showApk?: boolean;
   /** "updates": Knopf wirbt mit Update-Mails statt mit dem Play Store. */
   focus?: "play" | "updates";
+  /** Im Download-Popup: ohne Knopfleiste, Formular sofort offen. */
+  embedded?: boolean;
 }) {
   const c = COPY[lang];
-  const [step, setStep] = useState<Step>("closed");
+  const [step, setStep] = useState<Step>(embedded ? "email" : "closed");
   const [email, setEmail] = useState("");
   const [code, setCode] = useState("");
   const [trap, setTrap] = useState("");
@@ -201,6 +204,7 @@ export function AndroidCta({
 
   return (
     <div className={`flex w-full flex-col gap-3 ${align === "center" ? "items-center" : "items-start"}`}>
+      {embedded ? null : (
       <div className={`flex w-full flex-col items-stretch gap-3 sm:w-auto sm:flex-row ${justify}`}>
         {APK_URL && showApk ? (
           <a href={lang === "de" ? "/android" : "/en/android"} className={`${pill} whitespace-nowrap`}>
@@ -240,8 +244,9 @@ export function AndroidCta({
           </button>
         )}
       </div>
+      )}
 
-      {step !== "closed" && !PLAY_STORE_LIVE ? (
+      {step !== "closed" && (embedded || !PLAY_STORE_LIVE) ? (
         <div className={`w-full max-w-md rounded-2xl border border-cream/15 bg-black/25 p-4 text-left text-sm ${align === "center" ? "mx-auto" : ""}`}>
           {step === "email" ? (
             <form

@@ -13,6 +13,7 @@ struct HomeView: View {
     @AppStorage(AppFocus.storageKey) private var appFocus: AppFocus = .golf
 
     @State private var showNewRound      = false
+    @State private var showDrivingRange  = false
     #if DEBUG
     @State private var debugTip: GolfTip?
     #endif
@@ -248,6 +249,7 @@ struct HomeView: View {
             }
             // iPad: vollständige Seite; iPhone: Sheet
             .fullScreenCover(isPresented: $showNewRound) { NewRoundView().preferredColorScheme(.dark) }
+            .fullScreenCover(isPresented: $showDrivingRange) { DrivingRangeView().preferredColorScheme(.dark) }
             #if DEBUG
             .sheet(item: $debugTip) { tip in
                 NavigationStack { TipDetailView(tip: tip, categoryColor: AppTheme.gold) }
@@ -292,7 +294,7 @@ struct HomeView: View {
     }
 
     #if DEBUG
-    /// Screenshots ohne Tippen: `GOLFTRACK_OPEN=newRound` öffnet „Neue Runde“,
+    /// Screenshots ohne Tippen: `GOLFTRACK_OPEN=newRound` öffnet „Neue Runde“, `range` die Driving Range,
     /// `GOLFTRACK_OPEN=round` die erste offene Runde, `GOLFTRACK_OPEN=tipVisual`
     /// den ersten Tipp mit Grafik.
     private func openDebugScreen() {
@@ -301,6 +303,7 @@ struct HomeView: View {
             try? await Task.sleep(for: .milliseconds(600))
             switch target {
             case "newRound": showNewRound = true
+            case "range": showDrivingRange = true
             case "tipVisual":
                 debugTip = (TipsCategoryContent.anfaenger + TipsCategoryContent.technik
                             + TipsCategoryContent.mentalGame + TipsCategoryContent.strategie)
@@ -413,6 +416,15 @@ struct HomeView: View {
         } label: {
             Label("Neue Runde spielen", systemImage: "plus.circle.fill")
                 .goldButton()
+        }
+        .padding(.horizontal)
+
+        Button {
+            Haptics.medium()
+            showDrivingRange = true
+        } label: {
+            Label("Driving Range", systemImage: "figure.golf")
+                .greenButton()
         }
         .padding(.horizontal)
 

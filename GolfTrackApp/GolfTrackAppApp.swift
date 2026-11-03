@@ -19,7 +19,7 @@ struct GolfTrackAppApp: App {
     /// die offene Lochansicht beobachtet, und erscheint dort sofort.
     static let sharedContainer: ModelContainer = {
         do {
-            return try ModelContainer(for: Course.self, Round.self, HoleScore.self, Shot.self, PlayerHoleScore.self, QuizResult.self, GolfClub.self, GolfBag.self, RoundTrack.self)
+            return try ModelContainer(for: Course.self, Round.self, HoleScore.self, Shot.self, PlayerHoleScore.self, QuizResult.self, GolfClub.self, GolfBag.self, RoundTrack.self, RangeSession.self, RangeShot.self)
         } catch {
             fatalError("ModelContainer konnte nicht angelegt werden: \(error)")
         }
@@ -28,6 +28,9 @@ struct GolfTrackAppApp: App {
     init() {
         configureNavigationBarAppearance()
         GolfLiveActivityManager.registerStrokeHandler(container: Self.sharedContainer)
+        // Sofort, nicht in einem Task: Startet ein Antippen die App, muss der
+        // Delegate stehen, bevor das Starten abgeschlossen ist.
+        NotificationManager.shared.becomeDelegate()
         // Ab iOS 26 rendert die schwebende Liquid-Glass-Tab-Bar mit einer
         // opaken UITabBarAppearance beim Kaltstart fehlerhaft (riesige,
         // abgeschnittene Labels) — dort die System-Tab-Bar verwenden.
@@ -39,7 +42,6 @@ struct GolfTrackAppApp: App {
             // Haptik-Generatoren vorwärmen, damit der erste Impuls sitzt.
             Haptics.warmUp()
             GameCenterManager.shared.authenticate()
-            NotificationManager.shared.becomeDelegate()
             // Neuinstallationen fragt das Onboarding nach dem Namen – erst
             // dort, damit die Rückfrage nicht vor der Begrüßung aufpoppt.
             if UserDefaults.standard.bool(forKey: "hasSeenOnboarding") {

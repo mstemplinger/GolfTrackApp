@@ -6,13 +6,16 @@ import Combine
 
 enum GCLeaderboard {
     static let bestRoundScore = "com.TobiasAufschlaeger.GolfTrackappnew.bestScore"
+    /// Weitester Driver-Schlag auf der Range in Metern. Höher = besser.
+    static let longestDrive = "com.TobiasAufschlaeger.GolfTrackappnew.longestDrive"
 }
 
 // MARK: - Achievement Identifiers
 
 enum GCAchievement: String, CaseIterable, Identifiable {
     var id: String { rawValue }
-    case firstRound     = "com.TobiasAufschlaeger.GolfTrackappnew.firstRound"
+    /// In App Store Connect ohne „new“ angelegt – so muss die ID bleiben.
+    case firstRound     = "com.TobiasAufschlaeger.GolfTrackapp.firstRound"
     case rounds10       = "com.TobiasAufschlaeger.GolfTrackappnew.rounds10"
     case rounds50       = "com.TobiasAufschlaeger.GolfTrackappnew.rounds50"
     case firstPar       = "com.TobiasAufschlaeger.GolfTrackappnew.firstPar"
@@ -21,6 +24,15 @@ enum GCAchievement: String, CaseIterable, Identifiable {
     case handicapSub18  = "com.TobiasAufschlaeger.GolfTrackappnew.handicapSub18"
     case handicapSub10  = "com.TobiasAufschlaeger.GolfTrackappnew.handicapSub10"
     case allCategories  = "com.TobiasAufschlaeger.GolfTrackappnew.allCategories"
+    // Driving Range
+    case firstRangeSession = "com.TobiasAufschlaeger.GolfTrackappnew.firstRangeSession"
+    case rangeSessions10   = "com.TobiasAufschlaeger.GolfTrackappnew.rangeSessions10"
+    case rangeShots100     = "com.TobiasAufschlaeger.GolfTrackappnew.rangeShots100"
+    case rangeShots1000    = "com.TobiasAufschlaeger.GolfTrackappnew.rangeShots1000"
+    case drive200          = "com.TobiasAufschlaeger.GolfTrackappnew.drive200"
+    case drive250          = "com.TobiasAufschlaeger.GolfTrackappnew.drive250"
+    case rangeFullBag      = "com.TobiasAufschlaeger.GolfTrackappnew.rangeFullBag"
+    case rangePersonalBest = "com.TobiasAufschlaeger.GolfTrackappnew.rangePersonalBest"
 
     var displayTitle: String {
         switch self {
@@ -33,6 +45,14 @@ enum GCAchievement: String, CaseIterable, Identifiable {
         case .handicapSub18: return "Handicap < 18"
         case .handicapSub10: return "Handicap < 10"
         case .allCategories: return "Alleskönner"
+        case .firstRangeSession: return "Erste Range-Einheit"
+        case .rangeSessions10:   return "Range-Stammgast"
+        case .rangeShots100:     return "100 Range-Bälle"
+        case .rangeShots1000:    return "1000 Range-Bälle"
+        case .drive200:          return "200-m-Drive"
+        case .drive250:          return "250-m-Drive"
+        case .rangeFullBag:      return "Ganzes Bag"
+        case .rangePersonalBest: return "Neue Bestweite"
         }
     }
 
@@ -47,6 +67,14 @@ enum GCAchievement: String, CaseIterable, Identifiable {
         case .handicapSub18: return "Erreiche ein Handicap unter 18"
         case .handicapSub10: return "Erreiche ein Handicap unter 10"
         case .allCategories: return "Schließe Runden auf 5 verschiedenen Plätzen ab"
+        case .firstRangeSession: return "Schließe deine erste Einheit auf der Driving Range ab"
+        case .rangeSessions10:   return "Schließe 10 Einheiten auf der Driving Range ab"
+        case .rangeShots100:     return "Trage 100 Schläge auf der Range ein"
+        case .rangeShots1000:    return "Trage 1000 Schläge auf der Range ein"
+        case .drive200:          return "Schlage den Driver mindestens 200 m weit"
+        case .drive250:          return "Schlage den Driver mindestens 250 m weit"
+        case .rangeFullBag:      return "Schlage 10 verschiedene Schläger auf der Range"
+        case .rangePersonalBest: return "Übertriff deine Bestweite mit einem Schläger"
         }
     }
 
@@ -61,6 +89,14 @@ enum GCAchievement: String, CaseIterable, Identifiable {
         case .handicapSub18: return "18.circle.fill"
         case .handicapSub10: return "10.circle.fill"
         case .allCategories: return "map.fill"
+        case .firstRangeSession: return "figure.golf"
+        case .rangeSessions10:   return "calendar.badge.checkmark"
+        case .rangeShots100:     return "circle.grid.3x3.fill"
+        case .rangeShots1000:    return "circle.hexagongrid.fill"
+        case .drive200:          return "arrow.up.right"
+        case .drive250:          return "flame.fill"
+        case .rangeFullBag:      return "bag.fill"
+        case .rangePersonalBest: return "chart.line.uptrend.xyaxis"
         }
     }
 
@@ -84,6 +120,22 @@ enum GCAchievement: String, CaseIterable, Identifiable {
             return "Senke dein Handicap auf unter 10. Das erfordert viel Übung – du bist dann ein sehr erfahrener Golfer!"
         case .allCategories:
             return "Schließe Runden auf 5 verschiedenen Golfplätzen ab. Erkunde neue Plätze in deiner Region oder auf Reisen."
+        case .firstRangeSession:
+            return "Starte auf der Startseite die Driving Range, trage ein paar Schläge ein und beende die Einheit."
+        case .rangeSessions10:
+            return "Beende 10 Einheiten auf der Driving Range. Regelmäßiges Training zahlt sich auf dem Platz aus."
+        case .rangeShots100:
+            return "Trage auf der Driving Range insgesamt 100 Schläge mit Schläger und Weite ein – über alle Einheiten zusammen."
+        case .rangeShots1000:
+            return "Trage auf der Driving Range insgesamt 1000 Schläge ein. Das ist echtes Fleißtraining!"
+        case .drive200:
+            return "Trage auf der Driving Range einen Driver-Schlag mit mindestens 200 m ein."
+        case .drive250:
+            return "Trage auf der Driving Range einen Driver-Schlag mit mindestens 250 m ein. Das schaffen nur sehr lange Hitter."
+        case .rangeFullBag:
+            return "Trainiere auf der Driving Range mit 10 verschiedenen Schlägern – nicht nur mit dem Driver."
+        case .rangePersonalBest:
+            return "Schlage einen Schläger in einer späteren Einheit weiter als jemals zuvor. Vergleiche dich auf der Range mit dir selbst."
         }
     }
 }
@@ -258,6 +310,56 @@ final class GameCenterManager: ObservableObject {
 
         // Handicap-Errungenschaften werden manuell über die Profil-Statistiken ausgewertet
         // und können über unlock(.handicapSub18) / unlock(.handicapSub10) ausgelöst werden
+    }
+
+    // MARK: - Driving Range auswerten (funktioniert OHNE Game Center)
+
+    func evaluateRangeAchievements(sessions: [RangeSession]) {
+        let finished = sessions.filter { $0.endedAt != nil && !$0.shots.isEmpty }
+        let shots = sessions.flatMap(\.shots)
+
+        if !finished.isEmpty { unlock(.firstRangeSession) }
+        unlock(.rangeSessions10, percentComplete: min(100, Double(finished.count) / 10.0 * 100))
+        unlock(.rangeShots100, percentComplete: min(100, Double(shots.count) / 100.0 * 100))
+        unlock(.rangeShots1000, percentComplete: min(100, Double(shots.count) / 1000.0 * 100))
+
+        let longestDrive = shots.filter { RangeClubDefaults.isDriver($0.clubName) }
+            .map(\.distanceMeters).max() ?? 0
+        unlock(.drive200, percentComplete: min(100, longestDrive / 200.0 * 100))
+        unlock(.drive250, percentComplete: min(100, longestDrive / 250.0 * 100))
+
+        let clubCount = Set(shots.map(\.clubName)).count
+        unlock(.rangeFullBag, percentComplete: min(100, Double(clubCount) / 10.0 * 100))
+
+        if Self.hasBeatenEarlierBest(sessions: sessions) { unlock(.rangePersonalBest) }
+
+        submitLongestDrive(meters: longestDrive)
+    }
+
+    /// Wahr, sobald ein Schläger in einer Einheit weiter flog als in allen
+    /// früheren Einheiten zusammen – die erste Einheit selbst zählt nicht.
+    static func hasBeatenEarlierBest(sessions: [RangeSession]) -> Bool {
+        var best: [String: Double] = [:]
+        for session in sessions.sorted(by: { $0.date < $1.date }) {
+            let stats = RangeClubStats.byClub(session.shots)
+            for (club, s) in stats {
+                if let earlier = best[club], s.best > earlier { return true }
+            }
+            for (club, s) in stats { best[club] = max(best[club] ?? 0, s.best) }
+        }
+        return false
+    }
+
+    private func submitLongestDrive(meters: Double) {
+        guard isAuthenticated, meters > 0 else { return }
+        Task {
+            try? await GKLeaderboard.submitScore(
+                Int(meters.rounded()),
+                context: 0,
+                player: GKLocalPlayer.local,
+                leaderboardIDs: [GCLeaderboard.longestDrive]
+            )
+        }
     }
 
     // MARK: - Access Point (Aktivitätsstatus während einer Runde)

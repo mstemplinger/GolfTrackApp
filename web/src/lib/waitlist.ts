@@ -165,6 +165,45 @@ const MAILS = {
           },
         ],
 
+  privacy: (lang: Lang, unsub: string): [string, EmailContent] =>
+    lang === "de"
+      ? [
+          "Unsere Datenschutzerklärung wurde aktualisiert",
+          {
+            lang,
+            preheader: "Kurz erklärt, was sich bei den Android-Mails geändert hat.",
+            title: "Datenschutzerklärung aktualisiert",
+            paragraphs: [
+              "Wir haben den Abschnitt zu den Mails rund um GolfTrack für Android überarbeitet. Das gilt jetzt:",
+              "• Bei jeder neuen APK-Version bekommst du eine Mail – die APK aktualisiert sich nicht von selbst.",
+              "• Sobald GolfTrack im Google Play Store steht, sagen wir dir Bescheid.",
+              "• Neuigkeiten und Aktionen schicken wir nur, wenn du dem ausdrücklich zugestimmt hast. Ein festes Limit pro Monat gibt es dafür nicht mehr.",
+              "• Deine Adresse bleibt gespeichert, bis du dich abmeldest.",
+            ],
+            button: { label: "Datenschutzerklärung lesen", url: `${SITE_URL}/datenschutz` },
+            note: "Du musst nichts tun. Keine Mails mehr gewünscht? Über „Abmelden“ unten löschen wir deine Adresse sofort.",
+            unsubscribeUrl: unsub,
+          },
+        ]
+      : [
+          "We've updated our privacy policy",
+          {
+            lang,
+            preheader: "A quick summary of what changed for the Android emails.",
+            title: "Privacy policy updated",
+            paragraphs: [
+              "We've revised the section on emails about GolfTrack for Android. This now applies:",
+              "• You get an email with every new APK version – the APK doesn't update itself.",
+              "• We'll let you know as soon as GolfTrack is on Google Play.",
+              "• We only send news and offers if you've explicitly agreed. There's no longer a fixed monthly limit for those.",
+              "• Your address is kept until you unsubscribe.",
+            ],
+            button: { label: "Read the privacy policy", url: `${SITE_URL}/en/privacy` },
+            note: "No action needed. No more emails wanted? Use “Unsubscribe” below and we'll delete your address right away.",
+            unsubscribeUrl: unsub,
+          },
+        ],
+
   live: (lang: Lang, unsub: string): [string, EmailContent] =>
     lang === "de"
       ? [
@@ -343,7 +382,7 @@ async function sendToEach(rows: Row[], mail: (row: Row) => [string, EmailContent
  * Adressen, die sie noch nicht bekommen haben. Mehrfach aufrufen schadet
  * nicht – gemeldet wird jede Fassung nur einmal.
  */
-export async function notifyApkUpdate(notes: string[] = []): Promise<{ version: string; sent: number; failed: number }> {
+export async function notifyApkUpdate(notes: string[] = [], notesEn: string[] = notes): Promise<{ version: string; sent: number; failed: number }> {
   await ensureSchema();
   const code = ANDROID_RELEASE.versionCode;
   const rows = await query<Row>(
@@ -352,7 +391,7 @@ export async function notifyApkUpdate(notes: string[] = []): Promise<{ version: 
   );
   const result = await sendToEach(
     rows,
-    (row) => MAILS.update(langOf(row), linkUrl("unsubscribe", row.unsubscribe_token), ANDROID_RELEASE.versionName, notes),
+    (row) => MAILS.update(langOf(row), linkUrl("unsubscribe", row.unsubscribe_token), ANDROID_RELEASE.versionName, langOf(row) === "de" ? notes : notesEn),
     (row) => query("UPDATE android_waitlist SET last_update_version = $2 WHERE id = $1", [row.id, code]),
   );
   return { version: ANDROID_RELEASE.versionName, ...result };
@@ -369,5 +408,16 @@ export async function notifyAll(): Promise<{ sent: number; failed: number }> {
     rows,
     (row) => MAILS.live(langOf(row), linkUrl("unsubscribe", row.unsubscribe_token)),
     (row) => query("UPDATE android_waitlist SET notified_at = now() WHERE id = $1", [row.id]),
+  );
+}
+
+/** Hinweis auf die geänderte Datenschutzerklärung an alle Bestätigten – reine Information, keine Einwilligungsbitte. */
+export async function notifyPrivacyUpdate(): Promise<{ sent: number; failed: number }> {
+  await ensureSchema();
+  const rows = await query<Row>("SELECT * FROM android_waitlist WHERE confirmed_at IS NOT NULL");
+  return sendToEach(
+    rows,
+    (row) => MAILS.privacy(langOf(row), linkUrl("unsubscribe", row.unsubscribe_token)),
+    async () => {},
   );
 }

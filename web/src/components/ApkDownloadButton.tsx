@@ -8,13 +8,11 @@ const COPY = {
     title: "Download läuft …",
     lead: "Die APK aktualisiert sich nicht von selbst. Sollen wir dir Bescheid geben, wenn es eine neue Version gibt?",
     no: "Nein, danke",
-    close: "Schließen",
   },
   en: {
     title: "Downloading …",
     lead: "The APK doesn't update itself. Shall we let you know when there's a new version?",
     no: "No, thanks",
-    close: "Close",
   },
 } as const;
 
@@ -80,17 +78,7 @@ export function ApkDownloadButton({ href, label, lang }: { href: string; label: 
             aria-labelledby="apk-dialog-title"
             className="relative w-full max-w-md rounded-2xl border border-brass/40 bg-[#0e2718] p-6 shadow-[0_30px_80px_-20px_rgba(0,0,0,0.9)]"
           >
-            <button
-              type="button"
-              aria-label={c.close}
-              onClick={dismiss}
-              className="absolute right-3 top-3 grid h-9 w-9 place-items-center rounded-full text-cream/60 hover:text-brass"
-            >
-              <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden>
-                <path d="M6 6l12 12M18 6 6 18" strokeLinecap="round" />
-              </svg>
-            </button>
-            <h2 id="apk-dialog-title" className="pr-8 font-display text-2xl font-bold tracking-tight">
+            <h2 id="apk-dialog-title" className="font-display text-2xl font-bold tracking-tight">
               {c.title}
             </h2>
             <p className="mt-2 leading-relaxed text-cream/75">{c.lead}</p>

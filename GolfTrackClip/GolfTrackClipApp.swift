@@ -9,7 +9,7 @@ import StoreKit
 /// dieselbe Zählkarte.
 ///
 /// Bewusst nicht dabei: Werbung (untersagt, Richtlinie 2.5.16(a)), der
-/// Watch-Abgleich, Abos, Caddy, Golfrunden, SwiftData. Der Clip muss klein
+/// Watch-Abgleich, Abos, Golfrunden, SwiftData. Der Clip muss klein
 /// bleiben – Apple begrenzt ihn auf 15 MB entpackt.
 @main
 struct GolfTrackClipApp: App {

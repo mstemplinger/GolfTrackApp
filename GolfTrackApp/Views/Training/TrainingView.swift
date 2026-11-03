@@ -450,7 +450,7 @@ struct TrainingView: View {
             TrainingPlayerSheet(model: playerModel)
         }
         .sheet(isPresented: $showPaywall) {
-            TrainingPaywallView()
+            ProPaywallView()
                 .environmentObject(subscriptionManager)
         }
         .animation(.spring(response: 0.35), value: playerModel.currentLesson?.id)

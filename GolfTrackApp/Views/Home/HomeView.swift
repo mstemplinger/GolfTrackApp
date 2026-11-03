@@ -17,8 +17,6 @@ struct HomeView: View {
     #if DEBUG
     @State private var debugTip: GolfTip?
     #endif
-    @State private var showAssistant     = false
-    @State private var showCaddyPaywall  = false
     @EnvironmentObject private var subscriptionManager: SubscriptionManager
     @StateObject private var weather = GolfWeatherService()
     /// „Du stehst gerade an diesem Platz" – kommt vom Standort, nicht vom Verlauf.
@@ -215,8 +213,6 @@ struct HomeView: View {
                         } else {
                             golfSections
                         }
-
-                        caddyButton
 
                         Spacer(minLength: 30)
                     }
@@ -674,65 +670,6 @@ struct HomeView: View {
     private func loadMinigolfData() {
         minigolfSaved = MinigolfGameStore.load()
         minigolfHistory = MinigolfGameStore.loadHistory()
-    }
-
-    // MARK: Caddy
-
-    private var caddyButton: some View {
-        Button {
-            Haptics.tap()
-            if subscriptionManager.isCaddySubscribed {
-                showAssistant = true
-            } else {
-                showCaddyPaywall = true
-            }
-        } label: {
-            HStack(spacing: 10) {
-                Image(systemName: "waveform.circle.fill")
-                    .font(.title3)
-                VStack(alignment: .leading, spacing: 1) {
-                    Text("Caddy – Golf-Assistent")
-                        .font(.subheadline.weight(.semibold))
-                    Text("Regeln, Tipps & Strategien")
-                        .font(.caption)
-                        .opacity(0.7)
-                }
-                Spacer()
-                Image(systemName: "chevron.right")
-                    .font(.caption.weight(.semibold))
-                    .opacity(0.5)
-            }
-            .foregroundStyle(.white)
-            .padding(.horizontal, 20)
-            .padding(.vertical, 14)
-            .background(
-                RoundedRectangle(cornerRadius: 16)
-                    .fill(
-                        LinearGradient(
-                            colors: [
-                                Color(red: 0.12, green: 0.30, blue: 0.12),
-                                Color(red: 0.08, green: 0.20, blue: 0.08)
-                            ],
-                            startPoint: .topLeading,
-                            endPoint: .bottomTrailing
-                        )
-                    )
-                    .overlay(
-                        RoundedRectangle(cornerRadius: 16)
-                            .stroke(AppTheme.gold.opacity(0.35), lineWidth: 1)
-                    )
-            )
-        }
-        .padding(.horizontal)
-        .sheet(isPresented: $showAssistant) {
-            GolfAssistantView()
-                .presentationDetents([.large])
-                .presentationDragIndicator(.visible)
-        }
-        .sheet(isPresented: $showCaddyPaywall) {
-            CaddyPaywallView()
-                .environmentObject(subscriptionManager)
-        }
     }
 
     // MARK: Top Bar

@@ -7,7 +7,7 @@ import { AndroidCta } from "@/components/AndroidCta";
 
 /**
  * Download der Android-APK. Bewusst ohne Play Store: die erste Fassung geht
- * direkt von hier aus. Caddy und Training fehlen noch und stehen deshalb
+ * direkt von hier aus. Training fehlt noch und steht deshalb
  * ausdrücklich als „kommt später" auf der Seite.
  */
 export function Android({ lang }: { lang: Lang }) {

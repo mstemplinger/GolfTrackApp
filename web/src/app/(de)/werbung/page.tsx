@@ -128,7 +128,7 @@ export default async function Page() {
               <li>Kein Werbenetzwerk, keine fremden Skripte, keine Profilbildung.</li>
               <li>Gezählt wird nur, wie oft eine Anzeige zu sehen war und wie oft jemand tippte.</li>
               <li>Keine Gerätekennung, kein Standort, nichts, was auf einen Gast zurückführt.</li>
-              <li>Wer „Werbefrei“ gekauft oder ein Abo hat, sieht die Fläche gar nicht.</li>
+              <li>Wer GolfTrack Pro hat, sieht die Fläche gar nicht.</li>
             </ul>
           </div>
 

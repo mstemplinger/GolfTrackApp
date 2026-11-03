@@ -218,7 +218,7 @@ struct PrivacyView: View {
                 Group {
                     legalBlock(
                         title: "Datenschutz auf einen Blick",
-                        body: "GolfTrack speichert deine Daten (Runden, Scores, Statistiken) lokal auf deinem Gerät. Es werden keine Analyse- oder Tracking-Dienste eingesetzt. Einzelne Funktionen nutzen externe Dienste (Caddy-Sprachassistent, Golfplatz-Suche, Wetter) — dabei werden nur die unten beschriebenen Daten übertragen, und nur wenn du die jeweilige Funktion aktiv verwendest."
+                        body: "GolfTrack speichert deine Daten (Runden, Scores, Statistiken) lokal auf deinem Gerät. Es werden keine Analyse- oder Tracking-Dienste eingesetzt. Einzelne Funktionen nutzen externe Dienste (Golfplatz-Suche, Wetter) — dabei werden nur die unten beschriebenen Daten übertragen, und nur wenn du die jeweilige Funktion aktiv verwendest."
                     )
                     legalBlock(
                         title: "Gespeicherte Daten",
@@ -227,10 +227,6 @@ struct PrivacyView: View {
                     legalBlock(
                         title: "Standortzugriff",
                         body: "GolfTrack kann deinen GPS-Standort für das Schlag-Tracking auf der Karte verwenden. Der Standortzugriff erfolgt nur während der App-Nutzung und die Koordinaten werden ausschließlich lokal auf deinem Gerät gespeichert."
-                    )
-                    legalBlock(
-                        title: "Caddy-Sprachassistent (ElevenLabs)",
-                        body: "Wenn du den Caddy-Sprachassistenten nutzt, wird deine Spracheingabe zur Verarbeitung an ElevenLabs Inc. (USA) übertragen. Die Übertragung erfolgt nur, während ein Gespräch aktiv ist. Für die Verarbeitung gilt die Datenschutzerklärung von ElevenLabs (elevenlabs.io/privacy). Ohne Nutzung des Caddys werden keine Sprachdaten übertragen."
                     )
                     legalBlock(
                         title: "Wetterdaten (Open-Meteo)",
@@ -246,7 +242,7 @@ struct PrivacyView: View {
                     )
                     legalBlock(
                         title: "Abos (App Store)",
-                        body: "Training, Caddy und Pro werden über den App Store von Apple abgeschlossen und abgerechnet. Ich erhalte dabei keine Zahlungsdaten, sondern von Apple nur die Auskunft, ob ein Abo aktiv ist."
+                        body: "GolfTrack Pro wird über den App Store von Apple abgeschlossen und abgerechnet – als Abo oder Einmalkauf. Ich erhalte dabei keine Zahlungsdaten, sondern von Apple nur die Auskunft, ob ein Kauf aktiv ist."
                     )
                     legalBlock(
                         title: "Deine Rechte",
@@ -319,7 +315,6 @@ struct ImprintView: View {
                         "Das Design und der Quellcode der App sind urheberrechtlich geschützt.",
                         "Platzwertungen (Course Rating, Slope, Par) deutscher Golfplätze stammen mit freundlicher Genehmigung von handicap.report.",
                         "Platzkoordinaten: © OpenStreetMap-Mitwirkende, verfügbar unter der Open Database License (openstreetmap.org/copyright).",
-                        "Der Caddy-Sprachassistent nutzt die Sprachtechnologie von ElevenLabs.",
                         "Wetterdaten werden von Open-Meteo bereitgestellt."
                     ]
                 )

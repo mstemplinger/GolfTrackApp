@@ -25,14 +25,14 @@ enum AudioTrialPromo {
             markAsSeen()
             return false
         }
-        if subscriptions.trainingProduct == nil { await subscriptions.loadProducts() }
+        if subscriptions.proProduct == nil { await subscriptions.loadProducts() }
         await subscriptions.updateSubscriptionStatus()
-        if subscriptions.isTrainingSubscribed {
+        if subscriptions.isPro {
             markAsSeen()
             return false
         }
         // Ohne Produkt (offline) beim nächsten Start erneut versuchen.
-        guard let subscription = subscriptions.trainingProduct?.subscription,
+        guard let subscription = subscriptions.proProduct?.subscription,
               subscriptions.hasFreeTrial else { return false }
         guard await subscription.isEligibleForIntroOffer else {
             markAsSeen()
@@ -54,7 +54,7 @@ struct AudioTrialPromoView: View {
     }
 
     private var priceLine: String? {
-        guard let product = subscriptionManager.trainingProduct else { return nil }
+        guard let product = subscriptionManager.proProduct else { return nil }
         let period = subscriptionManager.subscriptionPeriodLabel(for: product)
         return String(localized: "Danach \(product.displayPrice) / \(period), jederzeit kündbar.")
     }

@@ -14,48 +14,43 @@ enum StoreError: LocalizedError {
 @MainActor
 final class SubscriptionManager: ObservableObject {
 
-    // Product IDs
-    static let trainingProductID = "Trainingsvideos_abo"
-    /// Jahresabo für die Training-Audios. Liegt in App Store Connect in
-    /// derselben Abo-Gruppe wie `trainingProductID`, damit Apple Wechsel
-    /// zwischen Monat und Jahr als Up-/Downgrade behandelt. Schaltet genau
-    /// dasselbe frei wie das Monatsabo.
-    static let trainingYearlyProductID = "Trainingsvideos_abo_jahr"
-    static let caddyProductID    = "Caddy_abo"
-    static let proProductID      = "GolfTrackPro_abo"
-    /// Einmalkauf, der die Werbung abschaltet. Muss in App Store Connect als
-    /// nicht verbrauchbarer Artikel unter dieser Kennung angelegt sein –
-    /// solange er fehlt, bleibt `adFreeProduct` einfach leer.
-    static let adFreeProductID   = "GolfTrack_werbefrei"
-    /// Einmalkauf (nicht verbrauchbar), der alle Audiobooks dauerhaft
-    /// freischaltet – auch die, die mit späteren Updates dazukommen. Wirkt
-    /// wie ein Training-Abo, läuft aber nie ab.
-    static let audiobooksLifetimeProductID = "Audiobooks_lifetime"
+    // Product IDs – verkauft wird nur noch GolfTrack Pro.
+    /// Pro im Monatsabo (Ziel 5 €). Liegt in derselben Abo-Gruppe wie das
+    /// Jahresabo, damit Apple Wechsel als Up-/Downgrade behandelt.
+    static let proProductID        = "GolfTrackPro_abo"
+    /// Pro im Jahresabo (Ziel 50 €).
+    static let proYearlyProductID  = "GolfTrackPro_abo_jahr"
+    /// Pro als Einmalkauf (nicht verbrauchbar, Ziel 80 €) – läuft nie ab.
+    static let proLifetimeProductID = "GolfTrackPro_lifetime"
 
-    @Published var isTrainingSubscribed = false
-    @Published var isCaddySubscribed    = false
-    @Published var isAdFree             = false
-    /// Audiobooks per Einmalkauf freigeschaltet. Setzt `isTrainingSubscribed`
-    /// mit – die Views fragen weiter nur das ab.
-    @Published var ownsAudiobooksLifetime = false
+    /// Frühere Produkte, die nicht mehr verkauft werden. Wer eines davon noch
+    /// besitzt, behält seinen Zugang: Abos und Audiobooks-Kauf zählen als Pro,
+    /// der Werbefrei-Kauf schaltet weiter nur die Werbung ab.
+    static let legacyProProductIDs: Set<String> = [
+        "Trainingsvideos_abo", "Trainingsvideos_abo_jahr", "Caddy_abo", "Audiobooks_lifetime",
+    ]
+    static let legacyAdFreeProductID = "GolfTrack_werbefrei"
 
-    @Published var trainingProduct: Product?
-    @Published var trainingYearlyProduct: Product?
-    @Published var caddyProduct: Product?
+    /// Pro aktiv – per Abo, Einmalkauf oder einem früheren Produkt.
+    @Published var isPro = false
+    /// Pro per Einmalkauf, läuft also nie ab.
+    @Published var ownsProLifetime = false
+    /// Früherer Werbefrei-Einmalkauf.
+    @Published var isAdFree = false
+
     @Published var proProduct: Product?
-    @Published var adFreeProduct: Product?
-    @Published var audiobooksLifetimeProduct: Product?
+    @Published var proYearlyProduct: Product?
+    @Published var proLifetimeProduct: Product?
 
-    /// Werbung sieht nur, wer nichts bezahlt hat. Ein Abo schaltet sie mit ab –
-    /// wer für Inhalte zahlt, soll nicht zusätzlich beworben werden.
-    var showsAds: Bool { !(isAdFree || isTrainingSubscribed || isCaddySubscribed) }
+    /// Werbung sieht nur, wer nichts bezahlt hat.
+    var showsAds: Bool { !(isPro || isAdFree) }
 
     @Published var isPurchasing  = false
     @Published var isRestoring   = false
     @Published var errorMessage: String?
 
-    // Legacy computed for TrainingView compatibility
-    var isSubscribed: Bool { isTrainingSubscribed }
+    /// Schaltet die Audio-Lektionen frei – heißt in den Training-Views so.
+    var isSubscribed: Bool { isPro }
 
     private var transactionListener: Task<Void, Never>?
 
@@ -64,9 +59,7 @@ final class SubscriptionManager: ObservableObject {
         // Sofort setzen, nicht erst im Task: die Views lesen den Status beim
         // ersten Aufbau. Nur mit -unlockAll und nur in DEBUG-Builds.
         if ProcessInfo.processInfo.arguments.contains("-unlockAll") {
-            isTrainingSubscribed = true
-            isCaddySubscribed    = true
-            isAdFree             = true
+            isPro = true
         }
         #endif
 
@@ -128,8 +121,8 @@ final class SubscriptionManager: ObservableObject {
     /// Rein aus den StoreKit-Preisen gerechnet – kein Betrag ist fest verdrahtet.
     /// `nil`, wenn ein Produkt fehlt, die Währungen abweichen, die Laufzeiten
     /// nicht Monat/Jahr sind oder sich nichts spart.
-    var trainingYearlySavingsLabel: String? {
-        guard let monthly = trainingProduct, let yearly = trainingYearlyProduct,
+    var yearlySavingsLabel: String? {
+        guard let monthly = proProduct, let yearly = proYearlyProduct,
               Self.isSinglePeriod(monthly, .month), Self.isSinglePeriod(yearly, .year),
               monthly.priceFormatStyle.currencyCode == yearly.priceFormatStyle.currencyCode,
               monthly.price > 0 else { return nil }
@@ -140,8 +133,8 @@ final class SubscriptionManager: ObservableObject {
     }
 
     /// Jahrespreis auf einen Monat umgelegt, in Währung und Format des Stores.
-    var trainingYearlyPricePerMonth: String? {
-        guard let yearly = trainingYearlyProduct, Self.isSinglePeriod(yearly, .year) else { return nil }
+    var yearlyPricePerMonth: String? {
+        guard let yearly = proYearlyProduct, Self.isSinglePeriod(yearly, .year) else { return nil }
         return (yearly.price / 12).formatted(yearly.priceFormatStyle)
     }
 
@@ -150,27 +143,21 @@ final class SubscriptionManager: ObservableObject {
         return period.value == 1 && period.unit == unit
     }
 
-    // Legacy helpers used by TrainingPaywallView
-    var freeTrialLabel: String? { freeTrialLabel(for: trainingProduct) }
+    /// Testphase des Monatsabos, falls in App Store Connect eine angelegt ist.
+    var freeTrialLabel: String? { freeTrialLabel(for: proProduct) }
     var hasFreeTrial: Bool { freeTrialLabel != nil }
 
     // MARK: - Load
 
     func loadProducts() async {
         do {
-            let ids: [String] = [Self.trainingProductID, Self.trainingYearlyProductID,
-                                 Self.caddyProductID,
-                                 Self.proProductID, Self.adFreeProductID,
-                                 Self.audiobooksLifetimeProductID]
+            let ids = [Self.proProductID, Self.proYearlyProductID, Self.proLifetimeProductID]
             let products = try await Product.products(for: ids)
             for p in products {
                 switch p.id {
-                case Self.trainingProductID: trainingProduct = p
-                case Self.trainingYearlyProductID: trainingYearlyProduct = p
-                case Self.caddyProductID:    caddyProduct    = p
-                case Self.proProductID:      proProduct      = p
-                case Self.adFreeProductID:   adFreeProduct   = p
-                case Self.audiobooksLifetimeProductID: audiobooksLifetimeProduct = p
+                case Self.proProductID:         proProduct         = p
+                case Self.proYearlyProductID:   proYearlyProduct   = p
+                case Self.proLifetimeProductID: proLifetimeProduct = p
                 default: break
                 }
             }
@@ -178,10 +165,6 @@ final class SubscriptionManager: ObservableObject {
             errorMessage = "Abonnement konnte nicht geladen werden."
         }
     }
-
-    // Legacy used by TrainingPaywallView
-    var product: Product? { trainingProduct }
-    func loadProduct() async { await loadProducts() }
 
     // MARK: - Purchase
 
@@ -199,24 +182,8 @@ final class SubscriptionManager: ObservableObject {
                 // aufgerufen, da StoreKit die Entitlements erst verzögert aktualisiert
                 // und sonst den gerade gesetzten State wieder überschreiben würde.
                 // Der Transaction-Listener übernimmt die spätere Synchronisierung.
-                switch product.id {
-                case Self.trainingProductID, Self.trainingYearlyProductID:
-                    isTrainingSubscribed = true
-                    isCaddySubscribed    = false
-                case Self.caddyProductID:
-                    isCaddySubscribed    = true
-                    isTrainingSubscribed = ownsAudiobooksLifetime
-                case Self.proProductID:
-                    isTrainingSubscribed = true
-                    isCaddySubscribed    = true
-                case Self.adFreeProductID:
-                    isAdFree = true
-                case Self.audiobooksLifetimeProductID:
-                    ownsAudiobooksLifetime = true
-                    isTrainingSubscribed   = true
-                default:
-                    break
-                }
+                isPro = true
+                if product.id == Self.proLifetimeProductID { ownsProLifetime = true }
                 Haptics.celebrate()
                 await transaction.finish()
             case .pending, .userCancelled:
@@ -228,12 +195,6 @@ final class SubscriptionManager: ObservableObject {
             Haptics.error()
             errorMessage = "Kauf fehlgeschlagen. Bitte versuche es erneut."
         }
-    }
-
-    // Legacy used by TrainingPaywallView
-    func purchase() async {
-        guard let p = trainingProduct else { return }
-        await purchase(p)
     }
 
     // MARK: - Restore
@@ -260,33 +221,31 @@ final class SubscriptionManager: ObservableObject {
         // -unlockAll beim Start, nur in DEBUG-Builds — im Release existiert
         // dieser Zweig nicht.
         if ProcessInfo.processInfo.arguments.contains("-unlockAll") {
-            isTrainingSubscribed = true
-            isCaddySubscribed    = true
-            isAdFree             = true
-            ownsAudiobooksLifetime = true
+            isPro = true
             return
         }
         #endif
 
-        var hasTraining = false
-        var hasCaddy    = false
-        var hasAdFree   = false
+        var hasPro      = false
         var hasLifetime = false
+        var hasAdFree   = false
         for await result in Transaction.currentEntitlements {
             guard case .verified(let tx) = result, tx.revocationDate == nil else { continue }
             switch tx.productID {
-            case Self.trainingProductID, Self.trainingYearlyProductID: hasTraining = true
-            case Self.caddyProductID:    hasCaddy    = true
-            case Self.proProductID:      hasTraining = true; hasCaddy = true
-            case Self.adFreeProductID:   hasAdFree   = true
-            case Self.audiobooksLifetimeProductID: hasLifetime = true; hasTraining = true
+            case Self.proProductID, Self.proYearlyProductID:
+                hasPro = true
+            case Self.proLifetimeProductID:
+                hasPro = true; hasLifetime = true
+            case Self.legacyAdFreeProductID:
+                hasAdFree = true
+            case let id where Self.legacyProProductIDs.contains(id):
+                hasPro = true
             default: break
             }
         }
-        ownsAudiobooksLifetime = hasLifetime
-        isTrainingSubscribed = hasTraining
-        isCaddySubscribed    = hasCaddy
-        isAdFree             = hasAdFree
+        isPro           = hasPro
+        ownsProLifetime = hasLifetime
+        isAdFree        = hasAdFree
     }
 
     // MARK: - Helpers

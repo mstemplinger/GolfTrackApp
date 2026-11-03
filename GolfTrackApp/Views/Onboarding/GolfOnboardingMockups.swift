@@ -156,7 +156,7 @@ struct OnbWelcomeVisual: View {
         ("list.number", "Zählkarte"), ("location.fill", "GPS-Distanzen"),
         ("bag.fill", "Schläger & Bag"), ("chart.line.uptrend.xyaxis", "WHS-Handicap"),
         ("figure.walk", "Laufspur"), ("cloud.sun.fill", "Golf-Wetter"),
-        ("headphones", "Audio-Training"), ("waveform", "Caddy"),
+        ("headphones", "Audio-Training"), ("figure.golf", "Driving Range"),
         ("graduationcap.fill", "Platzreife"), ("applewatch", "Apple Watch"),
     ]
 
@@ -252,25 +252,6 @@ struct OnbHomeMock: View {
                         greenButton("Platzreife lernen", icon: "graduationcap.fill")
                         greenButton("Verlauf", icon: "clock.fill")
                     }
-
-                    HStack(spacing: 10) {
-                        Image(systemName: "waveform.circle.fill").font(.system(size: 20))
-                        VStack(alignment: .leading, spacing: 0) {
-                            Text("Caddy – Golf-Assistent").font(.system(size: 12, weight: .semibold))
-                            Text("Regeln, Tipps & Strategien").font(.system(size: 9)).opacity(0.7)
-                        }
-                        Spacer()
-                        Image(systemName: "chevron.right").font(.system(size: 10, weight: .semibold)).opacity(0.5)
-                    }
-                    .foregroundStyle(.white)
-                    .padding(.horizontal, 12).padding(.vertical, 9)
-                    .background(
-                        RoundedRectangle(cornerRadius: 13)
-                            .fill(LinearGradient(colors: [Color(red: 0.12, green: 0.30, blue: 0.12),
-                                                          Color(red: 0.08, green: 0.20, blue: 0.08)],
-                                                 startPoint: .topLeading, endPoint: .bottomTrailing))
-                            .overlay(RoundedRectangle(cornerRadius: 13).stroke(AppTheme.gold.opacity(0.35), lineWidth: 1))
-                    )
                 }
                 .padding(.horizontal, 14)
             }
@@ -1086,83 +1067,6 @@ struct OnbTrainingMock: View {
             Text(verbatim: length).font(.system(size: 10)).foregroundStyle(AppTheme.textSec)
         }
         .onbCard(13, padding: 8)
-    }
-}
-
-// MARK: - Caddy
-
-struct OnbCaddyMock: View {
-    @Environment(\.onbActive) private var active
-    @Environment(\.accessibilityReduceMotion) private var reduceMotion
-    @State private var wave = false
-
-    var body: some View {
-        OnbPhone {
-            OnbScreen {
-                VStack(spacing: 12) {
-                    HStack(spacing: 10) {
-                        Image(systemName: "waveform.circle.fill")
-                            .font(.system(size: 30))
-                            .foregroundStyle(AppTheme.gold)
-                        VStack(alignment: .leading, spacing: 0) {
-                            Text("Caddy").font(.system(size: 16, weight: .bold)).foregroundStyle(.white)
-                            Text("Golf-Assistent").font(.system(size: 10)).foregroundStyle(AppTheme.textSec)
-                        }
-                        Spacer()
-                    }
-
-                    bubble("Mein Ball liegt im Wasserhindernis. Was darf ich jetzt tun?", mine: true)
-                    bubble("Du hast drei Möglichkeiten, jeweils mit einem Strafschlag: Schlag wiederholen, auf der Linie zur Fahne zurückgehen oder seitlich innerhalb von zwei Schlägerlängen droppen (Regel 17).",
-                           mine: false)
-                    bubble("Und welchen Schläger für 140 m?", mine: true)
-                    bubble("Nimm dein 7er-Eisen – damit schlägst du laut deinem Bag im Schnitt 140 m.", mine: false)
-
-                    Spacer(minLength: 0)
-
-                    HStack(alignment: .center, spacing: 4) {
-                        ForEach(0..<16, id: \.self) { i in
-                            Capsule()
-                                .fill(AppTheme.gold)
-                                .frame(width: 4, height: barHeight(i))
-                        }
-                    }
-                    .frame(height: 50)
-                    .animation(reduceMotion ? nil : .easeInOut(duration: 0.5).repeatForever(autoreverses: true),
-                               value: wave)
-
-                    Image(systemName: "mic.fill")
-                        .font(.system(size: 24, weight: .bold))
-                        .foregroundStyle(onbDarkText)
-                        .frame(width: 68, height: 68)
-                        .background(AppTheme.gold, in: Circle())
-                        .shadow(color: AppTheme.gold.opacity(0.5), radius: 14)
-                        .onbHighlight(34)
-                        .padding(.bottom, 24)
-                }
-                .padding(.horizontal, 14)
-            }
-        }
-        .onAppear { wave = true }
-    }
-
-    private func barHeight(_ i: Int) -> CGFloat {
-        let base: [CGFloat] = [0.3, 0.5, 0.8, 0.55, 0.9, 0.4, 0.7, 1, 0.65, 0.85, 0.45, 0.75, 0.5, 0.9, 0.35, 0.55]
-        let v = wave ? base[i] : base[(i + 5) % base.count]
-        return 8 + 40 * v
-    }
-
-    private func bubble(_ text: LocalizedStringKey, mine: Bool) -> some View {
-        HStack {
-            if mine { Spacer(minLength: 40) }
-            Text(text)
-                .font(.system(size: 12))
-                .foregroundStyle(mine ? onbDarkText : .white)
-                .padding(.horizontal, 12).padding(.vertical, 9)
-                .background(mine ? AppTheme.gold : AppTheme.card,
-                            in: RoundedRectangle(cornerRadius: 16, style: .continuous))
-                .fixedSize(horizontal: false, vertical: true)
-            if !mine { Spacer(minLength: 30) }
-        }
     }
 }
 

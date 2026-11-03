@@ -8503,6 +8503,46 @@
         }
       }
     },
+    "Alle Audio-Trainings, keine Werbung –\nmonatlich, jährlich oder einmalig." : {
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Všechny audio tréninky, bez reklam –\nměsíčně, ročně nebo jednorázově."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "All audio trainings, no ads –\nmonthly, yearly or one-time."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Todos los entrenamientos de audio, sin anuncios –\nmensual, anual o pago único."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tous les entraînements audio, sans publicité –\nmensuel, annuel ou en une fois."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tutti gli allenamenti audio, senza pubblicità –\nmensile, annuale o una tantum."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wszystkie treningi audio, bez reklam –\nmiesięcznie, rocznie lub jednorazowo."
+          }
+        }
+      }
+    },
     "Alle Ergebnisse löschen?" : {
       "localizations" : {
         "cs" : {
@@ -9408,6 +9448,46 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Zmień"
+          }
+        }
+      }
+    },
+    "Angebot wird geladen…" : {
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Načítání nabídky…"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Loading offer…"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cargando oferta…"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Chargement de l’offre…"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Caricamento dell’offerta…"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ładowanie oferty…"
           }
         }
       }
@@ -18702,6 +18782,46 @@
         }
       }
     },
+    "Einmalig" : {
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Jednorázově"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "One-time"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pago único"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Une fois"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Una tantum"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Jednorazowo"
+          }
+        }
+      }
+    },
     "Einmalig kaufen" : {
       "localizations" : {
         "cs" : {
@@ -18778,6 +18898,46 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Płatność jednorazowa · Bez subskrypcji"
+          }
+        }
+      }
+    },
+    "Einmalzahlung · Kein Abo · Für immer" : {
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Jednorázová platba · Bez předplatného · Navždy"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "One-time payment · No subscription · Forever"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pago único · Sin suscripción · Para siempre"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Paiement unique · Sans abonnement · Pour toujours"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pagamento unico · Nessun abbonamento · Per sempre"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Jednorazowa płatność · Bez subskrypcji · Na zawsze"
           }
         }
       }
@@ -21678,6 +21838,46 @@
         }
       }
     },
+    "für immer" : {
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "navždy"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "forever"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "para siempre"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "pour toujours"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "per sempre"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "na zawsze"
+          }
+        }
+      }
+    },
     "Game Center" : {
       "localizations" : {
         "cs" : {
@@ -24165,6 +24365,46 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "GolfTrack Pro"
+          }
+        }
+      }
+    },
+    "GolfTrack Pro aktiv" : {
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "GolfTrack Pro aktivní"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "GolfTrack Pro active"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "GolfTrack Pro activo"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "GolfTrack Pro actif"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "GolfTrack Pro attivo"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "GolfTrack Pro aktywny"
           }
         }
       }
@@ -31831,6 +32071,46 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Połącz z Game Center"
+          }
+        }
+      }
+    },
+    "Mit GolfTrack Pro ohne Anzeigen" : {
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bez reklam s GolfTrack Pro"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No ads with GolfTrack Pro"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sin anuncios con GolfTrack Pro"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sans publicité avec GolfTrack Pro"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Senza pubblicità con GolfTrack Pro"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bez reklam z GolfTrack Pro"
           }
         }
       }

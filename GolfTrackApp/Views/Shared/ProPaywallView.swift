@@ -1,66 +1,46 @@
 import SwiftUI
 import StoreKit
 
-struct TrainingPaywallView: View {
+/// Die einzige Kaufseite der App: GolfTrack Pro monatlich, jährlich oder
+/// einmalig. Preise kommen aus StoreKit – kein Betrag ist fest verdrahtet.
+/// Jahres- und Einmal-Karte erscheinen erst, wenn StoreKit das Produkt liefert.
+struct ProPaywallView: View {
     @EnvironmentObject private var subscriptionManager: SubscriptionManager
     @Environment(\.dismiss) private var dismiss
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
-    @State private var selectedPlan: Plan = .training
-    /// Laufzeit innerhalb des Training-Tabs: Monats- oder Jahresabo.
-    @State private var billing: Billing = .monthly
+    @State private var plan: Plan = .yearly
     /// Kurzes Aufleuchten des Kauf-Buttons, nachdem der Testphasen-Hinweis
     /// angetippt wurde und die Ansicht dorthin gescrollt hat.
     @State private var highlightPurchase = false
 
-    enum Plan { case training, lifetime, pro }
-    enum Billing { case monthly, yearly }
+    enum Plan { case monthly, yearly, lifetime }
 
     /// Scroll-Ziel für den Testphasen-Hinweis.
     private static let purchaseAnchor = "purchase"
 
-    private var trainingFeatures: [(icon: String, color: Color, text: LocalizedStringKey)] {
-        let count = allLessons.filter(\.isAvailable).count
-        return [
-        ("headphones",           AppTheme.gold,                              "\(count) Audio-Trainingseinheiten"),
-        ("figure.golf",          Color(red: 0.3, green: 0.85, blue: 0.5),   "Drive, Technik, Mental & mehr"),
-        ("arrow.clockwise",      Color(red: 0.4, green: 0.7,  blue: 1.0),   "Neue Lektionen regelmäßig"),
-        ("play.circle.fill",     Color(red: 1.0, green: 0.6,  blue: 0.3),   "Offline anhören, jederzeit"),
-        ("speedometer",          Color(red: 0.6, green: 0.5,  blue: 1.0),   "Wiedergabegeschwindigkeit"),
-        ("nosign",               Color(red: 1.0, green: 0.4,  blue: 0.5),   "Keine Werbung in der App"),
-        ]
-    }
+    private var features: [PaywallFeature] { ProFeatureList.features() }
 
-    private var proFeatures: [PaywallFeature] { ProFeatureList.features() }
-
-    private var lifetimeFeatures: [(icon: String, color: Color, text: LocalizedStringKey)] {
-        let count = allLessons.filter(\.isAvailable).count
-        return [
-        ("infinity",             AppTheme.gold,                              "Einmal zahlen, für immer behalten"),
-        ("headphones",           Color(red: 0.3, green: 0.85, blue: 0.5),   "Alle \(count) Audio-Trainingseinheiten"),
-        ("sparkles",             Color(red: 0.4, green: 0.7,  blue: 1.0),   "Alle künftigen Audiobooks inklusive"),
-        ("creditcard",           Color(red: 1.0, green: 0.6,  blue: 0.3),   "Kein Abo, keine Folgekosten"),
-        ("person.2.fill",        Color(red: 0.6, green: 0.5,  blue: 1.0),   "Mit der Familienfreigabe teilen"),
-        ("nosign",               Color(red: 1.0, green: 0.4,  blue: 0.5),   "Keine Werbung in der App"),
-        ]
-    }
-
-    private var activeProduct: Product? {
-        switch selectedPlan {
-        case .training:
-            // Jahresabo nur, wenn StoreKit es liefert – sonst bleibt es beim Monat.
-            billing == .yearly
-                ? subscriptionManager.trainingYearlyProduct ?? subscriptionManager.trainingProduct
-                : subscriptionManager.trainingProduct
-        case .lifetime: subscriptionManager.audiobooksLifetimeProduct
-        case .pro:      subscriptionManager.proProduct
+    private func product(for plan: Plan) -> Product? {
+        switch plan {
+        case .monthly:  subscriptionManager.proProduct
+        case .yearly:   subscriptionManager.proYearlyProduct
+        case .lifetime: subscriptionManager.proLifetimeProduct
         }
     }
 
-    private var isLifetime: Bool { selectedPlan == .lifetime }
+    /// Gewählter Plan – fällt auf das Monatsabo zurück, solange StoreKit den
+    /// gewählten nicht liefert.
+    private var effectivePlan: Plan {
+        product(for: plan) == nil ? .monthly : plan
+    }
+
+    private var activeProduct: Product? { product(for: effectivePlan) }
+
+    private var isLifetime: Bool { effectivePlan == .lifetime }
 
     private var trialLabel: String? {
-        subscriptionManager.freeTrialLabel(for: activeProduct)
+        isLifetime ? nil : subscriptionManager.freeTrialLabel(for: activeProduct)
     }
 
     private var periodLabel: String {
@@ -82,14 +62,6 @@ struct TrainingPaywallView: View {
                         VStack(spacing: 24) {
                             heroSection
                             planPicker
-                            if selectedPlan == .training && subscriptionManager.trainingYearlyProduct != nil {
-                                billingPicker
-                            }
-                            // Monats- und Jahresabo liegen in derselben Gruppe wie
-                            // Caddy – beide ersetzen ein laufendes Caddy-Abo.
-                            if subscriptionManager.isCaddySubscribed && selectedPlan == .training {
-                                caddyWarningBanner
-                            }
                             if trialLabel != nil { trialBanner(proxy: proxy) }
                             featuresSection
                             priceSection
@@ -106,11 +78,11 @@ struct TrainingPaywallView: View {
         }
         .presentationDetents([.large])
         .presentationDragIndicator(.hidden)
-        .onChange(of: subscriptionManager.isTrainingSubscribed) { _, subscribed in
-            if subscribed { dismiss() }
+        .onChange(of: subscriptionManager.isPro) { _, isPro in
+            if isPro { dismiss() }
         }
         .onChange(of: subscriptionManager.isPurchasing) { _, purchasing in
-            if !purchasing && subscriptionManager.isTrainingSubscribed { dismiss() }
+            if !purchasing && subscriptionManager.isPro { dismiss() }
         }
         .alert("Fehler", isPresented: Binding(
             get: { subscriptionManager.errorMessage != nil },
@@ -136,64 +108,102 @@ struct TrainingPaywallView: View {
                 Circle()
                     .fill(AppTheme.gold.opacity(0.18))
                     .frame(width: 70, height: 70)
-                Image(systemName: selectedPlan == .pro ? "crown.fill" : isLifetime ? "infinity" : "headphones")
+                Image(systemName: "crown.fill")
                     .font(.system(size: 32, weight: .semibold))
                     .foregroundStyle(AppTheme.gold)
-                    .contentTransition(.symbolEffect(.replace))
             }
 
-            Text(selectedPlan == .pro ? "GolfTrack Pro" : isLifetime ? "Audiobooks für immer" : "Training")
+            Text(verbatim: "GolfTrack Pro")
                 .font(.title.bold())
                 .foregroundStyle(AppTheme.text)
-                .contentTransition(.numericText())
 
-            Text(selectedPlan == .pro
-                 ? "Alle Trainings und der KI-Caddy –\nalles in einem Abo."
-                 : isLifetime
-                 ? "Einmal kaufen – alle Audiobooks,\nheute und in Zukunft."
-                 : "Werde zum besseren Golfspieler –\nmit geführten Audio-Trainings.")
+            Text("Alle Audio-Trainings, keine Werbung –\nmonatlich, jährlich oder einmalig.")
                 .font(.subheadline)
                 .foregroundStyle(AppTheme.textSec)
                 .multilineTextAlignment(.center)
                 .lineSpacing(3)
         }
-        .animation(.easeInOut(duration: 0.2), value: selectedPlan)
     }
 
     // MARK: - Plan Picker
 
     private var planPicker: some View {
-        HStack(spacing: 0) {
-            planTab(label: "Training", plan: .training)
-            if subscriptionManager.audiobooksLifetimeProduct != nil {
-                planTab(label: "Für immer", plan: .lifetime)
+        HStack(spacing: 10) {
+            planCard(.monthly,
+                     title: "Monatlich",
+                     caption: subscriptionManager.proProduct.map { _ in
+                         "/ \(subscriptionManager.subscriptionPeriodLabel(for: subscriptionManager.proProduct))"
+                     },
+                     note: nil,
+                     badge: nil)
+            if subscriptionManager.proYearlyProduct != nil {
+                planCard(.yearly,
+                         title: "Jährlich",
+                         caption: "/ \(subscriptionManager.subscriptionPeriodLabel(for: subscriptionManager.proYearlyProduct))",
+                         note: subscriptionManager.yearlyPricePerMonth.map { "≈ \($0) / Monat" },
+                         badge: subscriptionManager.yearlySavingsLabel.map { "Spare \($0)" })
             }
-            planTab(label: "Pro (Alles)", plan: .pro)
+            if subscriptionManager.proLifetimeProduct != nil {
+                planCard(.lifetime,
+                         title: "Einmalig",
+                         caption: String(localized: "für immer"),
+                         note: nil,
+                         badge: nil)
+            }
         }
-        .background(AppTheme.card, in: RoundedRectangle(cornerRadius: 12))
-        .padding(.horizontal, 4)
+        // Alle Karten so hoch wie die höchste – nur die Jahreskarte hat die
+        // „≈ … / Monat“-Zeile.
+        .fixedSize(horizontal: false, vertical: true)
     }
 
-    private func planTab(label: LocalizedStringKey, plan: Plan) -> some View {
-        Button {
+    private func planCard(_ option: Plan, title: LocalizedStringKey, caption: String?,
+                          note: String?, badge: String?) -> some View {
+        let isSelected = effectivePlan == option
+        return Button {
             Haptics.selection()
-            withAnimation(.easeInOut(duration: 0.2)) { selectedPlan = plan }
+            withAnimation(.easeInOut(duration: 0.2)) { plan = option }
         } label: {
-            Text(label)
-                .font(.subheadline.weight(selectedPlan == plan ? .semibold : .regular))
-                .foregroundStyle(selectedPlan == plan ? Color(red: 0.08, green: 0.18, blue: 0.11) : AppTheme.textSec)
-                .frame(maxWidth: .infinity)
-                .frame(height: 40)
-                .background(
-                    Group {
-                        if selectedPlan == plan {
-                            RoundedRectangle(cornerRadius: 10).fill(AppTheme.gold)
-                        }
-                    }
-                )
-                .padding(4)
+            VStack(alignment: .leading, spacing: 4) {
+                Text(title)
+                    .font(.subheadline.weight(.semibold))
+                    .foregroundStyle(isSelected ? AppTheme.gold : AppTheme.textSec)
+                Text(product(for: option)?.displayPrice ?? "–")
+                    .font(.headline.bold())
+                    .foregroundStyle(AppTheme.text)
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.7)
+                if let caption {
+                    Text(caption)
+                        .font(.caption)
+                        .foregroundStyle(AppTheme.textSec)
+                }
+                if let note {
+                    Text(note)
+                        .font(.caption2)
+                        .foregroundStyle(AppTheme.textTer)
+                }
+            }
+            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+            .padding(12)
+            .background(AppTheme.card, in: RoundedRectangle(cornerRadius: 14))
+            .overlay(
+                RoundedRectangle(cornerRadius: 14)
+                    .stroke(isSelected ? AppTheme.gold : AppTheme.cardAlt, lineWidth: isSelected ? 2 : 1)
+            )
+            .overlay(alignment: .topTrailing) {
+                if let badge {
+                    Text(badge)
+                        .font(.caption2.bold())
+                        .foregroundStyle(Color(red: 0.08, green: 0.18, blue: 0.11))
+                        .padding(.horizontal, 8)
+                        .padding(.vertical, 3)
+                        .background(AppTheme.gold, in: Capsule())
+                        .offset(x: -6, y: -9)
+                }
+            }
         }
         .buttonStyle(.plain)
+        .accessibilityAddTraits(isSelected ? .isSelected : [])
     }
 
     // MARK: - Trial Banner
@@ -243,115 +253,10 @@ struct TrainingPaywallView: View {
         }
     }
 
-    // MARK: - Laufzeit (Monat / Jahr)
-
-    private var billingPicker: some View {
-        HStack(spacing: 12) {
-            billingCard(.monthly,
-                        title: "Monatlich",
-                        product: subscriptionManager.trainingProduct,
-                        perMonth: nil,
-                        savings: nil)
-            billingCard(.yearly,
-                        title: "Jährlich",
-                        product: subscriptionManager.trainingYearlyProduct,
-                        perMonth: subscriptionManager.trainingYearlyPricePerMonth,
-                        savings: subscriptionManager.trainingYearlySavingsLabel)
-        }
-        // Beide Karten so hoch wie die höhere – der Monatskarte fehlt die
-        // „≈ … / Monat“-Zeile, sonst ragt die Jahreskarte unten heraus.
-        .fixedSize(horizontal: false, vertical: true)
-    }
-
-    private func billingCard(_ option: Billing, title: LocalizedStringKey, product: Product?,
-                             perMonth: String?, savings: String?) -> some View {
-        let isSelected = billing == option
-        return Button {
-            Haptics.selection()
-            withAnimation(.easeInOut(duration: 0.2)) { billing = option }
-        } label: {
-            VStack(alignment: .leading, spacing: 4) {
-                Text(title)
-                    .font(.subheadline.weight(.semibold))
-                    .foregroundStyle(isSelected ? AppTheme.gold : AppTheme.textSec)
-                Text(product?.displayPrice ?? "–")
-                    .font(.title3.bold())
-                    .foregroundStyle(AppTheme.text)
-                Text("/ \(subscriptionManager.subscriptionPeriodLabel(for: product))")
-                    .font(.caption)
-                    .foregroundStyle(AppTheme.textSec)
-                if let perMonth {
-                    Text("≈ \(perMonth) / Monat")
-                        .font(.caption2)
-                        .foregroundStyle(AppTheme.textTer)
-                }
-            }
-            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
-            .padding(14)
-            .background(AppTheme.card, in: RoundedRectangle(cornerRadius: 14))
-            .overlay(
-                RoundedRectangle(cornerRadius: 14)
-                    .stroke(isSelected ? AppTheme.gold : AppTheme.cardAlt, lineWidth: isSelected ? 2 : 1)
-            )
-            .overlay(alignment: .topTrailing) {
-                if let savings {
-                    Text("Spare \(savings)")
-                        .font(.caption2.bold())
-                        .foregroundStyle(Color(red: 0.08, green: 0.18, blue: 0.11))
-                        .padding(.horizontal, 8)
-                        .padding(.vertical, 3)
-                        .background(AppTheme.gold, in: Capsule())
-                        .offset(x: -8, y: -9)
-                }
-            }
-        }
-        .buttonStyle(.plain)
-        .accessibilityAddTraits(isSelected ? .isSelected : [])
-    }
-
-    // MARK: - Caddy-Konflikt-Hinweis
-
-    private var caddyWarningBanner: some View {
-        VStack(alignment: .leading, spacing: 10) {
-            HStack(spacing: 8) {
-                Image(systemName: "exclamationmark.triangle.fill")
-                    .foregroundStyle(AppTheme.gold)
-                Text("Du hast bereits Caddy")
-                    .font(.subheadline.bold())
-                    .foregroundStyle(AppTheme.text)
-            }
-            Text("Du hast aktuell Caddy aktiv. Wenn du das Training-Abo kaufst, verlierst du deinen Caddy-Zugang. Mit Pro bekommst du beides – Training und Caddy – in einem Abo.")
-                .font(.caption)
-                .foregroundStyle(AppTheme.textSec)
-                .fixedSize(horizontal: false, vertical: true)
-            Button {
-                Haptics.selection()
-                withAnimation(.easeInOut(duration: 0.2)) { selectedPlan = .pro }
-            } label: {
-                Label("Zu Pro wechseln – alles in einem", systemImage: "crown.fill")
-                    .font(.caption.bold())
-                    .foregroundStyle(Color(red: 0.08, green: 0.18, blue: 0.11))
-                    .frame(maxWidth: .infinity)
-                    .padding(.vertical, 10)
-                    .background(AppTheme.gold, in: RoundedRectangle(cornerRadius: 10))
-            }
-            .buttonStyle(.plain)
-        }
-        .padding(14)
-        .background(AppTheme.gold.opacity(0.1), in: RoundedRectangle(cornerRadius: 14))
-        .overlay(RoundedRectangle(cornerRadius: 14).stroke(AppTheme.gold.opacity(0.35), lineWidth: 1))
-    }
-
     // MARK: - Features
 
     private var featuresSection: some View {
-        let features: [(icon: String, color: Color, text: LocalizedStringKey)]
-        switch selectedPlan {
-        case .training: features = trainingFeatures
-        case .lifetime: features = lifetimeFeatures
-        case .pro:      features = proFeatures
-        }
-        return VStack(spacing: 0) {
+        VStack(spacing: 0) {
             ForEach(features.indices, id: \.self) { i in
                 let f = features[i]
                 HStack(spacing: 14) {
@@ -382,7 +287,6 @@ struct TrainingPaywallView: View {
             }
         }
         .background(AppTheme.card, in: RoundedRectangle(cornerRadius: 16))
-        .animation(.easeInOut(duration: 0.2), value: selectedPlan)
     }
 
     // MARK: - Price
@@ -418,14 +322,14 @@ struct TrainingPaywallView: View {
                         .foregroundStyle(AppTheme.textSec)
                 }
             }
-            Text(isLifetime ? "Einmalzahlung · Kein Abo" as LocalizedStringKey : "Jederzeit kündbar · Keine Bindung")
+            Text(isLifetime ? "Einmalzahlung · Kein Abo · Für immer" as LocalizedStringKey : "Jederzeit kündbar · Keine Bindung")
                 .font(.caption)
                 .foregroundStyle(AppTheme.textTer)
         }
         .frame(maxWidth: .infinity)
         .padding(.vertical, 20)
         .background(AppTheme.card, in: RoundedRectangle(cornerRadius: 16))
-        .animation(.easeInOut(duration: 0.2), value: selectedPlan)
+        .animation(.easeInOut(duration: 0.2), value: effectivePlan)
     }
 
     // MARK: - Action
@@ -453,7 +357,7 @@ struct TrainingPaywallView: View {
                             ProgressView()
                                 .tint(Color(red: 0.08, green: 0.18, blue: 0.11))
                                 .scaleEffect(0.8)
-                            Text("Abonnement wird geladen…")
+                            Text("Angebot wird geladen…")
                                 .font(.headline)
                                 .foregroundStyle(Color(red: 0.08, green: 0.18, blue: 0.11))
                         }
@@ -466,7 +370,7 @@ struct TrainingPaywallView: View {
                             .font(.headline)
                             .foregroundStyle(Color(red: 0.08, green: 0.18, blue: 0.11))
                     } else {
-                        Label("Jetzt abonnieren", systemImage: selectedPlan == .pro ? "crown.fill" : "headphones")
+                        Label("Jetzt abonnieren", systemImage: "crown.fill")
                             .font(.headline)
                             .foregroundStyle(Color(red: 0.08, green: 0.18, blue: 0.11))
                     }

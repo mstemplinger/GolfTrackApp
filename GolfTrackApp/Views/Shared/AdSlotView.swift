@@ -11,7 +11,7 @@ import SwiftUI
 ///    nächstgelegenen Umkreis oder allgemein, steht sie hier – sichtbar als
 ///    „Anzeige" gekennzeichnet. Ein Tipp öffnet erst `golftrack.app/werbung/<id>`:
 ///    dort steht der Weg zur Website und warum genau diese Anzeige hier steht.
-/// 3. Sonst bewirbt sich die App selbst: Abo, Caddy oder der Hinweis für
+/// 3. Sonst bewirbt sich die App selbst: GolfTrack Pro oder der Hinweis für
 ///    Betreiber, dass dieser Platz buchbar ist.
 ///
 /// Die Anzeige wechselt mit dem Loch – so bekommt jeder Werbepartner im Lauf
@@ -58,11 +58,7 @@ struct AdSlotView: View {
     }
 
     private var housePromo: HousePromo? {
-        let available = HousePromo.available(
-            hasTraining: subscriptionManager.isTrainingSubscribed,
-            hasCaddy: subscriptionManager.isCaddySubscribed
-        )
-        guard !available.isEmpty else { return nil }
+        let available = HousePromo.allCases
         return available[abs(rotation) % available.count]
     }
 
@@ -116,7 +112,7 @@ struct AdSlotView: View {
 
                 removeAdsLink
             }
-            .sheet(isPresented: $showsAdFree) { AdFreePaywallView() }
+            .sheet(isPresented: $showsAdFree) { ProPaywallView() }
             .task(id: "\(ad.id)-\(rotation)") { catalog.countImpression(ad) }
         } else if let promo = housePromo {
             VStack(spacing: 6) {
@@ -145,13 +141,11 @@ struct AdSlotView: View {
             }
             .sheet(item: $promoSheet) { promo in
                 switch promo {
-                case .training:  TrainingPaywallView()
-                case .caddy:     CaddyPaywallView()
-                case .adFree:    AdFreePaywallView()
-                case .advertise: EmptyView()
+                case .training, .adFree: ProPaywallView()
+                case .advertise:         EmptyView()
                 }
             }
-            .sheet(isPresented: $showsAdFree) { AdFreePaywallView() }
+            .sheet(isPresented: $showsAdFree) { ProPaywallView() }
         }
     }
 
@@ -261,7 +255,6 @@ struct AdSlotView: View {
 /// Anlagenbetreiber – der wiederum sorgt dafür, dass der Platz verkauft wird.
 enum HousePromo: String, Identifiable, CaseIterable {
     case training
-    case caddy
     case adFree
     case advertise
 
@@ -275,7 +268,6 @@ enum HousePromo: String, Identifiable, CaseIterable {
     var title: LocalizedStringKey {
         switch self {
         case .training:  return "Besser putten lernen"
-        case .caddy:     return "Caddy fragen"
         case .adFree:    return "Ohne Werbung spielen"
         case .advertise: return "Hier könnte Ihre Anlage stehen"
         }
@@ -284,8 +276,7 @@ enum HousePromo: String, Identifiable, CaseIterable {
     var subtitle: LocalizedStringKey {
         switch self {
         case .training:  return "Audio-Trainings für Technik und Kopf"
-        case .caddy:     return "Der Assistent für Schlagwahl und Taktik"
-        case .adFree:    return "Einmal kaufen, Anzeigen weg"
+        case .adFree:    return "Mit GolfTrack Pro ohne Anzeigen"
         case .advertise: return "Werbeplatz für Betreiber – golftrack.app"
         }
     }
@@ -293,7 +284,6 @@ enum HousePromo: String, Identifiable, CaseIterable {
     var symbol: String {
         switch self {
         case .training:  return "headphones"
-        case .caddy:     return "waveform.circle.fill"
         case .adFree:    return "rectangle.slash"
         case .advertise: return "megaphone.fill"
         }
@@ -301,24 +291,10 @@ enum HousePromo: String, Identifiable, CaseIterable {
 
     var destination: Destination {
         switch self {
-        case .training, .caddy, .adFree:
+        case .training, .adFree:
             return .sheet
         case .advertise:
             return .link(URL(string: "https://golftrack.app/werbung")!)
-        }
-    }
-
-    /// Nur bewerben, was noch fehlt – wer Training hat, braucht den Hinweis nicht.
-    static func available(hasTraining: Bool, hasCaddy: Bool) -> [HousePromo] {
-        allCases.filter { promo in
-            switch promo {
-            case .training:  return !hasTraining
-            case .caddy:     return !hasCaddy
-            // Wer hier überhaupt etwas sieht, hat weder Abo noch Werbefrei –
-            // der Slot verschwindet sonst ganz (`showsAds`).
-            case .adFree:    return true
-            case .advertise: return true
-            }
         }
     }
 }

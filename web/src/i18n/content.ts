@@ -334,11 +334,11 @@ const de = {
     faq: [
       {
         q: "Kostet die App etwas?",
-        a: "Runden aufzeichnen, Scorekarte, Handicap und Statistiken sind kostenlos. Für die Audio-Trainings und den Sprach-Caddy gibt es Abos, einzeln oder zusammen als Pro.",
+        a: "Runden aufzeichnen, Scorekarte, Handicap und Statistiken sind kostenlos. Die Audio-Trainings und eine App ohne Werbung gibt es mit GolfTrack Pro – monatlich, jährlich oder als Einmalkauf.",
       },
       {
         q: "Gibt es GolfTrack für Android?",
-        a: "Ja, als APK zum direkten Herunterladen auf golftrack.app/android. Alles Kostenlose ist dabei; KI-Caddy sowie Training und Audiobooks folgen in einer späteren Version.",
+        a: "Ja, als APK zum direkten Herunterladen auf golftrack.app/android. Alles Kostenlose ist dabei; Training und Audiobooks folgen in einer späteren Version.",
       },
       {
         q: "Wie kommt mein Platz in die App?",
@@ -391,10 +391,9 @@ const de = {
     ],
     laterTitle: "Kommt in einer späteren Version",
     later: [
-      "Der KI-Caddy mit Sprachsteuerung",
       "Trainingslektionen und Audiobooks",
     ],
-    laterNote: "Beides gibt es auf dem iPhone als Abo bzw. Einmalkauf. Auf Android folgt es mit einer späteren Version.",
+    laterNote: "Auf dem iPhone gibt es sie mit GolfTrack Pro als Abo oder Einmalkauf. Auf Android folgt es mit einer späteren Version.",
     installTitle: "So installierst du die APK",
     install: [
       "Tipp auf „APK herunterladen\" und öffne die Datei nach dem Download.",
@@ -743,11 +742,11 @@ const en: Content = {
     faq: [
       {
         q: "Is GolfTrack available for Android?",
-        a: "Yes, as an APK you can download directly at golftrack.app/en/android. Everything free is included; the AI caddy and the training lessons and audiobooks follow in a later version.",
+        a: "Yes, as an APK you can download directly at golftrack.app/en/android. Everything free is included; the training lessons and audiobooks follow in a later version.",
       },
       {
         q: "Does the app cost anything?",
-        a: "Recording rounds, the scorecard, handicap and statistics are free. The audio lessons and the voice caddy are subscriptions, separately or together as Pro.",
+        a: "Recording rounds, the scorecard, handicap and statistics are free. The audio lessons and an ad-free app come with GolfTrack Pro – monthly, yearly or as a one-time purchase.",
       },
       {
         q: "How does my course get into the app?",
@@ -800,10 +799,9 @@ const en: Content = {
     ],
     laterTitle: "Coming in a later version",
     later: [
-      "The AI caddy with voice control",
       "Training lessons and audiobooks",
     ],
-    laterNote: "Both are available on iPhone as a subscription or one-time purchase. They will follow on Android in a later version.",
+    laterNote: "On iPhone they come with GolfTrack Pro, as a subscription or one-time purchase. They will follow on Android in a later version.",
     installTitle: "How to install the APK",
     install: [
       "Tap “Download APK” and open the file once it has downloaded.",

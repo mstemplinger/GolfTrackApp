@@ -15,8 +15,6 @@
 	</array>
 	<key>MKDirectionsApplicationSupportedModes</key>
 	<array/>
-	<key>NSMicrophoneUsageDescription</key>
-	<string>GolfTrack verwendet das Mikrofon für den Caddy-Sprachassistenten, damit du auf dem Platz Golfregeln, Tipps und Strategien per Sprache abrufen kannst – zum Beispiel: „Was ist die Regel bei einem Ball im Wasserhindernis?"</string>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>audio</string>

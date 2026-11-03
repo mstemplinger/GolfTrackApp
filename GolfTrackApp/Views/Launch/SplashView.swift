@@ -48,7 +48,7 @@ struct SplashContainerView: View {
             WhatsNewView()
         }
         .sheet(isPresented: $showTrainingPaywall) {
-            TrainingPaywallView()
+            ProPaywallView()
                 .environmentObject(subscriptionManager)
         }
     }

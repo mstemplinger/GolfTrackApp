@@ -159,8 +159,8 @@ export function Privacy({ lang }: { lang: Lang }) {
       </p>
       <p>
         {de
-          ? "Für Wetterdaten fragt die App einen Wetterdienst ab; dabei wird der ungefähre Standort des Platzes übermittelt. Für den Sprach-Caddy wird der eingegebene Text an ElevenLabs übertragen, um daraus Sprache zu erzeugen. Käufe und Abos wickelt Apple über den App Store ab; ich erhalte dabei keine Zahlungsdaten."
-          : "For weather data the app queries a weather service, transmitting the approximate location of the course. For the voice caddy the given text is sent to ElevenLabs to be turned into speech. Purchases and subscriptions are handled by Apple through the App Store; I receive no payment data."}
+          ? "Für Wetterdaten fragt die App einen Wetterdienst ab; dabei wird der ungefähre Standort des Platzes übermittelt. Käufe und Abos wickelt Apple über den App Store ab; ich erhalte dabei keine Zahlungsdaten."
+          : "For weather data the app queries a weather service, transmitting the approximate location of the course. Purchases and subscriptions are handled by Apple through the App Store; I receive no payment data."}
       </p>
 
       <p>

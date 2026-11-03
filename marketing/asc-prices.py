@@ -36,9 +36,7 @@ BASIS_LAND = "DEU"
 
 # Produkt-ID → Zielpreis in Euro
 ZIELE = {
-    "Caddy_abo":           10.00,
-    "Trainingsvideos_abo": 10.00,
-    "GolfTrackPro_abo":    15.00,
+    "GolfTrackPro_abo":    5.00,
 }
 
 # Bestandskunden auf den neuen Preis (mit Apples Zustimmungsabfrage).
@@ -49,7 +47,7 @@ BESTAND_BEHAELT_PREIS = False
 # („Initial price cannot be created again after subscription is approved").
 # Bestandskunden bekommen Apples Zustimmungsabfrage unabhängig davon, mit
 # Apples eigener Vorlauffrist.
-START_DATUM = "2026-09-12"
+START_DATUM = "2026-11-05"
 
 
 def abos(asc: ASC) -> dict[str, str]:

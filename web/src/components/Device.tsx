@@ -22,7 +22,6 @@ const EN_SHOTS = new Set([
   "09-schlagkarte",
   "11-regel-diagramm",
   "12-training",
-  "14-caddy-ki",
   "18-neue-runde",
   "19-live-scorecard",
 ]);

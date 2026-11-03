@@ -51,7 +51,7 @@ struct RoundCompleteSheet: View {
             TrainingPlayerSheet(model: playerModel)
         }
         .sheet(isPresented: $showPaywall) {
-            TrainingPaywallView()
+            ProPaywallView()
                 .environmentObject(subscriptionManager)
         }
         .onAppear {

@@ -36,7 +36,7 @@ Deine Runde, Loch für Loch
 Jede Runde mitschreiben, jeden Schlag verorten, das Handicap automatisch fortschreiben. Scorekarte, Statistik und Apple Watch kosten nichts.
 
 ### Schlüsselwörter
-scorekarte,handicap,whs,golfplatz,minigolf,platzreife,stableford,putt,schlagweite,training,caddy
+scorekarte,handicap,whs,golfplatz,minigolf,platzreife,stableford,putt,schlagweite,training,range
 
 ### Beschreibung
 GolfTrack schreibt deine Runde mit – Loch für Loch, Schlag für Schlag. Ohne Konto, ohne Anmeldung.
@@ -76,12 +76,12 @@ PLATZREIFE-THEORIE LERNEN
 • Auf dem iPad in großer Ansicht, mit Tastatur bedienbar
 • 50 Golfregeln mit Diagrammen zum Nachschlagen, dazu ein Guide zu Strategie, Anspiel und Kurzspiel
 
-MIT ABO, WENN DU WILLST
-• Training: 17 Audio-Lektionen zu Grundlagen, Drive, Technik, Kurzspiel, Putten, Mental und Strategie – nach der Runde passend zu deinen Zahlen vorgeschlagen
-• Caddy: Sprachassistent für Regeln, Tipps und Strategie, auch während der Runde
-• Pro: Training und Caddy zusammen
+MIT GOLFTRACK PRO, WENN DU WILLST
+• 17 Audio-Lektionen zu Grundlagen, Drive, Technik, Kurzspiel, Putten, Mental und Strategie – nach der Runde passend zu deinen Zahlen vorgeschlagen
+• Keine Werbung in der App
+• Monatlich, jährlich oder einmal zahlen und für immer behalten
 
-Ohne Abo bleiben: Scorekarte, Handicap, Statistik, Schlagerfassung, Laufspur, Apple Watch, Minigolf, Regeln und Platzreife-Training.
+Ohne Pro kostenlos: Scorekarte, Handicap, Statistik, Schlagerfassung, Laufspur, Apple Watch, Minigolf, Regeln und Platzreife-Training.
 
 GolfTrack gibt es auf Deutsch, Englisch, Französisch, Italienisch und Spanisch.
 
@@ -98,7 +98,7 @@ Your round, hole by hole
 Keep score on every round, place every shot, let your handicap update itself. Scorecard, statistics and Apple Watch cost nothing.
 
 ### Keywords
-scorecard,handicap,whs,golf course,minigolf,stableford,putt,shot distance,stats,training,caddy
+scorecard,handicap,whs,golf course,minigolf,stableford,putt,shot distance,stats,training,range
 
 ### Description
 GolfTrack keeps score for you – hole by hole, shot by shot. No account, no sign-up.
@@ -135,10 +135,10 @@ LEARNING
 • 150 questions for the golf licence, with a review of your wrong answers
 • Guide to strategy, approach play and the short game
 
-WITH A SUBSCRIPTION, IF YOU WANT ONE
-• Training: 17 audio lessons on fundamentals, driving, technique, short game, putting, mental game and strategy – suggested after a round to match your numbers
-• Caddy: a voice assistant for rules, tips and strategy, during the round too
-• Pro: Training and Caddy together
+WITH GOLFTRACK PRO, IF YOU WANT IT
+• 17 audio lessons on fundamentals, driving, technique, short game, putting, mental game and strategy – suggested after a round to match your numbers
+• No ads in the app
+• Monthly, yearly, or pay once and keep it forever
 
 Free of charge: scorecard, handicap, statistics, shot tracking, walking path, Apple Watch, minigolf, rules and quiz.
 
@@ -157,7 +157,7 @@ Ta partie, trou par trou
 Note chaque partie, situe chaque coup, laisse ton index se mettre à jour tout seul. Carte de score, statistiques et Apple Watch sont gratuites.
 
 ### Mots-clés
-carte de score,handicap,whs,parcours,minigolf,stableford,putt,distance,stats,entrainement,caddy
+carte de score,handicap,whs,parcours,minigolf,stableford,putt,distance,stats,entrainement,practice
 
 ### Description
 GolfTrack note ta partie – trou par trou, coup par coup. Sans compte, sans inscription.
@@ -194,10 +194,10 @@ APPRENDRE
 • 150 questions pour la carte verte, avec relecture de tes erreurs
 • Guide de stratégie, de jeu d'approche et de petit jeu
 
-AVEC UN ABONNEMENT, SI TU VEUX
-• Entraînement : 17 leçons audio sur les bases, le drive, la technique, le petit jeu, le putting, le mental et la stratégie – proposées après la partie selon tes chiffres
-• Caddy : un assistant vocal pour les règles, les conseils et la stratégie, même pendant la partie
-• Pro : Entraînement et Caddy ensemble
+AVEC GOLFTRACK PRO, SI TU VEUX
+• 17 leçons audio sur les bases, le drive, la technique, le petit jeu, le putting, le mental et la stratégie – proposées après la partie selon tes chiffres
+• Aucune publicité dans l’app
+• Au mois, à l’année ou en une fois, pour toujours
 
 Gratuits : carte de score, handicap, statistiques, suivi des coups, tracé, Apple Watch, minigolf, règles et quiz.
 
@@ -216,7 +216,7 @@ Il tuo giro, buca per buca
 Segna ogni giro, colloca ogni colpo, lascia che l'handicap si aggiorni da solo. Score, statistiche e Apple Watch non costano nulla.
 
 ### Parole chiave
-score,handicap,whs,campo da golf,minigolf,stableford,putt,distanza,statistiche,allenamento,caddy
+score,handicap,whs,campo da golf,minigolf,stableford,putt,distanza,statistiche,allenamento,pratica
 
 ### Descrizione
 GolfTrack tiene il punteggio per te – buca dopo buca, colpo dopo colpo. Senza account, senza registrazione.
@@ -253,10 +253,10 @@ IMPARARE
 • 150 domande per l'abilitazione, con revisione degli errori
 • Guida a strategia, colpi d'avvicinamento e gioco corto
 
-CON ABBONAMENTO, SE VUOI
-• Allenamento: 17 lezioni audio su fondamentali, drive, tecnica, gioco corto, putting, testa e strategia – proposte dopo il giro in base ai tuoi numeri
-• Caddy: assistente vocale per regole, consigli e strategia, anche durante il giro
-• Pro: Allenamento e Caddy insieme
+CON GOLFTRACK PRO, SE VUOI
+• 17 lezioni audio su fondamentali, drive, tecnica, gioco corto, putting, testa e strategia – proposte dopo il giro in base ai tuoi numeri
+• Nessuna pubblicità nell’app
+• Mensile, annuale o una tantum, per sempre
 
 Gratis: score, handicap, statistiche, rilevamento dei colpi, tracciato, Apple Watch, minigolf, regole e quiz.
 
@@ -275,7 +275,7 @@ Tu vuelta, hoyo a hoyo
 Anota cada vuelta, sitúa cada golpe y deja que el hándicap se actualice solo. La tarjeta, las estadísticas y el Apple Watch no cuestan nada.
 
 ### Palabras clave
-tarjeta,handicap,whs,campo de golf,minigolf,stableford,putt,distancia,stats,entrenamiento,caddy
+tarjeta,handicap,whs,campo de golf,minigolf,stableford,putt,distancia,stats,entrenamiento,practica
 
 ### Descripción
 GolfTrack anota tu vuelta – hoyo a hoyo, golpe a golpe. Sin cuenta, sin registro.
@@ -312,10 +312,10 @@ APRENDER
 • 150 preguntas para la licencia, con repaso de los fallos
 • Guía de estrategia, juego de aproximación y juego corto
 
-CON SUSCRIPCIÓN, SI QUIERES
-• Entrenamiento: 17 lecciones de audio sobre fundamentos, drive, técnica, juego corto, putt, cabeza y estrategia – propuestas tras la vuelta según tus números
-• Caddy: asistente de voz para reglas, consejos y estrategia, también durante la vuelta
-• Pro: Entrenamiento y Caddy juntos
+CON GOLFTRACK PRO, SI QUIERES
+• 17 lecciones de audio sobre fundamentos, drive, técnica, juego corto, putt, cabeza y estrategia – propuestas tras la vuelta según tus números
+• Sin anuncios en la app
+• Mensual, anual o un solo pago para siempre
 
 Gratis: tarjeta, hándicap, estadísticas, registro de golpes, recorrido, Apple Watch, minigolf, reglas y test.
 

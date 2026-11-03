@@ -25,7 +25,7 @@ struct ProfileView: View {
     @EnvironmentObject private var subscriptionManager: SubscriptionManager
     @State private var selectedAchievement: GCAchievement?
     @State private var showWhatsNew = false
-    @State private var showAdFree = false
+    @State private var showProPaywall = false
 
     private var completedRounds: [Round] { allRounds.filter(\.isComplete) }
 
@@ -194,7 +194,7 @@ struct ProfileView: View {
             .navigationBarHidden(true)
         }
         .sheet(isPresented: $showWhatsNew) { WhatsNewView() }
-        .sheet(isPresented: $showAdFree) { AdFreePaywallView() }
+        .sheet(isPresented: $showProPaywall) { ProPaywallView() }
     }
 
     // MARK: - Avatar
@@ -351,22 +351,22 @@ struct ProfileView: View {
             Divider().background(AppTheme.cardAlt).padding(.leading, 62)
             Button {
                 Haptics.tap()
-                showAdFree = true
+                showProPaywall = true
             } label: {
                 HStack(spacing: 14) {
                     ZStack {
                         RoundedRectangle(cornerRadius: 9)
                             .fill(AppTheme.gold.opacity(0.18))
                             .frame(width: 40, height: 40)
-                        Image(systemName: subscriptionManager.isAdFree ? "checkmark.seal.fill" : "rectangle.slash")
+                        Image(systemName: subscriptionManager.isPro ? "checkmark.seal.fill" : "crown.fill")
                             .font(.system(size: 16))
                             .foregroundStyle(AppTheme.gold)
                     }
-                    Text(subscriptionManager.isAdFree ? "Werbefrei gekauft" : "Werbung entfernen")
+                    Text(subscriptionManager.isPro ? "GolfTrack Pro aktiv" : "GolfTrack Pro")
                         .font(.subheadline)
                         .foregroundStyle(AppTheme.text)
                     Spacer()
-                    if !subscriptionManager.isAdFree, let price = subscriptionManager.adFreeProduct?.displayPrice {
+                    if !subscriptionManager.isPro, let price = subscriptionManager.proProduct?.displayPrice {
                         Text(verbatim: price)
                             .font(.subheadline)
                             .foregroundStyle(AppTheme.textSec)
@@ -378,7 +378,7 @@ struct ProfileView: View {
                 .padding(.horizontal, 18)
                 .padding(.vertical, 14)
             }
-            .disabled(subscriptionManager.isAdFree)
+            .disabled(subscriptionManager.isPro)
             Divider().background(AppTheme.cardAlt).padding(.leading, 62)
             Button {
                 Haptics.tap()

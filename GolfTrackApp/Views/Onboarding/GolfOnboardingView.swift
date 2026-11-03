@@ -182,7 +182,6 @@ struct GolfOnboardingView: View {
         case .tracking: OnbTrackingMock()
         case .finish:   OnbRoundCompleteMock()
         case .learn:    OnbTrainingMock()
-        case .caddy:    OnbCaddyMock()
         case .profile:  OnbProfileMock()
         case .done:     OnbTabGuideVisual()
         }
@@ -250,7 +249,7 @@ struct GolfOnboardingView: View {
 
 struct GolfOnboardingPage: Identifiable {
     enum ID: Hashable {
-        case welcome, home, newRound, scoring, map, tracking, finish, learn, caddy, profile, done
+        case welcome, home, newRound, scoring, map, tracking, finish, learn, profile, done
     }
 
     let id: ID
@@ -291,10 +290,6 @@ struct GolfOnboardingPage: Identifiable {
               chips: [("headphones", "Hören statt lesen"), ("checkmark.seal.fill", "Fit für die Platzreife")],
               title: "Besser werden – auch zuhause",
               text: "Audio-Trainings für Schwung, kurzes Spiel und Kopf, alle Golfregeln mit Skizzen und ein Quiz, mit dem du dich auf die Platzreife vorbereitest."),
-        .init(id: .caddy,
-              chips: [("mic.fill", "Einfach fragen"), ("book.fill", "Mit Regelbezug")],
-              title: "Frag einfach deinen Caddy",
-              text: "Regelfrage am Wasserhindernis? Taktik für ein schwieriges Loch? Der Caddy antwortet per Sprache – mitten auf der Runde."),
         .init(id: .profile,
               chips: [("chart.xyaxis.line", "Handicap-Verlauf"), ("creditcard.fill", "Mitgliedskarte dabei")],
               title: "Dein Golf-Zuhause",

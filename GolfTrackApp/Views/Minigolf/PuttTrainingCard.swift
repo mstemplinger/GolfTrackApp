@@ -14,7 +14,7 @@ struct PuttTrainingCard: View {
     @State private var showLessons = false
 
     var body: some View {
-        if subscriptionManager.isTrainingSubscribed && !PuttTraining.lessons.isEmpty {
+        if subscriptionManager.isPro && !PuttTraining.lessons.isEmpty {
             Button {
                 Haptics.tap()
                 showLessons = true

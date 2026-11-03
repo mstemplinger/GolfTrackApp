@@ -37,7 +37,7 @@ const TEXT = {
     ],
     adFree: "Ohne Werbung spielen",
     adFreeText:
-      "Mit „Werbefrei“ (einmalig in der App) oder einem Training- bzw. Caddy-Abo verschwindet die Fläche ganz. Die Hinweise der Anlage – Toiletten, Unterstand, Ausschank – bleiben.",
+      "Mit GolfTrack Pro (Abo oder Einmalkauf in der App) verschwindet die Fläche ganz. Die Hinweise der Anlage – Toiletten, Unterstand, Ausschank – bleiben.",
     advertise: "Selbst hier werben?",
     advertiseText: "Umkreis auf der Karte wählen, Preis steht sofort daneben.",
     advertiseLink: "Werbeplatz anfragen",
@@ -62,7 +62,7 @@ const TEXT = {
     ],
     adFree: "Play without ads",
     adFreeText:
-      "“Ad-free” (a one-time purchase in the app) or a Training or Caddy subscription removes the space entirely. The course's own notes – toilets, shelter, refreshments – stay.",
+      "GolfTrack Pro (a subscription or one-time purchase in the app) removes the space entirely. The course's own notes – toilets, shelter, refreshments – stay.",
     advertise: "Advertise here yourself?",
     advertiseText: "Pick a radius on the map and see the price right away.",
     advertiseLink: "Request an ad slot",

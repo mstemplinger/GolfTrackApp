@@ -675,7 +675,6 @@ struct NewRoundView: View {
         context.insert(round)
 
         for i in 1...course.numberOfHoles {
-            let par = course.parValues[i - 1]
             let hole = HoleScore(holeNumber: i, strokes: 0, putts: 0)
             context.insert(hole)
             round.holeScores.append(hole)
@@ -685,7 +684,7 @@ struct NewRoundView: View {
                     playerIndex: idx + 1,
                     playerName: name,
                     holeNumber: i,
-                    strokes: par
+                    strokes: 0
                 )
                 context.insert(phs)
                 round.playerHoleScores.append(phs)

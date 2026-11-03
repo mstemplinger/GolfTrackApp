@@ -34,6 +34,27 @@ struct HoleScoringView: View {
     @State private var showNoGPSAlert = false
     @AppStorage("hint.teeSetter.shown") private var teeHintShown = false
     @AppStorage(RoundTrackingService.enabledKey) private var trackingEnabled = false
+    /// Mitspieler, dessen Schlagkarte (Karte mit GPS-Schlägen) gerade offen ist.
+    @State private var shotTrackerPlayer: PlayerHoleScore?
+
+    // MARK: - Mitspieler
+
+    /// Spielformen mit gemeinsamem Ball – dort gibt es nur einen Team-Score.
+    private var playsOwnBall: Bool {
+        switch gameMode {
+        case .scramble2Mann, .scrambleTeam, .vierer, .greensome, .scrambleMatchplay: return false
+        default: return true
+        }
+    }
+
+    /// Jeder Mitspieler bekommt eine eigene Scorekarte, sobald er seinen eigenen Ball spielt.
+    private var showsPartnerCards: Bool {
+        gameMode.isMultiplayer && playsOwnBall && !opponentScores.isEmpty
+    }
+
+    private func displayName(_ opp: PlayerHoleScore) -> String {
+        opp.playerName.isEmpty ? String(localized: "Spieler \(opp.playerIndex + 1)") : opp.playerName
+    }
 
     private var diff: Int { score.strokes - par }
 
@@ -86,8 +107,17 @@ struct HoleScoringView: View {
             holeHeader
             pinDistanceCard
             clubRecommendationCard
+            if showsPartnerCards {
+                playerNameLabel(String(localized: "Du"))
+            }
             strokeCounterCard
-            secondaryStatsCard
+            secondaryStatsCard(score)
+
+            if showsPartnerCards {
+                ForEach(opponentScores, id: \.playerIndex) { opp in
+                    partnerCard(opp)
+                }
+            }
 
             if gameMode.isMultiplayer && !opponentScores.isEmpty {
                 VStack(spacing: 0) {
@@ -128,6 +158,9 @@ struct HoleScoringView: View {
         .padding(.bottom, 8)
         .sheet(isPresented: $showShotTracker) {
             ShotTrackerView(holeScore: score)
+        }
+        .sheet(item: $shotTrackerPlayer) { opp in
+            ShotTrackerView(holeScore: opp, playerName: displayName(opp), recordsClubDistances: false)
         }
         .sheet(isPresented: $showPinSetter) {
             PinSetterView(pinLatitude: $score.pinLatitude,
@@ -533,16 +566,7 @@ struct HoleScoringView: View {
 
             HStack {
                 Button {
-                    guard score.strokes > 1 else { return }
-                    Haptics.decrement()
-                    let removingNum = score.strokes
-                    score.strokes -= 1
-                    if let shot = score.shots.first(where: { $0.shotNumber == removingNum }) {
-                        if let club = clubs.first(where: { $0.name == shot.club }), club.isPutter, score.putts > 0 {
-                            score.putts -= 1
-                        }
-                        context.delete(shot)
-                    }
+                    removeStroke(from: score)
                 } label: {
                     Image(systemName: "minus")
                         .font(.system(size: 26, weight: .bold))
@@ -567,22 +591,7 @@ struct HoleScoringView: View {
                 Spacer(minLength: 0)
 
                 Button {
-                    Haptics.stroke()
-                    let shotNum = score.strokes + 1
-                    score.strokes += 1
-                    // Update previous shot's destination with current position
-                    if let loc = userLocation,
-                       let prev = score.sortedShots.last {
-                        let c = loc.coordinate
-                        prev.toLatitude = c.latitude
-                        prev.toLongitude = c.longitude
-                        prev.distanceMeters = Shot.haversineDistance(from: prev.fromCoordinate, to: c)
-                    }
-                    // Die Lage sofort speichern – auch wenn die Schlägerwahl
-                    // übersprungen wird, bleibt die Kette der GPS-Punkte geschlossen.
-                    if let loc = userLocation {
-                        insertShot(number: shotNum, at: loc.coordinate)
-                    }
+                    let shotNum = addStroke(to: score)
                     pendingGPSLocation = userLocation
                     pendingShotNumber = shotNum
                     if !clubs.isEmpty && !round.hidesClubPicker { showClubPicker = true }
@@ -620,19 +629,122 @@ struct HoleScoringView: View {
         }
     }
 
+    // MARK: - Mitspieler-Karten
+
+    private func playerNameLabel(_ name: String, role: String? = nil) -> some View {
+        HStack(spacing: 6) {
+            Text(name)
+                .font(.subheadline.bold())
+                .foregroundStyle(AppTheme.text)
+            if let role {
+                Text(role)
+                    .font(.caption2)
+                    .foregroundStyle(AppTheme.textSec)
+            }
+            Spacer(minLength: 0)
+        }
+        .padding(.horizontal, 4)
+        .padding(.top, 4)
+    }
+
+    /// Kompakte Scorekarte eines Mitspielers: Schläge mit GPS-Kette, Putts,
+    /// Fairway und GIR – wie die eigene, nur kleiner, damit alle untereinander passen.
+    private func partnerCard(_ opp: PlayerHoleScore) -> some View {
+        let played = opp.strokes > 0
+        let d = opp.strokes - par
+        return VStack(spacing: 10) {
+            HStack(spacing: 8) {
+                VStack(alignment: .leading, spacing: 1) {
+                    Text(displayName(opp))
+                        .font(.headline)
+                        .foregroundStyle(AppTheme.text)
+                        .lineLimit(1)
+                    if let role = roleLabel(for: opp) {
+                        Text(role).font(.caption2).foregroundStyle(AppTheme.textSec)
+                    }
+                }
+                if played {
+                    Text(d == 0 ? "Par" : d > 0 ? "+\(d)" : "\(d)")
+                        .font(.caption.bold())
+                        .foregroundStyle(d < 0 ? AppTheme.gold : d > 0 ? .orange : AppTheme.text)
+                        .padding(.horizontal, 8).padding(.vertical, 3)
+                        .background(AppTheme.cardAlt, in: Capsule())
+                }
+                Spacer(minLength: 0)
+
+                Button {
+                    removeStroke(from: opp)
+                } label: {
+                    Image(systemName: "minus")
+                        .font(.system(size: 18, weight: .bold))
+                        .foregroundStyle(opp.strokes > 1 ? AppTheme.text : AppTheme.textTer)
+                        .frame(width: 46, height: 46)
+                        .background(AppTheme.cardAlt, in: Circle())
+                }
+                .buttonStyle(.plain)
+                .disabled(opp.strokes <= 1)
+                .accessibilityLabel(Text("Schlag abziehen") + Text(verbatim: " – \(displayName(opp))"))
+
+                Text("\(opp.strokes)")
+                    .font(.system(size: 40, weight: .heavy, design: .rounded))
+                    .foregroundStyle(played ? AppTheme.text : AppTheme.textTer)
+                    .frame(minWidth: 44)
+                    .contentTransition(.numericText())
+                    .animation(.snappy, value: opp.strokes)
+
+                Button {
+                    addStroke(to: opp)
+                } label: {
+                    Image(systemName: "plus")
+                        .font(.system(size: 18, weight: .bold))
+                        .foregroundStyle(darkText)
+                        .frame(width: 46, height: 46)
+                        .background(AppTheme.gold, in: Circle())
+                }
+                .buttonStyle(.plain)
+                .accessibilityLabel(Text("Schlag hinzufügen") + Text(verbatim: " – \(displayName(opp))"))
+            }
+
+            secondaryStatsCard(opp)
+
+            Button {
+                Haptics.tap()
+                shotTrackerPlayer = opp
+            } label: {
+                HStack(spacing: 6) {
+                    Image(systemName: "mappin.and.ellipse")
+                    Text(opp.shots.isEmpty
+                         ? String(localized: "Schläge auf der Karte")
+                         : "\(opp.shots.count) \(opp.shots.count == 1 ? String(localized: "Schlag") : String(localized: "Schläge")) erfasst · \(distanceUnit.format(opp.totalDistanceMeters))")
+                    Spacer(minLength: 0)
+                    Image(systemName: "chevron.right").font(.caption)
+                }
+                .font(.caption.weight(.semibold))
+                .foregroundStyle(AppTheme.textSec)
+                .padding(.horizontal, 4)
+            }
+            .buttonStyle(.plain)
+        }
+        .padding(12)
+        .background(AppTheme.cardDark.opacity(0.6), in: RoundedRectangle(cornerRadius: 20))
+        .overlay(RoundedRectangle(cornerRadius: 20).strokeBorder(AppTheme.cardAlt, lineWidth: 1))
+    }
+
     // MARK: - Secondary Stats
 
-    private var secondaryStatsCard: some View {
+    private func secondaryStatsCard(_ entry: any ScoreEntry) -> some View {
         HStack(spacing: 10) {
-            puttBox
+            puttBox(entry)
             if par > 3 {
-                toggleBox("Fairway", isOn: $score.fairwayHit)
+                toggleBox("Fairway", isOn: Binding(get: { entry.fairwayHit },
+                                                   set: { entry.fairwayHit = $0 }))
             }
-            toggleBox("GIR", isOn: $score.greenInRegulation)
+            toggleBox("GIR", isOn: Binding(get: { entry.greenInRegulation },
+                                           set: { entry.greenInRegulation = $0 }))
         }
     }
 
-    private var puttBox: some View {
+    private func puttBox(_ score: any ScoreEntry) -> some View {
         VStack(spacing: 4) {
             Text("Putts").font(.caption).foregroundStyle(AppTheme.textSec)
             HStack(spacing: 4) {
@@ -831,12 +943,50 @@ struct HoleScoringView: View {
         if !clubs.isEmpty && !round.hidesClubPicker { showClubPicker = true }
     }
 
-    private func insertShot(number: Int, at coordinate: CLLocationCoordinate2D) {
-        guard !score.shots.contains(where: { $0.shotNumber == number }) else { return }
+    private func insertShot(number: Int, at coordinate: CLLocationCoordinate2D,
+                            into entry: (any ScoreEntry)? = nil) {
+        let entry = entry ?? score
+        guard !entry.shots.contains(where: { $0.shotNumber == number }) else { return }
         let shot = Shot(shotNumber: number, from: coordinate, to: coordinate)
-        shot.holeScore = score
-        score.shots.append(shot)
         context.insert(shot)
+        entry.shots.append(shot)
+    }
+
+    /// Zählt einen Schlag und hängt den aktuellen Standort als Lage an die
+    /// GPS-Kette des Spielers: Der vorige Schlag endet hier, der neue beginnt hier.
+    /// Für Mitspieler ist das der Standort des Handys beim Tippen – also dort,
+    /// wo man beim Schlag des Mitspielers steht.
+    @discardableResult
+    private func addStroke(to entry: any ScoreEntry) -> Int {
+        Haptics.stroke()
+        let shotNum = entry.strokes + 1
+        entry.strokes += 1
+        if let loc = userLocation, let prev = entry.sortedShots.last {
+            let c = loc.coordinate
+            prev.toLatitude = c.latitude
+            prev.toLongitude = c.longitude
+            prev.distanceMeters = Shot.haversineDistance(from: prev.fromCoordinate, to: c)
+        }
+        // Die Lage sofort speichern – auch wenn die Schlägerwahl
+        // übersprungen wird, bleibt die Kette der GPS-Punkte geschlossen.
+        if let loc = userLocation {
+            insertShot(number: shotNum, at: loc.coordinate, into: entry)
+        }
+        return shotNum
+    }
+
+    private func removeStroke(from entry: any ScoreEntry) {
+        guard entry.strokes > 1 else { return }
+        Haptics.decrement()
+        let removingNum = entry.strokes
+        entry.strokes -= 1
+        if let shot = entry.shots.first(where: { $0.shotNumber == removingNum }) {
+            if let club = clubs.first(where: { $0.name == shot.club }), club.isPutter, entry.putts > 0 {
+                entry.putts -= 1
+            }
+            entry.shots.removeAll { $0.shotNumber == removingNum }
+            context.delete(shot)
+        }
     }
 
     private var shotRecorderButton: some View {
@@ -913,13 +1063,17 @@ struct HoleScoringView: View {
 
     private var opponentSection: some View {
         VStack(alignment: .leading, spacing: 12) {
-            Text(sectionLabel)
-                .font(.caption)
-                .foregroundStyle(AppTheme.textSec)
-                .padding(.horizontal)
+            // Mit eigenen Karten stehen die Mitspieler schon oben – hier bleibt
+            // nur die Auswertung des Lochs.
+            if !showsPartnerCards {
+                Text(sectionLabel)
+                    .font(.caption)
+                    .foregroundStyle(AppTheme.textSec)
+                    .padding(.horizontal)
 
-            ForEach(opponentScores, id: \.playerIndex) { opp in
-                opponentStepperRow(opp: opp, roleLabel: roleLabel(for: opp))
+                ForEach(opponentScores, id: \.playerIndex) { opp in
+                    opponentStepperRow(opp: opp, roleLabel: roleLabel(for: opp))
+                }
             }
 
             switch gameMode {

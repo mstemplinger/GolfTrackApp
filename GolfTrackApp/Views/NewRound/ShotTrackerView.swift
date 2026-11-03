@@ -3,8 +3,12 @@ import MapKit
 import SwiftData
 import CoreLocation
 
-struct ShotTrackerView: View {
-    @Bindable var holeScore: HoleScore
+struct ShotTrackerView<Entry: ScoreEntry>: View {
+    @Bindable var holeScore: Entry
+    /// Name des Mitspielers im Titel; nil für die eigene Karte.
+    var playerName: String? = nil
+    /// Nur eigene Schläge fließen in die Distanzen der eigenen Schläger.
+    var recordsClubDistances = true
     @Environment(\.modelContext) private var context
     @Environment(\.dismiss) private var dismiss
 
@@ -91,7 +95,8 @@ struct ShotTrackerView: View {
 
                 bottomPanel
             }
-            .navigationTitle("Loch \(holeScore.holeNumber) – Schläge")
+            .navigationTitle((playerName.map { "\($0) · " } ?? "")
+                             + String(localized: "Loch \(holeScore.holeNumber) – Schläge"))
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .topBarLeading) {
@@ -330,7 +335,7 @@ struct ShotTrackerView: View {
         holeScore.shots.append(shot)
 
         // Distanz automatisch in die Schläger-Datenbank eintragen
-        if !selectedClub.isEmpty,
+        if recordsClubDistances, !selectedClub.isEmpty,
            let club = clubs.first(where: { $0.name == selectedClub }) {
             club.addMeasurement(dist)
         }

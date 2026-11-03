@@ -306,16 +306,23 @@ struct HomeView: View {
                             + TipsCategoryContent.mentalGame + TipsCategoryContent.strategie)
                     .first { $0.visual != nil }
             case "round": selectedIncompleteRound = allRounds.first { !$0.isComplete } ?? makeDebugRound()
+            case "roundPartners": selectedIncompleteRound = makeDebugRound(partners: ["Zizi", "Max"])
             default: break
             }
         }
     }
 
     /// Offene Runde auf dem ersten Platz mit Gelb, sechs Löcher gespielt.
-    private func makeDebugRound() -> Round? {
+    /// Mit `partners` als Best Ball (`GOLFTRACK_OPEN=roundPartners`), damit
+    /// die Scorekarten der Mitspieler zu sehen sind.
+    private func makeDebugRound(partners: [String] = []) -> Round? {
         guard let course = allCourses.first else { return nil }
         let round = Round(course: course)
         round.teeColor = .yellow
+        if !partners.isEmpty {
+            round.gameMode = .bestBallStroke
+            round.otherPlayerNames = partners
+        }
         context.insert(round)
         for i in 1...course.numberOfHoles {
             let par = course.parValues[safe: i - 1] ?? 4
@@ -323,6 +330,12 @@ struct HomeView: View {
             let hole = HoleScore(holeNumber: i, strokes: strokes, putts: i <= 6 ? 2 : 0)
             context.insert(hole)
             round.holeScores.append(hole)
+            for (idx, name) in partners.enumerated() {
+                let phs = PlayerHoleScore(playerIndex: idx + 1, playerName: name,
+                                          holeNumber: i, strokes: 0)
+                context.insert(phs)
+                round.playerHoleScores.append(phs)
+            }
         }
         return round
     }

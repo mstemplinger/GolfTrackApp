@@ -37,15 +37,9 @@ final class HoleScore {
 
     var hasPinLocation: Bool { pinLatitude != nil && pinLongitude != nil }
 
-    var sortedShots: [Shot] {
-        shots.sorted { $0.shotNumber < $1.shotNumber }
-    }
-
-    var totalDistanceMeters: Double {
-        shots.reduce(0) { $0 + $1.distanceMeters }
-    }
-
     var totalDistanceYards: Int {
         Int(totalDistanceMeters * 1.09361)
     }
 }
+
+extension HoleScore: ScoreEntry {}

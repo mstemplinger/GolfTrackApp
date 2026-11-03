@@ -12,6 +12,8 @@ final class Shot {
     var distanceMeters: Double
     var club: String
     var holeScore: HoleScore?
+    /// Gesetzt statt `holeScore`, wenn der Schlag einem Mitspieler gehört.
+    var playerHoleScore: PlayerHoleScore?
 
     init(shotNumber: Int,
          from: CLLocationCoordinate2D,

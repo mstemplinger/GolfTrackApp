@@ -11669,6 +11669,52 @@
         }
       }
     },
+    "Bahn %lld von %lld · %@" : {
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dráha %1$lld z %2$lld · %3$@"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Bahn %1$lld von %2$lld · %3$@"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hole %1$lld of %2$lld · %3$@"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pista %1$lld de %2$lld · %3$@"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Piste %1$lld sur %2$lld · %3$@"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pista %1$lld di %2$lld · %3$@"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tor %1$lld z %2$lld · %3$@"
+          }
+        }
+      }
+    },
     "Bahn für Bahn" : {
       "localizations" : {
         "cs" : {
@@ -14240,6 +14286,46 @@
         }
       }
     },
+    "Code scannen" : {
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Naskenovat kód"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Scan code"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Escanear código"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Scanner le code"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Scansiona il codice"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Skanuj kod"
+          }
+        }
+      }
+    },
     "Course Rating (CR)" : {
       "localizations" : {
         "cs" : {
@@ -15768,6 +15854,46 @@
         }
       }
     },
+    "Der Platz ließ sich nicht laden. Prüf die Verbindung und scanne noch einmal." : {
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hřiště se nepodařilo načíst. Zkontroluj připojení a naskenuj znovu."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The course couldn't be loaded. Check your connection and scan again."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No se pudo cargar el campo. Comprueba la conexión y escanea de nuevo."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Le parcours n'a pas pu être chargé. Vérifie la connexion et scanne à nouveau."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Non è stato possibile caricare il campo. Controlla la connessione e scansiona di nuovo."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nie udało się wczytać pola. Sprawdź połączenie i zeskanuj ponownie."
+          }
+        }
+      }
+    },
     "Der Weg aufs Grün" : {
       "localizations" : {
         "cs" : {
@@ -16269,6 +16395,46 @@
         }
       }
     },
+    "Diese Anlage kennen wir noch nicht. Bitte sag an der Kasse Bescheid." : {
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tento areál zatím neznáme. Dej prosím vědět u pokladny."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "We don't know this venue yet. Please let the front desk know."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Todavía no conocemos esta instalación. Avisa en la recepción, por favor."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nous ne connaissons pas encore ce site. Préviens l'accueil, s'il te plaît."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Non conosciamo ancora questa struttura. Avvisa alla cassa, per favore."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nie znamy jeszcze tego obiektu. Daj znać w kasie."
+          }
+        }
+      }
+    },
     "Diese Einheit" : {
       "localizations" : {
         "cs" : {
@@ -16345,6 +16511,86 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Ta karta wyników to wersja skrócona. Aplikacja potrafi znacznie więcej:"
+          }
+        }
+      }
+    },
+    "Diesen Platz kennen wir noch nicht. Prüf die Verbindung und scanne noch einmal." : {
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Toto hřiště zatím neznáme. Zkontroluj připojení a naskenuj znovu."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "We don't know this course yet. Check your connection and scan again."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Todavía no conocemos este campo. Comprueba la conexión y escanea de nuevo."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nous ne connaissons pas encore ce parcours. Vérifie la connexion et scanne à nouveau."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Non conosciamo ancora questo campo. Controlla la connessione e scansiona di nuovo."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nie znamy jeszcze tego pola. Sprawdź połączenie i zeskanuj ponownie."
+          }
+        }
+      }
+    },
+    "Dieser Code gehört zu keinem Platz von GolfTrack." : {
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tento kód nepatří k žádnému hřišti GolfTrack."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "This code doesn't belong to any GolfTrack course."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Este código no pertenece a ningún campo de GolfTrack."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ce code ne correspond à aucun parcours GolfTrack."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Questo codice non appartiene a nessun campo di GolfTrack."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ten kod nie należy do żadnego pola GolfTrack."
           }
         }
       }
@@ -20062,6 +20308,46 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Wyjaśnienie"
+          }
+        }
+      }
+    },
+    "Erlaube GolfTrack die Kamera in den Einstellungen – oder scanne den Code mit der Kamera-App." : {
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Povol GolfTracku fotoaparát v Nastavení – nebo naskenuj kód aplikací Fotoaparát."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Allow GolfTrack to use the camera in Settings – or scan the code with the Camera app."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Permite la cámara a GolfTrack en Ajustes, o escanea el código con la app Cámara."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Autorise la caméra pour GolfTrack dans Réglages – ou scanne le code avec l'app Appareil photo."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Consenti la fotocamera a GolfTrack in Impostazioni – oppure scansiona il codice con l'app Fotocamera."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zezwól GolfTrack na aparat w Ustawieniach – albo zeskanuj kod aplikacją Aparat."
           }
         }
       }
@@ -24818,6 +25104,46 @@
         }
       }
     },
+    "Halte die Kamera auf den QR-Code am Platz." : {
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Namiř fotoaparát na QR kód na hřišti."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Point the camera at the QR code at the course."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Apunta la cámara al código QR del campo."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dirige la caméra vers le QR code sur le parcours."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Inquadra il codice QR al campo."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Skieruj aparat na kod QR na polu."
+          }
+        }
+      }
+    },
     "Halten" : {
 
     },
@@ -26183,6 +26509,46 @@
         }
       }
     },
+    "Im Umkreis von 50 km kennen wir noch keinen Platz." : {
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "V okruhu 50 km zatím žádné hřiště neznáme."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "We don't know any course within 50 km yet."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Todavía no conocemos ningún campo en 50 km a la redonda."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nous ne connaissons encore aucun parcours dans un rayon de 50 km."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Non conosciamo ancora nessun campo nel raggio di 50 km."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "W promieniu 50 km nie znamy jeszcze żadnego pola."
+          }
+        }
+      }
+    },
     "Immer wieder hohe Löcher (3+ über Par). Cleveres Course Management senkt deinen Score." : {
       "localizations" : {
         "cs" : {
@@ -26346,6 +26712,46 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "W toku"
+          }
+        }
+      }
+    },
+    "In deiner Nähe" : {
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ve tvém okolí"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Near you"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cerca de ti"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Près de toi"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vicino a te"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "W pobliżu"
           }
         }
       }
@@ -28014,6 +28420,46 @@
         }
       }
     },
+    "Kein Zugriff auf die Kamera" : {
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Žádný přístup k fotoaparátu"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No camera access"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sin acceso a la cámara"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pas d'accès à la caméra"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nessun accesso alla fotocamera"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Brak dostępu do aparatu"
+          }
+        }
+      }
+    },
     "Keine Anzeigen mehr in den Zählkarten" : {
       "localizations" : {
         "cs" : {
@@ -29573,6 +30019,46 @@
         }
       }
     },
+    "Letzte Runde fortsetzen" : {
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pokračovat v posledním kole"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Resume last round"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Continuar la última vuelta"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Reprendre la dernière partie"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Riprendi l'ultimo giro"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wznów ostatnią rundę"
+          }
+        }
+      }
+    },
     "Letzten löschen" : {
       "localizations" : {
         "cs" : {
@@ -29981,6 +30467,52 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Dołek %1$lld / %2$lld"
+          }
+        }
+      }
+    },
+    "Loch %lld von %lld · %@" : {
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Jamka %1$lld z %2$lld · %3$@"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Loch %1$lld von %2$lld · %3$@"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hole %1$lld of %2$lld · %3$@"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hoyo %1$lld de %2$lld · %3$@"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Trou %1$lld sur %2$lld · %3$@"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Buca %1$lld di %2$lld · %3$@"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dołek %1$lld z %2$lld · %3$@"
           }
         }
       }
@@ -36483,6 +37015,46 @@
         }
       }
     },
+    "Ohne Standort können wir keine Plätze in der Nähe zeigen. Scanne einfach den QR-Code am Platz." : {
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bez polohy nemůžeme ukázat hřiště v okolí. Stačí naskenovat QR kód na hřišti."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Without your location we can't show courses nearby. Just scan the QR code at the course."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sin tu ubicación no podemos mostrar campos cercanos. Escanea el código QR del campo."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sans ta position, impossible d'afficher les parcours proches. Scanne simplement le QR code sur place."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Senza la tua posizione non possiamo mostrare i campi vicini. Scansiona il codice QR al campo."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bez lokalizacji nie pokażemy pól w pobliżu. Po prostu zeskanuj kod QR na polu."
+          }
+        }
+      }
+    },
     "Ohne Standortzugriff kann keine Laufspur aufgezeichnet werden." : {
       "localizations" : {
         "cs" : {
@@ -38483,6 +39055,46 @@
         }
       }
     },
+    "Plätze werden gesucht …" : {
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hledání hřišť …"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Looking for courses …"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Buscando campos …"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Recherche de parcours …"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ricerca dei campi …"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Szukanie pól …"
+          }
+        }
+      }
+    },
     "Platzinfo" : {
       "localizations" : {
         "cs" : {
@@ -40303,6 +40915,46 @@
         }
       }
     },
+    "QR-Code scannen" : {
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Naskenovat QR kód"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Scan QR code"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Escanear código QR"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Scanner le QR code"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Scansiona il codice QR"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zeskanuj kod QR"
+          }
+        }
+      }
+    },
     "Quelle: R&A Rules of Golf 2023 (r-a.org) · USGA (usga.org)" : {
       "localizations" : {
         "cs" : {
@@ -41938,6 +42590,46 @@
         }
       }
     },
+    "Runde starten mit GolfTrack" : {
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Začni kolo s GolfTrack"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Start a round with GolfTrack"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Empieza una vuelta con GolfTrack"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Commencer une partie avec GolfTrack"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Inizia un giro con GolfTrack"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Rozpocznij rundę z GolfTrack"
+          }
+        }
+      }
+    },
     "Runde starten, Wetter, Verlauf" : {
       "localizations" : {
         "cs" : {
@@ -42518,6 +43210,46 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Zeskanuj kartę członkowską lub paragony za greenfee, aby mieć do nich szybki dostęp."
+          }
+        }
+      }
+    },
+    "Scanne den QR-Code am Platz oder wähle eine Anlage in deiner Nähe." : {
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Naskenuj QR kód na hřišti nebo vyber areál ve svém okolí."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Scan the QR code at the course or pick a venue near you."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Escanea el código QR del campo o elige una instalación cerca de ti."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Scanne le QR code sur le parcours ou choisis un site près de toi."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Scansiona il codice QR al campo o scegli una struttura vicino a te."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zeskanuj kod QR na polu albo wybierz obiekt w pobliżu."
           }
         }
       }
@@ -54314,6 +55046,46 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Witaj!"
+          }
+        }
+      }
+    },
+    "Willkommen! Ab jetzt zählen wir für dich mit – Bahn für Bahn." : {
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vítej! Od teď počítáme za tebe – dráhu po dráze."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Welcome! From now on we'll keep score for you – hole by hole."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "¡Bienvenido! A partir de ahora contamos por ti, pista a pista."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bienvenue ! À partir de maintenant, on compte pour toi – piste après piste."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Benvenuto! Da ora conteggiamo noi per te, pista dopo pista."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Witaj! Od teraz liczymy za ciebie – tor po torze."
           }
         }
       }

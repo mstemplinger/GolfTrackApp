@@ -11,6 +11,31 @@ import StoreKit
 /// Bewusst nicht dabei: Werbung (untersagt, Richtlinie 2.5.16(a)), der
 /// Watch-Abgleich, Abos, Golfrunden, SwiftData. Der Clip muss klein
 /// bleiben – Apple begrenzt ihn auf 15 MB entpackt.
+/// Warum ein Start nicht geklappt hat.
+///
+/// Ein eigener Grund statt eines fertigen Satzes: so steht die Meldung im
+/// Sprachkatalog und nicht als deutscher Text mitten im Ablauf. Der Clip wird
+/// am Abschlag von Gästen gescannt, die kein Deutsch sprechen müssen.
+enum ClipFailure: Equatable {
+    case unbekannterCode
+    case unbekannterPlatz
+    case unbekannteAnlage
+    case platzNichtGeladen
+
+    var text: LocalizedStringResource {
+        switch self {
+        case .unbekannterCode:
+            "Dieser Code gehört zu keinem Platz von GolfTrack."
+        case .unbekannterPlatz:
+            "Diesen Platz kennen wir noch nicht. Prüf die Verbindung und scanne noch einmal."
+        case .unbekannteAnlage:
+            "Diese Anlage kennen wir noch nicht. Bitte sag an der Kasse Bescheid."
+        case .platzNichtGeladen:
+            "Der Platz ließ sich nicht laden. Prüf die Verbindung und scanne noch einmal."
+        }
+    }
+}
+
 @main
 struct GolfTrackClipApp: App {
 
@@ -21,7 +46,7 @@ struct GolfTrackClipApp: App {
     enum Status: Equatable {
         case waiting
         case loading
-        case failed(String)
+        case failed(ClipFailure)
         case ready
     }
 
@@ -40,7 +65,7 @@ struct GolfTrackClipApp: App {
                     ClipLoadingView()
                 } else {
                     ClipHomeView(
-                        failure: { if case .failed(let message) = status { return message } else { return nil } }(),
+                        failure: { if case .failed(let grund) = status { return grund.text } else { return nil } }(),
                         onScan: { url in open(url) },
                         onPick: pick
                     )
@@ -100,7 +125,7 @@ struct GolfTrackClipApp: App {
 
     private func open(_ url: URL) {
         guard let link = CourseDeepLink.link(from: url) else {
-            status = .failed("Dieser Code gehört zu keinem Platz von GolfTrack.")
+            status = .failed(.unbekannterCode)
             return
         }
 
@@ -123,7 +148,7 @@ struct GolfTrackClipApp: App {
                     golfCourse = entry
                     status = .ready
                 case nil:
-                    status = .failed("Diesen Platz kennen wir noch nicht. Prüf die Verbindung und scanne noch einmal.")
+                    status = .failed(.unbekannterPlatz)
                 }
             }
 
@@ -141,7 +166,7 @@ struct GolfTrackClipApp: App {
                     minigolfCourse = fetched
                     status = .ready
                 } else {
-                    status = .failed("Diese Anlage kennen wir noch nicht. Bitte sag an der Kasse Bescheid.")
+                    status = .failed(.unbekannteAnlage)
                 }
             }
 
@@ -154,7 +179,7 @@ struct GolfTrackClipApp: App {
                     golfCourse = fetched
                     status = .ready
                 } else {
-                    status = .failed("Der Platz ließ sich nicht laden. Prüf die Verbindung und scanne noch einmal.")
+                    status = .failed(.platzNichtGeladen)
                 }
             }
         }

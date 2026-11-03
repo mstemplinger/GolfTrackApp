@@ -11,7 +11,7 @@ import CoreLocation
 struct ClipHomeView: View {
 
     /// Meldung, falls ein Link nicht aufging; sonst `nil`.
-    let failure: String?
+    let failure: LocalizedStringResource?
     /// Ein gescannter Code – geht durch dieselbe Auswertung wie der Start-Link.
     let onScan: (URL) -> Void
     /// Ein Platz aus der Umgebung oder die fortzusetzende Golfrunde.
@@ -94,7 +94,7 @@ struct ClipHomeView: View {
 
     private func minigolfResumeCard(_ game: SavedMinigolfGame) -> some View {
         resumeCard(
-            title: game.courseName ?? "Minigolf",
+            title: game.courseName ?? String(localized: "Minigolf"),
             detail: "Bahn \(min(game.currentHole + 1, game.numberOfHoles)) von \(game.numberOfHoles) · \(game.playerNames.joined(separator: ", "))"
         ) {
             resumeConfig = MinigolfConfig(
@@ -111,9 +111,13 @@ struct ClipHomeView: View {
     }
 
     private func golfResumeCard(_ round: SavedGolfLiteRound) -> some View {
-        resumeCard(
+        // „%lld Schläge" steht als eigener Schlüssel schon im Katalog, mit den
+        // Pluralformen für Polnisch und Tschechisch. Deshalb hier eingesetzt
+        // und nicht noch einmal ausgeschrieben.
+        let schlaege = String(localized: "\(round.totalStrokes) Schläge")
+        return resumeCard(
             title: round.courseName,
-            detail: "Loch \(min(round.currentHole + 1, round.strokes.count)) von \(round.strokes.count) · \(round.totalStrokes) Schläge"
+            detail: "Loch \(min(round.currentHole + 1, round.strokes.count)) von \(round.strokes.count) · \(schlaege)"
         ) {
             // Die Golf-Startseite bietet das Fortsetzen selbst an.
             onPick(.golf(GolfLiteCourse(
@@ -126,7 +130,9 @@ struct ClipHomeView: View {
         }
     }
 
-    private func resumeCard(title: String, detail: String, action: @escaping () -> Void) -> some View {
+    private func resumeCard(title: String,
+                            detail: LocalizedStringResource,
+                            action: @escaping () -> Void) -> some View {
         Button {
             Haptics.medium()
             action()

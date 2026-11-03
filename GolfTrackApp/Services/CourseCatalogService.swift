@@ -349,7 +349,7 @@ struct RemoteCourse: Decodable {
             lat: lat ?? fallback?.lat ?? 0,
             lon: lon ?? fallback?.lon ?? 0,
             welcome: gruss.isEmpty
-                ? "Willkommen! Ab jetzt zählen wir für dich mit – Bahn für Bahn."
+                ? String(localized: "Willkommen! Ab jetzt zählen wir für dich mit – Bahn für Bahn.")
                 : gruss,
             notes: facilityNotes.isEmpty ? (fallback?.notes ?? "") : facilityNotes,
             hints: facilityHints ?? fallback?.hints ?? [],

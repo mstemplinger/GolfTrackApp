@@ -129,7 +129,7 @@ enum ClipCourseDirectory {
                 lat: lat ?? 0,
                 lon: lon ?? 0,
                 welcome: welcome.isEmpty
-                    ? "Willkommen! Ab jetzt zählen wir für dich mit – Bahn für Bahn."
+                    ? String(localized: "Willkommen! Ab jetzt zählen wir für dich mit – Bahn für Bahn.")
                     : welcome,
                 notes: facilityNotes,
                 hints: facilityHints ?? []

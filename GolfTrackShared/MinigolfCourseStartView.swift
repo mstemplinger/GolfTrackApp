@@ -333,8 +333,11 @@ struct MinigolfCourseStartView: View {
 
     private func startRound() {
         let names = rawNames.enumerated().map { i, name in
+            // Der Platzhalter im Feld war schon übersetzt, der daraus
+            // entstehende Name bisher nicht – auf der Zählkarte stand dann
+            // „Spieler 1“ mitten in einer französischen Runde.
             name.trimmingCharacters(in: .whitespaces).isEmpty
-                ? "Spieler \(i + 1)"
+                ? String(localized: "Spieler \(i + 1)")
                 : name
         }
         MinigolfGameStore.saveNames(rawNames)

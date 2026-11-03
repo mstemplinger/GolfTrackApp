@@ -15,6 +15,7 @@
 		EEB4CF942FB4BB6100E6D6A5 /* GolfWidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = EEB4CF802FB4BB5F00E6D6A5 /* GolfWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		EEFB8CE12FB9196B0045E2F2 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = EEFB8CE02FB9196B0045E2F2 /* Localizable.xcstrings */; };
 		EEFB8CE22FB9196B0045E2F2 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = EEFB8CE02FB9196B0045E2F2 /* Localizable.xcstrings */; };
+		EEFB8CE32FB9196B0045E2F2 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = EEFB8CE02FB9196B0045E2F2 /* Localizable.xcstrings */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -589,6 +590,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EEFB8CE32FB9196B0045E2F2 /* Localizable.xcstrings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

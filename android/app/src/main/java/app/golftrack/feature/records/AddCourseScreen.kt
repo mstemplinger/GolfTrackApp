@@ -64,8 +64,7 @@ private const val NEARBY_RADIUS = 30_000.0
 
 /**
  * Wie AddCourseSheetView.swift: Plätze aus dem Verzeichnis in der Nähe, Suche
- * im Verzeichnis, dazu Scorecard-Scan und manuelles Anlegen. Die Online-Suche
- * über golfcourseapi.com braucht einen eigenen API-Key und fehlt deshalb.
+ * im Verzeichnis, dazu Scorecard-Scan und manuelles Anlegen.
  */
 @Composable
 internal fun AddCourseScreen(nav: NavController) {

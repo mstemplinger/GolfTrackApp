@@ -54,8 +54,60 @@ data class Course(
     val flagLongitudes: List<Double> = emptyList(),
     /** Kennung aus dem Platzverzeichnis (QR-Code), leer bei eigenen Plätzen. */
     val slug: String = "",
+    /**
+     * Abschläge je Farbe (wie `Course.tees` auf iOS). Die Standardfelder oben
+     * (`holeLengths`, `teeLatitudes` …) bleiben der Rückfall für Plätze ohne Farbangaben.
+     */
+    val tees: List<CourseTee> = emptyList(),
 ) {
     val totalPar: Int get() = parValues.sum()
+
+    // --- Abschläge je Farbe ---
+
+    /**
+     * Farben zur Auswahl beim Rundenstart: die vom Platz angegebenen, sonst
+     * die üblichen. Nur gelernte Positionen (ohne Wertung und Längen) machen
+     * aus einem Platz noch keinen mit festen Farben – sonst schrumpfte die
+     * Auswahl nach der ersten Runde auf die gespielte Farbe.
+     */
+    val availableTeeColors: List<TeeColor>
+        get() {
+            val all = tees.filter { it.teeColor != null }
+            val official = all.filter { it.courseRating != null || it.slopeRating != null || it.holeLengths.any { l -> l > 0 } }
+            if (official.isNotEmpty()) return official.mapNotNull { it.teeColor }.distinct()
+            val colors = TeeColor.commonSet.toSet() + all.mapNotNull { it.teeColor }
+            return TeeColor.entries.filter { it in colors }
+        }
+
+    fun tee(color: TeeColor?): CourseTee? = color?.let { c -> tees.firstOrNull { it.teeColor == c } }
+
+    /** Abschlag eines Lochs für eine Farbe – fällt auf den Standardabschlag zurück. */
+    fun teeCoordinate(hole: Int, tee: TeeColor?): LatLon? = tee(tee)?.coordinate(hole) ?: teeCoordinate(hole)
+
+    /** Ob für diese Farbe selbst schon ein Abschlag bekannt ist (ohne Rückfall). */
+    fun hasOwnTeeCoordinate(hole: Int, tee: TeeColor?): Boolean =
+        if (tee == null) teeCoordinate(hole) != null else tee(tee)?.coordinate(hole) != null
+
+    fun holeLength(hole: Int, tee: TeeColor?): Int? =
+        tee(tee)?.length(hole) ?: holeLengths.getOrNull(hole - 1)?.takeIf { it > 0 }
+
+    fun courseRating(tee: TeeColor?): Double = tee(tee)?.courseRating ?: courseRating
+    fun slopeRating(tee: TeeColor?): Int = tee(tee)?.slopeRating ?: slopeRating
+
+    /**
+     * Speichert einen Abschlag für eine Farbe. Der Standardabschlag wird
+     * mitgesetzt, solange er fehlt – ältere Ansichten lesen nur ihn.
+     */
+    fun withTee(hole: Int, c: LatLon, tee: TeeColor?): Course {
+        var next = if (teeCoordinate(hole) == null || tee == null) withTee(hole, c) else this
+        if (tee == null) return next
+        val all = tees.toMutableList()
+        val i = all.indexOfFirst { it.teeColor == tee }
+        if (i >= 0) all[i] = all[i].withCoordinate(hole, c, numberOfHoles)
+        else all += CourseTee(tee.raw).withCoordinate(hole, c, numberOfHoles)
+        next = next.copy(tees = all)
+        return next
+    }
 
     fun par(hole: Int): Int = parValues.getOrNull(hole - 1) ?: 4
 
@@ -106,6 +158,67 @@ data class Course(
     }
 }
 
+/**
+ * Abschlagfarbe. Die Rohwerte stehen genauso in der Website
+ * (`web/src/lib/schema.ts`) und auf iOS (`TeeColor`).
+ */
+enum class TeeColor(val raw: String, val displayName: String, val argb: Long) {
+    BLACK("black", "Schwarz", 0xFF1C1C1C),
+    WHITE("white", "Weiß", 0xFFF5F5F5),
+    GOLD("gold", "Gold", 0xFFD4B038),
+    BLUE("blue", "Blau", 0xFF2E70DE),
+    YELLOW("yellow", "Gelb", 0xFFF2C230),
+    RED("red", "Rot", 0xFFD93B3B),
+    ORANGE("orange", "Orange", 0xFFF08A24),
+    GREEN("green", "Grün", 0xFF2E9E4F);
+
+    /** Dunkle Farben brauchen auf dunklem Grund einen hellen Rand. */
+    val needsOutline: Boolean get() = this == BLACK
+
+    companion object {
+        fun fromRaw(raw: String?): TeeColor? = entries.firstOrNull { it.raw == raw }
+
+        /** Was ein Platz ohne hinterlegte Abschläge zur Auswahl anbietet. */
+        val commonSet: List<TeeColor> = listOf(WHITE, YELLOW, BLUE, RED)
+    }
+}
+
+/**
+ * Ein Abschlag eines Platzes mit eigener Wertung, Lochlängen und Positionen
+ * (wie `CourseTee` auf iOS). Fehlende Werte: Länge 0, Koordinate `NaN`.
+ * Die Farbe bleibt als Text gespeichert, damit eine unbekannte Farbe aus einer
+ * neueren Version nicht die ganze Datei unlesbar macht.
+ */
+@Serializable
+data class CourseTee(
+    val color: String,
+    val courseRating: Double? = null,
+    val slopeRating: Int? = null,
+    val holeLengths: List<Int> = emptyList(),
+    val teeLatitudes: List<Double> = emptyList(),
+    val teeLongitudes: List<Double> = emptyList(),
+) {
+    val teeColor: TeeColor? get() = TeeColor.fromRaw(color)
+
+    fun length(hole: Int): Int? = holeLengths.getOrNull(hole - 1)?.takeIf { it > 0 }
+
+    fun coordinate(hole: Int): LatLon? {
+        val i = hole - 1
+        if (i < 0 || i >= teeLatitudes.size || i >= teeLongitudes.size) return null
+        return LatLon(teeLatitudes[i], teeLongitudes[i]).takeIf { it.isValid }
+    }
+
+    fun withCoordinate(hole: Int, c: LatLon, holeCount: Int): CourseTee {
+        val i = hole - 1
+        if (i < 0 || i >= holeCount) return this
+        val lats = teeLatitudes.toMutableList().apply { while (size < holeCount) add(Double.NaN) }
+        val lons = teeLongitudes.toMutableList().apply { while (size < holeCount) add(Double.NaN) }
+        lats[i] = c.lat
+        lons[i] = c.lon
+        return copy(teeLatitudes = lats, teeLongitudes = lons)
+    }
+}
+
 @Serializable
 data class Shot(
     val shotNumber: Int,
@@ -121,31 +234,54 @@ data class Shot(
     val distanceYards: Int get() = (distanceMeters * 1.09361).toInt()
 }
 
+/**
+ * Gemeinsame Scorekarte eines Lochs – für den eigenen Spieler (`HoleScore`)
+ * und für Mitspieler (`PlayerHoleScore`), wie `ScoreEntry` auf iOS.
+ */
+interface ScoreEntry {
+    val holeNumber: Int
+    val strokes: Int
+    val putts: Int
+    val fairwayHit: Boolean
+    val greenInRegulation: Boolean
+    val shots: List<Shot>
+
+    val sortedShots: List<Shot> get() = shots.sortedBy { it.shotNumber }
+    val totalDistanceMeters: Double get() = shots.sumOf { it.distanceMeters }
+}
+
 @Serializable
 data class HoleScore(
-    val holeNumber: Int,
-    val strokes: Int = 0,
-    val putts: Int = 0,
-    val fairwayHit: Boolean = false,
-    val greenInRegulation: Boolean = false,
+    override val holeNumber: Int,
+    override val strokes: Int = 0,
+    override val putts: Int = 0,
+    override val fairwayHit: Boolean = false,
+    override val greenInRegulation: Boolean = false,
     val pinLatitude: Double? = null,
     val pinLongitude: Double? = null,
     val pinIsAutomatic: Boolean = false,
     val clubName: String? = null,
-    val shots: List<Shot> = emptyList(),
-) {
+    override val shots: List<Shot> = emptyList(),
+) : ScoreEntry {
     val hasPinLocation: Boolean get() = pinLatitude != null && pinLongitude != null
-    val sortedShots: List<Shot> get() = shots.sortedBy { it.shotNumber }
-    val totalDistanceMeters: Double get() = shots.sumOf { it.distanceMeters }
 }
 
 @Serializable
 data class PlayerHoleScore(
     val playerIndex: Int,
     val playerName: String,
-    val holeNumber: Int,
-    val strokes: Int,
-)
+    override val holeNumber: Int,
+    override val strokes: Int,
+    // Mitspieler führen dieselbe Scorekarte wie der eigene Spieler.
+    override val putts: Int = 0,
+    override val fairwayHit: Boolean = false,
+    override val greenInRegulation: Boolean = false,
+    /**
+     * Schlagpositionen des Mitspielers. Bewusst getrennt von `HoleScore.shots`,
+     * damit sie weder die eigene Schlägerstatistik noch die Platzableitung verfälschen.
+     */
+    override val shots: List<Shot> = emptyList(),
+) : ScoreEntry
 
 /** Ein Punkt der Laufspur – wie `TrackPoint` in RoundTrack.swift. */
 @Serializable
@@ -183,8 +319,23 @@ data class Round(
     val holeScores: List<HoleScore> = emptyList(),
     val playerHoleScores: List<PlayerHoleScore> = emptyList(),
     val track: RoundTrack? = null,
+    /** Gespielter Abschlag (`TeeColor.raw`), leer bei älteren Runden. */
+    val teeColorRaw: String = "",
+    /** Schlägerauswahl nach Plus für den Rest der Runde ausgeblendet. */
+    val hidesClubPicker: Boolean = false,
+    /** Code der Lobby, über die diese Runde mit Freunden verbunden ist (leer: keine). */
+    val lobbyCode: String = "",
+    /**
+     * Lobby-Kennungen der Mitspieler, in der Reihenfolge von `otherPlayerNames` –
+     * deren Schläge kommen von ihrem eigenen Handy (siehe `LobbyService`).
+     */
+    val lobbyMemberIDsRaw: String = "",
 ) {
+    val lobbyMemberIDs: List<String>
+        get() = if (lobbyMemberIDsRaw.isEmpty()) emptyList() else lobbyMemberIDsRaw.split("|")
+
     val gameMode: GameMode get() = GameMode.fromRaw(gameModeRaw)
+    val teeColor: TeeColor? get() = TeeColor.fromRaw(teeColorRaw)
 
     fun opponentScore(playerIndex: Int, holeNumber: Int): PlayerHoleScore? =
         playerHoleScores.firstOrNull { it.playerIndex == playerIndex && it.holeNumber == holeNumber }

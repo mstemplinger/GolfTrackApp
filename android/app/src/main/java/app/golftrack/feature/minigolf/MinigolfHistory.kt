@@ -153,7 +153,10 @@ internal fun MinigolfHistoryScreen(nav: NavController) {
     }
 
     selected?.let { e ->
-        MinigolfResultsSheet(e.playerNames, e.numberOfHoles, e.scores, e.challengeList, onFinish = null) { selected = null }
+        MinigolfResultsSheet(
+            e.playerNames, e.numberOfHoles, e.scores, e.challengeList, onFinish = null,
+            onDismiss = { selected = null }, courseName = e.courseName, dateMillis = e.dateMillis,
+        )
     }
 }
 

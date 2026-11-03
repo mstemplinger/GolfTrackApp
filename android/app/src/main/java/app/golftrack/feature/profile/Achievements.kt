@@ -51,6 +51,19 @@ import androidx.compose.ui.unit.sp
 import app.golftrack.data.GolfData
 import app.golftrack.data.Prefs
 import app.golftrack.ui.common.Haptics
+import app.golftrack.feature.range.RangeClubDefaults
+import app.golftrack.feature.range.RangeClubStats
+import app.golftrack.feature.range.RangeSession
+import app.golftrack.feature.range.RangeStore
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.material.icons.filled.EventAvailable
+import androidx.compose.material.icons.filled.Apps
+import androidx.compose.material.icons.filled.Hive
+import androidx.compose.material.icons.filled.NorthEast
+import androidx.compose.material.icons.filled.LocalFireDepartment
+import androidx.compose.material.icons.filled.ShoppingBag
+import androidx.compose.material.icons.filled.ShowChart
+import androidx.compose.material.icons.filled.SportsGolf
 import app.golftrack.ui.theme.AppTheme
 import kotlinx.serialization.builtins.MapSerializer
 import kotlinx.serialization.builtins.serializer
@@ -76,6 +89,23 @@ enum class Achievement(val key: String, val title: String, val description: Stri
         "Senke dein Handicap auf unter 10. Das erfordert viel Übung – du bist dann ein sehr erfahrener Golfer!"),
     ALL_CATEGORIES("allCategories", "Alleskönner", "Schließe Runden auf 5 verschiedenen Plätzen ab", Icons.Filled.Map,
         "Schließe Runden auf 5 verschiedenen Golfplätzen ab. Erkunde neue Plätze in deiner Region oder auf Reisen."),
+    // Driving Range
+    FIRST_RANGE_SESSION("firstRangeSession", "Erste Range-Einheit", "Schließe deine erste Einheit auf der Driving Range ab", Icons.Filled.SportsGolf,
+        "Starte auf der Startseite die Driving Range, trage ein paar Schläge ein und beende die Einheit."),
+    RANGE_SESSIONS_10("rangeSessions10", "Range-Stammgast", "Schließe 10 Einheiten auf der Driving Range ab", Icons.Filled.EventAvailable,
+        "Beende 10 Einheiten auf der Driving Range. Regelmäßiges Training zahlt sich auf dem Platz aus."),
+    RANGE_SHOTS_100("rangeShots100", "100 Range-Bälle", "Trage 100 Schläge auf der Range ein", Icons.Filled.Apps,
+        "Trage auf der Driving Range insgesamt 100 Schläge mit Schläger und Weite ein – über alle Einheiten zusammen."),
+    RANGE_SHOTS_1000("rangeShots1000", "1000 Range-Bälle", "Trage 1000 Schläge auf der Range ein", Icons.Filled.Hive,
+        "Trage auf der Driving Range insgesamt 1000 Schläge ein. Das ist echtes Fleißtraining!"),
+    DRIVE_200("drive200", "200-m-Drive", "Schlage den Driver mindestens 200 m weit", Icons.Filled.NorthEast,
+        "Trage auf der Driving Range einen Driver-Schlag mit mindestens 200 m ein."),
+    DRIVE_250("drive250", "250-m-Drive", "Schlage den Driver mindestens 250 m weit", Icons.Filled.LocalFireDepartment,
+        "Trage auf der Driving Range einen Driver-Schlag mit mindestens 250 m ein. Das schaffen nur sehr lange Hitter."),
+    RANGE_FULL_BAG("rangeFullBag", "Ganzes Bag", "Schlage 10 verschiedene Schläger auf der Range", Icons.Filled.ShoppingBag,
+        "Trainiere auf der Driving Range mit 10 verschiedenen Schlägern – nicht nur mit dem Driver."),
+    RANGE_PERSONAL_BEST("rangePersonalBest", "Neue Bestweite", "Übertriff deine Bestweite mit einem Schläger", Icons.Filled.ShowChart,
+        "Schlage einen Schläger in einer späteren Einheit weiter als jemals zuvor. Vergleiche dich auf der Range mit dir selbst."),
 }
 
 /** Fortschritt in Prozent je Errungenschaft, wie `gc_achievement_progress` auf iOS (steigt nur). */
@@ -86,6 +116,49 @@ object AchievementStore {
 
     fun progress(): Map<String, Double> =
         runCatching { json.decodeFromString(ser, Prefs.string(KEY).ifEmpty { "{}" }) }.getOrDefault(emptyMap())
+
+    /** Driving Range auswerten wie `evaluateRangeAchievements` auf iOS. */
+    fun evaluateRange(sessions: List<RangeSession>): Map<String, Double> {
+        val old = progress()
+        val p = old.toMutableMap()
+        var celebrate = false
+        fun unlock(a: Achievement, pct: Double = 100.0) {
+            val cur = p[a.key] ?: 0.0
+            if (pct <= cur) return
+            if (pct >= 100 && cur < 100) celebrate = true
+            p[a.key] = pct
+        }
+        val finished = sessions.filter { it.endedAt != null && it.shots.isNotEmpty() }
+        val shots = sessions.flatMap { it.shots }
+        if (finished.isNotEmpty()) unlock(Achievement.FIRST_RANGE_SESSION)
+        unlock(Achievement.RANGE_SESSIONS_10, minOf(100.0, finished.size / 10.0 * 100))
+        unlock(Achievement.RANGE_SHOTS_100, minOf(100.0, shots.size / 100.0 * 100))
+        unlock(Achievement.RANGE_SHOTS_1000, minOf(100.0, shots.size / 1000.0 * 100))
+        val longestDrive = shots.filter { RangeClubDefaults.isDriver(it.clubName) }.maxOfOrNull { it.distanceMeters } ?: 0.0
+        unlock(Achievement.DRIVE_200, minOf(100.0, longestDrive / 200.0 * 100))
+        unlock(Achievement.DRIVE_250, minOf(100.0, longestDrive / 250.0 * 100))
+        unlock(Achievement.RANGE_FULL_BAG, minOf(100.0, shots.map { it.clubName }.toSet().size / 10.0 * 100))
+        if (hasBeatenEarlierBest(sessions)) unlock(Achievement.RANGE_PERSONAL_BEST)
+        if (p != old) {
+            Prefs.set(KEY, json.encodeToString(ser, p))
+            if (celebrate) Haptics.celebrate()
+        }
+        return p
+    }
+
+    /**
+     * Wahr, sobald ein Schläger in einer Einheit weiter flog als in allen
+     * früheren Einheiten zusammen – die erste Einheit selbst zählt nicht.
+     */
+    private fun hasBeatenEarlierBest(sessions: List<RangeSession>): Boolean {
+        val best = mutableMapOf<String, Double>()
+        for (session in sessions.sortedBy { it.date }) {
+            val stats = RangeClubStats.byClub(session.shots)
+            if (stats.any { (club, s) -> best[club]?.let { s.best > it } == true }) return true
+            stats.forEach { (club, s) -> best[club] = maxOf(best[club] ?: 0.0, s.best) }
+        }
+        return false
+    }
 
     /** Wertet die abgeschlossenen Runden aus; gibt true zurück, wenn etwas neu freigeschaltet wurde. */
     fun evaluate(data: GolfData): Map<String, Double> {
@@ -130,7 +203,12 @@ object AchievementStore {
 @Composable
 internal fun AchievementsCard(data: GolfData) {
     var progress by remember { mutableStateOf(AchievementStore.progress()) }
-    LaunchedEffect(data.completedRounds.size) { progress = AchievementStore.evaluate(data) }
+    val ctx = LocalContext.current
+    LaunchedEffect(data.completedRounds.size) {
+        AchievementStore.evaluate(data)
+        RangeStore.init(ctx)
+        progress = AchievementStore.evaluateRange(RangeStore.data.value.sessions)
+    }
     var selected by remember { mutableStateOf<Achievement?>(null) }
 
     Column(

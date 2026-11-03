@@ -1,6 +1,7 @@
 package app.golftrack.data.catalog
 
 import app.golftrack.data.Course
+import app.golftrack.data.CourseTee
 import app.golftrack.data.LatLon
 import kotlinx.serialization.Serializable
 
@@ -32,6 +33,8 @@ data class GolfCourseEntry(
     val flagLongitudes: List<Double> = emptyList(),
     val firstTeeLat: Double? = null,
     val firstTeeLon: Double? = null,
+    /** Abschläge je Farbe – kommen über die API, eingebaute Plätze haben keine. */
+    val tees: List<CourseTee> = emptyList(),
 ) {
     val id: String get() = name
 
@@ -51,6 +54,7 @@ data class GolfCourseEntry(
         teeLatitudes = teeLatitudes, teeLongitudes = teeLongitudes,
         flagLatitudes = flagLatitudes, flagLongitudes = flagLongitudes,
         slug = slug,
+        tees = tees,
     )
 }
 

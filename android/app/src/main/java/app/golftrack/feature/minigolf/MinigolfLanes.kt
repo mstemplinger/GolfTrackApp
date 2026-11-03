@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -31,6 +32,7 @@ import androidx.compose.material.icons.filled.Directions
 import androidx.compose.material.icons.filled.ExpandMore
 import androidx.compose.material.icons.filled.GridView
 import androidx.compose.material.icons.filled.Lightbulb
+import androidx.compose.material.icons.filled.OpenInFull
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.SportsScore
 import androidx.compose.material.icons.filled.Straighten
@@ -44,15 +46,19 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import app.golftrack.data.rememberPrefBool
 import app.golftrack.ui.common.AppScaffold
 import app.golftrack.ui.common.Haptics
 import app.golftrack.ui.theme.AppTheme
@@ -214,6 +220,9 @@ internal fun MinigolfLanesTabContent(onLane: (MinigolfStandardLane) -> Unit) {
 
 @Composable
 internal fun MinigolfLaneDetailScreen(nav: NavController, lane: MinigolfStandardLane) {
+    var show3D by rememberPrefBool("minigolf.lane3D", true)
+    var showsIdealLine by rememberPrefBool("minigolf.idealLine", true)
+    var showsFullscreen by rememberSaveable { mutableStateOf(false) }
     AppScaffold("Bahn ${lane.normNumber}", onBack = { nav.popBackStack() }) { m ->
         Column(m.verticalScroll(rememberScrollState()).padding(16.dp), verticalArrangement = Arrangement.spacedBy(14.dp)) {
             Column(Modifier.mgCard(), verticalArrangement = Arrangement.spacedBy(10.dp)) {
@@ -223,12 +232,34 @@ internal fun MinigolfLaneDetailScreen(nav: NavController, lane: MinigolfStandard
                     }
                     MgText(lane.name, MgFont.title3, weight = FontWeight.Bold)
                 }
-                MinigolfLaneSketch(lane.shape, lane.glyph, 2f, Modifier.fillMaxWidth().height(110.dp).padding(vertical = 6.dp))
+                ViewPicker(show3D) { Haptics.selection(); show3D = it }
+                if (show3D) {
+                    Box(Modifier.fillMaxWidth().height(260.dp).clip(RoundedCornerShape(12.dp))) {
+                        MinigolfLane3DView(lane, showsIdealLine, Modifier.fillMaxSize())
+                        MinigolfIdealLineToggle(
+                            showsIdealLine, { showsIdealLine = !showsIdealLine },
+                            Modifier.align(Alignment.BottomStart).padding(8.dp),
+                        )
+                        Box(
+                            Modifier.align(Alignment.BottomEnd).padding(8.dp).size(30.dp)
+                                .background(Color.Black.copy(alpha = 0.35f), CircleShape)
+                                .clickable { Haptics.tap(); showsFullscreen = true }
+                                .semantics { contentDescription = "Vollbild" },
+                            contentAlignment = Alignment.Center,
+                        ) {
+                            Icon(Icons.Filled.OpenInFull, null, tint = Color.White, modifier = Modifier.size(15.dp))
+                        }
+                    }
+                    MgText("Zum Drehen wischen, mit zwei Fingern zoomen.", MgFont.caption2, AppTheme.textSec)
+                } else {
+                    MinigolfLaneSketch(lane.shape, lane.glyph, 2f, Modifier.fillMaxWidth().height(110.dp).padding(vertical = 6.dp))
+                }
                 Row(horizontalArrangement = Arrangement.spacedBy(14.dp)) {
                     Legend(Color.White.copy(alpha = 0.8f), "Abschlag")
                     Legend(AppTheme.gold, "Hindernis")
                     // Bei der Sprungschanze ist das Netz selbst das Ziel.
                     if (lane.shape != LaneShape.jump) Legend(SketchTargetColor, "Ziel") else Legend(AppTheme.gold, "Netz")
+                    if (show3D && showsIdealLine) Legend(MinigolfLaneModel.idealColor, "Idealspur")
                 }
             }
             Section(Icons.Filled.ViewInAr, "Hindernis", lane.hindernis)
@@ -236,9 +267,33 @@ internal fun MinigolfLaneDetailScreen(nav: NavController, lane: MinigolfStandard
             Section(Icons.Filled.Straighten, "Maße & Besonderheiten", lane.mass)
             Section(Icons.Filled.Lightbulb, "Tipp", lane.tipp, accent = true)
             MgText(
-                "Nummer der Normbahn nach den Normungsbestimmungen für Miniaturgolf (DMV/WMF). Auf der Anlage kann sie an jeder Position stehen. Verbindlich sind die Zeichnungen des Weltverbands – die Skizze hier ist schematisch.",
+                "Nummer der Normbahn nach den Normungsbestimmungen für Miniaturgolf (DMV/WMF). Auf der Anlage kann sie an jeder Position stehen. Verbindlich sind die Zeichnungen des Weltverbands – Skizze und 3D-Modell hier sind schematisch, die Idealspur ist eine Empfehlung der App.",
                 MgFont.caption2, AppTheme.textSec, modifier = Modifier.padding(horizontal = 4.dp),
             )
+        }
+    }
+    if (showsFullscreen) {
+        MinigolfLane3DFullscreen(lane, showsIdealLine, { showsIdealLine = !showsIdealLine }) { showsFullscreen = false }
+    }
+}
+
+/** Umschalter 3D-Modell / Draufsicht – wie der segmentierte Picker auf iOS. */
+@Composable
+private fun ViewPicker(show3D: Boolean, onSelect: (Boolean) -> Unit) {
+    Row(
+        Modifier.fillMaxWidth().background(AppTheme.cardAlt, RoundedCornerShape(9.dp)).padding(2.dp),
+    ) {
+        for ((value, label) in listOf(true to "3D-Modell", false to "Draufsicht")) {
+            val selected = show3D == value
+            Box(
+                Modifier.weight(1f)
+                    .background(if (selected) AppTheme.textSec.copy(alpha = 0.35f) else Color.Transparent, RoundedCornerShape(7.dp))
+                    .clickable(enabled = !selected) { onSelect(value) }
+                    .padding(vertical = 6.dp),
+                contentAlignment = Alignment.Center,
+            ) {
+                MgText(label, MgFont.caption, weight = if (selected) FontWeight.SemiBold else FontWeight.Normal)
+            }
         }
     }
 }

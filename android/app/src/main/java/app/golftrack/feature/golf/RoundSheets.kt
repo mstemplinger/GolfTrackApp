@@ -68,6 +68,10 @@ import app.golftrack.ui.common.Haptics
 import app.golftrack.ui.common.LaterBadge
 import app.golftrack.ui.common.LaterFeature
 import app.golftrack.ui.common.Routes
+import app.golftrack.ui.common.RoundShareButton
+import app.golftrack.ui.common.RoundShareSummary
+import app.golftrack.feature.records.ScorecardShareData
+import app.golftrack.feature.records.renderScorecardBitmap
 import app.golftrack.ui.theme.AppTheme
 import java.util.Locale
 
@@ -248,6 +252,18 @@ fun RoundCompleteSheet(nav: NavController, round: Round, course: Course?, onDone
                     VerticalDivider(Modifier.height(40.dp), color = AppTheme.cardAlt)
                     ScoreBox("${round.holeScores.size}", "Löcher")
                 }
+                // Gleich unter dem Ergebnis, solange die Freude frisch ist.
+                val sorted = round.sortedScores
+                RoundShareButton(
+                    summary = RoundShareSummary.golf(
+                        courseName = course?.name,
+                        dateMillis = round.date,
+                        strokes = sorted.map { it.strokes },
+                        pars = course?.let { c -> sorted.map { c.par(it.holeNumber) } }.orEmpty(),
+                    ),
+                    modifier = Modifier.padding(horizontal = 16.dp),
+                    image = { runCatching { renderScorecardBitmap(ScorecardShareData.from(round, course)) }.getOrNull() },
+                )
                 // Audio-Training zur Runde – kommt auf Android später
                 Column(Modifier.padding(horizontal = 16.dp), verticalArrangement = Arrangement.spacedBy(10.dp)) {
                     Row(verticalAlignment = Alignment.CenterVertically) {

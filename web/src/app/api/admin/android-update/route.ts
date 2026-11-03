@@ -6,12 +6,14 @@ import { notifyApkUpdate } from "@/lib/waitlist";
  * Update-Mail zur aktuell veröffentlichten APK (`lib/android.ts`) an alle
  * Eingetragenen. Jede Fassung geht je Adresse nur einmal raus.
  * Aufruf nach dem Deploy über `android/notify-update.sh`.
- * Body optional: `{ "notes": ["Neu: …", "Behoben: …"] }`.
+ * Body optional: `{ "notes": ["Neu: …", "Behoben: …"], "notesEn": ["New: …"] }`
+ * – `notesEn` geht an alle nicht deutschsprachigen Adressen (sonst `notes`).
  */
 
 export const dynamic = "force-dynamic";
 
-const schema = z.object({ notes: z.array(z.string().max(300)).max(10).default([]) });
+const notesSchema = z.array(z.string().max(300)).max(10);
+const schema = z.object({ notes: notesSchema.default([]), notesEn: notesSchema.optional() });
 
 export async function POST(request: Request) {
   if (!apiTokenConfigured()) return Response.json({ error: "not_configured" }, { status: 503 });
@@ -20,5 +22,5 @@ export async function POST(request: Request) {
   }
   const parsed = schema.safeParse(await request.json().catch(() => ({})));
   if (!parsed.success) return Response.json({ error: "invalid" }, { status: 422 });
-  return Response.json(await notifyApkUpdate(parsed.data.notes));
+  return Response.json(await notifyApkUpdate(parsed.data.notes, parsed.data.notesEn ?? parsed.data.notes));
 }

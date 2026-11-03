@@ -31,11 +31,11 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.setValue
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -133,11 +133,21 @@ private enum class Placing(val label: String, val color: Color) {
 
 /** Wie ShotTrackerView.swift: Schläge auf der Karte erfassen (Abschlag → Treffpunkt). */
 @Composable
-fun ShotTrackerSheet(round: Round, hole: Int, here: LatLon?, onDismiss: () -> Unit) {
+fun ShotTrackerSheet(
+    round: Round,
+    hole: Int,
+    here: LatLon?,
+    /** 0 = eigene Karte, 1… = Mitspieler (dessen Name dann im Titel steht). */
+    playerIndex: Int = 0,
+    playerName: String? = null,
+    onDismiss: () -> Unit,
+) {
     val data by GolfStore.data.collectAsState()
     val unit = rememberDistanceUnit()
-    val holeScore = data.round(round.id)?.score(hole)
-    val shots = holeScore?.sortedShots.orEmpty()
+    val entry = data.round(round.id)?.entry(playerIndex, hole)
+    val shots = entry?.sortedShots.orEmpty()
+    // Nur eigene Schläge fließen in die Distanzen der eigenen Schläger.
+    val recordsClubDistances = playerIndex == 0
     var from by remember { mutableStateOf<LatLon?>(null) }
     var to by remember { mutableStateOf<LatLon?>(null) }
     var placing by remember { mutableStateOf(Placing.FROM) }
@@ -171,11 +181,11 @@ fun ShotTrackerSheet(round: Round, hole: Int, here: LatLon?, onDismiss: () -> Un
         val t = to ?: return
         Haptics.success()
         val dist = f.distanceTo(t)
-        updateHole(round.id, hole) { hs ->
-            hs.copy(shots = hs.shots + Shot(hs.sortedShots.size + 1, f.lat, f.lon, t.lat, t.lon, selectedClub))
+        updateEntry(round.id, playerIndex, hole) { e ->
+            e.copy(shots = e.shots + Shot(e.sortedShots.size + 1, f.lat, f.lon, t.lat, t.lon, selectedClub))
         }
         // Distanz automatisch in die Schläger-Datenbank eintragen
-        if (selectedClub.isNotEmpty()) {
+        if (recordsClubDistances && selectedClub.isNotEmpty()) {
             GolfStore.current.bags.firstOrNull { b -> b.clubs.any { it.name == selectedClub } }?.let { bag ->
                 var done = false
                 GolfStore.upsertBag(bag.copy(clubs = bag.clubs.map {
@@ -193,13 +203,13 @@ fun ShotTrackerSheet(round: Round, hole: Int, here: LatLon?, onDismiss: () -> Un
             from != null -> { from = null; placing = Placing.FROM }
             shots.isNotEmpty() -> {
                 val last = shots.last()
-                updateHole(round.id, hole) { hs -> hs.copy(shots = hs.shots.filter { it.shotNumber != last.shotNumber }) }
+                updateEntry(round.id, playerIndex, hole) { e -> e.copy(shots = e.shots.filter { it.shotNumber != last.shotNumber }) }
             }
         }
     }
 
     fun clearAll() {
-        updateHole(round.id, hole) { it.copy(shots = emptyList()) }
+        updateEntry(round.id, playerIndex, hole) { it.copy(shots = emptyList()) }
         from = null; to = null; placing = Placing.FROM; selectedClub = ""
     }
 
@@ -219,7 +229,7 @@ fun ShotTrackerSheet(round: Round, hole: Int, here: LatLon?, onDismiss: () -> Un
     FullSheet(onDismiss) {
         Column(Modifier.fillMaxSize()) {
             SheetTopBar(
-                "Loch $hole – Schläge",
+                (playerName?.let { "$it · " } ?: "") + "Loch $hole – Schläge",
                 leading = { BarButton("Fertig") { Haptics.tap(); onDismiss() } },
                 trailing = {
                     if (canUndo) BarIconButton(Icons.AutoMirrored.Filled.Undo, description = "Rückgängig") { Haptics.light(); undo() }

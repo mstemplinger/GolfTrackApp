@@ -112,7 +112,7 @@ private fun MinigolfCourseStartScreen(nav: NavController, course: MinigolfCourse
     LaunchedEffect(Unit) {
         if (!loadedDefaults) {
             loadedDefaults = true
-            MinigolfGameStore.loadNames()?.takeIf { it.isNotEmpty() }?.let { rawNames = it }
+            rawNames = MinigolfGameStore.initialNames(fallback = rawNames)
             if (challenges.isEmpty()) challenges = MinigolfGameStore.loadChallenges()
         }
     }

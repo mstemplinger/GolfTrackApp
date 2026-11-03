@@ -72,6 +72,11 @@ import app.golftrack.data.GolfStore
 import app.golftrack.data.HoleOutcome
 import app.golftrack.data.Prefs
 import app.golftrack.data.Round
+import app.golftrack.feature.lobby.LobbyLiveSheet
+import app.golftrack.feature.lobby.LobbyRoundEffect
+import app.golftrack.feature.lobby.LobbyService
+import app.golftrack.feature.lobby.LobbyStrip
+import app.golftrack.feature.lobby.isLobbyRound
 import app.golftrack.ui.common.Haptics
 import app.golftrack.ui.common.Placeholder
 import app.golftrack.ui.common.Routes
@@ -102,6 +107,8 @@ fun ScorecardScreen(nav: NavController, roundId: String) {
     var showComplete by rememberSaveable { mutableStateOf(false) }
     var showShake by remember { mutableStateOf(false) }
     var showCourseInfo by remember { mutableStateOf(false) }
+    var showLobby by remember { mutableStateOf(false) }
+    val lobbyRound = isLobbyRound(round)
 
     fun par(hole: Int) = course?.par(hole) ?: 4
 
@@ -137,6 +144,9 @@ fun ScorecardScreen(nav: NavController, roundId: String) {
         }
     }
 
+    // Lobby: eigenen Stand melden, Freunde abholen
+    LobbyRoundEffect(round, currentIndex + 1)
+
     ShakeEffect { if (!showShake) showShake = true }
 
     fun goPrevious() {
@@ -156,6 +166,9 @@ fun ScorecardScreen(nav: NavController, roundId: String) {
             title = "",
             leading = { BarButton("Abbrechen", color = AppTheme.textSec) { Haptics.tap(); showCancel = true } },
             trailing = {
+                if (lobbyRound) {
+                    BarIconButton(Icons.Filled.Group, description = "Lobby") { Haptics.tap(); showLobby = true }
+                }
                 if (course != null && (course.hcpValues.isNotEmpty() || course.facilityNotes.isNotEmpty())) {
                     BarIconButton(Icons.Filled.Info, tint = AppTheme.textSec, description = "Platzinfo") { Haptics.tap(); showCourseInfo = true }
                 }
@@ -165,7 +178,8 @@ fun ScorecardScreen(nav: NavController, roundId: String) {
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     Icon(round.gameMode.icon, null, tint = AppTheme.gold, modifier = Modifier.size(13.dp))
                     Spacer(Modifier.width(6.dp))
-                    Text(round.gameMode.displayName, color = AppTheme.textSec, fontSize = 12.sp, maxLines = 1)
+                    // Mit Lobby-Knopf wird die Leiste eng – dann nur das Symbol (wie ViewThatFits auf iOS).
+                    if (!lobbyRound) Text(round.gameMode.displayName, color = AppTheme.textSec, fontSize = 12.sp, maxLines = 1)
                 }
             },
         )
@@ -175,9 +189,16 @@ fun ScorecardScreen(nav: NavController, roundId: String) {
                     nav = nav, round = round, course = course, score = score, par = par(score.holeNumber),
                     holeCount = sorted.size, here = here,
                     onPrevious = ::goPrevious, onNext = ::goNext,
+                    onSelectHole = { n ->
+                        val i = sorted.indexOfFirst { it.holeNumber == n }
+                        if (i >= 0) { Haptics.selection(); currentIndex = i }
+                    },
                 )
             }
             if (round.gameMode.isMultiplayer) GameStatusBanner(round, course)
+            if (lobbyRound) {
+                LobbyStrip(course?.parValues.orEmpty(), Modifier.padding(horizontal = 16.dp).padding(top = 6.dp)) { showLobby = true }
+            }
             if (isTracking) {
                 Row(
                     Modifier.padding(horizontal = 16.dp).padding(top = 4.dp).fillMaxWidth()
@@ -209,6 +230,7 @@ fun ScorecardScreen(nav: NavController, roundId: String) {
                     Haptics.celebrate()
                     RoundTracker.stop()
                     GolfStore.updateRound(roundId) { it.copy(isComplete = true) }
+                    GolfStore.current.round(roundId)?.let { LobbyService.roundFinished(it, ctx) }
                     // Inaktivitätserinnerung: 5 Tage nach der abgeschlossenen Runde
                     RoundReminders.scheduleInactivity(ctx, 5)
                     RoundReminders.cancelOpenRound(ctx)
@@ -270,6 +292,9 @@ fun ScorecardScreen(nav: NavController, roundId: String) {
             dismissButton = { TextButton(onClick = { Haptics.tap(); showShake = false }) { Text("Abbrechen", color = AppTheme.textSec) } },
             containerColor = AppTheme.card,
         )
+    }
+    if (showLobby) {
+        LobbyLiveSheet(pars = course?.parValues.orEmpty(), here = here) { showLobby = false }
     }
     if (showCourseInfo && course != null) {
         CourseInfoSheet(course) { showCourseInfo = false }

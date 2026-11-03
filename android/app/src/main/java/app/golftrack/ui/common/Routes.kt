@@ -47,6 +47,8 @@ object Routes {
     const val DOCUMENTS = "profile/documents"
     const val HELP = "profile/help"
     const val WEATHER = "home/weather"
+    const val DRIVING_RANGE = "range"
+    const val RANGE_HISTORY = "range/history"
     const val AD_DETAIL = "ads/{adId}"
     fun adDetail(adId: String) = "ads/${Uri.encode(adId)}"
 
@@ -57,10 +59,6 @@ object Routes {
 
 /** Auf iOS kostenpflichtige Bereiche – in der ersten Android-Version noch nicht enthalten. */
 enum class LaterFeature(val title: String, val text: String) {
-    CADDY(
-        "KI-Caddy",
-        "Der sprechende KI-Caddy kommt mit einer späteren Version auch auf Android.",
-    ),
     AUDIOBOOKS(
         "Training & Audiobooks",
         "Die Trainingslektionen und Audiobooks kommen mit einer späteren Version auch auf Android.",

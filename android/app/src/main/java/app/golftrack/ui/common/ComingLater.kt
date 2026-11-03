@@ -14,7 +14,6 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Headphones
-import androidx.compose.material.icons.filled.RecordVoiceOver
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -35,10 +34,7 @@ fun ComingLaterContent(feature: LaterFeature, modifier: Modifier = Modifier) {
                 Modifier.size(88.dp).background(AppTheme.card, CircleShape),
                 contentAlignment = Alignment.Center,
             ) {
-                Icon(
-                    if (feature == LaterFeature.CADDY) Icons.Filled.RecordVoiceOver else Icons.Filled.Headphones,
-                    contentDescription = null, tint = AppTheme.gold, modifier = Modifier.size(42.dp),
-                )
+                Icon(Icons.Filled.Headphones, contentDescription = null, tint = AppTheme.gold, modifier = Modifier.size(42.dp))
             }
             Spacer(Modifier.height(4.dp))
             Text(feature.title, color = AppTheme.text, fontSize = 22.sp, fontWeight = FontWeight.Bold)

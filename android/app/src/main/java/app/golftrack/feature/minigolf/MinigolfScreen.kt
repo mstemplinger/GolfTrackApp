@@ -101,7 +101,7 @@ internal fun MinigolfScreen(nav: NavController, onBack: (() -> Unit)?) {
     LaunchedEffect(Unit) {
         if (!loadedDefaults) {
             loadedDefaults = true
-            MinigolfGameStore.loadNames()?.takeIf { it.isNotEmpty() }?.let { if (rawNames == listOf("", "")) rawNames = it }
+            if (rawNames == listOf("", "")) rawNames = MinigolfGameStore.initialNames(fallback = rawNames)
         }
         // Wie onAppear auf iOS: bei jeder Rückkehr den letzten Stand übernehmen.
         if (selectedChallenges.isEmpty()) selectedChallenges = MinigolfGameStore.loadChallenges()
@@ -204,7 +204,10 @@ internal fun MinigolfScreen(nav: NavController, onBack: (() -> Unit)?) {
     }
 
     selectedHistory?.let { e ->
-        MinigolfResultsSheet(e.playerNames, e.numberOfHoles, e.scores, e.challengeList, onFinish = null) { selectedHistory = null }
+        MinigolfResultsSheet(
+            e.playerNames, e.numberOfHoles, e.scores, e.challengeList, onFinish = null,
+            onDismiss = { selectedHistory = null }, courseName = e.courseName, dateMillis = e.dateMillis,
+        )
     }
 }
 

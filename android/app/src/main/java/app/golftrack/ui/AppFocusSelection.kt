@@ -130,8 +130,6 @@ fun AppFocusSelection(onChosen: (AppFocus) -> Unit) {
                     .clickable(enabled = enabled) {
                         val choice = selection ?: return@clickable
                         Haptics.success()
-                        // Minigolf-Spieler bekommen kein Tutorial – es erklärt nur Golf-Features.
-                        if (choice == AppFocus.MINIGOLF) Prefs.set("hasSeenOnboarding", true)
                         onChosen(choice)
                     }
                     .padding(vertical = 16.dp),

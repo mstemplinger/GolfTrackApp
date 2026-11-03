@@ -54,7 +54,13 @@ import app.golftrack.data.DistanceUnit
 import app.golftrack.data.GameMode
 import app.golftrack.data.GolfStore
 import app.golftrack.data.HoleScore
+import app.golftrack.data.PlayerHoleScore
 import app.golftrack.data.Round
+import app.golftrack.data.ScoreEntry
+import app.golftrack.data.Shot
+import app.golftrack.data.TeeColor
+import androidx.compose.foundation.border
+import androidx.compose.foundation.shape.CircleShape
 import app.golftrack.data.catalog.CourseHintKind
 import app.golftrack.data.rememberPrefString
 import app.golftrack.ui.common.Haptics
@@ -175,6 +181,43 @@ fun updateOpponent(roundId: String, playerIndex: Int, hole: Int, strokes: Int) {
     }
 }
 
+/** Die gemeinsam bearbeitbaren Felder einer Scorekarte (eigene wie Mitspieler). */
+data class EntryFields(
+    val strokes: Int,
+    val putts: Int,
+    val fairwayHit: Boolean,
+    val greenInRegulation: Boolean,
+    val shots: List<Shot>,
+) {
+    val sortedShots: List<Shot> get() = shots.sortedBy { it.shotNumber }
+}
+
+private fun ScoreEntry.fields() = EntryFields(strokes, putts, fairwayHit, greenInRegulation, shots)
+
+/** Spieler 0 = eigener Spieler (`holeScores`), 1… = Mitspieler (`playerHoleScores`). */
+fun Round.entry(playerIndex: Int, hole: Int): ScoreEntry? =
+    if (playerIndex == 0) score(hole) else opponentScore(playerIndex, hole)
+
+/** Ändert Schläge, Putts, Fairway, GIR und Schlagkette eines Spielers auf einem Loch. */
+fun updateEntry(roundId: String, playerIndex: Int, hole: Int, transform: (EntryFields) -> EntryFields) {
+    if (playerIndex == 0) {
+        updateHole(roundId, hole) { hs ->
+            val f = transform(hs.fields())
+            hs.copy(strokes = f.strokes, putts = f.putts, fairwayHit = f.fairwayHit, greenInRegulation = f.greenInRegulation, shots = f.shots)
+        }
+    } else {
+        GolfStore.updateRound(roundId) { r ->
+            r.copy(playerHoleScores = r.playerHoleScores.map { p: PlayerHoleScore ->
+                if (p.playerIndex != playerIndex || p.holeNumber != hole) p
+                else {
+                    val f = transform(p.fields())
+                    p.copy(strokes = f.strokes, putts = f.putts, fairwayHit = f.fairwayHit, greenInRegulation = f.greenInRegulation, shots = f.shots)
+                }
+            })
+        }
+    }
+}
+
 fun Round.parFor(hole: Int, pars: List<Int>?): Int = pars?.getOrNull(hole - 1) ?: 4
 
 // --- Layout-Bausteine ---
@@ -257,5 +300,18 @@ fun Capsule(text: String, color: Color, bg: Color = color.copy(alpha = 0.15f), f
     Text(
         text, color = color, fontSize = fontSize.sp, fontWeight = FontWeight.Bold,
         modifier = Modifier.background(bg, RoundedCornerShape(50)).padding(horizontal = 10.dp, vertical = 4.dp),
+    )
+}
+
+// --- Abschlagfarben ---
+
+val TeeColor.color: Color get() = Color(argb)
+
+/** Farbpunkt für Abschläge – überall gleich, damit Gelb überall gleich aussieht. */
+@Composable
+fun TeeDot(tee: TeeColor, size: Int = 10) {
+    Box(
+        Modifier.size(size.dp).background(tee.color, CircleShape)
+            .border(1.dp, Color.White.copy(alpha = if (tee.needsOutline) 0.5f else 0.15f), CircleShape),
     )
 }

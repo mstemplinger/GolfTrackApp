@@ -1,6 +1,29 @@
 package app.golftrack.feature.golf
 
 import androidx.compose.animation.animateColorAsState
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.foundation.border
+import androidx.compose.foundation.horizontalScroll
+import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material.icons.filled.CalendarMonth
+import androidx.compose.material.icons.filled.Check
+import androidx.compose.material.icons.filled.Flag
+import androidx.compose.material.icons.filled.RemoveCircle
+import androidx.compose.material.icons.filled.UnfoldMore
+import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.text.input.KeyboardCapitalization
+import androidx.compose.ui.text.style.TextOverflow
+import app.golftrack.data.Course
+import app.golftrack.data.GameModeCategory
+import app.golftrack.data.HandicapCalculator
+import app.golftrack.data.TeeColor
+import app.golftrack.data.rememberPrefInt
+import app.golftrack.data.rememberPrefString
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -15,7 +38,6 @@ import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
@@ -29,9 +51,6 @@ import androidx.compose.material.icons.filled.AddCircle
 import androidx.compose.material.icons.filled.CheckCircle
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Info
-import androidx.compose.material.icons.filled.Person
-import androidx.compose.material.icons.filled.Place
-import androidx.compose.material.icons.filled.Remove
 import androidx.compose.material.icons.filled.ShoppingBag
 import androidx.compose.material.icons.filled.Warning
 import androidx.compose.material3.DatePicker
@@ -44,18 +63,20 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.rememberDatePickerState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.setValue
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
 import androidx.compose.runtime.toMutableStateList
 import androidx.compose.runtime.saveable.listSaver
 import androidx.compose.runtime.snapshots.SnapshotStateList
 import app.golftrack.data.catalog.CourseCatalog
+import app.golftrack.feature.lobby.LobbyCard
+import app.golftrack.feature.lobby.LobbyService
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -67,7 +88,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import app.golftrack.data.GameMode
-import app.golftrack.data.GolfBag
 import app.golftrack.data.GolfStore
 import app.golftrack.data.HoleScore
 import app.golftrack.data.PlayerHoleScore
@@ -80,7 +100,10 @@ import java.util.Calendar
 import java.util.Locale
 import java.util.TimeZone
 
-/** Wie NewRoundView.swift: Platz, Bag, Datum, Spielmodus, Mitspieler → Runde starten. */
+/**
+ * Wie NewRoundView.swift: Platz, Spielform (Einzel/Partner/Team), Bag, Abschlag,
+ * Datum, Spieler → Runde starten (mit Ladeseite und Eintrage-Hinweis).
+ */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun NewRoundScreen(nav: NavController, preselectedCourseId: String?, preselectedMode: GameMode = GameMode.STROKE_PLAY) {
@@ -89,11 +112,18 @@ fun NewRoundScreen(nav: NavController, preselectedCourseId: String?, preselected
     val courses = remember(data.courses) { data.courses.sortedBy { it.name.lowercase() } }
     val bags = remember(data.bags) { data.bags.sortedBy { it.createdAt } }
     val catalog by CourseCatalog.golfCourses.collectAsState()
+    val playerName by rememberPrefString("playerName", "Golfer")
+    // Zuletzt gespielte Abschlagfarbe – Vorauswahl für die nächste Runde.
+    var lastTeeColorRaw by rememberPrefString("lastTeeColor", TeeColor.YELLOW.raw)
+    // Wie oft hier schon eine Runde gestartet wurde – steuert die Ladeseite.
+    var roundStartCount by rememberPrefInt("roundStartCount")
 
     var selectedCourseId by rememberSaveable { mutableStateOf(preselectedCourseId) }
     var selectedBagId by rememberSaveable { mutableStateOf<String?>(null) }
+    var selectedTeeRaw by rememberSaveable { mutableStateOf<String?>(null) }
     var roundDate by rememberSaveable { mutableStateOf(System.currentTimeMillis()) }
     var selectedMode by rememberSaveable { mutableStateOf(preselectedMode) }
+    var category by rememberSaveable { mutableStateOf(preselectedMode.category) }
     val otherPlayers = rememberSaveable(
         saver = listSaver<SnapshotStateList<String>, String>(save = { it.toList() }, restore = { it.toMutableStateList() }),
     ) {
@@ -103,11 +133,23 @@ fun NewRoundScreen(nav: NavController, preselectedCourseId: String?, preselected
     var showSelector by remember { mutableStateOf(false) }
     var showModePicker by remember { mutableStateOf(false) }
     var showDatePicker by remember { mutableStateOf(false) }
+    var showBagMenu by remember { mutableStateOf(false) }
+    var showLoading by remember { mutableStateOf(false) }
     var initialized by rememberSaveable { mutableStateOf(false) }
     // Platz-IDs vor dem Sprung zur Platzverwaltung – ein danach neuer Platz wird gewählt.
     var knownCourseIds by remember { mutableStateOf<Set<String>?>(null) }
 
     val selectedCourse = data.course(selectedCourseId)
+    val selectedBag = data.bag(selectedBagId)
+    val selectedTee = TeeColor.fromRaw(selectedTeeRaw)
+    val teeColors = selectedCourse?.availableTeeColors ?: TeeColor.commonSet
+    val availableModes = remember { GameMode.entries.filter { it.isAvailable } }
+    val modesInCategory = availableModes.filter { it.category == category }
+    // Freunde aus der Lobby, die bei Spielformen mit Mitspielern als Mitspieler in die Runde gehen.
+    val lobbySession by LobbyService.session.collectAsState()
+    val lobbyState by LobbyService.state.collectAsState()
+    val lobbyFriends = if (lobbySession != null && selectedMode.isMultiplayer)
+        lobbyState?.others.orEmpty().take(selectedMode.maxOtherPlayers) else emptyList()
 
     LaunchedEffect(Unit) {
         if (!initialized) {
@@ -120,12 +162,33 @@ fun NewRoundScreen(nav: NavController, preselectedCourseId: String?, preselected
         val known = knownCourseIds ?: return@LaunchedEffect
         data.courses.firstOrNull { it.id !in known }?.let { selectedCourseId = it.id; knownCourseIds = null }
     }
+    // Gespeicherte Plätze kennen die Farben des Verzeichnisses erst, wenn sie
+    // dort nachgetragen wurden – beim Rundenstart einmal nachziehen.
+    LaunchedEffect(selectedCourseId, catalog) {
+        val course = selectedCourse ?: return@LaunchedEffect
+        if (course.tees.isNotEmpty()) return@LaunchedEffect
+        val entry = catalog.firstOrNull { it.name.equals(course.name, ignoreCase = true) && it.tees.isNotEmpty() } ?: return@LaunchedEffect
+        GolfStore.upsertCourse(course.copy(tees = entry.tees))
+    }
+    // Vorauswahl: bisherige Wahl, sonst die zuletzt gespielte Farbe, sonst Gelb.
+    LaunchedEffect(teeColors) {
+        if (selectedTee != null && selectedTee in teeColors) return@LaunchedEffect
+        val last = TeeColor.fromRaw(lastTeeColorRaw)
+        selectedTeeRaw = (if (last != null && last in teeColors) last
+            else if (TeeColor.YELLOW in teeColors) TeeColor.YELLOW else teeColors.firstOrNull())?.raw
+    }
 
-    fun adjustPlayers(mode: GameMode) {
+    fun selectMode(mode: GameMode) {
+        selectedMode = mode
         val needed = mode.minOtherPlayers
-        if (needed == 0) { otherPlayers.clear(); otherPlayers.add(""); return }
-        while (otherPlayers.size < needed) otherPlayers.add("")
-        while (otherPlayers.size > mode.maxOtherPlayers) otherPlayers.removeAt(otherPlayers.lastIndex)
+        if (needed == 0) { otherPlayers.clear(); otherPlayers.add("") }
+        else {
+            while (otherPlayers.size < needed) otherPlayers.add("")
+            while (otherPlayers.size > mode.maxOtherPlayers) otherPlayers.removeAt(otherPlayers.lastIndex)
+        }
+        // Auswahl über „Alle erklärt“ kann die Kategorie wechseln.
+        if (category != mode.category) category = mode.category
+        warnMissingNames = false
     }
 
     fun openCourseManager() {
@@ -135,16 +198,24 @@ fun NewRoundScreen(nav: NavController, preselectedCourseId: String?, preselected
     }
 
     fun startRound() {
-        val course = selectedCourse ?: return
-        val validNames = if (selectedMode.isMultiplayer) otherPlayers.filter { it.isNotBlank() } else emptyList()
+        val course = GolfStore.current.course(selectedCourseId) ?: return
+        var validNames = if (selectedMode.isMultiplayer) otherPlayers.filter { it.isNotBlank() } else emptyList()
+        // Freunde aus der Lobby zuerst – ihre Schläge kommen von ihrem Handy.
+        val friends = lobbyFriends
+        if (friends.isNotEmpty()) validNames = (friends.map { it.name } + validNames).take(selectedMode.maxOtherPlayers)
         val holes = (1..course.numberOfHoles).map { HoleScore(holeNumber = it) }
+        // Mitspieler starten wie der eigene Spieler mit 0 Schlägen.
         val phs = (1..course.numberOfHoles).flatMap { h ->
-            validNames.mapIndexed { idx, name -> PlayerHoleScore(idx + 1, name, h, course.par(h)) }
+            validNames.mapIndexed { idx, name -> PlayerHoleScore(idx + 1, name, h, 0) }
         }
         val round = Round(
             date = roundDate, courseId = course.id, gameModeRaw = selectedMode.raw, bagId = selectedBagId,
             otherPlayerNames = validNames, holeScores = holes, playerHoleScores = phs,
+            teeColorRaw = selectedTee?.raw ?: "",
+            lobbyCode = LobbyService.code ?: "",
+            lobbyMemberIDsRaw = friends.joinToString("|") { it.id },
         )
+        selectedTee?.let { lastTeeColorRaw = it.raw }
         GolfStore.upsertRound(round)
         // Offene-Runde-Erinnerung: falls die Runde morgen früh noch nicht abgeschlossen ist
         RoundReminders.scheduleOpenRound(ctx, course.name)
@@ -152,7 +223,7 @@ fun NewRoundScreen(nav: NavController, preselectedCourseId: String?, preselected
     }
 
     fun handleStart() {
-        val hasEmpty = selectedMode.isMultiplayer && otherPlayers.any { it.isBlank() }
+        val hasEmpty = selectedMode.isMultiplayer && lobbyFriends.isEmpty() && otherPlayers.any { it.isBlank() }
         if (hasEmpty && !warnMissingNames) {
             Haptics.warning()
             warnMissingNames = true
@@ -160,158 +231,258 @@ fun NewRoundScreen(nav: NavController, preselectedCourseId: String?, preselected
         }
         warnMissingNames = false
         Haptics.medium()
-        startRound()
+        val showHint = RoundLoading.shouldShow(roundStartCount)
+        roundStartCount += 1
+        if (showHint) showLoading = true else startRound()
     }
 
+    Box(Modifier.fillMaxSize()) {
     Column(Modifier.fillMaxSize().background(AppTheme.bg)) {
         SheetTopBar(
             "Neue Runde",
             leading = { BarIconButton(Icons.Filled.Close, tint = AppTheme.textSec, description = "Schließen") { Haptics.tap(); nav.popBackStack() } },
         )
         Column(
-            Modifier.weight(1f).verticalScroll(rememberScrollState()).padding(horizontal = 16.dp).imePadding(),
+            Modifier.weight(1f).verticalScroll(rememberScrollState()).padding(horizontal = 16.dp).padding(top = 8.dp, bottom = 16.dp).imePadding(),
+            verticalArrangement = Arrangement.spacedBy(18.dp),
         ) {
             // Platz
-            Row(verticalAlignment = Alignment.Bottom) {
-                SectionHeader("Platz", Modifier.weight(1f))
-                Row(
-                    Modifier.clickable { openCourseManager() }.padding(bottom = 6.dp, end = 4.dp),
-                    verticalAlignment = Alignment.CenterVertically,
-                ) {
+            FormSection("Platz", accessory = {
+                Row(Modifier.clickable { openCourseManager() }, verticalAlignment = Alignment.CenterVertically) {
                     Icon(Icons.Filled.Add, null, tint = AppTheme.gold, modifier = Modifier.size(14.dp))
+                    Spacer(Modifier.width(4.dp))
                     Text("Platz hinzufügen", color = AppTheme.gold, fontSize = 12.sp, fontWeight = FontWeight.Bold)
                 }
-            }
-            GroupCard {
-                if (courses.isEmpty() && catalog.isEmpty()) {
-                    Row(
-                        Modifier.fillMaxWidth().clickable { openCourseManager() }.padding(16.dp),
-                        verticalAlignment = Alignment.CenterVertically,
-                    ) {
-                        Icon(Icons.Filled.AddCircle, null, tint = AppTheme.gold)
-                        Spacer(Modifier.width(8.dp))
-                        Text("Ersten Platz hinzufügen", color = AppTheme.gold)
-                    }
-                } else {
-                    Row(
-                        Modifier.fillMaxWidth().clickable { Haptics.tap(); showSelector = true }
-                            .padding(horizontal = 16.dp, vertical = 12.dp),
-                        verticalAlignment = Alignment.CenterVertically,
-                    ) {
-                        Icon(Icons.Filled.Place, null, tint = if (selectedCourse != null) AppTheme.gold else AppTheme.textSec, modifier = Modifier.size(26.dp))
+            }) {
+                val noCourses = courses.isEmpty() && catalog.isEmpty()
+                FormCard(Modifier.clickable { Haptics.tap(); if (noCourses) openCourseManager() else showSelector = true }) {
+                    Row(verticalAlignment = Alignment.CenterVertically) {
+                        Box(
+                            Modifier.size(40.dp).background(
+                                if (selectedCourse != null) AppTheme.gold else AppTheme.gold.copy(alpha = 0.15f), RoundedCornerShape(11.dp),
+                            ),
+                            contentAlignment = Alignment.Center,
+                        ) {
+                            Icon(if (noCourses) Icons.Filled.Add else Icons.Filled.Flag, null,
+                                tint = if (selectedCourse != null) IosColors.onGoldDark else AppTheme.gold, modifier = Modifier.size(18.dp))
+                        }
                         Spacer(Modifier.width(12.dp))
                         Column(Modifier.weight(1f)) {
-                            if (selectedCourse != null) {
-                                Text(selectedCourse.name, color = AppTheme.text, fontSize = 15.sp, fontWeight = FontWeight.Bold)
-                                Text("${selectedCourse.numberOfHoles} Löcher · Par ${selectedCourse.totalPar}", color = AppTheme.textSec, fontSize = 12.sp)
-                            } else {
-                                Text("Platz wählen …", color = AppTheme.textSec)
+                            when {
+                                selectedCourse != null -> {
+                                    Text(selectedCourse.name, color = AppTheme.text, fontSize = 17.sp, fontWeight = FontWeight.SemiBold,
+                                        maxLines = 1, overflow = TextOverflow.Ellipsis)
+                                    Text("${selectedCourse.numberOfHoles} Löcher · Par ${selectedCourse.totalPar}", color = AppTheme.textSec, fontSize = 12.sp)
+                                }
+                                noCourses -> Text("Ersten Platz hinzufügen", color = AppTheme.gold, fontSize = 17.sp, fontWeight = FontWeight.SemiBold)
+                                else -> Text("Platz wählen …", color = AppTheme.textSec, fontSize = 17.sp, fontWeight = FontWeight.SemiBold)
                             }
                         }
-                        Icon(Icons.AutoMirrored.Filled.KeyboardArrowRight, null, tint = AppTheme.textTer)
+                        Icon(Icons.AutoMirrored.Filled.KeyboardArrowRight, null, tint = AppTheme.textTer, modifier = Modifier.size(18.dp))
                     }
                 }
             }
 
-            // Schläger-Bag (nur wenn Bags existieren)
-            if (bags.isNotEmpty()) {
-                SectionHeader("Schläger-Bag")
-                GroupCard {
-                    bags.forEachIndexed { i, bag ->
-                        BagRow(bag, selected = bag.id == selectedBagId) {
-                            Haptics.selection()
-                            selectedBagId = if (selectedBagId == bag.id) null else bag.id
+            // Spielform
+            FormSection("Spielform", accessory = {
+                Text("Alle erklärt", color = AppTheme.gold, fontSize = 12.sp, fontWeight = FontWeight.Bold,
+                    modifier = Modifier.clickable { Haptics.tap(); showModePicker = true })
+            }) {
+                FormCard {
+                    Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
+                        Row(Modifier.fillMaxWidth().background(AppTheme.cardDark, RoundedCornerShape(50)).padding(3.dp)) {
+                            listOf(GameModeCategory.INDIVIDUAL to "Einzel", GameModeCategory.PARTNER to "Partner", GameModeCategory.TEAM to "Team")
+                                .forEach { (value, title) ->
+                                    val sel = category == value
+                                    Box(
+                                        Modifier.weight(1f).background(if (sel) AppTheme.gold else Color.Transparent, RoundedCornerShape(50))
+                                            .clickable {
+                                                if (sel) return@clickable
+                                                Haptics.selection()
+                                                category = value
+                                                if (selectedMode.category != value) availableModes.firstOrNull { it.category == value }?.let { selectMode(it) }
+                                            }
+                                            .padding(vertical = 7.dp),
+                                        contentAlignment = Alignment.Center,
+                                    ) {
+                                        Text(title, color = if (sel) IosColors.onGoldDark else AppTheme.textSec, fontSize = 15.sp, fontWeight = FontWeight.SemiBold)
+                                    }
+                                }
                         }
-                        if (i < bags.lastIndex) HorizontalDivider(color = AppTheme.cardAlt, modifier = Modifier.padding(start = 54.dp))
+                        Row(Modifier.horizontalScroll(rememberScrollState()), horizontalArrangement = Arrangement.spacedBy(7.dp)) {
+                            modesInCategory.forEach { mode ->
+                                val sel = selectedMode == mode
+                                // Mehrere Formen heißen gleich („Better Ball“) – dann hilft der Untertitel.
+                                val twins = modesInCategory.count { it.displayName == mode.displayName }
+                                val title = if (twins > 1 && mode.subtitle.isNotEmpty()) "${mode.displayName} · ${mode.subtitle}" else mode.displayName
+                                Chip(sel, onClick = { Haptics.selection(); selectMode(mode) }, background = if (sel) AppTheme.gold.copy(alpha = 0.16f) else AppTheme.cardAlt) {
+                                    Text(title, color = if (sel) AppTheme.gold else AppTheme.text.copy(alpha = 0.85f), fontSize = 15.sp, fontWeight = FontWeight.SemiBold)
+                                }
+                            }
+                        }
+                        Row(verticalAlignment = Alignment.Top) {
+                            Icon(selectedMode.icon, null, tint = AppTheme.gold, modifier = Modifier.width(20.dp).size(16.dp))
+                            Spacer(Modifier.width(8.dp))
+                            Text(selectedMode.shortDesc(), color = AppTheme.textSec, fontSize = 12.sp)
+                        }
+                    }
+                }
+            }
+
+            // Bag
+            if (bags.isNotEmpty()) {
+                FormSection("Bag") {
+                    Box {
+                        FormCard(Modifier.clickable { Haptics.tap(); showBagMenu = true }) {
+                            Row(verticalAlignment = Alignment.CenterVertically) {
+                                Icon(Icons.Filled.ShoppingBag, null, tint = if (selectedBag != null) AppTheme.gold else AppTheme.textSec,
+                                    modifier = Modifier.width(28.dp).size(22.dp))
+                                Spacer(Modifier.width(12.dp))
+                                Text(selectedBag?.name ?: "Ohne Bag", color = AppTheme.text, fontSize = 15.sp, fontWeight = FontWeight.SemiBold, modifier = Modifier.weight(1f))
+                                selectedBag?.let { Text("${it.clubs.size} Schläger", color = AppTheme.textSec, fontSize = 12.sp) }
+                                if (bags.size > 1 || selectedBag == null) {
+                                    Spacer(Modifier.width(8.dp))
+                                    Icon(Icons.Filled.UnfoldMore, null, tint = AppTheme.textTer, modifier = Modifier.size(14.dp))
+                                }
+                            }
+                        }
+                        DropdownMenu(showBagMenu, onDismissRequest = { showBagMenu = false }, containerColor = AppTheme.card) {
+                            bags.forEach { bag ->
+                                DropdownMenuItem(
+                                    text = { Text(bag.name, color = AppTheme.text) },
+                                    leadingIcon = if (bag.id == selectedBagId) { { Icon(Icons.Filled.Check, null, tint = AppTheme.gold) } } else null,
+                                    onClick = { Haptics.selection(); selectedBagId = bag.id; showBagMenu = false },
+                                )
+                            }
+                            HorizontalDivider(color = AppTheme.cardAlt)
+                            DropdownMenuItem(
+                                text = { Text("Ohne Bag", color = AppTheme.text) },
+                                leadingIcon = { Icon(Icons.Filled.Close, null, tint = AppTheme.textSec) },
+                                onClick = { Haptics.selection(); selectedBagId = null; showBagMenu = false },
+                            )
+                        }
+                    }
+                }
+            }
+
+            // Abschlag
+            if (selectedCourse != null) {
+                FormSection("Abschlag") {
+                    FormCard(padding = 8) {
+                        Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                            Row(Modifier.horizontalScroll(rememberScrollState()), horizontalArrangement = Arrangement.spacedBy(6.dp)) {
+                                teeColors.forEach { tee ->
+                                    val sel = selectedTee == tee
+                                    Chip(sel, onClick = { Haptics.selection(); selectedTeeRaw = tee.raw },
+                                        background = if (sel) AppTheme.gold.copy(alpha = 0.16f) else Color.Transparent, horizontal = 14) {
+                                        TeeDot(tee, 12)
+                                        Spacer(Modifier.width(7.dp))
+                                        Text(tee.displayName, color = if (sel) AppTheme.gold else AppTheme.text.copy(alpha = 0.85f),
+                                            fontSize = 15.sp, fontWeight = FontWeight.SemiBold)
+                                    }
+                                }
+                            }
+                            teeInfo(selectedCourse, selectedTee)?.let {
+                                Text(it, color = AppTheme.textSec, fontSize = 12.sp, modifier = Modifier.padding(horizontal = 6.dp).padding(bottom = 2.dp))
+                            }
+                        }
                     }
                 }
             }
 
             // Datum
-            SectionHeader("Datum")
-            GroupCard {
-                Row(Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 12.dp), verticalAlignment = Alignment.CenterVertically) {
-                    Text("Datum", color = AppTheme.text, modifier = Modifier.weight(1f))
-                    Text(
-                        SimpleDateFormat("dd.MM.yyyy", Locale.GERMANY).format(roundDate),
-                        color = AppTheme.gold,
-                        modifier = Modifier.background(AppTheme.cardAlt, RoundedCornerShape(8.dp))
-                            .clickable { Haptics.tap(); showDatePicker = true }
-                            .padding(horizontal = 12.dp, vertical = 6.dp),
-                    )
-                }
-            }
-
-            // Spielmodus
-            SectionHeader("Spielmodus")
-            GroupCard {
-                Row(
-                    Modifier.fillMaxWidth().clickable { Haptics.tap(); showModePicker = true }.padding(horizontal = 16.dp, vertical = 12.dp),
-                    verticalAlignment = Alignment.CenterVertically,
-                ) {
-                    Icon(selectedMode.icon, null, tint = AppTheme.gold, modifier = Modifier.width(32.dp).size(24.dp))
-                    Spacer(Modifier.width(12.dp))
-                    Column(Modifier.weight(1f)) {
-                        Text(selectedMode.displayName, color = AppTheme.text, fontSize = 17.sp, fontWeight = FontWeight.SemiBold)
-                        Text(selectedMode.shortDesc(), color = AppTheme.textSec, fontSize = 12.sp)
+            FormSection("Datum") {
+                FormCard(padding = 10) {
+                    Row(verticalAlignment = Alignment.CenterVertically) {
+                        Icon(Icons.Filled.CalendarMonth, null, tint = AppTheme.gold, modifier = Modifier.width(28.dp).size(22.dp))
+                        Spacer(Modifier.width(12.dp))
+                        Text(
+                            SimpleDateFormat("dd.MM.yyyy", Locale.GERMANY).format(roundDate),
+                            color = AppTheme.gold,
+                            modifier = Modifier.background(AppTheme.cardAlt, RoundedCornerShape(8.dp))
+                                .clickable { Haptics.tap(); showDatePicker = true }
+                                .padding(horizontal = 12.dp, vertical = 6.dp),
+                        )
                     }
-                    Icon(Icons.AutoMirrored.Filled.KeyboardArrowRight, null, tint = AppTheme.textTer)
                 }
             }
 
-            // Mitspieler
-            if (selectedMode.isMultiplayer) {
-                SectionHeader("Spieler")
-                GroupCard {
-                    otherPlayers.forEachIndexed { i, name ->
-                        val empty = name.isBlank()
-                        val warn = warnMissingNames && empty
-                        Row(
-                            Modifier.fillMaxWidth()
-                                .background(if (warn) IosColors.red.copy(alpha = 0.12f) else Color.Transparent)
-                                .padding(horizontal = 16.dp, vertical = 14.dp),
-                            verticalAlignment = Alignment.CenterVertically,
-                        ) {
-                            Icon(Icons.Filled.Person, null, tint = if (warn) IosColors.red else AppTheme.gold, modifier = Modifier.width(24.dp))
-                            Spacer(Modifier.width(8.dp))
-                            Box(Modifier.weight(1f)) {
-                                if (name.isEmpty()) Text(playerPlaceholder(selectedMode, i + 2), color = AppTheme.textTer)
-                                BasicTextField(
-                                    value = name,
-                                    onValueChange = { otherPlayers[i] = it; if (warnMissingNames) warnMissingNames = false },
-                                    singleLine = true,
-                                    textStyle = TextStyle(color = AppTheme.text, fontSize = 16.sp),
-                                    cursorBrush = SolidColor(AppTheme.gold),
-                                    modifier = Modifier.fillMaxWidth(),
-                                )
+            // Spieler
+            FormSection("Spieler") {
+                FormCard {
+                    Column(verticalArrangement = Arrangement.spacedBy(10.dp)) {
+                        PlayerRow(playerName.take(1).uppercase()) {
+                            Text(playerName, color = AppTheme.text, fontSize = 15.sp, fontWeight = FontWeight.SemiBold, modifier = Modifier.weight(1f))
+                            Text("HCP ${HandicapCalculator.displayString(data.completedRounds, data)}", color = AppTheme.textSec,
+                                fontSize = 12.sp, fontWeight = FontWeight.SemiBold)
+                        }
+                        if (selectedMode.isMultiplayer) {
+                            otherPlayers.forEachIndexed { i, name ->
+                                val empty = name.isBlank()
+                                val canRemove = otherPlayers.size > selectedMode.minOtherPlayers
+                                PlayerRow(if (empty) "${i + 2}" else name.take(1).uppercase(), highlight = warnMissingNames && empty) {
+                                    Box(Modifier.weight(1f)) {
+                                        if (name.isEmpty()) Text(playerPlaceholder(selectedMode, i + 2), color = AppTheme.textTer, fontSize = 15.sp, fontWeight = FontWeight.SemiBold)
+                                        BasicTextField(
+                                            value = name,
+                                            onValueChange = { otherPlayers[i] = it; if (warnMissingNames) warnMissingNames = false },
+                                            singleLine = true,
+                                            textStyle = TextStyle(color = AppTheme.text, fontSize = 15.sp, fontWeight = FontWeight.SemiBold),
+                                            cursorBrush = SolidColor(AppTheme.gold),
+                                            keyboardOptions = KeyboardOptions(capitalization = KeyboardCapitalization.Words),
+                                            modifier = Modifier.fillMaxWidth(),
+                                        )
+                                    }
+                                    if (canRemove) {
+                                        Icon(
+                                            Icons.Filled.RemoveCircle, "Spieler entfernen", tint = AppTheme.textTer,
+                                            modifier = Modifier.size(24.dp).clickable { Haptics.light(); otherPlayers.removeAt(i) },
+                                        )
+                                    }
+                                }
+                            }
+                            if (otherPlayers.size < selectedMode.maxOtherPlayers) {
+                                Row(
+                                    Modifier.fillMaxWidth().clickable { Haptics.tap(); otherPlayers.add("") },
+                                    verticalAlignment = Alignment.CenterVertically,
+                                ) {
+                                    Icon(Icons.Filled.AddCircle, null, tint = AppTheme.gold, modifier = Modifier.size(18.dp))
+                                    Spacer(Modifier.width(8.dp))
+                                    Text("Spieler hinzufügen", color = AppTheme.gold, fontSize = 15.sp, fontWeight = FontWeight.SemiBold)
+                                }
                             }
                         }
-                        HorizontalDivider(color = AppTheme.cardAlt, modifier = Modifier.padding(start = 48.dp))
-                    }
-                    if (otherPlayers.size < selectedMode.maxOtherPlayers) {
-                        ActionRow(Icons.Filled.Add, "Spieler hinzufügen", AppTheme.gold) { Haptics.tap(); otherPlayers.add("") }
-                    }
-                    if (otherPlayers.size > selectedMode.minOtherPlayers) {
-                        ActionRow(Icons.Filled.Remove, "Spieler entfernen", IosColors.red) {
-                            Haptics.light(); otherPlayers.removeAt(otherPlayers.lastIndex)
-                        }
                     }
                 }
+                val footer = when {
+                    warnMissingNames -> null
+                    selectedMode.isMultiplayer -> playerFooter(selectedMode).takeIf { it.isNotEmpty() }
+                    else -> "Mitspieler trägst du bei Partner- und Team-Spielformen ein."
+                }
                 if (warnMissingNames) {
-                    Row(Modifier.padding(start = 16.dp, top = 6.dp), verticalAlignment = Alignment.CenterVertically) {
+                    Row(Modifier.padding(horizontal = 4.dp), verticalAlignment = Alignment.CenterVertically) {
                         Icon(Icons.Filled.Warning, null, tint = IosColors.orange, modifier = Modifier.size(14.dp))
                         Spacer(Modifier.width(6.dp))
                         Text("Namen eingeben oder erneut drücken, um ohne Namen zu starten.", color = AppTheme.textSec, fontSize = 12.sp)
                     }
-                } else if (playerFooter(selectedMode).isNotEmpty()) {
-                    SectionFooter(playerFooter(selectedMode))
+                } else if (footer != null) {
+                    Text(footer, color = AppTheme.textSec, fontSize = 12.sp, modifier = Modifier.padding(horizontal = 4.dp))
                 }
             }
-            Spacer(Modifier.height(24.dp))
+
+            // Freunde (Lobby)
+            FormSection("Freunde") {
+                LobbyCard(
+                    selectedCourse = selectedCourse,
+                    courses = courses,
+                    playerName = playerName,
+                    onSelectCourse = { selectedCourseId = it },
+                )
+            }
         }
 
         // Start-Knopf unten (safeAreaInset)
-        Box(Modifier.fillMaxWidth().background(AppTheme.card).navigationBarsPadding().padding(horizontal = 16.dp, vertical = 10.dp)) {
+        Box(Modifier.fillMaxWidth().background(AppTheme.bg.copy(alpha = 0.96f)).navigationBarsPadding().padding(start = 16.dp, end = 16.dp, top = 10.dp, bottom = 6.dp)) {
             val bg by animateColorAsState(
                 when {
                     selectedCourse == null -> Color.Gray.copy(alpha = 0.3f)
@@ -327,10 +498,18 @@ fun NewRoundScreen(nav: NavController, preselectedCourseId: String?, preselected
             ) {
                 Text(
                     if (warnMissingNames) "Ohne Namen starten – erneut drücken" else "Runde starten",
-                    color = Color.White, fontSize = 17.sp, fontWeight = FontWeight.SemiBold,
+                    color = if (selectedCourse == null) AppTheme.textSec else IosColors.onGoldDark, fontSize = 17.sp, fontWeight = FontWeight.SemiBold,
                 )
             }
         }
+    }
+
+    AnimatedVisibility(showLoading, enter = fadeIn(tween(250)), exit = fadeOut(tween(350))) {
+        RoundLoading.Screen(selectedCourse?.name ?: "") {
+            startRound()
+            showLoading = false
+        }
+    }
     }
 
     if (showSelector) {
@@ -343,7 +522,7 @@ fun NewRoundScreen(nav: NavController, preselectedCourseId: String?, preselected
     if (showModePicker) {
         GameModePickerSheet(
             selected = selectedMode,
-            onSelect = { selectedMode = it; adjustPlayers(it); warnMissingNames = false; showModePicker = false },
+            onSelect = { selectMode(it); showModePicker = false },
             onDismiss = { showModePicker = false },
         )
     }
@@ -377,32 +556,59 @@ fun NewRoundScreen(nav: NavController, preselectedCourseId: String?, preselected
     }
 }
 
+/** „CR 71,2 · Slope 130 · 5.533 m“ – nur was für den Abschlag bekannt ist. */
+private fun teeInfo(course: Course, color: TeeColor?): String? {
+    val tee = course.tee(color) ?: return null
+    val parts = buildList {
+        tee.courseRating?.let { add("CR " + String.format(Locale.GERMANY, "%.1f", it)) }
+        tee.slopeRating?.let { add("Slope $it") }
+        val total = tee.holeLengths.sumOf { maxOf(0, it) }
+        if (total > 0) add(String.format(Locale.GERMANY, "%,d m", total))
+    }
+    return parts.takeIf { it.isNotEmpty() }?.joinToString(" · ")
+}
+
+/** Abschnitt mit kleiner Großbuchstaben-Überschrift wie `section(_:)` in NewRoundView. */
 @Composable
-private fun BagRow(bag: GolfBag, selected: Boolean, onClick: () -> Unit) {
-    Row(
-        Modifier.fillMaxWidth().background(if (selected) AppTheme.gold.copy(alpha = 0.08f) else Color.Transparent)
-            .clickable { onClick() }.padding(horizontal = 16.dp, vertical = 12.dp),
-        verticalAlignment = Alignment.CenterVertically,
-    ) {
-        Icon(Icons.Filled.ShoppingBag, null, tint = if (selected) AppTheme.gold else AppTheme.textSec, modifier = Modifier.size(24.dp))
-        Spacer(Modifier.width(12.dp))
-        Column(Modifier.weight(1f)) {
-            Text(bag.name, color = AppTheme.text, fontSize = 15.sp, fontWeight = FontWeight.Bold)
-            Text("${bag.clubs.size} Schläger", color = AppTheme.textSec, fontSize = 12.sp)
+private fun FormSection(title: String, accessory: (@Composable () -> Unit)? = null, content: @Composable () -> Unit) {
+    Column(verticalArrangement = Arrangement.spacedBy(7.dp)) {
+        Row(Modifier.fillMaxWidth().padding(horizontal = 4.dp), verticalAlignment = Alignment.CenterVertically) {
+            Text(title.uppercase(), color = AppTheme.textTer, fontSize = 12.sp, fontWeight = FontWeight.SemiBold,
+                letterSpacing = 0.6.sp, modifier = Modifier.weight(1f))
+            accessory?.invoke()
         }
-        if (selected) Icon(Icons.Filled.CheckCircle, null, tint = AppTheme.gold)
+        content()
     }
 }
 
 @Composable
-private fun ActionRow(icon: androidx.compose.ui.graphics.vector.ImageVector, text: String, color: Color, onClick: () -> Unit) {
+private fun FormCard(modifier: Modifier = Modifier, padding: Int = 12, content: @Composable () -> Unit) {
+    Box(
+        Modifier.fillMaxWidth().clip(RoundedCornerShape(16.dp)).background(AppTheme.card).then(modifier).padding(padding.dp),
+    ) { content() }
+}
+
+@Composable
+private fun Chip(
+    selected: Boolean, onClick: () -> Unit, background: Color, horizontal: Int = 13,
+    content: @Composable androidx.compose.foundation.layout.RowScope.() -> Unit,
+) {
     Row(
-        Modifier.fillMaxWidth().clickable { onClick() }.padding(horizontal = 16.dp, vertical = 13.dp),
+        Modifier.clip(RoundedCornerShape(50)).background(background)
+            .border(1.dp, if (selected) AppTheme.gold.copy(alpha = 0.6f) else Color.Transparent, RoundedCornerShape(50))
+            .clickable { onClick() }.padding(horizontal = horizontal.dp, vertical = 8.dp),
         verticalAlignment = Alignment.CenterVertically,
-    ) {
-        Icon(icon, null, tint = color, modifier = Modifier.size(18.dp))
-        Spacer(Modifier.width(8.dp))
-        Text(text, color = color, fontSize = 15.sp)
+    ) { content() }
+}
+
+@Composable
+private fun PlayerRow(initial: String, highlight: Boolean = false, content: @Composable androidx.compose.foundation.layout.RowScope.() -> Unit) {
+    Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+        Box(
+            Modifier.size(32.dp).background((if (highlight) IosColors.orange else AppTheme.gold).copy(alpha = 0.85f), CircleShape),
+            contentAlignment = Alignment.Center,
+        ) { Text(initial.ifEmpty { "?" }, color = IosColors.onGoldDark, fontSize = 15.sp, fontWeight = FontWeight.Bold) }
+        content()
     }
 }
 

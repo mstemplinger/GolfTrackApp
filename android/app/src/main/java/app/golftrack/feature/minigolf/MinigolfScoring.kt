@@ -56,6 +56,8 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import app.golftrack.ui.common.AppScaffold
 import app.golftrack.ui.common.Haptics
+import app.golftrack.ui.common.RoundShareButton
+import app.golftrack.ui.common.RoundShareSummary
 import app.golftrack.ui.theme.AppTheme
 
 private val scoresSaver = Saver<List<List<Int>>, String>(
@@ -87,7 +89,8 @@ internal fun MinigolfScoringScreen(nav: NavController, config: MinigolfConfig) {
     var finished by remember { mutableStateOf(false) }
 
     fun total(p: Int) = scores[p].sum()
-    val sortedPlayers = (0 until playerCount).sortedBy { total(it) }
+    /** Platz eines Spielers, 0 = vorn. Gleich viele Schläge, gleicher Platz. */
+    fun place(p: Int): Int { val own = total(p); return (0 until playerCount).count { total(it) < own } }
 
     fun setScore(p: Int, v: Int) {
         scores = scores.mapIndexed { i, row -> if (i == p) row.mapIndexed { h, s -> if (h == currentHole) v else s } else row }
@@ -143,7 +146,7 @@ internal fun MinigolfScoringScreen(nav: NavController, config: MinigolfConfig) {
             ) {
                 for (i in 0 until playerCount) {
                     PlayerScoreCard(
-                        name = config.playerNames[i], total = total(i), rank = sortedPlayers.indexOf(i),
+                        name = config.playerNames[i], total = total(i), rank = place(i),
                         strokes = scores[i][currentHole],
                         onMinus = {
                             if (scores[i][currentHole] > 0) { Haptics.light(); setScore(i, scores[i][currentHole] - 1) }
@@ -178,6 +181,7 @@ internal fun MinigolfScoringScreen(nav: NavController, config: MinigolfConfig) {
         MinigolfResultsSheet(
             playerNames = config.playerNames, numberOfHoles = holeCount, scores = scores,
             challenges = challenges, onFinish = ::finishGame, onDismiss = { showResults = false },
+            courseName = config.courseName, dateMillis = System.currentTimeMillis(),
         )
     }
     if (showChallenges) {
@@ -292,6 +296,9 @@ internal fun MinigolfResultsSheet(
     challenges: List<MinigolfChallenge>,
     onFinish: (() -> Unit)?,
     onDismiss: () -> Unit,
+    /** Für den Teil-Text; fehlt beides, bleibt es dort einfach weg. */
+    courseName: String? = null,
+    dateMillis: Long? = null,
 ) {
     val state = rememberModalBottomSheetState(skipPartiallyExpanded = true)
     ModalBottomSheet(onDismissRequest = onDismiss, sheetState = state, containerColor = AppTheme.bg) {
@@ -300,7 +307,7 @@ internal fun MinigolfResultsSheet(
             Modifier.fillMaxSize().verticalScroll(rememberScrollState()).padding(16.dp),
             verticalArrangement = Arrangement.spacedBy(20.dp),
         ) {
-            MinigolfResultsContent(playerNames, numberOfHoles, scores, challenges)
+            MinigolfResultsContent(playerNames, numberOfHoles, scores, challenges, courseName, dateMillis)
             if (onFinish != null) {
                 MgPillButton(
                     "Spiel beenden & speichern", Icons.Filled.CheckCircle, AppTheme.gold, Color.White,
@@ -318,13 +325,19 @@ internal fun MinigolfResultsContent(
     numberOfHoles: Int,
     scores: List<List<Int>>,
     challenges: List<MinigolfChallenge>,
+    courseName: String? = null,
+    dateMillis: Long? = null,
 ) {
-    data class Entry(val index: Int, val name: String, val total: Int)
-    val ranked = playerNames.indices.map { Entry(it, playerNames[it], scores.getOrNull(it)?.sum() ?: 0) }.sortedBy { it.total }
+    // `place` zählt wie im Sport: Bei Gleichstand teilen sich alle den Platz.
+    data class Entry(val index: Int, val name: String, val total: Int, val place: Int)
+    val totals = playerNames.indices.map { scores.getOrNull(it)?.sum() ?: 0 }
+    val ranked = playerNames.indices.map { i -> Entry(i, playerNames[i], totals[i], totals.count { it < totals[i] }) }
+        .sortedBy { it.total }
 
     // Rangliste
     Column(Modifier.fillMaxWidth().background(AppTheme.card, RoundedCornerShape(14.dp))) {
-        ranked.forEachIndexed { place, e ->
+        ranked.forEachIndexed { row, e ->
+            val place = e.place
             Row(
                 Modifier.padding(horizontal = 12.dp, vertical = 10.dp),
                 verticalAlignment = Alignment.CenterVertically,
@@ -339,9 +352,13 @@ internal fun MinigolfResultsContent(
                 MgText("${e.total}", MgFont.headline, if (place == 0) MgMedalGold else AppTheme.text, FontWeight.Bold)
                 MgText("Schl.", MgFont.caption, AppTheme.textSec)
             }
-            if (place < ranked.size - 1) HorizontalDivider(Modifier.padding(start = 60.dp), color = AppTheme.text.copy(alpha = 0.12f))
+            if (row < ranked.size - 1) HorizontalDivider(Modifier.padding(start = 60.dp), color = AppTheme.text.copy(alpha = 0.12f))
         }
     }
+
+    RoundShareButton(
+        RoundShareSummary.minigolf(playerNames, scores, numberOfHoles, courseName, dateMillis),
+    )
 
     if (challenges.isNotEmpty()) AwardsCard(playerNames, scores, challenges)
 

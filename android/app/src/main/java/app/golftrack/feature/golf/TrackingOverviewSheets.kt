@@ -67,11 +67,11 @@ fun HoleTrackingOverviewSheet(round: Round, course: Course?, score: HoleScore, p
         loading = false
     }
 
-    val tee = course?.teeCoordinate(hole)
+    val tee = course?.teeCoordinate(hole, round.teeColor)
     val green = course?.flagCoordinate(hole)
     val pin = if (score.pinLatitude != null && score.pinLongitude != null) LatLon(score.pinLatitude, score.pinLongitude) else null
     val walk = round.track?.points(hole)?.filter { it.isValid }?.sortedBy { it.timeOffset }?.map { it.coordinate }.orEmpty()
-    val length = course?.holeLengths?.getOrNull(hole - 1)?.takeIf { it > 0 }
+    val length = course?.holeLength(hole, round.teeColor)
     val hcp = course?.hcpValues?.getOrNull(hole - 1)
 
     FullSheet(onDismiss) {
@@ -194,7 +194,7 @@ fun RoundTrackingOverviewSheet(round: Round, course: Course?, currentHole: Int, 
                 }
                 return@Column
             }
-            val tees = course?.let { c -> (1..maxOf(1, c.numberOfHoles)).mapNotNull { h -> c.teeCoordinate(h)?.let { h to it } } }.orEmpty()
+            val tees = course?.let { c -> (1..maxOf(1, c.numberOfHoles)).mapNotNull { h -> c.teeCoordinate(h, round.teeColor)?.let { h to it } } }.orEmpty()
             val items = buildList<MapItem> {
                 corridors.forEach { c ->
                     val cur = c.holeNumber == currentHole
@@ -243,7 +243,7 @@ fun RoundTrackingOverviewSheet(round: Round, course: Course?, currentHole: Int, 
                         val h = s.holeNumber
                         val par = course?.par(h) ?: 4
                         val hcp = course?.hcpValues?.getOrNull(h - 1)
-                        val len = course?.holeLengths?.getOrNull(h - 1) ?: 0
+                        val len = course?.holeLength(h, round.teeColor) ?: 0
                         val cor = corridors.firstOrNull { it.holeNumber == h }
                         val cur = h == currentHole
                         Row(

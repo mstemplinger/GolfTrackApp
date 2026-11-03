@@ -33,7 +33,8 @@ object HandicapCalculator {
         rounds.take(20).mapNotNull { r ->
             val c = data.course(r.courseId) ?: return@mapNotNull null
             if (r.totalStrokes <= 0 || c.courseRating <= 0 || c.slopeRating <= 0) null
-            else scoreDifferential(r.totalStrokes, c.courseRating, c.slopeRating)
+            // Wertung des gespielten Abschlags, sonst die des Platzes.
+            else scoreDifferential(r.totalStrokes, c.courseRating(r.teeColor), c.slopeRating(r.teeColor))
         }
 
     fun progressInfo(rounds: List<Round>, data: GolfData): ProgressInfo? {

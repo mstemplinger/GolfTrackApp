@@ -6,6 +6,7 @@ import app.golftrack.data.AppFocus
 import app.golftrack.data.GolfStore
 import app.golftrack.data.Prefs
 import app.golftrack.data.catalog.CourseCatalog
+import app.golftrack.feature.lobby.LobbyService
 import app.golftrack.ui.common.Haptics
 import app.golftrack.ui.common.Routes
 
@@ -15,6 +16,7 @@ import app.golftrack.ui.common.Routes
  *  - https://play.golftrack.app/p/<kennung> (Art steht nicht im Link)
  *  - golftrack://minigolf/<slug>, golftrack://golf/<slug>
  *  - golftrack://platzreife, golftrack://home
+ *  - https://golftrack.app/lobby/<code>, golftrack://lobby/<code> (Lobby beitreten)
  */
 object DeepLinks {
     enum class Kind { GOLF, MINIGOLF }
@@ -38,7 +40,27 @@ object DeepLinks {
         }
     }
 
+    /** Fünfstelliger Code aus einem Lobby-Link, sonst `null`. */
+    fun lobbyCode(uri: Uri): String? {
+        val segs = uri.pathSegments
+        val candidate = when {
+            uri.scheme == "golftrack" && uri.host == "lobby" -> segs.firstOrNull()
+            (uri.scheme == "https" || uri.scheme == "http") && segs.size == 2 && segs[0] == "lobby" -> segs[1]
+            else -> null
+        }
+        return candidate?.takeIf { it.length == 5 && it.all(Char::isDigit) }
+    }
+
     fun handleScheme(uri: Uri, nav: NavController) {
+        // Lobby-QR-Code: Rundenstart öffnen, die Lobby-Karte tritt bei.
+        lobbyCode(uri)?.let { code ->
+            Haptics.success()
+            chooseFocusIfNeeded(AppFocus.GOLF)
+            LobbyService.pendingJoinCode.value = code
+            nav.popBackStack(Routes.MAIN, inclusive = false)
+            nav.navigate(Routes.newRound())
+            return
+        }
         if (uri.scheme != "golftrack") return
         nav.popBackStack(Routes.MAIN, inclusive = false)
         when (uri.host) {

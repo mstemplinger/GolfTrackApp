@@ -93,6 +93,20 @@ object MinigolfGameStore {
 
     fun saveNames(names: List<String>) = Prefs.set(NAMES_KEY, json.encodeToString(stringList, names))
 
+    /**
+     * Vorbelegung der Namensfelder: zuletzt gespielte Namen, Spieler 1
+     * aber immer mit dem Profilnamen – sofern der vom Standard „Golfer“
+     * abweicht. Schlüssel `playerName` wie `@AppStorage` auf iOS.
+     */
+    fun initialNames(fallback: List<String>): List<String> {
+        val names = (loadNames()?.takeIf { it.isNotEmpty() } ?: fallback).toMutableList()
+        val profile = Prefs.playerName.trim()
+        if (profile.isNotEmpty() && profile != "Golfer") {
+            if (names.isEmpty()) names += profile else names[0] = profile
+        }
+        return names
+    }
+
     /** Zuletzt gewählte Wettkämpfe – Vorschlag für die nächste Runde. */
     fun loadChallenges(): List<MinigolfChallenge> {
         val raw = Prefs.string(CHALLENGES_KEY).ifEmpty { return emptyList() }

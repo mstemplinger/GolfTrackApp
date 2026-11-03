@@ -100,7 +100,11 @@ import app.golftrack.ui.common.LaterFeature
 import app.golftrack.ui.common.LocationService
 import app.golftrack.ui.common.Routes
 import app.golftrack.ui.common.rememberLocation
+import app.golftrack.ui.onboarding.LaunchKeys
 import app.golftrack.ui.onboarding.LaunchOverlays
+import app.golftrack.data.rememberPrefBool
+import app.golftrack.data.Prefs
+import androidx.compose.ui.draw.alpha
 import app.golftrack.ui.theme.AppTheme
 import java.text.SimpleDateFormat
 import java.util.Locale
@@ -119,8 +123,12 @@ fun HomeScreen(nav: NavController) {
     val suggestion by NearbyCourses.suggestion.collectAsState()
     val newNearby by NearbyCourses.newNearby.collectAsState()
 
-    // Standort: fragt einmal nach der Berechtigung (wie das Wetter auf iOS).
-    val here = rememberLocation(highAccuracy = false)
+    // Die Startseite liegt schon hinter dem Onboarding – Standort erst danach
+    // abfragen, das Onboarding erfragt ihn nach dem Namen.
+    val hasSeenOnboarding by rememberPrefBool(LaunchKeys.HAS_SEEN_ONBOARDING)
+    val here = if (hasSeenOnboarding) {
+        rememberLocation(highAccuracy = false, askPermission = !Prefs.bool(LaunchKeys.LOCATION_ASKED))
+    } else null
 
     var minigolfSaved by remember { mutableStateOf<SavedMinigolfGame?>(null) }
     var minigolfHistory by remember { mutableStateOf<List<MinigolfHistoryEntry>>(emptyList()) }
@@ -131,9 +139,11 @@ fun HomeScreen(nav: NavController) {
     }
 
     LaunchedEffect(Unit) {
-        if (!weather.hasData && LocationService.hasPermission(ctx)) GolfWeather.fetch(ctx)
         CourseCatalog.checkForUpdates()
         Reminders.onAppStart(ctx)
+    }
+    LaunchedEffect(hasSeenOnboarding) {
+        if (hasSeenOnboarding && !weather.hasData && LocationService.hasPermission(ctx)) GolfWeather.fetch(ctx)
     }
     LaunchedEffect(here != null) {
         if (here != null && !weather.hasData && !weather.isLoading && weather.selectedCourseName == null) GolfWeather.fetch(ctx)
@@ -151,12 +161,14 @@ fun HomeScreen(nav: NavController) {
             Modifier.fillMaxSize().verticalScroll(rememberScrollState()).padding(top = 8.dp, bottom = 30.dp),
             verticalArrangement = Arrangement.spacedBy(20.dp),
         ) {
-            TopBar(onTutorial = { nav.navigate(Routes.TUTORIAL) })
+            TopBar()
             GreetingCard(playerName, weather, data)
 
             suggestion?.let { NearbyCard(it, onStart = { DeepLinks.open(DeepLinks.Link(it.kind, it.slug), nav) }) }
-            if (newNearby.isNotEmpty()) {
-                NewNearbyCard(newNearby, onStart = { DeepLinks.open(DeepLinks.Link(it.kind, it.slug), nav) })
+            // Den Platz aus „Du bist hier" nicht noch einmal als neu zeigen.
+            val neuePlaetze = newNearby.filter { it.id != suggestion?.id }
+            if (neuePlaetze.isNotEmpty()) {
+                NewNearbyCard(neuePlaetze, onStart = { DeepLinks.open(DeepLinks.Link(it.kind, it.slug), nav) })
             }
 
             val openWeather = { if (weather.hasData) { Haptics.tap(); nav.navigate(Routes.WEATHER) } }
@@ -183,13 +195,14 @@ fun HomeScreen(nav: NavController) {
                 if (completed.isNotEmpty()) TrainingProgressCard(completed.size)
                 if (incomplete.isNotEmpty()) ActiveRoundsCard(incomplete, data, { nav.navigate(Routes.playRound(it.id)) }) { roundToDelete = it }
                 GoldActionButton("Neue Runde spielen", Icons.Filled.AddCircle) { nav.navigate(Routes.newRound()) }
+                GreenButton("Driving Range", Icons.Filled.SportsGolf, cardModifier.fillMaxWidth(), haptic = { Haptics.medium() }) {
+                    nav.navigate(Routes.DRIVING_RANGE)
+                }
                 Row(Modifier.padding(horizontal = 16.dp).height(IntrinsicSize.Min), horizontalArrangement = Arrangement.spacedBy(12.dp)) {
                     GreenButton("Platzreife lernen", Icons.Filled.School, Modifier.weight(1f).fillMaxHeight()) { nav.navigate(Routes.PLATZREIFE) }
                     GreenButton("Verlauf", Icons.Filled.History, Modifier.weight(1f).fillMaxHeight()) { nav.navigate(Routes.HISTORY) }
                 }
             }
-
-            CaddyButton { nav.navigate(Routes.comingLater(LaterFeature.CADDY)) }
         }
 
         LaunchOverlays(nav)
@@ -218,7 +231,7 @@ fun HomeScreen(nav: NavController) {
 private val cardModifier = Modifier.padding(horizontal = 16.dp)
 
 @Composable
-private fun TopBar(onTutorial: () -> Unit) {
+private fun TopBar() {
     Row(Modifier.fillMaxWidth().padding(horizontal = 16.dp), verticalAlignment = Alignment.CenterVertically) {
         Image(
             painterResource(R.mipmap.ic_launcher), null,
@@ -226,9 +239,6 @@ private fun TopBar(onTutorial: () -> Unit) {
         )
         Spacer(Modifier.width(10.dp))
         Text("GolfTrack", color = AppTheme.text, fontSize = 22.sp, fontWeight = FontWeight.Bold, modifier = Modifier.weight(1f))
-        Box(
-            Modifier.clip(CircleShape).background(AppTheme.card).clickable { Haptics.tap(); onTutorial() }.padding(10.dp),
-        ) { Icon(Icons.Filled.Lightbulb, "Tutorial", tint = AppTheme.gold, modifier = Modifier.size(22.dp)) }
     }
 }
 
@@ -410,18 +420,27 @@ private fun WeatherCard(weather: WeatherState, rules: GolfWeatherRules, data: Go
                 Text(weather.golfWeatherLabel(rules), color = badge, fontSize = 12.sp, fontWeight = FontWeight.Bold, maxLines = 1)
             }
         }
-        Row(Modifier.height(IntrinsicSize.Min), verticalAlignment = Alignment.CenterVertically) {
-            Column(Modifier.weight(1f), horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.spacedBy(4.dp)) {
-                Icon(weather.symbol.icon, null, tint = weather.symbol.tint, modifier = Modifier.size(38.dp))
-                Text(weather.temperature, color = AppTheme.text, fontSize = 28.sp, fontWeight = FontWeight.Bold)
-                Text(weather.conditionText, color = AppTheme.textSec, fontSize = 12.sp, textAlign = TextAlign.Center)
+        Row(verticalAlignment = Alignment.CenterVertically) {
+            Box(Modifier.width(44.dp), contentAlignment = Alignment.Center) {
+                Icon(weather.symbol.icon, null, tint = weather.symbol.tint, modifier = Modifier.size(36.dp))
             }
-            VerticalDivider(Modifier.height(70.dp), color = AppTheme.cardAlt)
-            Column(Modifier.weight(1f).padding(start = 12.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
-                WeatherDetail(Icons.Filled.Thermostat, "Gefühlt", weather.feelsLike)
+            Spacer(Modifier.width(12.dp))
+            Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(1.dp)) {
+                Text(weather.temperature, color = AppTheme.text, fontSize = 30.sp, fontWeight = FontWeight.Bold)
+                Text(weather.conditionText, color = AppTheme.textSec, fontSize = 12.sp, maxLines = 1, overflow = TextOverflow.Ellipsis)
+            }
+            Column(Modifier.widthIn(max = 150.dp), verticalArrangement = Arrangement.spacedBy(5.dp)) {
                 WeatherDetail(Icons.Filled.Air, "Wind", weather.windSpeed)
-                WeatherDetail(Icons.Filled.WaterDrop, "Feuchte", weather.humidity)
-                WeatherDetail(Icons.Filled.WbSunny, "UV", weather.uvIndex)
+                WeatherDetail(Icons.Filled.Thermostat, "Gefühlt", weather.feelsLike)
+            }
+        }
+        val todayHours = weather.dailyForecast.firstOrNull { it.isToday }?.daylightHours ?: emptyList()
+        if (todayHours.size >= 3) {
+            HourlyGolfBars(todayHours, rules)
+        } else {
+            Row(horizontalArrangement = Arrangement.spacedBy(14.dp)) {
+                Box(Modifier.weight(1f)) { WeatherDetail(Icons.Filled.WaterDrop, "Feuchte", weather.humidity) }
+                Box(Modifier.weight(1f)) { WeatherDetail(Icons.Filled.WbSunny, "UV", weather.uvIndex) }
             }
         }
         // Die Karte öffnet beim Antippen die Vorhersage – ohne Hinweis sieht man das nicht.
@@ -429,6 +448,55 @@ private fun WeatherCard(weather: WeatherState, rules: GolfWeatherRules, data: Go
             Text("Tippe für mehr Infos", color = AppTheme.textSec, fontSize = 11.sp)
             Icon(Icons.Filled.ChevronRight, null, tint = AppTheme.textSec, modifier = Modifier.size(14.dp))
         }
+    }
+}
+
+/**
+ * Ein Balken je Hellstunde: Höhe = Temperatur, Gold = spielbar.
+ * Vergangene Stunden verblassen, die aktuelle ist umrandet.
+ */
+@Composable
+private fun HourlyGolfBars(hours: List<HourlyForecast>, rules: GolfWeatherRules) {
+    val temps = hours.map { it.temperature }
+    val low = (temps.minOrNull() ?: 0.0) - 2
+    val span = maxOf(1.0, (temps.maxOrNull() ?: 1.0) - low)
+    val now = System.currentTimeMillis()
+    val labelStep = if (hours.size > 12) 3 else 2
+    Column(verticalArrangement = Arrangement.spacedBy(6.dp)) {
+        Row(Modifier.fillMaxWidth().height(54.dp), horizontalArrangement = Arrangement.spacedBy(4.dp), verticalAlignment = Alignment.Bottom) {
+            hours.forEachIndexed { index, hour ->
+                val past = hour.date + 3_600_000 <= now
+                val current = hour.date <= now && !past
+                val playable = hour.isPlayable(rules)
+                Column(Modifier.weight(1f), horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.spacedBy(4.dp)) {
+                    val h = maxOf(6.0, 38 * (hour.temperature - low) / span).dp
+                    Box(
+                        Modifier.fillMaxWidth().height(h)
+                            .alpha(if (past) 0.3f else 1f)
+                            .background(if (playable) AppTheme.gold else AppTheme.cardAlt, RoundedCornerShape(3.dp))
+                            .then(if (current) Modifier.border(1.5.dp, Color.White.copy(alpha = 0.9f), RoundedCornerShape(3.dp)) else Modifier),
+                    )
+                    Text(
+                        if (index % labelStep == 0) hourLabel(hour.date) else " ",
+                        color = if (current) AppTheme.text else AppTheme.textTer, fontSize = 9.sp, fontWeight = FontWeight.SemiBold,
+                        maxLines = 1, softWrap = false,
+                    )
+                }
+            }
+        }
+        Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+            LegendDot(AppTheme.gold, "Golf-Wetter")
+            LegendDot(AppTheme.cardAlt, "Regen, Wind oder kalt")
+        }
+    }
+}
+
+@Composable
+private fun LegendDot(color: Color, label: String) {
+    Row(verticalAlignment = Alignment.CenterVertically) {
+        Box(Modifier.size(10.dp).background(color, RoundedCornerShape(2.dp)))
+        Spacer(Modifier.width(5.dp))
+        Text(label, color = AppTheme.textSec, fontSize = 11.sp)
     }
 }
 
@@ -519,10 +587,10 @@ private fun GoldActionButton(text: String, icon: ImageVector, onClick: () -> Uni
 }
 
 @Composable
-private fun GreenButton(text: String, icon: ImageVector, modifier: Modifier, onClick: () -> Unit) {
+private fun GreenButton(text: String, icon: ImageVector, modifier: Modifier, haptic: () -> Unit = { Haptics.tap() }, onClick: () -> Unit) {
     Row(
         modifier.clip(RoundedCornerShape(14.dp)).background(AppTheme.greenMid)
-            .clickable { Haptics.tap(); onClick() }.padding(vertical = 14.dp, horizontal = 8.dp),
+            .clickable { haptic(); onClick() }.padding(vertical = 14.dp, horizontal = 8.dp),
         horizontalArrangement = Arrangement.Center, verticalAlignment = Alignment.CenterVertically,
     ) {
         Icon(icon, null, tint = Color.White, modifier = Modifier.size(18.dp))
@@ -608,28 +676,6 @@ private fun MinigolfHistoryCard(history: List<MinigolfHistoryEntry>, onOpen: () 
                 Icon(Icons.Filled.ChevronRight, null, tint = AppTheme.textTer, modifier = Modifier.size(18.dp))
             }
         }
-    }
-}
-
-@Composable
-private fun CaddyButton(onClick: () -> Unit) {
-    Row(
-        cardModifier.fillMaxWidth().clip(RoundedCornerShape(16.dp))
-            .background(Brush.linearGradient(listOf(Color(0xFF1F4D1F), Color(0xFF143314))))
-            .border(1.dp, AppTheme.gold.copy(alpha = 0.35f), RoundedCornerShape(16.dp))
-            .clickable { Haptics.tap(); onClick() }
-            .padding(horizontal = 20.dp, vertical = 14.dp),
-        verticalAlignment = Alignment.CenterVertically,
-    ) {
-        Icon(Icons.Filled.GraphicEq, null, tint = Color.White, modifier = Modifier.size(24.dp))
-        Spacer(Modifier.width(10.dp))
-        Column(Modifier.weight(1f)) {
-            Text("Caddy – Golf-Assistent", color = Color.White, fontSize = 15.sp, fontWeight = FontWeight.SemiBold)
-            Text("Regeln, Tipps & Strategien", color = Color.White.copy(alpha = 0.7f), fontSize = 12.sp)
-        }
-        LaterBadge()
-        Spacer(Modifier.width(6.dp))
-        Icon(Icons.Filled.ChevronRight, null, tint = Color.White.copy(alpha = 0.5f), modifier = Modifier.size(18.dp))
     }
 }
 

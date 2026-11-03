@@ -15,12 +15,12 @@ export const ANDROID_RELEASE: {
   sha256: string;
   releasedAt: string;
 } = {
-  file: "golftrack-1.0.apk",
-  versionName: "1.0",
-  versionCode: 1,
-  sizeBytes: 22598649,
-  sha256: "7bf0daf68dcceec540888878f9da85f5e7852d849dc0b9f89a58958a9264e28a",
-  releasedAt: "2026-10-20T13:13:30Z",
+  file: "golftrack-1.1.apk",
+  versionName: "1.1",
+  versionCode: 2,
+  sizeBytes: 22877201,
+  sha256: "fadeeac93bcfb1766d3f516113af9e23ad24bc7d2721554a2da28ccaf4341bce",
+  releasedAt: "2026-11-03T15:18:22Z",
 };
 
 /**

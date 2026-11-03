@@ -38,6 +38,8 @@
                 <category android:name="android.intent.category.BROWSABLE" />
                 <data android:scheme="https" android:host="golftrack.app" android:pathPrefix="/minigolf/" />
                 <data android:scheme="https" android:host="golftrack.app" android:pathPrefix="/golf/" />
+                <!-- Lobby-QR-Code: golftrack.app/lobby/<code> -->
+                <data android:scheme="https" android:host="golftrack.app" android:pathPrefix="/lobby/" />
                 <data android:scheme="https" android:host="play.golftrack.app" android:pathPrefix="/p/" />
             </intent-filter>
         </activity>

@@ -89,7 +89,6 @@ import app.golftrack.ui.common.LaterBadge
 import app.golftrack.ui.common.LaterFeature
 import app.golftrack.ui.common.Routes
 import app.golftrack.ui.onboarding.LaunchKeys
-import app.golftrack.ui.onboarding.LaunchOverlays
 import app.golftrack.ui.theme.AppTheme
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -208,7 +207,6 @@ fun ProfileScreen(nav: NavController) {
             Box(Modifier.padding(horizontal = 16.dp)) { AchievementsCard(data) }
             Box(Modifier.padding(horizontal = 16.dp)) { SettingsSection(nav) }
         }
-        LaunchOverlays(nav)
     }
 
     toCrop?.let { img ->

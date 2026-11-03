@@ -277,6 +277,9 @@ fun TipDetailScreen(nav: NavController, categoryIndex: Int, tipIndex: Int) {
                         contentAlignment = Alignment.Center,
                     ) { SfIcon(tip.icon, category.color, 40.dp) }
                     T(tip.title, IosFont.title2, weight = FontWeight.Bold, align = TextAlign.Center, modifier = Modifier.padding(horizontal = 16.dp))
+                    tip.visual?.let { visual ->
+                        Box(Modifier.padding(horizontal = 16.dp)) { TipVisualView(visual, category.color) }
+                    }
                     Column(
                         Modifier.padding(horizontal = 16.dp).fillMaxWidth().background(AppTheme.card, RoundedCornerShape(16.dp)).padding(20.dp),
                     ) {

@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -19,7 +20,6 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.HelpOutline
 import androidx.compose.material.icons.filled.Campaign
 import androidx.compose.material.icons.filled.ChevronRight
-import androidx.compose.material.icons.filled.GraphicEq
 import androidx.compose.material.icons.filled.Headphones
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
@@ -102,6 +102,7 @@ fun AdSlot(
                 subtitle = booked.subtitle.ifEmpty { booked.advertiser },
                 imageUrl = booked.imageURL.ifEmpty { null },
                 icon = Icons.Filled.Campaign,
+                footnote = "Tippe für Infos zu dieser Anzeige",
                 onClick = {
                     Haptics.tap()
                     AdCatalog.countClick(booked)
@@ -131,7 +132,6 @@ fun AdSlot(
                 Haptics.tap()
                 when (promo) {
                     HousePromo.TRAINING -> nav?.navigate(Routes.comingLater(LaterFeature.AUDIOBOOKS))
-                    HousePromo.CADDY -> nav?.navigate(Routes.comingLater(LaterFeature.CADDY))
                     HousePromo.ADVERTISE -> openUrl("https://golftrack.app/werbung")
                 }
             },
@@ -150,6 +150,7 @@ private fun SlotContent(
     icon: ImageVector,
     onClick: () -> Unit,
     onLongClick: (() -> Unit)? = null,
+    footnote: String? = null,
     modifier: Modifier = Modifier,
 ) {
     Box(
@@ -158,7 +159,8 @@ private fun SlotContent(
             .background(AppTheme.card)
             .combinedClickable(onClick = onClick, onLongClick = onLongClick),
     ) {
-        Row(Modifier.fillMaxWidth().padding(12.dp), verticalAlignment = Alignment.CenterVertically) {
+        Column(Modifier.fillMaxWidth().padding(horizontal = 12.dp, vertical = if (footnote == null) 12.dp else 14.dp)) {
+        Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
             Box(Modifier.size(44.dp).clip(RoundedCornerShape(10.dp))) {
                 val tile: @Composable () -> Unit = {
                     Box(Modifier.fillMaxSize().background(AppTheme.cardAlt), contentAlignment = Alignment.Center) {
@@ -174,6 +176,11 @@ private fun SlotContent(
             }
             Icon(Icons.Filled.ChevronRight, null, tint = AppTheme.textTer, modifier = Modifier.size(18.dp))
         }
+        if (footnote != null) {
+            Spacer(Modifier.height(10.dp))
+            Text(footnote, color = AppTheme.textTer, fontSize = 10.sp, maxLines = 1)
+        }
+        }
         Text(
             badge.uppercase(),
             color = AppTheme.textTer, fontSize = 8.sp, fontWeight = FontWeight.SemiBold, letterSpacing = 0.6.sp,
@@ -182,10 +189,9 @@ private fun SlotContent(
     }
 }
 
-/** Eigenwerbung, solange der Platz nicht verkauft ist. Training und Caddy zeigen auf „kommt später". */
+/** Eigenwerbung, solange der Platz nicht verkauft ist. Training zeigt auf „kommt später" (ohne Kauf, darum kein „Ohne Werbung spielen"). */
 private enum class HousePromo(val title: String, val subtitle: String, val icon: ImageVector) {
     TRAINING("Besser putten lernen", "Audio-Trainings für Technik und Kopf", Icons.Filled.Headphones),
-    CADDY("Caddy fragen", "Der Assistent für Schlagwahl und Taktik", Icons.Filled.GraphicEq),
     ADVERTISE("Hier könnte Ihre Anlage stehen", "Werbeplatz für Betreiber – golftrack.app", Icons.Filled.Campaign);
 
     companion object {

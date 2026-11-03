@@ -19,8 +19,8 @@ android {
         applicationId = "app.golftrack"
         minSdk = 26
         targetSdk = 36
-        versionCode = 1
-        versionName = "1.0"
+        versionCode = 2
+        versionName = "1.1"
         // Nur Handy-Prozessoren: die x86-Varianten der Texterkennung allein wären ~23 MB.
         ndk { abiFilters += listOf("arm64-v8a", "armeabi-v7a") }
     }
@@ -75,4 +75,5 @@ dependencies {
     implementation("org.osmdroid:osmdroid-android:6.1.20")
     implementation("androidx.work:work-runtime-ktx:2.11.1")
     implementation("com.google.mlkit:text-recognition:16.0.1")
+    implementation("com.google.zxing:core:3.5.3")
 }

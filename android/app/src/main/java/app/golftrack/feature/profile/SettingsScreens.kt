@@ -50,6 +50,7 @@ import androidx.compose.material.icons.filled.SportsGolf
 import androidx.compose.material.icons.filled.Star
 import androidx.compose.material.icons.filled.TouchApp
 import androidx.compose.material.icons.filled.Vibration
+import androidx.compose.material.icons.filled.WaterDrop
 import androidx.compose.material.icons.filled.Warning
 import androidx.compose.material.icons.filled.WbCloudy
 import androidx.compose.material.icons.filled.Whatshot
@@ -103,7 +104,7 @@ private fun openAppSettings(ctx: android.content.Context) {
     }
 }
 
-/** Einstellungen wie SettingsView.swift (ohne API-Einstellungen – die gehören zum Caddy). */
+/** Einstellungen wie SettingsView.swift. */
 @Composable
 fun SettingsScreen(nav: NavController) {
     var haptics by rememberPrefBool(Haptics.ENABLED_KEY, true)
@@ -274,6 +275,8 @@ fun NotificationSettingsScreen(nav: NavController) {
     var openRound by rememberPrefBool("notif.openRound.enabled", true)
     var roundInactivity by rememberPrefBool("notif.roundInactivity.enabled", true)
     var roundMinutes by rememberPrefInt("notif.roundInactivity.minutes", 45)
+    var drink by rememberPrefBool(DrinkReminders.ENABLED_KEY, true)
+    var drinkMinutes by rememberPrefInt(DrinkReminders.MINUTES_KEY, 30)
     var canPost by remember { mutableStateOf(Reminders.canPost(ctx)) }
     val launcher = rememberLauncherForActivityResult(ActivityResultContracts.RequestPermission()) { canPost = it }
     LifecycleResumeEffect(Unit) {
@@ -318,6 +321,15 @@ fun NotificationSettingsScreen(nav: NavController) {
             })
             ToggleCard(Icons.Filled.Schedule, iosOrange, "Pause-Erinnerung", "Erinnert dich während einer Runde, wenn du längere Zeit nichts eingetragen hast", roundInactivity, { roundInactivity = it }) {
                 PickerRow("Erinnerung nach", roundMinutes, listOf(20 to "20 Min.", 30 to "30 Min.", 45 to "45 Min.", 60 to "60 Min.")) { roundMinutes = it }
+            }
+            ToggleCard(Icons.Filled.WaterDrop, Color(0xFF59B3FF), "Trinkerinnerung", "Erinnert dich während einer Runde regelmäßig ans Trinken", drink, {
+                drink = it
+                if (!it) DrinkReminders.cancel(ctx)
+            }) {
+                PickerRow("Erinnern alle", drinkMinutes, listOf(20 to "20 Min.", 30 to "30 Min.", 45 to "45 Min.", 60 to "60 Min.")) {
+                    drinkMinutes = it
+                    DrinkReminders.rescheduleIfRunning(ctx)
+                }
             }
             Text(
                 "Benachrichtigungen werden nur als lokale Erinnerungen verschickt – keine Werbung, keine Server.",
@@ -378,7 +390,7 @@ private data class HelpItem(val icon: ImageVector, val color: Color, val title: 
 
 private val helpSections: List<Triple<String, ImageVector, List<HelpItem>>> = listOf(
     Triple("Erste Schritte", Icons.Filled.Flag, listOf(
-        HelpItem(Icons.Filled.LooksOne, AppTheme.gold, "Golfplatz hinzufügen", "Gehe zu Profil > Golfplätze verwalten und tippe auf '+'. Du kannst Plätze manuell anlegen oder aus dem Platzverzeichnis übernehmen."),
+        HelpItem(Icons.Filled.LooksOne, AppTheme.gold, "Golfplatz hinzufügen", "Gehe zu Profil > Golfplätze verwalten und tippe auf '+'. Du kannst Plätze aus dem GolfTrack-Platzverzeichnis übernehmen, eine Scorecard scannen oder einen Platz manuell anlegen."),
         HelpItem(Icons.Filled.LooksTwo, AppTheme.gold, "Neue Runde starten", "Tippe auf der Startseite auf 'Neue Runde spielen'. Wähle Platz, Datum und Spielmodus. Bei Mehrspieler-Modi kannst du direkt die Namen der Mitspieler eingeben. Dann auf 'Starten'."),
         HelpItem(Icons.Filled.Looks3, AppTheme.gold, "Scorecard ausfüllen", "Erfasse Schlag für Schlag deine Scores. Mit den Pfeilen navigierst du zwischen den Löchern. Wenn du fertig bist, tippe auf 'Abschließen'."),
         HelpItem(Icons.Filled.Looks4, AppTheme.gold, "Statistiken ansehen", "In der Statistik siehst du deine Entwicklung über alle Runden: Score-Verlauf, Fairway-Trefferquote, Grün in Regulierung und Putt-Durchschnitt."),
@@ -490,6 +502,8 @@ fun ImprintScreen(nav: NavController) {
             ), bullets = true)
             LegalBlock("Urheberrecht", listOf(
                 "Das Design und der Quellcode der App sind urheberrechtlich geschützt.",
+                "Platzwertungen (Course Rating, Slope, Par) deutscher Golfplätze stammen mit freundlicher Genehmigung von handicap.report.",
+                "Platzkoordinaten: © OpenStreetMap-Mitwirkende, verfügbar unter der Open Database License (openstreetmap.org/copyright).",
                 "Wetterdaten werden von Open-Meteo bereitgestellt.",
                 "Kartendaten © OpenStreetMap-Mitwirkende.",
             ), bullets = true)

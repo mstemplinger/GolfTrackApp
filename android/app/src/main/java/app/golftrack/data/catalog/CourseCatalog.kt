@@ -1,7 +1,9 @@
 package app.golftrack.data.catalog
 
 import android.content.Context
+import app.golftrack.data.CourseTee
 import app.golftrack.data.Prefs
+import app.golftrack.data.TeeColor
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -250,6 +252,29 @@ internal data class RemoteHint(val kind: String = "info", val text: String = "")
     fun toHint() = CourseHint(runCatching { CourseHintKind.valueOf(kind) }.getOrDefault(CourseHintKind.info), text)
 }
 
+/** Abschlag einer Farbe im Feed; unbekannte Werte kommen als `null`. */
+@Serializable
+internal data class RemoteTee(
+    val color: String = "",
+    val courseRating: Double? = null,
+    val slopeRating: Int? = null,
+    val holeLengths: List<Int?> = emptyList(),
+    val teeLatitudes: List<Double?> = emptyList(),
+    val teeLongitudes: List<Double?> = emptyList(),
+) {
+    /** Unbekannte Farben fallen weg, wie beim Dekodieren auf iOS. */
+    fun toTee(): CourseTee? = TeeColor.fromRaw(color)?.let {
+        CourseTee(
+            color = it.raw,
+            courseRating = courseRating,
+            slopeRating = slopeRating,
+            holeLengths = holeLengths.map { l -> l ?: 0 },
+            teeLatitudes = teeLatitudes.map { v -> v ?: Double.NaN },
+            teeLongitudes = teeLongitudes.map { v -> v ?: Double.NaN },
+        )
+    }
+}
+
 @Serializable
 internal data class RemoteCourse(
     val id: String,
@@ -269,6 +294,8 @@ internal data class RemoteCourse(
     val facilityNotes: String = "",
     val facilityHints: List<RemoteHint>? = null,
     val welcome: String = "",
+    /** Abschläge je Farbe – fehlt bei älteren Ständen der Website. */
+    val tees: List<RemoteTee>? = null,
     val teeLatitudes: List<Double> = emptyList(),
     val teeLongitudes: List<Double> = emptyList(),
     val flagLatitudes: List<Double> = emptyList(),
@@ -294,6 +321,7 @@ internal data class RemoteCourse(
         slug = id,
         firstTeeLat = firstTeeLat ?: fb?.firstTeeLat,
         firstTeeLon = firstTeeLon ?: fb?.firstTeeLon,
+        tees = tees?.mapNotNull { it.toTee() } ?: fb?.tees ?: emptyList(),
     )
 
     fun minigolfEntry(fb: MinigolfCourseEntry?): MinigolfCourseEntry {

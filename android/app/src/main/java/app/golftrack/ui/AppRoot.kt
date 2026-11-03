@@ -52,12 +52,17 @@ import app.golftrack.feature.minigolf.MinigolfTab
 import app.golftrack.feature.minigolf.minigolfRoutes
 import app.golftrack.feature.profile.ProfileTab
 import app.golftrack.feature.profile.profileRoutes
+import app.golftrack.feature.profile.DrinkReminders
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.runtime.collectAsState
+import app.golftrack.feature.range.rangeRoutes
 import app.golftrack.ui.common.ComingLaterContent
 import app.golftrack.ui.common.AppScaffold
 import app.golftrack.ui.common.Haptics
 import app.golftrack.ui.common.LaterFeature
 import app.golftrack.ui.common.Routes
 import app.golftrack.ui.theme.AppTheme
+import app.golftrack.ui.onboarding.LaunchKeys
 
 /** Wie ContentView.swift: fünf Tabs, darüber die bildschirmfüllenden Unterseiten. */
 @Composable
@@ -68,6 +73,12 @@ fun AppRoot(pendingLink: Uri?, onLinkHandled: () -> Unit) {
     var deepLinkError by remember { mutableStateOf<String?>(null) }
 
     LaunchedEffect(Unit) { CourseCatalog.refreshIfNeeded() }
+
+    // Trinkerinnerung: läuft, solange eine Runde offen ist.
+    val ctx = LocalContext.current
+    val golf by GolfStore.data.collectAsState()
+    val openRound = golf.openRound
+    LaunchedEffect(openRound?.id) { DrinkReminders.onOpenRoundChanged(ctx, openRound?.id, openRound?.date) }
 
     LaunchedEffect(pendingLink) {
         val uri = pendingLink ?: return@LaunchedEffect
@@ -103,6 +114,7 @@ fun AppRoot(pendingLink: Uri?, onLinkHandled: () -> Unit) {
             minigolfRoutes(nav)
             guideRoutes(nav)
             profileRoutes(nav)
+            rangeRoutes(nav)
         }
 
         if (!hasChosenFocus) {
@@ -137,6 +149,9 @@ private data class Tab(val title: String, val icon: ImageVector)
 @Composable
 private fun MainTabs(nav: NavController) {
     var selected by rememberSaveable { mutableStateOf(0) }
+    // „Tutorial neu starten" im Profil: danach auf der Startseite landen.
+    val hasSeenOnboarding by rememberPrefBool(LaunchKeys.HAS_SEEN_ONBOARDING)
+    LaunchedEffect(hasSeenOnboarding) { if (!hasSeenOnboarding) selected = 0 }
     val focus by rememberPrefString("appFocus", AppFocus.GOLF.raw)
     val minigolfFocus = focus == AppFocus.MINIGOLF.raw
 

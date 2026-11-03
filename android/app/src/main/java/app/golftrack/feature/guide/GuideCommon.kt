@@ -24,6 +24,9 @@ import androidx.compose.material.icons.automirrored.filled.TrendingDown
 import androidx.compose.material.icons.automirrored.filled.TrendingUp
 import androidx.compose.material.icons.automirrored.filled.Undo
 import androidx.compose.material.icons.filled.Accessibility
+import androidx.compose.material.icons.filled.CallMade
+import androidx.compose.material.icons.filled.FlutterDash
+import androidx.compose.material.icons.filled.RadioButtonChecked
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.AddCircle
 import androidx.compose.material.icons.filled.Adjust
@@ -204,6 +207,10 @@ fun sfIcon(name: String): ImageVector = when (name) {
     "graduationcap.fill" -> Icons.Filled.School
     "hands.clap.fill", "hand.raised.fingers.spread.fill" -> Icons.Filled.FrontHand
     "hand.raised.fill" -> Icons.Filled.PanTool
+    "bird.fill" -> Icons.Filled.FlutterDash
+    "line.diagonal.arrow" -> Icons.Filled.CallMade
+    "arrow.up.forward" -> Icons.Filled.NorthEast
+    "circle.circle" -> Icons.Filled.RadioButtonChecked
     "hand.thumbsup.fill" -> Icons.Filled.ThumbUp
     "arrow.up.circle.fill" -> Icons.Filled.ArrowCircleUp
     "arrow.down.circle.fill" -> Icons.Filled.ArrowCircleDown

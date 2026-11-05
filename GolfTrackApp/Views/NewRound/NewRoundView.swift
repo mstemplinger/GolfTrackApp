@@ -115,6 +115,16 @@ struct NewRoundView: View {
                 }
                 adoptCatalogTees(for: selectedCourse)
                 pickDefaultTee(for: selectedCourse)
+                refreshSetupActivity()
+            }
+            .onChange(of: setupSignature) { _, _ in refreshSetupActivity() }
+            .onDisappear {
+                // Beim Rundenstart übernimmt die Scorekarte die Live Activity.
+                if activeRound == nil { GolfLiveActivityManager.endSetup() }
+            }
+            .onReceive(NotificationCenter.default.publisher(for: .liveActivityStartRound)) { _ in
+                guard activeRound == nil, selectedCourse != nil, !showLoading else { return }
+                handleStartButton()
             }
             .sheet(isPresented: $showCourseManager) { CourseListView(selection: $selectedCourse) }
             .sheet(isPresented: $showCourseSelector) {
@@ -764,6 +774,44 @@ struct NewRoundView: View {
         case .scrambleTeam: return String(localized: "3–4 Spieler – alle schlagen ab, bester Abschlag gespielt")
         default: return String(mode.description.prefix(60)) + "…"
         }
+    }
+
+    // MARK: - Live Activity
+
+    /// Alles, was die Vorbereitungs-Live-Activity zeigt – ändert sich davon
+    /// etwas, wird sie nachgezogen.
+    private var setupSignature: [String] {
+        [selectedCourse?.name ?? "", selectedMode.rawValue, selectedTee?.rawValue ?? ""]
+            + otherPlayers + lobbyFriends.map(\.name)
+    }
+
+    /// Solange hier eingestellt wird, zeigt die Live Activity „Runde starten“
+    /// und die Einstellungen – nicht schon eine laufende Runde.
+    private func refreshSetupActivity() {
+        guard activeRound == nil else { return }
+        guard let course = selectedCourse else {
+            GolfLiveActivityManager.endSetup()
+            return
+        }
+        var details = [
+            String(localized: "\(course.numberOfHoles) Löcher"),
+            selectedMode.displayName,
+        ]
+        if let tee = selectedTee {
+            details.append(String(localized: "Abschlag \(tee.displayName)"))
+        }
+        let typed = selectedMode.isMultiplayer
+            ? otherPlayers.map { $0.trimmingCharacters(in: .whitespaces) }.filter { !$0.isEmpty }
+            : []
+        let names = lobbyFriends.map(\.name) + typed
+        if !names.isEmpty {
+            let list = ListFormatter.localizedString(byJoining: names)
+            details.append(String(localized: "mit \(list)"))
+        }
+        GolfLiveActivityManager.showSetup(
+            RoundSetup(courseName: course.name, details: details),
+            totalHoles: course.numberOfHoles
+        )
     }
 
     private func handleStartButton() {

@@ -5,6 +5,8 @@ import SwiftData
 extension Notification.Name {
     /// Die Live Activity hat das Loch gewechselt; `object` ist die neue Lochnummer.
     static let liveActivityHoleChanged = Notification.Name("liveActivityHoleChanged")
+    /// „Runde starten“ in der Live Activity gedrückt, solange die Runde nur eingestellt ist.
+    static let liveActivityStartRound = Notification.Name("liveActivityStartRound")
 }
 
 /// Manages the Golf round Live Activity on the lock screen / Dynamic Island.
@@ -27,10 +29,44 @@ final class GolfLiveActivityManager {
             current = Activity<GolfRoundAttributes>.activities.first
         }
 
-        if let activity = current {
+        // Der Platzname ist fest in der Live Activity – gehört sie zu einem
+        // anderen Platz (Vorbereitung eines anderen Platzes, liegengebliebene
+        // Runde), neu anlegen statt den falschen Namen weiterzuzeigen.
+        if let activity = current, activity.attributes.courseName == courseName {
             Task { await activity.update(.init(state: state, staleDate: nil)) }
         } else {
-            start(state: state, courseName: courseName)
+            replace(with: state, courseName: courseName)
+        }
+    }
+
+    /// Solange „Neue Runde“ offen ist: Live Activity mit „Runde starten“ und
+    /// den Einstellungen statt einer scheinbar schon laufenden Runde.
+    static func showSetup(_ setup: RoundSetup, totalHoles: Int) {
+        let state = GolfRoundAttributes.ContentState(
+            holeNumber: 1, totalHoles: totalHoles, strokes: 0, par: 0, setup: setup
+        )
+        if current == nil {
+            current = Activity<GolfRoundAttributes>.activities.first
+        }
+        if let activity = current, activity.attributes.courseName == setup.courseName {
+            guard activity.content.state != state else { return }
+            Task { await activity.update(.init(state: state, staleDate: nil)) }
+        } else {
+            replace(with: state, courseName: setup.courseName)
+        }
+    }
+
+    /// „Neue Runde“ ohne Start verlassen – Vorbereitungs-Activity entfernen.
+    /// Eine echte Runde bleibt unberührt.
+    static func endSetup() {
+        let activities = Activity<GolfRoundAttributes>.activities
+            .filter { $0.content.state.setup != nil }
+        guard !activities.isEmpty else { return }
+        if let c = current, c.content.state.setup != nil { current = nil }
+        Task {
+            for activity in activities {
+                await activity.end(nil, dismissalPolicy: .immediate)
+            }
         }
     }
 
@@ -60,6 +96,12 @@ final class GolfLiveActivityManager {
         NextHoleIntent.handler = {
             nextHole(in: container.mainContext)
         }
+        StartRoundIntent.handler = {
+            NotificationCenter.default.post(name: .liveActivityStartRound, object: nil)
+        }
+        // Frisch gestartete App: „Neue Runde“ ist nicht offen, eine
+        // liegengebliebene Vorbereitung würde nur noch einen toten Knopf zeigen.
+        endSetup()
     }
 
     /// Loch, auf dem eine wieder geöffnete Runde weitergeht: das der Live
@@ -70,6 +112,7 @@ final class GolfLiveActivityManager {
     static func resumeIndex(for round: Round) -> Int {
         guard !round.isComplete,
               let activity = current ?? Activity<GolfRoundAttributes>.activities.first,
+              activity.content.state.setup == nil,
               activity.attributes.courseName == (round.course?.name ?? "GolfTrack")
         else { return 0 }
         let sorted = round.holeScores.sorted { $0.holeNumber < $1.holeNumber }
@@ -97,7 +140,8 @@ final class GolfLiveActivityManager {
         }
         guard let activity = current else { return }
         let state = activity.content.state
-        guard state.holeNumber < state.totalHoles,
+        guard state.setup == nil,
+              state.holeNumber < state.totalHoles,
               let round = openRound(in: context) else { return }
 
         let next = state.holeNumber + 1
@@ -122,7 +166,8 @@ final class GolfLiveActivityManager {
         guard let activity = current else { return }
         let state = activity.content.state
 
-        guard let round = openRound(in: context),
+        guard state.setup == nil,
+              let round = openRound(in: context),
               let score = round.holeScores.first(where: { $0.holeNumber == state.holeNumber })
         else { return }
 
@@ -132,6 +177,20 @@ final class GolfLiveActivityManager {
         var newState = state
         newState.strokes = score.strokes
         Task { await activity.update(.init(state: newState, staleDate: nil)) }
+    }
+
+    /// Beendet alle bestehenden Live Activities und legt eine neue an.
+    private static func replace(with state: GolfRoundAttributes.ContentState, courseName: String) {
+        let old = Activity<GolfRoundAttributes>.activities
+        current = nil
+        if !old.isEmpty {
+            Task {
+                for activity in old {
+                    await activity.end(nil, dismissalPolicy: .immediate)
+                }
+            }
+        }
+        start(state: state, courseName: courseName)
     }
 
     private static func start(state: GolfRoundAttributes.ContentState, courseName: String) {

@@ -80,14 +80,79 @@ private struct NextHoleButton: View {
     }
 }
 
+/// Solange die Runde nur eingestellt ist: startet sie und öffnet die App.
+private struct StartRoundButton: View {
+    var height: CGFloat = 52
+
+    var body: some View {
+        Button(intent: StartRoundIntent()) {
+            HStack(spacing: 8) {
+                Image(systemName: "flag.fill")
+                    .font(.system(size: 18, weight: .bold))
+                Text("Runde starten")
+                    .font(.system(size: 17, weight: .bold, design: .rounded))
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.75)
+            }
+            .foregroundStyle(darkText)
+            .frame(maxWidth: .infinity)
+            .frame(height: height)
+            .background(gold, in: RoundedRectangle(cornerRadius: 16, style: .continuous))
+        }
+        .buttonStyle(.plain)
+    }
+}
+
+/// Eingestellt, aber noch nicht gestartet: keine Zählknöpfe, damit niemand
+/// meint, die Runde laufe schon.
+private struct SetupView: View {
+    let setup: RoundSetup
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 12) {
+            VStack(alignment: .leading, spacing: 3) {
+                HStack(spacing: 4) {
+                    Image(systemName: "pause.circle")
+                    Text("Noch nicht gestartet")
+                }
+                .font(.caption2.weight(.semibold))
+                .foregroundStyle(textSec)
+
+                Text(setup.courseName)
+                    .font(.system(size: 20, weight: .heavy, design: .rounded))
+                    .foregroundStyle(.white)
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.8)
+
+                Text(setup.details.joined(separator: " · "))
+                    .font(.caption)
+                    .foregroundStyle(gold)
+                    .lineLimit(2)
+            }
+            .frame(maxWidth: .infinity, alignment: .leading)
+
+            StartRoundButton()
+        }
+        .padding(14)
+    }
+}
+
 // MARK: - Lock Screen Banner
 
 struct GolfLockScreenView: View {
     let context: ActivityViewContext<GolfRoundAttributes>
 
     var body: some View {
+        if let setup = context.state.setup {
+            SetupView(setup: setup)
+        } else {
+            roundView
+        }
+    }
+
+    private var roundView: some View {
         let state = context.state
-        VStack(spacing: 12) {
+        return VStack(spacing: 12) {
             HStack(alignment: .center, spacing: 12) {
                 // Links: Loch
                 VStack(alignment: .leading, spacing: 2) {
@@ -161,7 +226,10 @@ struct GolfLiveActivity: Widget {
                 .activitySystemActionForegroundColor(gold)
                 .environment(\.colorScheme, .dark)
         } dynamicIsland: { context in
-            DynamicIsland {
+            if let setup = context.state.setup {
+                return setupIsland(setup)
+            }
+            return DynamicIsland {
                 DynamicIslandExpandedRegion(.leading) {
                     VStack(alignment: .leading, spacing: 0) {
                         Text("Loch")
@@ -221,5 +289,40 @@ struct GolfLiveActivity: Widget {
             .widgetURL(URL(string: "golftrack://home"))
             .keylineTint(gold)
         }
+    }
+
+    private func setupIsland(_ setup: RoundSetup) -> DynamicIsland {
+        DynamicIsland {
+            DynamicIslandExpandedRegion(.center) {
+                VStack(spacing: 2) {
+                    Text(setup.courseName)
+                        .font(.headline)
+                        .lineLimit(1)
+                    Text(setup.details.joined(separator: " · "))
+                        .font(.caption)
+                        .foregroundStyle(textSec)
+                        .lineLimit(1)
+                }
+            }
+            DynamicIslandExpandedRegion(.bottom) {
+                StartRoundButton(height: 46)
+                    .padding(.horizontal, 4)
+                    .padding(.top, 4)
+            }
+        } compactLeading: {
+            Image(systemName: "figure.golf")
+                .font(.caption.bold())
+                .foregroundStyle(gold)
+        } compactTrailing: {
+            Image(systemName: "flag.fill")
+                .font(.caption.bold())
+                .foregroundStyle(textSec)
+        } minimal: {
+            Image(systemName: "figure.golf")
+                .font(.caption.bold())
+                .foregroundStyle(gold)
+        }
+        // Kein widgetURL: Tippen öffnet die App dort, wo sie steht – auf „Neue Runde“.
+        .keylineTint(gold)
     }
 }

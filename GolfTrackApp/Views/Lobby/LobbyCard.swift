@@ -69,7 +69,8 @@ struct LobbyCard: View {
         }
         .onDisappear { lobby.pauseIfIdle() }
         .onChange(of: lobby.state?.courseName) { _, _ in adoptHostCourse() }
-        .onChange(of: selectedCourse) { _, course in
+        .onChange(of: selectedCourse?.persistentModelID) { _, _ in
+            let course = selectedCourse
             // Gastgeber wechselt den Platz → Gäste ziehen mit. Gäste selbst
             // springen auf den Platz der Lobby zurück.
             if lobby.isHost, let course {

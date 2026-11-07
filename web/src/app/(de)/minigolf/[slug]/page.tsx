@@ -3,6 +3,8 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Footer, Header } from "@/components/Chrome";
 import { CourseHintList } from "@/components/CourseHintList";
+import { JsonLd, courseDescription, courseSchema } from "@/components/JsonLd";
+import { OG_IMAGE } from "@/components/Shell";
 import { getCourse } from "@/lib/courses";
 import { PLAY_URL, SITE_URL } from "@/i18n/routes";
 
@@ -27,10 +29,18 @@ export async function generateMetadata({
 
   return {
     title: `${course.name} · Minigolf mit GolfTrack`,
-    description:
-      course.welcome ||
-      `Zähle deine Runde auf der Anlage ${course.name} mit GolfTrack mit – Bahn für Bahn, für die ganze Gruppe.`,
+    description: courseDescription(course),
     alternates: { canonical: `${SITE_URL}/minigolf/${course.slug}` },
+    // Eigene Vorschau, sonst erbt die Seite Titel und Adresse der Startseite.
+    openGraph: {
+      title: course.name,
+      description: courseDescription(course),
+      url: `${SITE_URL}/minigolf/${course.slug}`,
+      siteName: "GolfTrack",
+      locale: "de-DE",
+      type: "website",
+      images: [OG_IMAGE],
+    },
     robots: { index: true, follow: true },
   };
 }
@@ -43,6 +53,7 @@ export default async function MinigolfLandingPage({ params }: PageProps<"/minigo
 
   return (
     <>
+      <JsonLd data={courseSchema(course)} />
       <Header lang="de" />
       <main className="mx-auto max-w-3xl px-5 pt-12 pb-20 text-center sm:px-8 sm:pt-16">
         <p className="marginal">Minigolf · {course.holes} Bahnen</p>

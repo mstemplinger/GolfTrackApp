@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { pageMetadata } from "@/components/Shell";
 import { t } from "@/i18n/content";
+import { JsonLd, faqSchema } from "@/components/JsonLd";
 import { Support } from "@/views/Support";
 
 export const metadata: Metadata = pageMetadata("en", "support", {
@@ -9,5 +10,10 @@ export const metadata: Metadata = pageMetadata("en", "support", {
 });
 
 export default function Page() {
-  return <Support lang="en" />;
+  return (
+    <>
+      <JsonLd data={faqSchema("en")} />
+      <Support lang="en" />
+    </>
+  );
 }

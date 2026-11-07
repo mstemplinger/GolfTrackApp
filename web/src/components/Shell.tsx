@@ -4,6 +4,9 @@ import { t } from "@/i18n/content";
 import { SITE_URL, alternatePath, path, type Lang, type RouteKey } from "@/i18n/routes";
 import "@/app/globals.css";
 
+/** Vorschaubild für geteilte Links (1200×630, liegt in `public/`). */
+export const OG_IMAGE = { url: "/og.png", width: 1200, height: 630, alt: "GolfTrack" };
+
 /** Gemeinsames Grundgerüst beider Sprachfassungen. */
 export function Document({ lang, children }: { lang: Lang; children: React.ReactNode }) {
   return (
@@ -44,7 +47,8 @@ export function pageMetadata(
       siteName: "GolfTrack",
       locale: copy.meta.locale,
       type: "website",
+      images: [OG_IMAGE],
     },
-    twitter: { card: "summary_large_image", title, description },
+    twitter: { card: "summary_large_image", title, description, images: [OG_IMAGE.url] },
   };
 }

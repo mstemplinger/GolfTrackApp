@@ -4,6 +4,8 @@ import { notFound } from "next/navigation";
 import { Footer, Header } from "@/components/Chrome";
 import { CourseHintList } from "@/components/CourseHintList";
 import { CourseTees } from "@/components/CourseTees";
+import { JsonLd, courseDescription, courseSchema } from "@/components/JsonLd";
+import { OG_IMAGE } from "@/components/Shell";
 import { getCourse } from "@/lib/courses";
 import { APP_STORE_URL, PLAY_URL, SITE_URL } from "@/i18n/routes";
 
@@ -28,10 +30,18 @@ export async function generateMetadata({
 
   return {
     title: `${course.name} · Golf mit GolfTrack`,
-    description:
-      course.welcome ||
-      `Zähle deine Runde auf ${course.name} mit GolfTrack mit – Loch für Loch, gegen Par.`,
+    description: courseDescription(course),
     alternates: { canonical: `${SITE_URL}/golf/${course.slug}` },
+    // Eigene Vorschau, sonst erbt die Seite Titel und Adresse der Startseite.
+    openGraph: {
+      title: course.name,
+      description: courseDescription(course),
+      url: `${SITE_URL}/golf/${course.slug}`,
+      siteName: "GolfTrack",
+      locale: "de-DE",
+      type: "website",
+      images: [OG_IMAGE],
+    },
     robots: { index: true, follow: true },
   };
 }
@@ -48,6 +58,7 @@ export default async function GolfLandingPage({ params }: PageProps<"/golf/[slug
 
   return (
     <>
+      <JsonLd data={courseSchema(course)} />
       <Header lang="de" />
       <main className="mx-auto max-w-3xl px-5 py-20 text-center sm:px-8">
         <p className="marginal">Golfplatz</p>

@@ -30,10 +30,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: 0.4,
   });
 
-  const minigolf = await listCourses({ status: "approved", kind: "minigolf", limit: 1000 });
-  for (const course of minigolf) {
+  // Golf- und Minigolfplätze; die Grenze liegt weit über dem heutigen Bestand
+  // (gut 800 Golfplätze), eine Sitemap darf bis 50.000 Adressen haben.
+  const courses = await listCourses({ status: "approved", limit: 10000 });
+  for (const course of courses) {
     pages.push({
-      url: `${SITE_URL}/minigolf/${course.slug}`,
+      url: `${SITE_URL}/${course.kind === "minigolf" ? "minigolf" : "golf"}/${course.slug}`,
       lastModified: new Date(course.updatedAt),
       changeFrequency: "monthly",
       priority: 0.5,

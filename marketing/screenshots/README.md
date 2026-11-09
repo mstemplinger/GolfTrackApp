@@ -3,6 +3,13 @@
 Aufgenommen am 08.08.2026 im iPhone-17-Pro-Simulator (iOS, 402×874 pt / 1206×2622 px),
 Statusleiste auf 09:41 · voller Empfang · geladener Akku gesetzt (App-Store-Konvention).
 
+**Neu aufgenommen am 03.11.2026** (App-Stand 2.6, ohne Glühbirne): die neun Bilder,
+die die Website zeigt – `01`, `02`, `06`, `08`, `09`, `12`, `18`, `19`, `20` –, jeweils
+auf Deutsch und Englisch. Für `19`/`20` steht der Simulator am ersten Abschlag von
+Eichenried (`xcrun simctl location <udid> set 48.2842,11.8060`), die Runde ist über
+„Neue Runde → Runde starten“ angelegt, damit keine Tableiste darüberliegt. Die übrigen
+Dateien stammen noch vom 08.08.2026.
+
 Zwei Sprachfassungen: `de/` und `en/`. Englisch starten mit
 `-AppleLanguages '(en-GB)' -AppleLocale en_GB`, Inhalte statt Kaufseite mit
 `-unlockAll` (nur DEBUG). Die Website wählt die Fassung nach Sprache und fällt
@@ -89,3 +96,18 @@ nimmt Apple dort nicht an. Bisher nur die fünf Bilder der Produktseite *Platzre
 `SIMCTL_CHILD_GOLFTRACK_DEEPLINK="golftrack://platzreife"`, Standort per
 `xcrun simctl location <udid> set 48.137,11.575` (sonst lädt das Wetter auf der Startseite nicht),
 Abspeichern mit `marketing/shoot.sh` (prüft die Größe).
+
+## App-Store-Bilder 6,9 Zoll (`de-69/`, `en-69/`) – Stand 04.11.2026
+
+Neu aufgenommen im iPhone 17 Pro Max (iOS 26.5) mit `marketing/appstore/capture.sh`
+(startet die App frisch mit `-seedDemoData YES -unlockAll`, Statusleiste 9:41):
+`01-home`, `02-profil-handicap` (nur de), `19-live-scorecard` (`GOLFTRACK_OPEN=round`,
+Standort Eichenried), `24-mitspieler` (`GOLFTRACK_OPEN=roundPartners`),
+`25-driving-range` (`GOLFTRACK_OPEN=range`, danach sieben Bälle von Hand eingetippt),
+`22-platzreife-uebersicht` (Deep Link), `26-schlaegerwahl` (Schlägerblatt nach „+“).
+
+Daraus macht `marketing/appstore/store-shots.mjs` die gestalteten Store-Bilder
+(Überschrift + Gerät auf App-Hintergrund) nach `marketing/appstore/out/<sprache>/`.
+Fehlt ein Bild in `<sprache>-69/`, nimmt der Generator die Website-Aufnahme derselben
+Sprache (`06`, `09`, `12` kommen so aus `de/`/`en/`). `event-banners.mjs` baut die
+Bilder für In-App-Events (1920×1080 Karte, 1080×1920 Detailseite, ohne Schrift).

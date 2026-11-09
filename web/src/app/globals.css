@@ -147,6 +147,21 @@
     height: auto;
     border-radius: 2.05rem;
   }
+  /* Dynamic Island. Simulator-Aufnahmen enthalten sie nicht, die Statusleiste
+     lässt aber Platz dafür. Maße vom iPhone 17 Pro (402 × 874 pt): 126 × 37 pt,
+     11 pt unter der Oberkante. */
+  .phone::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    top: calc(0.4rem + (100% - 0.8rem) * 0.0126);
+    width: calc((100% - 0.8rem) * 0.313);
+    aspect-ratio: 126 / 37;
+    transform: translateX(-50%);
+    border-radius: 999px;
+    background: #000;
+    pointer-events: none;
+  }
 
   /* Apple Watch: Gehäuse mit Krone rechts. Der Screenshot ist nur der Schirm. */
   .watch {

@@ -1,15 +1,27 @@
 import Link from "next/link";
 import { Footer, Header, PageHeader } from "@/components/Chrome";
-import { listCourses, type CourseRecord } from "@/lib/courses";
+import { listCourses } from "@/lib/courses";
 import { t } from "@/i18n/content";
 import { path, type Lang } from "@/i18n/routes";
 import { AushangPicker } from "@/components/AushangPicker";
+import { DirectoryList, type DirectoryEntry } from "@/components/DirectoryList";
 
 export async function Directory({ lang }: { lang: Lang }) {
   const copy = t(lang).directory;
   const courses = await listCourses({ status: "approved", limit: 1000 });
-  const golf = courses.filter((course) => course.kind === "golf");
-  const minigolf = courses.filter((course) => course.kind === "minigolf");
+  // Nur was die Liste anzeigt – die Suche läuft im Browser.
+  const entries: DirectoryEntry[] = courses.map((course) => ({
+    id: course.id,
+    slug: course.slug,
+    kind: course.kind,
+    name: course.name,
+    location: course.location ?? null,
+    holes: course.holes,
+    parTotal: course.holeData.reduce((sum, hole) => sum + (hole.par ?? 0), 0),
+    courseRating: course.courseRating ?? null,
+    slopeRating: course.slopeRating ?? null,
+    picker: <AushangPicker slug={course.slug} country={course.country} copy={copy} />,
+  }));
 
   return (
     <>
@@ -25,8 +37,7 @@ export async function Directory({ lang }: { lang: Lang }) {
           </div>
         ) : (
           <>
-            {golf.length ? <CourseGroup title={copy.golf} courses={golf} lang={lang} /> : null}
-            {minigolf.length ? <CourseGroup title={copy.minigolf} courses={minigolf} lang={lang} /> : null}
+            <DirectoryList entries={entries} copy={copy} />
             <div className="mt-14 flex flex-wrap items-center gap-x-6 gap-y-3 border-t rule pt-8">
               <Link href={path("submit", lang)} className="btn-brass">
                 {copy.submitCta}
@@ -49,66 +60,5 @@ export async function Directory({ lang }: { lang: Lang }) {
       </main>
       <Footer lang={lang} />
     </>
-  );
-}
-
-function CourseGroup({
-  title,
-  courses,
-  lang,
-}: {
-  title: string;
-  courses: CourseRecord[];
-  lang: Lang;
-}) {
-  const copy = t(lang).directory;
-  return (
-    <section className="mt-14 first:mt-0">
-      <h2 className="marginal flex items-baseline gap-2">
-        {title}
-        <span className="text-cream/45">{courses.length}</span>
-      </h2>
-      <ul className="mt-4 grid gap-px overflow-hidden rounded-sm border rule bg-brass/15 sm:grid-cols-2 lg:grid-cols-3">
-        {courses.map((course) => {
-          const pars = course.holeData.map((hole) => hole.par ?? 0);
-          const parTotal = pars.reduce((sum, value) => sum + value, 0);
-          const body = (
-            <>
-              <h3 className="font-display text-xl leading-snug tracking-tight">{course.name}</h3>
-              {course.location ? <p className="mt-1 text-sm text-cream/65">{course.location}</p> : null}
-              <dl className="mt-4 flex flex-wrap gap-x-5 gap-y-1.5 font-mono text-xs text-cream/60">
-                <span>
-                  {course.holes} {course.kind === "golf" ? copy.holes : copy.lanes}
-                </span>
-                {parTotal ? (
-                  <span>
-                    {copy.par} {parTotal}
-                  </span>
-                ) : null}
-                {course.courseRating && course.slopeRating ? (
-                  <span>
-                    {course.courseRating.toFixed(1)} / {course.slopeRating}
-                  </span>
-                ) : null}
-              </dl>
-            </>
-          );
-
-          return (
-            <li key={course.id} className="bg-black/25 p-6 transition-colors hover:bg-white/[0.04]">
-              {/* Golf und Minigolf gleichberechtigt: beide haben eine Landeseite
-                  und beide brauchen ihren Aushang. */}
-              <Link href={`/${course.kind}/${course.slug}`} className="block">
-                {body}
-              </Link>
-              {/* Aushang für die Anlage: Sprachen wählen, PDF laden. */}
-              <div className="mt-4">
-                <AushangPicker slug={course.slug} country={course.country} copy={copy} />
-              </div>
-            </li>
-          );
-        })}
-      </ul>
-    </section>
   );
 }

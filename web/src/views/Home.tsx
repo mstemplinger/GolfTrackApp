@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Footer, Header, SectionHeading } from "@/components/Chrome";
+import { Footer, Header, SectionHeading, Sentences } from "@/components/Chrome";
 import { PhoneShot, WatchShot } from "@/components/Device";
 import { HoleMap } from "@/components/HoleMap";
 import { Scorecard } from "@/components/Scorecard";
@@ -42,7 +42,7 @@ export function Home({ lang }: { lang: Lang }) {
                 className="reveal mt-6 max-w-md text-lg leading-relaxed text-cream/75"
                 style={{ animationDelay: "160ms" }}
               >
-                {home.lead}
+                <Sentences text={home.lead} />
               </p>
               <div className="reveal mt-9 flex flex-wrap gap-3" style={{ animationDelay: "240ms" }}>
                 <a href={APP_STORE_URL} target="_blank" rel="noreferrer" className="btn-brass">
@@ -81,7 +81,7 @@ export function Home({ lang }: { lang: Lang }) {
         {/* 02 — Ablauf: vier Schritte als Filmstreifen */}
         <section id="runde" className="border-t rule">
           <div className="mx-auto max-w-6xl px-5 py-16 sm:px-8 sm:py-20">
-            <SectionHeading index={home.roundEyebrow} title={home.roundTitle} lead={home.roundLead} />
+            <SectionHeading index={home.roundEyebrow} title={home.roundTitle} />
             {/*
               Am Handy steht das Gerät über dem Text, ab 40rem daneben, ab
               48rem stehen die vier Schritte nebeneinander wie ein Filmstreifen.
@@ -96,7 +96,7 @@ export function Home({ lang }: { lang: Lang }) {
                   <div className="md:mt-5">
                     <p className="marginal">{String(index + 1).padStart(2, "0")}</p>
                     <h3 className="mt-2 font-display text-xl tracking-tight">{step.title}</h3>
-                    <p className="mt-2 text-sm leading-relaxed text-cream/65">{step.body}</p>
+                    <p className="mt-2 text-sm leading-relaxed text-cream/65"><Sentences text={step.body} /></p>
                   </div>
                 </li>
               ))}
@@ -113,7 +113,7 @@ export function Home({ lang }: { lang: Lang }) {
                 <li key={feature.title} className="bg-black/25 p-7 transition-colors hover:bg-white/[0.04]">
                   <span className="marginal">{String(index + 1).padStart(2, "0")}</span>
                   <h3 className="mt-3 font-display text-xl tracking-tight">{feature.title}</h3>
-                  <p className="mt-2.5 text-sm leading-relaxed text-cream/65">{feature.body}</p>
+                  <p className="mt-2.5 text-sm leading-relaxed text-cream/65"><Sentences text={feature.body} /></p>
                 </li>
               ))}
             </ul>
@@ -138,7 +138,7 @@ export function Home({ lang }: { lang: Lang }) {
                 ))}
               </ul>
               <p className="mt-7 max-w-md border-l-2 border-brass/40 pl-4 text-sm leading-relaxed text-cream/55">
-                {home.watchNote}
+                <Sentences text={home.watchNote} />
               </p>
             </div>
           </div>
@@ -224,11 +224,11 @@ export function Home({ lang }: { lang: Lang }) {
                 {home.pricePlans.map((plan) => (
                   <div key={plan.title} className="grid gap-1 py-5 sm:grid-cols-[8rem_1fr] sm:gap-6">
                     <dt className="font-display text-lg tracking-tight text-brass-soft">{plan.title}</dt>
-                    <dd className="text-sm leading-relaxed text-cream/65">{plan.body}</dd>
+                    <dd className="text-sm leading-relaxed text-cream/65"><Sentences text={plan.body} /></dd>
                   </div>
                 ))}
               </dl>
-              <p className="mt-6 text-sm text-cream/55">{home.priceNote}</p>
+              <p className="mt-6 text-sm text-cream/55"><Sentences text={home.priceNote} /></p>
             </div>
             <div className="flex justify-center lg:justify-end">
               <PhoneShot shot="12-training" alt={home.priceShotAlt} lang={lang} width={268} />
@@ -246,7 +246,7 @@ export function Home({ lang }: { lang: Lang }) {
                   {home.coursesPoints.map((point) => (
                     <div key={point.title} className="bg-black/25 p-6">
                       <dt className="font-display text-lg tracking-tight text-brass-soft">{point.title}</dt>
-                      <dd className="mt-1.5 text-sm leading-relaxed text-cream/65">{point.body}</dd>
+                      <dd className="mt-1.5 text-sm leading-relaxed text-cream/65"><Sentences text={point.body} /></dd>
                     </div>
                   ))}
                 </dl>
@@ -269,7 +269,7 @@ export function Home({ lang }: { lang: Lang }) {
             <h2 className="mx-auto max-w-2xl font-display text-3xl leading-[1.08] tracking-[-0.03em] sm:text-4xl">
               {home.closingTitle}
             </h2>
-            <p className="mt-4 text-cream/70">{home.closingBody}</p>
+            <p className="mt-4 text-cream/70"><Sentences text={home.closingBody} /></p>
             <p className="mt-9">
               <a href={APP_STORE_URL} target="_blank" rel="noreferrer" className="btn-brass">
                 <AppleMark />

@@ -9,9 +9,9 @@ import type { Lang } from "./routes";
 const de = {
   meta: {
     locale: "de-DE",
-    title: "GolfTrack – Scorekarte, Handicap und Laufspur für deine Runde",
+    title: "GolfTrack – Scorekarte, Handicap und Schlagkarte für deine Golfrunde",
     description:
-      "GolfTrack zeichnet deine Runde auf: Scorekarte, WHS-Handicap, Schlagpositionen und Statistiken. Für iPhone und Apple Watch. Golf- und Minigolfanlagen können sich hier eintragen.",
+      "Zähl deine Golfrunde am iPhone oder an der Apple Watch. GolfTrack führt die Scorekarte, rechnet dein WHS-Handicap und zeigt, wo jeder Schlag gelandet ist. Kostenlos und ohne Konto. Golf- und Minigolfanlagen tragen sich hier ein.",
   },
   nav: {
     home: "Start",
@@ -28,116 +28,114 @@ const de = {
     menuClose: "Menü schließen",
   },
   home: {
-    eyebrow: "iPhone · Apple Watch",
+    eyebrow: "iPhone · Apple Watch · Android",
     title: "Deine Runde,\nLoch für Loch.",
-    lead: "Jede Runde aufzeichnen, jeden Schlag verorten, das Handicap automatisch fortschreiben. Dieser Teil kostet nichts und braucht kein Abo.",
+    lead: "Schläge zählen, Handicap ausrechnen lassen und hinterher sehen, wo der Drive gelandet ist. Ohne Konto und ohne Abo.",
     ctaPrimary: "Im App Store laden",
     ctaSecondary: "Anlage eintragen",
-    heroShotAlt: "Startbildschirm von GolfTrack mit Handicap-Index, letzter Runde und Wetter am Platz",
-    scorecardCaption: "Wie in der App: Loch, Par, Schläge.",
+    heroShotAlt: "Startseite von GolfTrack mit Handicap-Index, letzter Runde und Wetter am Platz",
+    scorecardCaption: "So steht es auch in der App: Loch, Par, Schläge.",
     scorecardLabels: { title: "Scorekarte", hole: "Loch", par: "Par", me: "Ich", out: "Out" },
 
     roundEyebrow: "02 — Ablauf",
-    roundTitle: "So läuft eine Runde",
-    roundLead:
-      "Vom Anlegen bis zur fertigen Karte sind es vier Bildschirme; die Bilder unten stammen aus der App selbst.",
+    roundTitle: "Eine Runde mit GolfTrack",
     roundSteps: [
       {
         shot: "18-neue-runde",
         title: "Anlegen",
-        body: "Platz, Bag, Datum, Spielform. 97 Golfplätze sind eingebaut, weitere kommen aus dem Verzeichnis oder der weltweiten Suche; gesucht wird nach Entfernung. Die Schläger kommen aus deinem Bag.",
-        alt: "Runden-Setup mit Platzauswahl, Bag, Datum und Spielmodus",
+        body: "Platz wählen, Bag und Spielform einstellen, fertig. Wenn du schon am Platz stehst, schlägt GolfTrack ihn dir von selbst vor. Fast 1000 Plätze stehen in unserer Datenbank.",
+        alt: "Neue Runde anlegen mit Platz, Bag, Datum und Spielform",
       },
       {
         shot: "19-live-scorecard",
         title: "Loch für Loch",
-        body: "Entfernung zur Fahne, eine Schlägerempfehlung aus deinen gemessenen Distanzen, Schläge über zwei Knöpfe. Putts, Fairway und Grün liegen im selben Bildschirm.",
-        alt: "Aktuelles Loch mit 350 Metern zur Fahne, Schlägerempfehlung Driver und Schlagzähler",
+        body: "Oben die Entfernung zur Fahne und ein Schläger, der zu deinen gemessenen Weiten passt. Darunter zählst du mit Plus und Minus, Putts, Fairway und Grün gleich daneben.",
+        alt: "Aktuelles Loch mit Entfernung zur Fahne, Schlägerempfehlung und Schlagzähler",
       },
       {
         shot: "20-scorecard-mini",
         title: "Zwischenstand",
-        body: "Unten läuft die Scorekarte mit. Damit siehst du ohne Wechsel des Bildschirms, wo du gegenüber Par stehst.",
-        alt: "Loch-Ansicht mit eingeblendeter Mini-Scorekarte am unteren Rand",
+        body: "Unten läuft die Scorekarte mit, ein Blick genügt. Auf dem Sperrbildschirm zählst du über die Live Activity weiter, ohne das iPhone zu entsperren.",
+        alt: "Loch-Ansicht mit eingeblendeter Scorekarte am unteren Rand",
       },
       {
         shot: "08-rundendetail",
         title: "Danach",
-        body: "Die volle Karte, dazu die Schlagkarte, Putts, Fairwaytreffer und die Strecke, die du gelaufen bist.",
-        alt: "Rundendetail mit Scorekarten-Tabelle und Schlagkarte",
+        body: "Die ganze Karte, die Schlagkarte und die Strecke, die du gelaufen bist. Das Ergebnis schickst du als Bild oder Link an deinen Flight.",
+        alt: "Rundendetail mit Scorekarte und Schlagkarte",
       },
     ],
 
     featuresEyebrow: "03 — App",
-    featuresTitle: "Was GolfTrack mitschreibt",
+    featuresTitle: "Was drin ist",
     features: [
       {
         title: "Scorekarte",
-        body: "Schläge, Putts, Fairway und Grün pro Loch am iPhone, die Schläge auch an der Uhr. Auch für mehrere Mitspieler.",
+        body: "Für dich und deine Mitspieler, in 14 Spielformen von Zählspiel bis Scramble. Wer vorne liegt, rechnet die App aus.",
       },
       {
         title: "Handicap nach WHS",
-        body: "Aus deinen gewerteten Runden rechnet die App dein Handicap fort. Course und Slope Rating des Platzes fließen ein.",
+        body: "Nach jeder gewerteten Runde steht dein neuer Index da, gerechnet mit Course und Slope Rating des Platzes.",
       },
       {
-        title: "Laufspur & Schlagkarte",
-        body: "Deine Wege über den Platz, jeder Schlag verortet. Daraus schätzt die App Abschlag, Fahne und Fairwayverlauf.",
+        title: "Schlagkarte",
+        body: "Beim Schlag einmal tippen, den Ort merkt sich das GPS. Hinterher siehst du jedes Loch mit allen Schlägen auf der Karte.",
       },
       {
-        title: "Statistiken",
-        body: "Schlägerdistanzen, Fairwaytrefferquote, Putts pro Runde, Entwicklung über die Saison.",
+        title: "Minigolf",
+        body: "Zählkarte für die ganze Gruppe und die 28 Normbahnen als 3D-Modell zum Drehen. Am QR-Code der Anlage geht es auch ohne installierte App los.",
       },
       {
-        title: "Minigolf-Modus",
-        body: "Bahn für Bahn zählen, für die ganze Gruppe. Wer den QR-Code an der Anlage scannt, startet die Runde mit der richtigen Bahnenzahl.",
+        title: "Platzreife-Theorie",
+        body: "150 Prüfungsfragen, Lernrunden und eine Probeprüfung wie im Club. Was du falsch hattest, kommt so lange wieder, bis es sitzt.",
       },
       {
-        title: "Wetter am Platz",
-        body: "Wind, Regenwahrscheinlichkeit und Temperatur für die nächsten Stunden, abgefragt für den Ort des Platzes.",
+        title: "Regeln und Tipps",
+        body: "50 Golfregeln mit Diagrammen zum Nachschlagen. Dazu 20 Tipps mit kleinen Animationen, von Griff und Stand bis zum Spiel bei Wind.",
       },
     ],
     watchEyebrow: "04 — Apple Watch",
     watchTitle: "Am Handgelenk",
     watchBody:
-      "Die Uhr trägt den Teil, den man mitten im Spiel braucht. Runde starten, Schläge zählen, Schlagpunkt setzen, nach dem letzten Loch die Übersicht.",
+      "Das iPhone bleibt im Bag. Auf der Uhr startest du die Runde, zählst deine Schläge und setzt den Schlagpunkt. Nach dem letzten Loch zeigt sie dir die Übersicht.",
     watchPoints: [
       "Golf oder Minigolf, 9 oder 18 Löcher",
-      "Schläge zählen über − und +",
-      "Schlagpunkt per GPS setzen",
-      "Rundenübersicht am Ende",
+      "Schläge mit − und + zählen",
+      "Schwungerkennung zählt mit",
+      "Schlagpunkt per GPS",
     ],
     watchNote:
-      "Putts, Fairway- und Grüntreffer trägst du am iPhone nach. Die Watch-App gibt es nur auf Deutsch.",
+      "Putts, Fairway und Grün trägst du danach am iPhone ein. Die Uhr spricht bisher nur Deutsch.",
     watchAlts: [
       "Apple Watch: Rundenstart mit Golf oder Minigolf und 9 oder 18 Löchern",
       "Apple Watch: Schlagzähler mit Minus, Weiter und Plus",
     ],
 
     trackingEyebrow: "05 — GPS",
-    trackingTitle: "Positions-Tracking",
+    trackingTitle: "Dein Weg über den Platz",
     trackingBody:
-      "GolfTrack kann aufzeichnen, wo du während der Runde unterwegs warst, und daraus lernen, wie die Löcher liegen. Nach ein paar Runden zeigt die App die Entfernung zur Fahne, weil sie die Lage der Löcher aus deinen eigenen Wegen kennt.",
+      "Wenn du willst, merkt sich GolfTrack während der Runde, wo du langgegangen bist. Nach ein paar Runden weiß die App daraus, wo Abschlag und Grün jedes Lochs liegen, und zeigt dir die Entfernung zur Fahne auch auf Plätzen ohne Längenangaben.",
     trackingPoints: [
-      "Standardmäßig ausgeschaltet",
+      "Ab Werk ausgeschaltet",
       "Läuft nur während einer Runde",
-      "Daten bleiben auf deinem iPhone",
+      "Bleibt auf deinem iPhone",
       "Jederzeit löschbar",
     ],
-    trackingShotAlt: "Schlagkarte im Vollbild mit den Positionen aller Schläge eines Lochs",
+    trackingShotAlt: "Schlagkarte mit den Positionen aller Schläge eines Lochs",
 
     statsEyebrow: "06 — Zahlen",
     statsTitle: "Handicap und Statistik",
     statsBody:
-      "Nach jeder gewerteten Runde rechnet die App den WHS-Index fort, mit Course und Slope Rating des gespielten Platzes. Daneben stehen die Werte, aus denen eine Saison besteht: Fairwaytreffer, Grüns in Regulation, Putts pro Runde, gemessene Distanz je Schläger.",
+      "Dein Index steht immer aktuell auf der Startseite. Im Profil siehst du, welche Runden gerade zählen. Die Statistik zeigt, wie oft du das Fairway triffst, wie viele Putts du brauchst und wie weit du mit jedem Schläger wirklich kommst.",
     statsAlts: [
       "Profil mit WHS-Handicap und den Score Differentials der letzten Runden",
-      "Diagramm des Score-Verlaufs über zehn Runden",
+      "Diagramm des Score-Verlaufs über die letzten Runden",
     ],
 
     modesEyebrow: "07 — Spielformen",
     modesTitle: "14 Spielformen",
     modesLead:
-      "Gewählt wird beim Anlegen der Runde, gerechnet wird danach von allein. Einige Namen stehen mehrfach da, weil dieselbe Form nach Zählspiel, Stableford oder Matchplay gewertet werden kann.",
+      "Die Spielform wählst du beim Anlegen, die Wertung übernimmt die App. Manche Namen stehen doppelt da, weil es sie als Zählspiel, Stableford oder Matchplay gibt.",
     modeGroups: [
       {
         title: "Einzeln",
@@ -169,40 +167,40 @@ const de = {
         ],
       },
     ],
-    modesFooter: "Dazu neun Achievements über Game Center.",
+    modesFooter: "Dazu neun Achievements im Game Center.",
 
     priceEyebrow: "08 — Kosten",
-    priceTitle: "Preise und Abos",
+    priceTitle: "Was es kostet",
     priceFree:
-      "Runden aufzeichnen, Scorekarte, Handicap und Statistiken sind kostenlos und brauchen kein Konto bei mir.",
+      "Scorekarte, Handicap, Statistik, Schlagkarte, Apple Watch, Minigolf, Regeln und Platzreife kosten nichts. Ein Konto brauchst du dafür nicht.",
     pricePlans: [
-      { title: "Pro monatlich", body: "5 € im Monat. Alle 17 Audio-Trainings, vom Griff bis zum Grün lesen, und keine Werbung." },
+      { title: "Pro monatlich", body: "5 € im Monat. Alle 17 Audio-Lektionen von den Grundlagen bis zum Putten, nach der Runde die passende vorgeschlagen, und keine Werbung." },
       { title: "Pro jährlich", body: "50 € im Jahr – dasselbe wie monatlich, gut zwei Monate günstiger." },
       { title: "Pro einmalig", body: "80 € einmal zahlen und für immer behalten, auch alle Lektionen, die noch dazukommen. Kein Abo." },
     ],
     priceNote: "Die Abos lassen sich jederzeit im App Store kündigen. Den genauen Preis in deiner Währung zeigt die App vor dem Kauf an.",
-    priceShotAlt: "Audio-Trainings nach Kategorien, mit Fortschritt je Einheit",
+    priceShotAlt: "Audio-Trainings nach Kategorien, mit Fortschritt je Lektion",
 
     coursesEyebrow: "09 — Anlagen",
     coursesTitle: "Für Golfclubs und Minigolfanlagen",
     coursesBody:
-      "Trag deine Anlage einmal ein: Löcher, Par, Stroke Index, Längen, Course und Slope Rating. Nach der Freigabe steht sie in der App, und Gäste wählen sie beim Rundenstart aus der Liste.",
+      "Trag deine Anlage einmal ein: Löcher, Par, Stroke Index, Längen je Abschlagfarbe, Course und Slope Rating. Nach der Freigabe finden Gäste sie in der App und spielen mit den richtigen Daten.",
     coursesPoints: [
-      { title: "Kostenlos", body: "Für die Anlage entstehen keine Kosten." },
-      { title: "Geprüft", body: "Jede Einsendung wird vor der Veröffentlichung von Hand kontrolliert." },
-      { title: "Änderbar", body: "Neue Längen oder ein neues Rating? Kurze Mail genügt." },
-      { title: "QR-Start für Minigolf", body: "Gäste scannen den Code an der Kasse und zählen sofort mit." },
+      { title: "Kostenlos", body: "Für die Anlage kostet der Eintrag nichts." },
+      { title: "Geprüft", body: "Ich sehe mir jede Einsendung an, bevor sie online geht." },
+      { title: "Änderbar", body: "Neue Längen oder ein neues Rating? Eine kurze Mail reicht." },
+      { title: "QR-Start für Minigolf", body: "Gäste scannen den Code am Eingang und zählen sofort, auch ohne die App. Den Aushang gibt es als PDF in sieben Sprachen." },
     ],
     coursesCta: "Anlage eintragen",
     directoryCta: "Alle Plätze ansehen",
 
-    closingTitle: "Die nächste Runde mitschreiben",
-    closingBody: "GolfTrack liegt kostenlos im App Store.",
-    closingNote: "Ab iOS 17.0. Die Watch-App braucht watchOS 11.0.",
+    closingTitle: "Nimm GolfTrack mit auf die nächste Runde",
+    closingBody: "Kostenlos im App Store und als APK zum Download.",
+    closingNote: "Ab iOS 17 und watchOS 11",
   },
   directory: {
     title: "Eingetragene Plätze",
-    lead: "Alle freigegebenen Anlagen. Die App lädt genau diese Liste.",
+    lead: "Alle freigegebenen Anlagen. GolfTrack lädt alle Daten aus dieser Liste.",
     empty: "Bisher ist keine Anlage freigegeben.",
     golf: "Golfplätze",
     minigolf: "Minigolfanlagen",
@@ -218,6 +216,8 @@ const de = {
     sheetHint: "Eine Sprache: Hochformat. Zwei oder drei: Querformat nebeneinander. Mehr: auf mehrere Blätter verteilt.",
     sheetButton: "PDF laden",
     sheetCodeOnly: "Nur QR-Code (SVG)",
+    search: "Platz oder Ort suchen",
+    noMatch: "Kein Platz passt zur Suche.",
   },
   submit: {
     title: "Anlage eintragen",
@@ -354,7 +354,7 @@ const de = {
       },
       {
         q: "Wie funktioniert der QR-Code an der Minigolfanlage?",
-        a: "Der Code enthält einen Link, der die App mit der richtigen Anlage und Bahnenzahl öffnet, sodass Gäste nach dem Scannen sofort zählen können.",
+        a: "Der Code öffnet GolfTrack gleich mit der richtigen Anlage und Bahnenzahl. Wer die App nicht hat, zählt trotzdem sofort los, weil sich eine kleine Fassung direkt aus dem Code startet.",
       },
     ],
   },
@@ -404,7 +404,7 @@ const de = {
     iphone: "Du hast ein iPhone?",
   },
   footer: {
-    tagline: "Scorekarte, Handicap und Laufspur für iPhone und Apple Watch.",
+    tagline: "Scorekarte, Handicap und Schlagkarte für iPhone und Apple Watch.",
     legal: "Rechtliches",
     product: "Produkt",
     forCourses: "Für Anlagen",
@@ -417,9 +417,9 @@ type Content = typeof de;
 const en: Content = {
   meta: {
     locale: "en-GB",
-    title: "GolfTrack – scorecard, handicap and shot map for your round",
+    title: "GolfTrack – scorecard, handicap and shot map for your golf round",
     description:
-      "GolfTrack records your round: scorecard, WHS handicap, shot positions and statistics. For iPhone and Apple Watch. Golf and minigolf venues can list themselves here.",
+      "Keep score on your iPhone or Apple Watch. GolfTrack runs the scorecard, works out your WHS handicap and shows where every shot landed. Free, no account needed. Golf and minigolf venues can list themselves here.",
   },
   nav: {
     home: "Home",
@@ -436,116 +436,114 @@ const en: Content = {
     menuClose: "Close menu",
   },
   home: {
-    eyebrow: "iPhone · Apple Watch",
+    eyebrow: "iPhone · Apple Watch · Android",
     title: "Your round,\nhole by hole.",
-    lead: "Record every round, place every shot, keep the handicap up to date. That part is free and needs no subscription.",
+    lead: "Count your strokes, let the app work out your handicap, and see afterwards where that drive actually went. No account, no subscription.",
     ctaPrimary: "Get it on the App Store",
     ctaSecondary: "List your venue",
     heroShotAlt: "GolfTrack home screen with handicap index, last round and weather at the course",
-    scorecardCaption: "Just like the app: hole, par, strokes.",
+    scorecardCaption: "Same as in the app: hole, par, strokes.",
     scorecardLabels: { title: "Scorecard", hole: "Hole", par: "Par", me: "Me", out: "Out" },
 
     roundEyebrow: "02 — A round",
-    roundTitle: "How a round runs",
-    roundLead:
-      "From setting it up to the finished card it is four screens; the pictures below come from the app itself.",
+    roundTitle: "A round with GolfTrack",
     roundSteps: [
       {
         shot: "18-neue-runde",
         title: "Set up",
-        body: "Course, bag, date, format. 97 courses are built in, more come from the directory or from worldwide search; you pick one by distance. The clubs come from your bag.",
-        alt: "Round setup with course selection, bag, date and game mode",
+        body: "Pick the course, set your bag and format, done. If you're already standing on a course, GolfTrack suggests it for you. Our database holds close to 1,000 venues.",
+        alt: "Setting up a new round with course, bag, date and format",
       },
       {
         shot: "19-live-scorecard",
         title: "Hole by hole",
-        body: "Distance to the pin, a club suggestion drawn from your measured distances, strokes on two buttons. Putts, fairway and green sit on the same screen.",
-        alt: "Current hole showing 350 metres to the pin, a driver suggestion and the stroke counter",
+        body: "At the top, the distance to the pin and a club that matches your measured distances. Below, you count with plus and minus, with putts, fairway and green right next to it.",
+        alt: "Current hole with distance to the pin, a club suggestion and the stroke counter",
       },
       {
         shot: "20-scorecard-mini",
         title: "Where you stand",
-        body: "The scorecard runs along the bottom, so your score against par is there without changing screens.",
-        alt: "Hole view with the mini scorecard shown along the bottom",
+        body: "The scorecard runs along the bottom, one glance is enough. On the lock screen you keep counting through the Live Activity without unlocking your phone.",
+        alt: "Hole view with the scorecard shown along the bottom",
       },
       {
         shot: "08-rundendetail",
         title: "Afterwards",
-        body: "The full card, plus the shot map, putts, fairways hit and the distance you walked.",
-        alt: "Round detail with the scorecard table and the shot map",
+        body: "The full card, the shot map and how far you walked. Send the result to your flight as a picture or a link.",
+        alt: "Round detail with the scorecard and the shot map",
       },
     ],
 
     featuresEyebrow: "03 — App",
-    featuresTitle: "What GolfTrack keeps track of",
+    featuresTitle: "What's inside",
     features: [
       {
         title: "Scorecard",
-        body: "Strokes, putts, fairways and greens per hole on the iPhone, strokes on the watch as well. Several players at once.",
+        body: "For you and your playing partners, in 14 game formats from stroke play to scramble. The app works out who's ahead.",
       },
       {
         title: "WHS handicap",
-        body: "Your handicap is carried forward from your counting rounds, using the course and slope rating of the course you played.",
+        body: "After every counting round your new index is there, calculated with the course and slope rating of the course.",
       },
       {
-        title: "Walking path & shot map",
-        body: "Your route across the course with every shot placed on it. From that the app works out tees, pins and the shape of each fairway.",
+        title: "Shot map",
+        body: "Tap once when you hit, GPS remembers the spot. Afterwards you see every hole with all your shots on the map.",
       },
       {
-        title: "Statistics",
-        body: "Club distances, fairways hit, putts per round, and how it all moves across the season.",
+        title: "Minigolf",
+        body: "A scorecard for the whole group and the 28 standard lanes as 3D models you can turn. At a venue's QR code you can start without installing the app.",
       },
       {
-        title: "Minigolf mode",
-        body: "Count lane by lane for the whole group. Scanning the QR code at the venue starts the round with the right number of lanes.",
+        title: "Golf theory test",
+        body: "150 exam questions for the German Platzreife, learning rounds and a mock exam like the one at the club. Questions are in German.",
       },
       {
-        title: "Weather on site",
-        body: "Wind, chance of rain and temperature for the next few hours, taken for the location of the course.",
+        title: "Rules and tips",
+        body: "50 golf rules with diagrams to look things up. Plus 20 tips with small animations, from grip and stance to playing in the wind.",
       },
     ],
     watchEyebrow: "04 — Apple Watch",
     watchTitle: "On your wrist",
     watchBody:
-      "The watch carries the part you need mid-play. Start the round, count strokes, drop a shot point, see the summary after the last hole.",
+      "Your phone stays in the bag. On the watch you start the round, count your strokes and mark where you hit from. After the last hole it shows you the summary.",
     watchPoints: [
       "Golf or minigolf, 9 or 18 holes",
       "Count strokes with − and +",
-      "Drop a shot point by GPS",
-      "Round summary at the end",
+      "Swing detection counts along",
+      "Mark your shot by GPS",
     ],
     watchNote:
-      "Putts, fairways and greens are entered on the iPhone afterwards. The watch app exists in German only.",
+      "Putts, fairways and greens go in on the iPhone afterwards. The watch app is German only for now.",
     watchAlts: [
       "Apple Watch: starting a round, choosing golf or minigolf and 9 or 18 holes",
       "Apple Watch: stroke counter with minus, next and plus",
     ],
 
     trackingEyebrow: "05 — GPS",
-    trackingTitle: "Position tracking",
+    trackingTitle: "Your path round the course",
     trackingBody:
-      "GolfTrack can record where you walked during a round and learn from it how the holes are laid out. After a few rounds it shows the distance to the pin, because it has worked out the layout from your own walks.",
+      "If you want, GolfTrack remembers where you walked during a round. After a few rounds it knows where the tee and green of each hole are, and shows you the distance to the pin even on courses without published lengths.",
     trackingPoints: [
       "Off by default",
       "Runs only during a round",
-      "Data stays on your iPhone",
-      "Delete it whenever you like",
+      "Stays on your iPhone",
+      "Delete it any time",
     ],
-    trackingShotAlt: "Full-screen shot map with the position of every shot on a hole",
+    trackingShotAlt: "Shot map with the position of every shot on a hole",
 
     statsEyebrow: "06 — Numbers",
     statsTitle: "Handicap and statistics",
     statsBody:
-      "After every counting round the app carries your WHS index forward, using the course and slope rating of the course you played. Next to it sit the numbers a season is made of: fairways hit, greens in regulation, putts per round, measured distance per club.",
+      "Your index is always up to date on the home screen. Your profile shows which rounds currently count. The statistics show how often you hit the fairway, how many putts you need and how far you really get with each club.",
     statsAlts: [
       "Profile with the WHS handicap and the score differentials of recent rounds",
-      "Chart of the score trend across ten rounds",
+      "Chart of the score trend over recent rounds",
     ],
 
     modesEyebrow: "07 — Formats",
     modesTitle: "14 game formats",
     modesLead:
-      "You choose when setting up the round, the app does the scoring from there. Some names appear more than once because the same format can be scored as stroke play, Stableford or match play.",
+      "You choose the format when you set up the round, the app does the scoring. Some names appear twice because they exist as stroke play, Stableford or match play.",
     modeGroups: [
       {
         title: "Singles",
@@ -577,14 +575,14 @@ const en: Content = {
         ],
       },
     ],
-    modesFooter: "Plus nine achievements through Game Center.",
+    modesFooter: "Plus nine achievements in Game Center.",
 
     priceEyebrow: "08 — Cost",
-    priceTitle: "Price and subscriptions",
+    priceTitle: "What it costs",
     priceFree:
-      "Recording rounds, the scorecard, handicap and statistics are free and need no account with me.",
+      "Scorecard, handicap, statistics, shot map, Apple Watch, minigolf, rules and theory test are free. You don't need an account for any of it.",
     pricePlans: [
-      { title: "Pro monthly", body: "€5 a month. All 17 audio lessons, from the grip to reading a green, and no ads." },
+      { title: "Pro monthly", body: "€5 a month. All 17 audio lessons from the basics to putting, the right one suggested after each round, and no ads." },
       { title: "Pro yearly", body: "€50 a year – the same as monthly, a good two months cheaper." },
       { title: "Pro one-time", body: "Pay €80 once and keep it forever, including every lesson still to come. No subscription." },
     ],
@@ -594,23 +592,23 @@ const en: Content = {
     coursesEyebrow: "09 — Venues",
     coursesTitle: "For golf clubs and minigolf venues",
     coursesBody:
-      "List your venue once: holes, par, stroke index, lengths, course and slope rating. Once approved it appears in the app, and visitors pick it from the list when they start a round.",
+      "List your venue once: holes, par, stroke index, lengths per tee colour, course and slope rating. Once approved, visitors find it in the app and play with the right data.",
     coursesPoints: [
-      { title: "Free", body: "There is no cost for the venue." },
-      { title: "Reviewed", body: "Every submission is checked by hand before it goes live." },
+      { title: "Free", body: "Listing your venue costs nothing." },
+      { title: "Reviewed", body: "I look at every submission before it goes live." },
       { title: "Editable", body: "New lengths or a new rating? A short email is enough." },
-      { title: "QR start for minigolf", body: "Guests scan the code at the desk and start counting straight away." },
+      { title: "QR start for minigolf", body: "Guests scan the code at the entrance and start counting, even without the app. The poster comes as a PDF in seven languages." },
     ],
     coursesCta: "List your venue",
     directoryCta: "See all courses",
 
-    closingTitle: "Put the next round on record",
-    closingBody: "GolfTrack is a free download on the App Store.",
-    closingNote: "iOS 17.0 and up. The watch app needs watchOS 11.0.",
+    closingTitle: "Take GolfTrack along on your next round",
+    closingBody: "Free on the App Store and as an APK download.",
+    closingNote: "iOS 17 and watchOS 11 or later",
   },
   directory: {
     title: "Listed courses",
-    lead: "Every approved venue. This is exactly the list the app loads.",
+    lead: "Every approved venue. GolfTrack loads all its data from this list.",
     empty: "No venue has been approved yet.",
     golf: "Golf courses",
     minigolf: "Minigolf venues",
@@ -626,6 +624,8 @@ const en: Content = {
     sheetHint: "One language: portrait. Two or three: landscape, side by side. More: spread over several sheets.",
     sheetButton: "Download PDF",
     sheetCodeOnly: "QR code only (SVG)",
+    search: "Search course or town",
+    noMatch: "No course matches your search.",
   },
   submit: {
     title: "List a venue",
@@ -762,7 +762,7 @@ const en: Content = {
       },
       {
         q: "How does the QR code at a minigolf venue work?",
-        a: "The code holds a link that opens the app with the right venue and number of lanes, so guests can scan it and start counting.",
+        a: "The code opens GolfTrack straight away with the right venue and number of lanes. Guests without the app can still start counting, because a small version launches right from the code.",
       },
     ],
   },

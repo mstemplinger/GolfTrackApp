@@ -18,12 +18,15 @@ import type { Lang } from "@/i18n/routes";
 const EN_SHOTS = new Set([
   "00-splash",
   "01-home",
+  "02-profil-handicap",
   "06-statistiken-chart",
+  "08-rundendetail",
   "09-schlagkarte",
   "11-regel-diagramm",
   "12-training",
   "18-neue-runde",
   "19-live-scorecard",
+  "20-scorecard-mini",
 ]);
 
 function source(shot: string, lang: Lang): string {

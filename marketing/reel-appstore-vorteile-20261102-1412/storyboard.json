@@ -1,0 +1,134 @@
+{
+  "title": "GolfTrack App Store",
+  "format": "portrait",
+  "style": "keynote",
+  "font": "Inter",
+  "brand": {
+    "name": "GOLFTRACK",
+    "accent": "#C9A035",
+    "bg": "#0E2718",
+    "flash": "#C9A035",
+    "flash_ink": "#0E2718",
+    "tagline": "DEINE RUNDE, LOCH FÜR LOCH",
+    "logo": "material/logo.png",
+    "cta": "Jetzt im App Store",
+    "url": "golftrack.app"
+  },
+  "voice": {
+    "voice": "weiblich-standard",
+    "stability": 0.38,
+    "style": 0.45,
+    "speed": 1.05,
+    "say_voice": "Anna"
+  },
+  "pause": 0.12,
+  "min_scene": 0.9,
+  "lead_in": 0.35,
+  "bpm": 96,
+  "scenes": [
+    {
+      "type": "flash",
+      "say": "Fünf Apps für eine Runde?",
+      "text": "5 Apps für / eine *Runde*?"
+    },
+    {
+      "type": "words",
+      "say": "Eine für den Score. Eine fürs Handicap. Eine für die Uhr.",
+      "text": "Score. Handicap. / *Uhr*.",
+      "min": 2.2
+    },
+    {
+      "type": "grid",
+      "say": "Und jede will ein Konto von dir.",
+      "text": "Jede will / ein *Konto*",
+      "icon": "user",
+      "floor": true,
+      "highlight": false
+    },
+    {
+      "type": "grid",
+      "say": "Alle, außer einer.",
+      "text": "Alle, außer *einer*",
+      "icon": "user",
+      "floor": true,
+      "continue": true,
+      "sfx": "impact"
+    },
+    {
+      "type": "sphere",
+      "say": "Das ist GolfTrack.",
+      "text": "Das ist *GolfTrack*",
+      "label": "GOLFTRACK",
+      "drop": true
+    },
+    {
+      "type": "phone",
+      "say": "Deine Scorekarte. Loch für Loch.",
+      "text": "Loch für *Loch*",
+      "image": "material/19-live-scorecard.png"
+    },
+    {
+      "type": "counter",
+      "say": "Siebenundneunzig Golfplätze sind schon drin.",
+      "value": 97,
+      "label": "Golfplätze schon drin"
+    },
+    {
+      "type": "phone",
+      "say": "Jeden Schlag auf der Karte. Mit Schlagweite.",
+      "text": "Jeden Schlag / auf der *Karte*",
+      "image": "material/09-schlagkarte.png"
+    },
+    {
+      "type": "phone",
+      "say": "Dein Handicap rechnet die App nach jeder Runde selbst.",
+      "text": "Dein Handicap / rechnet die *App*",
+      "image": "material/02-profil-handicap.png",
+      "min": 2.2
+    },
+    {
+      "type": "counter",
+      "say": "Vierzehn Spielformen.",
+      "value": 14,
+      "label": "Spielformen"
+    },
+    {
+      "type": "phone",
+      "say": "Putts, Fairways, Grüns. Alles in der Statistik.",
+      "text": "Alles in der / *Statistik*",
+      "image": "material/06-statistiken-chart.png"
+    },
+    {
+      "type": "flash",
+      "say": "Auch auf der Apple Watch.",
+      "text": "Auch auf der / *Watch*"
+    },
+    {
+      "type": "phone",
+      "say": "Und für die Platzreife lernst du gleich mit.",
+      "text": "Platzreife / lernst du *mit*",
+      "image": "material/22-platzreife-uebersicht.png"
+    },
+    {
+      "type": "big",
+      "say": "Gratis.",
+      "text": "GRATIS"
+    },
+    {
+      "type": "words",
+      "say": "Ohne Konto. Ohne Anmeldung.",
+      "text": "Ohne Konto. / Ohne *Anmeldung*."
+    },
+    {
+      "type": "flash",
+      "say": "Jetzt im App Store. Lad sie dir.",
+      "text": "Jetzt im / *App Store*",
+      "min": 1.8
+    },
+    {
+      "type": "logo",
+      "say": "",
+      "hold": 3.5
+    }
+  ]
+}

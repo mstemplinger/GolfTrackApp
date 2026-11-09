@@ -276,7 +276,30 @@ export function SectionHeading({
     <div className={`${centred ? "mx-auto max-w-2xl text-center" : "max-w-2xl"} ${className}`}>
       <p className="marginal">{index}</p>
       <h2 className="mt-3 font-display text-3xl leading-[1.08] tracking-[-0.03em] sm:text-4xl">{title}</h2>
-      {lead ? <p className="mt-4 leading-relaxed text-cream/70">{lead}</p> : null}
+      {lead ? (
+        <p className="mt-4 leading-relaxed text-cream/70">
+          <Sentences text={lead} />
+        </p>
+      ) : null}
     </div>
+  );
+}
+
+/**
+ * Jeder Satz auf eine eigene Zeile. Getrennt wird nur, wenn nach dem
+ * Satzzeichen ein Großbuchstabe oder eine Ziffer folgt – „z. B.“ bleibt so
+ * zusammen.
+ */
+export function Sentences({ text }: { text: string }) {
+  const parts = text.split(/(?<=[.!?])\s+(?=[A-ZÄÖÜ0-9„"])/);
+  if (parts.length < 2) return <>{text}</>;
+  return (
+    <>
+      {parts.map((sentence, index) => (
+        <span key={index} className="block">
+          {sentence}
+        </span>
+      ))}
+    </>
   );
 }

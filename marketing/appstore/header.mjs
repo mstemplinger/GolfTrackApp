@@ -139,18 +139,72 @@ const html = (lang, guides) => `<!doctype html><html><head><meta charset="utf-8"
               <div class="guide" style="top:0;bottom:0;left:${SAFE.x}px;right:${SAFE.x}px"></div>` : ""}
 </body></html>`;
 
+// ── Suchergebnis ──────────────────────────────────────────────────────────
+// Eigenes Bild, 3:2 (3840×2560). In der Suche zeigt der App Store davon nur
+// einen flachen Streifen (~3:1, etwa 330 pt breit) – drei kleine Geräte werden
+// dort unlesbar. Darum: eine kurze, große Aussage links, rechts EIN Gerät groß
+// und angeschnitten, so dass „01“ und „Noch 350 m zum Loch“ lesbar bleiben.
+// Alles Wichtige im mittleren Band (SW × SW/3), Rest ist nur Hintergrund.
+const SW = 1920, SH = 1280;
+const BAND = { top: (SH - SW / 3) / 2, bottom: (SH + SW / 3) / 2 };
+const CLAIM = {
+  de: "Entfernung<br>zur Fahne. <em>Live.</em>",
+  en: "Distance<br>to the pin. <em>Live.</em>",
+};
+
+const searchHtml = (lang, guides) => {
+  const pw = 600, ph = Math.round(pw * 2868 / 1320) + 18;
+  return `<!doctype html><html><head><meta charset="utf-8"><style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  html,body{width:${SW}px;height:${SH}px;overflow:hidden;background:${C.bg}}
+  body{position:relative;font-family:-apple-system,"SF Pro Display",BlinkMacSystemFont,sans-serif;
+    -webkit-font-smoothing:antialiased;color:#fff}
+  svg{position:absolute;inset:0}
+  .phone{position:absolute;left:1140px;top:${BAND.top - 40}px;width:${pw}px;height:${ph}px;transform:rotate(7deg);
+    border-radius:${pw * 0.15}px;padding:${pw * 0.026}px;z-index:3;
+    background:linear-gradient(145deg,#4a4f54 0%,#1d2023 30%,#2b2f33 60%,#0f1113 100%);
+    box-shadow:0 40px 90px rgba(0,0,0,.65),0 0 0 2px #5d6369 inset,0 0 0 5px #0b0c0d inset}
+  .screen{width:100%;height:100%;overflow:hidden;position:relative;border-radius:${pw * 0.125}px}
+  .screen img{width:100%;height:100%;display:block}
+  .island{position:absolute;left:50%;top:${pw * 0.03}px;transform:translateX(-50%);
+    width:${pw * 0.28}px;height:${pw * 0.085}px;background:#000;border-radius:999px}
+  h1{position:absolute;left:150px;top:50%;transform:translateY(-50%);z-index:4;
+    font-size:132px;line-height:1.02;font-weight:800;letter-spacing:-3.5px;text-shadow:0 6px 30px rgba(0,0,0,.45)}
+  h1 em{font-style:normal;color:${C.gold}}
+  .vign{position:absolute;inset:0;z-index:2;
+    background:linear-gradient(90deg,rgba(8,26,15,.75),rgba(8,26,15,.15) 55%,transparent)}
+  .guide{position:absolute;left:0;right:0;z-index:9;border:3px dashed #f0f}
+</style></head><body>
+  <svg viewBox="420 120 1950 1300" width="${SW}" height="${SH}" preserveAspectRatio="xMidYMid slice"
+       xmlns="http://www.w3.org/2000/svg">${scene}</svg>
+  <div class="vign"></div>
+  <h1>${CLAIM[lang]}</h1>
+  <div class="phone"><div class="screen"><img src="${shot(lang, "19-live-scorecard")}"><div class="island"></div></div></div>
+  ${guides ? `<div class="guide" style="top:${BAND.top}px;height:${BAND.bottom - BAND.top}px"></div>` : ""}
+</body></html>`;
+};
+
 const arg = process.argv[2] || "all";
 const guides = process.argv.includes("--guides");
 const langs = arg === "all" ? ["de", "en"] : [arg];
 fs.mkdirSync(OUT, { recursive: true });
 
-const browser = await puppeteer.launch({ headless: true });
-const page = await browser.newPage();
-await page.setViewport({ width: W, height: H, deviceScaleFactor: SCALE });
-for (const lang of langs) {
-  await page.setContent(html(lang, guides), { waitUntil: "load" });
-  const out = path.join(OUT, `header-${lang}-${W * SCALE}x${H * SCALE}${guides ? "-guides" : ""}.png`);
-  await page.screenshot({ path: out, clip: { x: 0, y: 0, width: W, height: H } });
+// --only header|search: nur eine Bildart rendern
+const only = process.argv.includes("--only") ? process.argv[process.argv.indexOf("--only") + 1] : null;
+const browser = await puppeteer.launch({ headless: true, protocolTimeout: 180000 });
+const jobs = langs.flatMap((lang) => [
+  { kind: "header", name: `header-${lang}-${W * SCALE}x${H * SCALE}`, w: W, h: H, html: () => html(lang, guides) },
+  { kind: "search", name: `search-${lang}-${SW * SCALE}x${SH * SCALE}`, w: SW, h: SH, html: () => searchHtml(lang, guides) },
+]).filter((job) => !only || job.kind === only);
+for (const job of jobs) {
+  // Je Bild eine frische Seite: Größenwechsel auf derselben Seite ließ das
+  // Bildschirmfoto bei 5244 px hängen.
+  const page = await browser.newPage();
+  await page.setViewport({ width: job.w, height: job.h, deviceScaleFactor: SCALE });
+  await page.setContent(job.html(), { waitUntil: "load" });
+  const out = path.join(OUT, `${job.name}${guides ? "-guides" : ""}.png`);
+  await page.screenshot({ path: out, clip: { x: 0, y: 0, width: job.w, height: job.h } });
+  await page.close();
   // Apple lehnt Bilder mit Alphakanal ab.
   execFileSync("/usr/local/bin/python3.12", ["-c",
     "import sys;from PIL import Image;Image.open(sys.argv[1]).convert('RGB').save(sys.argv[1])", out]);

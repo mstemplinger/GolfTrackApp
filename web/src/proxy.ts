@@ -44,6 +44,7 @@ const OPEN = [
   "/android", // APK-Download, verlinkt vom Zähler
   "/en/android",
   "/laden", // Weiche App Store / APK, verlinkt von den Anlagenseiten
+  "/download", // dieselbe Weiche, Ziel des QR-Codes auf den Druckplakaten
   "/lobby/", // QR-Code der gemeinsamen Runde (Universal Link in die App)
   "/einladen/", // Einladungslink der Weiterempfehlung (Universal Link in die App)
 ];

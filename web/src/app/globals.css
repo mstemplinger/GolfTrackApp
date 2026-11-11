@@ -472,3 +472,218 @@
   .putt * { animation: none !important; }
   .putt-ball { transform: translate(140px, 0); }
 }
+
+/*
+  Fehlschlag-Szene auf der 404-Seite (components/HazardScene.tsx).
+  Ein Durchlauf dauert 10 s, 1 % sind also 0,1 s:
+     0–15 %  Ansprechen und Abschlag (Treffmoment bei 15 %)
+    15–28 %  Ballflug in den Bunker, Sand spritzt
+    30–50 %  Golfer läuft zum Bunker, Schläger geschultert
+    55–63 %  Schlag aus dem Bunker (Treffmoment bei 63 %)
+    63–74 %  Ballflug in den Teich, Fontäne und Ringe
+    76–95 %  Golfer lässt den Kopf hängen, blendet aus, steht wieder am Abschlag
+  Koordinaten sind die des Bildes: Ball am Abschlag (78, 187,5), im Bunker
+  (220, 200), im Teich (268, 146); der Golfer steht je 11 links davon.
+
+  `transform-box: fill-box` steht nur an den Klassen, die um ihre eigene Mitte
+  drehen oder wachsen – als Regel für alles würde es jedes `transform`-Attribut
+  im SVG verschieben.
+*/
+.hazard-golfer {
+  animation: hazard-golfer 10s infinite;
+}
+@keyframes hazard-golfer {
+  0%, 30% { transform: translate(67px, 189.5px); opacity: 1; animation-timing-function: cubic-bezier(0.35, 0, 0.65, 1); }
+  50%, 92% { transform: translate(209px, 202px); opacity: 1; animation-timing-function: ease-in; }
+  95% { transform: translate(209px, 202px); opacity: 0; animation-timing-function: steps(1, end); }
+  95.01% { transform: translate(67px, 189.5px); opacity: 0; animation-timing-function: ease-out; }
+  98%, 100% { transform: translate(67px, 189.5px); opacity: 1; }
+}
+/* Wippen beim Gehen: oben, wenn die Beine nebeneinander stehen. */
+.hazard-bob {
+  animation: hazard-bob 10s ease-in-out infinite;
+}
+@keyframes hazard-bob {
+  0%, 30%, 35%, 40%, 45%, 50%, 100% { transform: translateY(0); }
+  32.5%, 37.5%, 42.5%, 47.5% { transform: translateY(-1.4px); }
+}
+/*
+  Zwei Beinpaare: eines steht, eines schreitet ohne Pause. Sichtbar ist immer
+  nur eines – so braucht das Gehen keine eigene Zeitleiste.
+*/
+.hazard-legs-stand {
+  animation: hazard-legs-stand 10s steps(1, end) infinite;
+}
+@keyframes hazard-legs-stand {
+  0% { opacity: 1; }
+  30% { opacity: 0; }
+  50%, 100% { opacity: 1; }
+}
+.hazard-legs-walk {
+  opacity: 0;
+  animation: hazard-legs-walk 10s steps(1, end) infinite;
+}
+@keyframes hazard-legs-walk {
+  0% { opacity: 0; }
+  30% { opacity: 1; }
+  50%, 100% { opacity: 0; }
+}
+.hazard-leg {
+  transform-box: fill-box;
+  transform-origin: 50% 0%;
+  animation: hazard-step 0.5s ease-in-out infinite alternate;
+}
+.hazard-leg-b {
+  animation-direction: alternate-reverse;
+}
+@keyframes hazard-step {
+  from { transform: rotate(26deg); }
+  to { transform: rotate(-26deg); }
+}
+/*
+  Schwung, im Uhrzeigersinn positiv: Ausholen +125°, Treffen 0°, Ausschwung
+  −125°. Danach dreht der Schläger weiter über den Kopf auf die Schulter
+  (−215°) und beim Ansprechen im Bunker weiter nach unten (−360° = 0°) – nie
+  zurück, sonst sähe das Schultern wie ein dritter Schlag aus.
+*/
+.hazard-swing {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: hazard-swing 10s infinite;
+}
+@keyframes hazard-swing {
+  0%, 6% { transform: rotate(0deg); animation-timing-function: ease-in-out; }
+  13% { transform: rotate(125deg); animation-timing-function: cubic-bezier(0.55, 0, 0.9, 0.45); }
+  15% { transform: rotate(0deg); animation-timing-function: cubic-bezier(0.1, 0.55, 0.3, 1); }
+  18.5%, 27% { transform: rotate(-125deg); animation-timing-function: ease-in-out; }
+  31%, 49% { transform: rotate(-215deg); animation-timing-function: ease-in-out; }
+  53%, 55% { transform: rotate(-360deg); animation-timing-function: ease-in-out; }
+  61% { transform: rotate(-235deg); animation-timing-function: cubic-bezier(0.55, 0, 0.9, 0.45); }
+  63% { transform: rotate(-360deg); animation-timing-function: cubic-bezier(0.1, 0.55, 0.3, 1); }
+  66.5%, 76% { transform: rotate(-485deg); animation-timing-function: ease-in-out; }
+  80%, 95% { transform: rotate(-360deg); animation-timing-function: steps(1, end); }
+  95.01%, 100% { transform: rotate(0deg); }
+}
+/* Drehpunkt ist die Hüfte: dort liegt die Mitte der Gruppe. */
+.hazard-upper {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: hazard-upper 10s ease-in-out infinite;
+}
+@keyframes hazard-upper {
+  0%, 76% { transform: rotate(0deg); }
+  80%, 95% { transform: rotate(16deg); animation-timing-function: steps(1, end); }
+  95.01%, 100% { transform: rotate(0deg); }
+}
+.hazard-emote {
+  transform-box: fill-box;
+  transform-origin: 50% 100%;
+  opacity: 0;
+  animation: hazard-emote 10s infinite;
+}
+@keyframes hazard-emote {
+  0%, 28% { opacity: 0; transform: scale(0.4); }
+  29.5%, 32.5% { opacity: 1; transform: scale(1); }
+  34.5%, 74.5% { opacity: 0; transform: scale(0.4); }
+  76%, 82% { opacity: 1; transform: scale(1); }
+  85%, 100% { opacity: 0; transform: scale(0.4); }
+}
+.hazard-ballpos {
+  animation: hazard-ballpos 10s linear infinite;
+}
+@keyframes hazard-ballpos {
+  0%, 15% { transform: translate(78px, 187.5px); }
+  28%, 63% { transform: translate(220px, 200px); }
+  74%, 95% { transform: translate(268px, 146px); animation-timing-function: steps(1, end); }
+  95.01%, 100% { transform: translate(78px, 187.5px); }
+}
+/* Steigen mit Ausrollen, Fallen mit Anlauf: zusammen eine Parabel. */
+.hazard-ballup {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: hazard-ballup 10s infinite;
+}
+@keyframes hazard-ballup {
+  0%, 15% { transform: translateY(0) scale(1); opacity: 1; animation-timing-function: cubic-bezier(0.33, 0.67, 0.67, 1); }
+  21.5% { transform: translateY(-46px) scale(1); opacity: 1; animation-timing-function: cubic-bezier(0.33, 0, 0.67, 0.33); }
+  28%, 63% { transform: translateY(0) scale(1); opacity: 1; animation-timing-function: cubic-bezier(0.33, 0.67, 0.67, 1); }
+  68.5% { transform: translateY(-40px) scale(1); opacity: 1; animation-timing-function: cubic-bezier(0.33, 0, 0.67, 0.33); }
+  74% { transform: translateY(0) scale(1); opacity: 1; animation-timing-function: ease-out; }
+  76%, 95% { transform: translateY(3px) scale(0.5); opacity: 0; animation-timing-function: steps(1, end); }
+  95.01% { transform: translateY(0) scale(1); opacity: 0; animation-timing-function: ease-out; }
+  98%, 100% { transform: translateY(0) scale(1); opacity: 1; }
+}
+.hazard-ballshadow {
+  opacity: 0.3;
+  animation: hazard-ballshadow 10s infinite;
+}
+@keyframes hazard-ballshadow {
+  0%, 74% { opacity: 0.3; }
+  75%, 95.01% { opacity: 0; }
+  98%, 100% { opacity: 0.3; }
+}
+/* Mitte der Gruppe ist der Ball im Bunker (220, 200). */
+.hazard-sand {
+  transform-box: fill-box;
+  transform-origin: center;
+  opacity: 0;
+  animation: hazard-sand 10s infinite;
+}
+@keyframes hazard-sand {
+  0%, 27.9% { opacity: 0; transform: translateY(0) scale(0.15); }
+  28% { opacity: 1; transform: translateY(0) scale(0.15); animation-timing-function: cubic-bezier(0.2, 0.8, 0.3, 1); }
+  31% { opacity: 1; transform: translateY(0) scale(0.5); animation-timing-function: ease-in; }
+  34.5%, 62.9% { opacity: 0; transform: translateY(3px) scale(0.55); }
+  63% { opacity: 1; transform: translateY(0) scale(0.2); animation-timing-function: cubic-bezier(0.2, 0.8, 0.3, 1); }
+  67% { opacity: 1; transform: translateY(0) scale(1); animation-timing-function: ease-in; }
+  72%, 100% { opacity: 0; transform: translateY(6px) scale(1.05); }
+}
+/* Mitte der Gruppe ist die Einschlagstelle im Teich (268, 146). */
+.hazard-splash {
+  transform-box: fill-box;
+  transform-origin: center;
+  opacity: 0;
+  animation: hazard-splash 10s infinite;
+}
+@keyframes hazard-splash {
+  0%, 73.9% { opacity: 0; transform: translateY(0) scale(0.15); }
+  74% { opacity: 1; transform: translateY(0) scale(0.15); animation-timing-function: cubic-bezier(0.2, 0.8, 0.3, 1); }
+  78% { opacity: 1; transform: translateY(0) scale(1); animation-timing-function: ease-in; }
+  84%, 100% { opacity: 0; transform: translateY(8px) scale(1.05); }
+}
+.hazard-ripple {
+  transform-box: fill-box;
+  transform-origin: center;
+  opacity: 0;
+  vector-effect: non-scaling-stroke;
+  animation: hazard-ripple 10s infinite;
+}
+@keyframes hazard-ripple {
+  0%, 74% { opacity: 0; transform: scale(0.3); animation-timing-function: ease-out; }
+  76% { opacity: 0.8; transform: scale(0.8); animation-timing-function: ease-out; }
+  91%, 100% { opacity: 0; transform: scale(2.8); }
+}
+.hazard-late {
+  animation-delay: 0.4s;
+}
+.hazard-cloth {
+  transform-box: fill-box;
+  transform-origin: 0% 50%;
+  animation: hazard-wave 1.6s ease-in-out infinite alternate;
+}
+@keyframes hazard-wave {
+  from { transform: scaleX(1) skewY(0deg); }
+  to { transform: scaleX(0.86) skewY(4deg); }
+}
+.hazard-glint {
+  animation: hazard-glint 3.2s ease-in-out infinite alternate;
+}
+@keyframes hazard-glint {
+  from { transform: translateX(-2px); }
+  to { transform: translateX(3px); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .hazard * { animation: none !important; }
+  .hazard-golfer { transform: translate(209px, 202px); }
+  .hazard-ballpos { transform: translate(220px, 200px); }
+}

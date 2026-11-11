@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { HazardScene } from "@/components/HazardScene";
 import { fontVariables } from "@/lib/fonts";
 import "./globals.css";
 
@@ -10,8 +11,9 @@ export default function NotFound() {
   return (
     <html lang="de" className={`${fontVariables} h-full`}>
       <body className="grain glow grid min-h-full place-items-center px-5 text-center">
-        <div>
-          <p className="marginal">404</p>
+        <div className="w-full max-w-md py-10">
+          <HazardScene label="Ein Golfer schlägt vom Abschlag in den Bunker und von dort ins Wasser." />
+          <p className="marginal mt-6">404</p>
           <h1 className="mt-4 font-display text-4xl tracking-tight">Ins Aus geschlagen.</h1>
           <p className="mt-3 text-cream/60">Diese Seite gibt es nicht (mehr).</p>
           <Link href="/" className="btn-brass mt-8">

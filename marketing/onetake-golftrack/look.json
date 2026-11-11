@@ -1,0 +1,11 @@
+{
+  "name": "golftrack-app",
+  "from": "marketing/screenshots/de-69 (Lernrunde, Driving Range, Live-Scorecard)",
+  "mood": "the app's own night green with one gold light",
+  "color": { "ground": "#0d2419", "deep": "#081a11", "card": "#163421", "line": "#22402c", "mute": "#909e95", "ink": "#fcfcfc", "accent": "#c9a035", "accent2": "#f0953a" },
+  "type": {
+    "display": { "face": "Inter", "weight": 800, "tracking": -0.03 },
+    "text": { "face": "Inter", "weight": 500, "tracking": -0.01 },
+    "mono": { "face": "Geist Mono", "weight": 400, "tracking": 0 }
+  }
+}

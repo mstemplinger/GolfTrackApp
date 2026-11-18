@@ -1,72 +1,118 @@
 {
   "_hinweis": [
-    "Quelle der Wahrheit für die benutzerdefinierten Produktseiten.",
-    "Ein Eintrag pro Seite. 'name' ist nur intern in App Store Connect sichtbar.",
-    "'screenshots' sind Pfade relativ zu marketing/screenshots/.",
+    "Quelle der Wahrheit für die benutzerdefinierten Produktseiten (Custom Product Pages).",
+    "Ein Eintrag pro Seite. 'name' ist nur intern in App Store Connect sichtbar, 'slug' ist der Ordnername der Bilder.",
     "Werbetext: max. 170 Zeichen, wie auf der normalen Produktseite.",
-    "Reihenfolge der Screenshots = Reihenfolge auf der Seite. Max. 10 pro Slot.",
+    "'slides' sind die gestalteten Bilder der Seite, Reihenfolge = Reihenfolge im Store, max. 10. Die ersten drei erscheinen in Suche und Anzeigen.",
+    "  shot   = Rohbild aus marketing/screenshots/<sprache>-69/ (Rückfall: marketing/screenshots/<sprache>/), ohne .png",
+    "  layout = 'up' (Gerät gerade) oder 'tilt' (leicht gekippt, abwechselnd links/rechts)",
+    "  device = 'watch' für Aufnahmen der Apple Watch, sonst weglassen",
+    "  title  = zwei Zeilen mit <br>, <em>…</em> färbt hellgrün",
+    "Bilder bauen:   cd marketing/flyer && node ../appstore/cpp-shots.mjs [slug|all]   → marketing/appstore/out/cpp/<slug>/<sprache>/",
+    "Hochladen:      python3.12 marketing/asc-custom-product-page.py --issuer <UUID> [--only <name>] [--apply]",
     "'deepLink' (optional, je Seite): Ziel des Öffnen-Knopfs, ab iOS 18.",
-    "'extraScreenshots' (optional, je Sprache): weitere Slots, z. B. APP_IPAD_PRO_3GEN_129 für 13-Zoll-iPad."
+    "'extraScreenshots' (optional, je Sprache): weitere Slots mit fertigen Bildern relativ zu marketing/screenshots/, z. B. APP_IPAD_PRO_3GEN_129.",
+    "Der 6,9-Zoll-Slot heißt an der API APP_IPHONE_67 – APP_IPHONE_69 lehnt sie ab.",
+    "Jede Seite braucht auch iPad-Bilder (APP_IPAD_PRO_3GEN_129, 2064×2752) – ohne sie lehnt Apple die Einreichung als 'not in valid state' ab."
   ],
-  "displayType": "APP_IPHONE_69",
+  "displayType": "APP_IPHONE_67",
   "pages": [
     {
-      "name": "Instagram",
+      "name": "Minigolf",
+      "slug": "minigolf",
       "locales": {
         "de-DE": {
-          "promotionalText": "Jede Runde aufzeichnen, jeden Schlag verorten, dein Handicap automatisch berechnen. Ohne Abo loslegen.",
-          "screenshots": [
-            "de/01-home.png",
-            "de/19-live-scorecard.png",
-            "de/09-schlagkarte.png",
-            "de/06-statistiken-chart.png",
-            "de/02-profil-handicap.png"
-          ]
-        }
-      }
-    },
-    {
-      "name": "Flyer-Golfclub",
-      "locales": {
-        "de-DE": {
-          "promotionalText": "Die Runde auf deinem Heimatplatz digital mitschreiben – mit offizieller Scorecard, WHS-Handicap und Apple Watch.",
-          "screenshots": [
-            "de/17-platzwahl.png",
-            "de/19-live-scorecard.png",
-            "de/13-rundendetail-gps.png",
-            "de/02-profil-handicap.png",
-            "de/16-spielmodi.png"
-          ]
-        }
-      }
-    },
-    {
-      "name": "Positions-Tracking",
-      "locales": {
-        "de-DE": {
-          "promotionalText": "Deine Laufspur über den Platz: jeder Schlag verortet, Distanzen pro Loch, Abschlag und Grün automatisch erkannt.",
-          "screenshots": [
-            "de/09-schlagkarte.png",
-            "de/13-rundendetail-gps.png",
-            "de/08-rundendetail.png",
-            "de/21-statistik-schlaegerdistanzen.png",
-            "de/04-schlaegerdistanzen.png"
-          ]
+          "promotionalText": "Minigolf-Zählkarte für beliebig viele Spieler, die 28 genormten Bahnen als 3D-Modell mit Idealspur und alle Regeln. Kostenlos, ohne Konto.",
+          "slides": [
+            {
+              "shot": "31-minigolf-ergebnis",
+              "layout": "up",
+              "kicker": "Minigolf",
+              "title": "Wer gewinnt<br><em>heute?</em>",
+              "sub": "Zählkarte für beliebig viele Spieler – mit Rangliste und Scorecard am Ende."
+            },
+            {
+              "shot": "35-minigolf-bahn3d",
+              "layout": "tilt",
+              "kicker": "28 Normbahnen",
+              "title": "Jede Bahn<br><em>in 3D</em>",
+              "sub": "Drehbares Modell mit Idealspur, Hindernis, Maßen und Spieltipp."
+            },
+            {
+              "shot": "30-minigolf-home",
+              "layout": "up",
+              "kicker": "Dein Minigolf",
+              "title": "Unterbrochen?<br><em>Weiterspielen.</em>",
+              "sub": "Angefangene Spiele fortsetzen, bester Schnitt und alle Partien im Verlauf."
+            },
+            {
+              "shot": "34-minigolf-bahnen",
+              "layout": "tilt",
+              "kicker": "Bahnenkatalog",
+              "title": "Von Pyramiden<br>bis <em>Labyrinth</em>",
+              "sub": "Alle 28 genormten Miniaturgolfbahnen mit Skizze zum Nachschlagen."
+            },
+            {
+              "shot": "33-minigolf-regeln",
+              "layout": "up",
+              "kicker": "Regeln",
+              "title": "Streitfall?<br><em>Nachschlagen.</em>",
+              "sub": "Die offiziellen Bahnengolf-Regeln, kurz gefasst – von Zählweise bis Ablegen."
+            }
+          ],
+          "extraScreenshots": {
+            "APP_IPAD_PRO_3GEN_129": [
+              "ipad/de/i11-minigolf-home.png",
+              "ipad/de/i13-minigolf-bahn3d.png",
+              "ipad/de/i12-minigolf-bahnen.png"
+            ]
+          }
         }
       }
     },
     {
       "name": "Platzreife",
+      "slug": "platzreife",
       "deepLink": "golftrack://platzreife",
       "locales": {
         "de-DE": {
           "promotionalText": "Platzreife-Theorie lernen: 150 Prüfungsfragen, Lernrunden, die deine Fehler wiederholen, und Probeprüfungen wie im Club. Ohne Abo.",
-          "screenshots": [
-            "de-69/22-platzreife-uebersicht.png",
-            "de-69/23-platzreife-lernrunde.png",
-            "de-69/10-regeln.png",
-            "de-69/11-regel-diagramm.png",
-            "de-69/01-home.png"
+          "slides": [
+            {
+              "shot": "22-platzreife-uebersicht",
+              "layout": "up",
+              "kicker": "Platzreife",
+              "title": "Theorie lernen,<br><em>sicher bestehen</em>",
+              "sub": "150 Prüfungsfragen mit Erklärung, Lernstand und Probeprüfung."
+            },
+            {
+              "shot": "23-platzreife-lernrunde",
+              "layout": "tilt",
+              "kicker": "Lernrunden",
+              "title": "Fehler kommen<br><em>wieder</em>",
+              "sub": "20 Fragen pro Runde – was du falsch beantwortest, kommt so lange, bis es sitzt."
+            },
+            {
+              "shot": "11-regel-diagramm",
+              "layout": "up",
+              "kicker": "Diagramme",
+              "title": "Regeln, die<br><em>man sieht</em>",
+              "sub": "Interaktive Diagramme zeigen, wo du droppst und was es kostet."
+            },
+            {
+              "shot": "10-regeln",
+              "layout": "tilt",
+              "kicker": "50 Golfregeln",
+              "title": "Regeln zum<br><em>Nachschlagen</em>",
+              "sub": "Vom Abschlag bis zum Grün – nach Themen sortiert und verständlich erklärt."
+            },
+            {
+              "shot": "36-range-einheit",
+              "layout": "up",
+              "kicker": "Danach",
+              "title": "Und dann ab<br><em>auf die Range</em>",
+              "sub": "Die ersten Weiten messen – mit derselben App."
+            }
           ],
           "extraScreenshots": {
             "APP_IPAD_PRO_3GEN_129": [
@@ -77,6 +123,470 @@
           }
         }
       }
+    },
+    {
+      "name": "Driving Range",
+      "slug": "driving-range",
+      "locales": {
+        "de-DE": {
+          "promotionalText": "Bälle schlagen, Weite tippen: GolfTrack merkt sich Durchschnitt und Bestweite für jeden Schläger und zeigt, wie deine Weiten von Einheit zu Einheit wachsen.",
+          "slides": [
+            {
+              "shot": "36-range-einheit",
+              "layout": "up",
+              "kicker": "Driving Range",
+              "title": "Weiß, wie weit<br><em>jeder Schläger</em>",
+              "sub": "Bälle schlagen, Weite tippen – Durchschnitt und Bestweite stehen sofort da."
+            },
+            {
+              "shot": "37-range-verlauf",
+              "layout": "tilt",
+              "kicker": "Range-Verlauf",
+              "title": "Sieh deine<br><em>Weiten wachsen</em>",
+              "sub": "Durchschnitt und Bestweite je Schläger, Einheit für Einheit im Diagramm."
+            },
+            {
+              "shot": "42-training-player",
+              "layout": "up",
+              "kicker": "Mit GolfTrack Pro",
+              "title": "Übungen für<br><em>jede Einheit</em>",
+              "sub": "Audio-Lektionen mit konkreter Übungsaufgabe für die Range."
+            },
+            {
+              "shot": "19-live-scorecard",
+              "layout": "tilt",
+              "kicker": "Auf dem Platz",
+              "title": "Dann raus<br><em>auf die Runde</em>",
+              "sub": "GPS-Distanz zur Fahne, Schlägerempfehlung und Scorekarte."
+            }
+          ],
+          "extraScreenshots": {
+            "APP_IPAD_PRO_3GEN_129": [
+              "ipad/de/i05-range.png",
+              "ipad/de/i06-range-verlauf.png",
+              "ipad/de/i02-runde.png"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "name": "Positions-Tracking",
+      "slug": "positions-tracking",
+      "locales": {
+        "de-DE": {
+          "promotionalText": "Auf Wunsch zeichnet GolfTrack deinen Weg über den Platz auf, verortet jeden Schlag und erkennt Abschlag und Grün von selbst. Bleibt auf deinem iPhone.",
+          "slides": [
+            {
+              "shot": "39-tracking-vollbild",
+              "layout": "up",
+              "kicker": "Positions-Tracking",
+              "title": "Dein Weg über<br><em>den Platz</em>",
+              "sub": "GolfTrack zeichnet deine Laufspur auf – jedes Loch in eigener Farbe."
+            },
+            {
+              "shot": "09-schlagkarte",
+              "layout": "tilt",
+              "kicker": "Schlag-Tracking",
+              "title": "Jeder Schlag<br><em>verortet</em>",
+              "sub": "Abschlag, Auftreffpunkt, Schlagweite – Loch für Loch auf der Karte."
+            },
+            {
+              "shot": "40-tracking-lochpositionen",
+              "layout": "up",
+              "kicker": "Automatisch",
+              "title": "Abschlag und Grün<br><em>erkennt die App</em>",
+              "sub": "Aus deiner Laufspur schätzt GolfTrack, wo jedes Loch beginnt und endet."
+            },
+            {
+              "shot": "38-tracking-laufspur",
+              "layout": "tilt",
+              "kicker": "Nach der Runde",
+              "title": "Strecke, Zeit,<br><em>Distanzen</em>",
+              "sub": "Gelaufene Meter, Dauer und GPS-Distanz für jedes Loch."
+            },
+            {
+              "shot": "19-live-scorecard",
+              "layout": "up",
+              "kicker": "Auf dem Platz",
+              "title": "Entfernung<br>zur Fahne. <em>Live.</em>",
+              "sub": "GPS-Distanz, Schlägerempfehlung und Scorekarte auf einem Bildschirm."
+            }
+          ],
+          "extraScreenshots": {
+            "APP_IPAD_PRO_3GEN_129": [
+              "ipad/de/i02-runde.png",
+              "ipad/de/i04-neue-runde.png",
+              "ipad/de/i01-home.png"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "name": "Apple Watch",
+      "slug": "apple-watch",
+      "locales": {
+        "de-DE": {
+          "promotionalText": "Runde am Handgelenk zählen, mit automatischer Schwungerkennung. Apple Watch und iPhone gleichen sich in beide Richtungen ab – ohne Abo.",
+          "slides": [
+            {
+              "shot": "w2-tracker",
+              "device": "watch",
+              "layout": "up",
+              "kicker": "Apple Watch",
+              "title": "Zählen am<br><em>Handgelenk</em>",
+              "sub": "Tippen oder einfach schwingen – die Uhr erkennt deinen Schwung automatisch."
+            },
+            {
+              "shot": "w1-setup",
+              "device": "watch",
+              "layout": "tilt",
+              "kicker": "Schnellstart",
+              "title": "Runde starten<br><em>an der Uhr</em>",
+              "sub": "Golf oder Minigolf, 9 oder 18 Löcher – ein Tipp genügt."
+            },
+            {
+              "shot": "19-live-scorecard",
+              "layout": "up",
+              "kicker": "Im Gleichklang",
+              "title": "Uhr und iPhone<br><em>gleichen sich ab</em>",
+              "sub": "Was du am Handgelenk zählst, steht in der Scorekarte – und umgekehrt."
+            },
+            {
+              "shot": "02-profil-handicap",
+              "layout": "tilt",
+              "kicker": "Nach der Runde",
+              "title": "Handicap rechnet<br><em>sich selbst</em>",
+              "sub": "Jede Runde zählt – ob am iPhone oder an der Apple Watch erfasst."
+            }
+          ],
+          "extraScreenshots": {
+            "APP_IPAD_PRO_3GEN_129": [
+              "ipad/de/i02-runde.png",
+              "ipad/de/i10-profil.png",
+              "ipad/de/i01-home.png"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "name": "Bag Intelligence",
+      "slug": "bag-intelligence",
+      "locales": {
+        "de-DE": {
+          "promotionalText": "B.I. – Bag Intelligence: GolfTrack kennt deine echten Schlagweiten und schlägt zu jeder Entfernung zur Fahne automatisch den passenden Schläger vor.",
+          "slides": [
+            {
+              "shot": "19-live-scorecard",
+              "layout": "up",
+              "kicker": "B.I. · Bag Intelligence",
+              "title": "Immer der<br><em>richtige Schläger</em>",
+              "sub": "Aus der GPS-Distanz zur Fahne und deinen echten Weiten schlägt GolfTrack den Schläger vor."
+            },
+            {
+              "shot": "26-schlaegerwahl",
+              "layout": "tilt",
+              "kicker": "Schlag für Schlag",
+              "title": "Die Empfehlung<br><em>steht ganz oben</em>",
+              "sub": "Beim Zählen ist der passende Schläger schon markiert – ein Tipp genügt."
+            },
+            {
+              "shot": "04-schlaegerdistanzen",
+              "layout": "up",
+              "kicker": "Dein Bag",
+              "title": "Lernt aus<br><em>deinen Schlägen</em>",
+              "sub": "Jede Messung schärft den Durchschnitt – für jeden Schläger im Bag."
+            },
+            {
+              "shot": "21-statistik-schlaegerdistanzen",
+              "layout": "tilt",
+              "kicker": "Echte Zahlen",
+              "title": "Gemessen,<br><em>nicht geschätzt</em>",
+              "sub": "Deine tatsächlichen Schlagweiten aus allen Runden."
+            },
+            {
+              "shot": "36-range-einheit",
+              "layout": "up",
+              "kicker": "Driving Range",
+              "title": "Auf der Range<br><em>nachmessen</em>",
+              "sub": "Bälle schlagen, Weite tippen – Durchschnitt und Bestweite je Schläger."
+            }
+          ],
+          "extraScreenshots": {
+            "APP_IPAD_PRO_3GEN_129": [
+              "ipad/de/i02-runde.png",
+              "ipad/de/i05-range.png",
+              "ipad/de/i06-range-verlauf.png"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "name": "Audiobooks",
+      "slug": "audiobooks",
+      "locales": {
+        "de-DE": {
+          "promotionalText": "17 Audio-Lektionen zu Grundlagen, Drive, Technik, Kurzspiel, Putten, Mental und Strategie – passend zu deinen Zahlen vorgeschlagen. Mit GolfTrack Pro.",
+          "slides": [
+            {
+              "shot": "42-training-player",
+              "layout": "up",
+              "kicker": "Audiobooks",
+              "title": "Dein Golf-Coach<br><em>im Ohr</em>",
+              "sub": "17 Audio-Lektionen in GolfTrack Pro – jede mit Übungsaufgabe, die erste gratis."
+            },
+            {
+              "shot": "41-training-liste",
+              "layout": "tilt",
+              "kicker": "7 Themen",
+              "title": "Vom Griff bis<br><em>zur Kopfsache</em>",
+              "sub": "Grundlagen, Drive, Technik, Kurzspiel, Putten, Mental und Strategie."
+            },
+            {
+              "shot": "05-tipps-coaching",
+              "layout": "up",
+              "kicker": "Persönlich",
+              "title": "Passend zu<br><em>deinen Zahlen</em>",
+              "sub": "GolfTrack schlägt die Lektion vor, die zu deiner Statistik passt."
+            },
+            {
+              "shot": "06-statistiken-chart",
+              "layout": "tilt",
+              "kicker": "Fortschritt",
+              "title": "Hören. Üben.<br><em>Besser werden.</em>",
+              "sub": "In der Statistik siehst du, wie sich dein Training auszahlt."
+            }
+          ],
+          "extraScreenshots": {
+            "APP_IPAD_PRO_3GEN_129": [
+              "ipad/de/i07-training.png",
+              "ipad/de/i09-tipps.png"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "name": "Mit Freunden",
+      "slug": "freunde",
+      "locales": {
+        "de-DE": {
+          "promotionalText": "Spielt zusammen: 14 Spielformen, Scorekarte für den ganzen Flight und eine Lobby, in der jeder auf dem eigenen iPhone zählt und alle live mitlesen.",
+          "slides": [
+            {
+              "shot": "24-mitspieler",
+              "layout": "up",
+              "kicker": "14 Spielformen",
+              "title": "Spiel mit<br><em>deinem Flight</em>",
+              "sub": "Zählspiel, Stableford, Matchplay, Best Ball, Scramble – Scorekarte für alle."
+            },
+            {
+              "shot": "43-freunde-lobby",
+              "layout": "tilt",
+              "kicker": "Lobby",
+              "title": "Jeder zählt auf<br><em>seinem iPhone</em>",
+              "sub": "Lobby erstellen, Code teilen – ihr seht live die Schläge der anderen."
+            },
+            {
+              "shot": "16-spielmodi",
+              "layout": "up",
+              "kicker": "Spielformen",
+              "title": "Zählspiel bis<br><em>Scramble</em>",
+              "sub": "Stableford, Matchplay, Skins, Better Ball – jede Form kurz erklärt."
+            },
+            {
+              "shot": "31-minigolf-ergebnis",
+              "layout": "tilt",
+              "kicker": "Auch beim Minigolf",
+              "title": "Rangliste für<br><em>die ganze Runde</em>",
+              "sub": "Zählkarte für beliebig viele Spieler, Ergebnis zum Teilen."
+            }
+          ],
+          "extraScreenshots": {
+            "APP_IPAD_PRO_3GEN_129": [
+              "ipad/de/i03-mitspieler.png",
+              "ipad/de/i04-neue-runde.png"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "name": "Handicap & Statistik",
+      "slug": "handicap",
+      "locales": {
+        "de-DE": {
+          "promotionalText": "WHS-Handicap, nach jeder Runde automatisch fortgeschrieben. Dazu Statistik über alle Runden: Putts, Fairways, Greens in Regulation und Score-Verlauf.",
+          "slides": [
+            {
+              "shot": "02-profil-handicap",
+              "layout": "up",
+              "kicker": "WHS-Handicap",
+              "title": "Handicap rechnet<br><em>sich selbst</em>",
+              "sub": "Nach jeder Runde automatisch fortgeschrieben – nach World Handicap System."
+            },
+            {
+              "shot": "06-statistiken-chart",
+              "layout": "tilt",
+              "kicker": "Statistik",
+              "title": "Sieh, wie du<br><em>besser wirst</em>",
+              "sub": "Putts, Fairways, Greens in Regulation und Score-Verlauf über alle Runden."
+            },
+            {
+              "shot": "21-statistik-schlaegerdistanzen",
+              "layout": "up",
+              "kicker": "Kennzahlen",
+              "title": "Fairways, Greens,<br><em>Schlagweiten</em>",
+              "sub": "Durchschnittswerte über alle Runden – und was jeder Schläger wirklich bringt."
+            },
+            {
+              "shot": "07-verlauf",
+              "layout": "tilt",
+              "kicker": "Verlauf",
+              "title": "Jede Runde<br><em>bleibt</em>",
+              "sub": "Alle Runden mit Score, Scorecard und Schlagkarte zum Nachlesen."
+            },
+            {
+              "shot": "01-home",
+              "layout": "up",
+              "kicker": "Dein Golf",
+              "title": "Alles auf<br><em>einen Blick</em>",
+              "sub": "Handicap, letzte Runde, Platzwetter und dein Fortschritt."
+            }
+          ],
+          "extraScreenshots": {
+            "APP_IPAD_PRO_3GEN_129": [
+              "ipad/de/i10-profil.png",
+              "ipad/de/i01-home.png"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "name": "Golf-Einstieg",
+      "slug": "einsteiger",
+      "locales": {
+        "de-DE": {
+          "promotionalText": "Golf anfangen mit GolfTrack: Platzreife-Theorie lernen, auf der Driving Range die ersten Weiten messen und die erste Runde mitschreiben. Ohne Konto.",
+          "slides": [
+            {
+              "shot": "22-platzreife-uebersicht",
+              "layout": "up",
+              "kicker": "Schritt 1 · Platzreife",
+              "title": "Erst die<br><em>Theorie</em>",
+              "sub": "150 Prüfungsfragen, Lernrunden und Probeprüfung wie im Club."
+            },
+            {
+              "shot": "36-range-einheit",
+              "layout": "tilt",
+              "kicker": "Schritt 2 · Driving Range",
+              "title": "Dann die<br><em>ersten Bälle</em>",
+              "sub": "Weite tippen – und sehen, was jeder Schläger bei dir bringt."
+            },
+            {
+              "shot": "19-live-scorecard",
+              "layout": "up",
+              "kicker": "Schritt 3 · Erste Runde",
+              "title": "Und raus auf<br><em>den Platz</em>",
+              "sub": "Scorekarte, Distanz zur Fahne und Schlägerempfehlung – die App zählt mit."
+            },
+            {
+              "shot": "05-tipps-coaching",
+              "layout": "tilt",
+              "kicker": "Tipps",
+              "title": "Tipps für<br><em>jeden Tag</em>",
+              "sub": "Tipp des Tages, Golf-Ratgeber und Empfehlungen für dein Spiel."
+            },
+            {
+              "shot": "11-regel-diagramm",
+              "layout": "up",
+              "kicker": "Golfregeln",
+              "title": "Regeln, die<br><em>man sieht</em>",
+              "sub": "50 Regeln mit Diagrammen – zum Nachschlagen, auch auf der Runde."
+            }
+          ],
+          "extraScreenshots": {
+            "APP_IPAD_PRO_3GEN_129": [
+              "ipad/de/p1-platzreife-uebersicht.png",
+              "ipad/de/i05-range.png",
+              "ipad/de/i02-runde.png"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "name": "Golfregeln",
+      "slug": "regeln",
+      "locales": {
+        "de-DE": {
+          "promotionalText": "50 Golfregeln mit Diagrammen zum Nachschlagen, dazu 150 Platzreife-Fragen zum Üben und die Bahnengolf-Regeln fürs Minigolf. Kostenlos, ohne Anmeldung.",
+          "slides": [
+            {
+              "shot": "11-regel-diagramm",
+              "layout": "up",
+              "kicker": "Golfregeln",
+              "title": "Regeln, die<br><em>man sieht</em>",
+              "sub": "Interaktive Diagramme zeigen, wo du droppst und was es kostet."
+            },
+            {
+              "shot": "10-regeln",
+              "layout": "tilt",
+              "kicker": "50 Golfregeln",
+              "title": "Schnell<br><em>nachgeschlagen</em>",
+              "sub": "Vom Abschlag bis zum Grün – nach Themen sortiert und verständlich erklärt."
+            },
+            {
+              "shot": "22-platzreife-uebersicht",
+              "layout": "up",
+              "kicker": "Platzreife",
+              "title": "150 Fragen<br><em>zum Üben</em>",
+              "sub": "Lernrunden und Probeprüfung für die Platzreife-Theorie."
+            },
+            {
+              "shot": "33-minigolf-regeln",
+              "layout": "tilt",
+              "kicker": "Minigolf",
+              "title": "Auch fürs<br><em>Minigolf</em>",
+              "sub": "Die offiziellen Bahnengolf-Regeln und alle 28 Normbahnen."
+            }
+          ],
+          "extraScreenshots": {
+            "APP_IPAD_PRO_3GEN_129": [
+              "ipad/de/i08-regeln.png",
+              "ipad/de/p1-platzreife-uebersicht.png",
+              "ipad/de/i12-minigolf-bahnen.png"
+            ]
+          }
+        }
+      }
     }
-  ]
+  ],
+  "_zurueckgestellt": {
+    "_hinweis": "Frühere Entwürfe mit Rohbildern in 1206×2622 – für den 6,9-Zoll-Slot zu klein und nie angelegt. Bei Bedarf als Seite mit 'slides' neu aufbauen.",
+    "Instagram": {
+      "promotionalText": "Jede Runde aufzeichnen, jeden Schlag verorten, dein Handicap automatisch berechnen. Ohne Abo loslegen.",
+      "screenshots": [
+        "de/01-home.png",
+        "de/19-live-scorecard.png",
+        "de/09-schlagkarte.png",
+        "de/06-statistiken-chart.png",
+        "de/02-profil-handicap.png"
+      ]
+    },
+    "Flyer-Golfclub": {
+      "promotionalText": "Die Runde auf deinem Heimatplatz digital mitschreiben – mit offizieller Scorecard, WHS-Handicap und Apple Watch.",
+      "screenshots": [
+        "de/17-platzwahl.png",
+        "de/19-live-scorecard.png",
+        "de/13-rundendetail-gps.png",
+        "de/02-profil-handicap.png",
+        "de/16-spielmodi.png"
+      ]
+    }
+  }
 }

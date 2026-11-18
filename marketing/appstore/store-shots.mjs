@@ -9,28 +9,16 @@
 //
 // Aufruf (aus marketing/flyer, dort liegt puppeteer):
 //   node ../appstore/store-shots.mjs [de|en|all]
+//
+// Das Aussehen selbst steht in `slide.mjs` – dieselbe Vorlage nutzen die Bilder
+// der benutzerdefinierten Produktseiten (`cpp-shots.mjs`).
 import fs from "node:fs";
 import path from "node:path";
-import { fileURLToPath } from "node:url";
-import { createRequire } from "node:module";
-
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const require = createRequire(path.join(__dirname, "..", "flyer", "package.json"));
-const puppeteer = require("puppeteer");
-
-const ROOT = path.join(__dirname, "..", "..");
-const SHOTS = path.join(ROOT, "marketing", "screenshots");
-const OUT = path.join(__dirname, "out");
-
-const W = 1320;
-const H = 2868;
-
-// Dieselben Farben wie AppTheme in der App.
-const C = { bg: "#0E2718", card: "#163421", cardAlt: "#1C4129", gold: "#C9A035", green: "#28824B", light: "#7BD389" };
+import { puppeteer, ROOT, OUT, W, H, shotPath, dataURI, slideHtml, renderSlide } from "./slide.mjs";
 
 // Reihenfolge = Reihenfolge im Store. Die ersten drei sieht man in der Suche,
 // sie tragen das Versprechen der App.
-// `layout`: "up" Gerät unten, Text oben · "tilt" leicht gekippt · "down" Text unten.
+// `layout`: "up" Gerät gerade · "tilt" leicht gekippt.
 const SLIDES = [
   { shot: "19-live-scorecard", layout: "up",
     de: { kicker: "Auf dem Platz", title: "Entfernung<br>zur Fahne. <em>Live.</em>", sub: "GPS-Distanz, Schlägerempfehlung und Scorekarte auf einem Bildschirm." },
@@ -60,66 +48,6 @@ const SLIDES = [
     en: { kicker: "Training", title: "A coach<br><em>in your ear</em>", sub: "Audio sessions for technique, short game and mindset – right on the range." } },
 ];
 
-const logo = "data:image/png;base64," +
-  fs.readFileSync(path.join(ROOT, "GolfTrackApp/Assets.xcassets/AppIcon.appiconset/AppIcon.png")).toString("base64");
-
-function slideHtml(slide, lang, shotURI, index) {
-  const t = slide[lang];
-  const tilt = slide.layout === "tilt" ? (index % 4 === 1 ? -5 : 5) : 0;
-  return `<!doctype html><html><head><meta charset="utf-8"><style>
-  * { margin:0; padding:0; box-sizing:border-box; }
-  html,body { width:${W}px; height:${H}px; overflow:hidden; }
-  body {
-    font-family:-apple-system,"SF Pro Display",BlinkMacSystemFont,sans-serif;
-    color:#fff; -webkit-font-smoothing:antialiased; position:relative;
-    background:
-      radial-gradient(120% 45% at 50% -4%, ${C.light}33 0%, transparent 60%),
-      radial-gradient(90% 40% at ${tilt < 0 ? "0%" : "100%"} 100%, ${C.gold}26 0%, transparent 60%),
-      linear-gradient(180deg, ${C.cardAlt} 0%, ${C.bg} 45%, #0A1E12 100%);
-  }
-  /* feine Fairway-Streifen, wie gemähter Rasen */
-  body::before { content:""; position:absolute; inset:0; opacity:.03;
-    background:repeating-linear-gradient(115deg, #fff 0 90px, transparent 90px 180px); }
-  .text { position:absolute; left:110px; right:110px; top:190px; z-index:2; }
-  .kicker { display:inline-flex; align-items:center; gap:18px; font-size:40px; font-weight:800;
-    letter-spacing:6px; text-transform:uppercase; color:${C.gold}; }
-  .kicker img { width:64px; height:64px; border-radius:15px; box-shadow:0 6px 20px rgba(0,0,0,.4); }
-  h1 { margin-top:36px; font-size:132px; line-height:1.0; font-weight:800; letter-spacing:-3.5px; }
-  h1 em { font-style:normal; color:${C.light}; }
-  .sub { margin-top:40px; font-size:50px; line-height:1.28; font-weight:500; color:rgba(255,255,255,.72); max-width:1060px; }
-
-  .phone { position:absolute; left:50%; top:1010px; width:1020px; height:${Math.round(1020 * 2868 / 1320) + 52}px;
-    transform:translateX(-50%) rotate(${tilt}deg); transform-origin:50% 30%;
-    border-radius:150px; padding:26px;
-    background:linear-gradient(145deg,#4a4f54 0%,#1d2023 30%,#2b2f33 60%,#0f1113 100%);
-    box-shadow:0 60px 140px rgba(0,0,0,.6), 0 0 0 3px #5d6369 inset, 0 0 0 9px #0b0c0d inset; }
-  .screen { width:100%; height:100%; border-radius:126px; overflow:hidden; position:relative; background:#000; }
-  .screen img { width:100%; height:100%; display:block; }
-  .island { position:absolute; top:30px; left:50%; transform:translateX(-50%); width:290px; height:86px;
-    background:#000; border-radius:50px; }
-  .glow { position:absolute; left:50%; top:1300px; width:1300px; height:900px; transform:translateX(-50%);
-    background:radial-gradient(closest-side, ${C.green}55, transparent); filter:blur(40px); }
-</style></head><body>
-  <div class="glow"></div>
-  <div class="text">
-    <div class="kicker"><img src="${logo}">${t.kicker}</div>
-    <h1>${t.title}</h1>
-    <div class="sub">${t.sub}</div>
-  </div>
-  <div class="phone"><div class="screen"><img src="${shotURI}"><div class="island"></div></div></div>
-</body></html>`;
-}
-
-function shotPath(lang, name) {
-  // Erst die 6,9-Zoll-Aufnahme, sonst die Website-Aufnahme derselben Sprache –
-  // nie die andere Sprache, sonst steht Deutsch auf der englischen Seite.
-  for (const dir of [`${lang}-69`, lang]) {
-    const p = path.join(SHOTS, dir, name + ".png");
-    if (fs.existsSync(p)) return p;
-  }
-  return null;
-}
-
 const arg = process.argv[2] || "all";
 const langs = arg === "all" ? ["de", "en"] : [arg];
 
@@ -137,12 +65,11 @@ for (const lang of langs) {
     if (!slide[lang]) continue;
     const src = shotPath(lang, slide.shot);
     if (!src) { console.log(`  – ${lang}/${slide.shot} fehlt, übersprungen`); continue; }
-    const uri = "data:image/png;base64," + fs.readFileSync(src).toString("base64");
-    await page.setContent(slideHtml(slide, lang, uri, i), { waitUntil: "load" });
+    const tilt = slide.layout === "tilt" ? (i % 4 === 1 ? -5 : 5) : 0;
     n += 1;
     const out = path.join(dir, `${String(n).padStart(2, "0")}-${slide.shot}.png`);
-    await page.screenshot({ path: out, clip: { x: 0, y: 0, width: W, height: H } });
-    console.log(`  ✓ ${path.relative(ROOT, out)}`);
+    const notes = await renderSlide(page, slideHtml(slide[lang], dataURI(src), { tilt }), out);
+    console.log(`  ✓ ${path.relative(ROOT, out)}${notes.length ? "  ⚠ " + notes.join("; ") : ""}`);
   }
 }
 await browser.close();

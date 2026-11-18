@@ -50,7 +50,9 @@ echo "→ installieren und bauen"
 # gebraucht. Sie bleiben liegen, damit der naechste Durchlauf schneller ist.
 # .next wird verworfen: ein abgebrochener Durchlauf hinterlaesst dort einen
 # Zwischenstand, an dem sich der naechste Build verschluckt.
-ssh "$REMOTE" "cd $TARGET && npm install --include=dev --no-audit --no-fund && rm -rf .next && npm run build"
+# Der Build laeuft als root, der Dienst als Nutzer golftrack: danach gehoert
+# ihm .next, sonst kann Next.js seinen Bild-Cache nicht schreiben.
+ssh "$REMOTE" "cd $TARGET && npm install --include=dev --no-audit --no-fund && rm -rf .next && npm run build && chown -R golftrack:golftrack .next"
 
 echo "→ starten"
 ssh "$REMOTE" "cd $TARGET && (pm2 reload golftrack --update-env || pm2 start $TARGET/deploy/ecosystem.config.js) && pm2 save"

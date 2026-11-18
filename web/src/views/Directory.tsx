@@ -55,6 +55,28 @@ export async function Directory({ lang }: { lang: Lang }) {
                 </a>
               </p>
             </div>
+            {/* Absprache mit handicap.report: Quellenhinweis direkt an der Liste, nicht nur im Impressum. */}
+            <p className="mt-6 text-xs leading-relaxed text-cream/55">
+              {copy.creditRatings}{" "}
+              <a
+                href="https://handicap.report"
+                target="_blank"
+                rel="noreferrer"
+                className="tap text-brass underline underline-offset-4"
+              >
+                handicap.report
+              </a>
+              . {copy.creditCoords}{" "}
+              <a
+                href="https://www.openstreetmap.org/copyright"
+                target="_blank"
+                rel="noreferrer"
+                className="tap underline underline-offset-4"
+              >
+                {copy.creditOsm}
+              </a>{" "}
+              {copy.creditLicense}.
+            </p>
           </>
         )}
       </main>

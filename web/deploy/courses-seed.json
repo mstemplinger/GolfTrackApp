@@ -152,71 +152,6 @@
     "welcome" : ""
   },
   {
-    "courseRating" : null,
-    "facilityNotes" : "",
-    "flagLatitudes" : [
-      48.7042,
-      48.701500000000003,
-      48.701799999999999,
-      48.704500000000003,
-      48.708199999999998,
-      48.709200000000003,
-      48.7072,
-      48.705800000000004,
-      48.706800000000001
-    ],
-    "flagLongitudes" : [
-      13.3878,
-      13.3895,
-      13.391999999999999,
-      13.393800000000001,
-      13.3925,
-      13.3872,
-      13.3855,
-      13.380800000000001,
-      13.3855
-    ],
-    "hcpValues" : [
-
-    ],
-    "holeLengths" : [
-
-    ],
-    "holes" : 9,
-    "kind" : "golf",
-    "lat" : 48.704000000000001,
-    "location" : "Tittling, Bayern",
-    "lon" : 13.388,
-    "name" : "Golfclub Tittling",
-    "parValues" : [
-
-    ],
-    "slopeRating" : null,
-    "teeLatitudes" : [
-      48.706800000000001,
-      48.704000000000001,
-      48.701300000000003,
-      48.701999999999998,
-      48.704700000000003,
-      48.708500000000001,
-      48.709000000000003,
-      48.707000000000001,
-      48.705599999999997
-    ],
-    "teeLongitudes" : [
-      13.385199999999999,
-      13.3881,
-      13.389799999999999,
-      13.392300000000001,
-      13.3941,
-      13.392200000000001,
-      13.386900000000001,
-      13.385199999999999,
-      13.3805
-    ],
-    "welcome" : ""
-  },
-  {
     "courseRating" : 72.599999999999994,
     "facilityNotes" : "Feng-Shui-Golfplatz (einziger in Deutschland)\nDriving Range · 6-Loch-Kurzplatz\nSekretariat: tägl. 10–16 Uhr · Tel. +49 8502 917160",
     "flagLatitudes" : [
@@ -376,39 +311,6 @@
       4
     ],
     "slopeRating" : 125,
-    "teeLatitudes" : [
-
-    ],
-    "teeLongitudes" : [
-
-    ],
-    "welcome" : ""
-  },
-  {
-    "courseRating" : null,
-    "facilityNotes" : "",
-    "flagLatitudes" : [
-
-    ],
-    "flagLongitudes" : [
-
-    ],
-    "hcpValues" : [
-
-    ],
-    "holeLengths" : [
-
-    ],
-    "holes" : 9,
-    "kind" : "golf",
-    "lat" : 48.628,
-    "location" : "Vilshofen an der Donau, Bayern",
-    "lon" : 13.186999999999999,
-    "name" : "Golfclub Vilshofen",
-    "parValues" : [
-
-    ],
-    "slopeRating" : null,
     "teeLatitudes" : [
 
     ],
@@ -1486,39 +1388,6 @@
     "welcome" : ""
   },
   {
-    "courseRating" : null,
-    "facilityNotes" : "",
-    "flagLatitudes" : [
-
-    ],
-    "flagLongitudes" : [
-
-    ],
-    "hcpValues" : [
-
-    ],
-    "holeLengths" : [
-
-    ],
-    "holes" : 18,
-    "kind" : "golf",
-    "lat" : 48.427999999999997,
-    "location" : "Pfarrkirchen, Bayern",
-    "lon" : 12.936999999999999,
-    "name" : "Golfclub Pfarrkirchen e.V.",
-    "parValues" : [
-
-    ],
-    "slopeRating" : null,
-    "teeLatitudes" : [
-
-    ],
-    "teeLongitudes" : [
-
-    ],
-    "welcome" : ""
-  },
-  {
     "courseRating" : 70.900000000000006,
     "facilityNotes" : "9-Loch-Anlage · Runde zweimal gespielt für 18-Loch-Wertung\nArchitekt: Peter Harradine (1998)\nDriving Range · Clubhaus · Restaurant",
     "flagLatitudes" : [
@@ -2059,105 +1928,6 @@
     "welcome" : ""
   },
   {
-    "courseRating" : null,
-    "facilityNotes" : "",
-    "flagLatitudes" : [
-
-    ],
-    "flagLongitudes" : [
-
-    ],
-    "hcpValues" : [
-
-    ],
-    "holeLengths" : [
-
-    ],
-    "holes" : 9,
-    "kind" : "golf",
-    "lat" : 48.25,
-    "location" : "Mühldorf am Inn, Bayern",
-    "lon" : 12.516999999999999,
-    "name" : "Golfclub Mühldorf",
-    "parValues" : [
-
-    ],
-    "slopeRating" : null,
-    "teeLatitudes" : [
-
-    ],
-    "teeLongitudes" : [
-
-    ],
-    "welcome" : ""
-  },
-  {
-    "courseRating" : null,
-    "facilityNotes" : "",
-    "flagLatitudes" : [
-
-    ],
-    "flagLongitudes" : [
-
-    ],
-    "hcpValues" : [
-
-    ],
-    "holeLengths" : [
-
-    ],
-    "holes" : 9,
-    "kind" : "golf",
-    "lat" : 48.633000000000003,
-    "location" : "Dingolfing, Bayern",
-    "lon" : 12.5,
-    "name" : "Golfclub Dingolfing",
-    "parValues" : [
-
-    ],
-    "slopeRating" : null,
-    "teeLatitudes" : [
-
-    ],
-    "teeLongitudes" : [
-
-    ],
-    "welcome" : ""
-  },
-  {
-    "courseRating" : null,
-    "facilityNotes" : "",
-    "flagLatitudes" : [
-
-    ],
-    "flagLongitudes" : [
-
-    ],
-    "hcpValues" : [
-
-    ],
-    "holeLengths" : [
-
-    ],
-    "holes" : 18,
-    "kind" : "golf",
-    "lat" : 48.267000000000003,
-    "location" : "Dorfen, Bayern",
-    "lon" : 12.167,
-    "name" : "Golfclub Dorfen",
-    "parValues" : [
-
-    ],
-    "slopeRating" : null,
-    "teeLatitudes" : [
-
-    ],
-    "teeLongitudes" : [
-
-    ],
-    "welcome" : ""
-  },
-  {
     "courseRating" : 72,
     "facilityNotes" : "Architekt: Peter Harradine (1995) · Historisches Schloss Guttenburg\n6-Loch-Kurzplatz vorhanden\nGuttenburg 3, 84559 Kraiburg am Inn\nKontakt: www.golfclub-guttenburg.de",
     "flagLatitudes" : [
@@ -2458,72 +2228,6 @@
       5
     ],
     "slopeRating" : 126,
-    "teeLatitudes" : [
-
-    ],
-    "teeLongitudes" : [
-
-    ],
-    "welcome" : ""
-  },
-  {
-    "courseRating" : null,
-    "facilityNotes" : "",
-    "flagLatitudes" : [
-
-    ],
-    "flagLongitudes" : [
-
-    ],
-    "hcpValues" : [
-
-    ],
-    "holeLengths" : [
-
-    ],
-    "holes" : 9,
-    "kind" : "golf",
-    "lat" : 48.966999999999999,
-    "location" : "Regen, Bayern",
-    "lon" : 13.117000000000001,
-    "name" : "Golfclub Regen",
-    "parValues" : [
-
-    ],
-    "slopeRating" : null,
-    "teeLatitudes" : [
-
-    ],
-    "teeLongitudes" : [
-
-    ],
-    "welcome" : ""
-  },
-  {
-    "courseRating" : null,
-    "facilityNotes" : "",
-    "flagLatitudes" : [
-
-    ],
-    "flagLongitudes" : [
-
-    ],
-    "hcpValues" : [
-
-    ],
-    "holeLengths" : [
-
-    ],
-    "holes" : 9,
-    "kind" : "golf",
-    "lat" : 49.082999999999998,
-    "location" : "Viechtach, Bayern",
-    "lon" : 12.882999999999999,
-    "name" : "Golfclub Viechtach",
-    "parValues" : [
-
-    ],
-    "slopeRating" : null,
     "teeLatitudes" : [
 
     ],
@@ -2917,72 +2621,6 @@
       3
     ],
     "slopeRating" : 104,
-    "teeLatitudes" : [
-
-    ],
-    "teeLongitudes" : [
-
-    ],
-    "welcome" : ""
-  },
-  {
-    "courseRating" : null,
-    "facilityNotes" : "",
-    "flagLatitudes" : [
-
-    ],
-    "flagLongitudes" : [
-
-    ],
-    "hcpValues" : [
-
-    ],
-    "holeLengths" : [
-
-    ],
-    "holes" : 18,
-    "kind" : "golf",
-    "lat" : 49.082999999999998,
-    "location" : "Beratzhausen, Bayern",
-    "lon" : 11.817,
-    "name" : "Golfclub Beratzhausen",
-    "parValues" : [
-
-    ],
-    "slopeRating" : null,
-    "teeLatitudes" : [
-
-    ],
-    "teeLongitudes" : [
-
-    ],
-    "welcome" : ""
-  },
-  {
-    "courseRating" : null,
-    "facilityNotes" : "",
-    "flagLatitudes" : [
-
-    ],
-    "flagLongitudes" : [
-
-    ],
-    "hcpValues" : [
-
-    ],
-    "holeLengths" : [
-
-    ],
-    "holes" : 18,
-    "kind" : "golf",
-    "lat" : 49.216999999999999,
-    "location" : "Cham, Bayern",
-    "lon" : 12.667,
-    "name" : "Golfclub Cham",
-    "parValues" : [
-
-    ],
-    "slopeRating" : null,
     "teeLatitudes" : [
 
     ],
@@ -3813,39 +3451,6 @@
     "welcome" : ""
   },
   {
-    "courseRating" : null,
-    "facilityNotes" : "",
-    "flagLatitudes" : [
-
-    ],
-    "flagLongitudes" : [
-
-    ],
-    "hcpValues" : [
-
-    ],
-    "holeLengths" : [
-
-    ],
-    "holes" : 18,
-    "kind" : "golf",
-    "lat" : 48.283000000000001,
-    "location" : "Hebertshausen, Bayern",
-    "lon" : 11.382999999999999,
-    "name" : "Golfclub Hebertshausen",
-    "parValues" : [
-
-    ],
-    "slopeRating" : null,
-    "teeLatitudes" : [
-
-    ],
-    "teeLongitudes" : [
-
-    ],
-    "welcome" : ""
-  },
-  {
     "courseRating" : 71.700000000000003,
     "facilityNotes" : "Seit 1987 · 70 ha · Alpenpanorama · Slope 140 (sehr anspruchsvoll)\nTom Duncan Performance Center · Simulatoren\nKontakt: www.gc-mangfalltal.de",
     "flagLatitudes" : [
@@ -3944,12 +3549,12 @@
     "holeLengths" : [
 
     ],
-    "holes" : 18,
+    "holes" : 9,
     "kind" : "golf",
-    "lat" : 47.866999999999997,
-    "location" : "Stephanskirchen, Bayern",
-    "lon" : 12.167,
-    "name" : "Golfclub Rosenheim",
+    "lat" : 47.8338,
+    "location" : "Rosenheim-Happing, Bayern",
+    "lon" : 12.1384,
+    "name" : "City Golf Rosenheim",
     "parValues" : [
 
     ],
@@ -4088,105 +3693,6 @@
       5
     ],
     "slopeRating" : 130,
-    "teeLatitudes" : [
-
-    ],
-    "teeLongitudes" : [
-
-    ],
-    "welcome" : ""
-  },
-  {
-    "courseRating" : null,
-    "facilityNotes" : "",
-    "flagLatitudes" : [
-
-    ],
-    "flagLongitudes" : [
-
-    ],
-    "hcpValues" : [
-
-    ],
-    "holeLengths" : [
-
-    ],
-    "holes" : 18,
-    "kind" : "golf",
-    "lat" : 47.866999999999997,
-    "location" : "Traunstein, Bayern",
-    "lon" : 12.65,
-    "name" : "Golfclub Traunstein",
-    "parValues" : [
-
-    ],
-    "slopeRating" : null,
-    "teeLatitudes" : [
-
-    ],
-    "teeLongitudes" : [
-
-    ],
-    "welcome" : ""
-  },
-  {
-    "courseRating" : null,
-    "facilityNotes" : "",
-    "flagLatitudes" : [
-
-    ],
-    "flagLongitudes" : [
-
-    ],
-    "hcpValues" : [
-
-    ],
-    "holeLengths" : [
-
-    ],
-    "holes" : 18,
-    "kind" : "golf",
-    "lat" : 47.933,
-    "location" : "Waging am See, Bayern",
-    "lon" : 12.733000000000001,
-    "name" : "Golfclub Waging am See",
-    "parValues" : [
-
-    ],
-    "slopeRating" : null,
-    "teeLatitudes" : [
-
-    ],
-    "teeLongitudes" : [
-
-    ],
-    "welcome" : ""
-  },
-  {
-    "courseRating" : null,
-    "facilityNotes" : "",
-    "flagLatitudes" : [
-
-    ],
-    "flagLongitudes" : [
-
-    ],
-    "hcpValues" : [
-
-    ],
-    "holeLengths" : [
-
-    ],
-    "holes" : 18,
-    "kind" : "golf",
-    "lat" : 48.232999999999997,
-    "location" : "Ranshofen, Oberösterreich",
-    "lon" : 13.050000000000001,
-    "name" : "Golfclub Braunau-Ranshofen",
-    "parValues" : [
-
-    ],
-    "slopeRating" : null,
     "teeLatitudes" : [
 
     ],
@@ -4397,39 +3903,6 @@
     "welcome" : ""
   },
   {
-    "courseRating" : null,
-    "facilityNotes" : "",
-    "flagLatitudes" : [
-
-    ],
-    "flagLongitudes" : [
-
-    ],
-    "hcpValues" : [
-
-    ],
-    "holeLengths" : [
-
-    ],
-    "holes" : 9,
-    "kind" : "golf",
-    "lat" : 47.966999999999999,
-    "location" : "Attnang-Puchheim, Oberösterreich",
-    "lon" : 13.717000000000001,
-    "name" : "Golfclub Attnang-Puchheim",
-    "parValues" : [
-
-    ],
-    "slopeRating" : null,
-    "teeLatitudes" : [
-
-    ],
-    "teeLongitudes" : [
-
-    ],
-    "welcome" : ""
-  },
-  {
     "courseRating" : 62.799999999999997,
     "facilityNotes" : "ROBINSON Club-Resort · 9-Loch · Par 37 (18-Loch-Wertung: Par 74)\nDriving Range · Restaurant · Erbaut 1995",
     "flagLatitudes" : [
@@ -4622,72 +4095,6 @@
       3
     ],
     "slopeRating" : 128,
-    "teeLatitudes" : [
-
-    ],
-    "teeLongitudes" : [
-
-    ],
-    "welcome" : ""
-  },
-  {
-    "courseRating" : null,
-    "facilityNotes" : "",
-    "flagLatitudes" : [
-
-    ],
-    "flagLongitudes" : [
-
-    ],
-    "hcpValues" : [
-
-    ],
-    "holeLengths" : [
-
-    ],
-    "holes" : 18,
-    "kind" : "golf",
-    "lat" : 48.482999999999997,
-    "location" : "Schönau im Mühlkreis, OÖ",
-    "lon" : 14.15,
-    "name" : "Golf & Country Club Schloss Schönau",
-    "parValues" : [
-
-    ],
-    "slopeRating" : null,
-    "teeLatitudes" : [
-
-    ],
-    "teeLongitudes" : [
-
-    ],
-    "welcome" : ""
-  },
-  {
-    "courseRating" : null,
-    "facilityNotes" : "",
-    "flagLatitudes" : [
-
-    ],
-    "flagLongitudes" : [
-
-    ],
-    "hcpValues" : [
-
-    ],
-    "holeLengths" : [
-
-    ],
-    "holes" : 9,
-    "kind" : "golf",
-    "lat" : 48.517000000000003,
-    "location" : "Bad Leonfelden, Oberösterreich",
-    "lon" : 14.282999999999999,
-    "name" : "Golfclub Bad Leonfelden",
-    "parValues" : [
-
-    ],
-    "slopeRating" : null,
     "teeLatitudes" : [
 
     ],
@@ -5998,45 +5405,12 @@
     "holeLengths" : [
 
     ],
-    "holes" : 9,
+    "holes" : 18,
     "kind" : "golf",
-    "lat" : 47.283000000000001,
-    "location" : "Uttendorf, Salzburg",
-    "lon" : 12.567,
-    "name" : "Golfclub Uttendorf",
-    "parValues" : [
-
-    ],
-    "slopeRating" : null,
-    "teeLatitudes" : [
-
-    ],
-    "teeLongitudes" : [
-
-    ],
-    "welcome" : ""
-  },
-  {
-    "courseRating" : null,
-    "facilityNotes" : "",
-    "flagLatitudes" : [
-
-    ],
-    "flagLongitudes" : [
-
-    ],
-    "hcpValues" : [
-
-    ],
-    "holeLengths" : [
-
-    ],
-    "holes" : 9,
-    "kind" : "golf",
-    "lat" : 49.183,
-    "location" : "Železná Ruda, Tschechien",
-    "lon" : 13.183,
-    "name" : "Golfpark Böhmerwald Špičák",
+    "lat" : 47.2814,
+    "location" : "Mittersill, Salzburg",
+    "lon" : 12.5077,
+    "name" : "Golfclub Nationalpark Hohe Tauern",
     "parValues" : [
 
     ],

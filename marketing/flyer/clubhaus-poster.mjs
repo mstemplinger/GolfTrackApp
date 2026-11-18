@@ -28,12 +28,10 @@ const RASSBACH = "donau-golf-club-passau-rassbach-e-v";
 // bekommen „vom <Name>" und den Slug als Dateinamen.
 const PRESETS = {
   [RASSBACH]: { of: "vom Raßbach", file: "Passau-Rassbach" },
-  "golfclub-tittling": { of: "vom GC Tittling", file: "Tittling" },
   "golf-und-landclub-bayerwald-e-v": { of: "vom GLC Bayerwald", file: "Bayerwald" },
   "3-loch-uebungsrunde-gc-bayerwald": { of: "der 3-Loch-Runde", file: "Bayerwald-3-Loch" },
   "golfclub-am-nationalpark-bayerischer-wald": { of: "vom GC am Nationalpark", file: "Nationalpark-Bayerischer-Wald" },
   "panorama-golf-passau": { of: "vom Panorama Golf", file: "Panorama-Golf-Passau" },
-  "golfclub-vilshofen": { of: "vom GC Vilshofen", file: "Vilshofen" },
   "quellness-golf-brunnwies": { of: "von Brunnwies", file: "Quellness-Brunnwies" },
 };
 

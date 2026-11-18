@@ -120,13 +120,6 @@ enum BundledCourses {
                                 48.6112, 48.6138, 48.6152, 48.6155, 48.6148, 48.6140, 48.6122, 48.6128, 48.6122],
               flagLongitudes: [13.5485, 13.5503, 13.5528, 13.5548, 13.5558, 13.5515, 13.5498, 13.5472, 13.5452,
                                 13.5412, 13.5385, 13.5402, 13.5458, 13.5522, 13.5578, 13.5595, 13.5545, 13.5480]),
-        // ⚠️ Lochpositionen: Näherungswerte – mit echten GPS-Messungen vor Ort ersetzen
-        .init(name: "Golfclub Tittling", location: "Tittling, Bayern",
-              holes: 9, lat: 48.704, lon: 13.388,
-              teeLatitudes:  [48.7068, 48.7040, 48.7013, 48.7020, 48.7047, 48.7085, 48.7090, 48.7070, 48.7056],
-              teeLongitudes: [13.3852, 13.3881, 13.3898, 13.3923, 13.3941, 13.3922, 13.3869, 13.3852, 13.3805],
-              flagLatitudes:  [48.7042, 48.7015, 48.7018, 48.7045, 48.7082, 48.7092, 48.7072, 48.7058, 48.7068],
-              flagLongitudes: [13.3878, 13.3895, 13.3920, 13.3938, 13.3925, 13.3872, 13.3855, 13.3808, 13.3855]),
         .init(name: "Panorama Golf Passau", location: "Fürstenzell, Bayern",
               holes: 18, lat: 48.516, lon: 13.323,
               parValues: [5, 4, 3, 4, 5, 4, 4, 4, 4,   // OUT 37
@@ -164,7 +157,6 @@ enum BundledCourses {
               Platzregeln: Lochspiel – Lochverlust · Zählspiel – 2 Strafschläge (Aushang am Sekretariat)
               Kontakt: info@gc-bayerwald.de · www.gc-bayerwald.de · Tel. +49 8581 1040
               """),
-        .init(name: "Golfclub Vilshofen",                        location: "Vilshofen an der Donau, Bayern",        holes:  9, lat: 48.628, lon: 13.187),
         .init(name: "Celtic Golf Course Schärding", location: "Taufkirchen an der Pram, Oberösterreich",
               holes: 18, lat: 48.374, lon: 13.518,
               parValues: [5, 5, 4, 4, 4, 3, 4, 4, 3,   // OUT 36
@@ -351,7 +343,6 @@ enum BundledCourses {
               Driving Range · Putting Green · 6-Loch-Übungsplatz
               Kontakt: www.rottaler-golfclub.de
               """),
-        .init(name: "Golfclub Pfarrkirchen e.V.",               location: "Pfarrkirchen, Bayern",  holes: 18, lat: 48.428, lon: 12.937),
         .init(name: "Golfclub Vilsbiburg e.V.", location: "Vilsbiburg, Bayern",
               holes: 9, lat: 48.448, lon: 12.361,
               parValues: [4, 3, 5, 4, 5, 3, 4, 3, 4],  // Par 35 (9 Loch, 2× für 18-Loch-Wertung)
@@ -451,9 +442,6 @@ enum BundledCourses {
               Am Golfplatz 2, Pleiskirchen
               Kontakt: www.gc-pleiskirchen.de
               """),
-        .init(name: "Golfclub Mühldorf",  location: "Mühldorf am Inn, Bayern", holes: 9, lat: 48.250, lon: 12.517),
-        .init(name: "Golfclub Dingolfing", location: "Dingolfing, Bayern",      holes: 9, lat: 48.633, lon: 12.500),
-        .init(name: "Golfclub Dorfen",     location: "Dorfen, Bayern",           holes: 18, lat: 48.267, lon: 12.167),
         .init(name: "Golfclub Schloss Guttenburg / Inntal", location: "Ampfing, Bayern",
               holes: 18, lat: 48.222, lon: 12.429,
               parValues: [4, 3, 4, 5, 4, 5, 3, 4, 4,   // OUT 36
@@ -509,8 +497,6 @@ enum BundledCourses {
               Hunde für Mitglieder Mo–Fr ab 14 Uhr erlaubt
               Kontakt: www.deggendorfer-golfclub.de
               """),
-        .init(name: "Golfclub Regen",     location: "Regen, Bayern",     holes: 9, lat: 48.967, lon: 13.117),
-        .init(name: "Golfclub Viechtach", location: "Viechtach, Bayern", holes: 9, lat: 49.083, lon: 12.883),
         .init(name: "Golfclub Furth im Wald e.V.", location: "Furth im Wald, Bayern",
               holes: 18, lat: 49.307, lon: 12.849,
               parValues: [5, 3, 4, 3, 4, 4, 4, 4, 5,   // OUT 36
@@ -585,8 +571,6 @@ enum BundledCourses {
               Ideal für Anfänger und Kurzurlauber
               Kontakt: www.marcaurel.de
               """),
-        .init(name: "Golfclub Beratzhausen",             location: "Beratzhausen, Bayern",  holes: 18, lat: 49.083, lon: 11.817),
-        .init(name: "Golfclub Cham",                     location: "Cham, Bayern",           holes: 18, lat: 49.217, lon: 12.667),
         .init(name: "Golf- und Landclub Oberpfälzer Wald e.V.", location: "Neunburg vorm Wald, Bayern",
               holes: 18, lat: 49.314, lon: 12.338,
               parValues: [5, 4, 4, 3, 4, 5, 4, 3, 4,   // OUT 36
@@ -731,7 +715,6 @@ enum BundledCourses {
               Saisonbetrieb April–Oktober
               Kontakt: www.gcdachau.de
               """),
-        .init(name: "Golfclub Hebertshausen",                   location: "Hebertshausen, Bayern",                 holes: 18, lat: 48.283, lon: 11.383),
         .init(name: "Golfclub Mangfalltal",                     location: "Feldkirchen-Westerham, Bayern",
               holes: 18, lat: 47.867, lon: 11.917,
               parValues: [5, 3, 4, 4, 4, 3, 5, 4, 5,   // OUT 37
@@ -748,7 +731,7 @@ enum BundledCourses {
               """),
 
         // ── Rosenheim / Chiemgau / Berchtesgaden ─────────────────────
-        .init(name: "Golfclub Rosenheim",                       location: "Stephanskirchen, Bayern",               holes: 18, lat: 47.867, lon: 12.167),
+        .init(name: "City Golf Rosenheim", location: "Rosenheim-Happing, Bayern", holes:  9, lat: 47.8338, lon: 12.1384),
         .init(name: "Chiemsee Golf-Club Prien e.V.",            location: "Prien am Chiemsee, Bayern",
               holes: 18, lat: 47.844, lon: 12.343,
               parValues: [4, 3, 5, 3, 4, 4, 5, 4, 4,   // OUT 36
@@ -773,11 +756,8 @@ enum BundledCourses {
               Weng 12, 83404 Ainring (bei Bad Reichenhall)
               Kontakt: www.gcbgl.de
               """),
-        .init(name: "Golfclub Traunstein",                      location: "Traunstein, Bayern",                    holes: 18, lat: 47.867, lon: 12.650),
-        .init(name: "Golfclub Waging am See",                   location: "Waging am See, Bayern",                 holes: 18, lat: 47.933, lon: 12.733),
 
         // ── Oberösterreich — Innviertel ───────────────────────────────
-        .init(name: "Golfclub Braunau-Ranshofen",               location: "Ranshofen, Oberösterreich",             holes: 18, lat: 48.233, lon: 13.050),
         .init(name: "Golfclub Pischelsdorf (Gut Kaltenhausen)",  location: "Pischelsdorf am Engelbach, OÖ",
               holes: 18, lat: 48.073, lon: 13.250,
               parValues: [4, 4, 4, 4, 5, 4, 3, 5, 3,   // OUT 36
@@ -812,7 +792,6 @@ enum BundledCourses {
               Gegründet 1981 · Parklandplatz
               Kontakt: www.gc-wels.at
               """),
-        .init(name: "Golfclub Attnang-Puchheim",                location: "Attnang-Puchheim, Oberösterreich",      holes:  9, lat: 47.967, lon: 13.717),
         .init(name: "Golfclub Ampflwang",                       location: "Ampflwang, Oberösterreich",
               holes:  9, lat: 48.101, lon: 13.565,
               courseRating: 62.8, slopeRating: 125,
@@ -849,8 +828,6 @@ enum BundledCourses {
               Schauerschlag 4, 4181 Oberneukirchen
               Kontakt: www.sterngartl.at
               """),
-        .init(name: "Golf & Country Club Schloss Schönau",      location: "Schönau im Mühlkreis, OÖ",              holes: 18, lat: 48.483, lon: 14.150),
-        .init(name: "Golfclub Bad Leonfelden",                  location: "Bad Leonfelden, Oberösterreich",        holes:  9, lat: 48.517, lon: 14.283),
         .init(name: "Golfclub St. Oswald-Freistadt",            location: "St. Oswald bei Freistadt, OÖ",
               holes: 18, lat: 48.505, lon: 14.596,
               courseRating: 70.6, slopeRating: 133,
@@ -1077,10 +1054,9 @@ enum BundledCourses {
               Golfstraße 25, Zell am See
               Kontakt: www.golfinzellamsee.at
               """),
-        .init(name: "Golfclub Uttendorf",                       location: "Uttendorf, Salzburg",                   holes:  9, lat: 47.283, lon: 12.567),
+        .init(name: "Golfclub Nationalpark Hohe Tauern", location: "Mittersill, Salzburg", holes: 18, lat: 47.2814, lon: 12.5077),
 
         // ── Tschechien / Südböhmen ────────────────────────────────────
-        .init(name: "Golfpark Böhmerwald Špičák",               location: "Železná Ruda, Tschechien",              holes:  9, lat: 49.183, lon: 13.183),
         .init(name: "Golf Rezort Lipno",                        location: "Lipno nad Vltavou, Tschechien",
               holes: 18, lat: 48.633, lon: 14.183,
               facilityNotes: "Golfplatz geschlossen · Anlage nicht mehr in Betrieb"),

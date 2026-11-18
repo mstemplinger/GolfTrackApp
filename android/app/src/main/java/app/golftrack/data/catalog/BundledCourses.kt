@@ -28,12 +28,6 @@ object BundledCourses {
                                     48.6112, 48.6138, 48.6152, 48.6155, 48.6148, 48.6140, 48.6122, 48.6128, 48.6122),
                   flagLongitudes = listOf(13.5485, 13.5503, 13.5528, 13.5548, 13.5558, 13.5515, 13.5498, 13.5472, 13.5452,
                                     13.5412, 13.5385, 13.5402, 13.5458, 13.5522, 13.5578, 13.5595, 13.5545, 13.5480)),
-        GolfCourseEntry(name = "Golfclub Tittling", location = "Tittling, Bayern",
-                  holes = 9, lat = 48.704, lon = 13.388,
-                  teeLatitudes =  listOf(48.7068, 48.7040, 48.7013, 48.7020, 48.7047, 48.7085, 48.7090, 48.7070, 48.7056),
-                  teeLongitudes = listOf(13.3852, 13.3881, 13.3898, 13.3923, 13.3941, 13.3922, 13.3869, 13.3852, 13.3805),
-                  flagLatitudes =  listOf(48.7042, 48.7015, 48.7018, 48.7045, 48.7082, 48.7092, 48.7072, 48.7058, 48.7068),
-                  flagLongitudes = listOf(13.3878, 13.3895, 13.3920, 13.3938, 13.3925, 13.3872, 13.3855, 13.3808, 13.3855)),
         GolfCourseEntry(name = "Panorama Golf Passau", location = "Fürstenzell, Bayern",
                   holes = 18, lat = 48.516, lon = 13.323,
                   parValues = listOf(5, 4, 3, 4, 5, 4, 4, 4, 4,   // OUT 37
@@ -59,7 +53,6 @@ object BundledCourses {
                                 327, 137, 448, 174, 440, 303, 334, 263, 342),  // IN 2768
                   courseRating = 70.4, slopeRating = 125,
                   facilityNotes = "Toiletten: Tee 7 · Tee 10 · Grün 14\nTrinkwasser: zwischen Grün 7/Abschlag 8 und Grün 14/Abschlag 15\nHerzdefibrillator: Sekretariat (Tel. 08581/1040)\nEntfernungsmarkierungen: 2 weiße Ringe = 150 m bis Grünbeginn · 1 weißer Ring = 100 m bis Grünbeginn\nBiotope dürfen nicht betreten werden! (Platzverweis/Turniersperre)\nPlatzregeln: Lochspiel – Lochverlust · Zählspiel – 2 Strafschläge (Aushang am Sekretariat)\nKontakt: info@gc-bayerwald.de · www.gc-bayerwald.de · Tel. +49 8581 1040"),
-        GolfCourseEntry(name = "Golfclub Vilshofen",                        location = "Vilshofen an der Donau, Bayern",        holes =  9, lat = 48.628, lon = 13.187),
         GolfCourseEntry(name = "Celtic Golf Course Schärding", location = "Taufkirchen an der Pram, Oberösterreich",
                   holes = 18, lat = 48.374, lon = 13.518,
                   parValues = listOf(5, 5, 4, 4, 4, 3, 4, 4, 3,   // OUT 36
@@ -192,7 +185,6 @@ object BundledCourses {
                                 499, 166, 373, 313, 457, 471, 348, 188, 421),  // IN 3236 → 6427 m
                   courseRating = 71.7, slopeRating = 125,
                   facilityNotes = "Parklandplatz am Rottauensee · Rott-Fluss als Hindernis\nDriving Range · Putting Green · 6-Loch-Übungsplatz\nKontakt: www.rottaler-golfclub.de"),
-        GolfCourseEntry(name = "Golfclub Pfarrkirchen e.V.",               location = "Pfarrkirchen, Bayern",  holes = 18, lat = 48.428, lon = 12.937),
         GolfCourseEntry(name = "Golfclub Vilsbiburg e.V.", location = "Vilsbiburg, Bayern",
                   holes = 9, lat = 48.448, lon = 12.361,
                   parValues = listOf(4, 3, 5, 4, 5, 3, 4, 3, 4),  // Par 35 (9 Loch, 2× für 18-Loch-Wertung)
@@ -260,9 +252,6 @@ object BundledCourses {
                                 486, 133, 445, 178, 544, 435, 330, 381, 190),  // IN 3122 → 6591 m
                   courseRating = 71.8, slopeRating = 129,
                   facilityNotes = "Parklandplatz (1996)\nAm Golfplatz 2, Pleiskirchen\nKontakt: www.gc-pleiskirchen.de"),
-        GolfCourseEntry(name = "Golfclub Mühldorf",  location = "Mühldorf am Inn, Bayern", holes = 9, lat = 48.250, lon = 12.517),
-        GolfCourseEntry(name = "Golfclub Dingolfing", location = "Dingolfing, Bayern",      holes = 9, lat = 48.633, lon = 12.500),
-        GolfCourseEntry(name = "Golfclub Dorfen",     location = "Dorfen, Bayern",           holes = 18, lat = 48.267, lon = 12.167),
         GolfCourseEntry(name = "Golfclub Schloss Guttenburg / Inntal", location = "Ampfing, Bayern",
                   holes = 18, lat = 48.222, lon = 12.429,
                   parValues = listOf(4, 3, 4, 5, 4, 5, 3, 4, 4,   // OUT 36
@@ -303,8 +292,6 @@ object BundledCourses {
                                 343, 154, 325, 331, 178, 513, 335, 174, 478),  // IN 2831 → 6003 m
                   courseRating = 68.8, slopeRating = 126,
                   facilityNotes = "Architekten: Donald Harradine (1981) & Peter Harradine (2003)\nDriving Range · RUSEL-ARENA (Indoor-Simulator) · Golfschule\nHunde für Mitglieder Mo–Fr ab 14 Uhr erlaubt\nKontakt: www.deggendorfer-golfclub.de"),
-        GolfCourseEntry(name = "Golfclub Regen",     location = "Regen, Bayern",     holes = 9, lat = 48.967, lon = 13.117),
-        GolfCourseEntry(name = "Golfclub Viechtach", location = "Viechtach, Bayern", holes = 9, lat = 49.083, lon = 12.883),
         GolfCourseEntry(name = "Golfclub Furth im Wald e.V.", location = "Furth im Wald, Bayern",
                   holes = 18, lat = 49.307, lon = 12.849,
                   parValues = listOf(5, 3, 4, 3, 4, 4, 4, 4, 5,   // OUT 36
@@ -355,8 +342,6 @@ object BundledCourses {
                   holeLengths = listOf(96, 100, 142, 84, 94, 103, 121, 67, 97),  // 904 m
                   courseRating = 29.4, slopeRating = 104,
                   facilityNotes = "9-Loch-Par-3-Platz direkt am Wellnesshotel · komplett flach\nDriving Range · Clubverleih · Unterricht\nIdeal für Anfänger und Kurzurlauber\nKontakt: www.marcaurel.de"),
-        GolfCourseEntry(name = "Golfclub Beratzhausen",             location = "Beratzhausen, Bayern",  holes = 18, lat = 49.083, lon = 11.817),
-        GolfCourseEntry(name = "Golfclub Cham",                     location = "Cham, Bayern",           holes = 18, lat = 49.217, lon = 12.667),
         GolfCourseEntry(name = "Golf- und Landclub Oberpfälzer Wald e.V.", location = "Neunburg vorm Wald, Bayern",
                   holes = 18, lat = 49.314, lon = 12.338,
                   parValues = listOf(5, 4, 4, 3, 4, 5, 4, 3, 4,   // OUT 36
@@ -457,7 +442,6 @@ object BundledCourses {
                   hcpValues = listOf(15, 5, 7, 17, 1, 13, 3, 9, 11),
                   courseRating = 70.7, slopeRating = 131,
                   facilityNotes = "9-Loch-Platz (18-Loch durch doppelten Umlauf) · An der Amper\nSaisonbetrieb April–Oktober\nKontakt: www.gcdachau.de"),
-        GolfCourseEntry(name = "Golfclub Hebertshausen",                   location = "Hebertshausen, Bayern",                 holes = 18, lat = 48.283, lon = 11.383),
     )
 
     private fun part7(): List<GolfCourseEntry> = listOf(
@@ -471,7 +455,7 @@ object BundledCourses {
                                 170, 492, 518, 253, 358, 386, 140, 372, 188),  // IN 2877 → 6309 m
                   courseRating = 71.7, slopeRating = 140,
                   facilityNotes = "Seit 1987 · 70 ha · Alpenpanorama · Slope 140 (sehr anspruchsvoll)\nTom Duncan Performance Center · Simulatoren\nKontakt: www.gc-mangfalltal.de"),
-        GolfCourseEntry(name = "Golfclub Rosenheim",                       location = "Stephanskirchen, Bayern",               holes = 18, lat = 47.867, lon = 12.167),
+        GolfCourseEntry(name = "City Golf Rosenheim", location = "Rosenheim-Happing, Bayern", holes =  9, lat = 47.8338, lon = 12.1384),
         GolfCourseEntry(name = "Chiemsee Golf-Club Prien e.V.",            location = "Prien am Chiemsee, Bayern",
                   holes = 18, lat = 47.844, lon = 12.343,
                   parValues = listOf(4, 3, 5, 3, 4, 4, 5, 4, 4,   // OUT 36
@@ -488,9 +472,6 @@ object BundledCourses {
                               14, 12,  8,  6,  4, 10,  2, 18, 16),
                   courseRating = 71.4, slopeRating = 130,
                   facilityNotes = "Seit 1994 · ca. 40 Bunker · Inselgrün Loch 11 · Bergpanorama\nWeng 12, 83404 Ainring (bei Bad Reichenhall)\nKontakt: www.gcbgl.de"),
-        GolfCourseEntry(name = "Golfclub Traunstein",                      location = "Traunstein, Bayern",                    holes = 18, lat = 47.867, lon = 12.650),
-        GolfCourseEntry(name = "Golfclub Waging am See",                   location = "Waging am See, Bayern",                 holes = 18, lat = 47.933, lon = 12.733),
-        GolfCourseEntry(name = "Golfclub Braunau-Ranshofen",               location = "Ranshofen, Oberösterreich",             holes = 18, lat = 48.233, lon = 13.050),
         GolfCourseEntry(name = "Golfclub Pischelsdorf (Gut Kaltenhausen)",  location = "Pischelsdorf am Engelbach, OÖ",
                   holes = 18, lat = 48.073, lon = 13.250,
                   parValues = listOf(4, 4, 4, 4, 5, 4, 3, 5, 3,   // OUT 36
@@ -518,7 +499,6 @@ object BundledCourses {
                                 393, 347, 394, 352, 492, 490, 143, 433, 394),  // IN 3438 → 6591 m
                   courseRating = 72.9, slopeRating = 131,
                   facilityNotes = "Gegründet 1981 · Parklandplatz\nKontakt: www.gc-wels.at"),
-        GolfCourseEntry(name = "Golfclub Attnang-Puchheim",                location = "Attnang-Puchheim, Oberösterreich",      holes =  9, lat = 47.967, lon = 13.717),
         GolfCourseEntry(name = "Golfclub Ampflwang",                       location = "Ampflwang, Oberösterreich",
                   holes =  9, lat = 48.101, lon = 13.565,
                   courseRating = 62.8, slopeRating = 125,
@@ -543,8 +523,6 @@ object BundledCourses {
                                 509, 352, 482, 156, 404, 466, 189, 366, 154),  // IN 3078 → 5911 m
                   courseRating = 70.3, slopeRating = 128,
                   facilityNotes = "18-Loch · Par 70 · Hügeliges Granit-Gelände mit Bach\nSchauerschlag 4, 4181 Oberneukirchen\nKontakt: www.sterngartl.at"),
-        GolfCourseEntry(name = "Golf & Country Club Schloss Schönau",      location = "Schönau im Mühlkreis, OÖ",              holes = 18, lat = 48.483, lon = 14.150),
-        GolfCourseEntry(name = "Golfclub Bad Leonfelden",                  location = "Bad Leonfelden, Oberösterreich",        holes =  9, lat = 48.517, lon = 14.283),
     )
 
     private fun part9(): List<GolfCourseEntry> = listOf(
@@ -704,8 +682,7 @@ object BundledCourses {
                                 396, 320, 370, 165, 318, 179, 382, 388, 566),  // IN 3084 → 6540 m
                   courseRating = 72.5, slopeRating = 126,
                   facilityNotes = "Schmittenhöhe-Course · Design Donald Harradine (1983)\nZweiter Kurs: Kitzsteinhorn (Par 73)\nGolfstraße 25, Zell am See\nKontakt: www.golfinzellamsee.at"),
-        GolfCourseEntry(name = "Golfclub Uttendorf",                       location = "Uttendorf, Salzburg",                   holes =  9, lat = 47.283, lon = 12.567),
-        GolfCourseEntry(name = "Golfpark Böhmerwald Špičák",               location = "Železná Ruda, Tschechien",              holes =  9, lat = 49.183, lon = 13.183),
+        GolfCourseEntry(name = "Golfclub Nationalpark Hohe Tauern", location = "Mittersill, Salzburg", holes = 18, lat = 47.2814, lon = 12.5077),
         GolfCourseEntry(name = "Golf Rezort Lipno",                        location = "Lipno nad Vltavou, Tschechien",
                   holes = 18, lat = 48.633, lon = 14.183,
                   facilityNotes = "Golfplatz geschlossen · Anlage nicht mehr in Betrieb"),

@@ -21,3 +21,16 @@ marketing/flyer/out/
 
 # E-Mail-Signatur: enthält Anschrift und Telefonnummer, Repository ist öffentlich
 marketing/signatur/
+
+# Outreach-Kampagne Einsteiger-Plakat: Ansprechpartner der Clubs, Mails mit Absendername
+marketing/outreach/einsteiger-plakat/
+
+# Lizenzmusik der Reels und Filme – darf nicht öffentlich weitergegeben werden
+marketing/reel-*/material/*.mp3
+marketing/onetake-*/music/
+
+# onetake-Filme: Entwürfe, Tonspuren und Logs entstehen neu aus Komposition und Ton-Skript
+marketing/onetake-*/draft*.mp4
+marketing/onetake-*/draft*.render.json
+marketing/onetake-*/*.wav
+marketing/onetake-*/*.log

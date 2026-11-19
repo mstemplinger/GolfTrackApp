@@ -450,7 +450,12 @@ export function AdRequestForm({ markers }: { markers: CourseMarker[] }) {
           />
           <span>
             Die Angaben dürfen zur Bearbeitung dieser Anfrage gespeichert und per Mail beantwortet
-            werden.
+            werden. Ich frage als Unternehmen bzw. Anlagenbetreiber an, nicht als Verbraucher; für
+            eine Buchung gelten die{" "}
+            <a href="/werbung/bedingungen" target="_blank" className="underline decoration-brass underline-offset-4">
+              Bedingungen für Werbekunden
+            </a>
+            .
           </span>
         </label>
 

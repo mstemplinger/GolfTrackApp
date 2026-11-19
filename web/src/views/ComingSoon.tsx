@@ -6,31 +6,30 @@ import { PreviewForm } from "@/components/PreviewForm";
 import { PuttScene } from "@/components/PuttScene";
 import { APP_STORE_URL, type Lang } from "@/i18n/routes";
 import { LAUNCH_AT } from "@/lib/launch";
+import { site } from "@/lib/site";
 
 /**
- * Angaben für Zähler und Kurzimpressum – bewusst dieselben wie auf
- * toob360.com, damit beide Seiten bis zum Start gleich auftreten.
+ * Angaben für Zähler und Kurzimpressum – dieselben wie im ausführlichen
+ * Impressum (`lib/site.ts`, auf dem Server per Umgebungsvariablen gesetzt),
+ * damit nie zwei verschiedene Anschriften gleichzeitig online stehen.
  */
 const OPERATOR = {
-  name: "Toob360 / Tobias Aufschläger",
-  street: "Hadamarstraße 22E",
-  city: "93051 Regensburg",
-  country: "Deutschland",
-  phone: "+49 151 70084818",
-  phoneHref: "tel:+4915170084818",
-  email: "contact@golftrack.app",
+  name: site.operator,
+  street: site.street,
+  city: site.city,
+  country: site.country,
+  email: site.email,
 };
 
 const COPY = {
   de: {
     tag: "Bald verfügbar",
     title: "Die neue Website kommt.",
-    text: "Scorekarte, Platzverzeichnis und QR-Codes für Minigolfanlagen – alles an einem Ort. Bis zur Freischaltung erreichst du uns per Telefon und E-Mail, und die App gibt es schon jetzt im App Store – und als APK für Android.",
+    text: "Scorekarte, Platzverzeichnis und QR-Codes für Minigolfanlagen – alles an einem Ort. Bis zur Freischaltung erreichst du uns per E-Mail, und die App gibt es schon jetzt im App Store – und als APK für Android.",
     scene: "Ein Golfball mit Augen rollt übers Grün ins Loch.",
     when: "Freischaltung am Mittwoch, 1. Dezember 2027 um 00:00 Uhr",
     app: "Zur App im App Store",
     mail: "E-Mail schreiben",
-    call: "Anrufen",
     imprint: "Impressum",
     privacy: "Datenschutz",
     support: "Support",
@@ -39,12 +38,11 @@ const COPY = {
   en: {
     tag: "Coming soon",
     title: "The new website is on its way.",
-    text: "Scorecard, course directory and QR codes for mini golf venues – all in one place. Until launch you can reach us by phone and e-mail, and the app is already on the App Store – and as an APK for Android.",
+    text: "Scorecard, course directory and QR codes for mini golf venues – all in one place. Until launch you can reach us by e-mail, and the app is already on the App Store – and as an APK for Android.",
     scene: "A golf ball with eyes rolls across the green into the hole.",
     when: "Launching Wednesday, 1 December 2027 at 00:00 (CET)",
     app: "Get the app on the App Store",
     mail: "Send an e-mail",
-    call: "Call us",
     imprint: "Legal notice",
     privacy: "Privacy",
     support: "Support",
@@ -88,12 +86,6 @@ export function ComingSoon({ lang, now }: { lang: Lang; now: number }) {
             {c.app}
           </a>
           <a
-            href={OPERATOR.phoneHref}
-            className="tap justify-center rounded-full border border-cream/25 px-6 font-semibold text-cream hover:border-brass hover:text-brass"
-          >
-            {c.call}
-          </a>
-          <a
             href={`mailto:${OPERATOR.email}`}
             className="tap justify-center rounded-full border border-cream/25 px-6 font-semibold text-cream hover:border-brass hover:text-brass"
           >
@@ -110,7 +102,7 @@ export function ComingSoon({ lang, now }: { lang: Lang; now: number }) {
           <li><Link className="tap hover:text-cream" href={lang === "de" ? "/datenschutz" : "/en/privacy"}>{c.privacy}</Link></li>
           <li><Link className="tap hover:text-cream" href={lang === "de" ? "/support" : "/en/support"}>{c.support}</Link></li>
         </ul>
-        <p className="mt-1 text-center text-xs text-muted/70">© 2026 GolfTrack · 93051 Regensburg</p>
+        <p className="mt-1 text-center text-xs text-muted/70">© 2026 GolfTrack · {site.city.replace(/^\d+\s*/, "")}</p>
       </footer>
     </div>
   );
@@ -134,11 +126,6 @@ export function ShortImprint() {
         </address>
         <h2 className="mt-6 text-lg text-ink">Kontakt</h2>
         <p className="mt-1 leading-relaxed text-ink">
-          Telefon:{" "}
-          <a className="font-semibold underline decoration-brass underline-offset-4" href={OPERATOR.phoneHref}>
-            {OPERATOR.phone}
-          </a>
-          <br />
           E-Mail:{" "}
           <a className="font-semibold underline decoration-brass underline-offset-4" href={`mailto:${OPERATOR.email}`}>
             {OPERATOR.email}

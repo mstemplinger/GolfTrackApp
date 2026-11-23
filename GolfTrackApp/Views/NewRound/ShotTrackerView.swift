@@ -9,6 +9,11 @@ struct ShotTrackerView<Entry: ScoreEntry>: View {
     var playerName: String? = nil
     /// Nur eigene Schläge fließen in die Distanzen der eigenen Schläger.
     var recordsClubDistances = true
+    /// Abschlag und Loch dieses Lochs – damit richtet sich die Karte aus.
+    var tee: CLLocationCoordinate2D? = nil
+    var hole: CLLocationCoordinate2D? = nil
+    /// Fairway-Verlauf aus früheren Runden; wird komplett eingepasst.
+    var corridor: HoleCorridor? = nil
     @Environment(\.modelContext) private var context
     @Environment(\.dismiss) private var dismiss
 
@@ -22,6 +27,8 @@ struct ShotTrackerView<Entry: ScoreEntry>: View {
     @State private var locationManager = CLLocationManager()
     @State private var locationUnavailableAlert = false
     @State private var isSatellite = false
+    @State private var playerCoord: CLLocationCoordinate2D?
+    @State private var mapSize: CGSize = .zero
 
     enum PlacingState {
         case from, to
@@ -49,6 +56,27 @@ struct ShotTrackerView<Entry: ScoreEntry>: View {
                 MapReader { proxy in
                     Map(position: $cameraPosition) {
                         UserAnnotation()
+
+                        if let tee {
+                            Annotation("", coordinate: tee) {
+                                Image(systemName: "figure.golf")
+                                    .font(.system(size: 12, weight: .bold))
+                                    .foregroundStyle(.white)
+                                    .frame(width: 24, height: 24)
+                                    .background(Circle().fill(.blue.opacity(0.85)))
+                                    .accessibilityLabel(Text("Abschlag"))
+                            }
+                        }
+                        if let hole {
+                            Annotation(String(localized: "Loch"), coordinate: hole) {
+                                Image(systemName: "flag.fill")
+                                    .font(.system(size: 13, weight: .bold))
+                                    .foregroundStyle(.white)
+                                    .frame(width: 28, height: 28)
+                                    .background(Circle().fill(.red))
+                                    .shadow(color: .black.opacity(0.35), radius: 3, y: 1)
+                            }
+                        }
 
                         ForEach(holeScore.sortedShots, id: \.shotNumber) { shot in
                             Annotation("A\(shot.shotNumber)", coordinate: shot.fromCoordinate) {
@@ -83,9 +111,19 @@ struct ShotTrackerView<Entry: ScoreEntry>: View {
                         MapScaleView()
                     }
                     .overlay(alignment: .topLeading) {
-                        satelliteToggleButton
-                            .padding(.top, 12)
-                            .padding(.leading, 12)
+                        HStack(spacing: 8) {
+                            satelliteToggleButton
+                            if canAlignToHole { alignButton }
+                        }
+                        .padding(.top, 12)
+                        .padding(.leading, 12)
+                    }
+                    .background {
+                        GeometryReader { geo in
+                            Color.clear
+                                .onAppear { updateMapSize(geo.size) }
+                                .onChange(of: geo.size) { _, size in updateMapSize(size) }
+                        }
                     }
                     .onTapGesture { screenPoint in
                         guard let coord = proxy.convert(screenPoint, from: .local) else { return }
@@ -131,8 +169,17 @@ struct ShotTrackerView<Entry: ScoreEntry>: View {
             .onAppear {
                 locationManager.requestWhenInUseAuthorization()
                 locationManager.startUpdatingLocation()
-                cameraPosition = .userLocation(fallback: .automatic)
+                playerCoord = locationManager.location?.coordinate
+                if canAlignToHole {
+                    alignToHole(animated: false)
+                } else {
+                    cameraPosition = .userLocation(fallback: .automatic)
+                }
             }
+            .livePlayerLocation($playerCoord)
+            .onChange(of: playerCoord?.latitude) { _, _ in autoAlign() }
+            .onChange(of: holeScore.strokes) { _, _ in autoAlign() }
+            .onChange(of: holeScore.shots.count) { _, _ in autoAlign() }
         }
     }
 
@@ -170,6 +217,28 @@ struct ShotTrackerView<Entry: ScoreEntry>: View {
         .padding(.horizontal, 14)
         .padding(.vertical, 10)
         .background(placingState.color.opacity(0.08))
+    }
+
+    private var alignButton: some View {
+        Button {
+            Haptics.selection()
+            alignToHole(animated: true)
+        } label: {
+            HStack(spacing: 6) {
+                Image(systemName: "location.north.line.fill")
+                    .font(.system(size: 13, weight: .semibold))
+                Text("Loch")
+                    .font(.system(size: 12, weight: .semibold))
+            }
+            .foregroundStyle(.white)
+            .padding(.horizontal, 12)
+            .padding(.vertical, 7)
+            .background(Color.black.opacity(0.5), in: Capsule())
+            .overlay(Capsule().stroke(Color.white.opacity(0.2), lineWidth: 1))
+        }
+        .buttonStyle(.plain)
+        .shadow(color: .black.opacity(0.3), radius: 4, y: 2)
+        .accessibilityLabel(Text("Karte zum Loch ausrichten"))
     }
 
     private var landingMarker: some View {
@@ -291,6 +360,54 @@ struct ShotTrackerView<Entry: ScoreEntry>: View {
         }
     }
 
+    // MARK: - Ausrichtung
+
+    private var hasPlayed: Bool { holeScore.strokes > 0 || !holeScore.shots.isEmpty }
+
+    private var canAlignToHole: Bool {
+        guard let hole else { return false }
+        return HoleCameraFraming.bottomPoint(tee: tee, hole: hole, player: playerCoord,
+                                             hasPlayed: hasPlayed) != nil
+    }
+
+    /// Unten mittig Abschlag bzw. die eigene Position, oben mittig das Loch;
+    /// Fairway und Schläge werden mit eingepasst.
+    private func alignToHole(animated: Bool) {
+        guard let hole,
+              let bottom = HoleCameraFraming.bottomPoint(tee: tee, hole: hole, player: playerCoord,
+                                                         hasPlayed: hasPlayed) else { return }
+        var extra: [CLLocationCoordinate2D] = []
+        // Das ganze Fairway nur, solange man noch am Abschlag steht – danach
+        // zählt der Weg von der eigenen Position zum Loch.
+        if bottom.latitude == tee?.latitude, bottom.longitude == tee?.longitude,
+           let corridor {
+            extra += corridor.corridorPolygon
+        }
+        if let from = fromCoord { extra.append(from) }
+        if let to = toCoord { extra.append(to) }
+        let size = mapSize == .zero ? CGSize(width: 390, height: 500) : mapSize
+        guard let camera = HoleCameraFraming.camera(bottom: bottom, top: hole,
+                                                    including: extra, viewSize: size) else { return }
+        if animated {
+            withAnimation(.easeInOut(duration: 0.6)) { cameraPosition = .camera(camera) }
+        } else {
+            cameraPosition = .camera(camera)
+        }
+    }
+
+    /// Automatisch nachführen – aber nicht, wenn der Spieler die Karte selbst
+    /// verschoben hat. Der Knopf „Loch" holt die Ausrichtung zurück.
+    private func autoAlign() {
+        guard canAlignToHole, !cameraPosition.positionedByUser else { return }
+        alignToHole(animated: true)
+    }
+
+    private func updateMapSize(_ size: CGSize) {
+        let changed = abs(size.width - mapSize.width) > 1 || abs(size.height - mapSize.height) > 1
+        mapSize = size
+        if changed { autoAlign() }
+    }
+
     // MARK: - Actions
 
     private func handleTap(_ coord: CLLocationCoordinate2D) {
@@ -311,7 +428,12 @@ struct ShotTrackerView<Entry: ScoreEntry>: View {
             return
         }
         handleTap(coord)
-        // Center map on current location
+        playerCoord = coord
+        if canAlignToHole {
+            alignToHole(animated: true)
+            return
+        }
+        // Ohne Lochdaten: auf den Standort zentrieren
         withAnimation {
             cameraPosition = .region(MKCoordinateRegion(
                 center: coord,

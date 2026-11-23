@@ -157,10 +157,12 @@ struct HoleScoringView: View {
         .padding(.top, 8)
         .padding(.bottom, 8)
         .sheet(isPresented: $showShotTracker) {
-            ShotTrackerView(holeScore: score)
+            ShotTrackerView(holeScore: score,
+                            tee: holeTee, hole: holePin, corridor: holeCorridor)
         }
         .sheet(item: $shotTrackerPlayer) { opp in
-            ShotTrackerView(holeScore: opp, playerName: displayName(opp), recordsClubDistances: false)
+            ShotTrackerView(holeScore: opp, playerName: displayName(opp), recordsClubDistances: false,
+                            tee: holeTee, hole: holePin, corridor: holeCorridor)
         }
         .sheet(isPresented: $showPinSetter) {
             PinSetterView(pinLatitude: $score.pinLatitude,
@@ -192,6 +194,11 @@ struct HoleScoringView: View {
             if clubs.isEmpty { seedDefaultClubs() }
             updateWidget()
             prefillPinFromCourse()
+            #if DEBUG
+            if ProcessInfo.processInfo.environment["GOLFTRACK_OPEN"] == "holeMap", score.holeNumber == 1 {
+                showShotTracker = true
+            }
+            #endif
         }
         .onChange(of: score.strokes) { _, _ in updateWidget() }
         .onChange(of: score.holeNumber) { _, _ in
@@ -266,6 +273,23 @@ struct HoleScoringView: View {
 
     /// Übernimmt die für den Platz hinterlegte (ggf. abgeleitete) Fahnenposition,
     /// solange der Nutzer für dieses Loch keinen eigenen Pin gesetzt hat.
+    // MARK: - Lochgeometrie für die Karte
+
+    private var holeTee: CLLocationCoordinate2D? {
+        round.course?.teeCoordinate(forHole: score.holeNumber, tee: round.teeColor)
+    }
+
+    private var holePin: CLLocationCoordinate2D? {
+        if let lat = score.pinLatitude, let lon = score.pinLongitude {
+            return CLLocationCoordinate2D(latitude: lat, longitude: lon)
+        }
+        return round.course?.flagCoordinate(forHole: score.holeNumber)
+    }
+
+    private var holeCorridor: HoleCorridor? {
+        round.course?.corridor(forHole: score.holeNumber)
+    }
+
     private func prefillPinFromCourse() {
         guard !score.hasPinLocation || score.pinIsAutomatic,
               let coord = round.course?.flagCoordinate(forHole: score.holeNumber) else { return }

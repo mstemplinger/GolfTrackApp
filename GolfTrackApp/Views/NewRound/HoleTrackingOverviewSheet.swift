@@ -17,6 +17,9 @@ struct HoleTrackingOverviewSheet: View {
 
     @State private var corridor: HoleCorridor?
     @State private var isLoading = true
+    @State private var cameraPosition: MapCameraPosition = .automatic
+    @State private var playerCoord: CLLocationCoordinate2D? = CLLocationManager().location?.coordinate
+    @State private var mapSize: CGSize = .zero
 
     private var course: Course? { round.course }
     private var hole: Int { score.holeNumber }
@@ -86,13 +89,42 @@ struct HoleTrackingOverviewSheet: View {
                     .first { $0.holeNumber == hole }
             }
             isLoading = false
+            alignToHole(animated: false)
+        }
+        .livePlayerLocation($playerCoord)
+        .onChange(of: playerCoord?.latitude) { _, _ in
+            if !cameraPosition.positionedByUser { alignToHole(animated: true) }
+        }
+    }
+
+    // MARK: - Ausrichtung
+
+    /// Unten mittig Abschlag (nach dem ersten Schlag die eigene Position),
+    /// oben mittig das Loch – Fairway, Spur und Schläge passen mit hinein.
+    private func alignToHole(animated: Bool) {
+        guard let top = pin ?? green,
+              let bottom = HoleCameraFraming.bottomPoint(
+                tee: tee, hole: top, player: playerCoord,
+                hasPlayed: score.strokes > 0 || !score.shots.isEmpty) else { return }
+        var extra: [CLLocationCoordinate2D] = []
+        if bottom.latitude == tee?.latitude, bottom.longitude == tee?.longitude {
+            extra += corridor?.corridorPolygon ?? []
+            extra += score.sortedShots.flatMap { [$0.fromCoordinate, $0.toCoordinate] }
+        }
+        let size = mapSize == .zero ? CGSize(width: 390, height: 520) : mapSize
+        guard let camera = HoleCameraFraming.camera(bottom: bottom, top: top,
+                                                    including: extra, viewSize: size) else { return }
+        if animated {
+            withAnimation(.easeInOut(duration: 0.6)) { cameraPosition = .camera(camera) }
+        } else {
+            cameraPosition = .camera(camera)
         }
     }
 
     // MARK: - Karte
 
     private var map: some View {
-        Map(initialPosition: .automatic) {
+        Map(position: $cameraPosition) {
             UserAnnotation()
 
             if let corridor, corridor.corridorPolygon.count >= 4 {
@@ -143,7 +175,38 @@ struct HoleTrackingOverviewSheet: View {
             }
         }
         .mapStyle(.hybrid(elevation: .realistic))
-        .mapControls { MapUserLocationButton() }
+        .mapControls {
+            MapUserLocationButton()
+            MapCompass()
+        }
+        .overlay(alignment: .topLeading) {
+            if (pin ?? green) != nil {
+                Button {
+                    Haptics.selection()
+                    alignToHole(animated: true)
+                } label: {
+                    Label("Loch", systemImage: "location.north.line.fill")
+                        .font(.system(size: 12, weight: .semibold))
+                        .foregroundStyle(.white)
+                        .padding(.horizontal, 12)
+                        .padding(.vertical, 7)
+                        .background(Color.black.opacity(0.5), in: Capsule())
+                }
+                .buttonStyle(.plain)
+                .padding(12)
+                .accessibilityLabel(Text("Karte zum Loch ausrichten"))
+            }
+        }
+        .background {
+            GeometryReader { geo in
+                Color.clear
+                    .onAppear { mapSize = geo.size }
+                    .onChange(of: geo.size) { _, size in
+                        mapSize = size
+                        if !cameraPosition.positionedByUser { alignToHole(animated: false) }
+                    }
+            }
+        }
     }
 
     private func marker(symbol: String, color: Color) -> some View {

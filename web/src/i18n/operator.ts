@@ -6,6 +6,8 @@
 export const OPERATOR_LANGS = ["de", "en"] as const;
 export type OperatorLang = (typeof OPERATOR_LANGS)[number];
 export const OPERATOR_LANG_COOKIE = "gt_operator_lang";
+/** Mindestlänge, wenn Betreiber ihr Passwort selbst setzen. */
+export const MIN_OPERATOR_PASSWORD = 10;
 
 export function isOperatorLang(v: unknown): v is OperatorLang {
   return v === "de" || v === "en";
@@ -47,8 +49,47 @@ export interface ReportCopy {
   periodLabel: string;
 }
 
+export interface AccountCopy {
+  nav: string;
+  title: string;
+  intro: string;
+  profile: string;
+  name: string;
+  nameHint: string;
+  email: string;
+  emailHint: string;
+  currentPassword: string;
+  currentPasswordHint: string;
+  save: string;
+  saving: string;
+  saved: string;
+  passwordTitle: string;
+  newPassword: string;
+  newPasswordHint: (min: number) => string;
+  repeatPassword: string;
+  changePassword: string;
+  passwordChanged: string;
+  errWrongPassword: string;
+  errEmailTaken: string;
+  errEmailInvalid: string;
+  errNameRequired: string;
+  errTooShort: (min: number) => string;
+  errMismatch: string;
+  errSame: string;
+  errLocked: string;
+  coursesTitle: string;
+  coursesIntro: string;
+  courseName: string;
+  requestChange: string;
+  requested: string;
+  pendingSince: (date: string) => string;
+  errNameUnchanged: string;
+  withdraw: string;
+}
+
 export interface OperatorCopy {
   report: ReportCopy;
+  account: AccountCopy;
   portal: string;
   forOperators: string;
   signIn: string;
@@ -114,6 +155,44 @@ const de: OperatorCopy = {
     teeNames: {},
     period: (d) => (d === 365 ? "1 Jahr" : `${d} Tage`),
     periodLabel: "Zeitraum",
+  },
+  account: {
+    nav: "Mein Konto",
+    title: "Mein Konto",
+    intro: "Deine Angaben, dein Passwort und die Namen deiner Plätze.",
+    profile: "Angaben",
+    name: "Name",
+    nameHint: "So erscheinst du im Portal und in unseren E-Mails.",
+    email: "E-Mail (Anmeldename)",
+    emailHint: "Damit meldest du dich an. Wir schicken einen Hinweis an die bisherige Adresse.",
+    currentPassword: "Aktuelles Passwort",
+    currentPasswordHint: "Nur nötig, wenn du die E-Mail-Adresse änderst.",
+    save: "Speichern",
+    saving: "Speichert …",
+    saved: "Gespeichert.",
+    passwordTitle: "Passwort ändern",
+    newPassword: "Neues Passwort",
+    newPasswordHint: (min) => `Mindestens ${min} Zeichen. Andere Geräte werden danach abgemeldet.`,
+    repeatPassword: "Neues Passwort wiederholen",
+    changePassword: "Passwort ändern",
+    passwordChanged: "Passwort geändert. Andere Geräte sind abgemeldet.",
+    errWrongPassword: "Das aktuelle Passwort stimmt nicht.",
+    errEmailTaken: "Diese E-Mail-Adresse gehört schon zu einem anderen Konto.",
+    errEmailInvalid: "Diese E-Mail-Adresse sieht nicht gültig aus.",
+    errNameRequired: "Bitte einen Namen eintragen.",
+    errTooShort: (min) => `Das neue Passwort braucht mindestens ${min} Zeichen.`,
+    errMismatch: "Die beiden neuen Passwörter stimmen nicht überein.",
+    errSame: "Das neue Passwort ist dasselbe wie das bisherige.",
+    errLocked: "Zu viele Fehlversuche. Bitte in einer Viertelstunde noch einmal versuchen.",
+    coursesTitle: "Namen meiner Plätze",
+    coursesIntro:
+      "Der Name erscheint in der GolfTrack-App, im App Clip und auf golftrack.app. Änderungen prüfen wir kurz, bevor sie überall sichtbar werden.",
+    courseName: "Name",
+    requestChange: "Änderung beantragen",
+    requested: "Danke – wir prüfen die Änderung und schalten sie frei.",
+    pendingSince: (d) => `Wartet auf Freigabe (seit ${d}):`,
+    errNameUnchanged: "Der Name ist unverändert.",
+    withdraw: "Zurückziehen",
   },
   portal: "Betreiber",
   forOperators: "Für Platzbetreiber",
@@ -194,6 +273,44 @@ const en: OperatorCopy = {
     },
     period: (d) => (d === 365 ? "1 year" : `${d} days`),
     periodLabel: "Period",
+  },
+  account: {
+    nav: "My account",
+    title: "My account",
+    intro: "Your details, your password and the names of your courses.",
+    profile: "Details",
+    name: "Name",
+    nameHint: "How you appear in the portal and in our emails.",
+    email: "Email (username)",
+    emailHint: "You sign in with it. We send a notice to the previous address.",
+    currentPassword: "Current password",
+    currentPasswordHint: "Only needed when you change the email address.",
+    save: "Save",
+    saving: "Saving …",
+    saved: "Saved.",
+    passwordTitle: "Change password",
+    newPassword: "New password",
+    newPasswordHint: (min) => `At least ${min} characters. Other devices are signed out afterwards.`,
+    repeatPassword: "Repeat new password",
+    changePassword: "Change password",
+    passwordChanged: "Password changed. Other devices have been signed out.",
+    errWrongPassword: "The current password is wrong.",
+    errEmailTaken: "This email address already belongs to another account.",
+    errEmailInvalid: "This email address doesn't look valid.",
+    errNameRequired: "Please enter a name.",
+    errTooShort: (min) => `The new password needs at least ${min} characters.`,
+    errMismatch: "The two new passwords don't match.",
+    errSame: "The new password is the same as the current one.",
+    errLocked: "Too many failed attempts. Please try again in fifteen minutes.",
+    coursesTitle: "Names of my courses",
+    coursesIntro:
+      "The name appears in the GolfTrack app, the App Clip and on golftrack.app. We briefly review changes before they go live everywhere.",
+    courseName: "Name",
+    requestChange: "Request change",
+    requested: "Thanks – we'll review the change and publish it.",
+    pendingSince: (d) => `Awaiting review (since ${d}):`,
+    errNameUnchanged: "The name hasn't changed.",
+    withdraw: "Withdraw",
   },
   portal: "Operator",
   forOperators: "For course operators",

@@ -22,7 +22,20 @@ export default async function OperatorLayout({ children }: { children: React.Rea
             <span className="text-xs uppercase tracking-[0.2em] text-cream/45">{t.portal}</span>
           </Link>
           <div className="flex items-center gap-3 text-sm">
-            {op ? <span className="hidden truncate text-cream/60 sm:block">{op.name}</span> : null}
+            {op ? (
+              <Link
+                href="/account"
+                className="hidden max-w-48 truncate text-cream/70 transition-colors hover:text-brass sm:block"
+                title={t.account.nav}
+              >
+                {op.name}
+              </Link>
+            ) : null}
+            {op ? (
+              <Link href="/account" className="text-cream/70 transition-colors hover:text-brass sm:hidden">
+                {t.account.nav}
+              </Link>
+            ) : null}
             <LangSwitch lang={lang} />
             {op ? <LogoutButton label={t.signOut} /> : null}
           </div>

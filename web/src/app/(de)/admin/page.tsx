@@ -2,7 +2,9 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { isAuthenticated, adminConfigured } from "@/lib/auth";
 import { adminOverview } from "@/lib/adminOverview";
+import { pendingNameRequests } from "@/lib/courseNameRequests";
 import { listCourses } from "@/lib/courses";
+import { NameRequestList } from "./NameRequestList";
 import { CourseRows } from "./CourseRows";
 import { LoginForm } from "./LoginForm";
 import { PageHeader, Panel, PrimaryLink, StatCard } from "./ui";
@@ -47,7 +49,11 @@ export default async function AdminPage() {
     );
   }
 
-  const [o, pending] = await Promise.all([adminOverview(), listCourses({ status: "pending", limit: 8 })]);
+  const [o, pending, nameRequests] = await Promise.all([
+    adminOverview(),
+    listCourses({ status: "pending", limit: 8 }),
+    pendingNameRequests().catch(() => []),
+  ]);
   const fmt = (n: number | null) => (n == null ? "–" : n.toLocaleString("de-DE"));
 
   return (
@@ -85,7 +91,25 @@ export default async function AdminPage() {
           icon="alert"
           href="#meldungen"
         />
+        {nameRequests.length ? (
+          <StatCard
+            label="Namensänderungen"
+            value={nameRequests.length}
+            note="von Betreibern beantragt"
+            icon="users"
+            href="#namen"
+            highlight
+          />
+        ) : null}
       </div>
+
+      {nameRequests.length ? (
+        <div id="namen" className="mt-6">
+          <Panel title="Namensänderungen von Betreibern">
+            <NameRequestList requests={nameRequests} />
+          </Panel>
+        </div>
+      ) : null}
 
       <h2 className="mt-10 text-xs font-medium uppercase tracking-[0.14em] text-cream/50">Wie es läuft</h2>
       <div className="mt-3 grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-4">

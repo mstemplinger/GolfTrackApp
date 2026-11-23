@@ -198,6 +198,29 @@ export async function deleteOperator(id: string): Promise<void> {
 // MARK: – Anmeldung
 
 /** Konto zu E-Mail und Passwort – nur aktive Konten. */
+// MARK: – Selbstverwaltung im Portal
+
+/** Prüft das aktuelle Passwort eines Kontos (für Änderungen durch den Betreiber selbst). */
+export async function verifyOperatorPassword(id: string, password: string): Promise<boolean> {
+  await ensureSchema();
+  const row = await queryOne<{ password_hash: string }>(`SELECT password_hash FROM operators WHERE id = $1`, [id]);
+  return row ? verifyPassword(password, row.password_hash) : false;
+}
+
+/** Name und E-Mail ändern – E-Mail nur, wenn kein anderes Konto sie hat. */
+export async function updateOperatorProfile(
+  id: string,
+  name: string,
+  email: string,
+): Promise<{ status: "ok" } | { status: "email_taken" }> {
+  await ensureSchema();
+  const normalized = email.trim().toLowerCase();
+  const taken = await queryOne(`SELECT 1 FROM operators WHERE email = $1 AND id <> $2`, [normalized, id]);
+  if (taken) return { status: "email_taken" };
+  await query(`UPDATE operators SET name = $2, email = $3 WHERE id = $1`, [id, name.trim(), normalized]);
+  return { status: "ok" };
+}
+
 export async function checkCredentials(email: string, password: string): Promise<Operator | null> {
   await ensureSchema();
   const row = await queryOne<{ id: string; password_hash: string; active: boolean }>(

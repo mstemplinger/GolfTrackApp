@@ -132,3 +132,51 @@ export async function sendOperatorMails(
     return "failed";
   }
 }
+
+/**
+ * Hinweis an die bisherige Adresse, wenn der Betreiber seine Anmelde-E-Mail
+ * ändert – falls das nicht er selbst war, merkt er es so.
+ */
+export async function sendEmailChangedNotice(
+  lang: "de" | "en",
+  name: string,
+  oldEmail: string,
+  newEmail: string,
+): Promise<MailResult> {
+  if (!mailConfigured()) return "unconfigured";
+  const de = lang === "de";
+  const content: EmailContent = {
+    lang,
+    preheader: de
+      ? "Die Anmelde-E-Mail deines Zugangs wurde geändert."
+      : "The sign-in email of your account was changed.",
+    title: de ? "Anmelde-E-Mail geändert" : "Sign-in email changed",
+    paragraphs: de
+      ? [
+          `Für deinen Zugang zu GolfTrack für Betreiber („${name}“) wurde die Anmelde-E-Mail geändert. Anmelden geht ab jetzt nur noch mit der neuen Adresse.`,
+          "Warst du das nicht? Dann melde dich bitte sofort bei uns – wir sperren den Zugang.",
+        ]
+      : [
+          `The sign-in email of your GolfTrack operator account (“${name}”) was changed. From now on you can only sign in with the new address.`,
+          "Wasn't you? Please contact us right away – we'll lock the account.",
+        ],
+    details: [
+      { label: de ? "Bisher" : "Previously", value: oldEmail },
+      { label: de ? "Neu" : "New", value: newEmail },
+    ],
+    note: de ? `Kontakt: ${SUPPORT}` : `Contact: ${SUPPORT}`,
+  };
+  try {
+    await sendMail(
+      oldEmail,
+      de ? "Deine Anmelde-E-Mail wurde geändert (GolfTrack)" : "Your sign-in email was changed (GolfTrack)",
+      renderText(content),
+      renderEmail(content),
+      { replyTo: SUPPORT },
+    );
+    return "sent";
+  } catch (error) {
+    console.error("operator mail failed", error);
+    return "failed";
+  }
+}

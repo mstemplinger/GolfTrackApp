@@ -324,6 +324,21 @@ const STATEMENTS = [
   `CREATE INDEX IF NOT EXISTS operator_courses_slug_idx ON operator_courses (course_slug)`,
   // Sprache der Zugangsmails und Vorgabe fürs Portal (de/en).
   `ALTER TABLE operators ADD COLUMN IF NOT EXISTS lang text NOT NULL DEFAULT 'de'`,
+  // Namensänderungen, die Betreiber im Portal beantragen. Wirksam erst nach
+  // Freigabe im Adminpanel: der Name ist öffentlich, und die iOS-App ordnet
+  // bereits gespielte Golfplätze über den Namen dem Verzeichnis zu.
+  `CREATE TABLE IF NOT EXISTS course_name_requests (
+     id             uuid PRIMARY KEY DEFAULT gen_random_uuid(),
+     course_slug    text NOT NULL,
+     operator_id    uuid REFERENCES operators(id) ON DELETE SET NULL,
+     operator_name  text NOT NULL DEFAULT '',
+     old_name       text NOT NULL,
+     requested_name text NOT NULL,
+     status         text NOT NULL DEFAULT 'pending' CHECK (status IN ('pending', 'approved', 'rejected', 'withdrawn')),
+     created_at     timestamptz NOT NULL DEFAULT now(),
+     decided_at     timestamptz
+   )`,
+  `CREATE INDEX IF NOT EXISTS course_name_requests_pending_idx ON course_name_requests (status, created_at)`,
 ];
 
 let ready: Promise<void> | null = null;

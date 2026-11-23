@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound, redirect } from "next/navigation";
 import { isAuthenticated } from "@/lib/auth";
+import { pendingNameRequests } from "@/lib/courseNameRequests";
 import { getCourse } from "@/lib/courses";
 import { toFeedCourse } from "@/lib/feed";
 import { AushangPicker } from "@/components/AushangPicker";
@@ -10,6 +11,7 @@ import { StatusPill } from "../StatusPill";
 import { PageHeader } from "../ui";
 import { EditForm } from "./EditForm";
 import { approve, moveBackToPending, reject, remove } from "../actions";
+import { NameRequestList } from "../NameRequestList";
 
 export const metadata: Metadata = {
   title: "Anlage prüfen · GolfTrack",
@@ -22,6 +24,7 @@ export default async function AdminDetailPage({ params }: PageProps<"/admin/[id]
   const { id } = await params;
   const course = await getCourse(id);
   if (!course) notFound();
+  const nameRequests = await pendingNameRequests([course.slug]).catch(() => []);
 
   const feed = toFeedCourse(course);
 
@@ -53,6 +56,15 @@ export default async function AdminDetailPage({ params }: PageProps<"/admin/[id]
         }
       />
       <div className="mt-8 border-t border-white/10" />
+
+      {nameRequests.length ? (
+        <section className="mt-8 overflow-hidden rounded-xl border border-brass/40 bg-brass/[0.05]">
+          <h2 className="border-b border-white/10 px-5 py-3 text-xs font-medium uppercase tracking-[0.14em] text-brass">
+            Namensänderung beantragt
+          </h2>
+          <NameRequestList requests={nameRequests} showCourse={false} />
+        </section>
+      ) : null}
 
       {/* Wer hat eingereicht */}
       <section className="mt-8 rounded-sm border rule bg-moss/30 p-5">

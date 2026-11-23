@@ -49,20 +49,20 @@ export function PasswordNotice({
         <p className="mt-2 text-sm text-cream/60">Keine E-Mail verschickt. Das Passwort wird nur jetzt angezeigt.</p>
       )}
 
-      <dl className="mt-4 grid gap-x-6 gap-y-2 text-sm sm:grid-cols-[auto_1fr]">
+      <dl className="mt-4 grid gap-x-6 gap-y-2 text-sm sm:grid-cols-[auto_minmax(0,1fr)]">
         <dt className="text-cream/55">Anmeldung</dt>
-        <dd className="font-mono">{portalUrl}/login</dd>
+        <dd className="min-w-0 break-all font-mono">{portalUrl}/login</dd>
         <dt className="text-cream/55">E-Mail</dt>
-        <dd className="font-mono">{email}</dd>
+        <dd className="min-w-0 break-all font-mono">{email}</dd>
         <dt className="text-cream/55">Passwort</dt>
-        <dd className="font-mono text-lg tracking-wide text-cream">
+        <dd className="min-w-0 break-all font-mono text-lg tracking-wide text-cream">
           {reveal ? (
             password
           ) : (
             <button
               type="button"
               onClick={() => setReveal(true)}
-              className="text-sm text-brass underline underline-offset-4"
+              className="font-sans text-sm tracking-normal text-brass underline underline-offset-4"
             >
               Trotzdem anzeigen
             </button>

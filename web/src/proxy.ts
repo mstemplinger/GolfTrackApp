@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 import { COOKIE, validSession } from "@/lib/auth";
 import { launched } from "@/lib/launch";
+import { OPERATOR_HOSTS, operatorPortalUrl } from "@/lib/operatorPortal";
 
 /**
  * Zwei Aufgaben vor jeder Seite.
@@ -56,6 +57,24 @@ function isOpen(pathname: string): boolean {
 export async function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
   const host = request.headers.get("host")?.split(":")[0]?.toLowerCase() ?? "";
+
+  // Betreiber-Portal: auf der Subdomain liegt jede Adresse unter /operator
+  // (operator.golftrack.app/login → /operator/login). Der Zähler gilt dort
+  // nicht – Betreiber sollen ihre Statistik auch vor der Freischaltung sehen.
+  if (OPERATOR_HOSTS.has(host)) {
+    if (pathname === "/operator" || pathname.startsWith("/operator/")) return NextResponse.next();
+    const target = request.nextUrl.clone();
+    target.pathname = `/operator${pathname === "/" ? "" : pathname}`;
+    return NextResponse.rewrite(target);
+  }
+  // Auf der Hauptdomain gibt es das Portal nicht – weiter zur Subdomain, damit
+  // Anmeldung und Cookie dort bleiben. /betreiber war der erste Name.
+  for (const prefix of ["/operator", "/betreiber"]) {
+    if (pathname === prefix || pathname.startsWith(`${prefix}/`)) {
+      const rest = pathname.slice(prefix.length) || "/";
+      return NextResponse.redirect(`${operatorPortalUrl()}${rest}${request.nextUrl.search}`);
+    }
+  }
 
   if (pathname === "/" && PLAY_HOSTS.has(host)) {
     // Die Suche mitnehmen, sonst geht ein `?lang=` vom Aushang verloren.

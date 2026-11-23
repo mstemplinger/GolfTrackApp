@@ -22,7 +22,7 @@ const NAV: {
     label: "Anlagen",
     icon: "flag",
     // Detailseiten einer Anlage liegen unter /admin/<id>.
-    match: (p) => p.startsWith("/admin/anlagen") || /^\/admin\/(?!werbung|statistik|anlagen)[^/]+$/.test(p),
+    match: (p) => p.startsWith("/admin/anlagen") || /^\/admin\/(?!werbung|statistik|anlagen|betreiber)[^/]+$/.test(p),
   },
   {
     href: "/admin/werbung",
@@ -35,6 +35,12 @@ const NAV: {
     label: "Statistik",
     icon: "chart",
     match: (p) => p.startsWith("/admin/statistik"),
+  },
+  {
+    href: "/admin/betreiber",
+    label: "Betreiber",
+    icon: "users",
+    match: (p) => p.startsWith("/admin/betreiber"),
   },
 ];
 

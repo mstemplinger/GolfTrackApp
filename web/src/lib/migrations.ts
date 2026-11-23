@@ -300,6 +300,28 @@ const STATEMENTS = [
      source        text NOT NULL CHECK (source IN ('app', 'clip', 'web'))
    )`,
   `CREATE INDEX IF NOT EXISTS round_stats_course_idx ON round_stats (course_slug, played_on)`,
+  // Betreiberkonten (`lib/operators.ts`): Zugang zu operator.golftrack.app.
+  // Das Passwort liegt nur als scrypt-Hash hier. `permissions` sagt, welche
+  // Bausteine der Statistik das Konto sieht (siehe OPERATOR_SECTIONS).
+  `CREATE TABLE IF NOT EXISTS operators (
+     id                  uuid PRIMARY KEY DEFAULT gen_random_uuid(),
+     name                text NOT NULL,
+     email               text NOT NULL UNIQUE,
+     password_hash       text NOT NULL,
+     permissions         text[] NOT NULL DEFAULT '{}',
+     active              boolean NOT NULL DEFAULT true,
+     notes               text NOT NULL DEFAULT '',
+     created_at          timestamptz NOT NULL DEFAULT now(),
+     password_changed_at timestamptz NOT NULL DEFAULT now(),
+     last_login_at       timestamptz
+   )`,
+  // Welche Plätze ein Betreiber sieht – beliebig viele je Konto.
+  `CREATE TABLE IF NOT EXISTS operator_courses (
+     operator_id  uuid NOT NULL REFERENCES operators(id) ON DELETE CASCADE,
+     course_slug  text NOT NULL,
+     PRIMARY KEY (operator_id, course_slug)
+   )`,
+  `CREATE INDEX IF NOT EXISTS operator_courses_slug_idx ON operator_courses (course_slug)`,
 ];
 
 let ready: Promise<void> | null = null;

@@ -59,6 +59,21 @@ export async function listCoursesWithStats(): Promise<CourseOverviewRow[]> {
   }));
 }
 
+/** Runden der letzten `days` Tage je Platz – für die Platzauswahl der Betreiber. */
+export async function roundCounts(slugs: string[], days: number): Promise<Map<string, number>> {
+  const result = new Map(slugs.map((s) => [s, 0]));
+  if (!slugs.length) return result;
+  await ensureSchema();
+  const rows = await query<{ course_slug: string; total: string }>(
+    `SELECT course_slug, COUNT(*) AS total FROM round_stats
+      WHERE course_slug = ANY($1) AND played_on >= current_date - $2::int
+      GROUP BY course_slug`,
+    [slugs, days],
+  );
+  for (const r of rows) result.set(r.course_slug, Number(r.total));
+  return result;
+}
+
 export interface HoleStat {
   hole: number;
   par: number | null;

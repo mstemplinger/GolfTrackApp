@@ -170,9 +170,39 @@ final class TrainingPlayerModel: ObservableObject {
 
     // MARK: Playback
 
+    /// Lektion, die nach dem Nachladen sofort starten soll.
+    @Published private(set) var pendingLessonID: String?
+    /// Callback → TrainingView meldet, dass eine Lektion ohne Netz fehlt
+    var onDownloadFailed: ((TrainingLesson) -> Void)?
+
+    /// Spielt eine Lektion ab. Liegt sie noch nicht auf dem Gerät, wird sie
+    /// erst geladen und startet danach – außer der Nutzer hat inzwischen
+    /// etwas anderes gewählt.
+    func start(_ lesson: TrainingLesson) {
+        guard let file = lesson.audioFile else { return }
+        if AudioLessonStore.shared.localURL(for: file) != nil {
+            pendingLessonID = nil
+            load(lesson)
+            play()
+            return
+        }
+        pendingLessonID = lesson.id
+        Task {
+            let url = await AudioLessonStore.shared.load(file)
+            guard pendingLessonID == lesson.id else { return }
+            pendingLessonID = nil
+            if url != nil {
+                load(lesson)
+                play()
+            } else {
+                onDownloadFailed?(lesson)
+            }
+        }
+    }
+
     func load(_ lesson: TrainingLesson) {
         guard let file = lesson.audioFile,
-              let url = Bundle.main.url(forResource: file, withExtension: "mp3") else { return }
+              let url = AudioLessonStore.shared.localURL(for: file) else { return }
         stop()
         player = nil
         do {
@@ -249,16 +279,14 @@ final class TrainingPlayerModel: ObservableObject {
             onNeedsSubscription?()
             return
         }
-        load(next)
-        play()
+        start(next)
     }
 
     func playPrev() {
         if currentTime > 3 {
             seek(to: 0)
         } else if let idx = currentIndex, idx > 0 {
-            load(availableLessons[idx - 1])
-            play()
+            start(availableLessons[idx - 1])
         }
     }
 
@@ -413,6 +441,8 @@ private let currentBatchVersion = 2
 struct TrainingView: View {
     @EnvironmentObject private var subscriptionManager: SubscriptionManager
     @StateObject private var playerModel = TrainingPlayerModel()
+    @ObservedObject private var lessonStore = AudioLessonStore.shared
+    @State private var unavailableLesson: TrainingLesson?
     @State private var selectedCategory: TrainingCategory = .alle
     @State private var showPlayer   = false
     @State private var showPaywall  = false
@@ -453,11 +483,26 @@ struct TrainingView: View {
             ProPaywallView()
                 .environmentObject(subscriptionManager)
         }
+        .alert(
+            "Lektion noch nicht geladen",
+            isPresented: Binding(
+                get: { unavailableLesson != nil },
+                set: { if !$0 { unavailableLesson = nil } }
+            )
+        ) {
+            Button("OK", role: .cancel) {}
+        } message: {
+            Text("Die Lektion wird geladen, sobald du wieder Internet hast. Danach kannst du sie jederzeit offline anhören.")
+        }
         .animation(.spring(response: 0.35), value: playerModel.currentLesson?.id)
         .onAppear {
             playerModel.onAppear()
             playerModel.isSubscribed = subscriptionManager.isSubscribed
             playerModel.onNeedsSubscription = { showPaywall = true }
+            playerModel.onDownloadFailed = { unavailableLesson = $0 }
+            if subscriptionManager.isSubscribed {
+                lessonStore.fillInBackground(allowExpensive: true)
+            }
             // "Neu"-Badge beim ersten Öffnen dieser Batch anzeigen, dann als gesehen markieren
             showNewBadges = seenBatchVersion < currentBatchVersion
             seenBatchVersion = currentBatchVersion
@@ -611,6 +656,9 @@ struct TrainingView: View {
         let canPlay      = hasAudio && (subscriptionManager.isSubscribed || isFree)
         let needsPaywall = hasAudio && !subscriptionManager.isSubscribed && !isFree
         let isActive     = playerModel.currentLesson?.id == lesson.id
+        let availability = lesson.audioFile.map { lessonStore.availability(of: $0) } ?? .missing
+        let isLocal      = availability == .ready
+        let isPending    = playerModel.pendingLessonID == lesson.id
 
         return Button {
             Haptics.tap()
@@ -619,9 +667,10 @@ struct TrainingView: View {
             } else if canPlay {
                 if isActive {
                     playerModel.toggle()
+                } else if !isLocal && !lessonStore.isOnline {
+                    unavailableLesson = lesson
                 } else {
-                    playerModel.load(lesson)
-                    playerModel.play()
+                    playerModel.start(lesson)
                 }
             }
         } label: {
@@ -639,9 +688,12 @@ struct TrainingView: View {
                 // Text
                 VStack(alignment: .leading, spacing: 3) {
                     HStack(spacing: 6) {
+                        // Eine Zeile, damit alle Kacheln im Raster gleich hoch sind.
                         Text(lesson.title)
                             .font(.subheadline.bold())
                             .foregroundStyle(hasAudio ? AppTheme.text : AppTheme.textSec)
+                            .lineLimit(1)
+                            .minimumScaleFactor(0.85)
                         if isNewLesson(lesson) {
                             Text("NEU")
                                 .font(.system(size: 9, weight: .bold))
@@ -673,12 +725,19 @@ struct TrainingView: View {
                         }
                     }
                     .foregroundStyle(AppTheme.textTer)
+                    .lineLimit(1)
                 }
 
-                Spacer()
+                Spacer(minLength: 0)
 
                 // Rechtes Icon
-                if isActive && canPlay {
+                if canPlay && !isLocal {
+                    LessonDownloadIndicator(
+                        availability: availability,
+                        isPending: isPending,
+                        color: lesson.category.color
+                    )
+                } else if isActive && canPlay {
                     Image(systemName: playerModel.isPlaying ? "pause.circle.fill" : "play.circle.fill")
                         .font(.system(size: 26))
                         .foregroundStyle(lesson.category.color)
@@ -1074,6 +1133,45 @@ struct TrainingPlayerSheet: View {
         .frame(maxWidth: .infinity, alignment: .leading)
         .padding(16)
         .background(AppTheme.card, in: RoundedRectangle(cornerRadius: 14))
+    }
+}
+
+// MARK: - Nachladen
+
+/// Zeigt, dass eine Lektion noch nicht auf dem Gerät liegt: Fortschrittsring
+/// während des Ladens, sonst ein Wolken-Symbol (Antippen lädt sie).
+private struct LessonDownloadIndicator: View {
+    let availability: AudioLessonStore.Availability
+    let isPending: Bool
+    let color: Color
+
+    var body: some View {
+        switch availability {
+        case .loading(let fraction):
+            ZStack {
+                Circle().stroke(color.opacity(0.2), lineWidth: 3)
+                Circle()
+                    .trim(from: 0, to: max(0.04, fraction))
+                    .stroke(color, style: StrokeStyle(lineWidth: 3, lineCap: .round))
+                    .rotationEffect(.degrees(-90))
+                    .animation(.linear(duration: 0.2), value: fraction)
+                Image(systemName: isPending ? "play.fill" : "arrow.down")
+                    .font(.system(size: 9, weight: .bold))
+                    .foregroundStyle(color)
+            }
+            .frame(width: 24, height: 24)
+            .accessibilityLabel(Text("Wird geladen"))
+        case .failed:
+            Image(systemName: "exclamationmark.icloud")
+                .font(.system(size: 20))
+                .foregroundStyle(AppTheme.textSec)
+                .accessibilityLabel(Text("Laden fehlgeschlagen, antippen zum Wiederholen"))
+        case .missing, .ready:
+            Image(systemName: "icloud.and.arrow.down")
+                .font(.system(size: 20))
+                .foregroundStyle(color)
+                .accessibilityLabel(Text("Antippen zum Laden"))
+        }
     }
 }
 

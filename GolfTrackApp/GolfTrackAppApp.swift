@@ -57,6 +57,7 @@ struct GolfTrackAppApp: App {
     var body: some Scene {
         WindowGroup {
             SplashContainerView()
+                .prefetchAudioLessons()
                 .environmentObject(subscriptionManager)
                 .preferredColorScheme(.dark)
                 .seedDemoDataIfRequested()

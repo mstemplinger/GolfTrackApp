@@ -275,6 +275,9 @@ struct TipsView: View {
         }
         .padding(.horizontal, 18)
         .padding(.vertical, 14)
+        // Ganze Zeile antippbar, nicht nur Text und Pfeil (auf dem iPad ist
+        // die Lücke dazwischen breit).
+        .contentShape(Rectangle())
     }
 }
 

@@ -211,8 +211,7 @@ struct PuttTrainingSheet: View {
             if isCurrent {
                 player.toggle()
             } else {
-                player.load(lesson)
-                player.play()
+                player.start(lesson)
             }
         } label: {
             VStack(spacing: 10) {

@@ -5,6 +5,7 @@ import { t } from "@/i18n/content";
 import { path, type Lang } from "@/i18n/routes";
 import { AushangPicker } from "@/components/AushangPicker";
 import { DirectoryList, type DirectoryEntry } from "@/components/DirectoryList";
+import { ratingsFromHandicapReport } from "@/lib/courseReports";
 
 export async function Directory({ lang }: { lang: Lang }) {
   const copy = t(lang).directory;
@@ -20,6 +21,8 @@ export async function Directory({ lang }: { lang: Lang }) {
     parTotal: course.holeData.reduce((sum, hole) => sum + (hole.par ?? 0), 0),
     courseRating: course.courseRating ?? null,
     slopeRating: course.slopeRating ?? null,
+    // Absprache mit handicap.report: Quellenhinweis an jedem Platz mit deren Wertungen.
+    ratingCredit: ratingsFromHandicapReport(course),
     picker: <AushangPicker slug={course.slug} country={course.country} copy={copy} />,
   }));
 

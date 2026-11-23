@@ -392,13 +392,7 @@ struct LobbyCard: View {
     /// Platznamen vergleichbar machen: „Golf- und Landclub Bayerwald e.V.“ und
     /// „golf und landclub bayerwald“ sind derselbe Platz.
     static func normalized(_ name: String) -> String {
-        var text = name.folding(options: [.caseInsensitive, .diacriticInsensitive], locale: .current)
-        for suffix in [" e.v.", " e. v.", " ev"] where text.hasSuffix(suffix) {
-            text.removeLast(suffix.count)
-        }
-        return text.unicodeScalars
-            .filter { CharacterSet.alphanumerics.contains($0) }
-            .map(String.init).joined()
+        CourseCatalogService.normalizedName(name)
     }
 
     private func spaced(_ code: String) -> String {

@@ -225,6 +225,22 @@ const STATEMENTS = [
      assigned_to  text REFERENCES referrers(code) ON DELETE SET NULL,
      assigned_at  timestamptz
    )`,
+  // Fehlermeldungen zu einem Platz („Fehler melden“ auf Liste und Platzseite).
+  // Jede Meldung geht zusätzlich per Mail raus; die Tabelle hält sie fest,
+  // falls der Versand scheitert.
+  `CREATE TABLE IF NOT EXISTS course_reports (
+     id             uuid PRIMARY KEY DEFAULT gen_random_uuid(),
+     course_slug    text NOT NULL,
+     course_name    text NOT NULL DEFAULT '',
+     category       text NOT NULL,
+     message        text NOT NULL,
+     reporter_name  text NOT NULL DEFAULT '',
+     reporter_email text NOT NULL DEFAULT '',
+     reporter_role  text NOT NULL DEFAULT '',
+     mailed         boolean NOT NULL DEFAULT false,
+     created_at     timestamptz NOT NULL DEFAULT now()
+   )`,
+  `CREATE INDEX IF NOT EXISTS course_reports_created_idx ON course_reports (created_at DESC)`,
   // Crowd-Positionen (`lib/courseGeometry.ts`): Abschlag und Grün je Loch,
   // aus den Runden der Spieler abgeleitet, die das in der App erlaubt haben.
   // Bewusst ohne Geräte-, Runden- oder Netzkennung und nur mit dem Tag –

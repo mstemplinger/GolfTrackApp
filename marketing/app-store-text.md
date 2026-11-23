@@ -48,7 +48,7 @@ SCOREKARTE UND HANDICAP
 • Statistik über alle Runden: Putts, Fairways, Greens in Regulation, Score-Verlauf
 
 AUF DEM PLATZ
-• 97 Golfplätze sind eingebaut, weitere kommen aus dem Verzeichnis oder der weltweiten Suche
+• 79 Golfplätze vorinstalliert, über 800 weitere fertig zum Download aus unserer Datenbank, inklusive weltweiter Suche
 • Scorecard abfotografieren – die App liest Par, Stroke Index und Längen selbst aus
 • Jeden Schlag verorten: Abschlag, Auftreffpunkt, Schlagweite
 • Entfernung zur Fahne, Platzwetter, Live Activity auf dem Sperrbildschirm
@@ -110,7 +110,7 @@ SCORECARD AND HANDICAP
 • Statistics across all your rounds: putts, fairways, greens in regulation, score history
 
 ON THE COURSE
-• 97 courses built in, more from the directory or from worldwide search
+• 79 courses built in, 800+ more ready to download from our database, including worldwide search
 • Photograph a scorecard – the app reads par, stroke index and lengths from it
 • Place every shot: tee, landing point, distance
 • Distance to the pin, course weather, Live Activity on the lock screen
@@ -169,7 +169,7 @@ CARTE DE SCORE ET HANDICAP
 • Statistiques sur toutes tes parties : putts, fairways, greens en régulation, évolution du score
 
 SUR LE PARCOURS
-• 97 parcours intégrés, d'autres viennent du répertoire ou de la recherche mondiale
+• 79 parcours intégrés, plus de 800 autres prêts à télécharger depuis notre base de données, recherche mondiale incluse
 • Photographie une carte de score – l'app y lit le par, le stroke index et les longueurs
 • Situe chaque coup : départ, point de chute, distance
 • Distance au drapeau, météo du parcours, Live Activity sur l'écran verrouillé
@@ -228,7 +228,7 @@ SCORE E HANDICAP
 • Statistiche su tutti i giri: putt, fairway, green in regulation, andamento del punteggio
 
 SUL CAMPO
-• 97 campi già inclusi, altri arrivano dall'elenco o dalla ricerca mondiale
+• 79 campi già inclusi, oltre 800 altri pronti da scaricare dal nostro database, ricerca mondiale inclusa
 • Fotografa uno score – l'app ne legge par, stroke index e lunghezze
 • Colloca ogni colpo: tee, punto di caduta, distanza
 • Distanza dalla bandiera, meteo del campo, Live Activity sulla schermata di blocco
@@ -287,7 +287,7 @@ TARJETA Y HÁNDICAP
 • Estadísticas de todas tus vueltas: putts, calles, greens en regulación, evolución del resultado
 
 EN EL CAMPO
-• 97 campos incluidos, y más desde el directorio o la búsqueda mundial
+• 79 campos incluidos, más de 800 listos para descargar de nuestra base de datos, con búsqueda mundial incluida
 • Fotografía una tarjeta – la app lee el par, el stroke index y las distancias
 • Sitúa cada golpe: salida, punto de caída, distancia
 • Distancia a bandera, tiempo en el campo, Live Activity en la pantalla bloqueada

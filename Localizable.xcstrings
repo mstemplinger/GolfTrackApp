@@ -253,6 +253,46 @@
         }
       }
     },
+    "Abschlag und Grün nach jeder Runde" : {
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Odpaliště a green po každém kole"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tee and green after every round"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tee y green después de cada vuelta"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Départ et green après chaque partie"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tee e green dopo ogni giro"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tee i green po każdej rundzie"
+          }
+        }
+      }
+    },
     "Alle Audio-Trainings und Tipps, keine Werbung –\nmonatlich, jährlich oder einmalig." : {
       "localizations" : {
         "de" : {
@@ -421,6 +461,126 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Udostępniaj anonimowe statystyki rund"
+          }
+        }
+      }
+    },
+    "Auf vielen Plätzen stimmen Abschlag- und Grünpositionen noch nicht genau. Mit deinen Runden kannst du das für alle Spieler korrigieren." : {
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Na mnoha hřištích ještě nejsou polohy odpališť a greenů přesné. Svými koly je můžeš opravit pro všechny hráče."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "On many courses the tee and green positions aren't accurate yet. With your rounds you can correct them for all players."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "En muchos campos las posiciones de tee y green aún no son exactas. Con tus vueltas puedes corregirlas para todos los jugadores."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sur beaucoup de parcours, les positions des départs et des greens ne sont pas encore exactes. Avec tes parties, tu peux les corriger pour tous les joueurs."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Su molti campi le posizioni di tee e green non sono ancora precise. Con i tuoi giri puoi correggerle per tutti i giocatori."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Na wielu polach pozycje tee i greenów nie są jeszcze dokładne. Swoimi rundami możesz je poprawić dla wszystkich graczy."
+          }
+        }
+      }
+    },
+    "Aus deiner Laufspur kennt die App jetzt Abschlag und Grün der gespielten Löcher. Darf sie diese Punkte an golftrack.app schicken? Sobald fünf Spieler übereinstimmen, sehen alle auf diesem Platz die richtigen Entfernungen.\n\nGesendet werden nur die Punkte – keine Laufspur, kein Name, keine Geräte-ID. Weil nichts auf dich verweist, lässt sich ein Beitrag danach nicht mehr löschen. Ändern kannst du das jederzeit unter Einstellungen › Positions-Tracking." : {
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Díky tvé trase teď aplikace zná odpaliště a green odehraných jamek. Smí tyto body poslat na golftrack.app? Jakmile se shodne pět hráčů, uvidí všichni na tomto hřišti správné vzdálenosti.\n\nOdesílají se jen body – žádná trasa, žádné jméno, žádné ID zařízení. Protože nic neodkazuje na tebe, příspěvek už pak nelze smazat. Změnit to můžeš kdykoli v Nastavení › Sledování polohy."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "From your walking path the app now knows the tee and green of the holes you played. May it send these points to golftrack.app? As soon as five players agree, everyone on this course sees the correct distances.\n\nOnly the points are sent – no walking path, no name, no device ID. Because nothing points back to you, a contribution can't be deleted afterwards. You can change this anytime under Settings › Position tracking."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gracias a tu trazado, la app ya conoce el tee y el green de los hoyos jugados. ¿Puede enviar estos puntos a golftrack.app? En cuanto cinco jugadores coincidan, todos en este campo verán las distancias correctas.\n\nSolo se envían los puntos: ni trazado, ni nombre, ni ID del dispositivo. Como nada remite a ti, una aportación no se puede borrar después. Puedes cambiarlo cuando quieras en Ajustes › Seguimiento de posición."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Grâce à ton tracé, l'app connaît maintenant le départ et le green des trous joués. Peut-elle envoyer ces points à golftrack.app ? Dès que cinq joueurs concordent, tout le monde sur ce parcours voit les bonnes distances.\n\nSeuls les points sont envoyés – pas de tracé, pas de nom, pas d'identifiant d'appareil. Comme rien ne renvoie à toi, une contribution ne peut plus être supprimée ensuite. Tu peux modifier cela à tout moment dans Réglages › Suivi de position."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Grazie al tuo tracciato l'app ora conosce tee e green delle buche giocate. Può inviare questi punti a golftrack.app? Appena cinque giocatori concordano, tutti su questo campo vedono le distanze corrette.\n\nVengono inviati solo i punti: nessun tracciato, nessun nome, nessun ID del dispositivo. Poiché nulla riconduce a te, un contributo non può essere eliminato in seguito. Puoi cambiarlo in qualsiasi momento in Impostazioni › Tracciamento posizione."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dzięki twojej trasie aplikacja zna teraz tee i green rozegranych dołków. Czy może wysłać te punkty do golftrack.app? Gdy pięciu graczy będzie zgodnych, wszyscy na tym polu zobaczą prawidłowe odległości.\n\nWysyłane są tylko punkty – bez trasy, bez imienia, bez identyfikatora urządzenia. Ponieważ nic nie wskazuje na ciebie, wkładu nie można później usunąć. Możesz to zmienić w każdej chwili w Ustawienia › Śledzenie pozycji."
+          }
+        }
+      }
+    },
+    "Aus deiner Runde gelernt" : {
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Naučeno z tvého kola"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Learned from your round"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aprendido de tu vuelta"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Appris de ta partie"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Imparato dal tuo giro"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wyznaczone z twojej rundy"
           }
         }
       }
@@ -781,6 +941,46 @@
         }
       }
     },
+    "Eingeschaltet – deine nächste Runde hilft mit." : {
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zapnuto – tvoje příští kolo pomůže."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Switched on – your next round will help."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Activado: tu próxima vuelta ayudará."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Activé – ta prochaine partie y contribuera."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Attivato: il tuo prossimo giro darà una mano."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Włączone – twoja następna runda pomoże."
+          }
+        }
+      }
+    },
     "Einladung" : {
       "localizations" : {
         "de" : {
@@ -919,6 +1119,46 @@
         }
       }
     },
+    "Entfernungen, die stimmen" : {
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vzdálenosti, které sedí"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Distances you can trust"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Distancias correctas"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Des distances justes"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Distanze corrette"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Odległości, które się zgadzają"
+          }
+        }
+      }
+    },
     "Ergebnis anonym an die Anlage melden" : {
       "localizations" : {
         "cs" : {
@@ -1045,6 +1285,46 @@
         }
       }
     },
+    "Gemeinsam genauer" : {
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Společně přesněji"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "More accurate together"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Más precisos juntos"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Plus précis ensemble"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Più precisi insieme"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Razem dokładniej"
+          }
+        }
+      }
+    },
     "Geschafft! Dein Geschenk ist gleich da – schau später noch einmal vorbei." : {
       "localizations" : {
         "de" : {
@@ -1087,6 +1367,46 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Hotovo! Dárek je na cestě – podívej se sem o něco později."
+          }
+        }
+      }
+    },
+    "Gesendet werden nur die Punkte je Loch – keine Laufspur, kein Name, keine Geräte-ID. Weil nichts auf dich verweist, lassen sich gesendete Punkte nicht mehr löschen. Die Laufspur selbst bleibt auf deinem iPhone. Beides kannst du jederzeit unter Einstellungen › Positions-Tracking ändern." : {
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Odesílají se jen body každé jamky – žádná trasa, žádné jméno, žádné ID zařízení. Protože nic neodkazuje na tebe, odeslané body už nelze smazat. Samotná trasa zůstává ve tvém iPhonu. Obojí můžeš kdykoli změnit v Nastavení › Sledování polohy."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Only the points per hole are sent – no walking path, no name, no device ID. Because nothing points back to you, points that were sent can't be deleted. The walking path itself stays on your iPhone. You can change both anytime under Settings › Position tracking."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Solo se envían los puntos de cada hoyo: ni trazado, ni nombre, ni ID del dispositivo. Como nada remite a ti, los puntos enviados no se pueden borrar. El trazado permanece en tu iPhone. Puedes cambiar ambas cosas cuando quieras en Ajustes › Seguimiento de posición."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Seuls les points de chaque trou sont envoyés – pas de tracé, pas de nom, pas d'identifiant d'appareil. Comme rien ne renvoie à toi, les points envoyés ne peuvent plus être supprimés. Le tracé reste sur ton iPhone. Tu peux modifier les deux à tout moment dans Réglages › Suivi de position."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vengono inviati solo i punti di ogni buca: nessun tracciato, nessun nome, nessun ID del dispositivo. Poiché nulla riconduce a te, i punti inviati non possono più essere eliminati. Il tracciato resta sul tuo iPhone. Puoi cambiare entrambe le cose in qualsiasi momento in Impostazioni › Tracciamento posizione."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wysyłane są tylko punkty każdego dołka – bez trasy, bez imienia, bez identyfikatora urządzenia. Ponieważ nic nie wskazuje na ciebie, wysłanych punktów nie można usunąć. Sama trasa pozostaje na twoim iPhonie. Oba ustawienia możesz w każdej chwili zmienić w Ustawienia › Śledzenie pozycji."
           }
         }
       }
@@ -1263,6 +1583,46 @@
         }
       }
     },
+    "Korrigierte Positionen kommen von selbst in deine App – auch auf Plätzen, die du zum ersten Mal spielst." : {
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Opravené polohy se samy dostanou do tvé aplikace – i na hřištích, která hraješ poprvé."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Corrected positions reach your app automatically – even on courses you play for the first time."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Las posiciones corregidas llegan solas a tu app, incluso en campos que juegas por primera vez."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Les positions corrigées arrivent d'elles-mêmes dans ton app – même sur des parcours que tu joues pour la première fois."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Le posizioni corrette arrivano da sole nella tua app, anche sui campi che giochi per la prima volta."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Poprawione pozycje same trafiają do twojej aplikacji – także na polach, na których grasz pierwszy raz."
+          }
+        }
+      }
+    },
     "Lade 5 Freunde zu GolfTrack ein – dein Geschenk kommt von selbst." : {
       "localizations" : {
         "de" : {
@@ -1355,6 +1715,86 @@
         }
       }
     },
+    "Laufspur und Teilen einschalten" : {
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zapnout trasu a sdílení"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Turn on walking path and sharing"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Activar trazado y compartir"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Activer le tracé et le partage"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Attiva tracciato e condivisione"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Włącz trasę i udostępnianie"
+          }
+        }
+      }
+    },
+    "Mit eingeschalteter Laufspur erkennt GolfTrack nach der Runde, wo Abschlag und Grün jedes Lochs liegen." : {
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Se zapnutou trasou GolfTrack po kole pozná, kde leží odpaliště a green každé jamky."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "With the walking path switched on, GolfTrack works out after the round where the tee and green of each hole are."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Con el trazado activado, GolfTrack detecta tras la vuelta dónde están el tee y el green de cada hoyo."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Avec le tracé activé, GolfTrack détecte après la partie où se trouvent le départ et le green de chaque trou."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Con il tracciato attivo, dopo il giro GolfTrack riconosce dove si trovano tee e green di ogni buca."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Przy włączonej trasie GolfTrack po rundzie rozpoznaje, gdzie leżą tee i green każdego dołka."
+          }
+        }
+      }
+    },
     "Nach einer Runde auf einem Platz aus dem Verzeichnis geht eine anonyme Zusammenfassung an golftrack.app: Tag, Tageszeit (grob), Dauer, Gruppengröße sowie Schläge je Loch – keine Namen, keine Uhrzeit, kein Standort, keine Geräte-ID. Betreiber sehen daraus nur Summen ab zehn Runden. Weil nichts auf dich verweist, lassen sich gesendete Runden nicht mehr löschen." : {
       "localizations" : {
         "cs" : {
@@ -1391,6 +1831,86 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Po rundzie na polu z katalogu do golftrack.app trafia anonimowe podsumowanie: dzień, pora dnia (w przybliżeniu), czas gry, liczebność grupy i uderzenia na dołek – bez imion, bez godziny, bez lokalizacji, bez identyfikatora urządzenia. Operatorzy widzą tylko sumy od dziesięciu rund. Ponieważ nic nie wskazuje na ciebie, wysłanych rund nie da się już usunąć."
+          }
+        }
+      }
+    },
+    "Nach einer Runde schickt die App nur die abgeleiteten Punkte je Loch an golftrack.app – keine Laufspur, kein Name, keine Geräte-ID. Sobald fünf Spieler übereinstimmen, gilt der Punkt für alle auf diesem Platz. Weil nichts auf dich verweist, lassen sich gesendete Punkte nicht mehr löschen." : {
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Po kole aplikace pošle na golftrack.app jen odvozené body každé jamky – žádnou trasu, žádné jméno, žádné ID zařízení. Jakmile se shodne pět hráčů, platí bod pro všechny na tomto hřišti. Protože nic neodkazuje na tebe, odeslané body už nelze smazat."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "After a round the app sends only the derived points per hole to golftrack.app – no walking path, no name, no device ID. As soon as five players agree, the point applies to everyone on this course. Because nothing points back to you, points that were sent can't be deleted."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tras una vuelta, la app envía a golftrack.app solo los puntos deducidos de cada hoyo: ni trazado, ni nombre, ni ID del dispositivo. En cuanto cinco jugadores coinciden, el punto vale para todos en este campo. Como nada remite a ti, los puntos enviados no se pueden borrar."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Après une partie, l'app envoie seulement les points déduits de chaque trou à golftrack.app – pas de tracé, pas de nom, pas d'identifiant d'appareil. Dès que cinq joueurs concordent, le point vaut pour tous sur ce parcours. Comme rien ne renvoie à toi, les points envoyés ne peuvent plus être supprimés."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dopo un giro l'app invia a golftrack.app solo i punti ricavati per ogni buca: nessun tracciato, nessun nome, nessun ID del dispositivo. Appena cinque giocatori concordano, il punto vale per tutti su questo campo. Poiché nulla riconduce a te, i punti inviati non possono più essere eliminati."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Po rundzie aplikacja wysyła do golftrack.app tylko wyznaczone punkty każdego dołka – bez trasy, bez imienia, bez identyfikatora urządzenia. Gdy pięciu graczy jest zgodnych, punkt obowiązuje wszystkich na tym polu. Ponieważ nic nie wskazuje na ciebie, wysłanych punktów nie można usunąć."
+          }
+        }
+      }
+    },
+    "Nicht teilen" : {
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nesdílet"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Don't share"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No compartir"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ne pas partager"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Non condividere"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nie udostępniaj"
           }
         }
       }
@@ -1437,6 +1957,166 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Nebo zdarma: 2 týdny Pro"
+          }
+        }
+      }
+    },
+    "Platzdaten für alle verbessern?" : {
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vylepšit data hřiště pro všechny?"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Improve course data for everyone?"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "¿Mejorar los datos del campo para todos?"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Améliorer les données du parcours pour tous ?"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Migliorare i dati del campo per tutti?"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ulepszyć dane pola dla wszystkich?"
+          }
+        }
+      }
+    },
+    "Platzdaten verbessern" : {
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vylepšit data hřiště"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Improve course data"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mejorar los datos del campo"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Améliorer les données du parcours"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Migliora i dati del campo"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ulepsz dane pola"
+          }
+        }
+      }
+    },
+    "Positionen mit allen teilen" : {
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sdílet polohy se všemi"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Share positions with everyone"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Compartir posiciones con todos"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Partager les positions avec tous"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Condividi le posizioni con tutti"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Udostępniaj pozycje wszystkim"
+          }
+        }
+      }
+    },
+    "Richtige Entfernungen für alle" : {
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Správné vzdálenosti pro všechny"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Correct distances for everyone"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Distancias correctas para todos"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Des distances justes pour tous"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Distanze corrette per tutti"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Prawidłowe odległości dla wszystkich"
           }
         }
       }
@@ -1527,6 +2207,86 @@
         }
       }
     },
+    "Teilen einschalten" : {
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zapnout sdílení"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Turn on sharing"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Activar compartir"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Activer le partage"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Attiva la condivisione"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Włącz udostępnianie"
+          }
+        }
+      }
+    },
+    "Teilst du diese Punkte, werden sie mit denen anderer Spieler abgeglichen. Sobald fünf übereinstimmen, gilt die Position für alle auf dem Platz." : {
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Když tyto body sdílíš, porovnají se s body ostatních hráčů. Jakmile se jich pět shodne, platí poloha pro všechny na hřišti."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "If you share these points, they are compared with those of other players. As soon as five agree, the position applies to everyone on the course."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Si compartes estos puntos, se comparan con los de otros jugadores. En cuanto cinco coinciden, la posición vale para todos en el campo."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Si tu partages ces points, ils sont comparés à ceux d'autres joueurs. Dès que cinq concordent, la position vaut pour tous sur le parcours."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Se condividi questi punti, vengono confrontati con quelli di altri giocatori. Appena cinque concordano, la posizione vale per tutti sul campo."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Jeśli udostępnisz te punkty, zostaną porównane z punktami innych graczy. Gdy pięciu będzie zgodnych, pozycja obowiązuje wszystkich na polu."
+          }
+        }
+      }
+    },
     "Von einem Freund eingeladen?" : {
       "localizations" : {
         "de" : {
@@ -1569,6 +2329,46 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Pozval tě kamarád?"
+          }
+        }
+      }
+    },
+    "Während einer Runde wird alle paar Meter deine Position gespeichert. Daraus leitet die App Abschlag- und Grünpositionen der Löcher ab – so bekommst du die Entfernung zur Fahne ohne den Pin selbst zu setzen.\n\nDie Laufspur bleibt auf deinem iPhone und wird nicht übertragen. Du kannst sie jederzeit hier löschen." : {
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Během kola se každých pár metrů ukládá tvá poloha. Z ní aplikace odvodí polohy odpališť a greenů jamek – tak znáš vzdálenost k vlajce, aniž bys musel sám nastavovat pin.\n\nTrasa zůstává ve tvém iPhonu a nikam se neodesílá. Kdykoli ji tu můžeš smazat."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "During a round your position is saved every few metres. From that the app derives the tee and green positions of the holes – so you get the distance to the pin without setting the pin yourself.\n\nThe walking path stays on your iPhone and is not transmitted. You can delete it here at any time."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Durante una vuelta se guarda tu posición cada pocos metros. Con ello la app deduce las posiciones de tee y green de los hoyos, así obtienes la distancia a la bandera sin colocar la bandera tú mismo.\n\nEl trazado permanece en tu iPhone y no se transmite. Puedes borrarlo aquí en cualquier momento."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pendant une partie, ta position est enregistrée tous les quelques mètres. L'app en déduit les positions de départ et de green des trous – tu obtiens ainsi la distance au drapeau sans placer le drapeau toi-même.\n\nLe tracé reste sur ton iPhone et n'est pas transmis. Tu peux le supprimer ici à tout moment."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Durante un giro la tua posizione viene salvata ogni pochi metri. Da questi dati l'app deduce le posizioni di tee e green delle buche, così ottieni la distanza dalla bandiera senza impostarla manualmente.\n\nIl tracciato resta sul tuo iPhone e non viene trasmesso. Puoi eliminarlo qui in qualsiasi momento."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Podczas rundy co kilka metrów zapisywana jest twoja pozycja. Na tej podstawie aplikacja wyznacza pozycje tee i greenów – dzięki temu znasz odległość do flagi bez samodzielnego ustawiania pinu.\n\nTrasa pozostaje na twoim iPhonie i nie jest przesyłana. Możesz ją tu w każdej chwili usunąć."
           }
         }
       }
@@ -4739,6 +5539,46 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Rundy z App Clipa są teraz w aplikacji: %lld."
+          }
+        }
+      }
+    },
+    "%lld Runden werden unwiderruflich gelöscht." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld rounds will be permanently deleted."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld parties seront définitivement supprimées."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld giri verranno eliminati definitivamente."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Se eliminarán %lld vueltas de forma definitiva."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Rundy (%lld) zostaną trwale usunięte."
+          }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kola (%lld) budou nenávratně smazána."
           }
         }
       }
@@ -9266,46 +10106,6 @@
         }
       }
     },
-    "Abschlag und Grün von allein" : {
-      "localizations" : {
-        "cs" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Odpaliště a green samy od sebe"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Tee and green by itself"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Tee y green automáticamente"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Départ et green tout seuls"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Tee e green da soli"
-          }
-        },
-        "pl" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Tee i green same z siebie"
-          }
-        }
-      }
-    },
     "Abschlag wählen" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -9977,6 +10777,46 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Usunąć wszystkie rundy (%lld)?"
+          }
+        }
+      }
+    },
+    "Alle aktiven Runden löschen?" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Delete all active rounds?"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Supprimer toutes les parties en cours ?"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Eliminare tutti i giri attivi?"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "¿Eliminar todas las vueltas activas?"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Usunąć wszystkie aktywne rundy?"
+          }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Smazat všechna aktivní kola?"
           }
         }
       }
@@ -11423,6 +12263,46 @@
     "Ansprechen" : {
 
     },
+    "Antippen zum Laden" : {
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Klepni pro stažení"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tap to download"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Toca para descargar"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Touche pour télécharger"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tocca per scaricare"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dotknij, aby pobrać"
+          }
+        }
+      }
+    },
     "Antworten durchsehen" : {
       "localizations" : {
         "cs" : {
@@ -12621,46 +13501,6 @@
         }
       }
     },
-    "Aufzeichnung aktiviert – sie startet mit deiner nächsten Runde." : {
-      "localizations" : {
-        "cs" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Záznam zapnut – spustí se s tvým příštím kolem."
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Recording enabled – it starts with your next round."
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Grabación activada: empieza con tu próxima vuelta."
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Enregistrement activé – il démarre avec ta prochaine partie."
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Registrazione attivata: parte con il tuo prossimo giro."
-          }
-        },
-        "pl" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Nagrywanie włączone – rozpocznie się wraz z następną rundą."
-          }
-        }
-      }
-    },
     "Aufzeichnung einschalten" : {
       "localizations" : {
         "cs" : {
@@ -12857,46 +13697,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "z 1 pomiaru"
-          }
-        }
-      }
-    },
-    "Aus deinen Runden schätzt die App, wo Abschlag und Fahne jedes Lochs liegen. Danach steht die Entfernung zur Fahne da, ohne dass du den Pin selbst setzen musst." : {
-      "localizations" : {
-        "cs" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Z tvých kol aplikace odhaduje, kde leží odpaliště a vlajka každé jamky. Pak se vzdálenost k vlajce zobrazí sama, aniž bys musel pin nastavovat."
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "From your rounds the app estimates where the tee and the pin of each hole are. After that the distance to the pin is simply there, without you setting the pin yourself."
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "A partir de tus vueltas, la app estima dónde están el tee y la bandera de cada hoyo. Después la distancia a la bandera aparece sola, sin que tengas que colocarla tú."
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "À partir de tes parties, l'app estime où se trouvent le départ et le drapeau de chaque trou. La distance au drapeau s'affiche ensuite sans que tu aies à le placer toi-même."
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Dai tuoi giri l'app stima dove si trovano il tee e la bandiera di ogni buca. Dopodiché la distanza dalla bandiera compare da sola, senza che tu debba impostarla."
-          }
-        },
-        "pl" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Na podstawie twoich rund aplikacja szacuje, gdzie leżą tee i flaga każdego dołka. Potem odległość do flagi jest po prostu widoczna – bez samodzielnego ustawiania pinu."
           }
         }
       }
@@ -17107,46 +17907,6 @@
         }
       }
     },
-    "Dein Weg über den Platz" : {
-      "localizations" : {
-        "cs" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Tvá cesta po hřišti"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Your path around the course"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Tu recorrido por el campo"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Ton parcours sur le terrain"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Il tuo percorso sul campo"
-          }
-        },
-        "pl" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Twoja droga przez pole"
-          }
-        }
-      }
-    },
     "Deine Laufspur" : {
       "localizations" : {
         "cs" : {
@@ -17888,6 +18648,46 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Klasyczny format: liczy się każde uderzenie. Wygrywa ten, kto na koniec rundy ma najmniej uderzeń."
+          }
+        }
+      }
+    },
+    "Die Lektion wird geladen, sobald du wieder Internet hast. Danach kannst du sie jederzeit offline anhören." : {
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lekce se stáhne, jakmile budeš znovu online. Pak si ji můžeš kdykoli poslechnout offline."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The lesson will download as soon as you're back online. After that you can listen to it offline at any time."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "La lección se descargará en cuanto vuelvas a tener Internet. Después podrás escucharla sin conexión cuando quieras."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "La leçon sera téléchargée dès que tu auras de nouveau Internet. Ensuite, tu pourras l’écouter hors ligne à tout moment."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "La lezione verrà scaricata appena avrai di nuovo Internet. Poi potrai ascoltarla offline in qualsiasi momento."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lekcja zostanie pobrana, gdy tylko znów będziesz mieć internet. Potem możesz jej słuchać offline w dowolnym momencie."
           }
         }
       }
@@ -26388,46 +27188,6 @@
         }
       }
     },
-    "GolfTrack kann jetzt aufzeichnen, wo du auf dem Platz unterwegs warst – und daraus lernen, wie die Löcher liegen." : {
-      "localizations" : {
-        "cs" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "GolfTrack teď umí zaznamenat, kudy ses po hřišti pohyboval – a naučit se z toho, jak jamky leží."
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "GolfTrack can now record where you walked on the course – and learn from it how the holes are laid out."
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "GolfTrack ahora puede grabar por dónde has ido en el campo y deducir de ello cómo están dispuestos los hoyos."
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "GolfTrack peut désormais enregistrer où tu es passé sur le parcours et en déduire la disposition des trous."
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "GolfTrack ora può registrare dove ti sei mosso sul campo e capirne la disposizione delle buche."
-          }
-        },
-        "pl" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "GolfTrack może teraz zapisywać, gdzie poruszałeś się po polu – i uczyć się z tego, jak położone są dołki."
-          }
-        }
-      }
-    },
     "GolfTrack Pro" : {
       "localizations" : {
         "cs" : {
@@ -29525,6 +30285,46 @@
     "Jedes Mal gleich – das beruhigt das Nervensystem" : {
 
     },
+    "Jetzt" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Now"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Maintenant"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Adesso"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ahora"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Teraz"
+          }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Teď"
+          }
+        }
+      }
+    },
     "Jetzt abonnieren" : {
       "localizations" : {
         "cs" : {
@@ -31240,6 +32040,46 @@
         }
       }
     },
+    "Laden fehlgeschlagen, antippen zum Wiederholen" : {
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Stažení se nezdařilo, klepni pro opakování"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Download failed, tap to retry"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Error en la descarga, toca para reintentar"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Échec du téléchargement, touche pour réessayer"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Download non riuscito, tocca per riprovare"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pobieranie nie powiodło się, dotknij, aby ponowić"
+          }
+        }
+      }
+    },
     "Lädt…" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -31566,6 +32406,46 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Analizowanie tras …"
+          }
+        }
+      }
+    },
+    "Lektion noch nicht geladen" : {
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lekce zatím není stažená"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lesson not downloaded yet"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lección aún no descargada"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Leçon pas encore téléchargée"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lezione non ancora scaricata"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lekcja jeszcze nie pobrana"
           }
         }
       }
@@ -35141,46 +36021,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Po rundzie twój handicap WHS jest gotowy. Do tego statystyki, karta wyników do udostępnienia i lekcje audio dopasowane do tej rundy."
-          }
-        }
-      }
-    },
-    "Nach ein paar Runden zeichnet die App, wo das Fairway ungefähr verläuft – Doglegs inklusive. Je mehr Runden, desto genauer." : {
-      "localizations" : {
-        "cs" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Po několika kolech aplikace nakreslí, kudy zhruba vede fairway – včetně doglegů. Čím víc kol, tím přesněji."
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "After a few rounds the app draws roughly where the fairway runs – doglegs included. The more rounds, the more accurate."
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Tras unas cuantas vueltas la app dibuja por dónde va aproximadamente el fairway, doglegs incluidos. Cuantas más vueltas, más preciso."
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Après quelques parties, l'app dessine approximativement le tracé du fairway, doglegs compris. Plus il y a de parties, plus c'est précis."
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Dopo qualche giro l'app disegna all'incirca dove passa il fairway, dogleg inclusi. Più giri, più è precisa."
-          }
-        },
-        "pl" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Po kilku rundach aplikacja rysuje, gdzie mniej więcej biegnie fairway – łącznie z doglegami. Im więcej rund, tym dokładniej."
           }
         }
       }
@@ -54574,46 +55414,6 @@
         }
       }
     },
-    "Während einer Runde wird alle paar Meter deine Position gespeichert. Daraus leitet die App Abschlag- und Grünpositionen der Löcher ab – so bekommst du die Entfernung zur Fahne ohne den Pin selbst zu setzen.\n\nDie Daten bleiben auf deinem iPhone und werden nicht übertragen. Du kannst sie jederzeit hier löschen." : {
-      "localizations" : {
-        "cs" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Během kola se každých pár metrů ukládá tvá poloha. Z ní aplikace odvodí polohy odpališť a greenů jamek – tak znáš vzdálenost k vlajce, aniž bys musel sám nastavovat pin.\n\nData zůstávají ve tvém iPhonu a nikam se neodesílají. Kdykoli je tu můžeš smazat."
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "During a round your position is saved every few metres. From that the app derives the tee and green positions of the holes – so you get the distance to the pin without setting the pin yourself.\n\nThe data stays on your iPhone and is not transmitted. You can delete it here at any time."
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Durante una vuelta se guarda tu posición cada pocos metros. Con ello la app deduce las posiciones de tee y green de los hoyos, así obtienes la distancia a la bandera sin colocar la bandera tú mismo.\n\nLos datos permanecen en tu iPhone y no se transmiten. Puedes borrarlos aquí en cualquier momento."
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Pendant une partie, ta position est enregistrée tous les quelques mètres. L'app en déduit les positions de départ et de green des trous – tu obtiens ainsi la distance au drapeau sans placer le drapeau toi-même.\n\nLes données restent sur ton iPhone et ne sont pas transmises. Tu peux les supprimer ici à tout moment."
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Durante un giro la tua posizione viene salvata ogni pochi metri. Da questi dati l'app deduce le posizioni di tee e green delle buche, così ottieni la distanza dalla bandiera senza impostarla manualmente.\n\nI dati restano sul tuo iPhone e non vengono trasmessi. Puoi eliminarli qui in qualsiasi momento."
-          }
-        },
-        "pl" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Podczas rundy co kilka metrów zapisywana jest twoja pozycja. Na tej podstawie aplikacja wyznacza pozycje tee i greenów – dzięki temu znasz odległość do flagi bez samodzielnego ustawiania pinu.\n\nDane pozostają na twoim iPhonie i nie są przesyłane. Możesz je tu w każdej chwili usunąć."
-          }
-        }
-      }
-    },
     "Warte auf Freunde – sie scannen den QR-Code oder geben den Code ein." : {
 
     },
@@ -55558,46 +56358,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Pokaż mniej"
-          }
-        }
-      }
-    },
-    "Wenn du es erlaubst, merkt sich GolfTrack während der Runde alle paar Meter deine Position. Nach der Runde siehst du deinen Weg über den Platz auf der Karte." : {
-      "localizations" : {
-        "cs" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Když to povolíš, GolfTrack si během kola každých pár metrů zapamatuje tvou polohu. Po kole uvidíš svou cestu po hřišti na mapě."
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "If you allow it, GolfTrack notes your position every few metres during the round. Afterwards you can see your path across the course on the map."
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Si lo permites, GolfTrack anota tu posición cada pocos metros durante la vuelta. Después puedes ver tu recorrido por el campo en el mapa."
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Si tu l'autorises, GolfTrack retient ta position tous les quelques mètres pendant la partie. Ensuite, tu vois ton parcours sur la carte."
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Se lo consenti, GolfTrack registra la tua posizione ogni pochi metri durante il giro. Dopo puoi vedere il tuo percorso sulla mappa."
-          }
-        },
-        "pl" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Jeśli na to pozwolisz, GolfTrack co kilka metrów zapamiętuje twoją pozycję podczas rundy. Po rundzie zobaczysz swoją drogę po polu na mapie."
           }
         }
       }
@@ -57363,6 +58123,46 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Zapytamy o to przy starcie następnej rundy"
+          }
+        }
+      }
+    },
+    "Wird geladen" : {
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Stahuje se"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Downloading"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Descargando"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Téléchargement en cours"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Download in corso"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pobieranie"
           }
         }
       }

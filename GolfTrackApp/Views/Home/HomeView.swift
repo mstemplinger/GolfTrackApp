@@ -29,6 +29,7 @@ struct HomeView: View {
 
     /// Runde die per Bestätigungs-Alert gelöscht werden soll
     @State private var roundToDelete: Round?
+    @State private var showDeleteAllRounds = false
     @State private var showWeatherForecast = false
 
     private var coursesWithGPS: [Course] {
@@ -294,7 +295,8 @@ struct HomeView: View {
     #if DEBUG
     /// Screenshots ohne Tippen: `GOLFTRACK_OPEN=newRound` öffnet „Neue Runde“, `range` die Driving Range, `pro` die Kaufseite,
     /// `GOLFTRACK_OPEN=round` die erste offene Runde, `GOLFTRACK_OPEN=tipVisual`
-    /// den ersten Tipp mit Grafik.
+    /// den ersten Tipp mit Grafik, `GOLFTRACK_OPEN=training` den Training-Tab,
+    /// `GOLFTRACK_OPEN=holeMap` die Schlagkarte von Loch 1 auf einem Platz mit Lochpositionen.
     private func openDebugScreen() {
         guard let target = ProcessInfo.processInfo.environment["GOLFTRACK_OPEN"] else { return }
         Task { @MainActor in
@@ -309,6 +311,8 @@ struct HomeView: View {
                     .first { $0.visual != nil }
             case "round": selectedIncompleteRound = allRounds.first { !$0.isComplete } ?? makeDebugRound()
             case "roundPartners": selectedIncompleteRound = makeDebugRound(partners: ["Zizi", "Max"])
+            case "holeMap": selectedIncompleteRound = makeDebugRound(requireHolePositions: true)
+            case "training": NotificationCenter.default.post(name: .openTraining, object: nil)
             default: break
             }
         }
@@ -317,8 +321,9 @@ struct HomeView: View {
     /// Offene Runde auf dem ersten Platz mit Gelb, sechs Löcher gespielt.
     /// Mit `partners` als Best Ball (`GOLFTRACK_OPEN=roundPartners`), damit
     /// die Scorekarten der Mitspieler zu sehen sind.
-    private func makeDebugRound(partners: [String] = []) -> Round? {
-        guard let course = allCourses.first else { return nil }
+    private func makeDebugRound(partners: [String] = [], requireHolePositions: Bool = false) -> Round? {
+        let candidates = requireHolePositions ? allCourses.filter(\.hasHolePositions) : allCourses
+        guard let course = candidates.first else { return nil }
         let round = Round(course: course)
         round.teeColor = .yellow
         if !partners.isEmpty {
@@ -948,59 +953,9 @@ struct HomeView: View {
         weather.dailyForecast.first(where: \.isToday)?.daylightHours ?? []
     }
 
-    /// Ein Balken je Hellstunde: Höhe = Temperatur, Gold = spielbar.
-    /// Vergangene Stunden verblassen, die aktuelle ist umrandet.
+    /// Balken je Hellstunde mit Temperatur – siehe `GolfHourBars`.
     private var hourlyGolfBars: some View {
-        let hours = todayHours
-        let temps = hours.map(\.temperature)
-        let low = (temps.min() ?? 0) - 2
-        let span = max(1, (temps.max() ?? 1) - low)
-        let now = Date()
-        let rules = GolfWeatherRules.current
-        let labelStep = hours.count > 12 ? 3 : 2
-
-        return VStack(alignment: .leading, spacing: 6) {
-            HStack(alignment: .bottom, spacing: 4) {
-                ForEach(Array(hours.enumerated()), id: \.element.id) { index, hour in
-                    let past = hour.date.addingTimeInterval(3600) <= now
-                    let current = hour.date <= now && !past
-                    let playable = hour.isPlayable(with: rules)
-                    VStack(spacing: 4) {
-                        RoundedRectangle(cornerRadius: 3)
-                            .fill(playable ? AppTheme.gold : AppTheme.cardAlt)
-                            .frame(height: max(6, 38 * (hour.temperature - low) / span))
-                            .overlay(
-                                RoundedRectangle(cornerRadius: 3)
-                                    .strokeBorder(.white.opacity(current ? 0.9 : 0), lineWidth: 1.5)
-                            )
-                            .opacity(past ? 0.3 : 1)
-                        Text(index % labelStep == 0 ? hour.date.formatted(.dateTime.hour(.defaultDigits(amPM: .omitted))) : " ")
-                            .font(.system(size: 9, weight: .semibold))
-                            .foregroundStyle(current ? AppTheme.text : AppTheme.textTer)
-                            .lineLimit(1)
-                            .fixedSize()
-                    }
-                    .frame(maxWidth: .infinity)
-                }
-            }
-            .frame(height: 54, alignment: .bottom)
-            .accessibilityElement(children: .ignore)
-            .accessibilityLabel(Text(weather.golfWeatherLabel))
-
-            HStack(spacing: 12) {
-                legendDot(AppTheme.gold, "Golf-Wetter")
-                legendDot(AppTheme.cardAlt, "Regen, Wind oder kalt")
-            }
-        }
-    }
-
-    private func legendDot(_ color: Color, _ label: LocalizedStringKey) -> some View {
-        HStack(spacing: 5) {
-            RoundedRectangle(cornerRadius: 2).fill(color).frame(width: 10, height: 10)
-            Text(label)
-        }
-        .font(.caption2)
-        .foregroundStyle(AppTheme.textSec)
+        GolfHourBars(hours: todayHours, accessibilityText: weather.golfWeatherLabel)
     }
 
     // label als LocalizedStringKey, nicht als String: bei String wird das Literal
@@ -1055,9 +1010,26 @@ struct HomeView: View {
     // MARK: Active Rounds Card
     private var activeRoundsCard: some View {
         VStack(alignment: .leading, spacing: 12) {
-            Text("Aktive Runden")
-                .font(.subheadline.bold())
-                .foregroundStyle(AppTheme.textSec)
+            HStack {
+                Text("Aktive Runden")
+                    .font(.subheadline.bold())
+                    .foregroundStyle(AppTheme.textSec)
+                Spacer()
+                if incompleteRounds.count > 1 {
+                    Button {
+                        Haptics.tap()
+                        showDeleteAllRounds = true
+                    } label: {
+                        Text("Alle löschen")
+                            .font(.caption.bold())
+                            .foregroundStyle(AppTheme.textSec)
+                            .padding(.horizontal, 10)
+                            .padding(.vertical, 5)
+                            .background(AppTheme.cardAlt, in: Capsule())
+                    }
+                    .buttonStyle(.plain)
+                }
+            }
             ForEach(incompleteRounds) { round in
                 HStack(spacing: 10) {
                     Button {
@@ -1103,6 +1075,18 @@ struct HomeView: View {
             }
         } message: {
             Text("Die Runde wird unwiderruflich gelöscht.")
+        }
+        .alert("Alle aktiven Runden löschen?", isPresented: $showDeleteAllRounds) {
+            Button("Alle löschen", role: .destructive) {
+                Haptics.warning()
+                GolfLiveActivityManager.endRound()
+                for r in incompleteRounds { context.delete(r) }
+            }
+            Button("Abbrechen", role: .cancel) {
+                Haptics.tap()
+            }
+        } message: {
+            Text("\(incompleteRounds.count) Runden werden unwiderruflich gelöscht.")
         }
     }
 

@@ -121,7 +121,7 @@ enum BundledCourses {
               flagLongitudes: [13.5485, 13.5503, 13.5528, 13.5548, 13.5558, 13.5515, 13.5498, 13.5472, 13.5452,
                                 13.5412, 13.5385, 13.5402, 13.5458, 13.5522, 13.5578, 13.5595, 13.5545, 13.5480]),
         .init(name: "Panorama Golf Passau", location: "Fürstenzell, Bayern",
-              holes: 18, lat: 48.516, lon: 13.323,
+              holes: 18, lat: 48.544, lon: 13.3442,
               parValues: [5, 4, 3, 4, 5, 4, 4, 4, 4,   // OUT 37
                           3, 5, 5, 4, 4, 3, 4, 4, 4],   // IN 36  → Par 73
               hcpValues: [3, 5, 13, 11, 7, 9, 1, 15, 17,
@@ -137,7 +137,7 @@ enum BundledCourses {
         .init(name: "Golf- und Landclub Bayerwald e.V.",
               location: "Jandelsbrunn, Bayern",
               holes: 18,
-              lat: 48.6555, lon: 13.5890,
+              lat: 48.7414, lon: 13.6659,
               // Par pro Loch (Löcher 1–18)
               parValues: [4, 4, 3, 4, 4, 5, 5, 3, 4,   // OUT
                           4, 3, 5, 3, 5, 4, 4, 4, 4],   // IN
@@ -173,7 +173,7 @@ enum BundledCourses {
               Kontakt: sekretariat@golfclub-schaerding.at · Tel. 07719-8110
               """),
         .init(name: "Golfclub Pfarrkirchen im Mühlkreis", location: "Pfarrkirchen im Mühlkreis, OÖ",
-              holes: 9, lat: 48.478, lon: 14.030,
+              holes: 9, lat: 48.5021, lon: 13.8244,
               parValues: [3, 4, 4, 3, 4, 4, 5, 4, 3],  // Par 34 (9 Loch)
               hcpValues: [3, 17, 9, 15, 5, 7, 11, 1, 13],
               holeLengths: [142, 272, 369, 161, 315, 363, 471, 294, 144],  // 2531 m
@@ -186,7 +186,7 @@ enum BundledCourses {
 
         // ── Bad Griesbach Resort (24–30 km) ───────────────────────────
         .init(name: "Golfclub Sagmühle e.V.", location: "Bad Griesbach im Rottal, Bayern",
-              holes: 18, lat: 48.432, lon: 13.189,
+              holes: 18, lat: 48.4135, lon: 13.1666,
               parValues: [4, 4, 5, 3, 4, 5, 4, 4, 3,   // OUT 36
                           4, 3, 5, 4, 4, 3, 5, 4, 4],   // IN 36  → Par 72
               hcpValues: [5, 7, 9, 15, 13, 11, 1, 3, 17,
@@ -201,7 +201,7 @@ enum BundledCourses {
               Kontakt: www.sagmuehle.de
               """),
         .init(name: "Quellness Golf — Lederbach", location: "Bad Griesbach im Rottal, Bayern",
-              holes: 18, lat: 48.444, lon: 13.196,
+              holes: 18, lat: 48.468, lon: 13.1702,
               parValues: [4, 3, 5, 4, 4, 3, 5, 4, 4,   // OUT 36
                           4, 3, 5, 4, 3, 4, 3, 5, 4],   // IN 35  → Par 71
               hcpValues: [5, 15, 7, 13, 3, 9, 17, 11, 1,
@@ -215,7 +215,7 @@ enum BundledCourses {
               Kontakt: Tel. 08532/3135 · www.quellness-golf.com
               """),
         .init(name: "Quellness Golf — Brunnwies", location: "Haarbach, Bayern",
-              holes: 18, lat: 48.474, lon: 13.218,
+              holes: 18, lat: 48.491, lon: 13.1699,
               parValues: [4, 4, 3, 4, 4, 3, 5, 3, 4,   // OUT 34
                           5, 4, 4, 5, 3, 5, 4, 3, 4],   // IN 37  → Par 71
               hcpValues: [11, 5, 15, 7, 1, 17, 9, 13, 3,
@@ -229,7 +229,7 @@ enum BundledCourses {
               Kontakt: Tel. 08535/96010 · www.quellness-golf.com
               """),
         .init(name: "Quellness Golf — Uttlau", location: "Haarbach, Bayern",
-              holes: 18, lat: 48.460, lon: 13.207,
+              holes: 18, lat: 48.4798, lon: 13.1711,
               parValues: [4, 5, 4, 3, 4, 4, 4, 5, 3,   // OUT 36
                           4, 3, 5, 4, 3, 4, 5, 3, 5],   // IN 36  → Par 72
               hcpValues: [7, 11, 1, 13, 15, 3, 9, 5, 17,
@@ -243,7 +243,7 @@ enum BundledCourses {
               Kontakt: Tel. 08535/18949 · www.quellness-golf.com
               """),
         .init(name: "Quellness Golf — Beckenbauer Course", location: "Rotthalmünster, Bayern",
-              holes: 18, lat: 48.357, lon: 13.203,
+              holes: 18, lat: 48.4107, lon: 13.1944,
               parValues: [4, 4, 5, 3, 4, 4, 3, 5, 4,   // OUT 36
                           5, 4, 5, 4, 3, 4, 4, 3, 4],   // IN 36  → Par 72
               hcpValues: [5, 3, 15, 17, 1, 9, 11, 13, 7,
@@ -258,7 +258,7 @@ enum BundledCourses {
               Kontakt: Tel. 08532/92440 · www.quellness-golf.com
               """),
         .init(name: "Quellness Golf — Porsche Course", location: "Rotthalmünster, Bayern",
-              holes: 18, lat: 48.360, lon: 13.210,
+              holes: 18, lat: 48.408, lon: 13.1996,
               parValues: [4, 5, 4, 4, 3, 4, 3, 5, 3,   // OUT 35
                           4, 5, 4, 3, 4, 5, 4, 3, 4],   // IN 36  → Par 71
               hcpValues: [7, 9, 5, 3, 11, 1, 15, 13, 17,
@@ -272,7 +272,7 @@ enum BundledCourses {
               Kontakt: Tel. 08532/7900 · www.quellness-golf.com
               """),
         .init(name: "Golfodrom Bad Griesbach — Jagl", location: "Bad Griesbach im Rottal, Bayern",
-              holes: 9, lat: 48.452, lon: 13.183,
+              holes: 9, lat: 48.4747, lon: 13.1844,
               parValues: [3, 3, 3, 3, 3, 3, 3, 3, 3],  // Par 27
               hcpValues: [17, 15, 9, 11, 1, 3, 5, 7, 13],
               holeLengths: [80, 91, 156, 133, 153, 240, 139, 127, 104],   // 1223 m
@@ -283,7 +283,7 @@ enum BundledCourses {
               Kontakt: Tel. 08532/7900 · www.quellness-golf.com
               """),
         .init(name: "Golfodrom Bad Griesbach — Engled", location: "Bad Griesbach im Rottal, Bayern",
-              holes: 9, lat: 48.453, lon: 13.185,
+              holes: 9, lat: 48.4747, lon: 13.1844,
               parValues: [3, 3, 3, 4, 3, 3, 4, 3, 4],  // Par 30
               hcpValues: [9, 11, 15, 1, 17, 13, 5, 7, 3],
               holeLengths: [156, 166, 120, 295, 115, 136, 284, 143, 272],  // 1687 m
@@ -292,7 +292,7 @@ enum BundledCourses {
               Kontakt: Tel. 08532/7900 · www.quellness-golf.com
               """),
         .init(name: "Golfodrom Bad Griesbach — Pfeiffer", location: "Bad Griesbach im Rottal, Bayern",
-              holes: 9, lat: 48.454, lon: 13.182,
+              holes: 9, lat: 48.4747, lon: 13.1844,
               parValues: [3, 3, 3, 3, 3, 3, 3, 3, 3],  // Par 27
               hcpValues: [1, 9, 5, 15, 13, 7, 3, 11, 17],
               holeLengths: [152, 116, 127, 96, 109, 120, 127, 113, 94],   // 1054 m
@@ -303,7 +303,7 @@ enum BundledCourses {
 
         // ── Niederbayern — Rottal / Inn / Vilstal ─────────────────────
         .init(name: "ThermenGolfClub Bad Füssing-Kirchham", location: "Bad Füssing, Bayern",
-              holes: 18, lat: 48.350, lon: 13.311,
+              holes: 18, lat: 48.343, lon: 13.2859,
               parValues: [4, 4, 5, 4, 4, 3, 5, 3, 4,   // OUT 36
                           5, 3, 4, 4, 4, 3, 4, 5, 4],   // IN 36  → Par 72
               hcpValues: [7, 3, 9, 15, 13, 11, 5, 17, 1,
@@ -317,7 +317,7 @@ enum BundledCourses {
               Kontakt: www.thermengolf.de
               """),
         .init(name: "Bella Vista Golfpark Bad Birnbach", location: "Bad Birnbach, Bayern",
-              holes: 18, lat: 48.407, lon: 13.082,
+              holes: 18, lat: 48.4502, lon: 13.0772,
               parValues: [4, 5, 4, 3, 4, 5, 4, 3, 4,   // OUT 36
                           4, 3, 4, 4, 3, 5, 4, 5, 4],   // IN 36  → Par 72
               hcpValues: [5, 11, 17, 15, 7, 9, 3, 13, 1,
@@ -330,7 +330,7 @@ enum BundledCourses {
               Kontakt: www.badbirnbach.de/bella-vista-golfpark
               """),
         .init(name: "Rottaler Golf- & Country Club", location: "Hebertsfelden, Bayern",
-              holes: 18, lat: 48.404, lon: 12.769,
+              holes: 18, lat: 48.4181, lon: 12.8543,
               parValues: [4, 3, 4, 4, 3, 5, 4, 5, 4,   // OUT 36
                           5, 3, 4, 4, 5, 4, 4, 3, 4],   // IN 36  → Par 72
               hcpValues: [17, 9, 1, 13, 15, 5, 11, 3, 7,
@@ -344,7 +344,7 @@ enum BundledCourses {
               Kontakt: www.rottaler-golfclub.de
               """),
         .init(name: "Golfclub Vilsbiburg e.V.", location: "Vilsbiburg, Bayern",
-              holes: 9, lat: 48.448, lon: 12.361,
+              holes: 9, lat: 48.414, lon: 12.3327,
               parValues: [4, 3, 5, 4, 5, 3, 4, 3, 4],  // Par 35 (9 Loch, 2× für 18-Loch-Wertung)
               hcpValues: [7, 17, 5, 3, 1, 13, 11, 15, 9],
               holeLengths: [410, 148, 526, 400, 571, 187, 366, 161, 400],  // 3169 m (9 Loch)
@@ -355,7 +355,7 @@ enum BundledCourses {
               Driving Range · Clubhaus · Restaurant
               """),
         .init(name: "Golfclub Landau/Isar e.V.", location: "Landau an der Isar, Bayern",
-              holes: 9, lat: 48.665, lon: 12.699,
+              holes: 9, lat: 48.6592, lon: 12.7314,
               parValues: [4, 3, 4, 4, 3, 5, 4, 5, 3],  // Par 35 (9 Loch)
               hcpValues: [3, 5, 8, 7, 4, 9, 1, 6, 2],
               holeLengths: [293, 129, 340, 328, 191, 465, 281, 551, 132],  // 2710 m (9 Loch)
@@ -366,7 +366,7 @@ enum BundledCourses {
               Kontakt: www.golfpark-landau.de
               """),
         .init(name: "Golfclub Schloßberg e.V.", location: "Reisbach, Bayern",
-              holes: 18, lat: 48.573, lon: 12.627,
+              holes: 18, lat: 48.6042, lon: 12.6507,
               parValues: [3, 4, 3, 5, 4, 5, 4, 4, 4,   // OUT 36
                           3, 5, 4, 4, 5, 3, 4, 4, 4],   // IN 36  → Par 72
               hcpValues: [15, 17, 7, 5, 11, 1, 9, 3, 13,
@@ -381,7 +381,7 @@ enum BundledCourses {
               Kontakt: www.golfclub-schlossberg.de
               """),
         .init(name: "Golfclub Gäuboden e.V.", location: "Aiterhofen (Straubing), Bayern",
-              holes: 18, lat: 48.828, lon: 12.559,
+              holes: 18, lat: 48.8661, lon: 12.6634,
               parValues: [5, 4, 4, 5, 3, 4, 4, 5, 4,   // OUT 38
                           4, 3, 4, 5, 4, 3, 4, 4, 3],   // IN 34  → Par 72
               hcpValues: [3, 15, 11, 9, 17, 13, 1, 7, 5,
@@ -396,7 +396,7 @@ enum BundledCourses {
               Kontakt: www.gc-gaeuboden.de
               """),
         .init(name: "Golfclub Straubing Stadt und Land e.V.", location: "Straubing, Bayern",
-              holes: 9, lat: 48.897, lon: 12.576,
+              holes: 9, lat: 48.9411, lon: 12.5566,
               parValues: [4, 3, 5, 4, 4, 5, 4, 4, 3],  // Par 36 (9 Loch)
               hcpValues: [3, 7, 13, 9, 11, 1, 15, 5, 17],
               holeLengths: [344, 191, 443, 302, 271, 438, 216, 268, 158],  // 2631 m (9 Loch)
@@ -407,7 +407,7 @@ enum BundledCourses {
               Kontakt: www.golfclub-straubing.de
               """),
         .init(name: "Golfclub Altötting-Burghausen (Piesing)", location: "Haiming, Bayern",
-              holes: 18, lat: 48.067, lon: 12.880,
+              holes: 18, lat: 48.2117, lon: 12.8709,
               parValues: [5, 3, 4, 3, 5, 4, 3, 4, 5,   // OUT 36
                           5, 4, 3, 4, 4, 5, 4, 3, 4],   // IN 36  → Par 72
               hcpValues: [5, 15, 1, 11, 7, 9, 17, 13, 3,
@@ -421,7 +421,7 @@ enum BundledCourses {
               Kontakt: www.gc-altoetting-burghausen.de
               """),
         .init(name: "Golfclub Altötting-Burghausen (Falkenhof)", location: "Marktl am Inn, Bayern",
-              holes: 9, lat: 48.254, lon: 12.844,
+              holes: 9, lat: 48.2671, lon: 12.8124,
               facilityNotes: """
               9-Loch-Platz am Zusammenfluss von Inn und Alz · flaches Gelände
               Gesamtlänge Herren: ca. 2.927 m · Par 35
@@ -443,7 +443,7 @@ enum BundledCourses {
               Kontakt: www.gc-pleiskirchen.de
               """),
         .init(name: "Golfclub Schloss Guttenburg / Inntal", location: "Ampfing, Bayern",
-              holes: 18, lat: 48.222, lon: 12.429,
+              holes: 18, lat: 48.2001, lon: 12.4694,
               parValues: [4, 3, 4, 5, 4, 5, 3, 4, 4,   // OUT 36
                           4, 4, 5, 3, 5, 4, 4, 3, 4],   // IN 36  → Par 72
               hcpValues: [5, 13, 11, 9, 3, 1, 17, 15, 7,
@@ -458,7 +458,7 @@ enum BundledCourses {
               Kontakt: www.golfclub-guttenburg.de
               """),
         .init(name: "Golfclub Leonhardshaun", location: "Ergoldsbach, Bayern",
-              holes: 9, lat: 48.688, lon: 12.172,
+              holes: 9, lat: 48.666, lon: 12.2247,
               parValues: [3, 4, 3, 4, 3, 4, 3, 4, 4],  // Par 32 (9 Loch)
               hcpValues: [17, 5, 11, 15, 13, 3, 9, 7, 1],
               holeLengths: [125, 330, 189, 308, 141, 299, 180, 306, 393],  // 2271 m (9 Loch)
@@ -467,7 +467,7 @@ enum BundledCourses {
 
         // ── Bayerischer Wald ──────────────────────────────────────────
         .init(name: "Golfclub am Nationalpark Bayerischer Wald", location: "St. Oswald / Grafenau, Bayern",
-              holes: 18, lat: 48.782, lon: 13.406,
+              holes: 18, lat: 48.8764, lon: 13.4472,
               parValues: [5, 4, 4, 3, 4, 4, 4, 4, 4,   // OUT 36
                           4, 4, 4, 5, 3, 4, 3, 4, 4],   // IN 35  → Par 71
               hcpValues: [3, 7, 13, 17, 15, 11, 5, 1, 9,
@@ -483,7 +483,7 @@ enum BundledCourses {
               Kontakt: www.gcanp.de
               """),
         .init(name: "Deggendorfer Golfclub (Rusel)", location: "Schaufling, Bayern",
-              holes: 18, lat: 48.834, lon: 13.099,
+              holes: 18, lat: 48.8794, lon: 13.0844,
               parValues: [4, 4, 4, 3, 5, 5, 4, 4, 4,   // OUT 37
                           4, 3, 4, 4, 3, 5, 4, 3, 5],   // IN 35  → Par 72
               hcpValues: [15, 13, 7, 17, 5, 1, 11, 9, 3,
@@ -498,7 +498,7 @@ enum BundledCourses {
               Kontakt: www.deggendorfer-golfclub.de
               """),
         .init(name: "Golfclub Furth im Wald e.V.", location: "Furth im Wald, Bayern",
-              holes: 18, lat: 49.307, lon: 12.849,
+              holes: 18, lat: 49.3275, lon: 12.8268,
               parValues: [5, 3, 4, 3, 4, 4, 4, 4, 5,   // OUT 36
                           5, 4, 4, 4, 3, 3, 5, 4, 4],   // IN 36  → Par 72
               hcpValues: [17, 9, 1, 13, 5, 3, 15, 11, 7,
@@ -515,8 +515,8 @@ enum BundledCourses {
               """),
 
         // ── Oberpfalz / Regensburg ────────────────────────────────────
-        .init(name: "Golf- und Landclub Regensburg e.V.", location: "Sinzing (Regensburg), Bayern",
-              holes: 18, lat: 49.019, lon: 12.003,
+        .init(name: "Golf- und Landclub Regensburg e.V.", location: "Donaustauf, Bayern",
+              holes: 18, lat: 49.0381, lon: 12.2631,
               parValues: [4, 4, 3, 4, 5, 3, 5, 4, 5,   // OUT 37
                           4, 5, 4, 3, 4, 4, 3, 5, 3],   // IN 35  → Par 72
               hcpValues: [17, 3, 7, 5, 9, 15, 13, 11, 1,
@@ -532,7 +532,7 @@ enum BundledCourses {
               Kontakt: www.golfclub-regensburg.de
               """),
         .init(name: "Golf- und Countryclub Sinzing Minoritenhof", location: "Sinzing, Bayern",
-              holes: 18, lat: 48.990, lon: 12.056,
+              holes: 18, lat: 48.9788, lon: 12.029,
               parValues: [4, 3, 4, 4, 5, 4, 3, 4, 5,   // OUT 36
                           3, 4, 5, 4, 3, 4, 4, 5, 4],   // IN 36  → Par 72
               hcpValues: [3, 15, 7, 9, 17, 5, 11, 1, 8,
@@ -546,7 +546,7 @@ enum BundledCourses {
               Kontakt: welcome@golfsinzing.de · Tel. +49 941 37 86 100
               """),
         .init(name: "Golfclub Bad Abbach-Deutenhof e.V.", location: "Bad Abbach, Bayern",
-              holes: 18, lat: 48.930, lon: 12.044,
+              holes: 18, lat: 48.9067, lon: 11.9956,
               parValues: [4, 4, 3, 4, 3, 5, 4, 4, 5,   // OUT 36
                           4, 3, 4, 5, 4, 4, 3, 5, 4],   // IN 36  → Par 72
               hcpValues: [7, 9, 15, 5, 17, 1, 3, 13, 11,
@@ -572,7 +572,7 @@ enum BundledCourses {
               Kontakt: www.marcaurel.de
               """),
         .init(name: "Golf- und Landclub Oberpfälzer Wald e.V.", location: "Neunburg vorm Wald, Bayern",
-              holes: 18, lat: 49.314, lon: 12.338,
+              holes: 18, lat: 49.3594, lon: 12.265,
               parValues: [5, 4, 4, 3, 4, 5, 4, 3, 4,   // OUT 36
                           5, 3, 4, 4, 3, 4, 5, 3, 5],   // IN 36  → Par 72
               hcpValues: [7, 1, 3, 17, 11, 5, 9, 13, 15,
@@ -587,7 +587,7 @@ enum BundledCourses {
               Kontakt: www.golf-oberpfalz.de
               """),
         .init(name: "Golfclub Schwanhof e.V.", location: "Luhe-Wildenau, Bayern",
-              holes: 18, lat: 49.585, lon: 12.173,
+              holes: 18, lat: 49.5887, lon: 12.1159,
               parValues: [4, 4, 3, 5, 4, 4, 5, 3, 4,   // OUT 36
                           4, 4, 3, 5, 4, 4, 3, 5, 4],   // IN 36  → Par 72
               hcpValues: [15, 3, 13, 9, 1, 11, 7, 17, 5,
@@ -618,7 +618,7 @@ enum BundledCourses {
               Kontakt: www.golf-landshut.de
               """),
         .init(name: "Golfclub Ingolstadt",                      location: "Ingolstadt, Bayern",
-              holes: 18, lat: 48.767, lon: 11.417,
+              holes: 18, lat: 48.7639, lon: 11.3716,
               parValues: [4, 4, 5, 3, 4, 3, 5, 3, 4,   // OUT 35
                           4, 3, 5, 4, 4, 3, 5, 4, 5],   // IN 37  → Par 72
               hcpValues: [ 3,  7,  1, 11,  5, 15,  9, 13, 17,
@@ -633,7 +633,7 @@ enum BundledCourses {
 
         // ── München & Umgebung ────────────────────────────────────────
         .init(name: "Golfclub Eichenried",                      location: "Eichenried, Bayern",
-              holes: 18, lat: 48.217, lon: 11.817,
+              holes: 18, lat: 48.2709, lon: 11.7712,
               parValues: [4, 3, 4, 4, 4, 5, 4, 3, 5,   // OUT (A) 36
                           5, 3, 4, 4, 3, 4, 4, 5, 4],   // IN (B) 36  → Par 72
               holeLengths: [423, 166, 410, 332, 313, 468, 436, 195, 531,   // OUT (A) 3274
@@ -646,7 +646,7 @@ enum BundledCourses {
               Kontakt: www.gc-eichenried.de
               """),
         .init(name: "Golfclub München Riedhof e.V.",            location: "Egling (Bad Tölz-Wolfratshausen), Bayern",
-              holes: 18, lat: 48.083, lon: 11.283,
+              holes: 18, lat: 47.9261, lon: 11.4714,
               parValues: [4, 3, 4, 5, 3, 4, 3, 4, 4,   // OUT 34
                           4, 3, 5, 4, 5, 4, 5, 4, 4],   // IN 38  → Par 72
               hcpValues: [ 9, 17, 13,  1, 15,  5, 11,  3,  7,
@@ -657,7 +657,7 @@ enum BundledCourses {
               Kontakt: www.golfclub-riedhof.de
               """),
         .init(name: "Golfclub München-Strasslach e.V.",         location: "Strasslach-Dingharting, Bayern",
-              holes: 18, lat: 47.967, lon: 11.517,
+              holes: 18, lat: 47.9852, lon: 11.5083,
               parValues: [5, 4, 3, 4, 5, 4, 3, 4, 4,   // OUT (A) 36
                           5, 3, 4, 4, 3, 4, 4, 5, 4],   // IN (B) 36  → Par 72
               holeLengths: [484, 328, 136, 358, 432, 314, 132, 381, 319,   // OUT (A) 2884
@@ -668,7 +668,7 @@ enum BundledCourses {
               Kontakt: www.mgc-golf.de
               """),
         .init(name: "Golfclub Feldafing e.V.",                  location: "Feldafing, Bayern",
-              holes: 18, lat: 47.950, lon: 11.283,
+              holes: 18, lat: 47.9428, lon: 11.2987,
               parValues: [4, 3, 5, 4, 4, 5, 4, 3, 5,   // OUT 37
                           4, 3, 4, 4, 3, 4, 3, 4, 5],   // IN 34  → Par 71
               hcpValues: [ 9, 13, 11,  1,  3,  7, 17, 15,  5,
@@ -682,7 +682,7 @@ enum BundledCourses {
               Kontakt: www.golfclub-feldafing.de
               """),
         .init(name: "Golfclub Tutzing e.V.",                    location: "Tutzing, Bayern",
-              holes: 18, lat: 47.900, lon: 11.283,
+              holes: 18, lat: 47.9302, lon: 11.2562,
               parValues: [4, 5, 4, 4, 5, 3, 5, 4, 3,   // OUT 37
                           5, 3, 4, 4, 3, 4, 4, 3, 5],   // IN 35  → Par 72
               hcpValues: [ 1, 11,  9,  7, 13, 17,  3,  5, 15,
@@ -695,7 +695,7 @@ enum BundledCourses {
               Kontakt: www.golfclub-tutzing.de
               """),
         .init(name: "Golfclub Erding-Grünbach",                 location: "Bockhorn bei Erding, Bayern",
-              holes: 18, lat: 48.283, lon: 11.917,
+              holes: 18, lat: 48.3291, lon: 12.011,
               parValues: [4, 4, 3, 5, 3, 4, 5, 4, 3,   // OUT 35
                           4, 3, 4, 4, 4, 5, 5, 3, 4],   // IN 36  → Par 71
               hcpValues: [ 3,  9, 11,  1,  7, 15, 13,  5, 17,
@@ -706,7 +706,7 @@ enum BundledCourses {
               Tel. +49 8122 49650 · Kontakt: www.golf-erding.de
               """),
         .init(name: "Golfclub Dachau-Inhauser Moos",            location: "Dachau, Bayern",
-              holes:  9, lat: 48.233, lon: 11.433,
+              holes:  9, lat: 48.2761, lon: 11.4545,
               parValues: [4, 4, 4, 4, 5, 3, 5, 4, 3],  // Par 36 (9 Loch, 18-Loch-Wertung: Par 72)
               hcpValues: [15, 5, 7, 17, 1, 13, 3, 9, 11],
               courseRating: 70.7, slopeRating: 131,
@@ -716,7 +716,7 @@ enum BundledCourses {
               Kontakt: www.gcdachau.de
               """),
         .init(name: "Golfclub Mangfalltal",                     location: "Feldkirchen-Westerham, Bayern",
-              holes: 18, lat: 47.867, lon: 11.917,
+              holes: 18, lat: 47.9186, lon: 11.8428,
               parValues: [5, 3, 4, 4, 4, 3, 5, 4, 5,   // OUT 37
                           3, 5, 5, 4, 4, 4, 3, 4, 3],   // IN 35  → Par 72
               hcpValues: [ 5, 13,  1,  9, 15, 17, 11,  7,  3,
@@ -802,7 +802,7 @@ enum BundledCourses {
 
         // ── Oberösterreich — Mühlviertel ──────────────────────────────
         .init(name: "Golfpark Böhmerwald",                      location: "Ulrichsberg, Oberösterreich",
-              holes: 18, lat: 48.647, lon: 13.902,
+              holes: 18, lat: 48.68, lon: 13.8598,
               parValues: [4, 4, 3, 4, 5, 4, 5, 3, 4,   // OUT 36
                           4, 5, 4, 4, 3, 4, 3, 5, 4],   // IN 36  → Par 72
               hcpValues: [ 3,  9, 13,  7, 11, 15,  1, 17,  5,
@@ -815,7 +815,7 @@ enum BundledCourses {
               Kontakt: www.boehmerwaldgolf.at
               """),
         .init(name: "Golfclub SternGartl",                      location: "Oberneukirchen, Oberösterreich",
-              holes: 18, lat: 48.477, lon: 14.233,
+              holes: 18, lat: 48.4863, lon: 14.2489,
               parValues: [4, 3, 4, 3, 5, 4, 4, 3, 4,   // OUT 34
                           5, 4, 5, 3, 4, 5, 3, 4, 3],   // IN 36  → Par 70
               hcpValues: [ 5, 17,  7, 11,  1,  9,  3, 15, 13,
@@ -855,9 +855,9 @@ enum BundledCourses {
               Clubhaus im historischen Renaissance-Meierhof
               Kontakt: www.gclinz-luftenberg.at
               """),
-        .init(name: "Golfclub Stärk Linz-Ansfelden",           location: "Ansfelden, Oberösterreich",             holes: 18, lat: 48.192, lon: 14.283),
+        .init(name: "Golfclub Stärk Linz-Ansfelden",           location: "Ansfelden, Oberösterreich",             holes: 18, lat: 48.19, lon: 14.2987),
         .init(name: "Golf Club Linz-St. Florian",               location: "St. Florian (Tillysburg), OÖ",
-              holes: 18, lat: 48.183, lon: 14.388,
+              holes: 18, lat: 48.1957, lon: 14.419,
               parValues: [5, 5, 3, 5, 4, 4, 3, 5, 4,   // OUT 38
                           4, 3, 5, 4, 3, 4, 3, 4, 4],   // IN 34  → Par 72
               hcpValues: [14, 18,  8, 10, 16,  2, 12,  6,  4,
@@ -871,7 +871,7 @@ enum BundledCourses {
               Kontakt: www.golfclub-stflorian.at
               """),
         .init(name: "Golfclub Donau Freizeitland",              location: "Feldkirchen an der Donau, OÖ",
-              holes: 18, lat: 48.330, lon: 14.100,
+              holes: 18, lat: 48.3372, lon: 14.0802,
               parValues: [4, 3, 4, 4, 4, 4, 5, 5, 3,   // OUT 36
                           4, 3, 5, 3, 4, 5, 4, 5, 3],   // IN 36  → Par 72
               hcpValues: [11,  9,  1,  3, 15,  5,  7, 13, 17,
@@ -885,7 +885,7 @@ enum BundledCourses {
               Kontakt: www.gc-donaufreizeitland.at
               """),
         .init(name: "Golfpark Metzenhof",                       location: "Kronstorf, Oberösterreich",
-              holes: 18, lat: 48.124, lon: 14.477,
+              holes: 18, lat: 48.1297, lon: 14.4365,
               parValues: [5, 4, 3, 5, 3, 4, 3, 4, 4,   // OUT 35
                           4, 4, 5, 3, 4, 3, 4, 4, 5],   // IN 36  → Par 71
               hcpValues: [ 2,  4, 10, 14, 16,  6, 12,  8, 18,
@@ -899,7 +899,7 @@ enum BundledCourses {
               Kontakt: www.golfpark-metzenhof.at
               """),
         .init(name: "Golf Resort Kremstal",                     location: "Kematen an der Krems, OÖ",
-              holes: 18, lat: 48.082, lon: 14.124,
+              holes: 18, lat: 48.1086, lon: 14.1825,
               facilityNotes: """
               27-Loch-Anlage (3 × 9 Loch): Bergergut · Scherndlgut · Panorama
               Erbaut 1991–1996 · Design Peter Mayrhofer
@@ -924,7 +924,7 @@ enum BundledCourses {
 
         // ── Salzkammergut / Traunsee ──────────────────────────────────
         .init(name: "Golf REGAU Attersee-Traunsee",             location: "Regau, Oberösterreich",
-              holes: 18, lat: 47.950, lon: 13.680,
+              holes: 18, lat: 47.9569, lon: 13.6993,
               parValues: [4, 4, 3, 4, 4, 3, 5, 5, 4,   // OUT 36
                           5, 4, 3, 4, 5, 4, 4, 5, 3],   // IN 37  → Par 73
               hcpValues: [15,  9,  3,  1, 17, 11,  7, 13,  5,
@@ -951,7 +951,7 @@ enum BundledCourses {
               Kontakt: www.golfclubtraunsee.at
               """),
         .init(name: "Golfclub Am Mondsee",                      location: "St. Lorenz am Mondsee, OÖ",
-              holes: 18, lat: 47.843, lon: 13.380,
+              holes: 18, lat: 47.8322, lon: 13.3588,
               parValues: [4, 4, 3, 4, 4, 4, 5, 3, 5,   // OUT 36
                           4, 5, 4, 4, 4, 3, 4, 3, 5],   // IN 36  → Par 72
               hcpValues: [11, 13, 15,  7,  1,  5,  9, 17,  3,
@@ -964,7 +964,7 @@ enum BundledCourses {
               Kontakt: www.gc-mondsee.at
               """),
         .init(name: "Golfclub Salzkammergut",                   location: "St. Wolfgang im Salzkammergut, OÖ",
-              holes: 18, lat: 47.741, lon: 13.451,
+              holes: 18, lat: 47.7169, lon: 13.554,
               parValues: [5, 4, 4, 3, 4, 5, 4, 3, 4,   // OUT 36
                           5, 3, 4, 4, 5, 3, 4, 3, 4],   // IN 35  → Par 71
               hcpValues: [ 6, 16,  2, 12, 10, 18,  8,  4, 14,
@@ -978,7 +978,7 @@ enum BundledCourses {
               Kontakt: www.gcsalzkammergut.at
               """),
         .init(name: "Golfclub Weyregg",                         location: "Weyregg am Attersee, OÖ",
-              holes:  9, lat: 47.898, lon: 13.550,
+              holes:  9, lat: 47.8957, lon: 13.5775,
               parValues: [5, 3, 3, 5, 3, 4, 3, 4, 4],  // Par 34 (9 Loch, 18-Loch-Wertung: Par 68)
               hcpValues: [15, 17, 13, 11, 5, 3, 7, 1, 9],
               holeLengths: [478, 138, 119, 430, 169, 288, 156, 350, 266],  // 2394 m (9 Loch)
@@ -998,7 +998,7 @@ enum BundledCourses {
               Kontakt: www.golfclub-klessheim.com
               """),
         .init(name: "Golfclub Salzburg-Eugendorf",              location: "Eugendorf, Salzburg",
-              holes: 18, lat: 47.878, lon: 13.119,
+              holes: 18, lat: 47.8671, lon: 13.1622,
               parValues: [4, 4, 5, 4, 3, 4, 4, 5, 3,   // OUT 36
                           5, 4, 4, 4, 4, 3, 5, 3, 4],   // IN 36  → Par 72
               hcpValues: [12,  2,  6,  4, 18, 14, 10,  8, 16,
@@ -1026,7 +1026,7 @@ enum BundledCourses {
               Kontakt: www.roemergolf.at
               """),
         .init(name: "Golfclub Gut Altentann",                   location: "Henndorf am Wallersee, Salzburg",
-              holes: 18, lat: 47.915, lon: 13.186,
+              holes: 18, lat: 47.8912, lon: 13.1941,
               parValues: [4, 4, 3, 4, 4, 5, 3, 4, 5,   // OUT 36
                           3, 4, 5, 4, 3, 4, 4, 4, 5],   // IN 36  → Par 72
               hcpValues: [ 9, 11, 15, 17,  7, 13,  3,  5,  1,
@@ -1061,7 +1061,7 @@ enum BundledCourses {
               holes: 18, lat: 48.633, lon: 14.183,
               facilityNotes: "Golfplatz geschlossen · Anlage nicht mehr in Betrieb"),
         .init(name: "Golf Club Český Krumlov",                  location: "Velešín (Č. Krumlov), Tschechien",
-              holes: 18, lat: 48.747, lon: 14.332,
+              holes: 18, lat: 48.8283, lon: 14.3648,
               parValues: [4, 3, 4, 5, 4, 3, 3, 4, 5,   // OUT 35
                           4, 5, 4, 3, 4, 4, 5, 4, 3],   // IN 36  → Par 71
               hcpValues: [13, 15, 11,  3,  5, 17,  7,  1,  9,

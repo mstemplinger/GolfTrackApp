@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import { Footer, Header, PageHeader } from "@/components/Chrome";
 import { SITE_URL } from "@/i18n/routes";
@@ -155,6 +156,31 @@ export default async function Page() {
               es einen QR-Code und damit einen Werbeplatz.
             </p>
           </aside>
+        </section>
+
+        <section className="mt-16 border-t rule pt-14">
+          <h2 className="marginal">Für Golfplätze</h2>
+          <div className="mt-4 grid items-center gap-8 md:grid-cols-[1fr_22rem]">
+            <div>
+              <p className="max-w-2xl leading-relaxed text-cream/75">
+                Werbesäulen fürs Clubhaus und eine Plane für den Zaun am ersten Abschlag – mit
+                QR-Code, der Ihre Spieler direkt zur Scorekarte bringt.
+              </p>
+              <Link href="/werbung/golfplatz" className="btn-ghost mt-5">
+                Werbemittel ansehen und anfragen
+              </Link>
+            </div>
+            <Link href="/werbung/golfplatz" className="block overflow-hidden rounded-[4px] bg-[#0E2718]">
+              <Image
+                src="/werbemittel/saeulen-trio.jpg"
+                alt="Drei GolfTrack-Werbesäulen"
+                width={1600}
+                height={1200}
+                sizes="22rem"
+                className="h-auto w-full"
+              />
+            </Link>
+          </div>
         </section>
 
         <AdPartners ads={partnerAds} courseNames={courseNames} />

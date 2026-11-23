@@ -5,7 +5,9 @@ import { Footer, Header } from "@/components/Chrome";
 import { CourseHintList } from "@/components/CourseHintList";
 import { JsonLd, courseDescription, courseSchema } from "@/components/JsonLd";
 import { OG_IMAGE } from "@/components/Shell";
+import { ReportCourseButton } from "@/components/ReportCourseButton";
 import { getCourse } from "@/lib/courses";
+import { t } from "@/i18n/content";
 import { PLAY_URL, SITE_URL } from "@/i18n/routes";
 
 /**
@@ -97,7 +99,11 @@ export default async function MinigolfLandingPage({ params }: PageProps<"/minigo
           </p>
         ) : null}
 
-        <p className="mt-12 text-sm">
+        <div className="mt-10">
+          <ReportCourseButton slug={course.slug} courseName={course.name} copy={t("de").directory.report} />
+        </div>
+
+        <p className="mt-8 text-sm">
           <Link href="/plaetze" className="text-brass underline underline-offset-4">
             Alle Anlagen
           </Link>

@@ -255,9 +255,11 @@ struct RoundCompleteSheet: View {
             return
         }
         if playerModel.currentLesson?.id != rec.lesson.id {
-            playerModel.load(rec.lesson)
+            // Lädt die Lektion nach, falls sie noch nicht auf dem Gerät ist.
+            playerModel.start(rec.lesson)
+        } else {
+            playerModel.play()
         }
-        playerModel.play()
         showPlayer = true
     }
 

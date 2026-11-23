@@ -231,6 +231,19 @@ struct TipsCategoryDetailView: View {
         }
     }
 
+    /// Die ersten Wörter eines Tipps (höchstens ~40 Zeichen) mit „…“.
+    static func teaser(_ text: String, maxLength: Int = 40) -> String {
+        var result = ""
+        for word in text.split(separator: " ") {
+            let next = result.isEmpty ? String(word) : result + " " + word
+            if next.count > maxLength { break }
+            result = next
+        }
+        if result.isEmpty { result = String(text.prefix(maxLength)) }
+        let trimmed = result.trimmingCharacters(in: CharacterSet(charactersIn: " ,.;:–-"))
+        return trimmed.count < text.count ? trimmed + " …" : trimmed
+    }
+
     private func tipCard(_ tip: GolfTip) -> some View {
         HStack(spacing: 14) {
             ZStack {
@@ -245,7 +258,9 @@ struct TipsCategoryDetailView: View {
                 Text(tip.title)
                     .font(.subheadline.bold())
                     .foregroundStyle(AppTheme.text)
-                Text(tip.body)
+                // Ohne Pro nur der Anfang: eine Zeile reicht auf dem iPad sonst
+                // für den ganzen Tipp.
+                Text(subscriptionManager.isPro ? tip.body : Self.teaser(tip.body))
                     .font(.caption)
                     .foregroundStyle(AppTheme.textSec)
                     .lineLimit(subscriptionManager.isPro ? 2 : 1)

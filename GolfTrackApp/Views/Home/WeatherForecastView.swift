@@ -29,7 +29,7 @@ struct WeatherForecastView: View {
 
                                 hourStrip(upcomingHours)
                                     .padding(.vertical, 12)
-                                    .background(AppTheme.card, in: RoundedRectangle(cornerRadius: 16))
+                                    .cardStyle()
                                     .padding(.horizontal)
                             }
                         }
@@ -48,7 +48,7 @@ struct WeatherForecastView: View {
                                         dayRow(day: day, isLast: idx == weather.dailyForecast.count - 1)
                                     }
                                 }
-                                .background(AppTheme.card, in: RoundedRectangle(cornerRadius: 16))
+                                .cardStyle()
                                 .padding(.horizontal)
                             }
                         }
@@ -64,7 +64,7 @@ struct WeatherForecastView: View {
                             .foregroundStyle(gold)
                             .frame(maxWidth: .infinity)
                             .padding(.vertical, 14)
-                            .background(AppTheme.card, in: RoundedRectangle(cornerRadius: 16))
+                            .cardStyle()
                             .padding(.horizontal)
                         }
 
@@ -89,54 +89,80 @@ struct WeatherForecastView: View {
 
     // MARK: - Current summary card
 
+    /// Gleicher Aufbau wie die Wetterkarte der Startseite: Kopfzeile mit
+    /// Golf-Wetter-Badge, Symbol + Temperatur links, Werte rechts, darunter
+    /// die Stundenbalken von heute.
     private var currentSummary: some View {
-        HStack(spacing: 0) {
-            // Icon + Temp
-            VStack(spacing: 6) {
+        VStack(alignment: .leading, spacing: 16) {
+            HStack {
+                HStack(spacing: 5) {
+                    Image(systemName: "location.fill")
+                        .font(.caption)
+                    Text("Jetzt")
+                        .font(.subheadline.bold())
+                }
+                .foregroundStyle(AppTheme.text)
+                Spacer()
+                golfBadge
+            }
+
+            HStack(alignment: .center, spacing: 12) {
                 Image(systemName: weather.symbolName)
-                    .font(.system(size: 44))
+                    .font(.system(size: 34))
                     .symbolRenderingMode(.multicolor)
-                Text(weather.temperature)
-                    .font(.system(size: 36, weight: .bold, design: .rounded))
-                    .foregroundStyle(AppTheme.text)
-                Text(weather.conditionText)
-                    .font(.caption)
-                    .foregroundStyle(AppTheme.textSec)
+                    .foregroundStyle(gold)
+                    .frame(width: 44)
+                VStack(alignment: .leading, spacing: 1) {
+                    Text(weather.temperature)
+                        .font(.system(size: 30, weight: .bold, design: .rounded))
+                        .foregroundStyle(AppTheme.text)
+                    Text(weather.conditionText)
+                        .font(.caption)
+                        .foregroundStyle(AppTheme.textSec)
+                        .lineLimit(1)
+                }
+                Spacer(minLength: 0)
+                VStack(alignment: .leading, spacing: 5) {
+                    detailRow(icon: "wind", label: "Wind", value: weather.windSpeed)
+                    detailRow(icon: "thermometer.medium", label: "Gefühlt", value: weather.feelsLike)
+                }
+                .frame(maxWidth: 150)
             }
-            .frame(maxWidth: .infinity)
 
-            Divider().frame(height: 80)
-
-            // Stats
-            VStack(alignment: .leading, spacing: 10) {
-                detailRow(icon: "thermometer.medium", label: "Gefühlt", value: weather.feelsLike)
-                detailRow(icon: "wind",               label: "Wind",    value: weather.windSpeed)
-                detailRow(icon: "humidity",           label: "Feuchte", value: weather.humidity)
+            if todayHours.count >= 3 {
+                GolfHourBars(hours: todayHours, accessibilityText: weather.golfWeatherLabel)
             }
-            .frame(maxWidth: .infinity)
+
+            HStack(spacing: 14) {
+                detailRow(icon: "humidity", label: "Feuchte", value: weather.humidity)
+                detailRow(icon: "sun.max", label: "UV", value: weather.uvIndex)
+            }
         }
         .padding(20)
-        .background(AppTheme.card, in: RoundedRectangle(cornerRadius: 16))
+        .cardStyle()
         .padding(.horizontal)
-        .overlay(alignment: .topTrailing) {
-            // Golf-Wetter Badge
-            HStack(spacing: 4) {
-                Circle()
-                    .fill(weather.isGoodGolfWeather ? Color.green : Color.orange)
-                    .frame(width: 6, height: 6)
-                Text(weather.golfWeatherLabel)
-                    .font(.caption2.bold())
-                    .foregroundStyle(weather.isGoodGolfWeather ? Color.green : Color.orange)
-            }
-            .padding(.horizontal, 8)
-            .padding(.vertical, 4)
-            .background(
-                (weather.isGoodGolfWeather ? Color.green : Color.orange).opacity(0.12),
-                in: Capsule()
-            )
-            .padding(.top, 12)
-            .padding(.trailing, 28)
+    }
+
+    private var golfBadge: some View {
+        HStack(spacing: 4) {
+            Circle()
+                .fill(weather.isGoodGolfWeather ? Color.green : Color.orange)
+                .frame(width: 6, height: 6)
+            Text(weather.golfWeatherLabel)
+                .font(.caption.bold())
+                .foregroundStyle(weather.isGoodGolfWeather ? Color.green : Color.orange)
         }
+        .padding(.horizontal, 8)
+        .padding(.vertical, 4)
+        .background(
+            (weather.isGoodGolfWeather ? Color.green : Color.orange).opacity(0.12),
+            in: Capsule()
+        )
+    }
+
+    /// Hellstunden von heute – dieselben wie auf der Startseite.
+    private var todayHours: [HourlyForecast] {
+        weather.dailyForecast.first(where: \.isToday)?.daylightHours ?? []
     }
 
     // MARK: - Upcoming hours
@@ -184,10 +210,11 @@ struct WeatherForecastView: View {
         .frame(width: 44)
     }
 
-    /// Grün = spielbar, Orange = Regen/Wind/Kälte, Grau = dunkel.
+    /// Wie auf der Startseite: Gold = spielbar, Kartenfarbe = Regen/Wind/Kälte,
+    /// blass = dunkel.
     private func hourColor(_ hour: HourlyForecast) -> Color {
-        guard hour.isDaylight else { return AppTheme.textTer.opacity(0.3) }
-        return hour.isPlayable ? .green : .orange
+        guard hour.isDaylight else { return AppTheme.cardAlt.opacity(0.4) }
+        return hour.isPlayable ? gold : AppTheme.cardAlt
     }
 
     // MARK: - Day row
@@ -235,7 +262,7 @@ struct WeatherForecastView: View {
                         .rotationEffect(.degrees(isExpanded ? 180 : 0))
                 } else {
                     Image(systemName: day.isGoodGolfWeather ? "checkmark.circle.fill" : "xmark.circle.fill")
-                        .foregroundStyle(day.isGoodGolfWeather ? Color.green : Color.orange)
+                        .foregroundStyle(day.isGoodGolfWeather ? gold : AppTheme.textTer)
                         .font(.body)
                 }
             }
@@ -255,7 +282,7 @@ struct WeatherForecastView: View {
                             .lineLimit(2)
                         Spacer()
                     }
-                    .foregroundStyle(windows.isEmpty ? Color.orange : Color.green)
+                    .foregroundStyle(windows.isEmpty ? AppTheme.textSec : gold)
                 }
                 .padding(.horizontal, 16)
                 .padding(.bottom, 10)
@@ -283,8 +310,14 @@ struct WeatherForecastView: View {
             }
 
             if isExpanded {
-                hourStrip(day.daylightHours)
-                    .padding(.bottom, 12)
+                VStack(spacing: 12) {
+                    if day.daylightHours.count >= 3 {
+                        GolfHourBars(hours: day.daylightHours, showsLegend: false)
+                            .padding(.horizontal, 16)
+                    }
+                    hourStrip(day.daylightHours)
+                }
+                .padding(.bottom, 12)
             }
 
             if !isLast {

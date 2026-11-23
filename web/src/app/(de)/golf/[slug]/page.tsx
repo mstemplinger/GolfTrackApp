@@ -6,7 +6,10 @@ import { CourseHintList } from "@/components/CourseHintList";
 import { CourseTees } from "@/components/CourseTees";
 import { JsonLd, courseDescription, courseSchema } from "@/components/JsonLd";
 import { OG_IMAGE } from "@/components/Shell";
+import { ReportCourseButton } from "@/components/ReportCourseButton";
 import { getCourse } from "@/lib/courses";
+import { ratingsFromHandicapReport } from "@/lib/courseReports";
+import { t } from "@/i18n/content";
 import { APP_STORE_URL, PLAY_URL, SITE_URL } from "@/i18n/routes";
 
 /**
@@ -111,7 +114,21 @@ export default async function GolfLandingPage({ params }: PageProps<"/golf/[slug
           </p>
         ) : null}
 
-        <p className="mt-12 text-sm">
+        {ratingsFromHandicapReport(course) ? (
+          <p className="mt-10 text-xs text-cream/50">
+            Platzwertungen mit freundlicher Genehmigung von{" "}
+            <a href="https://handicap.report" target="_blank" rel="noreferrer" className="underline underline-offset-4">
+              handicap.report
+            </a>
+            .
+          </p>
+        ) : null}
+
+        <div className="mt-8">
+          <ReportCourseButton slug={course.slug} courseName={course.name} copy={t("de").directory.report} />
+        </div>
+
+        <p className="mt-8 text-sm">
           <Link href="/plaetze" className="text-brass underline underline-offset-4">
             Alle Plätze
           </Link>

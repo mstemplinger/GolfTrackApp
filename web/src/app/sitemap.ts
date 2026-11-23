@@ -29,6 +29,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     changeFrequency: "monthly",
     priority: 0.4,
   });
+  pages.push({
+    url: `${SITE_URL}/werbung/golfplatz`,
+    lastModified: new Date(),
+    changeFrequency: "monthly",
+    priority: 0.4,
+  });
 
   // Golf- und Minigolfplätze; die Grenze liegt weit über dem heutigen Bestand
   // (gut 800 Golfplätze), eine Sitemap darf bis 50.000 Adressen haben.

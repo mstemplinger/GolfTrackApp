@@ -30,13 +30,20 @@ function getTransport(): Transporter {
 }
 
 /** `html` optional: dann geht die Mail mit Text- und HTML-Fassung und eingebettetem Logo raus. */
-export async function sendMail(to: string, subject: string, text: string, html?: string): Promise<void> {
+export async function sendMail(
+  to: string,
+  subject: string,
+  text: string,
+  html?: string,
+  options: { replyTo?: string } = {},
+): Promise<void> {
   if (!mailConfigured()) throw new Error("mail_unconfigured");
   await getTransport().sendMail({
     from: process.env.SMTP_FROM ?? `GolfTrack <${process.env.SMTP_USER}>`,
     to,
     subject,
     text,
+    ...(options.replyTo ? { replyTo: options.replyTo } : {}),
     ...(html
       ? {
           html,

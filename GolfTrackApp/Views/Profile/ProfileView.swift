@@ -619,6 +619,7 @@ struct ProfileView: View {
             } label: {
                 HStack(spacing: 6) {
                     Image(systemName: "list.number")
+                        .frame(height: 20)
                     Text("Bestenliste")
                         .font(.subheadline.bold())
                 }
@@ -633,6 +634,7 @@ struct ProfileView: View {
             } label: {
                 HStack(spacing: 6) {
                     Image(systemName: "trophy.fill")
+                        .frame(height: 20)
                     Text("Erfolge")
                         .font(.subheadline.bold())
                 }

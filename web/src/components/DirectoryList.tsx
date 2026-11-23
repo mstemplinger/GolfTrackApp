@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useDeferredValue, useState, type ReactNode } from "react";
+import { ReportCourseButton, type ReportCopy } from "@/components/ReportCourseButton";
 
 export type DirectoryEntry = {
   id: string;
@@ -13,6 +14,8 @@ export type DirectoryEntry = {
   parTotal: number;
   courseRating: number | null;
   slopeRating: number | null;
+  /** Wertungen stammen von handicap.report – dann steht der Quellenhinweis am Eintrag. */
+  ratingCredit: boolean;
   /** Aushang-Auswahl, auf dem Server gerendert – `aushang.ts` ist server-only. */
   picker: ReactNode;
 };
@@ -25,6 +28,8 @@ type Copy = {
   par: string;
   search: string;
   noMatch: string;
+  creditEntry: string;
+  report: ReportCopy;
 };
 
 /** Umlaute und Akzente weg, damit „munchen“ auch „München“ findet. */
@@ -93,8 +98,23 @@ function CourseGroup({ title, entries, copy }: { title: string; entries: Directo
                 ) : null}
               </dl>
             </Link>
+            {course.ratingCredit ? (
+              <p className="mt-3 text-xs text-cream/50">
+                <a
+                  href="https://handicap.report"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="tap underline underline-offset-4 hover:text-brass"
+                >
+                  {copy.creditEntry}
+                </a>
+              </p>
+            ) : null}
             {/* Aushang für die Anlage: Sprachen wählen, PDF laden. */}
             <div className="mt-4">{course.picker}</div>
+            <div className="mt-3">
+              <ReportCourseButton slug={course.slug} courseName={course.name} copy={copy.report} />
+            </div>
           </li>
         ))}
       </ul>

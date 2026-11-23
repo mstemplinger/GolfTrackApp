@@ -29,7 +29,7 @@ object BundledCourses {
                   flagLongitudes = listOf(13.5485, 13.5503, 13.5528, 13.5548, 13.5558, 13.5515, 13.5498, 13.5472, 13.5452,
                                     13.5412, 13.5385, 13.5402, 13.5458, 13.5522, 13.5578, 13.5595, 13.5545, 13.5480)),
         GolfCourseEntry(name = "Panorama Golf Passau", location = "Fürstenzell, Bayern",
-                  holes = 18, lat = 48.516, lon = 13.323,
+                  holes = 18, lat = 48.544, lon = 13.3442,
                   parValues = listOf(5, 4, 3, 4, 5, 4, 4, 4, 4,   // OUT 37
                               3, 5, 5, 4, 4, 3, 4, 4, 4),   // IN 36  → Par 73
                   hcpValues = listOf(3, 5, 13, 11, 7, 9, 1, 15, 17,
@@ -41,7 +41,7 @@ object BundledCourses {
         GolfCourseEntry(name = "Golf- und Landclub Bayerwald e.V.",
                   location = "Jandelsbrunn, Bayern",
                   holes = 18,
-                  lat = 48.6555, lon = 13.5890,
+                  lat = 48.7414, lon = 13.6659,
                   // Par pro Loch (Löcher 1–18)
                   parValues = listOf(4, 4, 3, 4, 4, 5, 5, 3, 4,   // OUT
                               4, 3, 5, 3, 5, 4, 4, 4, 4),   // IN
@@ -64,14 +64,14 @@ object BundledCourses {
                   courseRating = 70.4, slopeRating = 120,
                   facilityNotes = "7 Fairways umgeben einen Teichkomplex\n6-Loch-Akademie-Kurzplatz (Josko Golf) vorhanden\nHandicap-Nachweis erforderlich\nKontakt: sekretariat@golfclub-schaerding.at · Tel. 07719-8110"),
         GolfCourseEntry(name = "Golfclub Pfarrkirchen im Mühlkreis", location = "Pfarrkirchen im Mühlkreis, OÖ",
-                  holes = 9, lat = 48.478, lon = 14.030,
+                  holes = 9, lat = 48.5021, lon = 13.8244,
                   parValues = listOf(3, 4, 4, 3, 4, 4, 5, 4, 3),  // Par 34 (9 Loch)
                   hcpValues = listOf(3, 17, 9, 15, 5, 7, 11, 1, 13),
                   holeLengths = listOf(142, 272, 369, 161, 315, 363, 471, 294, 144),  // 2531 m
                   courseRating = 66.3, slopeRating = 128,
                   facilityNotes = "9-Loch-Platz auf 800 m Höhe im Mühlviertel\nZusätzlich 4-Loch-Par-3-Übungsanlage\nKontakt: office@gcpfarrkirchen.at · Tel. +43 7285 6420"),
         GolfCourseEntry(name = "Golfclub Sagmühle e.V.", location = "Bad Griesbach im Rottal, Bayern",
-                  holes = 18, lat = 48.432, lon = 13.189,
+                  holes = 18, lat = 48.4135, lon = 13.1666,
                   parValues = listOf(4, 4, 5, 3, 4, 5, 4, 4, 3,   // OUT 36
                               4, 3, 5, 4, 4, 3, 5, 4, 4),   // IN 36  → Par 72
                   hcpValues = listOf(5, 7, 9, 15, 13, 11, 1, 3, 17,
@@ -84,7 +84,7 @@ object BundledCourses {
 
     private fun part1(): List<GolfCourseEntry> = listOf(
         GolfCourseEntry(name = "Quellness Golf — Lederbach", location = "Bad Griesbach im Rottal, Bayern",
-                  holes = 18, lat = 48.444, lon = 13.196,
+                  holes = 18, lat = 48.468, lon = 13.1702,
                   parValues = listOf(4, 3, 5, 4, 4, 3, 5, 4, 4,   // OUT 36
                               4, 3, 5, 4, 3, 4, 3, 5, 4),   // IN 35  → Par 71
                   hcpValues = listOf(5, 15, 7, 13, 3, 9, 17, 11, 1,
@@ -94,7 +94,7 @@ object BundledCourses {
                   courseRating = 70.8, slopeRating = 133,
                   facilityNotes = "Platzregeln DGV – Hunde an der Leine erlaubt\nWetterschutzhütten vorhanden\nKontakt: Tel. 08532/3135 · www.quellness-golf.com"),
         GolfCourseEntry(name = "Quellness Golf — Brunnwies", location = "Haarbach, Bayern",
-                  holes = 18, lat = 48.474, lon = 13.218,
+                  holes = 18, lat = 48.491, lon = 13.1699,
                   parValues = listOf(4, 4, 3, 4, 4, 3, 5, 3, 4,   // OUT 34
                               5, 4, 4, 5, 3, 5, 4, 3, 4),   // IN 37  → Par 71
                   hcpValues = listOf(11, 5, 15, 7, 1, 17, 9, 13, 3,
@@ -104,7 +104,7 @@ object BundledCourses {
                   courseRating = 70.9, slopeRating = 132,
                   facilityNotes = "Wetterschutzhütten vorhanden\nArchitekt: Rico Gullmeister\nKontakt: Tel. 08535/96010 · www.quellness-golf.com"),
         GolfCourseEntry(name = "Quellness Golf — Uttlau", location = "Haarbach, Bayern",
-                  holes = 18, lat = 48.460, lon = 13.207,
+                  holes = 18, lat = 48.4798, lon = 13.1711,
                   parValues = listOf(4, 5, 4, 3, 4, 4, 4, 5, 3,   // OUT 36
                               4, 3, 5, 4, 3, 4, 5, 3, 5),   // IN 36  → Par 72
                   hcpValues = listOf(7, 11, 1, 13, 15, 3, 9, 5, 17,
@@ -114,7 +114,7 @@ object BundledCourses {
                   courseRating = 71.9, slopeRating = 136,
                   facilityNotes = "Wetterschutzhütten vorhanden\nGutshof Uttlau: Tel. 08535/1890\nKontakt: Tel. 08535/18949 · www.quellness-golf.com"),
         GolfCourseEntry(name = "Quellness Golf — Beckenbauer Course", location = "Rotthalmünster, Bayern",
-                  holes = 18, lat = 48.357, lon = 13.203,
+                  holes = 18, lat = 48.4107, lon = 13.1944,
                   parValues = listOf(4, 4, 5, 3, 4, 4, 3, 5, 4,   // OUT 36
                               5, 4, 5, 4, 3, 4, 4, 3, 4),   // IN 36  → Par 72
                   hcpValues = listOf(5, 3, 15, 17, 1, 9, 11, 13, 7,
@@ -124,7 +124,7 @@ object BundledCourses {
                   courseRating = 73.1, slopeRating = 127,
                   facilityNotes = "Design: Bernhard Langer\nWetterschutzhütten vorhanden\nGutshof Penning: Tel. 08532/92660\nKontakt: Tel. 08532/92440 · www.quellness-golf.com"),
         GolfCourseEntry(name = "Quellness Golf — Porsche Course", location = "Rotthalmünster, Bayern",
-                  holes = 18, lat = 48.360, lon = 13.210,
+                  holes = 18, lat = 48.408, lon = 13.1996,
                   parValues = listOf(4, 5, 4, 4, 3, 4, 3, 5, 3,   // OUT 35
                               4, 5, 4, 3, 4, 5, 4, 3, 4),   // IN 36  → Par 71
                   hcpValues = listOf(7, 9, 5, 3, 11, 1, 15, 13, 17,
@@ -134,20 +134,20 @@ object BundledCourses {
                   courseRating = 71.1, slopeRating = 129,
                   facilityNotes = "Design: Bernhard Langer (2003)\nBreitere Fairways mit Wasser- und Bunkerhindernissen\nKontakt: Tel. 08532/7900 · www.quellness-golf.com"),
         GolfCourseEntry(name = "Golfodrom Bad Griesbach — Jagl", location = "Bad Griesbach im Rottal, Bayern",
-                  holes = 9, lat = 48.452, lon = 13.183,
+                  holes = 9, lat = 48.4747, lon = 13.1844,
                   parValues = listOf(3, 3, 3, 3, 3, 3, 3, 3, 3),  // Par 27
                   hcpValues = listOf(17, 15, 9, 11, 1, 3, 5, 7, 13),
                   holeLengths = listOf(80, 91, 156, 133, 153, 240, 139, 127, 104),   // 1223 m
                   courseRating = 58.8, slopeRating = 105,
                   facilityNotes = "9-Loch-Par-3-Kurzplatz · öffentlich zugänglich\nArchitekt: Kurt Rossknecht (1989)\nKontakt: Tel. 08532/7900 · www.quellness-golf.com"),
         GolfCourseEntry(name = "Golfodrom Bad Griesbach — Engled", location = "Bad Griesbach im Rottal, Bayern",
-                  holes = 9, lat = 48.453, lon = 13.185,
+                  holes = 9, lat = 48.4747, lon = 13.1844,
                   parValues = listOf(3, 3, 3, 4, 3, 3, 4, 3, 4),  // Par 30
                   hcpValues = listOf(9, 11, 15, 1, 17, 13, 5, 7, 3),
                   holeLengths = listOf(156, 166, 120, 295, 115, 136, 284, 143, 272),  // 1687 m
                   facilityNotes = "9-Loch-Kurzplatz (Par 3 + Par 4) · öffentlich zugänglich\nKontakt: Tel. 08532/7900 · www.quellness-golf.com"),
         GolfCourseEntry(name = "Golfodrom Bad Griesbach — Pfeiffer", location = "Bad Griesbach im Rottal, Bayern",
-                  holes = 9, lat = 48.454, lon = 13.182,
+                  holes = 9, lat = 48.4747, lon = 13.1844,
                   parValues = listOf(3, 3, 3, 3, 3, 3, 3, 3, 3),  // Par 27
                   hcpValues = listOf(1, 9, 5, 15, 13, 7, 3, 11, 17),
                   holeLengths = listOf(152, 116, 127, 96, 109, 120, 127, 113, 94),   // 1054 m
@@ -156,7 +156,7 @@ object BundledCourses {
 
     private fun part2(): List<GolfCourseEntry> = listOf(
         GolfCourseEntry(name = "ThermenGolfClub Bad Füssing-Kirchham", location = "Bad Füssing, Bayern",
-                  holes = 18, lat = 48.350, lon = 13.311,
+                  holes = 18, lat = 48.343, lon = 13.2859,
                   parValues = listOf(4, 4, 5, 4, 4, 3, 5, 3, 4,   // OUT 36
                               5, 3, 4, 4, 4, 3, 4, 5, 4),   // IN 36  → Par 72
                   hcpValues = listOf(7, 3, 9, 15, 13, 11, 5, 17, 1,
@@ -166,7 +166,7 @@ object BundledCourses {
                   courseRating = 71.3, slopeRating = 124,
                   facilityNotes = "Parklandplatz · Architekt: Peter Harradine (2001)\nErlbach als Wasserhindernis\nKontakt: www.thermengolf.de"),
         GolfCourseEntry(name = "Bella Vista Golfpark Bad Birnbach", location = "Bad Birnbach, Bayern",
-                  holes = 18, lat = 48.407, lon = 13.082,
+                  holes = 18, lat = 48.4502, lon = 13.0772,
                   parValues = listOf(4, 5, 4, 3, 4, 5, 4, 3, 4,   // OUT 36
                               4, 3, 4, 4, 3, 5, 4, 5, 4),   // IN 36  → Par 72
                   hcpValues = listOf(5, 11, 17, 15, 7, 9, 3, 13, 1,
@@ -176,7 +176,7 @@ object BundledCourses {
                   courseRating = 70.8, slopeRating = 139,
                   facilityNotes = "18-Loch-Meisterschaftsanlage · teils hügeliges Gelände\nKontakt: www.badbirnbach.de/bella-vista-golfpark"),
         GolfCourseEntry(name = "Rottaler Golf- & Country Club", location = "Hebertsfelden, Bayern",
-                  holes = 18, lat = 48.404, lon = 12.769,
+                  holes = 18, lat = 48.4181, lon = 12.8543,
                   parValues = listOf(4, 3, 4, 4, 3, 5, 4, 5, 4,   // OUT 36
                               5, 3, 4, 4, 5, 4, 4, 3, 4),   // IN 36  → Par 72
                   hcpValues = listOf(17, 9, 1, 13, 15, 5, 11, 3, 7,
@@ -186,21 +186,21 @@ object BundledCourses {
                   courseRating = 71.7, slopeRating = 125,
                   facilityNotes = "Parklandplatz am Rottauensee · Rott-Fluss als Hindernis\nDriving Range · Putting Green · 6-Loch-Übungsplatz\nKontakt: www.rottaler-golfclub.de"),
         GolfCourseEntry(name = "Golfclub Vilsbiburg e.V.", location = "Vilsbiburg, Bayern",
-                  holes = 9, lat = 48.448, lon = 12.361,
+                  holes = 9, lat = 48.414, lon = 12.3327,
                   parValues = listOf(4, 3, 5, 4, 5, 3, 4, 3, 4),  // Par 35 (9 Loch, 2× für 18-Loch-Wertung)
                   hcpValues = listOf(7, 17, 5, 3, 1, 13, 11, 15, 9),
                   holeLengths = listOf(410, 148, 526, 400, 571, 187, 366, 161, 400),  // 3169 m (9 Loch)
                   courseRating = 70.9, slopeRating = 124,
                   facilityNotes = "9-Loch-Anlage · Runde zweimal gespielt für 18-Loch-Wertung\nArchitekt: Peter Harradine (1998)\nDriving Range · Clubhaus · Restaurant"),
         GolfCourseEntry(name = "Golfclub Landau/Isar e.V.", location = "Landau an der Isar, Bayern",
-                  holes = 9, lat = 48.665, lon = 12.699,
+                  holes = 9, lat = 48.6592, lon = 12.7314,
                   parValues = listOf(4, 3, 4, 4, 3, 5, 4, 5, 3),  // Par 35 (9 Loch)
                   hcpValues = listOf(3, 5, 8, 7, 4, 9, 1, 6, 2),
                   holeLengths = listOf(293, 129, 340, 328, 191, 465, 281, 551, 132),  // 2710 m (9 Loch)
                   courseRating = 35.4, slopeRating = 123,
                   facilityNotes = "9-Loch-Golfpark · hügeliges, naturnahes Gelände\nRappach 2, 94405 Landau/Isar\nKontakt: www.golfpark-landau.de"),
         GolfCourseEntry(name = "Golfclub Schloßberg e.V.", location = "Reisbach, Bayern",
-                  holes = 18, lat = 48.573, lon = 12.627,
+                  holes = 18, lat = 48.6042, lon = 12.6507,
                   parValues = listOf(3, 4, 3, 5, 4, 5, 4, 4, 4,   // OUT 36
                               3, 5, 4, 4, 5, 3, 4, 4, 4),   // IN 36  → Par 72
                   hcpValues = listOf(15, 17, 7, 5, 11, 1, 9, 3, 13,
@@ -210,7 +210,7 @@ object BundledCourses {
                   courseRating = 71.6, slopeRating = 126,
                   facilityNotes = "Ältester 18-Loch-Platz Ostbayerns (1984/85)\nIdyllische Waldlöcher · Restaurant\nGrünbach 8, 94419 Reisbach\nKontakt: www.golfclub-schlossberg.de"),
         GolfCourseEntry(name = "Golfclub Gäuboden e.V.", location = "Aiterhofen (Straubing), Bayern",
-                  holes = 18, lat = 48.828, lon = 12.559,
+                  holes = 18, lat = 48.8661, lon = 12.6634,
                   parValues = listOf(5, 4, 4, 5, 3, 4, 4, 5, 4,   // OUT 38
                               4, 3, 4, 5, 4, 3, 4, 4, 3),   // IN 34  → Par 72
                   hcpValues = listOf(3, 15, 11, 9, 17, 13, 1, 7, 5,
@@ -223,14 +223,14 @@ object BundledCourses {
 
     private fun part3(): List<GolfCourseEntry> = listOf(
         GolfCourseEntry(name = "Golfclub Straubing Stadt und Land e.V.", location = "Straubing, Bayern",
-                  holes = 9, lat = 48.897, lon = 12.576,
+                  holes = 9, lat = 48.9411, lon = 12.5566,
                   parValues = listOf(4, 3, 5, 4, 4, 5, 4, 4, 3),  // Par 36 (9 Loch)
                   hcpValues = listOf(3, 7, 13, 9, 11, 1, 15, 5, 17),
                   holeLengths = listOf(344, 191, 443, 302, 271, 438, 216, 268, 158),  // 2631 m (9 Loch)
                   courseRating = 68.4, slopeRating = 123,
                   facilityNotes = "9-Loch-Platz · ehemaliger Kiesabbau mit Wasserhindernissen\nBachhof 9, 94356 Kirchroth\nKontakt: www.golfclub-straubing.de"),
         GolfCourseEntry(name = "Golfclub Altötting-Burghausen (Piesing)", location = "Haiming, Bayern",
-                  holes = 18, lat = 48.067, lon = 12.880,
+                  holes = 18, lat = 48.2117, lon = 12.8709,
                   parValues = listOf(5, 3, 4, 3, 5, 4, 3, 4, 5,   // OUT 36
                               5, 4, 3, 4, 4, 5, 4, 3, 4),   // IN 36  → Par 72
                   hcpValues = listOf(5, 15, 1, 11, 7, 9, 17, 13, 3,
@@ -240,7 +240,7 @@ object BundledCourses {
                   courseRating = 71.3, slopeRating = 127,
                   facilityNotes = "Architekt: Kurt Rossknecht (1986) · barockes Schloss Piesing\nPiesing 4, 84533 Haiming\nKontakt: www.gc-altoetting-burghausen.de"),
         GolfCourseEntry(name = "Golfclub Altötting-Burghausen (Falkenhof)", location = "Marktl am Inn, Bayern",
-                  holes = 9, lat = 48.254, lon = 12.844,
+                  holes = 9, lat = 48.2671, lon = 12.8124,
                   facilityNotes = "9-Loch-Platz am Zusammenfluss von Inn und Alz · flaches Gelände\nGesamtlänge Herren: ca. 2.927 m · Par 35\nAchtung: keine Kartenzahlung möglich\nKontakt: www.gc-altoetting-burghausen.de"),
         GolfCourseEntry(name = "Golfclub Pleiskirchen e.V.", location = "Pleiskirchen, Bayern",
                   holes = 18, lat = 48.220, lon = 12.626,
@@ -253,7 +253,7 @@ object BundledCourses {
                   courseRating = 71.8, slopeRating = 129,
                   facilityNotes = "Parklandplatz (1996)\nAm Golfplatz 2, Pleiskirchen\nKontakt: www.gc-pleiskirchen.de"),
         GolfCourseEntry(name = "Golfclub Schloss Guttenburg / Inntal", location = "Ampfing, Bayern",
-                  holes = 18, lat = 48.222, lon = 12.429,
+                  holes = 18, lat = 48.2001, lon = 12.4694,
                   parValues = listOf(4, 3, 4, 5, 4, 5, 3, 4, 4,   // OUT 36
                               4, 4, 5, 3, 5, 4, 4, 3, 4),   // IN 36  → Par 72
                   hcpValues = listOf(5, 13, 11, 9, 3, 1, 17, 15, 7,
@@ -266,14 +266,14 @@ object BundledCourses {
 
     private fun part4(): List<GolfCourseEntry> = listOf(
         GolfCourseEntry(name = "Golfclub Leonhardshaun", location = "Ergoldsbach, Bayern",
-                  holes = 9, lat = 48.688, lon = 12.172,
+                  holes = 9, lat = 48.666, lon = 12.2247,
                   parValues = listOf(3, 4, 3, 4, 3, 4, 3, 4, 4),  // Par 32 (9 Loch)
                   hcpValues = listOf(17, 5, 11, 15, 13, 3, 9, 7, 1),
                   holeLengths = listOf(125, 330, 189, 308, 141, 299, 180, 306, 393),  // 2271 m (9 Loch)
                   courseRating = 32.1, slopeRating = 115,
                   facilityNotes = "Sanft hügelig · 9-Loch-Anlage · Kontakt: www.golfplatz-leonhardshaun.de"),
         GolfCourseEntry(name = "Golfclub am Nationalpark Bayerischer Wald", location = "St. Oswald / Grafenau, Bayern",
-                  holes = 18, lat = 48.782, lon = 13.406,
+                  holes = 18, lat = 48.8764, lon = 13.4472,
                   parValues = listOf(5, 4, 4, 3, 4, 4, 4, 4, 4,   // OUT 36
                               4, 4, 4, 5, 3, 4, 3, 4, 4),   // IN 35  → Par 71
                   hcpValues = listOf(3, 7, 13, 17, 15, 11, 5, 1, 9,
@@ -283,7 +283,7 @@ object BundledCourses {
                   courseRating = 68.7, slopeRating = 125,
                   facilityNotes = "18-Loch-Platz auf 90 ha im Nationalpark Bayerischer Wald\nArchitekt: Peter Harradine (2005)\nDriving Range · Putting- und Chipping-Green\nE-Carts erlaubt · Saison April–November\nKontakt: www.gcanp.de"),
         GolfCourseEntry(name = "Deggendorfer Golfclub (Rusel)", location = "Schaufling, Bayern",
-                  holes = 18, lat = 48.834, lon = 13.099,
+                  holes = 18, lat = 48.8794, lon = 13.0844,
                   parValues = listOf(4, 4, 4, 3, 5, 5, 4, 4, 4,   // OUT 37
                               4, 3, 4, 4, 3, 5, 4, 3, 5),   // IN 35  → Par 72
                   hcpValues = listOf(15, 13, 7, 17, 5, 1, 11, 9, 3,
@@ -293,7 +293,7 @@ object BundledCourses {
                   courseRating = 68.8, slopeRating = 126,
                   facilityNotes = "Architekten: Donald Harradine (1981) & Peter Harradine (2003)\nDriving Range · RUSEL-ARENA (Indoor-Simulator) · Golfschule\nHunde für Mitglieder Mo–Fr ab 14 Uhr erlaubt\nKontakt: www.deggendorfer-golfclub.de"),
         GolfCourseEntry(name = "Golfclub Furth im Wald e.V.", location = "Furth im Wald, Bayern",
-                  holes = 18, lat = 49.307, lon = 12.849,
+                  holes = 18, lat = 49.3275, lon = 12.8268,
                   parValues = listOf(5, 3, 4, 3, 4, 4, 4, 4, 5,   // OUT 36
                               5, 4, 4, 4, 3, 3, 5, 4, 4),   // IN 36  → Par 72
                   hcpValues = listOf(17, 9, 1, 13, 5, 3, 15, 11, 7,
@@ -302,8 +302,8 @@ object BundledCourses {
                                 592, 430, 297, 302, 184, 162, 479, 375, 369),  // IN 3190 → 6548 m
                   courseRating = 72.1, slopeRating = 136,
                   facilityNotes = "Architekt: Kurt Rossknecht (1983/1986)\nHügeliger Platz mit Wasserhindernissen · 70 ha Anlage\nDriving Range · Pitching- und Putting-Green\nSekretariat Mo–So 9–16 Uhr\nKontakt: www.gc-furth.de"),
-        GolfCourseEntry(name = "Golf- und Landclub Regensburg e.V.", location = "Sinzing (Regensburg), Bayern",
-                  holes = 18, lat = 49.019, lon = 12.003,
+        GolfCourseEntry(name = "Golf- und Landclub Regensburg e.V.", location = "Donaustauf, Bayern",
+                  holes = 18, lat = 49.0381, lon = 12.2631,
                   parValues = listOf(4, 4, 3, 4, 5, 3, 5, 4, 5,   // OUT 37
                               4, 5, 4, 3, 4, 4, 3, 5, 3),   // IN 35  → Par 72
                   hcpValues = listOf(17, 3, 7, 5, 9, 15, 13, 11, 1,
@@ -313,7 +313,7 @@ object BundledCourses {
                   courseRating = 70.0, slopeRating = 133,
                   facilityNotes = "Parklandplatz im ehem. Jagdgrund des Hauses Thurn & Taxis\nBäume bis 300 Jahre alt · Clubhaus im Jagdschloss von 1885\nGründungsmitglied Leading Golf Clubs of Germany\nHandicap-Ausweis & Buchung erforderlich · Green Fee 85–95 €\nKontakt: www.golfclub-regensburg.de"),
         GolfCourseEntry(name = "Golf- und Countryclub Sinzing Minoritenhof", location = "Sinzing, Bayern",
-                  holes = 18, lat = 48.990, lon = 12.056,
+                  holes = 18, lat = 48.9788, lon = 12.029,
                   parValues = listOf(4, 3, 4, 4, 5, 4, 3, 4, 5,   // OUT 36
                               3, 4, 5, 4, 3, 4, 4, 5, 4),   // IN 36  → Par 72
                   hcpValues = listOf(3, 15, 7, 9, 17, 5, 11, 1, 8,
@@ -326,7 +326,7 @@ object BundledCourses {
 
     private fun part5(): List<GolfCourseEntry> = listOf(
         GolfCourseEntry(name = "Golfclub Bad Abbach-Deutenhof e.V.", location = "Bad Abbach, Bayern",
-                  holes = 18, lat = 48.930, lon = 12.044,
+                  holes = 18, lat = 48.9067, lon = 11.9956,
                   parValues = listOf(4, 4, 3, 4, 3, 5, 4, 4, 5,   // OUT 36
                               4, 3, 4, 5, 4, 4, 3, 5, 4),   // IN 36  → Par 72
                   hcpValues = listOf(7, 9, 15, 5, 17, 1, 3, 13, 11,
@@ -343,7 +343,7 @@ object BundledCourses {
                   courseRating = 29.4, slopeRating = 104,
                   facilityNotes = "9-Loch-Par-3-Platz direkt am Wellnesshotel · komplett flach\nDriving Range · Clubverleih · Unterricht\nIdeal für Anfänger und Kurzurlauber\nKontakt: www.marcaurel.de"),
         GolfCourseEntry(name = "Golf- und Landclub Oberpfälzer Wald e.V.", location = "Neunburg vorm Wald, Bayern",
-                  holes = 18, lat = 49.314, lon = 12.338,
+                  holes = 18, lat = 49.3594, lon = 12.265,
                   parValues = listOf(5, 4, 4, 3, 4, 5, 4, 3, 4,   // OUT 36
                               5, 3, 4, 4, 3, 4, 5, 3, 5),   // IN 36  → Par 72
                   hcpValues = listOf(7, 1, 3, 17, 11, 5, 9, 13, 15,
@@ -353,7 +353,7 @@ object BundledCourses {
                   courseRating = 70.7, slopeRating = 135,
                   facilityNotes = "18-Loch in Naturschutzgebiet · hügeliges Gelände (165 Fuß Höhenunterschied)\nSignaturloch 9: 50 m Abstieg mit Dogleg\nDriving Range (12 überdachte Abschläge) · Restaurant \"Birner's Kulinarik\"\nKontakt: www.golf-oberpfalz.de"),
         GolfCourseEntry(name = "Golfclub Schwanhof e.V.", location = "Luhe-Wildenau, Bayern",
-                  holes = 18, lat = 49.585, lon = 12.173,
+                  holes = 18, lat = 49.5887, lon = 12.1159,
                   parValues = listOf(4, 4, 3, 5, 4, 4, 5, 3, 4,   // OUT 36
                               4, 4, 3, 5, 4, 4, 3, 5, 4),   // IN 36  → Par 72
                   hcpValues = listOf(15, 3, 13, 9, 1, 11, 7, 17, 5,
@@ -373,7 +373,7 @@ object BundledCourses {
                   courseRating = 71.1, slopeRating = 130,
                   facilityNotes = "Digital-Birdiebook verfügbar · 3-Loch-Kurzplatz vorhanden\nKontakt: www.golf-landshut.de"),
         GolfCourseEntry(name = "Golfclub Ingolstadt",                      location = "Ingolstadt, Bayern",
-                  holes = 18, lat = 48.767, lon = 11.417,
+                  holes = 18, lat = 48.7639, lon = 11.3716,
                   parValues = listOf(4, 4, 5, 3, 4, 3, 5, 3, 4,   // OUT 35
                               4, 3, 5, 4, 4, 3, 5, 4, 5),   // IN 37  → Par 72
                   hcpValues = listOf( 3,  7,  1, 11,  5, 15,  9, 13, 17,
@@ -386,7 +386,7 @@ object BundledCourses {
 
     private fun part6(): List<GolfCourseEntry> = listOf(
         GolfCourseEntry(name = "Golfclub Eichenried",                      location = "Eichenried, Bayern",
-                  holes = 18, lat = 48.217, lon = 11.817,
+                  holes = 18, lat = 48.2709, lon = 11.7712,
                   parValues = listOf(4, 3, 4, 4, 4, 5, 4, 3, 5,   // OUT (A) 36
                               5, 3, 4, 4, 3, 4, 4, 5, 4),   // IN (B) 36  → Par 72
                   holeLengths = listOf(423, 166, 410, 332, 313, 468, 436, 195, 531,   // OUT (A) 3274
@@ -394,7 +394,7 @@ object BundledCourses {
                   courseRating = 73.3, slopeRating = 131,
                   facilityNotes = "27-Loch-Anlage (A, B, C jeweils 9 Loch) · Design Kurt Rossknecht (1989)\nTurnierplatz (BMW Open) · Golfakademie · Simulator\nDaten: A-Kurs (OUT) + B-Kurs (IN)\nKontakt: www.gc-eichenried.de"),
         GolfCourseEntry(name = "Golfclub München Riedhof e.V.",            location = "Egling (Bad Tölz-Wolfratshausen), Bayern",
-                  holes = 18, lat = 48.083, lon = 11.283,
+                  holes = 18, lat = 47.9261, lon = 11.4714,
                   parValues = listOf(4, 3, 4, 5, 3, 4, 3, 4, 4,   // OUT 34
                               4, 3, 5, 4, 5, 4, 5, 4, 4),   // IN 38  → Par 72
                   hcpValues = listOf( 9, 17, 13,  1, 15,  5, 11,  3,  7,
@@ -402,14 +402,14 @@ object BundledCourses {
                   courseRating = 71.5, slopeRating = 132,
                   facilityNotes = "Gegründet 1991 · Driving Range · Golfschule\nKontakt: www.golfclub-riedhof.de"),
         GolfCourseEntry(name = "Golfclub München-Strasslach e.V.",         location = "Strasslach-Dingharting, Bayern",
-                  holes = 18, lat = 47.967, lon = 11.517,
+                  holes = 18, lat = 47.9852, lon = 11.5083,
                   parValues = listOf(5, 4, 3, 4, 5, 4, 3, 4, 4,   // OUT (A) 36
                               5, 3, 4, 4, 3, 4, 4, 5, 4),   // IN (B) 36  → Par 72
                   holeLengths = listOf(484, 328, 136, 358, 432, 314, 132, 381, 319,   // OUT (A) 2884
                                 432, 188, 366, 320, 180, 398, 378, 461, 318),  // IN (B) 3041 → 5925 m
                   facilityNotes = "27-Loch (A, B, C) · Gegründet 1910 (ältester Golfclub Bayerns)\nDaten: A-Kurs (OUT) + B-Kurs (IN)\nKontakt: www.mgc-golf.de"),
         GolfCourseEntry(name = "Golfclub Feldafing e.V.",                  location = "Feldafing, Bayern",
-                  holes = 18, lat = 47.950, lon = 11.283,
+                  holes = 18, lat = 47.9428, lon = 11.2987,
                   parValues = listOf(4, 3, 5, 4, 4, 5, 4, 3, 5,   // OUT 37
                               4, 3, 4, 4, 3, 4, 3, 4, 5),   // IN 34  → Par 71
                   hcpValues = listOf( 9, 13, 11,  1,  3,  7, 17, 15,  5,
@@ -419,7 +419,7 @@ object BundledCourses {
                   courseRating = 71.6, slopeRating = 142,
                   facilityNotes = "Exklusiver Clubplatz am Starnberger See · Slope 142 (sehr anspruchsvoll)\nEntfernungsmarkierungen: Weiß=100m · Rot=150m · Gelb=200m\nKontakt: www.golfclub-feldafing.de"),
         GolfCourseEntry(name = "Golfclub Tutzing e.V.",                    location = "Tutzing, Bayern",
-                  holes = 18, lat = 47.900, lon = 11.283,
+                  holes = 18, lat = 47.9302, lon = 11.2562,
                   parValues = listOf(4, 5, 4, 4, 5, 3, 5, 4, 3,   // OUT 37
                               5, 3, 4, 4, 3, 4, 4, 3, 5),   // IN 35  → Par 72
                   hcpValues = listOf( 1, 11,  9,  7, 13, 17,  3,  5, 15,
@@ -429,7 +429,7 @@ object BundledCourses {
                   courseRating = 71.7, slopeRating = 123,
                   facilityNotes = "Gut Deixlfurt · Sekretariat tägl. 9–17 Uhr · Tel. 08158-3600\nKontakt: www.golfclub-tutzing.de"),
         GolfCourseEntry(name = "Golfclub Erding-Grünbach",                 location = "Bockhorn bei Erding, Bayern",
-                  holes = 18, lat = 48.283, lon = 11.917,
+                  holes = 18, lat = 48.3291, lon = 12.011,
                   parValues = listOf(4, 4, 3, 5, 3, 4, 5, 4, 3,   // OUT 35
                               4, 3, 4, 4, 4, 5, 5, 3, 4),   // IN 36  → Par 71
                   hcpValues = listOf( 3,  9, 11,  1,  7, 15, 13,  5, 17,
@@ -437,7 +437,7 @@ object BundledCourses {
                   courseRating = 70.8, slopeRating = 127,
                   facilityNotes = "Birdiebook mit Lochdaten am Clubhaus erhältlich\nTel. +49 8122 49650 · Kontakt: www.golf-erding.de"),
         GolfCourseEntry(name = "Golfclub Dachau-Inhauser Moos",            location = "Dachau, Bayern",
-                  holes =  9, lat = 48.233, lon = 11.433,
+                  holes =  9, lat = 48.2761, lon = 11.4545,
                   parValues = listOf(4, 4, 4, 4, 5, 3, 5, 4, 3),  // Par 36 (9 Loch, 18-Loch-Wertung: Par 72)
                   hcpValues = listOf(15, 5, 7, 17, 1, 13, 3, 9, 11),
                   courseRating = 70.7, slopeRating = 131,
@@ -446,7 +446,7 @@ object BundledCourses {
 
     private fun part7(): List<GolfCourseEntry> = listOf(
         GolfCourseEntry(name = "Golfclub Mangfalltal",                     location = "Feldkirchen-Westerham, Bayern",
-                  holes = 18, lat = 47.867, lon = 11.917,
+                  holes = 18, lat = 47.9186, lon = 11.8428,
                   parValues = listOf(5, 3, 4, 4, 4, 3, 5, 4, 5,   // OUT 37
                               3, 5, 5, 4, 4, 4, 3, 4, 3),   // IN 35  → Par 72
                   hcpValues = listOf( 5, 13,  1,  9, 15, 17, 11,  7,  3,
@@ -504,7 +504,7 @@ object BundledCourses {
                   courseRating = 62.8, slopeRating = 125,
                   facilityNotes = "ROBINSON Club-Resort · 9-Loch · Par 37 (18-Loch-Wertung: Par 74)\nDriving Range · Restaurant · Erbaut 1995"),
         GolfCourseEntry(name = "Golfpark Böhmerwald",                      location = "Ulrichsberg, Oberösterreich",
-                  holes = 18, lat = 48.647, lon = 13.902,
+                  holes = 18, lat = 48.68, lon = 13.8598,
                   parValues = listOf(4, 4, 3, 4, 5, 4, 5, 3, 4,   // OUT 36
                               4, 5, 4, 4, 3, 4, 3, 5, 4),   // IN 36  → Par 72
                   hcpValues = listOf( 3,  9, 13,  7, 11, 15,  1, 17,  5,
@@ -514,7 +514,7 @@ object BundledCourses {
                   courseRating = 70.9, slopeRating = 129,
                   facilityNotes = "Hochwald-Kurs (18 Loch) + Panorama-Kurs (9 Loch) im Dreiländereck OÖ/Bayern/Tschechien\nKontakt: www.boehmerwaldgolf.at"),
         GolfCourseEntry(name = "Golfclub SternGartl",                      location = "Oberneukirchen, Oberösterreich",
-                  holes = 18, lat = 48.477, lon = 14.233,
+                  holes = 18, lat = 48.4863, lon = 14.2489,
                   parValues = listOf(4, 3, 4, 3, 5, 4, 4, 3, 4,   // OUT 34
                               5, 4, 5, 3, 4, 5, 3, 4, 3),   // IN 36  → Par 70
                   hcpValues = listOf( 5, 17,  7, 11,  1,  9,  3, 15, 13,
@@ -541,9 +541,9 @@ object BundledCourses {
                   holes = 18, lat = 48.328, lon = 14.394,
                   courseRating = 70.3, slopeRating = 122,
                   facilityNotes = "18-Loch · Par 71 · ca. 5867 m (Gelb)\nClubhaus im historischen Renaissance-Meierhof\nKontakt: www.gclinz-luftenberg.at"),
-        GolfCourseEntry(name = "Golfclub Stärk Linz-Ansfelden",           location = "Ansfelden, Oberösterreich",             holes = 18, lat = 48.192, lon = 14.283),
+        GolfCourseEntry(name = "Golfclub Stärk Linz-Ansfelden",           location = "Ansfelden, Oberösterreich",             holes = 18, lat = 48.19, lon = 14.2987),
         GolfCourseEntry(name = "Golf Club Linz-St. Florian",               location = "St. Florian (Tillysburg), OÖ",
-                  holes = 18, lat = 48.183, lon = 14.388,
+                  holes = 18, lat = 48.1957, lon = 14.419,
                   parValues = listOf(5, 5, 3, 5, 4, 4, 3, 5, 4,   // OUT 38
                               4, 3, 5, 4, 3, 4, 3, 4, 4),   // IN 34  → Par 72
                   hcpValues = listOf(14, 18,  8, 10, 16,  2, 12,  6,  4,
@@ -553,7 +553,7 @@ object BundledCourses {
                   courseRating = 72.1, slopeRating = 137,
                   facilityNotes = "Design Donald Harradine & Hans-Georg Erhardt (1974)\nTillysburg 28, 4490 St. Florian\nKontakt: www.golfclub-stflorian.at"),
         GolfCourseEntry(name = "Golfclub Donau Freizeitland",              location = "Feldkirchen an der Donau, OÖ",
-                  holes = 18, lat = 48.330, lon = 14.100,
+                  holes = 18, lat = 48.3372, lon = 14.0802,
                   parValues = listOf(4, 3, 4, 4, 4, 4, 5, 5, 3,   // OUT 36
                               4, 3, 5, 3, 4, 5, 4, 5, 3),   // IN 36  → Par 72
                   hcpValues = listOf(11,  9,  1,  3, 15,  5,  7, 13, 17,
@@ -563,7 +563,7 @@ object BundledCourses {
                   courseRating = 71.4, slopeRating = 128,
                   facilityNotes = "Erbaut 1991 · Auch 9-Loch-Kurzplatz (Par 30) vorhanden\nGolfplatzstraße 12, A-4101 Feldkirchen/Donau\nKontakt: www.gc-donaufreizeitland.at"),
         GolfCourseEntry(name = "Golfpark Metzenhof",                       location = "Kronstorf, Oberösterreich",
-                  holes = 18, lat = 48.124, lon = 14.477,
+                  holes = 18, lat = 48.1297, lon = 14.4365,
                   parValues = listOf(5, 4, 3, 5, 3, 4, 3, 4, 4,   // OUT 35
                               4, 4, 5, 3, 4, 3, 4, 4, 5),   // IN 36  → Par 71
                   hcpValues = listOf( 2,  4, 10, 14, 16,  6, 12,  8, 18,
@@ -573,7 +573,7 @@ object BundledCourses {
                   courseRating = 70.3, slopeRating = 131,
                   facilityNotes = "Design Hans-Georg Erhardt (2003)\nDörfling 2, A-4484 Kronstorf\nKontakt: www.golfpark-metzenhof.at"),
         GolfCourseEntry(name = "Golf Resort Kremstal",                     location = "Kematen an der Krems, OÖ",
-                  holes = 18, lat = 48.082, lon = 14.124,
+                  holes = 18, lat = 48.1086, lon = 14.1825,
                   facilityNotes = "27-Loch-Anlage (3 × 9 Loch): Bergergut · Scherndlgut · Panorama\nErbaut 1991–1996 · Design Peter Mayrhofer\nAm Golfplatz 1, 4531 Kematen an der Krems\nKontakt: www.golfresort-kremstal.at"),
     )
 
@@ -589,7 +589,7 @@ object BundledCourses {
                   courseRating = 70.1, slopeRating = 129,
                   facilityNotes = "Erbaut 1989 · Design Peter Mayrhofer\nLöcher 1–11 hügelig · Löcher 12–18 flach\nBlankenberger Str. 30, 4540 Bad Hall\nKontakt: www.gc-herzogtassilo.at"),
         GolfCourseEntry(name = "Golf REGAU Attersee-Traunsee",             location = "Regau, Oberösterreich",
-                  holes = 18, lat = 47.950, lon = 13.680,
+                  holes = 18, lat = 47.9569, lon = 13.6993,
                   parValues = listOf(4, 4, 3, 4, 4, 3, 5, 5, 4,   // OUT 36
                               5, 4, 3, 4, 5, 4, 4, 5, 3),   // IN 37  → Par 73
                   hcpValues = listOf(15,  9,  3,  1, 17, 11,  7, 13,  5,
@@ -609,7 +609,7 @@ object BundledCourses {
                   courseRating = 68.9, slopeRating = 129,
                   facilityNotes = "Erbaut 1989 · Hügeliges Gelände über 500 m Seehöhe\nKontakt: www.golfclubtraunsee.at"),
         GolfCourseEntry(name = "Golfclub Am Mondsee",                      location = "St. Lorenz am Mondsee, OÖ",
-                  holes = 18, lat = 47.843, lon = 13.380,
+                  holes = 18, lat = 47.8322, lon = 13.3588,
                   parValues = listOf(4, 4, 3, 4, 4, 4, 5, 3, 5,   // OUT 36
                               4, 5, 4, 4, 4, 3, 4, 3, 5),   // IN 36  → Par 72
                   hcpValues = listOf(11, 13, 15,  7,  1,  5,  9, 17,  3,
@@ -619,7 +619,7 @@ object BundledCourses {
                   courseRating = 72.0, slopeRating = 131,
                   facilityNotes = "Überwiegend flach · 4 Abschlagvarianten\nKontakt: www.gc-mondsee.at"),
         GolfCourseEntry(name = "Golfclub Salzkammergut",                   location = "St. Wolfgang im Salzkammergut, OÖ",
-                  holes = 18, lat = 47.741, lon = 13.451,
+                  holes = 18, lat = 47.7169, lon = 13.554,
                   parValues = listOf(5, 4, 4, 3, 4, 5, 4, 3, 4,   // OUT 36
                               5, 3, 4, 4, 5, 3, 4, 3, 4),   // IN 35  → Par 71
                   hcpValues = listOf( 6, 16,  2, 12, 10, 18,  8,  4, 14,
@@ -629,7 +629,7 @@ object BundledCourses {
                   courseRating = 71.0, slopeRating = 132,
                   facilityNotes = "Gegründet 1933 · ältester aktiver Golfclub Österreichs\nWirling 36, 5351 Aigen-Voglhub / Bad Ischl\nKontakt: www.gcsalzkammergut.at"),
         GolfCourseEntry(name = "Golfclub Weyregg",                         location = "Weyregg am Attersee, OÖ",
-                  holes =  9, lat = 47.898, lon = 13.550,
+                  holes =  9, lat = 47.8957, lon = 13.5775,
                   parValues = listOf(5, 3, 3, 5, 3, 4, 3, 4, 4),  // Par 34 (9 Loch, 18-Loch-Wertung: Par 68)
                   hcpValues = listOf(15, 17, 13, 11, 5, 3, 7, 1, 9),
                   holeLengths = listOf(478, 138, 119, 430, 169, 288, 156, 350, 266),  // 2394 m (9 Loch)
@@ -640,7 +640,7 @@ object BundledCourses {
                   courseRating = 70.9, slopeRating = 126,
                   facilityNotes = "Design Robert Trent Jones Jr. (renoviert 2000)\nGegründet 1955 · Schlosspark-Charakter\nKontakt: www.golfclub-klessheim.com"),
         GolfCourseEntry(name = "Golfclub Salzburg-Eugendorf",              location = "Eugendorf, Salzburg",
-                  holes = 18, lat = 47.878, lon = 13.119,
+                  holes = 18, lat = 47.8671, lon = 13.1622,
                   parValues = listOf(4, 4, 5, 4, 3, 4, 4, 5, 3,   // OUT 36
                               5, 4, 4, 4, 4, 3, 5, 3, 4),   // IN 36  → Par 72
                   hcpValues = listOf(12,  2,  6,  4, 18, 14, 10,  8, 16,
@@ -663,7 +663,7 @@ object BundledCourses {
                   courseRating = 66.3, slopeRating = 124,
                   facilityNotes = "Panorama-Course · Par 69 · Zusätzlich 9-Loch Kornbichl-Kurs (Par 60)\nKraimoosweg 5a, 5301 Eugendorf\nKontakt: www.roemergolf.at"),
         GolfCourseEntry(name = "Golfclub Gut Altentann",                   location = "Henndorf am Wallersee, Salzburg",
-                  holes = 18, lat = 47.915, lon = 13.186,
+                  holes = 18, lat = 47.8912, lon = 13.1941,
                   parValues = listOf(4, 4, 3, 4, 4, 5, 3, 4, 5,   // OUT 36
                               3, 4, 5, 4, 3, 4, 4, 4, 5),   // IN 36  → Par 72
                   hcpValues = listOf( 9, 11, 15, 17,  7, 13,  3,  5,  1,
@@ -687,7 +687,7 @@ object BundledCourses {
                   holes = 18, lat = 48.633, lon = 14.183,
                   facilityNotes = "Golfplatz geschlossen · Anlage nicht mehr in Betrieb"),
         GolfCourseEntry(name = "Golf Club Český Krumlov",                  location = "Velešín (Č. Krumlov), Tschechien",
-                  holes = 18, lat = 48.747, lon = 14.332,
+                  holes = 18, lat = 48.8283, lon = 14.3648,
                   parValues = listOf(4, 3, 4, 5, 4, 3, 3, 4, 5,   // OUT 35
                               4, 5, 4, 3, 4, 4, 5, 4, 3),   // IN 36  → Par 71
                   hcpValues = listOf(13, 15, 11,  3,  5, 17,  7,  1,  9,

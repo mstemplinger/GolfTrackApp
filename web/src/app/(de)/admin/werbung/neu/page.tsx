@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import { redirect } from "next/navigation";
 import { isAuthenticated } from "@/lib/auth";
 import { courseMarkers, listCourses } from "@/lib/courses";
 import { AdForm } from "../AdForm";
+import { PageHeader } from "../../ui";
 
 export const metadata: Metadata = {
   title: "Neue Anzeige · GolfTrack",
@@ -19,11 +19,13 @@ export default async function NewAdPage() {
   ]);
 
   return (
-    <div className="mx-auto max-w-5xl px-5 py-12 sm:px-8">
-      <Link href="/admin/werbung" className="marginal transition-colors hover:text-brass-soft">
-        ← Werbung
-      </Link>
-      <h1 className="mt-4 border-b rule pb-6 font-display text-3xl tracking-tight">Neue Anzeige</h1>
+    <div className="mx-auto max-w-6xl px-5 py-8 sm:px-8 lg:py-10">
+      <PageHeader
+        crumbs={[{ label: "Werbung", href: "/admin/werbung" }, { label: "Neue Anzeige" }]}
+        eyebrow="Werbung"
+        title="Neue Anzeige"
+      />
+      <div className="mt-8 border-t border-white/10" />
       <AdForm
         markers={markers}
         courses={courses.map((course) => ({

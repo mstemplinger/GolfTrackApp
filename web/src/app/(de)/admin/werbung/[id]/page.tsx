@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import { notFound, redirect } from "next/navigation";
 import { adReach, getAd } from "@/lib/ads";
 import { formatEuro } from "@/lib/adPricing";
@@ -8,6 +7,7 @@ import { courseMarkers, listCourses } from "@/lib/courses";
 import { AdForm } from "../AdForm";
 import { AdStatusPill } from "../AdStatusPill";
 import { removeAd, switchAdStatus } from "../actions";
+import { PageHeader } from "../../ui";
 
 export const metadata: Metadata = {
   title: "Anzeige · GolfTrack",
@@ -27,26 +27,18 @@ export default async function AdDetailPage({ params }: PageProps<"/admin/werbung
     courseMarkers(),
   ]);
 
-  const rate = reach.total.impressions
-    ? (reach.total.clicks / reach.total.impressions) * 100
-    : 0;
+  const rate = reach.total.impressions ? (reach.total.clicks / reach.total.impressions) * 100 : 0;
 
   return (
-    <div className="mx-auto max-w-5xl px-5 py-12 sm:px-8">
-      <Link href="/admin/werbung" className="marginal transition-colors hover:text-brass-soft">
-        ← Werbung
-      </Link>
-
-      <header className="mt-4 flex flex-wrap items-start justify-between gap-4 border-b rule pb-6">
-        <div>
-          <h1 className="font-display text-3xl tracking-tight">{ad.title}</h1>
-          <p className="mt-1.5 text-sm text-cream/70">
-            {ad.advertiser || "ohne Auftraggeber"} · {ad.courseSlug || "alle Anlagen"} · angelegt am{" "}
-            {new Date(ad.createdAt).toLocaleDateString("de-DE")}
-          </p>
-        </div>
-        <AdStatusPill status={ad.status} />
-      </header>
+    <div className="mx-auto max-w-6xl px-5 py-8 sm:px-8 lg:py-10">
+      <PageHeader
+        crumbs={[{ label: "Werbung", href: "/admin/werbung" }, { label: ad.title }]}
+        eyebrow="Anzeige"
+        title={ad.title}
+        subtitle={`${ad.advertiser || "ohne Auftraggeber"} · ${ad.courseSlug || "alle Anlagen"} · angelegt am ${new Date(ad.createdAt).toLocaleDateString("de-DE")}`}
+        action={<AdStatusPill status={ad.status} />}
+      />
+      <div className="mt-8 border-t border-white/10" />
 
       <section className="mt-6 flex flex-wrap items-center gap-3">
         {ad.status !== "active" ? (
@@ -82,14 +74,8 @@ export default async function AdDetailPage({ params }: PageProps<"/admin/werbung
             />
             <Detail label="Telefon" value={ad.submitterPhone || "–"} />
             <Detail label="Ort" value={ad.placeName || "–"} />
-            <Detail
-              label="Umkreis"
-              value={ad.radiusKm ? `${ad.radiusKm} km` : "–"}
-            />
-            <Detail
-              label="Wunschlaufzeit"
-              value={ad.requestedMonths ? `${ad.requestedMonths} Monate` : "–"}
-            />
+            <Detail label="Umkreis" value={ad.radiusKm ? `${ad.radiusKm} km` : "–"} />
+            <Detail label="Wunschlaufzeit" value={ad.requestedMonths ? `${ad.requestedMonths} Monate` : "–"} />
             <Detail
               label="Richtpreis (netto, ganze Anfrage)"
               value={
@@ -100,9 +86,7 @@ export default async function AdDetailPage({ params }: PageProps<"/admin/werbung
             />
           </dl>
           {ad.requestNote ? (
-            <p className="mt-4 max-w-2xl whitespace-pre-line text-sm leading-relaxed text-cream/75">
-              {ad.requestNote}
-            </p>
+            <p className="mt-4 max-w-2xl whitespace-pre-line text-sm leading-relaxed text-cream/75">{ad.requestNote}</p>
           ) : null}
         </section>
       ) : null}
@@ -119,9 +103,15 @@ export default async function AdDetailPage({ params }: PageProps<"/admin/werbung
             <table className="w-full min-w-[20rem] border-collapse text-sm">
               <thead>
                 <tr className="font-mono text-[0.6rem] uppercase tracking-[0.16em] text-cream/60">
-                  <th scope="col" className="pb-2 text-left font-normal">Tag</th>
-                  <th scope="col" className="pb-2 text-right font-normal">Gesehen</th>
-                  <th scope="col" className="pb-2 text-right font-normal">Getippt</th>
+                  <th scope="col" className="pb-2 text-left font-normal">
+                    Tag
+                  </th>
+                  <th scope="col" className="pb-2 text-right font-normal">
+                    Gesehen
+                  </th>
+                  <th scope="col" className="pb-2 text-right font-normal">
+                    Getippt
+                  </th>
                 </tr>
               </thead>
               <tbody className="font-mono text-cream/80">

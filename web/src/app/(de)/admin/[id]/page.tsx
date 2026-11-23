@@ -7,6 +7,7 @@ import { toFeedCourse } from "@/lib/feed";
 import { AushangPicker } from "@/components/AushangPicker";
 import { t } from "@/i18n/content";
 import { StatusPill } from "../StatusPill";
+import { PageHeader } from "../ui";
 import { EditForm } from "./EditForm";
 import { approve, moveBackToPending, reject, remove } from "../actions";
 
@@ -25,25 +26,33 @@ export default async function AdminDetailPage({ params }: PageProps<"/admin/[id]
   const feed = toFeedCourse(course);
 
   return (
-    <div className="mx-auto max-w-4xl px-5 py-12 sm:px-8">
-      <Link href="/admin" className="marginal transition-colors hover:text-brass-soft">
-        ← Übersicht
-      </Link>
-
-      <header className="mt-4 flex flex-wrap items-start justify-between gap-4 border-b rule pb-6">
-        <div>
-          <h1 className="font-display text-3xl tracking-tight">{course.name}</h1>
-          <p className="mt-1.5 text-sm text-cream/70">
-            {course.location || "ohne Ortsangabe"} · eingegangen am{" "}
-            {new Date(course.createdAt).toLocaleDateString("de-DE", {
-              day: "2-digit",
-              month: "long",
-              year: "numeric",
-            })}
-          </p>
-        </div>
-        <StatusPill status={course.status} kind={course.kind} />
-      </header>
+    <div className="mx-auto max-w-6xl px-5 py-8 sm:px-8 lg:py-10">
+      <PageHeader
+        crumbs={[{ label: "Anlagen", href: "/admin/anlagen" }, { label: course.name }]}
+        eyebrow={course.kind === "golf" ? "Golfplatz" : "Minigolfanlage"}
+        title={course.name}
+        subtitle={`${course.location || "ohne Ortsangabe"} · eingegangen am ${new Date(
+          course.createdAt,
+        ).toLocaleDateString("de-DE", {
+          day: "2-digit",
+          month: "long",
+          year: "numeric",
+        })}`}
+        action={
+          <span className="flex items-center gap-3">
+            {course.status === "approved" ? (
+              <Link
+                href={`/admin/statistik/${course.slug}`}
+                className="rounded-lg border border-white/10 px-4 py-2 text-sm text-cream/80 transition-colors hover:border-brass/60 hover:text-brass"
+              >
+                Statistik
+              </Link>
+            ) : null}
+            <StatusPill status={course.status} kind={course.kind} />
+          </span>
+        }
+      />
+      <div className="mt-8 border-t border-white/10" />
 
       {/* Wer hat eingereicht */}
       <section className="mt-8 rounded-sm border rule bg-moss/30 p-5">
@@ -108,8 +117,7 @@ export default async function AdminDetailPage({ params }: PageProps<"/admin/[id]
 
       {course.status === "approved" ? (
         <p className="mt-4 text-sm text-cream/70">
-          In der App sichtbar unter der Kennung{" "}
-          <code className="font-mono text-brass">{course.slug}</code>
+          In der App sichtbar unter der Kennung <code className="font-mono text-brass">{course.slug}</code>
           {course.kind === "minigolf" ? (
             <>
               {" · "}

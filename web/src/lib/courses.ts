@@ -210,6 +210,90 @@ export async function listCourses(options: {
   return rows.map(mapRow);
 }
 
+export type CourseSort = "new" | "old" | "name";
+
+export interface CourseSearch {
+  q?: string;
+  status?: CourseStatus;
+  kind?: CourseKind;
+  sort?: CourseSort;
+  limit: number;
+  offset: number;
+}
+
+/** % und _ wörtlich nehmen – sonst wäre „100%“ in der Suche ein Platzhalter. */
+function likePattern(q: string): string {
+  return `%${q.replace(/[\\%_]/g, (c) => `\\${c}`)}%`;
+}
+
+/** WHERE-Teil für Suche und Filter des Adminpanels. */
+function searchWhere(o: { q?: string; status?: CourseStatus; kind?: CourseKind }, params: unknown[]): string {
+  const conditions: string[] = [];
+  if (o.status) {
+    params.push(o.status);
+    conditions.push(`status = $${params.length}`);
+  }
+  if (o.kind) {
+    params.push(o.kind);
+    conditions.push(`kind = $${params.length}`);
+  }
+  const q = o.q?.trim();
+  if (q) {
+    params.push(likePattern(q));
+    const i = params.length;
+    conditions.push(`(name ILIKE $${i} OR location ILIKE $${i} OR slug ILIKE $${i} OR submitter_email ILIKE $${i})`);
+  }
+  return conditions.length ? `WHERE ${conditions.join(" AND ")}` : "";
+}
+
+/** Anlagenliste im Adminpanel: Suche, Filter, Sortierung, seitenweise. */
+export async function searchCourses(o: CourseSearch): Promise<{ courses: CourseRecord[]; total: number }> {
+  await ensureSchema();
+  const params: unknown[] = [];
+  const where = searchWhere(o, params);
+  const order = o.sort === "name" ? "name ASC" : o.sort === "old" ? "created_at ASC" : "created_at DESC";
+  const totalRow = await query<DbRow>(`SELECT COUNT(*) AS total FROM courses ${where}`, params);
+  params.push(o.limit, o.offset);
+  const rows = await query<DbRow>(
+    `SELECT * FROM courses ${where} ORDER BY ${order} LIMIT $${params.length - 1} OFFSET $${params.length}`,
+    params,
+  );
+  return { courses: rows.map(mapRow), total: Number(totalRow[0]?.total ?? 0) };
+}
+
+/**
+ * Zähler für die Filter-Chips: je Status (bei gewählter Art und Suche) und je
+ * Art (bei gewähltem Status und Suche) – so stimmt jede Zahl mit dem, was ein
+ * Klick auf den Chip zeigen würde.
+ */
+export async function courseFacets(o: { q?: string; status?: CourseStatus; kind?: CourseKind }): Promise<{
+  status: Record<CourseStatus | "all", number>;
+  kind: Record<CourseKind | "all", number>;
+}> {
+  await ensureSchema();
+  const sp: unknown[] = [];
+  const sRows = await query<DbRow>(
+    `SELECT status, COUNT(*) AS total FROM courses ${searchWhere({ q: o.q, kind: o.kind }, sp)} GROUP BY status`,
+    sp,
+  );
+  const kp: unknown[] = [];
+  const kRows = await query<DbRow>(
+    `SELECT kind, COUNT(*) AS total FROM courses ${searchWhere({ q: o.q, status: o.status }, kp)} GROUP BY kind`,
+    kp,
+  );
+  const status: Record<CourseStatus | "all", number> = { all: 0, pending: 0, approved: 0, rejected: 0 };
+  for (const r of sRows) {
+    status[asString(r.status) as CourseStatus] = Number(r.total);
+    status.all += Number(r.total);
+  }
+  const kind: Record<CourseKind | "all", number> = { all: 0, golf: 0, minigolf: 0 };
+  for (const r of kRows) {
+    kind[asString(r.kind) as CourseKind] = Number(r.total);
+    kind.all += Number(r.total);
+  }
+  return { status, kind };
+}
+
 export async function countByStatus(): Promise<Record<CourseStatus, number>> {
   await ensureSchema();
   const rows = await query<DbRow>("SELECT status, COUNT(*) AS total FROM courses GROUP BY status");

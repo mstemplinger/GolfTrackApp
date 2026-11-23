@@ -6,6 +6,7 @@ import { getCourse } from "@/lib/courses";
 import { MIN_ROUNDS_FOR_DISPLAY } from "@/lib/roundStats";
 import { courseReport, type CourseReport, type HoleStat } from "@/lib/roundStatsReport";
 import { TEE_META, isTeeColor } from "@/lib/tees";
+import { PageHeader } from "../../ui";
 
 export const metadata: Metadata = {
   title: "Rundenstatistik · GolfTrack",
@@ -15,7 +16,11 @@ export const metadata: Metadata = {
 const PERIODS = [30, 90, 365] as const;
 const WEEKDAYS = ["Mo", "Di", "Mi", "Do", "Fr", "Sa", "So"];
 const SLOT_LABELS = ["vormittags", "mittags", "nachmittags", "abends"];
-const SOURCE_LABELS: Record<string, string> = { app: "App", clip: "App Clip", web: "Browser" };
+const SOURCE_LABELS: Record<string, string> = {
+  app: "App",
+  clip: "App Clip",
+  web: "Browser",
+};
 
 /**
  * Auswertung eines Platzes – so, wie sie später der Betreiber sehen soll,
@@ -38,29 +43,26 @@ export default async function CourseRoundStatsPage({ params, searchParams }: Pag
   const unit = (course?.kind ?? report?.kind) === "golf" ? "Loch" : "Bahn";
 
   return (
-    <div className="mx-auto max-w-5xl px-5 py-12 sm:px-8">
-      <Link href="/admin/statistik" className="marginal transition-colors hover:text-brass-soft">
-        ← Alle Plätze
-      </Link>
-
-      <header className="mt-4 flex flex-wrap items-end justify-between gap-4 border-b rule pb-6">
-        <div>
-          <p className="marginal">Rundenstatistik · {(course?.kind ?? report?.kind) === "golf" ? "Golf" : "Minigolf"}</p>
-          <h1 className="mt-2 font-display text-3xl tracking-tight">{course?.name ?? slug}</h1>
-          {course?.location ? <p className="mt-1 text-sm text-cream/65">{course.location}</p> : null}
-        </div>
-        <nav className="flex gap-1 text-sm" aria-label="Zeitraum">
-          {PERIODS.map((p) => (
-            <Link
-              key={p}
-              href={`/admin/statistik/${slug}?tage=${p}`}
-              className={`rounded-sm px-3 py-1.5 transition-colors ${p === days ? "bg-brass text-night" : "text-cream/70 hover:text-brass"}`}
-            >
-              {p === 365 ? "1 Jahr" : `${p} Tage`}
-            </Link>
-          ))}
-        </nav>
-      </header>
+    <div className="mx-auto max-w-6xl px-5 py-8 sm:px-8 lg:py-10">
+      <PageHeader
+        crumbs={[{ label: "Statistik", href: "/admin/statistik" }, { label: course?.name ?? slug }]}
+        eyebrow={`Rundenstatistik · ${(course?.kind ?? report?.kind) === "golf" ? "Golf" : "Minigolf"}`}
+        title={course?.name ?? slug}
+        subtitle={course?.location || undefined}
+        action={
+          <nav className="flex gap-1 rounded-lg border border-white/10 p-1 text-sm" aria-label="Zeitraum">
+            {PERIODS.map((p) => (
+              <Link
+                key={p}
+                href={`/admin/statistik/${slug}?tage=${p}`}
+                className={`rounded-sm px-3 py-1.5 transition-colors ${p === days ? "bg-brass text-night" : "text-cream/70 hover:text-brass"}`}
+              >
+                {p === 365 ? "1 Jahr" : `${p} Tage`}
+              </Link>
+            ))}
+          </nav>
+        }
+      />
 
       {!report ? (
         <p className="mt-8 text-sm text-cream/65">In den letzten {days} Tagen wurden keine Runden gemeldet.</p>
@@ -88,8 +90,8 @@ function Report({ report, unit, hcps }: { report: CourseReport; unit: string; hc
     <>
       {report.belowThreshold ? (
         <p className="mt-8 rounded-sm border border-brass/40 bg-brass/10 p-4 text-sm text-cream/80">
-          Erst {report.rounds} {report.rounds === 1 ? "Runde" : "Runden"} in diesem Zeitraum. Ein Betreiber
-          sähe hier noch nichts (Schwelle: {MIN_ROUNDS_FOR_DISPLAY} Runden).
+          Erst {report.rounds} {report.rounds === 1 ? "Runde" : "Runden"} in diesem Zeitraum. Ein Betreiber sähe hier
+          noch nichts (Schwelle: {MIN_ROUNDS_FOR_DISPLAY} Runden).
         </p>
       ) : null}
 
@@ -100,14 +102,21 @@ function Report({ report, unit, hcps }: { report: CourseReport; unit: string; hc
           value={report.medianDuration != null ? formatDuration(report.medianDuration) : "–"}
           note={`aus ${report.durationSamples} Runden mit Dauer`}
         />
-        <Stat label="Ø Gruppengröße" value={report.avgGroup != null ? fmt(report.avgGroup, 1) : "–"} note={`${report.players} Spieler`} />
+        <Stat
+          label="Ø Gruppengröße"
+          value={report.avgGroup != null ? fmt(report.avgGroup, 1) : "–"}
+          note={`${report.players} Spieler`}
+        />
         <Stat label="Quelle" value={dominant(report.sources)} note={breakdown(report.sources, SOURCE_LABELS)} />
       </dl>
 
       {anomalies.length ? (
         <div className="mt-6 space-y-2">
           {anomalies.map((h) => (
-            <p key={h.hole} className="rounded-sm border border-amber-400/40 bg-amber-400/10 p-3 text-sm text-amber-100">
+            <p
+              key={h.hole}
+              className="rounded-sm border border-amber-400/40 bg-amber-400/10 p-3 text-sm text-amber-100"
+            >
               ⚠ {unit} {h.hole} ist in den letzten 14 Tagen im Schnitt {fmt(h.anomaly!.recent - h.anomaly!.before, 1)}{" "}
               Schläge schwerer als davor ({fmt(h.anomaly!.before, 1)} → {fmt(h.anomaly!.recent, 1)}).
               {golf ? "" : " Vielleicht beschädigt?"}
@@ -131,11 +140,19 @@ function Report({ report, unit, hcps }: { report: CourseReport; unit: string; hc
               <tr className="text-left text-xs text-cream/55">
                 <th className="py-2 pr-3 font-normal">{unit}</th>
                 {golf ? <th className="py-2 pr-3 font-normal">Par</th> : null}
-                {showHcp ? <th className="py-2 pr-3 font-normal" title="Schwierigkeitsrang laut Scorecard / laut Runden">HCP · real</th> : null}
+                {showHcp ? (
+                  <th className="py-2 pr-3 font-normal" title="Schwierigkeitsrang laut Scorecard / laut Runden">
+                    HCP · real
+                  </th>
+                ) : null}
                 <th className="py-2 pr-3 font-normal">Ø Schläge</th>
                 <th className="w-1/3 py-2 pr-3 font-normal" aria-hidden />
                 {golf ? <th className="py-2 pr-3 font-normal">über Par</th> : null}
-                {golf ? <th className="py-2 pr-3 font-normal">Ø Putts</th> : <th className="py-2 pr-3 font-normal">Hole-in-one</th>}
+                {golf ? (
+                  <th className="py-2 pr-3 font-normal">Ø Putts</th>
+                ) : (
+                  <th className="py-2 pr-3 font-normal">Hole-in-one</th>
+                )}
                 <th className="py-2 font-normal text-right">Werte</th>
               </tr>
             </thead>
@@ -211,7 +228,9 @@ function HoleRow({
       {golf ? (
         <td className="py-2 pr-3 font-mono text-cream/80">{h.avgPutts != null ? fmt(h.avgPutts, 1) : "–"}</td>
       ) : (
-        <td className="py-2 pr-3 font-mono text-cream/80">{h.aceRate != null ? `${Math.round(h.aceRate * 100)} %` : "–"}</td>
+        <td className="py-2 pr-3 font-mono text-cream/80">
+          {h.aceRate != null ? `${Math.round(h.aceRate * 100)} %` : "–"}
+        </td>
       )}
       <td className="py-2 text-right font-mono text-xs text-cream/45">{h.samples}</td>
     </tr>
@@ -225,11 +244,21 @@ function WeekBars({ weeks }: { weeks: { start: string; rounds: number }[] }) {
     <div>
       <div className="flex h-36 items-stretch gap-1">
         {shown.map((w) => (
-          <div key={w.start} className="flex h-full min-w-0 flex-1 flex-col items-center justify-end" title={`Woche ab ${formatDay(w.start)}: ${w.rounds}`}>
+          <div
+            key={w.start}
+            className="flex h-full min-w-0 flex-1 flex-col items-center justify-end"
+            title={`Woche ab ${formatDay(w.start)}: ${w.rounds}`}
+          >
             <span className="mb-1 font-mono text-[10px] text-cream/55">{w.rounds || ""}</span>
             {/* Höhe relativ zu einer Fläche mit fester Höhe – sonst greift das Prozent nicht. */}
             <div className="flex w-full flex-1 items-end justify-center">
-              <span className="block w-full max-w-6 rounded-t-sm bg-brass/80" style={{ height: `${(w.rounds / max) * 100}%`, minHeight: w.rounds ? 2 : 0 }} />
+              <span
+                className="block w-full max-w-6 rounded-t-sm bg-brass/80"
+                style={{
+                  height: `${(w.rounds / max) * 100}%`,
+                  minHeight: w.rounds ? 2 : 0,
+                }}
+              />
             </div>
           </div>
         ))}
@@ -248,7 +277,9 @@ function Heatmap({ data }: { data: number[][] }) {
     <div className="grid grid-cols-[88px_repeat(7,minmax(0,1fr))] gap-1 text-xs">
       <span />
       {WEEKDAYS.map((d) => (
-        <span key={d} className="text-center text-cream/55">{d}</span>
+        <span key={d} className="text-center text-cream/55">
+          {d}
+        </span>
       ))}
       {data.map((row, s) => (
         <Row key={s} label={SLOT_LABELS[s]} row={row} max={max} />
@@ -265,7 +296,10 @@ function Row({ label, row, max }: { label: string; row: number[]; max: number })
         <span
           key={i}
           className="flex h-8 items-center justify-center rounded-sm font-mono"
-          style={{ backgroundColor: `rgba(201, 160, 53, ${v ? 0.12 + (v / max) * 0.78 : 0.05})`, color: v / max > 0.55 ? "#0e2718" : undefined }}
+          style={{
+            backgroundColor: `rgba(201, 160, 53, ${v ? 0.12 + (v / max) * 0.78 : 0.05})`,
+            color: v / max > 0.55 ? "#0e2718" : undefined,
+          }}
         >
           {v || ""}
         </span>
@@ -291,7 +325,10 @@ function Breakdown({
       {entries.map(([k, v]) => (
         <li key={k} className="flex items-center gap-3">
           {swatch ? (
-            <span className="h-3 w-3 shrink-0 rounded-full border border-cream/30" style={{ backgroundColor: swatch(k) ?? "transparent" }} />
+            <span
+              className="h-3 w-3 shrink-0 rounded-full border border-cream/30"
+              style={{ backgroundColor: swatch(k) ?? "transparent" }}
+            />
           ) : null}
           <span className="flex-1">{label(k)}</span>
           <span className="font-mono text-cream/80">{v}</span>
@@ -322,7 +359,10 @@ function Stat({ label, value, note }: { label: string; value: string; note?: str
 }
 
 function fmt(n: number, digits: number): string {
-  return n.toLocaleString("de-DE", { minimumFractionDigits: digits, maximumFractionDigits: digits });
+  return n.toLocaleString("de-DE", {
+    minimumFractionDigits: digits,
+    maximumFractionDigits: digits,
+  });
 }
 
 function signed(n: number): string {

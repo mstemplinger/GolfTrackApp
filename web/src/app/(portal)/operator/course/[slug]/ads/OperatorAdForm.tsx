@@ -76,11 +76,11 @@ export function OperatorAdForm({
   const quote = useMemo(() => {
     if (target === "course") {
       const golf = course.kind === "golf";
-      return quoteAd(golf ? 1 : 0, golf ? 0 : 1, months);
+      return quoteAd(golf ? 1 : 0, golf ? 0 : 1, months, { operator: true });
     }
     if (!reached.length) return null;
     const golf = reached.filter((c) => c.kind === "golf").length;
-    return quoteAd(golf, reached.length - golf, months);
+    return quoteAd(golf, reached.length - golf, months, { operator: true });
   }, [target, course.kind, reached, months]);
 
   async function submit(event: React.FormEvent) {
@@ -420,10 +420,20 @@ function PriceBox({ quote, t }: { quote: ReturnType<typeof quoteAd> | null; t: R
       <p className="flex flex-wrap items-baseline justify-between gap-2">
         <span className="text-sm text-cream/60">{t.price}</span>
         <span className="font-display text-2xl tracking-tight">
+          {quote.operatorDiscountPercent ? (
+            <s className="mr-2 text-base font-normal text-cream/40">{formatEuro(quote.monthlyBeforeOperatorCents)}</s>
+          ) : null}
           {formatEuro(quote.monthlyDiscountedCents)}
           <span className="text-sm font-normal text-cream/55"> {t.perMonth}</span>
         </span>
       </p>
+      {quote.operatorDiscountPercent ? (
+        <p className="mt-1 sm:text-right">
+          <span className="inline-block rounded-full bg-brass/15 px-2.5 py-0.5 text-xs font-medium text-brass">
+            {t.operatorDiscount(quote.operatorDiscountPercent)}
+          </span>
+        </p>
+      ) : null}
       <p className="mt-1 text-sm text-cream/70 sm:text-right">
         {t.total(t.months(quote.months), formatEuro(quote.totalCents))}
         {quote.discountPercent ? <span className="text-cream/50"> ({t.discount(quote.discountPercent)})</span> : null}

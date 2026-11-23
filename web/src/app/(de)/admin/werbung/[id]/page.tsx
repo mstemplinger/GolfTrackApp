@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { notFound, redirect } from "next/navigation";
 import { adReach, getAd } from "@/lib/ads";
-import { formatEuro } from "@/lib/adPricing";
+import { formatEuro, OPERATOR_DISCOUNT_PERCENT } from "@/lib/adPricing";
 import { isAuthenticated } from "@/lib/auth";
 import { courseMarkers, listCourses } from "@/lib/courses";
 import { AdForm } from "../AdForm";
@@ -90,7 +90,9 @@ export default async function AdDetailPage({ params }: PageProps<"/admin/werbung
               label="Richtpreis (netto, ganze Anfrage)"
               value={
                 ad.quotedTotalCents != null && ad.quotedMonthlyCents != null
-                  ? `${formatEuro(ad.quotedMonthlyCents)} / Monat · gesamt ${formatEuro(ad.quotedTotalCents)}`
+                  ? `${formatEuro(ad.quotedMonthlyCents)} / Monat · gesamt ${formatEuro(ad.quotedTotalCents)}${
+                      ad.source === "operator" ? ` (inkl. −${OPERATOR_DISCOUNT_PERCENT} % Betreiberrabatt)` : ""
+                    }`
                   : "–"
               }
             />

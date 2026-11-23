@@ -40,8 +40,9 @@ async function ownCourse(slug: string) {
 /**
  * Anzeige anfragen: nur auf dem eigenen Platz oder im Umkreis um ihn. Landet
  * wie die Anfrage von /werbung als Entwurf im Adminpanel – geschaltet wird
- * erst nach Rückfrage. Der Preis wird hier neu gerechnet; das Formular zeigt
- * nur die Vorschau derselben Rechnung.
+ * erst nach Rückfrage. Der Preis wird hier neu gerechnet (mit Betreiberrabatt,
+ * OPERATOR_DISCOUNT_PERCENT); das Formular zeigt nur die Vorschau derselben
+ * Rechnung.
  */
 export async function requestOperatorAd(slug: string, payload: unknown): Promise<ToolResult> {
   const owned = await ownCourse(slug);
@@ -58,7 +59,7 @@ export async function requestOperatorAd(slug: string, payload: unknown): Promise
   if (input.target === "course") {
     const golf = course.kind === "golf";
     const placement: AdPlacement = golf ? "golf_scoring" : "minigolf_scoring";
-    const quote = quoteAd(golf ? 1 : 0, golf ? 0 : 1, input.requestedMonths);
+    const quote = quoteAd(golf ? 1 : 0, golf ? 0 : 1, input.requestedMonths, { operator: true });
     await createOperatorAdRequest(op.id, input, { courseSlug: course.slug, placeName: course.name, centre: null }, [placement], quote);
     return { ok: true };
   }
@@ -71,7 +72,7 @@ export async function requestOperatorAd(slug: string, payload: unknown): Promise
   const placements: AdPlacement[] = [];
   if (reach.minigolf > 0) placements.push("minigolf_scoring");
   if (reach.golf > 0) placements.push("golf_scoring");
-  const quote = quoteAd(reach.golf, reach.minigolf, input.requestedMonths);
+  const quote = quoteAd(reach.golf, reach.minigolf, input.requestedMonths, { operator: true });
   await createOperatorAdRequest(op.id, input, { courseSlug: "", placeName: course.name, centre }, placements, quote);
   return { ok: true };
 }

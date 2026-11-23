@@ -84,6 +84,7 @@ export interface AdsCopy {
   perMonth: string;
   total: (months: string, total: string) => string;
   discount: (percent: number) => string;
+  operatorDiscount: (percent: number) => string;
   minimum: string;
   priceNote: string;
   terms: string;
@@ -205,7 +206,8 @@ const de: OperatorToolsCopy = {
     taps: "Antipper",
     last30: "letzte 30 Tage",
     newTitle: "Neue Anzeige anfragen",
-    newIntro: "Unverbindlich – geschaltet wird erst, wenn wir Text, Laufzeit und Preis per Mail bestätigt haben.",
+    newIntro:
+      "Als Platzbetreiber zahlst du nur die Hälfte. Unverbindlich – geschaltet wird erst, wenn wir Text, Laufzeit und Preis per Mail bestätigt haben.",
     where: "Wo soll sie laufen?",
     targetCourse: (name) => `Nur auf ${name}`,
     targetCourseHint: "Deine Gäste sehen sie während ihrer Runde.",
@@ -237,6 +239,7 @@ const de: OperatorToolsCopy = {
     perMonth: "/ Monat",
     total: (months, total) => `${months}: ${total}`,
     discount: (p) => `−${p} % Laufzeitrabatt`,
+    operatorDiscount: (p) => `−${p} % Betreiberrabatt`,
     minimum: "Mindestpreis",
     priceNote: "Netto, zzgl. MwSt. Verbindlich wird der Preis mit unserer Antwort.",
     terms: "Für eine Buchung gelten die",
@@ -357,7 +360,8 @@ const en: OperatorToolsCopy = {
     taps: "Taps",
     last30: "last 30 days",
     newTitle: "Request a new ad",
-    newIntro: "Non-binding – it only goes live once we've confirmed text, duration and price by email.",
+    newIntro:
+      "As a course operator you pay only half. Non-binding – it only goes live once we've confirmed text, duration and price by email.",
     where: "Where should it run?",
     targetCourse: (name) => `Only at ${name}`,
     targetCourseHint: "Your guests see it during their round.",
@@ -389,6 +393,7 @@ const en: OperatorToolsCopy = {
     perMonth: "/ month",
     total: (months, total) => `${months}: ${total}`,
     discount: (p) => `−${p} % duration discount`,
+    operatorDiscount: (p) => `−${p} % operator discount`,
     minimum: "Minimum price",
     priceNote: "Net, plus VAT. The price becomes binding with our reply.",
     terms: "Bookings are subject to the",

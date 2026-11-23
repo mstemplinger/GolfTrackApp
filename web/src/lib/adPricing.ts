@@ -26,13 +26,24 @@ export const DURATION_DISCOUNTS: { months: number; percent: number }[] = [
   { months: 3, percent: 10 },
 ];
 
+/**
+ * Rabatt für Platzbetreiber, die über das Betreiber-Portal buchen – auf den
+ * Preis nach Laufzeitrabatt, für Anzeigen nur auf dem eigenen Platz wie im
+ * Umkreis. Wer GolfTrack bei seinen Gästen bewirbt, soll auch günstiger werben.
+ */
+export const OPERATOR_DISCOUNT_PERCENT = 50;
+
 export interface AdQuote {
   golf: number;
   minigolf: number;
   /** Monatspreis vor Rabatt, mindestens `MINIMUM_MONTHLY_CENTS`. */
   monthlyCents: number;
   discountPercent: number;
-  /** Monatspreis nach Rabatt. */
+  /** Betreiberrabatt in Prozent (0 außerhalb des Portals). */
+  operatorDiscountPercent: number;
+  /** Monatspreis nach Laufzeitrabatt, ohne Betreiberrabatt – zum Durchstreichen. */
+  monthlyBeforeOperatorCents: number;
+  /** Monatspreis nach allen Rabatten. */
   monthlyDiscountedCents: number;
   months: number;
   totalCents: number;
@@ -42,17 +53,29 @@ export function discountFor(months: number): number {
   return DURATION_DISCOUNTS.find((step) => months >= step.months)?.percent ?? 0;
 }
 
-export function quoteAd(golf: number, minigolf: number, months: number): AdQuote {
+/** Auf volle Euro abrunden – krumme Centbeträge wirken wie aus dem Taschenrechner. */
+const fullEuros = (cents: number) => Math.floor(cents / 100) * 100;
+
+export function quoteAd(
+  golf: number,
+  minigolf: number,
+  months: number,
+  { operator = false }: { operator?: boolean } = {},
+): AdQuote {
   const raw = golf * GOLF_COURSE_MONTHLY_CENTS + minigolf * MINIGOLF_COURSE_MONTHLY_CENTS;
   const monthlyCents = Math.max(MINIMUM_MONTHLY_CENTS, raw);
   const discountPercent = discountFor(months);
-  // Auf volle Euro abrunden – krumme Centbeträge wirken wie aus dem Taschenrechner.
-  const monthlyDiscountedCents = Math.floor((monthlyCents * (100 - discountPercent)) / 100 / 100) * 100;
+  const operatorDiscountPercent = operator ? OPERATOR_DISCOUNT_PERCENT : 0;
+  const afterDuration = (monthlyCents * (100 - discountPercent)) / 100;
+  const monthlyBeforeOperatorCents = fullEuros(afterDuration);
+  const monthlyDiscountedCents = fullEuros((afterDuration * (100 - operatorDiscountPercent)) / 100);
   return {
     golf,
     minigolf,
     monthlyCents,
     discountPercent,
+    operatorDiscountPercent,
+    monthlyBeforeOperatorCents,
     monthlyDiscountedCents,
     months,
     totalCents: monthlyDiscountedCents * months,

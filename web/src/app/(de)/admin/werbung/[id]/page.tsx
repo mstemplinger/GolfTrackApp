@@ -58,9 +58,19 @@ export default async function AdDetailPage({ params }: PageProps<"/admin/werbung
         </form>
       </section>
 
-      {ad.source === "form" ? (
+      {ad.source !== "admin" ? (
         <section className="mt-8 rounded-sm border rule bg-moss/30 p-5">
-          <h2 className="marginal">Anfrage über /werbung</h2>
+          <h2 className="marginal">
+            {ad.source === "operator" ? "Anfrage aus dem Betreiber-Portal" : "Anfrage über /werbung"}
+          </h2>
+          {ad.source === "operator" && ad.operatorId ? (
+            <p className="mt-2 text-sm text-cream/70">
+              <a href={`/admin/betreiber/${ad.operatorId}`} className="underline underline-offset-4">
+                Betreiberkonto ansehen
+              </a>
+              {ad.courseSlug ? ` · nur auf ${ad.courseSlug}` : null}
+            </p>
+          ) : null}
           <dl className="mt-3 grid gap-x-8 gap-y-2 text-sm sm:grid-cols-3">
             <Detail label="Name" value={ad.submitterName || "–"} />
             <Detail

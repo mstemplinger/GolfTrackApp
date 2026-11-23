@@ -199,7 +199,7 @@ const de: OperatorCopy = {
   signIn: "Anmelden",
   signingIn: "Anmelden …",
   signInIntro:
-    "Die anonyme Rundenstatistik deiner Anlage: wann viel los ist, wie lange gespielt wird und welche Bahnen schwer sind.",
+    "Die anonyme Rundenstatistik deiner Anlage – wann viel los ist, wie lange gespielt wird, welche Bahnen schwer sind. Dazu dein QR-Aushang, Werbung in der Zählkarte und Werbemittel für den Platz.",
   email: "E-Mail",
   password: "Passwort",
   wrongCredentials: "E-Mail oder Passwort stimmen nicht – oder das Konto ist gesperrt.",
@@ -218,7 +218,7 @@ const de: OperatorCopy = {
   back: "← Meine Plätze",
   tooFew: "Noch zu wenige Runden für eine Auswertung",
   tooFewText: (min) =>
-    `Damit niemand auf einzelne Spielgruppen schließen kann, zeigen wir Zahlen erst ab ${min} gemeldeten Runden im gewählten Zeitraum. Ein längerer Zeitraum hilft oft schon. Mehr Runden kommen zusammen, wenn deine Gäste mit GolfTrack zählen – den QR-Code-Aushang für deine Anlage gibt es auf golftrack.app.`,
+    `Damit niemand auf einzelne Spielgruppen schließen kann, zeigen wir Zahlen erst ab ${min} gemeldeten Runden im gewählten Zeitraum. Ein längerer Zeitraum hilft oft schon. Mehr Runden kommen zusammen, wenn deine Gäste mit GolfTrack zählen – den QR-Code-Aushang dafür findest du unter „Aushang“.`,
   nothingShared: "Für deinen Zugang ist noch keine Auswertung freigeschaltet.",
   footnote:
     "Grundlage sind Runden, die Spieler in der GolfTrack-App, im App Clip oder in der Browser-Zählkarte freiwillig und anonym gemeldet haben – keine Namen, keine Uhrzeiten, keine Standorte. Die Zahlen bilden deshalb nur einen Teil aller Runden ab.",
@@ -317,7 +317,7 @@ const en: OperatorCopy = {
   signIn: "Sign in",
   signingIn: "Signing in …",
   signInIntro:
-    "The anonymous round statistics for your course: when it gets busy, how long rounds take and which holes are hard.",
+    "The anonymous round statistics for your course – when it gets busy, how long rounds take, which holes are hard. Plus your QR code sign, advertising on the scorecard and print materials for the course.",
   email: "Email",
   password: "Password",
   wrongCredentials: "Email or password is wrong – or the account is disabled.",
@@ -336,7 +336,7 @@ const en: OperatorCopy = {
   back: "← My courses",
   tooFew: "Not enough rounds for an evaluation yet",
   tooFewText: (min) =>
-    `So that nobody can draw conclusions about individual groups, we only show figures from ${min} reported rounds in the selected period. A longer period often helps. More rounds come in when your guests keep score with GolfTrack – the QR code poster for your course is available on golftrack.app.`,
+    `So that nobody can draw conclusions about individual groups, we only show figures from ${min} reported rounds in the selected period. A longer period often helps. More rounds come in when your guests keep score with GolfTrack – you'll find the QR code sign for that under “Sign”.`,
   nothingShared: "No evaluation has been enabled for your account yet.",
   footnote:
     "Based on rounds that players reported voluntarily and anonymously in the GolfTrack app, the App Clip or the browser scorecard – no names, no times of day, no locations. The figures therefore cover only part of all rounds played.",

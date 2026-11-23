@@ -81,7 +81,7 @@ const optionalUrl = z
  */
 export const hintSchema = z.object({
   kind: hintKind,
-  text: trimmed(140).min(2),
+  text: trimmed(200).min(2),
 });
 
 export type CourseHint = z.infer<typeof hintSchema>;
@@ -304,6 +304,29 @@ export const adRequestSchema = z.object({
 });
 
 export type AdRequestInput = z.infer<typeof adRequestSchema>;
+
+/**
+ * Werbeanfrage aus dem Betreiber-Portal. Der Platz steht fest (aus der
+ * Adresse, vom Server gegen das Konto geprüft): entweder nur auf diesem Platz
+ * oder im Umkreis um ihn. Kein Honigtopf, keine Einwilligung – das Konto ist
+ * angemeldet und bekannt.
+ */
+export const operatorAdRequestSchema = z.object({
+  target: z.enum(["course", "radius"]),
+  radiusKm: z.number().int().min(5).max(100),
+  requestedMonths: z.number().int().min(1).max(36),
+  title: trimmed(40).min(2),
+  subtitle: trimmed(80).default(""),
+  linkURL: optionalUrl,
+  imageURL: optionalUrl,
+  advertiser: trimmed(120).default(""),
+  submitterName: trimmed(120).min(2),
+  submitterEmail: z.string().trim().email(),
+  submitterPhone: trimmed(60).default(""),
+  requestNote: trimmed(2000).default(""),
+});
+
+export type OperatorAdRequestInput = z.infer<typeof operatorAdRequestSchema>;
 
 /** Zählmeldung aus der App. Ohne Schlüssel, deshalb nach oben gedeckelt. */
 export const adEventBatchSchema = z.object({

@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { redirect } from "next/navigation";
-import { listAds, type AdWithReach } from "@/lib/ads";
+import { isAdRequest, listAds, type AdWithReach } from "@/lib/ads";
 import { isAuthenticated } from "@/lib/auth";
 import { AdStatusPill } from "./AdStatusPill";
 import { PageHeader, Panel, PrimaryLink, StatCard } from "../ui";
@@ -16,9 +16,9 @@ export default async function AdsPage() {
 
   const ads = await listAds();
   const active = ads.filter((ad) => ad.status === "active");
-  // Was über /werbung hereinkommt, liegt als Entwurf da und will zuerst
-  // angeschaut werden – deshalb eine eigene Gruppe ganz oben.
-  const requests = ads.filter((ad) => ad.status === "draft" && ad.source === "form");
+  // Was über /werbung oder das Betreiber-Portal hereinkommt, liegt als Entwurf
+  // da und will zuerst angeschaut werden – deshalb eine eigene Gruppe ganz oben.
+  const requests = ads.filter(isAdRequest);
   const rest = ads.filter((ad) => ad.status !== "active" && !requests.includes(ad));
   const reach = active.reduce((sum, ad) => sum + ad.impressions, 0);
 
@@ -75,7 +75,7 @@ function Group({ title, ads, empty }: { title: string; ads: AdWithReach[]; empty
                     <span className="mt-0.5 block text-sm text-cream/70">
                       {[
                         ad.courseSlug || "alle Anlagen",
-                        ad.advertiser || (ad.source === "form" ? ad.submitterName : ""),
+                        ad.advertiser || (ad.source !== "admin" ? ad.submitterName : ""),
                         ad.endsOn ? `bis ${new Date(ad.endsOn).toLocaleDateString("de-DE")}` : null,
                       ]
                         .filter(Boolean)

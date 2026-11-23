@@ -1,6 +1,6 @@
 import { revalidatePath } from "next/cache";
 import { z } from "zod";
-import { getAd, listAds, setAdStatus } from "@/lib/ads";
+import { getAd, isAdRequest, listAds, setAdStatus } from "@/lib/ads";
 import { apiTokenConfigured, apiTokenMatches } from "@/lib/auth";
 import { getCourse, listCourses, setStatus } from "@/lib/courses";
 
@@ -47,7 +47,8 @@ function revalidateCoursePages(slug?: string): void {
 
 /**
  * Was offen ist. Plätze mit `pending`, Werbeanfragen mit `draft` **und**
- * `source = 'form'` – von Hand angelegte Entwürfe sind keine Anfrage und
+ * `source = 'form'` oder `'operator'` (Betreiber-Portal) – von Hand
+ * angelegte Entwürfe sind keine Anfrage und
  * sollen niemanden aus dem Feierabend holen.
  */
 export async function GET(request: Request) {
@@ -85,7 +86,7 @@ export async function GET(request: Request) {
         adminURL: `${base}/admin/${course.id}`,
       })),
       ads: ads
-        .filter((ad) => ad.status === "draft" && ad.source === "form")
+        .filter(isAdRequest)
         .map((ad) => ({
           id: ad.id,
           courseSlug: ad.courseSlug,

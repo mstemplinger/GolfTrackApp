@@ -21,7 +21,7 @@ export function LangSwitch({ lang }: { lang: OperatorLang }) {
               window.location.reload();
             })
           }
-          className={`rounded-md px-2.5 py-1 uppercase tracking-wider transition-colors ${
+          className={`min-h-9 rounded-md px-2.5 uppercase tracking-wider transition-colors ${
             l === lang ? "bg-brass text-night" : "text-cream/60 hover:text-brass"
           }`}
         >

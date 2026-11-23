@@ -2,7 +2,7 @@ import "server-only";
 import { query, queryOne } from "./db";
 import { ensureSchema } from "./migrations";
 import type { AdQuote } from "./adPricing";
-import type { AdInput, AdPlacement, AdRequestInput, AdStatus } from "./schema";
+import type { AdInput, AdPlacement, AdRequestInput, AdStatus, OperatorAdRequestInput } from "./schema";
 
 /**
  * Werbung für den freien Platz unter den Spielernamen in der Minigolfkarte.
@@ -35,8 +35,13 @@ export interface AdRecord {
   /** Richtpreis aus dem Formular, netto in Cent; null bei Anzeigen aus dem Adminpanel. */
   quotedMonthlyCents: number | null;
   quotedTotalCents: number | null;
-  /** `admin` = von Hand angelegt, `form` = über /werbung eingegangen. */
+  /**
+   * `admin` = von Hand angelegt, `form` = über /werbung eingegangen,
+   * `operator` = aus dem Betreiber-Portal (dann mit `operatorId`).
+   */
   source: string;
+  /** Betreiberkonto, das die Anzeige im Portal angefragt hat; sonst leer. */
+  operatorId: string;
   submitterName: string;
   submitterEmail: string;
   submitterPhone: string;
@@ -51,6 +56,16 @@ export interface AdWithReach extends AdRecord {
 }
 
 type DbRow = Record<string, unknown>;
+
+/**
+ * Quellen, deren Entwürfe eine Anfrage sind (Adminpanel „Anfragen“,
+ * Telegram-Freigabe, Übersicht). Von Hand angelegte Entwürfe gehören nicht dazu.
+ */
+export const AD_REQUEST_SOURCES = ["form", "operator"] as const;
+
+export function isAdRequest(ad: Pick<AdRecord, "status" | "source">): boolean {
+  return ad.status === "draft" && (AD_REQUEST_SOURCES as readonly string[]).includes(ad.source);
+}
 
 const asString = (v: unknown) => (v == null ? "" : String(v));
 /** Nur der Tag, ohne Zeitzonenrechnerei – `date` kommt je nach Treiber anders. */
@@ -83,6 +98,7 @@ function mapRow(row: DbRow): AdRecord {
     quotedMonthlyCents: row.quoted_monthly_cents == null ? null : Number(row.quoted_monthly_cents),
     quotedTotalCents: row.quoted_total_cents == null ? null : Number(row.quoted_total_cents),
     source: asString(row.source),
+    operatorId: asString(row.operator_id),
     submitterName: asString(row.submitter_name),
     submitterEmail: asString(row.submitter_email),
     submitterPhone: asString(row.submitter_phone),
@@ -191,6 +207,96 @@ async function insertAdRequest(
     ],
   );
   return mapRow(rows[0]);
+}
+
+/**
+ * Anfrage aus dem Betreiber-Portal. Wie beim Formular auf /werbung ein
+ * Entwurf je Werbeplatz – nur kennt der Eintrag hier sein Konto
+ * (`operator_id`), damit es seine Anzeigen im Portal wiederfindet.
+ *
+ * `courseSlug` gesetzt = die Anzeige gilt nur auf diesem Platz (ohne
+ * Umkreis). Sonst Umkreis um `centre`.
+ */
+export async function createOperatorAdRequest(
+  operatorId: string,
+  input: OperatorAdRequestInput,
+  where: { courseSlug: string; placeName: string; centre: { lat: number; lon: number } | null },
+  placements: AdPlacement[],
+  quote: AdQuote,
+): Promise<AdRecord[]> {
+  await ensureSchema();
+  const radius = where.courseSlug ? null : input.radiusKm;
+  const created: AdRecord[] = [];
+  for (const placement of placements) {
+    const rows = await query<DbRow>(
+      `INSERT INTO ads (
+         status, placement, course_slug, title, subtitle, image_url, link_url,
+         advertiser, source, operator_id, submitter_name, submitter_email, submitter_phone, request_note,
+         latitude, longitude, radius_km, place_name, requested_months,
+         quoted_monthly_cents, quoted_total_cents
+       ) VALUES ('draft',$1,$2,$3,$4,$5,$6,$7,'operator',$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19)
+       RETURNING *`,
+      [
+        placement,
+        where.courseSlug,
+        input.title,
+        input.subtitle,
+        input.imageURL,
+        input.linkURL,
+        input.advertiser,
+        operatorId,
+        input.submitterName,
+        input.submitterEmail,
+        input.submitterPhone,
+        input.requestNote,
+        radius == null ? null : (where.centre?.lat ?? null),
+        radius == null ? null : (where.centre?.lon ?? null),
+        radius,
+        where.placeName,
+        input.requestedMonths,
+        quote.monthlyDiscountedCents,
+        quote.totalCents,
+      ],
+    );
+    created.push(mapRow(rows[0]));
+  }
+  return created;
+}
+
+/** Offene Anfragen eines Kontos – gegen versehentliches Mehrfachabschicken gedeckelt. */
+export async function openOperatorAdRequests(operatorId: string): Promise<number> {
+  await ensureSchema();
+  const row = await queryOne<{ total: string }>(
+    `SELECT COUNT(*) AS total FROM ads WHERE operator_id = $1 AND status = 'draft'`,
+    [operatorId],
+  );
+  return Number(row?.total ?? 0);
+}
+
+/**
+ * Die Anzeigen eines Betreiberkontos fürs Portal, mit den Zählern der letzten
+ * 30 Tage. Nur die eigenen: was andere auf demselben Platz buchen, geht das
+ * Konto nichts an.
+ */
+export async function listOperatorAds(operatorId: string): Promise<AdWithReach[]> {
+  await ensureSchema();
+  const rows = await query<DbRow>(
+    `SELECT a.*,
+            COALESCE(s.impressions, 0) AS impressions,
+            COALESCE(s.clicks, 0)      AS clicks
+       FROM ads a
+       LEFT JOIN (
+         SELECT ad_id, SUM(impressions) AS impressions, SUM(clicks) AS clicks
+           FROM ad_stats
+          WHERE day > current_date - 30
+          GROUP BY ad_id
+       ) s ON s.ad_id = a.id
+      WHERE a.operator_id = $1
+      ORDER BY a.created_at DESC
+      LIMIT 100`,
+    [operatorId],
+  );
+  return rows.map(mapRowWithReach);
 }
 
 export async function updateAd(id: string, input: AdInput): Promise<AdRecord | null> {

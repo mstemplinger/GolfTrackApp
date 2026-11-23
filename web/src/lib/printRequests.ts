@@ -32,7 +32,11 @@ function recipient(): string | null {
 
 export type PrintRequestResult = "sent" | "unavailable";
 
-export async function submitPrintRequest(input: PrintRequestInput): Promise<PrintRequestResult> {
+/**
+ * `origin` sind zusätzliche Zeilen unter dem Kopf – etwa aus dem
+ * Betreiber-Portal, damit klar ist, welches Konto und welcher Platz fragt.
+ */
+export async function submitPrintRequest(input: PrintRequestInput, origin: string[] = []): Promise<PrintRequestResult> {
   const to = recipient();
   if (!to || !mailConfigured()) return "unavailable";
 
@@ -43,6 +47,7 @@ export async function submitPrintRequest(input: PrintRequestInput): Promise<Prin
     `Kontakt:   ${input.name}`,
     `E-Mail:    ${input.email}`,
     `Telefon:   ${input.phone || "–"}`,
+    ...origin,
     "",
     "Gewünscht:",
     ...input.items.map((item) => `  – ${PRINT_ITEM_LABEL[item]}`),

@@ -339,6 +339,11 @@ const STATEMENTS = [
      decided_at     timestamptz
    )`,
   `CREATE INDEX IF NOT EXISTS course_name_requests_pending_idx ON course_name_requests (status, created_at)`,
+  // Werbeanfragen aus dem Betreiber-Portal (`source = 'operator'`): Das Konto
+  // sieht dort seine eigenen Anzeigen samt Zählern. Erst hier, weil `operators`
+  // vorher stehen muss. Wird ein Konto gelöscht, bleibt die Anzeige stehen.
+  `ALTER TABLE ads ADD COLUMN IF NOT EXISTS operator_id uuid REFERENCES operators(id) ON DELETE SET NULL`,
+  `CREATE INDEX IF NOT EXISTS ads_operator_idx ON ads (operator_id)`,
 ];
 
 let ready: Promise<void> | null = null;

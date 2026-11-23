@@ -18,9 +18,15 @@ export function LogoutButton({ label }: { label: string }) {
           window.location.assign("/login");
         })
       }
-      className="rounded-lg border border-white/10 px-3 py-1.5 text-cream/75 transition-colors hover:border-brass/60 hover:text-brass disabled:opacity-60"
+      aria-label={label}
+      title={label}
+      className="grid size-11 place-items-center rounded-lg text-cream/75 transition-colors hover:text-brass disabled:opacity-60 sm:flex sm:size-auto sm:min-h-9 sm:border sm:border-white/10 sm:px-3 sm:py-1.5 sm:hover:border-brass/60"
     >
-      {label}
+      {/* Am Handy nur das Zeichen – Text und Name passen dort nicht nebeneinander. */}
+      <svg aria-hidden viewBox="0 0 20 20" className="size-5 sm:hidden" fill="none" stroke="currentColor" strokeWidth="1.6">
+        <path d="M8 4H5.5A1.5 1.5 0 0 0 4 5.5v9A1.5 1.5 0 0 0 5.5 16H8M12.5 13.5 16 10l-3.5-3.5M16 10H8" strokeLinecap="round" strokeLinejoin="round" />
+      </svg>
+      <span className="hidden sm:inline">{label}</span>
     </button>
   );
 }

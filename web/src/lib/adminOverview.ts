@@ -46,7 +46,7 @@ export async function adminOverview(): Promise<AdminOverview> {
       count(`SELECT COUNT(*) AS total FROM courses WHERE status = 'pending'`),
       count(`SELECT COUNT(*) AS total FROM courses WHERE status = 'approved' AND kind = 'golf'`),
       count(`SELECT COUNT(*) AS total FROM courses WHERE status = 'approved' AND kind = 'minigolf'`),
-      count(`SELECT COUNT(*) AS total FROM ads WHERE status = 'draft' AND source = 'form'`),
+      count(`SELECT COUNT(*) AS total FROM ads WHERE status = 'draft' AND source IN ('form', 'operator')`),
       count(`SELECT COUNT(*) AS total FROM ads WHERE status = 'active'`),
       count(`SELECT COUNT(*) AS total FROM round_stats WHERE played_on >= current_date - 30`),
       count(`SELECT COUNT(*) AS total FROM course_reports WHERE created_at >= now() - interval '30 days'`),

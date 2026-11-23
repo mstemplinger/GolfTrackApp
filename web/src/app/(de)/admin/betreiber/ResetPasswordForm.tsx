@@ -9,7 +9,9 @@ export function ResetPasswordForm({ id, email, portalUrl }: { id: string; email:
   const [state, action, pending] = useActionState<SaveState, FormData>(resetPassword, { status: "idle" });
 
   if (state.status === "ok" && state.password) {
-    return <PasswordNotice email={state.email || email} password={state.password} portalUrl={portalUrl} />;
+    return (
+      <PasswordNotice email={state.email || email} password={state.password} portalUrl={portalUrl} mail={state.mail} />
+    );
   }
 
   return (
@@ -21,6 +23,10 @@ export function ResetPasswordForm({ id, email, portalUrl }: { id: string; email:
     >
       <input type="hidden" name="id" value={id} />
       <input type="hidden" name="email" value={email} />
+      <label className="mb-3 flex items-center gap-3 text-sm">
+        <input type="checkbox" name="sendMail" defaultChecked className="h-4 w-4 accent-[#c9a035]" />
+        Per E-Mail an {email} senden
+      </label>
       <button
         type="submit"
         disabled={pending}

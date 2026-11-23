@@ -41,6 +41,7 @@ export default async function OperatorDetailPage({ params }: PageProps<"/admin/b
             email: op.email,
             notes: op.notes,
             active: op.active,
+            lang: op.lang,
             permissions: op.permissions,
             courses: op.courses,
           }}

@@ -27,6 +27,8 @@ export interface Operator {
   permissions: OperatorSection[];
   active: boolean;
   notes: string;
+  /** Sprache der Zugangsmails und Vorgabe fürs Portal. */
+  lang: "de" | "en";
   createdAt: string;
   passwordChangedAt: string;
   lastLoginAt: string | null;
@@ -40,6 +42,7 @@ export const operatorInputSchema = z.object({
   permissions: z.array(z.string()).transform((list) => list.filter(isSection)),
   courses: z.array(z.string().trim().min(1).max(200)).max(200),
   active: z.boolean().default(true),
+  lang: z.enum(["de", "en"]).default("de"),
 });
 export type OperatorInput = z.infer<typeof operatorInputSchema>;
 
@@ -80,6 +83,7 @@ interface Row {
   permissions: string[] | null;
   active: boolean;
   notes: string;
+  lang: string | null;
   created_at: string | Date;
   password_changed_at: string | Date;
   last_login_at: string | Date | null;
@@ -96,6 +100,7 @@ function mapRow(r: Row): Operator {
     permissions: (r.permissions ?? []).filter(isSection),
     active: Boolean(r.active),
     notes: r.notes ?? "",
+    lang: r.lang === "en" ? "en" : "de",
     createdAt: iso(r.created_at)!,
     passwordChangedAt: iso(r.password_changed_at)!,
     lastLoginAt: iso(r.last_login_at),
@@ -104,7 +109,7 @@ function mapRow(r: Row): Operator {
 }
 
 const SELECT = `
-  SELECT o.id, o.name, o.email, o.permissions, o.active, o.notes, o.created_at,
+  SELECT o.id, o.name, o.email, o.permissions, o.active, o.notes, o.lang, o.created_at,
          o.password_changed_at, o.last_login_at,
          COALESCE(array_agg(oc.course_slug ORDER BY oc.course_slug) FILTER (WHERE oc.course_slug IS NOT NULL), '{}') AS courses
     FROM operators o
@@ -155,9 +160,9 @@ export async function createOperator(input: OperatorInput, password: string): Pr
   const taken = await queryOne(`SELECT 1 FROM operators WHERE email = $1`, [input.email]);
   if (taken) return { status: "email_taken" };
   const row = await queryOne<{ id: string }>(
-    `INSERT INTO operators (name, email, password_hash, permissions, active, notes)
-     VALUES ($1, $2, $3, $4, $5, $6) RETURNING id`,
-    [input.name, input.email, await hashPassword(password), input.permissions, input.active, input.notes],
+    `INSERT INTO operators (name, email, password_hash, permissions, active, notes, lang)
+     VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING id`,
+    [input.name, input.email, await hashPassword(password), input.permissions, input.active, input.notes, input.lang],
   );
   const id = String(row!.id);
   await setCourses(id, input.courses);
@@ -168,14 +173,10 @@ export async function updateOperator(id: string, input: OperatorInput): Promise<
   await ensureSchema();
   const taken = await queryOne(`SELECT 1 FROM operators WHERE email = $1 AND id <> $2`, [input.email, id]);
   if (taken) return { status: "email_taken" };
-  await query(`UPDATE operators SET name = $2, email = $3, permissions = $4, active = $5, notes = $6 WHERE id = $1`, [
-    id,
-    input.name,
-    input.email,
-    input.permissions,
-    input.active,
-    input.notes,
-  ]);
+  await query(
+    `UPDATE operators SET name = $2, email = $3, permissions = $4, active = $5, notes = $6, lang = $7 WHERE id = $1`,
+    [id, input.name, input.email, input.permissions, input.active, input.notes, input.lang],
+  );
   await setCourses(id, input.courses);
   return { status: "ok", id };
 }

@@ -30,12 +30,17 @@ export type EmailContent = {
   /** Sechsstelliger Code, groß hervorgehoben. */
   code?: string;
   codeHint?: string;
+  /** „password“: kleinere Schrift und enger – für lange Zufallspasswörter. */
+  codeStyle?: "code" | "password";
+  /** Angaben als Zeilen „Bezeichnung – Wert“ (z. B. Zugangsdaten). */
+  details?: { label: string; value: string }[];
   button?: { label: string; url: string };
   /** Zweite, leisere Aufforderung unter dem Knopf (z. B. Neuigkeiten abonnieren). */
   secondary?: { text: string; label: string; url: string };
   /** Kleiner Hinweis unter dem Hauptteil. */
   note?: string;
-  unsubscribeUrl: string;
+  /** Nur bei Mails, die man abbestellen kann – nicht bei Kontomails. */
+  unsubscribeUrl?: string;
 };
 
 export function renderEmail(c: EmailContent): string {
@@ -43,7 +48,7 @@ export function renderEmail(c: EmailContent): string {
   const codeBlock = c.code
     ? `<tr><td style="padding:8px 40px 4px">
         <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:${NIGHT};border:1px solid ${BRASS}55;border-radius:14px">
-          <tr><td align="center" style="padding:22px 12px 6px;font-family:'SF Mono',Menlo,Consolas,monospace;font-size:36px;font-weight:700;letter-spacing:12px;color:${BRASS}">${esc(c.code)}</td></tr>
+          <tr><td align="center" style="padding:22px 12px 6px;font-family:'SF Mono',Menlo,Consolas,monospace;font-size:${c.codeStyle === "password" ? "24px" : "36px"};font-weight:700;letter-spacing:${c.codeStyle === "password" ? "2px" : "12px"};color:${BRASS};word-break:break-all">${esc(c.code)}</td></tr>
           ${c.codeHint ? `<tr><td align="center" style="padding:0 12px 18px;font-family:-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;font-size:13px;color:${MUTED}">${esc(c.codeHint)}</td></tr>` : ""}
         </table>
       </td></tr>`
@@ -64,6 +69,18 @@ export function renderEmail(c: EmailContent): string {
         <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="border-top:1px solid #ffffff1f">
           <tr><td style="padding:18px 0 0;font-family:-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;font-size:14px;line-height:1.5;color:${CREAM}">${esc(c.secondary.text)}</td></tr>
           <tr><td style="padding:12px 0 0"><a href="${esc(c.secondary.url)}" style="display:inline-block;border:1px solid ${BRASS};color:${BRASS};font-family:-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;font-size:14px;font-weight:700;text-decoration:none;padding:10px 20px;border-radius:999px">${esc(c.secondary.label)}</a></td></tr>
+        </table>
+      </td></tr>`
+    : "";
+  const details = c.details?.length
+    ? `<tr><td style="padding:4px 40px 10px">
+        <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:${NIGHT};border:1px solid #ffffff1f;border-radius:14px">
+          ${c.details
+            .map(
+              (d, i) =>
+                `<tr><td style="padding:${i ? "0" : "16px"} 18px ${i === c.details!.length - 1 ? "16px" : "10px"};font-family:-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;font-size:12px;letter-spacing:1px;text-transform:uppercase;color:${MUTED}">${esc(d.label)}<br><span style="font-size:16px;letter-spacing:0;text-transform:none;color:${CREAM};font-weight:600">${esc(d.value)}</span></td></tr>`,
+            )
+            .join("")}
         </table>
       </td></tr>`
     : "";
@@ -95,6 +112,7 @@ export function renderEmail(c: EmailContent): string {
         <table role="presentation" width="100%" cellpadding="0" cellspacing="0">
           <tr><td style="padding:36px 40px 16px;font-family:-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;font-size:24px;line-height:1.25;font-weight:700;color:${CREAM}">${esc(c.title)}</td></tr>
           ${paragraphs}
+          ${details}
           ${codeBlock}
           ${button}
           ${secondary}
@@ -105,8 +123,7 @@ export function renderEmail(c: EmailContent): string {
       <tr><td align="center" style="padding:24px 24px 0;font-family:-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;font-size:12px;line-height:1.6;color:${MUTED}">
         GolfTrack · <a href="https://golftrack.app" style="color:${MUTED}">golftrack.app</a><br>
         ${de ? "Scorekarte, Handicap und Laufspur für iPhone und Android." : "Scorecard, handicap and walking track for iPhone and Android."}<br>
-        <a href="${esc(c.unsubscribeUrl)}" style="color:${BRASS}">${de ? "Abmelden" : "Unsubscribe"}</a>
-        · <a href="https://golftrack.app/${de ? "impressum" : "en/legal-notice"}" style="color:${MUTED}">${de ? "Impressum" : "Legal notice"}</a>
+        ${c.unsubscribeUrl ? `<a href="${esc(c.unsubscribeUrl)}" style="color:${BRASS}">${de ? "Abmelden" : "Unsubscribe"}</a> · ` : ""}<a href="https://golftrack.app/${de ? "impressum" : "en/legal-notice"}" style="color:${MUTED}">${de ? "Impressum" : "Legal notice"}</a>
         · <a href="https://golftrack.app/${de ? "datenschutz" : "en/privacy"}" style="color:${MUTED}">${de ? "Datenschutz" : "Privacy"}</a>
       </td></tr>
     </table>
@@ -120,10 +137,12 @@ export function renderEmail(c: EmailContent): string {
 export function renderText(c: EmailContent): string {
   const de = c.lang === "de";
   const parts = [de ? "Hallo," : "Hi,", ...c.paragraphs];
+  if (c.details?.length) parts.push(c.details.map((d) => `${d.label}: ${d.value}`).join("\n"));
   if (c.code) parts.push(`    ${c.code}${c.codeHint ? `\n    (${c.codeHint})` : ""}`);
   if (c.button) parts.push(`${c.button.label}: ${c.button.url}`);
   if (c.secondary) parts.push(`${c.secondary.text} ${c.secondary.label}: ${c.secondary.url}`);
   if (c.note) parts.push(c.note);
-  parts.push(`${de ? "Abmelden" : "Unsubscribe"}: ${c.unsubscribeUrl}`, "GolfTrack · golftrack.app");
+  if (c.unsubscribeUrl) parts.push(`${de ? "Abmelden" : "Unsubscribe"}: ${c.unsubscribeUrl}`);
+  parts.push("GolfTrack · golftrack.app");
   return parts.join("\n\n");
 }

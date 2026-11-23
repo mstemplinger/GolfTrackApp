@@ -322,6 +322,8 @@ const STATEMENTS = [
      PRIMARY KEY (operator_id, course_slug)
    )`,
   `CREATE INDEX IF NOT EXISTS operator_courses_slug_idx ON operator_courses (course_slug)`,
+  // Sprache der Zugangsmails und Vorgabe fürs Portal (de/en).
+  `ALTER TABLE operators ADD COLUMN IF NOT EXISTS lang text NOT NULL DEFAULT 'de'`,
 ];
 
 let ready: Promise<void> | null = null;

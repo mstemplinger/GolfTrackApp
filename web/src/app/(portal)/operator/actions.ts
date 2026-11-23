@@ -38,6 +38,11 @@ export async function login(_prev: LoginState, formData: FormData): Promise<Logi
   }
   await clearLoginFailures();
   await createOperatorSession(op);
+  // Noch keine eigene Sprachwahl? Dann die des Kontos (aus dem Adminpanel).
+  const jar = await cookies();
+  if (!isOperatorLang(jar.get(OPERATOR_LANG_COOKIE)?.value)) {
+    jar.set(OPERATOR_LANG_COOKIE, op.lang, { path: "/", maxAge: 60 * 60 * 24 * 365, sameSite: "lax" });
+  }
   return { done: true };
 }
 

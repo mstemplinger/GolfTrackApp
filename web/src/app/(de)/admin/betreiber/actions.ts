@@ -3,10 +3,13 @@
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { isAuthenticated } from "@/lib/auth";
+import { getCourse } from "@/lib/courses";
+import { sendOperatorMails, type MailResult } from "@/lib/operatorMail";
 import {
   createOperator,
   deleteOperator,
   generatePassword,
+  getOperator,
   operatorInputSchema,
   resetOperatorPassword,
   updateOperator,
@@ -24,6 +27,18 @@ export interface SaveState {
   password?: string;
   email?: string;
   message?: string;
+  /** Ergebnis des Mailversands – nur, wenn „per E-Mail senden“ angehakt war. */
+  mail?: MailResult;
+}
+
+/** Beide Zugangsmails an ein Konto – mit den Namen seiner Plätze. */
+async function mailAccount(id: string, password: string, kind: "created" | "reset"): Promise<MailResult> {
+  const op = await getOperator(id);
+  if (!op) return "failed";
+  const courses = (await Promise.all(op.courses.map((slug) => getCourse(slug))))
+    .map((c) => c?.name)
+    .filter((n): n is string => Boolean(n));
+  return sendOperatorMails({ name: op.name, email: op.email, lang: op.lang, courses }, password, kind);
 }
 
 async function requireAdmin(): Promise<void> {
@@ -38,6 +53,7 @@ function readInput(formData: FormData) {
     permissions: formData.getAll("permissions").map(String),
     courses: formData.getAll("courses").map(String),
     active: formData.get("active") === "on",
+    lang: formData.get("lang") === "en" ? "en" : "de",
   });
 }
 
@@ -70,7 +86,8 @@ export async function saveOperator(_prev: SaveState, formData: FormData): Promis
     return { status: "error", message: "Für diese E-Mail-Adresse gibt es schon ein Konto." };
   }
   revalidatePath("/admin/betreiber");
-  return { status: "ok", id: result.id, password, email: parsed.data.email };
+  const mail = formData.get("sendMail") === "on" ? await mailAccount(result.id, password, "created") : undefined;
+  return { status: "ok", id: result.id, password, email: parsed.data.email, mail };
 }
 
 export async function resetPassword(_prev: SaveState, formData: FormData): Promise<SaveState> {
@@ -79,7 +96,8 @@ export async function resetPassword(_prev: SaveState, formData: FormData): Promi
   if (!id) return { status: "error", message: "Konto fehlt." };
   const password = generatePassword();
   await resetOperatorPassword(id, password);
-  return { status: "ok", id, password, email: String(formData.get("email") ?? "") };
+  const mail = formData.get("sendMail") === "on" ? await mailAccount(id, password, "reset") : undefined;
+  return { status: "ok", id, password, email: String(formData.get("email") ?? ""), mail };
 }
 
 export async function removeOperator(formData: FormData): Promise<void> {

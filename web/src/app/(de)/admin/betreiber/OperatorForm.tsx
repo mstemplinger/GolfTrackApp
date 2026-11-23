@@ -19,11 +19,20 @@ interface Initial {
   email: string;
   notes: string;
   active: boolean;
+  lang: "de" | "en";
   permissions: OperatorSection[];
   courses: string[];
 }
 
-const EMPTY: Initial = { name: "", email: "", notes: "", active: true, permissions: ALL_SECTIONS, courses: [] };
+const EMPTY: Initial = {
+  name: "",
+  email: "",
+  notes: "",
+  active: true,
+  lang: "de",
+  permissions: ALL_SECTIONS,
+  courses: [],
+};
 
 const field =
   "w-full rounded-lg border border-white/10 bg-white/[0.03] px-4 py-2.5 text-sm text-cream placeholder:text-cream/35 focus:border-brass/60 focus:outline-none";
@@ -59,7 +68,13 @@ export function OperatorForm({
   if (!initial.id && state.status === "ok" && state.password) {
     return (
       <div className="space-y-5">
-        <PasswordNotice email={state.email ?? ""} password={state.password} portalUrl={portalUrl} created />
+        <PasswordNotice
+          email={state.email ?? ""}
+          password={state.password}
+          portalUrl={portalUrl}
+          mail={state.mail}
+          created
+        />
         <Link
           href={`/admin/betreiber/${state.id}`}
           className="inline-flex rounded-lg border border-white/10 px-4 py-2 text-sm transition-colors hover:border-brass/60 hover:text-brass"
@@ -106,10 +121,29 @@ export function OperatorForm({
             className={field}
           />
         </label>
-        <label className="flex items-center gap-3 text-sm sm:col-span-2">
-          <input type="checkbox" name="active" defaultChecked={initial.active} className="h-4 w-4 accent-[#c9a035]" />
-          Konto aktiv – darf sich anmelden
+        <label className="block">
+          <span className="mb-1.5 block text-sm text-cream/70">Sprache (E-Mails und Portal)</span>
+          <select name="lang" defaultValue={initial.lang} className={field}>
+            <option value="de" className="bg-night">
+              Deutsch
+            </option>
+            <option value="en" className="bg-night">
+              Englisch
+            </option>
+          </select>
         </label>
+        <div className="flex flex-col justify-end gap-3 pb-1 text-sm">
+          <label className="flex items-center gap-3">
+            <input type="checkbox" name="active" defaultChecked={initial.active} className="h-4 w-4 accent-[#c9a035]" />
+            Konto aktiv – darf sich anmelden
+          </label>
+          {!initial.id ? (
+            <label className="flex items-center gap-3">
+              <input type="checkbox" name="sendMail" defaultChecked className="h-4 w-4 accent-[#c9a035]" />
+              Zugangsdaten per E-Mail senden (zwei getrennte Mails)
+            </label>
+          ) : null}
+        </div>
       </section>
 
       <section>

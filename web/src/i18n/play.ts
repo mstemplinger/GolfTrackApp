@@ -97,6 +97,12 @@ export interface PlayCopy {
   reportRoundDone: string;
   reportRoundFailed: string;
   reportRoundInfo: string;
+  /** Frage vor dem ersten Loch: Runde anonym an die Anlage senden? */
+  consentTitle: string;
+  consentText: string;
+  consentYes: string;
+  consentNo: string;
+  consentPrivacy: string;
   discard: string;
   result: string;
   total: (n: number) => string;
@@ -174,6 +180,11 @@ const de: PlayCopy = {
   reportRoundFailed: "Senden fehlgeschlagen – nochmal versuchen",
   reportRoundInfo:
     "Hilft dem Betreiber zu sehen, welche Bahnen schwer sind und wann viel los ist. Gesendet werden nur Tag, Tageszeit (grob), Dauer, Spielerzahl und Schläge je Bahn – keine Namen, kein Standort. Die Anlage sieht nur Summen ab zehn Runden.",
+  consentTitle: "Runde anonym an die Anlage senden?",
+  consentText: "Nur Schläge, Dauer und Spielerzahl. Keine Namen.",
+  consentYes: "Ja",
+  consentNo: "Nein",
+  consentPrivacy: "Datenschutz",
   discard: "Verwerfen",
   result: "Ergebnis",
   total: (n) => `Gesamt: ${n}`,
@@ -278,6 +289,11 @@ const en: PlayCopy = {
   reportRoundFailed: "Sending failed – try again",
   reportRoundInfo:
     "Helps the operator see which holes are hard and when it gets busy. Only the day, rough time of day, duration, number of players and strokes per hole are sent – no names, no location. The course only sees totals from ten rounds upwards.",
+  consentTitle: "Send this round anonymously to the course?",
+  consentText: "Only strokes, duration and number of players. No names.",
+  consentYes: "Yes",
+  consentNo: "No",
+  consentPrivacy: "Privacy",
   discard: "Discard",
   result: "Result",
   total: (n) => `Total: ${n}`,
@@ -383,6 +399,11 @@ const fr: PlayCopy = {
   reportRoundFailed: "Échec de l'envoi – réessayer",
   reportRoundInfo:
     "Aide l'exploitant à voir quelles pistes sont difficiles et quand il y a du monde. Seuls le jour, le moment de la journée (approximatif), la durée, le nombre de joueurs et les coups par piste sont envoyés – pas de noms, pas de position. Le parcours ne voit que des totaux à partir de dix parties.",
+  consentTitle: "Envoyer la partie anonymement au parcours ?",
+  consentText: "Seulement les coups, la durée et le nombre de joueurs. Aucun nom.",
+  consentYes: "Oui",
+  consentNo: "Non",
+  consentPrivacy: "Confidentialité",
   discard: "Abandonner",
   result: "Résultat",
   total: (n) => `Total : ${n}`,
@@ -488,6 +509,11 @@ const it: PlayCopy = {
   reportRoundFailed: "Invio non riuscito – riprova",
   reportRoundInfo:
     "Aiuta il gestore a capire quali buche sono difficili e quando c'è molta gente. Vengono inviati solo giorno, fascia oraria (approssimativa), durata, numero di giocatori e colpi per buca – niente nomi, nessuna posizione. L'impianto vede solo totali a partire da dieci giri.",
+  consentTitle: "Inviare la partita in forma anonima all'impianto?",
+  consentText: "Solo colpi, durata e numero di giocatori. Nessun nome.",
+  consentYes: "Sì",
+  consentNo: "No",
+  consentPrivacy: "Privacy",
   discard: "Scarta",
   result: "Risultato",
   total: (n) => `Totale: ${n}`,
@@ -593,6 +619,11 @@ const es: PlayCopy = {
   reportRoundFailed: "Error al enviar – inténtalo de nuevo",
   reportRoundInfo:
     "Ayuda al responsable a ver qué hoyos son difíciles y cuándo hay mucha gente. Solo se envían el día, la franja horaria (aproximada), la duración, el número de jugadores y los golpes por hoyo – sin nombres ni ubicación. La instalación solo ve totales a partir de diez vueltas.",
+  consentTitle: "¿Enviar la partida de forma anónima a la instalación?",
+  consentText: "Solo golpes, duración y número de jugadores. Sin nombres.",
+  consentYes: "Sí",
+  consentNo: "No",
+  consentPrivacy: "Privacidad",
   discard: "Descartar",
   result: "Resultado",
   total: (n) => `Total: ${n}`,
@@ -714,6 +745,11 @@ const pl: PlayCopy = {
   reportRoundFailed: "Wysyłanie nie powiodło się – spróbuj ponownie",
   reportRoundInfo:
     "Pomaga operatorowi zobaczyć, które dołki są trudne i kiedy jest tłoczno. Wysyłane są tylko dzień, pora dnia (w przybliżeniu), czas gry, liczba graczy i uderzenia na dołek – bez imion i lokalizacji. Obiekt widzi tylko sumy od dziesięciu rund.",
+  consentTitle: "Wysłać rundę anonimowo do obiektu?",
+  consentText: "Tylko uderzenia, czas gry i liczba graczy. Bez imion.",
+  consentYes: "Tak",
+  consentNo: "Nie",
+  consentPrivacy: "Prywatność",
   discard: "Odrzuć",
   result: "Wynik",
   total: (n) => `Razem: ${n}`,
@@ -819,6 +855,11 @@ const cs: PlayCopy = {
   reportRoundFailed: "Odeslání se nezdařilo – zkusit znovu",
   reportRoundInfo:
     "Pomáhá provozovateli zjistit, které jamky jsou těžké a kdy je plno. Odesílá se jen den, přibližná denní doba, délka hry, počet hráčů a údery na jamku – žádná jména, žádná poloha. Hřiště vidí jen součty od deseti kol.",
+  consentTitle: "Odeslat hru anonymně hřišti?",
+  consentText: "Jen údery, délka hry a počet hráčů. Žádná jména.",
+  consentYes: "Ano",
+  consentNo: "Ne",
+  consentPrivacy: "Ochrana soukromí",
   discard: "Zahodit",
   result: "Výsledek",
   total: (n) => `Celkem: ${n}`,

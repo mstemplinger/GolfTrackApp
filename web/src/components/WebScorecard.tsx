@@ -4,7 +4,7 @@ import { useEffect, useState, useSyncExternalStore } from "react";
 import { createPortal } from "react-dom";
 import type { CourseKind } from "@/lib/schema";
 import { CHALLENGES, results as challengeResults, type ChallengeResult } from "@/lib/minigolfChallenges";
-import { playCopy, type PlayCopy, type PlayLang } from "@/i18n/play";
+import { playCopy, siteLang, type PlayCopy, type PlayLang } from "@/i18n/play";
 
 /**
  * Mitzählen im Browser – für alle, die weder App noch App Clip bekommen:
@@ -46,7 +46,15 @@ interface SavedRound {
   startedAt?: number | null;
   /** Schon anonym an die Anlage gemeldet – kein zweites Mal. */
   reported?: boolean;
+  /**
+   * Antwort auf die Frage vor dem ersten Loch. `null` = noch nicht gefragt.
+   * Fehlt bei Runden von vor der Frage – die bekommen am Ende den Knopf.
+   */
+  consent?: Consent | null;
 }
+
+/** Einwilligung in die anonyme Rundenstatistik – nie vorausgewählt (Planet49). */
+type Consent = "yes" | "no";
 
 /** Wie viele Namensfelder am Anfang dastehen. */
 function emptyNames(kind: CourseKind): string[] {
@@ -124,6 +132,11 @@ export function WebScorecard({
   const [minimized, setMinimized] = useState(false);
   const [startedAt, setStartedAt] = useState<number | null>(() => saved?.startedAt ?? null);
   const [report, setReport] = useState<ReportState>(() => (saved?.reported ? "done" : "idle"));
+  // Alte gespeicherte Runden kennen die Frage nicht: nicht mitten in der Runde
+  // nachfragen, sondern wie bisher den Knopf am Ende zeigen.
+  const [consent, setConsent] = useState<Consent | null>(() =>
+    saved ? (saved.consent === undefined ? "no" : saved.consent) : null,
+  );
 
   const running = Boolean(scores) && hydrated && !minimized;
 
@@ -143,12 +156,13 @@ export function WebScorecard({
         challenges,
         startedAt,
         reported: report === "done",
+        consent,
       };
       window.localStorage.setItem(storageKey, JSON.stringify(payload));
     } catch {
       // Nicht speichern können ist ärgerlich, aber kein Grund abzubrechen.
     }
-  }, [storageKey, names, scores, hole, finished, challenges, startedAt, report]);
+  }, [storageKey, names, scores, hole, finished, challenges, startedAt, report, consent]);
 
   // Solange der Zähler den Bildschirm füllt, gibt es die Seite darunter
   // nicht: `scorecard-open` blendet alles außer der Zählkarte aus (siehe
@@ -174,9 +188,20 @@ export function WebScorecard({
     setMinimized(false);
     setStartedAt(Date.now());
     setReport("idle");
+    setConsent(null);
   }
 
-  /** Anonyme Rundenstatistik – nur auf ausdrücklichen Knopfdruck. */
+  /**
+   * Ergebnis zeigen. Mit Einwilligung geht die Statistik gleich mit – aber nur
+   * an der letzten Bahn. Wer zwischendurch aufs Ergebnis schaut und dann
+   * weiterzählt, soll keine halbe Runde melden.
+   */
+  function finish() {
+    setFinished(true);
+    if (consent === "yes" && hole === holes - 1) void sendReport();
+  }
+
+  /** Anonyme Rundenstatistik – nur mit Einwilligung vor dem ersten Loch oder per Knopf am Ende. */
   async function sendReport() {
     if (!scores || report === "sending" || report === "done") return;
     const body = roundStatsPayload(kind, scores, startedAt);
@@ -213,6 +238,7 @@ export function WebScorecard({
     setNames(emptyNames(kind));
     setStartedAt(null);
     setReport("idle");
+    setConsent(null);
   }
 
   // Der Server kennt den Speicher des Geräts nicht. Solange sein Markup noch
@@ -262,7 +288,9 @@ export function WebScorecard({
 
   return (
     <FullScreen>
-      {finished ? (
+      {consent === null && !finished ? (
+        <ConsentAsk copy={copy} lang={lang} onAnswer={setConsent} />
+      ) : finished ? (
         <Result
           copy={copy}
           names={names}
@@ -270,6 +298,7 @@ export function WebScorecard({
           pars={hasPar ? pars : []}
           awards={challengeResults(challenges, scores, names)}
           report={report}
+          consent={consent}
           onReport={sendReport}
           onBack={() => setFinished(false)}
           onReset={reset}
@@ -288,7 +317,7 @@ export function WebScorecard({
           setChallenges={setChallenges}
           onChange={change}
           onHole={setHole}
-          onFinish={() => setFinished(true)}
+          onFinish={finish}
           onClose={() => setMinimized(true)}
         />
       )}
@@ -311,6 +340,55 @@ function FullScreen({ children }: { children: React.ReactNode }) {
       {children}
     </div>,
     document.body,
+  );
+}
+
+/**
+ * Vollbild-Frage zwischen Aufstellung und erstem Loch. Bewusst knapp:
+ * was gesendet wird, an wen, ohne Namen. „Ja“ und „Nein“ gleich groß –
+ * eine Einwilligung darf nicht leichter sein als die Ablehnung.
+ */
+function ConsentAsk({
+  copy,
+  lang,
+  onAnswer,
+}: {
+  copy: PlayCopy;
+  lang: PlayLang;
+  onAnswer: (answer: Consent) => void;
+}) {
+  const privacy = siteLang(lang) === "de" ? "/datenschutz" : "/en/privacy";
+  return (
+    <div className="mx-auto flex w-full max-w-md flex-1 flex-col justify-center px-6 pb-10 pt-16">
+      <h2 className="text-center text-2xl font-bold leading-snug">{copy.consentTitle}</h2>
+      <p className="mt-3 text-center text-sm leading-relaxed text-cream/60">{copy.consentText}</p>
+      <div className="mt-8 grid grid-cols-2 gap-3">
+        <button
+          type="button"
+          className="rounded-xl py-3.5 text-base font-semibold"
+          style={{ backgroundColor: APP.cardAlt }}
+          onClick={() => onAnswer("no")}
+        >
+          {copy.consentNo}
+        </button>
+        <button
+          type="button"
+          className="rounded-xl py-3.5 text-base font-semibold"
+          style={{ backgroundColor: APP.gold, color: APP.ink }}
+          onClick={() => onAnswer("yes")}
+        >
+          {copy.consentYes}
+        </button>
+      </div>
+      <a
+        href={privacy}
+        target="_blank"
+        rel="noreferrer"
+        className="mt-6 self-center text-xs text-cream/40 underline underline-offset-4"
+      >
+        {copy.consentPrivacy}
+      </a>
+    </div>
   );
 }
 
@@ -725,6 +803,7 @@ function Result({
   pars,
   awards,
   report,
+  consent,
   onReport,
   onBack,
   onReset,
@@ -737,6 +816,8 @@ function Result({
   /** Wettkämpfe der Runde – leer, wenn keiner eingeschaltet war. */
   awards: ChallengeResult[];
   report: ReportState;
+  /** „yes“: schon beim Start zugestimmt, gesendet wird von selbst. */
+  consent: Consent | null;
   onReport: () => void;
   onBack: () => void;
   onReset: () => void;
@@ -817,7 +898,7 @@ function Result({
         ) : null}
 
         <section className="mx-auto mt-8 max-w-lg rounded-2xl p-4" style={{ backgroundColor: APP.card }}>
-          {report === "done" ? (
+          {report === "done" || (consent === "yes" && report === "sending") ? (
             <p className="text-sm font-semibold" style={{ color: APP.gold }}>
               ✓ {copy.reportRoundDone}
             </p>
@@ -825,14 +906,17 @@ function Result({
             <button
               type="button"
               className="w-full rounded-xl py-3 text-sm font-semibold disabled:opacity-60"
-              style={{ backgroundColor: APP.cardAlt }}
+              style={{ backgroundColor: APP.gold, color: APP.ink }}
               disabled={report === "sending"}
               onClick={onReport}
             >
               {report === "failed" ? copy.reportRoundFailed : copy.reportRound}
             </button>
           )}
-          <p className="mt-2.5 text-xs leading-relaxed text-cream/50">{copy.reportRoundInfo}</p>
+          {/* Wer schon zugestimmt hat, braucht die Erklärung nicht noch einmal. */}
+          {consent === "yes" && report !== "failed" ? null : (
+            <p className="mt-2.5 text-xs leading-relaxed text-cream/50">{copy.reportRoundInfo}</p>
+          )}
         </section>
       </div>
 

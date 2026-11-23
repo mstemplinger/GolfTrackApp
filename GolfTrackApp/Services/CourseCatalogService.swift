@@ -62,6 +62,26 @@ final class CourseCatalogService {
         remoteGolfCourses.first { $0.slug == slug }
     }
 
+    /// Eintrag des Verzeichnisses zu einem eigenen Platz. `Course` trägt keine
+    /// Kennung der Website, deshalb über den normalisierten Namen
+    /// („… e.V.“, Groß-/Kleinschreibung und Akzente egal).
+    func golfCourse(matching course: Course) -> BundledCourseEntry? {
+        let name = Self.normalizedName(course.name)
+        return allGolfCourses.first { Self.normalizedName($0.name) == name }
+    }
+
+    /// Platznamen vergleichbar machen: „Golf- und Landclub Bayerwald e.V.“ und
+    /// „golf und landclub bayerwald“ sind derselbe Platz.
+    nonisolated static func normalizedName(_ name: String) -> String {
+        var text = name.folding(options: [.caseInsensitive, .diacriticInsensitive], locale: .current)
+        for suffix in [" e.v.", " e. v.", " ev"] where text.hasSuffix(suffix) {
+            text.removeLast(suffix.count)
+        }
+        return text.unicodeScalars
+            .filter { CharacterSet.alphanumerics.contains($0) }
+            .map(String.init).joined()
+    }
+
     func course(fromDeepLink url: URL) -> MinigolfCourseEntry? {
         guard let id = MinigolfDeepLink.courseID(from: url) else { return nil }
         return minigolfCourse(id: id)
@@ -304,6 +324,11 @@ struct RemoteCourse: Decodable {
     let teeLongitudes: [Double]
     let flagLatitudes: [Double]
     let flagLongitudes: [Double]
+    /// Position je Loch als `[lat, lon]` oder `null` – anders als die Arrays
+    /// oben auch mit Lücken (Crowd-Positionen füllen Loch für Loch). Fehlt bei
+    /// älteren Ständen der Website.
+    let teePositions: [[Double]?]?
+    let flagPositions: [[Double]?]?
 
     /// Als Golfplatz für die Platzauswahl.
     ///
@@ -312,6 +337,12 @@ struct RemoteCourse: Decodable {
     /// schickt lieber gar keine Scorecard als eine halbe), bleibt der geprüfte
     /// eingebaute Wert stehen.
     func bundledEntry(fallback: BundledCourseEntry? = nil) -> BundledCourseEntry {
+        let tee = Self.merged(full: (teeLatitudes, teeLongitudes), partial: teePositions,
+                              fallback: (fallback?.teeLatitudes ?? [], fallback?.teeLongitudes ?? []),
+                              holes: holes)
+        let flag = Self.merged(full: (flagLatitudes, flagLongitudes), partial: flagPositions,
+                               fallback: (fallback?.flagLatitudes ?? [], fallback?.flagLongitudes ?? []),
+                               holes: holes)
         var entry = BundledCourseEntry(
             name: name,
             location: location.isEmpty ? (fallback?.location ?? "") : location,
@@ -325,16 +356,36 @@ struct RemoteCourse: Decodable {
             slopeRating: slopeRating ?? fallback?.slopeRating ?? 113,
             facilityNotes: facilityNotes.isEmpty ? (fallback?.facilityNotes ?? "") : facilityNotes,
             hints: facilityHints ?? fallback?.hints ?? [],
-            teeLatitudes: teeLatitudes.isEmpty ? (fallback?.teeLatitudes ?? []) : teeLatitudes,
-            teeLongitudes: teeLongitudes.isEmpty ? (fallback?.teeLongitudes ?? []) : teeLongitudes,
-            flagLatitudes: flagLatitudes.isEmpty ? (fallback?.flagLatitudes ?? []) : flagLatitudes,
-            flagLongitudes: flagLongitudes.isEmpty ? (fallback?.flagLongitudes ?? []) : flagLongitudes,
+            teeLatitudes: tee.lat,
+            teeLongitudes: tee.lon,
+            flagLatitudes: flag.lat,
+            flagLongitudes: flag.lon,
             slug: id,
             firstTeeLat: firstTeeLat ?? fallback?.firstTeeLat,
             firstTeeLon: firstTeeLon ?? fallback?.firstTeeLon
         )
         entry.tees = tees ?? fallback?.tees ?? []
         return entry
+    }
+
+    /// Lochpositionen zusammenführen: das vollständige Array der Website,
+    /// sonst je Loch der Eintrag mit Lücken, sonst der eingebaute Wert.
+    /// Unbekannt bleibt `NaN` – so wie `Course` es erwartet.
+    static func merged(full: ([Double], [Double]), partial: [[Double]?]?,
+                       fallback: ([Double], [Double]), holes: Int) -> (lat: [Double], lon: [Double]) {
+        if !full.0.isEmpty, full.0.count == full.1.count { return (full.0, full.1) }
+        guard let partial, partial.contains(where: { $0 != nil }) else { return fallback }
+        let count = max(holes, partial.count)
+        var lat = [Double](repeating: .nan, count: count)
+        var lon = [Double](repeating: .nan, count: count)
+        for i in 0..<count {
+            if i < partial.count, let pair = partial[i], pair.count == 2 {
+                lat[i] = pair[0]; lon[i] = pair[1]
+            } else if i < fallback.0.count, i < fallback.1.count {
+                lat[i] = fallback.0[i]; lon[i] = fallback.1[i]
+            }
+        }
+        return (lat, lon)
     }
 
     /// Als Minigolfanlage für QR-Start und Anlagenliste – wie oben mit dem

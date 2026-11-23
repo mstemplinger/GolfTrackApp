@@ -28,6 +28,12 @@ const FIELDS: { name: string; type: string; de: string; en: string }[] = [
     de: "Abschläge nach Farbe (black, white, gold, blue, yellow, red, orange, green) mit eigener Wertung; Länge und Koordinaten je Loch, null = unbekannt. Immer vorhanden, bei Minigolf leer",
     en: "Tee boxes by colour (black, white, gold, blue, yellow, red, orange, green) with their own rating; length and coordinates per hole, null = unknown. Always present, empty for minigolf",
   },
+  {
+    name: "teePositions, flagPositions",
+    type: "([lat, lon] | null)[]",
+    de: "Abschlag (Standard) und Grün je Loch, auch lückenhaft – null = unbekannt. Teils aus übereinstimmenden Beiträgen der Spieler. Bei Minigolf leer",
+    en: "Tee (default) and green per hole, gaps allowed – null = unknown. Partly from matching player contributions. Empty for minigolf",
+  },
   { name: "updatedAt", type: "string", de: "Letzte Änderung (ISO 8601)", en: "Last change (ISO 8601)" },
 ];
 

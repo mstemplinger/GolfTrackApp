@@ -7,7 +7,8 @@ enum WhatsNew {
 
     /// Kennung dieser Neuerung – bewusst **nicht** die App-Version, sonst
     /// erscheint die Einführung nach jedem Bugfix-Release erneut.
-    static let releaseKey = "positions-tracking-1"
+    /// Vorher: `positions-tracking-1` (Laufspur, Herbst 2026).
+    static let releaseKey = "crowd-positions-1"
     static let storageKey = "whatsNew.lastSeenRelease"
 
     static var hasSeenCurrent: Bool {
@@ -21,10 +22,12 @@ enum WhatsNew {
     /// Beim Start aufrufen: liefert, ob die Einführung gezeigt werden soll.
     ///
     /// Neuinstallationen bekommen sie nicht – für die ist ohnehin alles neu,
-    /// und sie durchlaufen bereits das reguläre Onboarding. Deshalb wird die
-    /// Neuerung dort sofort als gesehen markiert.
+    /// und sie durchlaufen bereits das reguläre Onboarding (die Frage nach dem
+    /// Teilen kommt dort nach der ersten Runde mit Laufspur). Wer schon teilt,
+    /// braucht den Hinweis auch nicht.
     static func evaluateOnLaunch() -> Bool {
-        guard UserDefaults.standard.bool(forKey: "hasSeenOnboarding") else {
+        guard UserDefaults.standard.bool(forKey: "hasSeenOnboarding"),
+              !CrowdGeometryService.hasConsent else {
             markCurrentAsSeen()
             return false
         }
@@ -34,11 +37,15 @@ enum WhatsNew {
 
 // MARK: - Einführung
 
-/// Kurze Vorstellung des Positions-Trackings nach dem Update.
+/// Hinweis nach dem Update: Platzpositionen gemeinsam verbessern – mit
+/// Schalter, der Laufspur und Teilen gleich hier einschaltet.
 struct WhatsNewView: View {
     @Environment(\.dismiss) private var dismiss
     @AppStorage(RoundTrackingService.enabledKey) private var trackingEnabled = false
-    @State private var didEnable = false
+    @AppStorage(CrowdGeometryService.consentKey) private var sharingEnabled = false
+    @AppStorage(CrowdGeometryService.askedKey) private var askedAboutSharing = false
+
+    private var isOn: Bool { trackingEnabled && sharingEnabled }
 
     private struct Highlight: Identifiable {
         let id = UUID()
@@ -49,14 +56,14 @@ struct WhatsNewView: View {
 
     private let highlights: [Highlight] = [
         Highlight(symbol: "figure.walk",
-                  title: "Deine Laufspur",
-                  text: "Wenn du es erlaubst, merkt sich GolfTrack während der Runde alle paar Meter deine Position. Nach der Runde siehst du deinen Weg über den Platz auf der Karte."),
+                  title: "Aus deiner Runde gelernt",
+                  text: "Mit eingeschalteter Laufspur erkennt GolfTrack nach der Runde, wo Abschlag und Grün jedes Lochs liegen."),
+        Highlight(symbol: "person.3.fill",
+                  title: "Gemeinsam genauer",
+                  text: "Teilst du diese Punkte, werden sie mit denen anderer Spieler abgeglichen. Sobald fünf übereinstimmen, gilt die Position für alle auf dem Platz."),
         Highlight(symbol: "flag.fill",
-                  title: "Abschlag und Grün von allein",
-                  text: "Aus deinen Runden schätzt die App, wo Abschlag und Fahne jedes Lochs liegen. Danach steht die Entfernung zur Fahne da, ohne dass du den Pin selbst setzen musst."),
-        Highlight(symbol: "point.3.filled.connected.trianglepath.dotted",
-                  title: "Fairway-Verlauf",
-                  text: "Nach ein paar Runden zeichnet die App, wo das Fairway ungefähr verläuft – Doglegs inklusive. Je mehr Runden, desto genauer."),
+                  title: "Entfernungen, die stimmen",
+                  text: "Korrigierte Positionen kommen von selbst in deine App – auch auf Plätzen, die du zum ersten Mal spielst."),
     ]
 
     var body: some View {
@@ -100,10 +107,10 @@ struct WhatsNewView: View {
             Text("Neu in GolfTrack")
                 .font(.caption.bold())
                 .foregroundStyle(AppTheme.gold)
-            Text("Dein Weg über den Platz")
+            Text("Richtige Entfernungen für alle")
                 .font(.title.bold())
                 .foregroundStyle(AppTheme.text)
-            Text("GolfTrack kann jetzt aufzeichnen, wo du auf dem Platz unterwegs warst – und daraus lernen, wie die Löcher liegen.")
+            Text("Auf vielen Plätzen stimmen Abschlag- und Grünpositionen noch nicht genau. Mit deinen Runden kannst du das für alle Spieler korrigieren.")
                 .font(.subheadline)
                 .foregroundStyle(AppTheme.textSec)
                 .fixedSize(horizontal: false, vertical: true)
@@ -138,7 +145,7 @@ struct WhatsNewView: View {
             Image(systemName: "hand.raised.fill")
                 .font(.footnote)
                 .foregroundStyle(AppTheme.gold)
-            Text("Die Aufzeichnung ist standardmäßig aus und läuft nur während einer Runde. Die Daten bleiben auf deinem iPhone und werden nicht übertragen. Du kannst das Tracking jederzeit in den Einstellungen abschalten und die Aufzeichnungen dort löschen.")
+            Text("Gesendet werden nur die Punkte je Loch – keine Laufspur, kein Name, keine Geräte-ID. Weil nichts auf dich verweist, lassen sich gesendete Punkte nicht mehr löschen. Die Laufspur selbst bleibt auf deinem iPhone. Beides kannst du jederzeit unter Einstellungen › Positions-Tracking ändern.")
                 .font(.caption)
                 .foregroundStyle(AppTheme.textSec)
                 .fixedSize(horizontal: false, vertical: true)
@@ -149,11 +156,11 @@ struct WhatsNewView: View {
 
     private var actionBar: some View {
         VStack(spacing: 10) {
-            if didEnable {
+            if isOn {
                 HStack(spacing: 8) {
                     Image(systemName: "checkmark.circle.fill")
                         .foregroundStyle(AppTheme.green)
-                    Text("Aufzeichnung aktiviert – sie startet mit deiner nächsten Runde.")
+                    Text("Eingeschaltet – deine nächste Runde hilft mit.")
                         .font(.caption)
                         .foregroundStyle(AppTheme.textSec)
                         .fixedSize(horizontal: false, vertical: true)
@@ -163,9 +170,10 @@ struct WhatsNewView: View {
                 Button {
                     Haptics.success()
                     trackingEnabled = true
-                    didEnable = true
+                    sharingEnabled = true
+                    askedAboutSharing = true
                 } label: {
-                    Text("Aufzeichnung einschalten")
+                    Text(trackingEnabled ? "Teilen einschalten" : "Laufspur und Teilen einschalten")
                         .goldButton()
                 }
                 .buttonStyle(.plain)
@@ -175,12 +183,12 @@ struct WhatsNewView: View {
                 Haptics.tap()
                 dismiss()
             } label: {
-                Text(didEnable ? "Weiter" : "Später entscheiden")
+                Text(isOn ? "Weiter" : "Später entscheiden")
                     .font(.subheadline.bold())
-                    .foregroundStyle(didEnable ? AppTheme.text : AppTheme.textSec)
+                    .foregroundStyle(isOn ? AppTheme.text : AppTheme.textSec)
                     .frame(maxWidth: .infinity)
                     .padding(.vertical, 12)
-                    .background(didEnable ? AppTheme.cardAlt : Color.clear,
+                    .background(isOn ? AppTheme.cardAlt : Color.clear,
                                 in: RoundedRectangle(cornerRadius: 12))
             }
             .buttonStyle(.plain)
@@ -189,6 +197,6 @@ struct WhatsNewView: View {
         .padding(.top, 12)
         .padding(.bottom, 20)
         .background(.ultraThinMaterial)
-        .animation(.easeInOut(duration: 0.25), value: didEnable)
+        .animation(.easeInOut(duration: 0.25), value: isOn)
     }
 }

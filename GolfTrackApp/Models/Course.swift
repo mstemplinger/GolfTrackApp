@@ -43,6 +43,12 @@ final class Course {
     /// `teeLatitudes` …) bleiben der Rückfall für Plätze ohne Farbangaben.
     var teeData: Data = Data()
 
+    /// JSON-kodierter `CatalogGeometrySnapshot`: die Lochpositionen, wie das
+    /// Verzeichnis sie zuletzt geliefert hat. Daran erkennt
+    /// `CourseGeometrySync`, ob eine lokale Position noch die des Verzeichnisses
+    /// ist (dann darf eine bessere sie ersetzen) oder vom Spieler stammt.
+    var catalogGeometryData: Data = Data()
+
     @Relationship(deleteRule: .nullify, inverse: \Round.course)
     var rounds: [Round] = []
 
@@ -253,6 +259,9 @@ extension Course {
         let name = entry.name.lowercased()
         if let vorhanden = (try? context.fetch(FetchDescriptor<Course>()))?
             .first(where: { $0.name.lowercased() == name }) {
+            // Seit dem ersten Spielen verbesserte Lochpositionen nachziehen.
+            CourseGeometrySync.update(vorhanden, from: entry,
+                                      original: BundledCourses.all.first { $0.name.lowercased() == name })
             return vorhanden
         }
 
@@ -274,6 +283,8 @@ extension Course {
             flagLongitudes: entry.flagLongitudes
         )
         course.tees = entry.tees
+        course.catalogGeometryData = (try? JSONEncoder().encode(
+            CourseGeometrySync.snapshot(of: entry, holes: entry.holes))) ?? Data()
         context.insert(course)
         return course
     }

@@ -225,6 +225,45 @@ const STATEMENTS = [
      assigned_to  text REFERENCES referrers(code) ON DELETE SET NULL,
      assigned_at  timestamptz
    )`,
+  // Crowd-Positionen (`lib/courseGeometry.ts`): Abschlag und Grün je Loch,
+  // aus den Runden der Spieler abgeleitet, die das in der App erlaubt haben.
+  // Bewusst ohne Geräte-, Runden- oder Netzkennung und nur mit dem Tag –
+  // ein Beitrag ist ein Punkt auf dem Platz, nichts, was auf jemanden
+  // zurückführt. Je Punkt bleiben nur die jüngsten 30, keiner länger als ein Jahr.
+  `CREATE TABLE IF NOT EXISTS geometry_contributions (
+     id             bigserial PRIMARY KEY,
+     course_slug    text NOT NULL,
+     hole           integer NOT NULL,
+     kind           text NOT NULL CHECK (kind IN ('tee', 'green')),
+     tee_color      text NOT NULL DEFAULT '',
+     latitude       double precision NOT NULL,
+     longitude      double precision NOT NULL,
+     contributed_on date NOT NULL DEFAULT current_date
+   )`,
+  `CREATE INDEX IF NOT EXISTS geometry_contributions_point_idx
+     ON geometry_contributions (course_slug, hole, kind, tee_color, id DESC)`,
+  // Das Ergebnis je Punkt und was daraus wurde. `applied_*` ist der Wert, den
+  // die Crowd zuletzt in `hole_data` geschrieben (oder bestätigt) hat – steht
+  // dort noch genau das, darf sie ihn weiter verbessern; hat ihn jemand von
+  // Hand geändert, gilt er als geprüft. `previous_*` hält fest, was vor dem
+  // ersten Eintrag dort stand.
+  `CREATE TABLE IF NOT EXISTS course_geometry (
+     course_slug   text NOT NULL,
+     hole          integer NOT NULL,
+     kind          text NOT NULL CHECK (kind IN ('tee', 'green')),
+     tee_color     text NOT NULL DEFAULT '',
+     latitude      double precision NOT NULL,
+     longitude     double precision NOT NULL,
+     contributors  integer NOT NULL,
+     spread_m      double precision NOT NULL,
+     status        text NOT NULL CHECK (status IN ('applied', 'kept', 'conflict')),
+     applied_lat   double precision,
+     applied_lon   double precision,
+     previous_lat  double precision,
+     previous_lon  double precision,
+     updated_at    timestamptz NOT NULL DEFAULT now(),
+     PRIMARY KEY (course_slug, hole, kind, tee_color)
+   )`,
 ];
 
 let ready: Promise<void> | null = null;

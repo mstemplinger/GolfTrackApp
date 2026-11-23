@@ -40,6 +40,14 @@ export interface FeedCourse {
    * Lochreihenfolge, `null` = unbekannt. Immer vorhanden, ohne Angaben leer.
    */
   tees: FeedTee[];
+  /**
+   * Abschlag- und Grünposition je Loch, `[lat, lon]` oder `null` für unbekannt.
+   * Anders als `teeLatitudes` & Co. auch mit Lücken – die Crowd-Positionen
+   * füllen einen Platz Loch für Loch. Ältere App-Versionen lesen das Feld
+   * nicht; für sie bleiben die vollständigen Arrays oben.
+   */
+  teePositions: ([number, number] | null)[];
+  flagPositions: ([number, number] | null)[];
   updatedAt: string;
 }
 
@@ -65,6 +73,21 @@ function column<T>(record: CourseRecord, pick: (hole: CourseRecord["holeData"][n
   if (holes.length !== record.holes) return [];
   const values = holes.map(pick);
   return values.every((value) => value !== null && value !== undefined) ? (values as T[]) : [];
+}
+
+/** Ein Eintrag je Loch 1…holes, `null` wo etwas fehlt. */
+function positions(
+  record: CourseRecord,
+  pick: (hole: CourseRecord["holeData"][number]) => [number | null, number | null],
+): ([number, number] | null)[] {
+  if (record.kind !== "golf") return [];
+  const byNumber = new Map(record.holeData.map((hole) => [hole.number, hole]));
+  return Array.from({ length: record.holes }, (_, index) => {
+    const hole = byNumber.get(index + 1);
+    if (!hole) return null;
+    const [lat, lon] = pick(hole);
+    return lat != null && lon != null ? [lat, lon] : null;
+  });
 }
 
 /**
@@ -116,6 +139,8 @@ export function toFeedCourse(record: CourseRecord): FeedCourse {
     flagLatitudes: column(record, (h) => h.flagLat),
     flagLongitudes: column(record, (h) => h.flagLon),
     tees: feedTees(record),
+    teePositions: positions(record, (h) => [h.teeLat, h.teeLon]),
+    flagPositions: positions(record, (h) => [h.flagLat, h.flagLon]),
     updatedAt: record.updatedAt,
   };
 }

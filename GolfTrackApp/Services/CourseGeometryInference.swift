@@ -117,6 +117,17 @@ enum CourseGeometryInference {
         }
     }
 
+    /// Vorschläge allein aus *einer* Runde – das, was ein Spieler zu den
+    /// Crowd-Positionen beiträgt. Nicht die Summe aller eigenen Runden, sonst
+    /// zählte jede Runde die früheren noch einmal mit.
+    static func suggestions(for round: Round) -> [HoleGeometrySuggestion] {
+        guard let course = round.course else { return [] }
+        let prepared = [PreparedRound(round)]
+        return (1...max(1, course.numberOfHoles)).map { hole in
+            suggestion(forHole: hole, rounds: prepared, course: course, tee: round.teeColor)
+        }
+    }
+
     /// Schreibt alle Vorschläge mit ausreichender Konfidenz in den Platz.
     /// Gibt zurück, wie viele Löcher aktualisiert wurden.
     @discardableResult

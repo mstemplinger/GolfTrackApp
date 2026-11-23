@@ -10,6 +10,8 @@ struct TrackingSettingsView: View {
     @ObservedObject private var tracking = RoundTrackingService.shared
 
     @AppStorage(RoundTrackingService.enabledKey) private var isEnabled = false
+    @AppStorage(CrowdGeometryService.consentKey) private var sharesPositions = false
+    @AppStorage(CrowdGeometryService.askedKey) private var askedAboutSharing = false
     @State private var showDeleteAllAlert = false
 
     private var totalPoints: Int { tracks.reduce(0) { $0 + $1.pointCount } }
@@ -42,8 +44,34 @@ struct TrackingSettingsView: View {
                 } header: {
                     Text("Positions-Tracking")
                 } footer: {
-                    Text("Während einer Runde wird alle paar Meter deine Position gespeichert. Daraus leitet die App Abschlag- und Grünpositionen der Löcher ab – so bekommst du die Entfernung zur Fahne ohne den Pin selbst zu setzen.\n\nDie Daten bleiben auf deinem iPhone und werden nicht übertragen. Du kannst sie jederzeit hier löschen.")
+                    Text("Während einer Runde wird alle paar Meter deine Position gespeichert. Daraus leitet die App Abschlag- und Grünpositionen der Löcher ab – so bekommst du die Entfernung zur Fahne ohne den Pin selbst zu setzen.\n\nDie Laufspur bleibt auf deinem iPhone und wird nicht übertragen. Du kannst sie jederzeit hier löschen.")
                         .font(.caption)
+                }
+
+                // MARK: Crowd-Positionen
+                if isEnabled {
+                    Section {
+                        Toggle(isOn: $sharesPositions) {
+                            VStack(alignment: .leading, spacing: 2) {
+                                Text("Positionen mit allen teilen")
+                                    .foregroundStyle(AppTheme.text)
+                                Text("Abschlag und Grün nach jeder Runde")
+                                    .font(.caption)
+                                    .foregroundStyle(AppTheme.textSec)
+                            }
+                        }
+                        .tint(AppTheme.gold)
+                        .listRowBackground(AppTheme.card)
+                        .onChange(of: sharesPositions) { _, _ in
+                            Haptics.selection()
+                            askedAboutSharing = true
+                        }
+                    } header: {
+                        Text("Platzdaten verbessern")
+                    } footer: {
+                        Text("Nach einer Runde schickt die App nur die abgeleiteten Punkte je Loch an golftrack.app – keine Laufspur, kein Name, keine Geräte-ID. Sobald fünf Spieler übereinstimmen, gilt der Punkt für alle auf diesem Platz. Weil nichts auf dich verweist, lassen sich gesendete Punkte nicht mehr löschen.")
+                            .font(.caption)
+                    }
                 }
 
                 // MARK: Status

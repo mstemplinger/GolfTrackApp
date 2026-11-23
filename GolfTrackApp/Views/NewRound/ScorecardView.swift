@@ -19,6 +19,8 @@ struct ScorecardView: View {
     @State private var showCourseInfo = false
     @State private var showIncompleteScoreAlert = false
     @State private var showBackfillAlert = false
+    @State private var showCrowdConsentAlert = false
+    @State private var crowdConsentAllHolesPlayed = true
     @State private var showLobby = false
 
     private let lobby = LobbyService.shared
@@ -178,6 +180,21 @@ struct ScorecardView: View {
         } message: {
             Text("Die Runde wird als abgeschlossen gespeichert.")
         }
+        .alert("Platzdaten für alle verbessern?", isPresented: $showCrowdConsentAlert) {
+            Button("Teilen") {
+                Haptics.tap()
+                CrowdGeometryService.hasConsent = true
+                CrowdGeometryService.shared.contribute(round)
+                showCompletion(allHolesPlayed: crowdConsentAllHolesPlayed)
+            }
+            Button("Nicht teilen", role: .cancel) {
+                Haptics.tap()
+                CrowdGeometryService.hasConsent = false
+                showCompletion(allHolesPlayed: crowdConsentAllHolesPlayed)
+            }
+        } message: {
+            Text("Aus deiner Laufspur kennt die App jetzt Abschlag und Grün der gespielten Löcher. Darf sie diese Punkte an golftrack.app schicken? Sobald fünf Spieler übereinstimmen, sehen alle auf diesem Platz die richtigen Entfernungen.\n\nGesendet werden nur die Punkte – keine Laufspur, kein Name, keine Geräte-ID. Weil nichts auf dich verweist, lässt sich ein Beitrag danach nicht mehr löschen. Ändern kannst du das jederzeit unter Einstellungen › Positions-Tracking.")
+        }
         .alert("Runde nachgetragen?", isPresented: $showBackfillAlert) {
             Button("Nachgetragen – Spur löschen", role: .destructive) {
                 Haptics.warning()
@@ -262,6 +279,11 @@ struct ScorecardView: View {
         .onAppear {
             // Game Center: Aktivitätsstatus setzen (Freunde sehen "spielt gerade")
             gc.activateAccessPoint()
+
+            // Inzwischen verbesserte Lochpositionen (Crowd) aus dem Verzeichnis holen.
+            if !round.isComplete, let course = round.course {
+                CourseGeometrySync.updateFromCatalog(course)
+            }
 
             // Laufspur aufzeichnen – tut nur etwas, wenn in den Einstellungen erlaubt
             if !round.isComplete {
@@ -398,8 +420,19 @@ struct ScorecardView: View {
         try? context.save()
     }
 
-    /// Zeigt nach der Track-Entscheidung den regulären Abschluss.
+    /// Zeigt nach der Track-Entscheidung den regulären Abschluss – vorher,
+    /// beim ersten Mal, die Frage nach den Crowd-Positionen.
     private func presentCompletion(allHolesPlayed: Bool) {
+        if !CrowdGeometryService.wasAsked, CrowdGeometryService.canContribute(round) {
+            crowdConsentAllHolesPlayed = allHolesPlayed
+            showCrowdConsentAlert = true
+            return
+        }
+        CrowdGeometryService.shared.contribute(round)
+        showCompletion(allHolesPlayed: allHolesPlayed)
+    }
+
+    private func showCompletion(allHolesPlayed: Bool) {
         // Hinweis, falls das Ergebnis wegen fehlender Löcher nicht an Game Center ging
         if !allHolesPlayed && gc.isAuthenticated {
             showIncompleteScoreAlert = true

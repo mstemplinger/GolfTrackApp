@@ -66,6 +66,8 @@ struct ContentView: View {
         // damit der Platz vollständig angelegt wird statt als Notnagel.
         .task {
             await CourseCatalogService.shared.checkForUpdates()
+            // Crowd-Positionen, die nach einer Runde ohne Netz liegen blieben.
+            Task { await CrowdGeometryService.shared.flushPending() }
             let count = ClipRoundImporter.importPendingRounds(into: modelContext)
             if count > 0 { importedClipRounds = count }
         }

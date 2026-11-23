@@ -21,6 +21,7 @@ struct ScorecardView: View {
     @State private var showBackfillAlert = false
     @State private var showCrowdConsentAlert = false
     @State private var crowdConsentAllHolesPlayed = true
+    @State private var showStatsConsentAlert = false
     @State private var showLobby = false
 
     private let lobby = LobbyService.shared
@@ -185,15 +186,30 @@ struct ScorecardView: View {
                 Haptics.tap()
                 CrowdGeometryService.hasConsent = true
                 CrowdGeometryService.shared.contribute(round)
-                showCompletion(allHolesPlayed: crowdConsentAllHolesPlayed)
+                askStatsOrComplete(allHolesPlayed: crowdConsentAllHolesPlayed, afterAlert: true)
             }
             Button("Nicht teilen", role: .cancel) {
                 Haptics.tap()
                 CrowdGeometryService.hasConsent = false
-                showCompletion(allHolesPlayed: crowdConsentAllHolesPlayed)
+                askStatsOrComplete(allHolesPlayed: crowdConsentAllHolesPlayed, afterAlert: true)
             }
         } message: {
             Text("Aus deiner Laufspur kennt die App jetzt Abschlag und Grün der gespielten Löcher. Darf sie diese Punkte an golftrack.app schicken? Sobald fünf Spieler übereinstimmen, sehen alle auf diesem Platz die richtigen Entfernungen.\n\nGesendet werden nur die Punkte – keine Laufspur, kein Name, keine Geräte-ID. Weil nichts auf dich verweist, lässt sich ein Beitrag danach nicht mehr löschen. Ändern kannst du das jederzeit unter Einstellungen › Positions-Tracking.")
+        }
+        .alert("Deinem Platz helfen?", isPresented: $showStatsConsentAlert) {
+            Button("Anonym teilen") {
+                Haptics.tap()
+                RoundStatsService.hasConsent = true
+                RoundStatsService.shared.contribute(round)
+                showCompletion(allHolesPlayed: crowdConsentAllHolesPlayed)
+            }
+            Button("Nicht teilen", role: .cancel) {
+                Haptics.tap()
+                RoundStatsService.hasConsent = false
+                showCompletion(allHolesPlayed: crowdConsentAllHolesPlayed)
+            }
+        } message: {
+            Text("Darf die App eine anonyme Zusammenfassung dieser Runde an golftrack.app schicken? Der Platz erfährt daraus – nur als Summe vieler Runden –, wann viel los ist, wie lange gespielt wird und welche Löcher schwer sind.\n\nGesendet werden Tag, Tageszeit (grob), Dauer, Gruppengröße sowie Schläge und Putts je Loch – keine Namen, keine Uhrzeit, kein Standort, keine Geräte-ID. Ändern kannst du das jederzeit unter Einstellungen › Datenschutz.")
         }
         .alert("Runde nachgetragen?", isPresented: $showBackfillAlert) {
             Button("Nachgetragen – Spur löschen", role: .destructive) {
@@ -429,7 +445,25 @@ struct ScorecardView: View {
             return
         }
         CrowdGeometryService.shared.contribute(round)
-        showCompletion(allHolesPlayed: allHolesPlayed)
+        askStatsOrComplete(allHolesPlayed: allHolesPlayed, afterAlert: false)
+    }
+
+    /// Beim ersten Mal die Frage nach der anonymen Rundenstatistik, sonst
+    /// direkt senden (falls erlaubt) und den Abschluss zeigen.
+    private func askStatsOrComplete(allHolesPlayed: Bool, afterAlert: Bool) {
+        guard !RoundStatsService.wasAsked, RoundStatsService.canContribute(round) else {
+            RoundStatsService.shared.contribute(round)
+            showCompletion(allHolesPlayed: allHolesPlayed)
+            return
+        }
+        crowdConsentAllHolesPlayed = allHolesPlayed
+        // Ein zweiter Alert direkt aus dem Knopf des ersten heraus geht in
+        // SwiftUI verloren – erst das Ausblenden abwarten.
+        if afterAlert {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.45) { showStatsConsentAlert = true }
+        } else {
+            showStatsConsentAlert = true
+        }
     }
 
     private func showCompletion(allHolesPlayed: Bool) {

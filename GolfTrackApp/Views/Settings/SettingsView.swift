@@ -2,6 +2,8 @@ import SwiftUI
 
 struct SettingsView: View {
     @AppStorage(Haptics.enabledKey) private var hapticsEnabled = true
+    @AppStorage(RoundStatsService.consentKey) private var sharesRoundStats = false
+    @AppStorage(RoundStatsService.askedKey) private var askedAboutRoundStats = false
 
     var body: some View {
         NavigationStack {
@@ -29,6 +31,22 @@ struct SettingsView: View {
                         .listRowBackground(AppTheme.card)
                     } header: {
                         Text("Daten")
+                    }
+
+                    Section {
+                        Toggle(isOn: $sharesRoundStats) {
+                            Label("Anonyme Rundenstatistik teilen", systemImage: "chart.bar.xaxis")
+                        }
+                        .tint(AppTheme.gold)
+                        .listRowBackground(AppTheme.card)
+                        .onChange(of: sharesRoundStats) { _, _ in
+                            Haptics.selection()
+                            askedAboutRoundStats = true
+                        }
+                    } header: {
+                        Text("Datenschutz")
+                    } footer: {
+                        Text("Nach einer Runde auf einem Platz aus dem Verzeichnis geht eine anonyme Zusammenfassung an golftrack.app: Tag, Tageszeit (grob), Dauer, Gruppengröße sowie Schläge je Loch – keine Namen, keine Uhrzeit, kein Standort, keine Geräte-ID. Betreiber sehen daraus nur Summen ab zehn Runden. Weil nichts auf dich verweist, lassen sich gesendete Runden nicht mehr löschen.")
                     }
 
                     Section {

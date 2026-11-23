@@ -73,6 +73,9 @@ struct GolfTrackClipApp: App {
                 }
             }
             .preferredColorScheme(.dark)
+            // Gold statt System-Blau für „Zurück“, „Fertig“ & Co. – wie die
+            // App es auf ihren Tabs setzt (ContentView).
+            .tint(AppTheme.gold)
             // Der Clip wird über den Universal Link gestartet; beide Wege
             // abdecken, weil iOS je nach Startart das eine oder andere liefert.
             .onContinueUserActivity(NSUserActivityTypeBrowsingWeb) { activity in
@@ -86,6 +89,8 @@ struct GolfTrackClipApp: App {
                 recommendFullApp()
             }
             .task {
+                // Rundenstatistik, die nach einer Runde ohne Netz liegen blieb.
+                Task { await RoundStatsService.shared.flushPending() }
                 #if DEBUG
                 // Ohne echten Scan gibt es keinen Universal Link. Xcode und der
                 // Simulator reichen die Testadresse als `_XCAppClipURL` durch –

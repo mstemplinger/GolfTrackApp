@@ -92,6 +92,11 @@ export interface PlayCopy {
   resumeTitle: string;
   holeOf: (unit: string, hole: number, holes: number) => string;
   keepCounting: string;
+  /** Anonyme Rundenstatistik an die Anlage (nur Plätze aus dem Verzeichnis). */
+  reportRound: string;
+  reportRoundDone: string;
+  reportRoundFailed: string;
+  reportRoundInfo: string;
   discard: string;
   result: string;
   total: (n: number) => string;
@@ -164,6 +169,11 @@ const de: PlayCopy = {
   resumeTitle: "Angefangene Runde",
   holeOf: (unit, hole, holes) => `${unit} ${hole} von ${holes}`,
   keepCounting: "Weiterzählen",
+  reportRound: "Anonym an die Anlage melden",
+  reportRoundDone: "An die Anlage gemeldet – danke!",
+  reportRoundFailed: "Senden fehlgeschlagen – nochmal versuchen",
+  reportRoundInfo:
+    "Hilft dem Betreiber zu sehen, welche Bahnen schwer sind und wann viel los ist. Gesendet werden nur Tag, Tageszeit (grob), Dauer, Spielerzahl und Schläge je Bahn – keine Namen, kein Standort. Die Anlage sieht nur Summen ab zehn Runden.",
   discard: "Verwerfen",
   result: "Ergebnis",
   total: (n) => `Gesamt: ${n}`,
@@ -263,6 +273,11 @@ const en: PlayCopy = {
   resumeTitle: "Round in progress",
   holeOf: (unit, hole, holes) => `${unit} ${hole} of ${holes}`,
   keepCounting: "Continue",
+  reportRound: "Report anonymously to the course",
+  reportRoundDone: "Reported to the course – thank you!",
+  reportRoundFailed: "Sending failed – try again",
+  reportRoundInfo:
+    "Helps the operator see which holes are hard and when it gets busy. Only the day, rough time of day, duration, number of players and strokes per hole are sent – no names, no location. The course only sees totals from ten rounds upwards.",
   discard: "Discard",
   result: "Result",
   total: (n) => `Total: ${n}`,
@@ -363,6 +378,11 @@ const fr: PlayCopy = {
   resumeTitle: "Partie en cours",
   holeOf: (unit, hole, holes) => `${unit} ${hole} sur ${holes}`,
   keepCounting: "Continuer",
+  reportRound: "Transmettre anonymement au parcours",
+  reportRoundDone: "Transmis au parcours – merci !",
+  reportRoundFailed: "Échec de l'envoi – réessayer",
+  reportRoundInfo:
+    "Aide l'exploitant à voir quelles pistes sont difficiles et quand il y a du monde. Seuls le jour, le moment de la journée (approximatif), la durée, le nombre de joueurs et les coups par piste sont envoyés – pas de noms, pas de position. Le parcours ne voit que des totaux à partir de dix parties.",
   discard: "Abandonner",
   result: "Résultat",
   total: (n) => `Total : ${n}`,
@@ -463,6 +483,11 @@ const it: PlayCopy = {
   resumeTitle: "Giro in corso",
   holeOf: (unit, hole, holes) => `${unit} ${hole} di ${holes}`,
   keepCounting: "Continua",
+  reportRound: "Invia in forma anonima all'impianto",
+  reportRoundDone: "Inviato all'impianto – grazie!",
+  reportRoundFailed: "Invio non riuscito – riprova",
+  reportRoundInfo:
+    "Aiuta il gestore a capire quali buche sono difficili e quando c'è molta gente. Vengono inviati solo giorno, fascia oraria (approssimativa), durata, numero di giocatori e colpi per buca – niente nomi, nessuna posizione. L'impianto vede solo totali a partire da dieci giri.",
   discard: "Scarta",
   result: "Risultato",
   total: (n) => `Totale: ${n}`,
@@ -563,6 +588,11 @@ const es: PlayCopy = {
   resumeTitle: "Vuelta en curso",
   holeOf: (unit, hole, holes) => `${unit} ${hole} de ${holes}`,
   keepCounting: "Seguir",
+  reportRound: "Enviar de forma anónima a la instalación",
+  reportRoundDone: "Enviado a la instalación – ¡gracias!",
+  reportRoundFailed: "Error al enviar – inténtalo de nuevo",
+  reportRoundInfo:
+    "Ayuda al responsable a ver qué hoyos son difíciles y cuándo hay mucha gente. Solo se envían el día, la franja horaria (aproximada), la duración, el número de jugadores y los golpes por hoyo – sin nombres ni ubicación. La instalación solo ve totales a partir de diez vueltas.",
   discard: "Descartar",
   result: "Resultado",
   total: (n) => `Total: ${n}`,
@@ -679,6 +709,11 @@ const pl: PlayCopy = {
   resumeTitle: "Rozpoczęta runda",
   holeOf: (unit, hole, holes) => `${unit} ${hole} z ${holes}`,
   keepCounting: "Licz dalej",
+  reportRound: "Zgłoś anonimowo do obiektu",
+  reportRoundDone: "Zgłoszono do obiektu – dziękujemy!",
+  reportRoundFailed: "Wysyłanie nie powiodło się – spróbuj ponownie",
+  reportRoundInfo:
+    "Pomaga operatorowi zobaczyć, które dołki są trudne i kiedy jest tłoczno. Wysyłane są tylko dzień, pora dnia (w przybliżeniu), czas gry, liczba graczy i uderzenia na dołek – bez imion i lokalizacji. Obiekt widzi tylko sumy od dziesięciu rund.",
   discard: "Odrzuć",
   result: "Wynik",
   total: (n) => `Razem: ${n}`,
@@ -779,6 +814,11 @@ const cs: PlayCopy = {
   resumeTitle: "Rozehrané kolo",
   holeOf: (unit, hole, holes) => `${unit} ${hole} z ${holes}`,
   keepCounting: "Pokračovat",
+  reportRound: "Anonymně nahlásit hřišti",
+  reportRoundDone: "Nahlášeno hřišti – děkujeme!",
+  reportRoundFailed: "Odeslání se nezdařilo – zkusit znovu",
+  reportRoundInfo:
+    "Pomáhá provozovateli zjistit, které jamky jsou těžké a kdy je plno. Odesílá se jen den, přibližná denní doba, délka hry, počet hráčů a údery na jamku – žádná jména, žádná poloha. Hřiště vidí jen součty od deseti kol.",
   discard: "Zahodit",
   result: "Výsledek",
   total: (n) => `Celkem: ${n}`,

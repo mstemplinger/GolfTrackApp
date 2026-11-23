@@ -264,6 +264,26 @@ const STATEMENTS = [
      updated_at    timestamptz NOT NULL DEFAULT now(),
      PRIMARY KEY (course_slug, hole, kind, tee_color)
    )`,
+  // Anonyme Rundenstatistik für Platzbetreiber (`lib/roundStats.ts`), nur mit
+  // Einwilligung des Spielers. Bewusst ohne Geräte-, Runden- oder Netzkennung,
+  // ohne Namen und ohne Eingangszeitpunkt – nur Spieltag und Tagesabschnitt.
+  // Rohzeilen bleiben gut ein Jahr; angezeigt wird nur als Summe ab 10 Runden.
+  `CREATE TABLE IF NOT EXISTS round_stats (
+     id            bigserial PRIMARY KEY,
+     course_slug   text NOT NULL,
+     kind          text NOT NULL CHECK (kind IN ('golf', 'minigolf')),
+     played_on     date NOT NULL,
+     slot          text NOT NULL CHECK (slot IN ('morning', 'midday', 'afternoon', 'evening')),
+     weekday       smallint NOT NULL CHECK (weekday BETWEEN 1 AND 7),
+     holes_played  smallint NOT NULL,
+     duration_min  smallint,
+     tee_color     text NOT NULL DEFAULT '',
+     players       smallint NOT NULL,
+     strokes       jsonb NOT NULL,
+     putts         jsonb,
+     source        text NOT NULL CHECK (source IN ('app', 'clip', 'web'))
+   )`,
+  `CREATE INDEX IF NOT EXISTS round_stats_course_idx ON round_stats (course_slug, played_on)`,
 ];
 
 let ready: Promise<void> | null = null;

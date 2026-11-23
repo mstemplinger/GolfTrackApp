@@ -13,6 +13,9 @@ struct GolfLiteScoringView: View {
     @State private var strokes: [Int]
     @State private var currentHole: Int
     @State private var showResult = false
+    /// Beginn dieser Sitzung – nur für eine frisch gestartete Runde bekannt.
+    /// Nach dem Fortsetzen ist die Dauer nicht belastbar und bleibt leer.
+    @State private var startedAt: Date?
     @Environment(\.dismiss) private var dismiss
 
     init(course: GolfLiteCourse, resuming saved: SavedGolfLiteRound? = nil) {
@@ -21,6 +24,7 @@ struct GolfLiteScoringView: View {
                          ? saved!.strokes
                          : Array(repeating: 0, count: course.holes))
         _currentHole = State(initialValue: saved?.currentHole ?? 0)
+        _startedAt = State(initialValue: saved == nil ? Date() : nil)
     }
 
     private var par: Int? { course.par(at: currentHole) }
@@ -53,6 +57,9 @@ struct GolfLiteScoringView: View {
             bottomNav
         }
         .appBackground()
+        // Einmalige Frage nach der anonymen Rundenstatistik – nur bei einer
+        // frisch gestarteten Runde an einer Anlage aus dem Verzeichnis.
+        .roundStatsStartPrompt(isEligible: startedAt != nil)
         .navigationTitle("Loch \(currentHole + 1) / \(course.holes)")
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
@@ -244,9 +251,30 @@ struct GolfLiteScoringView: View {
             savedAt: Date()
         ))
         GolfLiteStore.clear()
+        reportRoundStats()
         NotificationCenter.default.post(name: .minigolfRoundFinished, object: nil)
         showResult = false
         dismiss()
+    }
+}
+
+// MARK: - Rundenstatistik
+
+extension GolfLiteScoringView {
+    /// Anonyme Zusammenfassung an die Anlage – nur mit Einwilligung
+    /// (`RoundStatsService.contribute` prüft sie).
+    fileprivate func reportRoundStats() {
+        #if APPCLIP
+        let source = RoundStatsService.Source.clip
+        #else
+        let source = RoundStatsService.Source.app
+        #endif
+        guard let payload = RoundStatsService.payload(kind: .golf,
+                                                      startedAt: startedAt,
+                                                      endedAt: Date(),
+                                                      strokes: [strokes],
+                                                      source: source) else { return }
+        RoundStatsService.shared.contribute(slug: course.id, payload: payload)
     }
 }
 
@@ -297,6 +325,7 @@ struct GolfLiteResultView: View {
                                                     strokes: strokes,
                                                     pars: course.hasPar ? course.parValues : []))
                     FullAppFeaturesCard()
+                    RoundStatsConsentToggle()
 
                     Button {
                         Haptics.celebrate()

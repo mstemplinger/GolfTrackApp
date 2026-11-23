@@ -42,6 +42,10 @@ interface SavedRound {
   finished: boolean;
   /** Eingeschaltete Wettkämpfe. Fehlt bei Runden von vor der Einführung. */
   challenges?: string[];
+  /** Beginn der Runde (ms) – nur für die Dauer in der Rundenstatistik. */
+  startedAt?: number | null;
+  /** Schon anonym an die Anlage gemeldet – kein zweites Mal. */
+  reported?: boolean;
 }
 
 /** Wie viele Namensfelder am Anfang dastehen. */
@@ -118,6 +122,8 @@ export function WebScorecard({
   const [challenges, setChallenges] = useState<string[]>(() => saved?.challenges ?? []);
   /** Runde läuft, aber der Gast hat den Zähler zugeklappt. */
   const [minimized, setMinimized] = useState(false);
+  const [startedAt, setStartedAt] = useState<number | null>(() => saved?.startedAt ?? null);
+  const [report, setReport] = useState<ReportState>(() => (saved?.reported ? "done" : "idle"));
 
   const running = Boolean(scores) && hydrated && !minimized;
 
@@ -129,12 +135,20 @@ export function WebScorecard({
         window.localStorage.removeItem(storageKey);
         return;
       }
-      const payload: SavedRound = { players: names, scores, hole, finished, challenges };
+      const payload: SavedRound = {
+        players: names,
+        scores,
+        hole,
+        finished,
+        challenges,
+        startedAt,
+        reported: report === "done",
+      };
       window.localStorage.setItem(storageKey, JSON.stringify(payload));
     } catch {
       // Nicht speichern können ist ärgerlich, aber kein Grund abzubrechen.
     }
-  }, [storageKey, names, scores, hole, finished, challenges]);
+  }, [storageKey, names, scores, hole, finished, challenges, startedAt, report]);
 
   // Solange der Zähler den Bildschirm füllt, gibt es die Seite darunter
   // nicht: `scorecard-open` blendet alles außer der Zählkarte aus (siehe
@@ -158,6 +172,28 @@ export function WebScorecard({
     setHole(0);
     setFinished(false);
     setMinimized(false);
+    setStartedAt(Date.now());
+    setReport("idle");
+  }
+
+  /** Anonyme Rundenstatistik – nur auf ausdrücklichen Knopfdruck. */
+  async function sendReport() {
+    if (!scores || report === "sending" || report === "done") return;
+    const body = roundStatsPayload(kind, scores, startedAt);
+    if (!body) return;
+    setReport("sending");
+    try {
+      const response = await fetch(`/api/v1/courses/${encodeURIComponent(slug)}/round-stats`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(body),
+      });
+      // Ein 4xx wird auch beim zweiten Mal nicht besser – dann gilt es als erledigt.
+      const final = response.ok || (response.status >= 400 && response.status < 500 && response.status !== 429);
+      setReport(final ? "done" : "failed");
+    } catch {
+      setReport("failed");
+    }
   }
 
   function change(player: number, delta: number) {
@@ -175,6 +211,8 @@ export function WebScorecard({
     setMinimized(false);
     setHole(0);
     setNames(emptyNames(kind));
+    setStartedAt(null);
+    setReport("idle");
   }
 
   // Der Server kennt den Speicher des Geräts nicht. Solange sein Markup noch
@@ -231,6 +269,8 @@ export function WebScorecard({
           scores={scores}
           pars={hasPar ? pars : []}
           awards={challengeResults(challenges, scores, names)}
+          report={report}
+          onReport={sendReport}
           onBack={() => setFinished(false)}
           onReset={reset}
           onClose={() => setMinimized(true)}
@@ -630,12 +670,62 @@ function RoundButton({
 
 // MARK: – Ergebnis
 
+type ReportState = "idle" | "sending" | "done" | "failed";
+
+/**
+ * Zusammenfassung für `/api/v1/courses/[slug]/round-stats` – dieselben Regeln
+ * wie `RoundStatsService.payload` in der App: Ortszeit des Geräts, Dauer nur
+ * wenn plausibel und auf 15 Minuten gerundet, keine Namen.
+ */
+function roundStatsPayload(kind: CourseKind, scores: number[][], startedAt: number | null) {
+  const rows = scores
+    .slice(0, MAX_PLAYERS)
+    .map((row) => row.map((v) => Math.min(Math.max(Math.round(v), 0), MAX_STROKES)));
+  if (!rows.length || !rows[0].length) return null;
+  const holesPlayed = rows[0].filter((_, hole) => rows.some((row) => row[hole] > 0)).length;
+  if (!holesPlayed) return null;
+
+  const now = new Date();
+  const ref = startedAt ? new Date(startedAt) : now;
+  const pad = (n: number) => String(n).padStart(2, "0");
+  const day = `${ref.getFullYear()}-${pad(ref.getMonth() + 1)}-${pad(ref.getDate())}`;
+  const hour = ref.getHours();
+  const slot = hour < 11 ? "morning" : hour < 14 ? "midday" : hour < 18 ? "afternoon" : "evening";
+  const weekday = ((ref.getDay() + 6) % 7) + 1;
+
+  let durationMinutes: number | null = null;
+  if (startedAt) {
+    const minutes = (now.getTime() - startedAt) / 60_000;
+    const perHole = minutes / holesPlayed;
+    const [lo, hi] = kind === "golf" ? [3, 30] : [0.5, 10];
+    if (perHole >= lo && perHole <= hi) {
+      durationMinutes = Math.min(Math.max(Math.round(minutes / 15) * 15, 15), 600);
+    }
+  }
+
+  return {
+    version: 1,
+    kind,
+    day,
+    slot,
+    weekday,
+    holesPlayed,
+    durationMinutes,
+    teeColor: null,
+    strokes: rows,
+    putts: null,
+    source: "web",
+  };
+}
+
 function Result({
   copy,
   names,
   scores,
   pars,
   awards,
+  report,
+  onReport,
   onBack,
   onReset,
   onClose,
@@ -646,6 +736,8 @@ function Result({
   pars: number[];
   /** Wettkämpfe der Runde – leer, wenn keiner eingeschaltet war. */
   awards: ChallengeResult[];
+  report: ReportState;
+  onReport: () => void;
   onBack: () => void;
   onReset: () => void;
   onClose: () => void;
@@ -723,6 +815,25 @@ function Result({
             </ul>
           </section>
         ) : null}
+
+        <section className="mx-auto mt-8 max-w-lg rounded-2xl p-4" style={{ backgroundColor: APP.card }}>
+          {report === "done" ? (
+            <p className="text-sm font-semibold" style={{ color: APP.gold }}>
+              ✓ {copy.reportRoundDone}
+            </p>
+          ) : (
+            <button
+              type="button"
+              className="w-full rounded-xl py-3 text-sm font-semibold disabled:opacity-60"
+              style={{ backgroundColor: APP.cardAlt }}
+              disabled={report === "sending"}
+              onClick={onReport}
+            >
+              {report === "failed" ? copy.reportRoundFailed : copy.reportRound}
+            </button>
+          )}
+          <p className="mt-2.5 text-xs leading-relaxed text-cream/50">{copy.reportRoundInfo}</p>
+        </section>
       </div>
 
       <nav className="flex gap-3 px-4 pb-[max(1rem,env(safe-area-inset-bottom))] pt-2">

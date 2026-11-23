@@ -50,6 +50,9 @@ export default async function AdminPage() {
           <Link href="/admin/werbung" className="tap text-cream/70 transition-colors hover:text-brass">
             Werbung
           </Link>
+          <Link href="/admin/statistik" className="tap text-cream/70 transition-colors hover:text-brass">
+            Statistik
+          </Link>
           <Link href="/" className="tap text-cream/70 transition-colors hover:text-brass">
             Zur Website
           </Link>

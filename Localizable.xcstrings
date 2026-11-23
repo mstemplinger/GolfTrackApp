@@ -345,6 +345,86 @@
         }
       }
     },
+    "Anonym teilen" : {
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sdílet anonymně"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Share anonymously"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Compartir de forma anónima"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Partager anonymement"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Condividi in forma anonima"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Udostępnij anonimowo"
+          }
+        }
+      }
+    },
+    "Anonyme Rundenstatistik teilen" : {
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sdílet anonymní statistiku kol"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Share anonymous round statistics"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Compartir estadísticas anónimas de vueltas"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Partager des statistiques de partie anonymes"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Condividi statistiche anonime dei giri"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Udostępniaj anonimowe statystyki rund"
+          }
+        }
+      }
+    },
     "Bei 5 Freunden gibt's 2 Wochen Pro geschenkt" : {
       "localizations" : {
         "de" : {
@@ -483,6 +563,46 @@
         }
       }
     },
+    "Darf die App eine anonyme Zusammenfassung dieser Runde an golftrack.app schicken? Der Platz erfährt daraus – nur als Summe vieler Runden –, wann viel los ist, wie lange gespielt wird und welche Löcher schwer sind.\n\nGesendet werden Tag, Tageszeit (grob), Dauer, Gruppengröße sowie Schläge und Putts je Loch – keine Namen, keine Uhrzeit, kein Standort, keine Geräte-ID. Ändern kannst du das jederzeit unter Einstellungen › Datenschutz." : {
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Smí aplikace poslat anonymní souhrn tohoto kola na golftrack.app? Hřiště se z něj dozví – jen jako součet mnoha kol –, kdy je plno, jak dlouho se hraje a které jamky jsou těžké.\n\nOdesílá se den, přibližná denní doba, délka hry, velikost skupiny a rány a putty na jamku – žádná jména, žádný čas, žádná poloha, žádné ID zařízení. Změnit to můžeš kdykoli v Nastavení › Ochrana soukromí."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "May the app send an anonymous summary of this round to golftrack.app? From it the course learns – only as a total of many rounds – when it gets busy, how long rounds take and which holes are hard.\n\nOnly the day, rough time of day, duration, group size and strokes and putts per hole are sent – no names, no time of day, no location, no device ID. You can change this at any time under Settings › Privacy."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "¿Puede la app enviar un resumen anónimo de esta vuelta a golftrack.app? Con él, el campo sabe – solo como suma de muchas vueltas – cuándo hay mucha gente, cuánto dura una vuelta y qué hoyos son difíciles.\n\nSe envían el día, la franja horaria (aproximada), la duración, el tamaño del grupo y los golpes y putts por hoyo – sin nombres, sin hora exacta, sin ubicación, sin ID del dispositivo. Puedes cambiarlo en cualquier momento en Ajustes › Privacidad."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "L'app peut-elle envoyer un résumé anonyme de cette partie à golftrack.app ? Le parcours y apprend – uniquement sous forme de total de nombreuses parties – quand il y a du monde, combien de temps dure une partie et quels trous sont difficiles.\n\nSont envoyés le jour, le moment de la journée (approximatif), la durée, la taille du groupe ainsi que les coups et putts par trou – pas de noms, pas d'heure, pas de position, pas d'identifiant d'appareil. Vous pouvez modifier ce choix à tout moment dans Réglages › Confidentialité."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "L'app può inviare a golftrack.app un riepilogo anonimo di questo giro? Il campo ne ricava – solo come somma di molti giri – quando c'è molta gente, quanto dura un giro e quali buche sono difficili.\n\nVengono inviati giorno, fascia oraria (approssimativa), durata, dimensione del gruppo e colpi e putt per buca – niente nomi, nessun orario, nessuna posizione, nessun ID del dispositivo. Puoi cambiarlo in qualsiasi momento in Impostazioni › Privacy."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Czy aplikacja może wysłać anonimowe podsumowanie tej rundy do golftrack.app? Pole dowie się z niego – wyłącznie jako suma wielu rund – kiedy jest tłoczno, jak długo trwa gra i które dołki są trudne.\n\nWysyłane są dzień, pora dnia (w przybliżeniu), czas gry, liczebność grupy oraz uderzenia i putty na dołek – bez imion, bez godziny, bez lokalizacji, bez identyfikatora urządzenia. Możesz to zmienić w każdej chwili w Ustawienia › Prywatność."
+          }
+        }
+      }
+    },
     "Das ist dein eigener Code." : {
       "localizations" : {
         "de" : {
@@ -525,6 +645,46 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "To je tvůj vlastní kód."
+          }
+        }
+      }
+    },
+    "Deinem Platz helfen?" : {
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pomoct svému hřišti?"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Help your course?"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "¿Ayudar a tu campo?"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aider votre parcours ?"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aiutare il tuo campo?"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pomóc swojemu polu?"
           }
         }
       }
@@ -759,6 +919,86 @@
         }
       }
     },
+    "Ergebnis anonym an die Anlage melden" : {
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Anonymně nahlásit výsledek hřišti"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Report result anonymously to the course"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Enviar el resultado de forma anónima a la instalación"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Transmettre le résultat anonymement au parcours"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Invia il risultato in forma anonima all'impianto"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zgłoś wynik anonimowo do obiektu"
+          }
+        }
+      }
+    },
+    "Ergebnis anonym an die Anlage melden?" : {
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Anonymně nahlásit výsledek hřišti?"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Report your result anonymously to the course?"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "¿Enviar tu resultado de forma anónima a la instalación?"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Transmettre votre résultat anonymement au parcours ?"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Inviare il risultato in forma anonima all'impianto?"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zgłosić wynik anonimowo do obiektu?"
+          }
+        }
+      }
+    },
     "Freunde einladen" : {
       "localizations" : {
         "de" : {
@@ -851,6 +1091,46 @@
         }
       }
     },
+    "Hilft dem Betreiber, die Bahnen zu verbessern. Gesendet werden nur Tag, Dauer und Schläge je Bahn – keine Namen, kein Standort. Ändern kannst du das jederzeit im Ergebnis." : {
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pomáhá provozovateli vylepšovat dráhy. Odesílá se jen den, délka hry a rány na dráhu – žádná jména, žádná poloha. Změnit to můžeš kdykoli ve výsledku."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Helps the operator improve the holes. Only the day, duration and strokes per hole are sent – no names, no location. You can change this at any time in the result."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ayuda al responsable a mejorar las pistas. Solo se envían el día, la duración y los golpes por pista – sin nombres ni ubicación. Puedes cambiarlo en cualquier momento en el resultado."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aide l'exploitant à améliorer les pistes. Seuls le jour, la durée et les coups par piste sont envoyés – pas de noms, pas de position. Vous pouvez modifier ce choix à tout moment dans le résultat."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aiuta il gestore a migliorare le piste. Vengono inviati solo giorno, durata e colpi per pista – niente nomi, nessuna posizione. Puoi cambiarlo in qualsiasi momento nel risultato."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pomaga operatorowi ulepszać tory. Wysyłane są tylko dzień, czas gry i uderzenia na tor – bez imion i lokalizacji. Możesz to zmienić w każdej chwili w wyniku."
+          }
+        }
+      }
+    },
     "Ich zähle meine Golfrunden mit GolfTrack – probier's aus! Mein Einladungscode: %@" : {
       "localizations" : {
         "de" : {
@@ -893,6 +1173,46 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Počítám svá golfová kola v GolfTracku – vyzkoušej to! Můj kód pozvánky: %@"
+          }
+        }
+      }
+    },
+    "Ja, gern" : {
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ano, rád(a)"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Yes, sure"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sí, claro"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Oui, volontiers"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sì, volentieri"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tak, chętnie"
           }
         }
       }
@@ -1035,6 +1355,46 @@
         }
       }
     },
+    "Nach einer Runde auf einem Platz aus dem Verzeichnis geht eine anonyme Zusammenfassung an golftrack.app: Tag, Tageszeit (grob), Dauer, Gruppengröße sowie Schläge je Loch – keine Namen, keine Uhrzeit, kein Standort, keine Geräte-ID. Betreiber sehen daraus nur Summen ab zehn Runden. Weil nichts auf dich verweist, lassen sich gesendete Runden nicht mehr löschen." : {
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Po kole na hřišti z adresáře odejde na golftrack.app anonymní souhrn: den, přibližná denní doba, délka hry, velikost skupiny a rány na jamku – žádná jména, žádný čas, žádná poloha, žádné ID zařízení. Provozovatelé vidí jen součty od deseti kol. Protože nic neukazuje na tebe, odeslaná kola už nejde smazat."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "After a round at a course from the directory, an anonymous summary goes to golftrack.app: day, rough time of day, duration, group size and strokes per hole – no names, no time of day, no location, no device ID. Operators only see totals from ten rounds upwards. Because nothing points to you, rounds already sent cannot be deleted."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tras una vuelta en un campo del directorio se envía un resumen anónimo a golftrack.app: día, franja horaria (aproximada), duración, tamaño del grupo y golpes por hoyo – sin nombres, sin hora exacta, sin ubicación, sin ID del dispositivo. Los responsables solo ven sumas a partir de diez vueltas. Como nada remite a ti, las vueltas enviadas ya no se pueden borrar."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Après une partie sur un parcours de l'annuaire, un résumé anonyme est envoyé à golftrack.app : jour, moment de la journée (approximatif), durée, taille du groupe et coups par trou – pas de noms, pas d'heure, pas de position, pas d'identifiant d'appareil. Les exploitants ne voient que des totaux à partir de dix parties. Comme rien ne renvoie à vous, les parties envoyées ne peuvent plus être supprimées."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dopo un giro su un campo dell'elenco, un riepilogo anonimo va a golftrack.app: giorno, fascia oraria (approssimativa), durata, dimensione del gruppo e colpi per buca – niente nomi, nessun orario, nessuna posizione, nessun ID del dispositivo. I gestori vedono solo somme a partire da dieci giri. Poiché nulla rimanda a te, i giri già inviati non si possono più cancellare."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Po rundzie na polu z katalogu do golftrack.app trafia anonimowe podsumowanie: dzień, pora dnia (w przybliżeniu), czas gry, liczebność grupy i uderzenia na dołek – bez imion, bez godziny, bez lokalizacji, bez identyfikatora urządzenia. Operatorzy widzą tylko sumy od dziesięciu rund. Ponieważ nic nie wskazuje na ciebie, wysłanych rund nie da się już usunąć."
+          }
+        }
+      }
+    },
     "Oder gratis: 2 Wochen Pro" : {
       "localizations" : {
         "de" : {
@@ -1127,6 +1487,46 @@
         }
       }
     },
+    "Tag, Tageszeit (grob), Dauer, Gruppengröße und Schläge je Bahn – keine Namen, keine Uhrzeit, kein Standort, keine Geräte-ID. Die Anlage sieht nur Summen ab zehn Runden. Weil nichts auf dich verweist, lässt sich eine gesendete Runde nicht mehr löschen. Mehr unter [golftrack.app/datenschutz](https://golftrack.app/datenschutz)." : {
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Den, přibližná denní doba, délka hry, velikost skupiny a rány na dráhu – žádná jména, žádný čas, žádná poloha, žádné ID zařízení. Hřiště vidí jen součty od deseti kol. Protože nic neukazuje na tebe, odeslané kolo už nejde smazat. Více na [golftrack.app/en/privacy](https://golftrack.app/en/privacy)."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Day, rough time of day, duration, group size and strokes per hole – no names, no time of day, no location, no device ID. The course only sees totals from ten rounds upwards. Because nothing points to you, a round already sent cannot be deleted. More at [golftrack.app/en/privacy](https://golftrack.app/en/privacy)."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Día, franja horaria (aproximada), duración, tamaño del grupo y golpes por pista – sin nombres, sin hora exacta, sin ubicación, sin ID del dispositivo. La instalación solo ve sumas a partir de diez vueltas. Como nada remite a ti, una vuelta enviada ya no se puede borrar. Más en [golftrack.app/en/privacy](https://golftrack.app/en/privacy)."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Jour, moment de la journée (approximatif), durée, taille du groupe et coups par piste – pas de noms, pas d'heure, pas de position, pas d'identifiant d'appareil. Le parcours ne voit que des totaux à partir de dix parties. Comme rien ne renvoie à vous, une partie envoyée ne peut plus être supprimée. Plus d'infos sur [golftrack.app/en/privacy](https://golftrack.app/en/privacy)."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Giorno, fascia oraria (approssimativa), durata, dimensione del gruppo e colpi per pista – niente nomi, nessun orario, nessuna posizione, nessun ID del dispositivo. L'impianto vede solo somme a partire da dieci giri. Poiché nulla rimanda a te, un giro inviato non si può più cancellare. Maggiori informazioni su [golftrack.app/en/privacy](https://golftrack.app/en/privacy)."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dzień, pora dnia (w przybliżeniu), czas gry, liczebność grupy i uderzenia na tor – bez imion, bez godziny, bez lokalizacji, bez identyfikatora urządzenia. Obiekt widzi tylko sumy od dziesięciu rund. Ponieważ nic nie wskazuje na ciebie, wysłanej rundy nie da się już usunąć. Więcej na [golftrack.app/en/privacy](https://golftrack.app/en/privacy)."
+          }
+        }
+      }
+    },
     "Von einem Freund eingeladen?" : {
       "localizations" : {
         "de" : {
@@ -1169,6 +1569,86 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Pozval tě kamarád?"
+          }
+        }
+      }
+    },
+    "Was wird gesendet?" : {
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Co se odesílá?"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "What is sent?"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "¿Qué se envía?"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Qu'est-ce qui est envoyé ?"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cosa viene inviato?"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Co jest wysyłane?"
+          }
+        }
+      }
+    },
+    "Weniger" : {
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Méně"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Less"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Menos"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Moins"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Meno"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mniej"
           }
         }
       }

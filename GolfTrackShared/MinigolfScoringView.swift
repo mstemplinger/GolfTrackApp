@@ -19,6 +19,9 @@ struct MinigolfScoringView: View {
     @State private var showResults = false
     @State private var challenges: [MinigolfChallenge]
     @State private var showChallenges = false
+    /// Beginn dieser Sitzung – nur für eine frisch gestartete Runde bekannt.
+    /// Nach dem Fortsetzen ist die Dauer nicht belastbar und bleibt leer.
+    @State private var startedAt: Date?
     @Environment(\.dismiss) private var dismiss
     #if !APPCLIP
     /// Zuletzt mit der Watch abgeglichener Zustand – verhindert Echo-Schleifen
@@ -35,6 +38,7 @@ struct MinigolfScoringView: View {
         )
         _currentHole = State(initialValue: config.initialHole)
         _challenges = State(initialValue: config.challenges)
+        _startedAt = State(initialValue: config.initialScores == nil ? Date() : nil)
     }
 
     private var playerCount: Int { config.playerNames.count }
@@ -90,6 +94,9 @@ struct MinigolfScoringView: View {
             bottomNav
         }
         .appBackground()
+        // Einmalige Frage nach der anonymen Rundenstatistik – nur bei einer
+        // frisch gestarteten Runde an einer Anlage aus dem Verzeichnis.
+        .roundStatsStartPrompt(isEligible: config.courseID != nil && startedAt != nil)
         .navigationTitle("Loch \(currentHole + 1) / \(holeCount)")
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
@@ -118,7 +125,8 @@ struct MinigolfScoringView: View {
                 challenges: challenges,
                 onFinish: finishGame,
                 courseName: config.courseName,
-                date: Date()
+                date: Date(),
+                offersRoundStats: config.courseID != nil
             )
         }
         .sheet(isPresented: $showChallenges) {
@@ -202,6 +210,7 @@ struct MinigolfScoringView: View {
             challenges: challenges
         ))
         MinigolfGameStore.clear()
+        reportRoundStats()
         // Der Clip hängt hieran seinen Hinweis auf die volle App; in der App
         // hört niemand zu.
         NotificationCenter.default.post(name: .minigolfRoundFinished, object: nil)
@@ -210,6 +219,23 @@ struct MinigolfScoringView: View {
         #endif
         showResults = false
         dismiss()
+    }
+
+    /// Anonyme Zusammenfassung an die Anlage – nur an einer Anlage aus dem
+    /// Verzeichnis und nur mit Einwilligung (`contribute` prüft sie).
+    private func reportRoundStats() {
+        guard let slug = config.courseID, !slug.isEmpty else { return }
+        #if APPCLIP
+        let source = RoundStatsService.Source.clip
+        #else
+        let source = RoundStatsService.Source.app
+        #endif
+        guard let payload = RoundStatsService.payload(kind: .minigolf,
+                                                      startedAt: startedAt,
+                                                      endedAt: Date(),
+                                                      strokes: scores,
+                                                      source: source) else { return }
+        RoundStatsService.shared.contribute(slug: slug, payload: payload)
     }
 
     private var progressBar: some View {
@@ -379,6 +405,9 @@ struct MinigolfResultsView: View {
     /// Für den Teil-Text; fehlt beides, bleibt es dort einfach weg.
     var courseName: String? = nil
     var date: Date? = nil
+    /// Haken „Ergebnis anonym an die Anlage melden“ zeigen – nur, wenn an
+    /// einer Anlage aus dem Verzeichnis gespielt wird.
+    var offersRoundStats = false
     @Environment(\.dismiss) private var dismiss
 
     private func total(for player: Int) -> Int {
@@ -413,6 +442,10 @@ struct MinigolfResultsView: View {
                     }
 
                     scorecardTable
+
+                    if onFinish != nil, offersRoundStats {
+                        RoundStatsConsentToggle()
+                    }
 
                     if let onFinish {
                         Button {

@@ -1,4 +1,5 @@
 import { readFile } from "node:fs/promises";
+import { tmpdir } from "node:os";
 import path from "node:path";
 import QRCode from "qrcode";
 import { getCourse } from "@/lib/courses";
@@ -69,9 +70,15 @@ export async function GET(request: Request, ctx: RouteContext<"/qr/[slug]/aushan
 async function alsPdf(html: string): Promise<Uint8Array> {
   // Erst hier laden: Chrome startet nur, wenn wirklich jemand druckt.
   const { default: puppeteer } = await import("puppeteer");
+  // Der Dienst läuft als Nutzer golftrack, erbt aber von pm2 HOME=/root. Dort
+  // darf er nicht schreiben, und Chromes Absturzmelder bricht dann den Start ab
+  // („chrome_crashpad_handler: --database is required“) – die Route lieferte
+  // still nur noch HTML. Deshalb ein eigener, beschreibbarer Ordner.
+  const chromeHome = path.join(tmpdir(), "golftrack-chrome");
   const browser = await puppeteer.launch({
-    // Läuft auf dem Server als root; ohne diese Schalter verweigert Chrome den Start.
+    // Ohne diese Schalter verweigert Chrome auf dem Server den Start.
     args: ["--no-sandbox", "--disable-setuid-sandbox", "--disable-dev-shm-usage"],
+    env: { ...process.env, XDG_CONFIG_HOME: chromeHome, XDG_CACHE_HOME: chromeHome },
   });
   try {
     const page = await browser.newPage();
